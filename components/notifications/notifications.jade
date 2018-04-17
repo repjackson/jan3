@@ -1,0 +1,26 @@
+template(name='notifications')
+    .ui.container.grid
+        .row
+            h1.ui.center.aligned.header Courses
+        .row
+            .ui.divided.items
+                .item
+                    // .image
+                    //     img(src='/images/wireframe/image.png')
+                    .content
+                        .header Source of Light
+                        // .meta
+                        //     span.cinema Union Square 14
+                        // .description
+                        //     p
+                        .extra
+                            if in_course
+                                a.ui.right.floated.primary.button(href='/courses/sol')
+                                    |View Course
+                                    i.right.chevron.icon
+                            else
+                                .ui.right.floated.primary.button
+                                    |Buy Course $100
+                                    i.right.chevron.icon
+                            
+template(name='notification')       

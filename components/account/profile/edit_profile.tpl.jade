@@ -1,0 +1,63 @@
+.ui.basic.segment.container
+    h1.ui.center.aligned.header Edit Profile 
+    with user
+        .ui.large.form
+            .ui.grid
+                .five.wide.column    
+                    .field
+                        // .field
+                        //     label Current image_id: #{image_id}
+                        //     input#input_image_id(type='text' placeholder='Change')
+                        if profile.image_id
+                            label Image
+                            .ui.centered.image
+                                img.ui.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                                a#remove_photo.ui.right.corner.link.label
+                                    i.remove.red.link.icon
+                        else
+                            label Upload Image
+                            input(type='file' name='upload_picture' accept='image/*')
+                .ten.wide.column    
+                    .field
+                        label First Name 
+                        .ui.input
+                            input#first_name(type='text' value=profile.first_name)
+                    .field
+                        label Last Name 
+                        .ui.input
+                            input#last_name(type='text' value=profile.last_name)
+                    .field
+                        label Email
+                        each emails
+                            .ui.basic.label #{address}
+                    .field
+                        label Phone
+                        .ui.input
+                            input#phone(type='text' value=profile.phone)
+                            
+                    .field
+                        label Company 
+                        .ui.input
+                            input#company(type='text' value=profile.company)
+                    .field
+                        label Position 
+                        .ui.input
+                            input#position(type='text' value=profile.position)
+                    .field
+                        label Website 
+                        .ui.input
+                            input#website(type='text' value=profile.website)
+                    .field
+                        label Tags
+                        each tags
+                            .ui.basic.button.doc_tag(class=doc_tag_class)
+                                i.minus.icon
+                                |#{this}
+                        .ui.left.icon.four.wide.input
+                            i.add.icon
+                            input#add_tag(type='text' placeholder='Add Tag' maxlength='50')
+                            
+        .field
+                .ui.center.aligned.basic.segment
+                    #save_profile.ui.center.aligned.huge.teal.button
+                        |Save

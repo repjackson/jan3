@@ -1,0 +1,19 @@
+template(name='footer')
+    .ui.basic.fluid.segment.footer
+        .ui.divider
+        .ui.container.grid
+            .eight.wide.column
+                .ui.center.aligned.basic.segment
+                    .ui.header
+                        |Have we connected on social media?
+                    a(href='https://twitter.com/_toriwebster')
+                        i.huge.twitter.link.teal.icon
+                    a(href='https://www.instagram.com/_toriwebster/')
+                        i.huge.instagram.link.teal.icon
+                +mailchimp
+            .eight.wide.column
+                +twitter
+        .row
+            .ui.center.aligned.header
+                i.copyright.icon
+                |Tori Webster

@@ -1,0 +1,46 @@
+# Meteor packages used by this project, one per line.
+# Check this file (and the other files in this directory) into your repository.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor-base@1.2.0             # Packages every Meteor app needs to have
+mongo@1.3.1                   # The database Meteor supports right now
+session@1.1.7                 # Client-side reactive dictionary for your app
+tracker@1.1.3                 # Meteor's client-side reactive programming library
+
+
+coffeescript@1.11.1_4
+random@1.0.10
+manuel:reactivearray
+meteorhacks:aggregate
+babrahams:constellation
+mobile-experience@1.0.5
+
+
+semantic:ui
+flemay:less-autoprefixer
+blaze-html-templates
+dburles:collection-helpers
+accounts-password@1.5.0
+shell-server@0.3.0
+kadira:flow-router
+kadira:blaze-layout
+accounts-base@1.4.0
+zimme:active-route
+useraccounts:flow-routing
+useraccounts:semantic-ui
+lepozepo:cloudinary
+momentjs:moment
+alanning:roles
+reactive-var@1.0.11
+kevohagan:sweetalert
+raix:handlebar-helpers
+matb33:collection-hooks
+themeteorchef:bert
+mizzao:autocomplete
+dynamic-import@0.2.0
+froala:editor-reactive@=2.4.2
+benjick:webcam
+mquandalle:jade
+stylus@2.513.13

@@ -1,0 +1,18 @@
+template(name='facet_staff_select')
+    if doc
+        with doc
+            if is_editing
+                .ui.labeled.fluid.input
+                    .ui.basic.label Select Staff
+                    input#staff(type='text' value=staff)
+            else
+                div(class=doc_classes)
+                    |#{staff}
+            if isInRole 'admin'
+                +session_edit_icon
+    else
+        if isInRole 'admin'
+            .ui.header No Doc Found
+            .create_doc.ui.basic.button
+                i.plus.icon
+                |Create HTML with #{template_tags}

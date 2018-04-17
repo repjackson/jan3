@@ -1,0 +1,42 @@
+template(name='add_user')
+    .ui.basic.segment.container
+        h1.ui.center.aligned.header Add User 
+        .ui.large.form
+            .ui.grid
+                .five.wide.column
+                    // +camera
+                    .field
+                        // .field
+                        //     label Current image_id: #{image_id}
+                        //     input#input_image_id(type='text' placeholder='Change')
+                        if profile.image_id
+                            label Image
+                            .ui.centered.image
+                                img.ui.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                                a#remove_photo.ui.right.corner.link.label
+                                    i.remove.red.link.icon
+                        else
+                            label Upload Image
+                            input(type='file' name='upload_picture' accept='image/*')
+                .ten.wide.column    
+                    .field
+                        label Username
+                        .ui.input
+                            input#username(type='text' )
+                    .field
+                        label First Name 
+                        .ui.input
+                            input#first_name(type='text')
+                    .field
+                        label Last Name 
+                        .ui.input
+                            input#last_name(type='text')
+                    .field
+                        label Email
+                        .ui.input
+                            input#email(type='text')
+                            
+        .field
+                .ui.center.aligned.basic.segment
+                    #add_person.ui.center.aligned.huge.teal.button
+                        |Add Person

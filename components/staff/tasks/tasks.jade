@@ -1,0 +1,91 @@
+
+template(name='edit_task')
+    with task
+        .ui.text.container
+            h1.ui.center.aligned.header Edit Task
+            .ui.form
+                +before_image
+                .field
+                    label Location
+                    input#location(type='text' value=location)
+                +staff_field
+                +due_date
+                .ui.segment
+                    +complete
+                    if complete
+                        .field
+                            label Complete Date
+                            input#complete_date(type='date' value=complete_date)        
+                        +after_image
+                        +notes
+                .field
+                    label Description
+                    input#description(type='text' value=description)
+                +edit_tags
+                .ui.basic.center.aligned.segment
+                    a.ui.green.big.button(href='/tasks') Save Task
+                    #delete_task.ui.red.icon.button
+                        i.trash.icon            
+            
+            
+template(name='tasks') 
+    .ui.container
+        h1.ui.center.aligned.header Tasks
+            i#add_task.green.plus.link.icon 
+        +cloud filter='task'
+        .ui.centered.cards
+            each tasks
+                +task
+                    
+                
+template(name='task')
+    .ui.card
+        if before_image_id
+            .image
+                .ui.shape
+                    .flip_shape.sides
+                        if before_image_id
+                            a.side.active
+                                .content
+                                    .ui.center.aligned.header Before
+                                .image
+                                    img.ui.image(src="{{c.url before_image_id width='400' height='400' crop='lpad' }}")
+                        if after_image_id
+                            a.side
+                                .content
+                                    .ui.center.aligned.header After
+                                .image
+                                    img.ui.image(src="{{c.url after_image_id width='400' height='400' crop='lpad' }}")
+        .content
+            if complete
+                span.right.floated
+                    i.green.large.check.icon
+            else
+                i.right.floated.remove.large.icon
+            .header #{description}
+            .meta
+                i.location.arrow.icon
+                |#{location}
+            if due_date
+                span
+                    i.calendar.icon
+                    |#{due_date}
+        .content
+            i.tags.icon
+            each tags
+                .ui.basic.label #{this}
+        if complete
+            .content
+                |Completed by #{staff}
+                if complete_date
+                    |on #{complete_date}
+                if notes
+                    div
+                        i.edit.icon
+                        |#{notes}
+        .content
+            a.ui.basic.button(href="/task/edit/#{_id}") 
+                i.pencil.icon
+                |Edit
+            // a.ui.compact.button(href="/task/view/#{_id}") 
+            //     |View

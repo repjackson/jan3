@@ -1,0 +1,36 @@
+with post
+    .ui.container.divided.grid
+        .row
+            a.ui.top.left.attached.basic.button(href="/posts")
+                i.arrow.left.icon
+                |Posts
+        .centered.row
+            h1.ui.center.aligned.header #{title}
+            if image_id
+                img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
+        .row
+            .ten.wide.column
+                if publish_date
+                    h4.ui.header Published #{publish_when}
+                .ui.basic.segment
+                    |!{description}
+                if tags
+                    .ui.basic.segment
+                        each tags
+                            .ui.basic.label #{this}
+                // +comments
+            .five.wide.column
+                // +user_card
+                if isInRole 'admin'
+                    .edit_post.ui.basic.large.button
+                        i.pencil.icon
+                        |Edit
+                    .ui.hidden.divider
+                        if published
+                            .ui.green.basic.label Published
+                        else
+                            .ui.red.basic.label Unpublished                        
+                        if featured
+                            .ui.green.basic.label Featured
+                        else
+                            .ui.red.basic.label Unfeatured

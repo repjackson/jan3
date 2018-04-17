@@ -1,0 +1,65 @@
+.ui.inverted.borderless.stackable.top.attached.menu
+    a.toggle_sidebar.mobile.only.header.item
+        i.sidebar.icon
+        | Gold Run
+
+    a.header.mobile.hidden.item(href='/' class="{{isActivePath '/'}}") 
+        i.home.icon
+        |Gold Run
+    // .header.mobile.hidden.item GR
+    a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
+        i.users.icon
+        |People
+    a.ui.mobile.hidden.simple.dropdown.item(href='/community' class="{{isActivePath '/community'}}")
+        i.users.icon
+        |Community
+        .ui.menu
+            a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
+                i.calendar.icon
+                |Events
+            a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
+                i.shopping.bag.icon
+                |Classifieds
+            a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
+                i.comments.outline.icon
+                |Discussion
+    a.mobile.hidden.item(href='/posts' class="{{isActivePath '/posts'}}")
+        i.sticky.note.outline.icon
+        |Posts
+    a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}")
+        i.sign.in.icon
+        |Health Club Check In
+    .mobile.hidden.right.menu
+        if currentUser
+            // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}")
+            //     i.line.chart.icon
+            // .ui.simple.dropdown.icon.item
+            //     i.alarm.icon
+            //     .menu
+            //         each notifications
+            //             .item #{text}
+            // a.icon.item(href='/messages' class="{{isActivePath '/messages'}}")
+            //     i.mail.icon
+            if isInRole 'admin'
+                a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}")
+                    i.configure.icon
+                    |Admin
+            a.mobile.hidden.item(href='/staff' class="{{isActivePath '/staff'}}")
+                i.info.circle.icon
+                |Staff
+            a.mobile.hidden.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
+                if currentUser.profile.image_id
+                    img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                else
+                    i.user.icon
+                if currentUser.name
+                    | #{currentUser.name}
+                else
+                    | Profile
+            a#logout.ui.mobile.hidden.item(href='#') 
+                i.sign.out.icon
+                | Sign Out
+        else
+            a.ui.mobile.hidden.item(href='/sign-in') 
+                i.sign.in.icon
+                | Sign In

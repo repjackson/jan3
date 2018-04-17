@@ -1,0 +1,41 @@
+template(name='staff')
+    .ui.container
+        h1.ui.dividing.center.aligned.header 
+            i.circle.info.icon
+            |Staff Back End
+        .ui.centered.cards
+            a.ui.card(href='/readings' class="{{isActivePath '/readings'}}")
+                .content
+                    .ui.icon.header
+                        i.theme.icon
+                        h2.content Readings
+            a.ui.card(href='/lostfound' class="{{isActivePath '/lostfound'}}")
+                .content
+                    .ui.icon.header
+                        i.random.icon
+                        h2.content Lost and Found
+            a.ui.card(href='/bikes' class="{{isActivePath '/bikes'}}")
+                .content
+                    .ui.icon.header
+                        i.bicycle.icon
+                        h2.content Bikes
+            a.ui.card(href='/frontdesk' class="{{isActivePath '/frontdesk'}}")
+                .content
+                    .ui.icon.header
+                        i.circle.info.icon
+                        h2.content Desk Staff
+            a.ui.card(href='/buildings' class="{{isActivePath '/buildings'}}")
+                .content
+                    .ui.icon.header
+                        i.building.icon
+                        h2.content Buildings
+            a.ui.card(href='/tasks' class="{{isActivePath '/tasks'}}")
+                .content
+                    .ui.icon.header
+                        i.edit.icon
+                        h2.content Tasks
+            a.ui.card(href='/keys' class="{{isActivePath '/keys'}}")
+                .content
+                    .ui.icon.header
+                        i.key.icon
+                        h2.content Keys

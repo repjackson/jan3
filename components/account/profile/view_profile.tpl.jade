@@ -1,0 +1,31 @@
+with person
+    .ui.container.grid
+        .five.wide.column
+            img.ui.centered.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+        .ten.wide.column
+            h2.ui.header
+                |#{profile.first_name} #{profile.last_name}
+            if can_edit_profile
+                a.ui.basic.button(href="/account/profile/edit/#{_id}") Edit Profile
+            if tags
+                i.large.tags.icon
+                each tags
+                    .ui.basic.label #{this}
+            if profile.position
+                .ui.header Position 
+                | #{profile.position}
+            if profile.phone
+                .ui.header Phone
+                i.phone.icon
+                | #{profile.phone}
+            if profile.company
+                .ui.header Company
+                | #{profile.company}
+            if profile.website
+                .ui.header Website 
+                a(href=profile.website target='_blank') #{profile.website}
+            if isInRole 'admin'
+                .ui.horizontal.divider.header
+                    i.red.configure.icon
+                    | Admin
+                +timecard

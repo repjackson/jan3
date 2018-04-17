@@ -1,0 +1,80 @@
+template(name='posts')
+    .ui.container
+        .ui.stackable.divided.grid
+            .twelve.wide.column
+                .ui.relaxed.divided.items
+                    each posts
+                        +post_item
+            .four.wide.column
+                if isInRole 'admin'
+                    h2.ui.header 
+                        i.red.configure.icon
+                        |Admin
+                    #add_post.ui.compact.basic.fluid.button
+                        i.large.icons
+                            i.sticky.note.outline.icon
+                            i.green.plus.corner.icon
+                        |Add Post
+
+
+template(name='my_posts')
+    .ui.fluid.card
+        .content
+            .ui.header My Docs
+            .ui.divided.list
+                each my_posts
+                    .item 
+                        a(href="/post/view/#{_id}") #{title}
+
+
+template(name='post')
+    .ui.fluid.card
+        .ui.centered.image
+            a(href="/post/view/#{_id}")
+                img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
+        .content
+            h1.ui.header
+                a(href="/post/view/#{_id}") #{title}
+            if publish_date
+                .meta
+                    | Published #{publish_when}
+            .description
+                |{{nl2br body}}
+        .content
+            each tags
+                .ui.compact.button.post_tag(class=tag_class) #{this}
+            if isInRole 'admin'
+                .edit_post.ui.primary.basic.right.floated.button
+                    i.pencil.icon
+                    |Edit Post    
+            
+            
+template(name='post_item')
+    .ui.item
+        a.image(href="/post/view/#{_id}")
+            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
+        .content
+            a.header(href="/post/view/#{_id}") #{title}
+            if publish_date
+                .meta
+                    | Published #{publish_when}
+            .description
+                |!{description}
+                a(href="/post/view/#{_id}") 
+                    |View More
+                    i.arrow.right.icon
+            .extra
+                i.tags.icon
+                each tags
+                    .ui.compact.label.post_tag(class=tag_class) #{this}
+            if isInRole 'admin'
+                .extra
+                    i.red.configure.large.icon
+                    if published
+                        .ui.green.basic.label Published
+                    else
+                        .ui.red.basic.label Unpublished                        
+                    if featured
+                        .ui.green.basic.label Featured
+                    else
+                        .ui.red.basic.label Unfeatured

@@ -1,0 +1,44 @@
+template(name='edit_price')
+    .field
+        label Price
+        input#price(type='number' min='0' val=price)
+
+template(name='edit_title')
+    .field
+        label Title
+        input#title(type='text' placeholder='Title' value=title)
+
+template(name='edit_type')
+    .field
+        label Type
+        .ui.left.icon.input
+            i.red.configure.icon
+            input#type(type='text' value=type)
+
+template(name='building_code')
+    .field
+        label Building Code
+        input#building_code(type='text' value=building_code)
+
+template(name='due_date')            
+    .field
+        label Due Date
+        input#due_date(type='date' value=due_date)        
+        
+        
+template(name='complete')            
+    .field
+        label Completed
+        #mark_complete.ui.button(class=complete_class) Yes 
+        #mark_incomplete.ui.button(class=incomplete_class) No 
+
+template(name='staff_field')            
+    .field
+        label Staff
+        input#staff(type='text' value=staff)        
+
+template(name='notes')            
+    .field
+        label Notes
+        input#notes(type='text' value=notes)
+        

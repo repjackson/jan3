@@ -1,0 +1,91 @@
+template(name='edit_building')
+    with building
+        .ui.container
+            .ui.header Edit Building
+            .ui.form
+                +building_code
+                .field
+                    label Building Numbers
+                    .ui.divided.list
+                        each building_numbers
+                            .item
+                                | #{this}
+                                i.remove_number.red.link.remove.icon
+                    .ui.action.input
+                        input#new_building_number(type='number' min='0')
+                        #add_building_number.ui.button Add Building Number
+                +edit_tags
+                .field
+                    label Building Street: #{building_street}
+                    // input#building_street(type='text' value=building_street)
+                    select#select_building_street
+                        option Change Street
+                        option(value='Shadow Creek Dr') Shadow Creek Dr
+                        option(value='Sundown Ln') Sundown Ln
+                        option(value='Springdale Ln') Springdale Ln
+                a.ui.green.big.button(href="/building/view/#{_id}") Save Building
+                #delete_building.ui.red.icon.button
+                    i.trash.icon            
+            
+template(name='buildings')
+    .ui.container
+        h1.ui.center.aligned.header Buildings
+            i#add_building.green.plus.link.icon 
+        +cloud filter='building'
+        table.ui.striped.sortable.table
+            thead
+                tr
+                    th Code
+                    th Numbers
+                    th Street
+                    th Actions
+            tbody
+                each buildings
+                    tr
+                        td #{building_code}
+                        td 
+                            each building_numbers
+                                .ui.basic.large.label #{this}
+                        td.single.line #{building_street}
+                        td.single.line 
+                            a.ui.compact.button(href="/building/edit/#{_id}")
+                                i.pencil.icon
+                                | Edit
+                            a.ui.compact.button(href="/building/view/#{_id}")
+                                i.right.arrow.icon
+                                | View
+
+            
+            
+template(name='view_building')
+    a.ui.basic.button(href='/buildings')
+        i.left.arrow.icon
+        |Buildings
+    with building
+        .ui.container
+            h1.ui.center.aligned.header Building #{building_code} Page
+            .ui.stackable.grid
+                .ten.wide.column
+                    .ui.dividing.header Notices
+                    .ui.dividing.header Posts
+                    .ui.dividing.header Maintenance Requests
+                    .ui.dividing.header Residents
+            
+            
+                .six.wide.column
+                    .ui.form
+                        .inline.field
+                            label Code
+                            .ui.basic.large.label #{building_code}
+                        .inline.field
+                            label Numbers
+                                each building_numbers
+                                    .ui.basic.large.label #{this}
+                        .inline.field
+                            label Street
+                            .ui.basic.large.label #{building_street}
+                    .ui.dividing.header
+                        i.configure.icon
+                        |Admin
+                    a.ui.basic.button(href="/building/edit/#{_id}") Edit Building
+                

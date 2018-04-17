@@ -1,0 +1,111 @@
+template(name='people') 
+    .ui.container
+        h1.ui.center.aligned.header People
+            i#add_person.green.plus.link.icon 
+        .ui.centered.cards
+            each people
+                +person_card
+                
+template(name='person_card')                
+    .ui.card
+        .image
+            a(href="/person/view/#{_id}")
+                img.ui.fluid.image(src="{{c.url profile.image_id height=400 width=800 background='white' crop='pad'}}")
+        .content
+            a(href="/person/view/#{_id}")
+                h2.ui.center.aligned.header #{first_name} #{last_name}
+            each five_tags
+                .ui.compact.small.circular.button.person_tag(class=tag_class) 
+                    strong #{this}
+        .content
+            if position
+                |#{position}
+            if company
+                |at #{company}
+        .extra.content
+            .ui.horizontal.divider.header
+                i.red.configure.icon
+                | Admin
+
+template(name='person_page')                
+    .ui.stackable.grid
+        .five.wide.column
+            .image
+                img.ui.fluid.image(src="{{c.url profile.image_id height=400 width=800 background='white' crop='pad'}}")
+        .eleven.wide.column
+            .content
+                a(href="/person/#{_id}")
+                    h2.ui.center.aligned.header #{first_name} #{last_name}
+                each five_tags
+                    .ui.compact.small.circular.button.person_tag(class=tag_class) 
+                        strong #{this}
+            .content
+                if position
+                    |#{position}
+                if company
+                    |at #{company}
+            .extra.content
+                .ui.horizontal.divider.header
+                    i.red.configure.icon
+                    | Admin
+
+
+
+template(name='edit_person')
+    with person
+        .ui.container
+            h1.ui.center.aligned.header
+                |Edit
+                if first_name
+                    |#{first_name}
+                    if last_name
+                        |&nbsp; #{last_name}
+                else
+                    |Person
+            .ui.form
+                .field
+                    label First Name 
+                    .ui.input
+                        input#first_name(type='text' value=first_name)
+                .field
+                    label Last Name 
+                    .ui.input
+                        input#last_name(type='text' value=last_name)
+                .field
+                    label Email
+                    .ui.input
+                        input#email(type='email' value=email)
+                .field
+                    label Phone
+                    .ui.input
+                        input#phone(type='text' value=phone)
+                .field
+                    label Company 
+                    .ui.input
+                        input#company(type='text' value=company)
+                .field
+                    label Position 
+                    .ui.input
+                        input#position(type='text' value=position)
+                .field
+                    label Roles
+                    .ui.header Assigned Roles:
+                    each roles
+                        .unassign_role.ui.blue.animated.fade.button
+                            .visible.content
+                                |#{this}
+                            .hidden.content
+                                i.minus.icon
+                            
+                    .ui.header Available Roles:
+                    each unassigned_roles
+                        .assign_role.ui.basic.animated.fade.button 
+                            .visible.content
+                                |#{this}    
+                            .hidden.content
+                                i.plus.icon
+            .ui.basic.center.aligned.segment    
+                a.ui.green.big.button(href='/people') Save Person
+                #delete_person.ui.red.icon.button
+                    i.trash.icon            
+            

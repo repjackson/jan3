@@ -1,0 +1,42 @@
+template(name='lostfound')
+    .ui.container
+        .ui.center.aligned.header Health Club Lost and Found
+            i#add_lf_reading.green.plus.link.icon 
+        +cloud filter='lostfound'
+        .ui.centered.cards
+            each lostfound_items
+                +lostfound_item
+            
+
+template(name='lostfound_item')
+    .ui.card
+        if image_id
+            .image
+                img(src="{{c.url image_id}}")
+        .content
+            .description
+                |#{body}
+            .meta
+                each tags
+                    .ui.basic.label #{this}
+        .content
+            | by #{author.username}
+            | #{when}
+            if is_author
+                a.ui.icon.blue.button(href="/lostfound/edit/#{_id}")
+                    i.pencil.icon
+
+
+
+template(name='edit_lf_item')
+    with doc
+        .ui.text.container.segment
+            .ui.center.aligned.header Edit Lost and Found Item
+            .ui.form
+                +edit_image
+                +edit_tags
+                +edit_body
+                a.ui.green.large.button(href='/lostfound') Save Lost and Found Item
+                #delete_lf_item.ui.red.icon.button
+                    i.trash.icon
+            

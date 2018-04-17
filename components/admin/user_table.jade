@@ -1,0 +1,66 @@
+template(name='user_table')
+    .ui.container
+        a#add_user.ui.basic.green.labeled.icon.button(href='/user/add')
+            i.plus.icon
+            |Add User
+        table.ui.sortable.striped.table
+            thead
+                tr
+                    th Image
+                    th Profile
+                    th Roles
+            tbody
+                each users
+                    tr
+                        td 
+                            img.ui.tiny.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        td 
+                            .ui.header 
+                                |#{name}
+                            div 
+                                | Username: #{username}
+                            each emails
+                                |#{address}
+                            a(href="/account/profile/edit/#{_id}")
+                                |Edit
+                        td 
+                            .ui.hidden.fitted.divider
+                            .ui.left.labeled.button
+                                if is_dev
+                                    .ui.green.label Dev
+                                    .remove_dev.ui.basic.icon.button
+                                        i.remove.icon 
+                                else
+                                    .ui.basic.label Dev
+                                    .make_dev.ui.basic.icon.button
+                                        i.plus.icon 
+                            .ui.hidden.fitted.divider
+                            .ui.left.labeled.button
+                                if is_staff
+                                    .ui.green.label staff
+                                    .remove_staff.ui.basic.icon.button
+                                        i.remove.icon 
+                                else
+                                    .ui.basic.label staff
+                                    .make_staff.ui.basic.icon.button
+                                        i.plus.icon 
+                            .ui.hidden.fitted.divider
+                            .ui.left.labeled.button
+                                if is_owner
+                                    .ui.green.label owner
+                                    .remove_beta.ui.basic.icon.button
+                                        i.remove.icon 
+                                else
+                                    .ui.basic.label owner
+                                    .make_owner.ui.basic.icon.button
+                                        i.plus.icon 
+                            .ui.hidden.fitted.divider
+                            .ui.left.labeled.button
+                                if is_resident
+                                    .ui.green.label Resident
+                                    .remove_resident.ui.basic.icon.button
+                                        i.remove.icon 
+                                else
+                                    .ui.basic.label Resident
+                                    .make_resident.ui.basic.icon.button
+                                        i.plus.icon 
