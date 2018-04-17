@@ -1,52 +1,37 @@
-.ui.inverted.borderless.stackable.top.attached.menu
+.ui.inverted.borderless.stackable.top.attached.big.menu
     a.toggle_sidebar.mobile.only.header.item
         i.sidebar.icon
-        | Gold Run
+        | JanPro
 
     a.header.mobile.hidden.item(href='/' class="{{isActivePath '/'}}") 
-        i.home.icon
-        |Gold Run
+        i.line.chart.icon
+        |JP
     // .header.mobile.hidden.item GR
     a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
         i.users.icon
-        |People
-    a.ui.mobile.hidden.simple.dropdown.item(href='/community' class="{{isActivePath '/community'}}")
-        i.users.icon
-        |Community
-        .ui.menu
-            a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
-                i.calendar.icon
-                |Events
-            a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
-                i.shopping.bag.icon
-                |Classifieds
-            a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
-                i.comments.outline.icon
-                |Discussion
-    a.mobile.hidden.item(href='/posts' class="{{isActivePath '/posts'}}")
+        | Users
+    a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}")
         i.sticky.note.outline.icon
-        |Posts
+        |Incidents
     a.mobile.hidden.item(href='/checkin' class="{{isActivePath '/checkin'}}")
         i.sign.in.icon
-        |Health Club Check In
+        |Check In
     .mobile.hidden.right.menu
+        a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}")
+            i.configure.icon
+            |Admin
+        a.mobile.hidden.item(href='/staff' class="{{isActivePath '/staff'}}")
+            i.info.circle.icon
+            |Staff
+        .ui.simple.dropdown.icon.item
+            i.alarm.icon
+            .menu
+                if notifications
+                    each notifications
+                        .item #{text}
+                else
+                    | No Notifications
         if currentUser
-            // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}")
-            //     i.line.chart.icon
-            // .ui.simple.dropdown.icon.item
-            //     i.alarm.icon
-            //     .menu
-            //         each notifications
-            //             .item #{text}
-            // a.icon.item(href='/messages' class="{{isActivePath '/messages'}}")
-            //     i.mail.icon
-            if isInRole 'admin'
-                a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}")
-                    i.configure.icon
-                    |Admin
-            a.mobile.hidden.item(href='/staff' class="{{isActivePath '/staff'}}")
-                i.info.circle.icon
-                |Staff
             a.mobile.hidden.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                 if currentUser.profile.image_id
                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")

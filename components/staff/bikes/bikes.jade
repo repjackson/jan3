@@ -36,7 +36,7 @@ template(name='bike')
                 each tags
                     .ui.basic.label #{this}
         .content
-            | posted by #{author.username} #{when}
+            | incidented by #{author.username} #{when}
             if is_author
                 a.ui.icon.blue.button(href="/bikes/edit/#{_id}")
                     i.pencil.icon

@@ -13,9 +13,9 @@ Cloudinary.config
     api_secret: Meteor.settings.cloudinary_secret
 
 
-Meteor.publish 'featured_posts', ->
+Meteor.publish 'featured_incidents', ->
     Docs.find
-        type: 'post'
+        type: 'incident'
         featured: true
         
         

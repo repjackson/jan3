@@ -4,11 +4,11 @@ if Meteor.isClient
             main: 'home'
     
     Template.home.onCreated ->
-        @autorun -> Meteor.subscribe('featured_posts')
+        @autorun -> Meteor.subscribe('featured_incidents')
         @autorun -> Meteor.subscribe('readings')
     
     Template.home.helpers
-        featured_posts: -> 
+        featured_incidents: -> 
             Docs.find {featured:true},
                 sort:
                     publish_date: -1
@@ -30,7 +30,7 @@ if Meteor.isClient
                 
                 
     Template.home.events
-        # 'click #add_post': ->
-        #     id = Docs.insert type: 'post'
-        #     FlowRouter.go "/post/edit/#{id}"
+        # 'click #add_incident': ->
+        #     id = Docs.insert type: 'incident'
+        #     FlowRouter.go "/incident/edit/#{id}"
     
