@@ -3,6 +3,8 @@ template(name='dashboard')
         h1.ui.dividing.center.aligned.header 
             i.circle.info.icon
             | Account Status Dashboard
+        |{{> quickForm collection="Incidents" id="insertBookForm" type="insert"}}
+        
         .ui.centered.cards
             a.ui.card(href='/incidents')
                 .content

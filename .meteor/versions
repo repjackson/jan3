@@ -105,7 +105,6 @@ mongo-livedata@1.0.12
 mquandalle:jade@0.4.9
 mquandalle:jade-compiler@0.4.5
 nicolaslopezj:options@1.0.1
-nicolaslopezj:orion-users-with-roles-attribute@1.0.1
 nicolaslopezj:reactive-templates@1.2.1
 nicolaslopezj:roles@1.5.3
 nicolaslopezj:router-layer@0.0.11
@@ -135,7 +134,6 @@ reactive-dict@1.2.0
 reactive-var@1.0.11
 reload@1.1.11
 retry@1.0.9
-reywood:publish-composite@1.4.2
 routepolicy@1.0.12
 semantic:ui@2.2.6_5
 semantic:ui-data@2.2.6_4
