@@ -3,8 +3,8 @@
   "cloudinary_secret": "rPPXD3rZM_GCjODvh0T70XeDCSw",
   "galaxy.meteor.com": {
     "env": {
-      "MONGO_URL": "mongodb://goldrunadmin:turnfearagainstthose@aws-us-east-1-portal.21.dblayer.com:10444/goldrundb?ssl=true",
-      "ROOT_URL": "https://www.goldrun.io"
+      "MONGO_URL": "mongodb://mongodb://janadmin:jancleaningcustomerpassword@aws-us-east-1-portal.21.dblayer.com:10444/jandb?ssl=true",
+      "ROOT_URL": "https://www.jan.meteorapp.com"
     }
   }
 }

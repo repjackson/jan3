@@ -47,3 +47,5 @@ dvz:orion-semantic-ui
 orionjs:file-attribute
 orionjs:image-attribute
 orionjs:froala
+orionjs:relationships
+nicolaslopezj:orion-users-with-roles-attribute
