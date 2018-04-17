@@ -13,8 +13,8 @@ AccountsTemplates.configure
     confirmPassword: true
     continuousValidation: true
     #displayFormLabels: true
-    #forbidClientAccountCreation: true
-    #formValidationFeedback: true
+    forbidClientAccountCreation: false
+    # formValidationFeedback: true
     #homeRoutePath: '/'
     showAddRemoveServices: true
     #showPlaceholders: true

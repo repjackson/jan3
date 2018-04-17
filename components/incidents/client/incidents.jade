@@ -6,15 +6,11 @@ template(name='incidents')
                     each incidents
                         +incident_item
             .four.wide.column
-                if isInRole 'admin'
-                    h2.ui.header 
-                        i.red.configure.icon
-                        |Admin
-                    #add_incident.ui.compact.basic.fluid.button
-                        i.large.icons
-                            i.sticky.note.outline.icon
-                            i.green.plus.corner.icon
-                        |Add Incident
+                #add_incident.ui.compact.basic.fluid.button
+                    i.large.icons
+                        i.sticky.note.outline.icon
+                        i.green.plus.corner.icon
+                    |Add Incident
 
 
 template(name='my_incidents')
@@ -43,10 +39,9 @@ template(name='incident')
         .content
             each tags
                 .ui.compact.button.incident_tag(class=tag_class) #{this}
-            if isInRole 'admin'
-                .edit_incident.ui.primary.basic.right.floated.button
-                    i.pencil.icon
-                    |Edit Incident    
+            .edit_incident.ui.primary.basic.right.floated.button
+                i.pencil.icon
+                |Edit Incident    
             
             
 template(name='incident_item')
@@ -67,14 +62,13 @@ template(name='incident_item')
                 i.tags.icon
                 each tags
                     .ui.compact.label.incident_tag(class=tag_class) #{this}
-            if isInRole 'admin'
-                .extra
-                    i.red.configure.large.icon
-                    if published
-                        .ui.green.basic.label Published
-                    else
-                        .ui.red.basic.label Unpublished                        
-                    if featured
-                        .ui.green.basic.label Featured
-                    else
-                        .ui.red.basic.label Unfeatured
+            .extra
+                i.red.configure.large.icon
+                if published
+                    .ui.green.basic.label Published
+                else
+                    .ui.red.basic.label Unpublished                        
+                if featured
+                    .ui.green.basic.label Featured
+                else
+                    .ui.red.basic.label Unfeatured

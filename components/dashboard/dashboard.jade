@@ -1,40 +1,40 @@
-template(name='staff')
+template(name='dashboard')
     .ui.container
         h1.ui.dividing.center.aligned.header 
             i.circle.info.icon
-            | Admin
+            | Account Status Dashboard
         .ui.centered.cards
-            a.ui.card(href='/readings' class="{{isActivePath '/readings'}}")
+            a.ui.card(href='/incidents')
                 .content
                     .ui.icon.header
                         i.theme.icon
                         h2.content Readings
-            a.ui.card(href='/lostfound' class="{{isActivePath '/lostfound'}}")
+            a.ui.card(href='/lostfound')
                 .content
                     .ui.icon.header
                         i.random.icon
                         h2.content Lost and Found
-            a.ui.card(href='/bikes' class="{{isActivePath '/bikes'}}")
+            a.ui.card(href='/bikes')
                 .content
                     .ui.icon.header
                         i.bicycle.icon
                         h2.content Bikes
-            a.ui.card(href='/frontdesk' class="{{isActivePath '/frontdesk'}}")
+            a.ui.card(href='/frontdesk')
                 .content
                     .ui.icon.header
                         i.circle.info.icon
                         h2.content Desk Staff
-            a.ui.card(href='/buildings' class="{{isActivePath '/buildings'}}")
+            a.ui.card(href='/buildings')
                 .content
                     .ui.icon.header
                         i.building.icon
                         h2.content Buildings
-            a.ui.card(href='/tasks' class="{{isActivePath '/tasks'}}")
+            a.ui.card(href='/tasks')
                 .content
                     .ui.icon.header
                         i.edit.icon
                         h2.content Tasks
-            a.ui.card(href='/keys' class="{{isActivePath '/keys'}}")
+            a.ui.card(href='/keys')
                 .content
                     .ui.icon.header
                         i.key.icon

@@ -24,8 +24,8 @@ with person
             if profile.website
                 .ui.header Website 
                 a(href=profile.website target='_blank') #{profile.website}
-            if isInRole 'admin'
-                .ui.horizontal.divider.header
-                    i.red.configure.icon
-                    | Admin
-                +timecard
+            // if isInRole 'admin'
+            //     .ui.horizontal.divider.header
+            //         i.red.configure.icon
+            //         | Admin
+            +timecard

@@ -93,10 +93,3 @@ template(name='sidebar')
                 a.ui.toggle_sidebar.item(href='/sign-in') 
                     i.sign.in.icon
                     | Sign In
-
-
-template(name='camera')
-    #webcam
-    button.snap Take photo
-    if image
-        img(src='{{image}}')

@@ -10,16 +10,13 @@ template(name='nav')
         a.item(href='/incidents' class="{{isActivePath '/incidents'}}")
             i.sticky.note.outline.icon
             |Incidents
-        a.item(href='/checkin' class="{{isActivePath '/checkin'}}")
-            i.sign.in.icon
-            |Check In
+        // a.item(href='/checkin' class="{{isActivePath '/checkin'}}")
+        //     i.sign.in.icon
+        //     |Check In
         .right.menu
             a.item(href='/admin' class="{{isActivePath '/admin'}}")
                 i.configure.icon
                 |Admin
-            a.item(href='/staff' class="{{isActivePath '/staff'}}")
-                i.info.circle.icon
-                |Staff
             .ui.simple.dropdown.icon.item
                 i.alarm.icon
                 .menu

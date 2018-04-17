@@ -21,16 +21,15 @@ with incident
                 // +comments
             .five.wide.column
                 // +user_card
-                if isInRole 'admin'
-                    .edit_incident.ui.basic.large.button
-                        i.pencil.icon
-                        |Edit
-                    .ui.hidden.divider
-                        if published
-                            .ui.green.basic.label Published
-                        else
-                            .ui.red.basic.label Unpublished                        
-                        if featured
-                            .ui.green.basic.label Featured
-                        else
-                            .ui.red.basic.label Unfeatured
+                .edit_incident.ui.basic.large.button
+                    i.pencil.icon
+                    |Edit
+                .ui.hidden.divider
+                    if published
+                        .ui.green.basic.label Published
+                    else
+                        .ui.red.basic.label Unpublished                        
+                    if featured
+                        .ui.green.basic.label Featured
+                    else
+                        .ui.red.basic.label Unfeatured

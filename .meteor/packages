@@ -38,11 +38,12 @@ matb33:collection-hooks
 themeteorchef:bert
 mizzao:autocomplete
 dynamic-import@0.2.0
-froala:editor-reactive@=2.4.2
-benjick:webcam
 mquandalle:jade
 stylus@2.513.13
 orionjs:core
 twbs:bootstrap
 fortawesome:fontawesome
 dvz:orion-semantic-ui
+orionjs:file-attribute
+orionjs:image-attribute
+orionjs:froala

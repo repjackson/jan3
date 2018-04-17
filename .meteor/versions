@@ -17,7 +17,6 @@ babrahams:constellation@0.4.10
 babrahams:editable-json@0.6.4
 babrahams:temple@0.4.5
 base64@1.0.10
-benjick:webcam@0.0.2
 binary-heap@1.0.10
 blaze@2.3.2
 blaze-html-templates@1.1.2
@@ -59,8 +58,7 @@ fastclick@1.0.13
 flemay:less-autoprefixer@1.2.0
 fortawesome:fontawesome@4.4.0_1
 fourseven:scss@4.5.4
-froala:editor@2.4.2
-froala:editor-reactive@2.4.2
+froala:editor@1.2.8
 geojson-utils@1.0.10
 gwendall:body-events@0.1.6
 gwendall:session-json@0.1.7
@@ -76,6 +74,7 @@ kevohagan:sweetalert@1.0.0
 lai:collection-extensions@0.2.1_1
 launch-screen@1.1.1
 lepozepo:cloudinary@4.2.6
+less@2.7.11
 livedata@1.0.18
 localstorage@1.2.0
 logging@1.1.19
@@ -119,6 +118,10 @@ orionjs:collections@1.8.0
 orionjs:config@1.8.0
 orionjs:core@1.8.1
 orionjs:dictionary@1.8.0
+orionjs:file-attribute@1.8.0
+orionjs:filesystem@1.8.0
+orionjs:froala@1.8.0
+orionjs:image-attribute@1.8.0
 orionjs:lang-en@1.8.0
 promise@0.10.0
 raix:eventemitter@0.1.3
