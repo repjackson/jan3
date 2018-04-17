@@ -1,6 +1,11 @@
 @selected_tags = new ReactiveArray []
 
 
+Meteor.startup( ->
+    AutoForm.setDefaultTemplate('semanticUI')
+)
+
+
 $.cloudinary.config
     cloud_name:"facet"
 

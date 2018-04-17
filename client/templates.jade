@@ -6,22 +6,6 @@ head
 
 
 
-    // LayerSlider stylesheet
-    link(rel='stylesheet', href='/layerslider/css/layerslider.css', type='text/css')
-    // External libraries: GreenSock
-    script(src='/layerslider/js/jquery.js', type='text/javascript')
-    script(src='/layerslider/js/greensock.js', type='text/javascript')
-    // LayerSlider script files
-    script(src='/layerslider/js/layerslider.transitions.js', type='text/javascript')
-    script(src='/layerslider/js/layerslider.kreaturamedia.jquery.js', type='text/javascript')
-    // sorting
-    script(src='/tablesort.js', type='text/javascript')
-    
-
-
-
-
-
 template(name='layout')
     .context.example
         +nav
@@ -52,23 +36,23 @@ template(name='sidebar')
     .ui.left.inline.vertical.thin.sidebar.inverted.fixed.menu
         a.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
             i.home.icon
-            |Gold Run
+            |JanPro
         // .header.toggle_sidebar.item GR
-        a.toggle_sidebar.item(href='/readings' class="{{isActivePath '/readings'}}")
-            i.theme.icon
-            | Readings
-        a.toggle_sidebar.item(href='/lostfound' class="{{isActivePath '/lostfound'}}")
-            i.random.icon
-            |Lost and Found
-        a.toggle_sidebar.item(href='/bikes' class="{{isActivePath '/bikes'}}")
-            i.bicycle.icon
-            |Bikes
-        a.toggle_sidebar.item(href='/frontdesk' class="{{isActivePath '/frontdesk'}}")
-            i.circle.info.icon
-            |Desk Staff
-        a.toggle_sidebar.item(href='/buildings' class="{{isActivePath '/buildings'}}")
-            i.building.icon
-            |Buildings
+        // a.toggle_sidebar.item(href='/readings' class="{{isActivePath '/readings'}}")
+        //     i.theme.icon
+        //     | Readings
+        // a.toggle_sidebar.item(href='/lostfound' class="{{isActivePath '/lostfound'}}")
+        //     i.random.icon
+        //     |Lost and Found
+        // a.toggle_sidebar.item(href='/bikes' class="{{isActivePath '/bikes'}}")
+        //     i.bicycle.icon
+        //     |Bikes
+        // a.toggle_sidebar.item(href='/frontdesk' class="{{isActivePath '/frontdesk'}}")
+        //     i.circle.info.icon
+        //     |Desk Staff
+        // a.toggle_sidebar.item(href='/buildings' class="{{isActivePath '/buildings'}}")
+        //     i.building.icon
+        //     |Buildings
         a.toggle_sidebar.item(href='/tasks' class="{{isActivePath '/tasks'}}")
             i.edit.icon
             |Tasks
@@ -89,10 +73,10 @@ template(name='sidebar')
                 //             .item #{text}
                 // a.icon.item(href='/messages' class="{{isActivePath '/messages'}}")
                 //     i.mail.icon
-                if isInRole 'admin'
-                    a.icon.toggle_sidebar.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
-                        i.configure.icon
-                        |Admin
+                // if isInRole 'admin'
+                //     a.icon.toggle_sidebar.item(href='/admin/members' class="{{isActivePath '/admin/members'}}")
+                //         i.configure.icon
+                //         |Admin
                 a.toggle_sidebar.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                     if currentUser.profile.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")

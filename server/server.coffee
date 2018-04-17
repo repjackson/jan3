@@ -1,4 +1,3 @@
-
 Meteor.users.allow
     update: (userId, doc, fields, modifier) ->
         true
@@ -26,3 +25,6 @@ Meteor.publish 'facet_doc', (tags)->
         
 Meteor.publish 'users', ()->
     Meteor.users.find()
+    
+    
+    
