@@ -5,19 +5,11 @@ if Meteor.isClient
     
     Template.doc_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-        @autorun -> Meteor.subscribe 'templates'
     
-    Template.doc_edit.onRendered ->
-        # @autorun =>
-        #     if @subscriptionsReady()
-        #         Meteor.setTimeout ->
-        #             $('.ui.accordion').accordion()
-        #         , 1000
-            
     
     Template.doc_edit.helpers
         doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-        edit_type_template: -> "edit_#{@type}"
+        type_edit: -> "#{@type}_edit"
     
     
     Template.doc_edit.events

@@ -1,0 +1,141 @@
+template(name='incidents')
+    .ui.container
+        h2.ui.center.aligned.header Incidents
+        .ui.stackable.divided.grid
+            .twelve.wide.column
+                .ui.cards
+                    each incidents
+                        +incident_card
+            .four.wide.column
+                #add_incident.ui.fluid.button
+                    i.plus.corner.icon
+                    |Add Incident
+
+
+template(name='my_incidents')
+    .ui.fluid.card
+        .content
+            .ui.header My Docs
+            .ui.cards
+                each my_incidents
+                    .item 
+                        a(href="/view/#{_id}") #{title}
+
+
+template(name='incident')
+    .ui.card
+        .ui.centered.image
+            a(href="/view/#{_id}")
+                img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
+        .content
+            h1.ui.header
+                a(href="/view/#{_id}") #{title}
+            if publish_date
+                .meta
+                    | Published #{publish_when}
+            .description
+                |{{nl2br body}}
+        .content
+            each tags
+                .ui.compact.button.incident_tag(class=tag_class) #{this}
+            .incident_edit.ui.primary.basic.right.floated.button
+                i.pencil.icon
+                |Edit Incident    
+            
+            
+template(name='incident_item')
+    .ui.item
+        a.image(href="/view/#{_id}")
+            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
+        .content
+            a.header(href="/view/#{_id}") #{title}
+            .meta Created by #{createdBy}
+            .meta Type #{type}
+            .meta Number #{number}
+            .description
+                .ui.header Body
+                |!{body}
+            a.ui.button(href="/view/#{_id}") 
+                |View
+                i.chevron.right.icon
+                
+template(name='incident_card')
+    .ui.card
+        a.image(href="/view/#{_id}")
+            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
+        .content
+            .right.floated.meta
+                .ui.circular.label(title='Incident Number') #{incident_number}
+            a.header(href="/view/#{_id}") #{title}
+            .meta Created by #{author.username}
+            .meta Logged #{when}
+            .description
+                |#{incident_details}
+        .content
+            // +view_full_button
+            a.ui.button(href="/view/#{_id}") 
+                |View
+                i.chevron.right.icon
+                
+                
+template(name='incident_edit')
+    .ui.center.aligned.header Edit Incident
+    .ui.padded.stackable.grid
+        .twelve.wide.column
+            .ui.form
+                +edit_text_field key='title' label='Title'  
+                +edit_number_field key='incident_number' label='Incident Number'
+                +edit_date_field key='incident_date' label='Date'
+                +edit_image_field
+                +edit_text_field key='jan_office_id' label='Jan Pro Office ID'
+                +edit_textarea key='incident_details' label='Incident Details'
+                .ui.segment
+                    .ui.header Incident Type
+                    +toggle_key key='incident_type' value='missed_service' label='Missed Service'
+                    +toggle_key key='incident_type' value='poor_service' label='Poor Service'
+                    +toggle_key key='incident_type' value='employee_issue' label='Employee Issue'
+                    +toggle_key key='incident_type' value='other' label='Other'
+                
+        .four.wide.column
+            a.ui.fluid.button(href="/view/#{_id}") 
+                i.save.icon
+                |Save Incident
+            .ui.hidden.divider
+            #delete.ui.basic.fluid.button
+                i.trash.icon
+                | Delete
+        
+        
+template(name='incident_view')
+    .ui.container.divided.grid
+        .row
+            a.ui.top.left.attached.button(href="/incidents")
+                i.arrow.left.icon
+                |Incidents
+        .centered.row
+            h1.ui.center.aligned.header #{title}
+            if image_id
+                img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
+        .row
+            .ten.wide.column
+                .ui.header Number: #{incident_number}
+                .ui.header Date: #{incident_date}
+                .ui.header Jan-Pro Office Id: #{jan_office_id}
+                .ui.basic.segment
+                    |!{description}
+                .ui.segment
+                    div Details
+                    | #{incident_details}
+                .ui.header Customer ID
+                +comments
+            .five.wide.column
+                h4.ui.header Logged by
+                +author_info
+                .ui.header Incident Type: #{incident_type}
+                .ui.header Incident Status
+                .ui.header Associated Documents/Pictures
+                .ui.header Jan-Pro Office ID
+                h4.ui.header Logged Date: #{when}
+                .incident_edit.ui.button
+                    i.edit.icon
+                    |Edit Incident
