@@ -1,16 +1,19 @@
 template(name='incidents')
     .ui.container
         .ui.stackable.divided.grid
-            .twelve.wide.column
+            .eight.wide.column
                 .ui.relaxed.divided.items
                     each incidents
                         +incident_item
-            .four.wide.column
-                #add_incident.ui.compact.basic.fluid.button
-                    i.large.icons
-                        i.sticky.note.outline.icon
-                        i.green.plus.corner.icon
-                    |Add Incident
+            .eight.wide.column
+                .ui.center.aligned.dividing.header Add Incident
+                // #add_incident.ui.compact.basic.fluid.button
+                //     i.large.icons
+                //         i.sticky.note.outline.icon
+                //         i.green.plus.corner.icon
+                //     |Add Incident
+                |{{> quickForm collection="Incidents" doc=incident id="updateBookForm" type="insert"}}
+
 
 
 template(name='my_incidents')
@@ -50,25 +53,12 @@ template(name='incident_item')
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
             a.header(href="/incident/view/#{_id}") #{title}
-            if publish_date
-                .meta
-                    | Published #{publish_when}
+            .meta Created by #{createdBy}
+            .meta Type #{type}
+            .meta Number #{number}
             .description
-                |!{description}
-                a(href="/incident/view/#{_id}") 
-                    |View More
-                    i.arrow.right.icon
-            .extra
-                i.tags.icon
-                each tags
-                    .ui.compact.label.incident_tag(class=tag_class) #{this}
-            .extra
-                i.red.configure.large.icon
-                if published
-                    .ui.green.basic.label Published
-                else
-                    .ui.red.basic.label Unpublished                        
-                if featured
-                    .ui.green.basic.label Featured
-                else
-                    .ui.red.basic.label Unfeatured
+                .ui.header Body
+                |!{body}
+            a.ui.button(href="/incident/view/#{_id}") 
+                |View
+                i.chevron.right.icon

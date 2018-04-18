@@ -1,0 +1,9 @@
+template(name='edit_incident')
+    .ui.center.aligned.header Edit Incident
+    |{{> quickForm collection="Incidents" doc=incident id="updateBookForm" type="update"}}
+    
+template(name='new_incident')
+    .ui.center.aligned.header New Incident
+    |{{> quickForm collection="Incidents" doc=incident id="updateBookForm" type="insert"}}
+    
+    

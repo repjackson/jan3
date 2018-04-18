@@ -17,14 +17,14 @@ template(name='nav')
             a.item(href='/admin' class="{{isActivePath '/admin'}}")
                 i.configure.icon
                 |Admin
-            .ui.simple.dropdown.icon.item
-                i.alarm.icon
-                .menu
-                    if notifications
-                        each notifications
-                            .item #{text}
-                    else
-                        | No Notifications
+            // .ui.simple.dropdown.icon.item
+            //     i.alarm.icon
+            //     .menu
+            //         if notifications
+            //             each notifications
+            //                 .item #{text}
+            //         else
+            //             | No Notifications
             if currentUser
                 a.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                     if currentUser.profile.image_id

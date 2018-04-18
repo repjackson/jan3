@@ -10,6 +10,8 @@ with incident
                 img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
         .row
             .ten.wide.column
+                .ui.header Type: #{type}
+                .ui.header Number: #{number}
                 if publish_date
                     h4.ui.header Published #{publish_when}
                 .ui.basic.segment
