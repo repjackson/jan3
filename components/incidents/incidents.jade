@@ -62,15 +62,20 @@ template(name='incident_item')
 template(name='incident_card')
     .ui.card
         a.image(href="/view/#{_id}")
-            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
+            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='scale' }}")
         .content
             .right.floated.meta
                 .ui.circular.label(title='Incident Number') #{incident_number}
             a.header(href="/view/#{_id}") #{title}
-            .meta Created by #{author.username}
-            .meta Logged #{when}
+        .content    
+            .right.floated Logged #{when}
+            | Created by #{author.username}
+        .content    
             .description
                 |#{incident_details}
+        .content
+            i.comment.icon
+            | 4 Comments
         .content
             // +view_full_button
             a.ui.button(href="/view/#{_id}") 
@@ -114,28 +119,62 @@ template(name='incident_view')
                 |Incidents
         .centered.row
             h1.ui.center.aligned.header #{title}
-            if image_id
-                img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
         .row
-            .ten.wide.column
-                .ui.header Number: #{incident_number}
-                .ui.header Date: #{incident_date}
-                .ui.header Jan-Pro Office Id: #{jan_office_id}
-                .ui.basic.segment
-                    |!{description}
-                .ui.segment
-                    div Details
-                    | #{incident_details}
-                .ui.header Customer ID
+            .twelve.wide.column
+                if image_id
+                    img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
+                .ui.dividing.header Details
+                | #{incident_details}
                 +comments
-            .five.wide.column
-                h4.ui.header Logged by
-                +author_info
-                .ui.header Incident Type: #{incident_type}
-                .ui.header Incident Status
-                .ui.header Associated Documents/Pictures
-                .ui.header Jan-Pro Office ID
-                h4.ui.header Logged Date: #{when}
+            .four.wide.column
+                .ui.large.relaxed.list
+                    .item
+                        i.user.icon
+                        .content
+                            .header Customer ID 
+                            .description #{customer_id}
+                    .item
+                        i.hashtag.icon
+                        .content
+                            .header Number
+                            .description #{incident_number}
+                    .item
+                        i.calendar.icon
+                        .content
+                            .header Incident Date
+                            .description #{incident_date}
+                    .item
+                        i.building.icon
+                        .content
+                            .header Jan-Pro Office Id 
+                            .description #{jan_office_id}
+                    .item
+                        i.user.icon
+                        .content
+                            .header Logged by
+                            .description
+                                +author_info
+                    .item
+                        i.clipboard.icon
+                        .content
+                            .header Incident Type 
+                            .description #{incident_type}
+                    .item
+                        i.clock.icon
+                        .content
+                            .header Incident Status
+                            .description
+                    .item
+                        i.file.image.icon
+                        .content
+                            .header Associated Documents/Pictures
+                            .description
+                    .item
+                        i.id.card.icon
+                        .content
+                            .header Jan-Pro Office ID
+                            .description
+                h4.ui.header Logged Date: #{formal_when}
                 .incident_edit.ui.button
                     i.edit.icon
                     |Edit Incident

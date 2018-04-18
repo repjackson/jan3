@@ -17,6 +17,11 @@
                         else
                             label Upload Image
                             input(type='file' name='upload_picture' accept='image/*')
+                    .ui.divider
+                        .ui.center.aligned.basic.segment
+                            #save_profile.ui.fluid.big.button
+                                i.checkmark.icon
+                                |Save
                 .ten.wide.column    
                     .field
                         label First Name 
@@ -57,7 +62,3 @@
                             i.add.icon
                             input#add_tag(type='text' placeholder='Add Tag' maxlength='50')
                             
-        .field
-                .ui.center.aligned.basic.segment
-                    #save_profile.ui.center.aligned.huge.button
-                        |Save

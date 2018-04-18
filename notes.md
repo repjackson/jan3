@@ -27,3 +27,7 @@ resident
 todo
     cloudinary id
     
+    
+    
+good to be back
+    confirmation modals after user interactions

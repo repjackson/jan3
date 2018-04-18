@@ -25,6 +25,7 @@ Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getParam('doc_id')
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 
+Template.registerHelper 'formal_when', () -> moment(@timestamp).format('MMMM Do YYYY, h:mm:ss a')
 
 
 Template.registerHelper 'key_value', () -> 
