@@ -1,8 +1,8 @@
 
-# FlowRouter.route '/admin', action: (params) ->
-#     BlazeLayout.render 'layout',
-#         nav: 'nav'
-#         main: 'user_table'
+FlowRouter.route '/admin', action: (params) ->
+    BlazeLayout.render 'layout',
+        nav: 'nav'
+        main: 'user_table'
  
  
 if Meteor.isClient

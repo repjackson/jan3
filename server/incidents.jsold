@@ -1,0 +1,17 @@
+import SimpleSchema from 'simpl-schema';
+
+SimpleSchema.extendOptions(['autoform']);
+
+Incidents.attachSchema(new SimpleSchema({
+  title: {
+    type: String
+  },
+  type: {
+    type: String
+  },
+  number: {
+    type: Number,
+    label: 'Incident Number',
+    min: 0
+  }
+}));

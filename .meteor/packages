@@ -40,11 +40,9 @@ mizzao:autocomplete
 dynamic-import@0.2.0
 mquandalle:jade
 stylus@2.513.13
-orionjs:core
-twbs:bootstrap
 fortawesome:fontawesome
-dvz:orion-semantic-ui
-orionjs:file-attribute
-orionjs:image-attribute
-orionjs:froala
-orionjs:relationships
+useraccounts:semantic-ui
+alanning:roles
+aldeed:autoform
+ecmascript
+aldeed:collection2
