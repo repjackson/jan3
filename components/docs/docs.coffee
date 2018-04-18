@@ -3,10 +3,6 @@
 Docs.before.insert (userId, doc)->
     doc.timestamp = Date.now()
     doc.author_id = Meteor.userId()
-    # doc.points = 0
-    # doc.downvoters = []
-    # doc.tags.push Meteor.user().profile.current_herd
-    # doc.upvoters = []
     return
 
 
@@ -24,10 +20,10 @@ Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
 
-FlowRouter.route '/docs', action: (params) ->
-    BlazeLayout.render 'layout',
-        # cloud: 'cloud'
-        main: 'docs'
+# FlowRouter.route '/docs', action: (params) ->
+#     BlazeLayout.render 'layout',
+#         # cloud: 'cloud'
+#         main: 'docs'
 
 Meteor.methods
     add: (tags=[])->
@@ -49,7 +45,7 @@ if Meteor.isClient
     Template.view_doc.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
         
-    Template.view_doc.onRendered ->
+    # Template.view_doc.onRendered ->
         # @autorun =>
         #     if @subscriptionsReady()
         #         doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -114,9 +110,11 @@ if Meteor.isClient
 
 if Meteor.isServer
     Docs.allow
-        insert: (userId, doc) -> doc.author_id is userId
-        update: (userId, doc) -> doc.author_id is userId or Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> doc.author_id is userId or Roles.userIsInRole(userId, 'admin')
+        insert: (user_id, doc) -> user_id
+        # update: (user_id, doc) -> doc.author_id is user_id or Roles.userIsInRole(user_id, 'admin')
+        # remove: (user_id, doc) -> doc.author_id is user_id or Roles.userIsInRole(user_id, 'admin')
+        update: (user_id, doc) -> user_id
+        remove: (user_id, doc) -> user_id
     
     
     

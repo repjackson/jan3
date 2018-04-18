@@ -1,27 +1,39 @@
 template(name='edit_number_field')
     .field
         label #{label}
-        input#number_field(type='number' min='0' val=key)
+        if icon
+            i.icon(class=icon)
+        input#number_field(type='number' min='0' value=key_value)
 
 
-template(name='edit_type')
+template(name='edit_textarea')
     .field
-        label Type
-        .ui.left.icon.input
-            i.red.configure.icon
-            input#type(type='text' value=type)
+        label #{label}
+        textarea#textarea(rows='3') #{key_value}
+
 
 template(name='edit_text_field')
     .field
         label #{label}
-        input#text_field(type='text' value=key)
+        .ui.left.icon.input
+        if icon
+            i.icon(class=icon)
+        input#text_field(type='text' value=key_value)
 
+        
+template(name='edit_html_field')
+    .field
+        label #{label}
+        .froala-container
+            +froalaReactive getFEContext
         
         
 template(name='edit_date_field')            
     .field
         label #{label}
-        input#date_field(type='date' value=key)        
+        if icon
+            i.icon(class=icon)
+        input#date_field(type='date' value=key_value)        
         
         
 template(name='complete')            
@@ -30,7 +42,29 @@ template(name='complete')
         #mark_complete.ui.button(class=complete_class) Yes 
         #mark_incomplete.ui.button(class=incomplete_class) No 
 
-template(name='staff_field')            
-    .field
-        label Staff
-        input#staff(type='text' value=staff)        
+
+template(name='toggle_key')
+    #toggle_key.ui.button(class=toggle_key_button_class) #{label}
+
+template(name='vote_button')
+    i.thumbs.up.link.large.icon.vote_up(class=vote_up_button_class)
+    i.thumbs.down.large.link.icon.vote_down(class=vote_down_button_class)
+    |#{points}
+
+
+template(name='view_full_button')
+    a.floated.right(href="/view/#{_id}")
+        i.right.chevron.link.large.icon
+                        
+template(name='toggle_follow')
+    if currentUser
+        if is_following
+            #remove_friend.ui.button
+                i.minus.large.icon
+                |Unfollow
+        else
+            #add_friend.ui.button
+                i.plus.large.icon
+                |Follow
+
+

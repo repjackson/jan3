@@ -18,3 +18,17 @@ template(name='session_edit_icon')
             .save_doc.ui.basic.button(class=button_classes)
                 i.green.check.icon
                 |Save
+
+template(name='toggle_boolean')
+    .field
+        if featured
+            #make_unfeatured.ui.basic.icon.button
+                i.toggle.on.icon
+        else
+            #make_featured.ui.basic.icon.button
+                i.toggle.off.icon
+        if featured
+            .ui.green.basic.label Featured
+        else
+            .ui.basic.label Unfeatured
+

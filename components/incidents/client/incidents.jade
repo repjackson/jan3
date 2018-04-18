@@ -1,6 +1,6 @@
 template(name='incidents')
     .ui.container
-        h3.ui.center.aligned.header Incidents
+        h2.ui.center.aligned.header Incidents
         .ui.stackable.divided.grid
             .twelve.wide.column
                 .ui.cards
@@ -65,9 +65,9 @@ template(name='incident_card')
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
             a.header(href="/view/#{_id}") #{title}
-            .meta Created by #{createdBy}
-            .meta Type #{type}
-            .meta Number #{number}
+            .meta Created by #{author.username}
+            .meta Number #{incident_number}
+            .meta Created #{when}
             .description
                 .ui.header Body
                 |!{body}
@@ -85,10 +85,23 @@ template(name='edit_incident')
                 .ui.form
                     +edit_text_field key='title' label='Title'  
                     +edit_number_field key='incident_number' label='Incident Number'
-                    +edit_date_field key='date' label='Date'
+                    +edit_date_field key='incident_date' label='Date'
+                    +edit_text_field key='jan_office_id' label='Jan Pro Office ID'
+                    +edit_textarea key='incident_details' label='Incident Details'
+                    .ui.segment
+                        .ui.header Incident Type
+                        +toggle_key key='incident_type' value='missed_service' label='Missed Service'
+                        +toggle_key key='incident_type' value='poor_service' label='Poor Service'
+                        +toggle_key key='incident_type' value='employee_issue' label='Employee Issue'
+                        +toggle_key key='incident_type' value='other' label='Other'
+                    
             .four.wide.column
-                a.ui.button(href="/view/#{_id}") Save Incident
-        
+                a.ui.button(href="/view/#{_id}") 
+                    i.save.icon
+                    |Save Incident
+                #delete.ui.basic.button
+                    i.trash.icon
+                    | Delete
         
         
 template(name='view_incident')
@@ -104,19 +117,20 @@ template(name='view_incident')
                     img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
             .row
                 .ten.wide.column
-                    .ui.header Type: #{type}
-                    .ui.header Number: #{number}
-                    if publish_date
-                        h4.ui.header Published #{publish_when}
+                    .ui.header Number: #{incident_number}
+                    .ui.header Date: #{incident_date}
+                    .ui.header Jan-Pro Office Id: #{jan_office_id}
                     .ui.basic.segment
                         |!{description}
-                    if tags
-                        .ui.basic.segment
-                            each tags
-                                .ui.basic.label #{this}
-                    // +comments
+                    .ui.header Incident Status
+                    .ui.header Associated Documents/Pictures
+                    .ui.header Jan-Pro Office ID
+                    .ui.header Customer ID
+                    +comments
                 .five.wide.column
-                    // +user_card
+                    h4.ui.header Logged by
+                    +author_info
+                    h4.ui.header Logged Date: #{when}
                     .edit_incident.ui.button
                         i.edit.icon
                         |Edit Incident

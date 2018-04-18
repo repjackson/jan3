@@ -28,6 +28,12 @@ Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getParam('doc_id')
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 
 
+
+Template.registerHelper 'key_value', () -> 
+    current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+    current_doc["#{@key}"]
+
+
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment
 
 

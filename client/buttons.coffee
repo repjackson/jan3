@@ -12,3 +12,13 @@ Template.session_edit_icon.events
 
 Template.session_edit_icon.helpers
     button_classes: -> Template.currentData().classes
+
+
+Template.toggle_boolean.events
+    'click #make_featured': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: featured: true
+
+    'click #make_unfeatured': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: featured: false

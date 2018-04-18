@@ -46,3 +46,20 @@ Template.edit_incident.onCreated ->
 Template.edit_incident.helpers
     incident: -> Doc.findOne FlowRouter.getParam('doc_id')
     
+Template.edit_incident.events
+    'click #delete': ->
+        template = Template.currentData()
+        swal {
+            title: 'Delete Incident?'
+            # text: 'Confirm delete?'
+            type: 'error'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Delete'
+            confirmButtonColor: '#da5347'
+        }, =>
+            doc = Docs.findOne FlowRouter.getParam('doc_id')
+            Docs.remove doc._id, ->
+                FlowRouter.go "/incidents"
