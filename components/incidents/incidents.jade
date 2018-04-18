@@ -1,15 +1,22 @@
 template(name='incidents')
-    .ui.container
-        h2.ui.center.aligned.header Incidents
-        .ui.stackable.divided.grid
-            .twelve.wide.column
-                .ui.cards
-                    each incidents
-                        +incident_card
-            .four.wide.column
-                #add_incident.ui.fluid.button
-                    i.plus.corner.icon
-                    |Add Incident
+    h1.ui.center.aligned.header 
+        i.edit.icon
+        |Incidents
+    .ui.stackable.grid
+        .three.wide.column
+            #add_incident.ui.fluid.button
+                i.plus.icon
+                |Add
+            .ui.dividing.header
+                i.filter.icon
+                |Filters
+            .ui.dividing.header Type
+            .ui.dividing.header Status
+            .ui.dividing.header Office
+        .thirteen.wide.column
+            .ui.centered.stackable.cards
+                each incidents
+                    +incident_card
 
 
 template(name='my_incidents')
@@ -62,11 +69,11 @@ template(name='incident_item')
 template(name='incident_card')
     .ui.card
         a.image(href="/view/#{_id}")
-            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='scale' }}")
+            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' }}")
         .content
             .right.floated.meta
                 .ui.circular.label(title='Incident Number') #{incident_number}
-            a.header(href="/view/#{_id}") #{title}
+            a.header(href="/view/#{_id}") Incident #{incident_number}
         .content    
             .right.floated Logged #{when}
             | Created by #{author.username}
@@ -74,37 +81,41 @@ template(name='incident_card')
             .description
                 |#{incident_details}
         .content
+            .right.floated
+                +incident_type_label
             i.comment.icon
             | 4 Comments
-        .content
-            // +view_full_button
-            a.ui.button(href="/view/#{_id}") 
-                |View
-                i.chevron.right.icon
+        // .content
+        //     // +view_full_button
+        //     a.ui.button(href="/view/#{_id}") 
+        //         |View
+        //         i.chevron.right.icon
                 
                 
 template(name='incident_edit')
-    .ui.center.aligned.header Edit Incident
-    .ui.padded.stackable.grid
-        .twelve.wide.column
-            .ui.form
-                +edit_text_field key='title' label='Title'  
-                +edit_number_field key='incident_number' label='Incident Number'
-                +edit_date_field key='incident_date' label='Date'
+    h1.ui.center.aligned.header Edit Incident #{incident_number}
+    .ui.padded.stackable.centered.grid
+        .eight.wide.column
+            .ui.large.form
+                // +edit_text_field key='title' label='Title'  
                 +edit_image_field
-                +edit_text_field key='jan_office_id' label='Jan Pro Office ID'
-                +edit_textarea key='incident_details' label='Incident Details'
-                .ui.segment
-                    .ui.header Incident Type
+                +edit_textarea key='incident_details' label='Details'
+                .field
+                    label Type
                     +toggle_key key='incident_type' value='missed_service' label='Missed Service'
                     +toggle_key key='incident_type' value='poor_service' label='Poor Service'
                     +toggle_key key='incident_type' value='employee_issue' label='Employee Issue'
                     +toggle_key key='incident_type' value='other' label='Other'
                 
         .four.wide.column
-            a.ui.fluid.button(href="/view/#{_id}") 
+            .ui.large.form
+                +edit_text_field key='jan_office_id' label='Jan Pro Office ID' icon='building'
+                +edit_number_field key='incident_number' label='Number' icon='hashtag'
+                +edit_date_field key='incident_date' label='Date' icon='calendar'
+            .ui.hidden.divider
+            a.ui.fluid.basic.big.button(href="/view/#{_id}") 
                 i.save.icon
-                |Save Incident
+                strong Save
             .ui.hidden.divider
             #delete.ui.basic.fluid.button
                 i.trash.icon
@@ -112,69 +123,87 @@ template(name='incident_edit')
         
         
 template(name='incident_view')
-    .ui.container.divided.grid
-        .row
-            a.ui.top.left.attached.button(href="/incidents")
-                i.arrow.left.icon
-                |Incidents
+    .ui.padded.stackable.centered.grid
+        // .row
+        //     a.ui.top.left.attached.button(href="/incidents")
+        //         i.arrow.left.icon
+        //         |Incidents
         .centered.row
-            h1.ui.center.aligned.header #{title}
+            h1.ui.center.aligned.header Incident #{incident_number}
         .row
-            .twelve.wide.column
+            .eight.wide.column
                 if image_id
                     img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                .ui.dividing.header Details
-                | #{incident_details}
+                .ui.dividing.header 
+                    i.align.left.icon
+                    |Details
+                .ui.basic.segment
+                    strong #{incident_details}
                 +comments
             .four.wide.column
                 .ui.large.relaxed.list
                     .item
                         i.user.icon
                         .content
-                            .header Customer ID 
-                            .description #{customer_id}
+                            .description Customer ID: #{customer_id}
                     .item
                         i.hashtag.icon
                         .content
-                            .header Number
-                            .description #{incident_number}
+                            .description Number: #{incident_number}
                     .item
                         i.calendar.icon
                         .content
-                            .header Incident Date
-                            .description #{incident_date}
+                            .description Date: #{incident_date}
                     .item
                         i.building.icon
                         .content
-                            .header Jan-Pro Office Id 
-                            .description #{jan_office_id}
+                            .description Jan-Pro Office Id: #{jan_office_id}
                     .item
                         i.user.icon
                         .content
-                            .header Logged by
-                            .description
+                            .description Logged by:
                                 +author_info
                     .item
                         i.clipboard.icon
                         .content
-                            .header Incident Type 
-                            .description #{incident_type}
-                    .item
-                        i.clock.icon
-                        .content
-                            .header Incident Status
                             .description
+                                +incident_type_label
                     .item
                         i.file.image.icon
                         .content
-                            .header Associated Documents/Pictures
-                            .description
+                            .description Associated Documents:
                     .item
                         i.id.card.icon
                         .content
-                            .header Jan-Pro Office ID
-                            .description
+                            .description Jan-Pro Office Id:
+                .ui.dividing.header 
+                    i.checkmark.icon
+                    |Incident Status
                 h4.ui.header Logged Date: #{formal_when}
-                .incident_edit.ui.button
+                .incident_edit.ui.fluid.large.basic.button
                     i.edit.icon
-                    |Edit Incident
+                    |Edit
+        .row
+            .twelve.wide.column
+                .ui.fluid.steps
+                    .active.step
+                        i.edit.icon
+                        .content
+                            .title Process
+                            .description Fill in required fields to submit for processing
+                    .step
+                        i.circle.outline.icon
+                        .content
+                            .title Level 2
+                            .description
+                    .disabled.step
+                        i.dot.circle.outline.icon
+                        .content
+                            .title Level 3
+                    .disabled.step
+                        i.checkmark.icon
+                        .content
+                            .title Satisfaction Survey
+                        
+template(name='incident_type_label')                    
+    .ui.label(class=type_label_class) #{incident_type_label}

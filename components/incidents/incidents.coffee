@@ -2,7 +2,23 @@ if Meteor.isClient
     Template.incident_view.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     Template.incident_view.helpers
-        incident: -> Docs.findOne FlowRouter.getParam('doc_id')
+    
+    Template.incident_type_label.helpers
+        incident_type_label: ->
+            switch @incident_type
+                when 'missed_service' then 'Missed Service'
+                when 'poor_service' then 'Poor Service'
+                when 'employee_issue' then 'Employee Issue'
+                when 'other' then 'Other'
+        
+        type_label_class: ->
+            switch @incident_type
+                when 'missed_service' then 'teal basic'
+                when 'poor_service' then 'blue basic'
+                when 'employee_issue' then 'violet basic'
+                when 'other' then 'grey'
+            
+        
     Template.incident_view.events
         'click .incident_edit': -> FlowRouter.go "/edit/#{@_id}"
     

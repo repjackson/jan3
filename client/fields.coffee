@@ -154,9 +154,10 @@ Template.toggle_key.helpers
         # console.log @key
         # console.log Template.parentData()
         # console.log Template.parentData()["#{@key}"]
+        
         if @value
-            if current_doc["#{@key}"] is @value then 'grey' else ''
-        else if current_doc["#{@key}"] is true then 'grey' else ''
+            if current_doc["#{@key}"] is @value then 'active' else 'basic'
+        else if current_doc["#{@key}"] is true then 'active' else 'basic'
 
 
 Template.toggle_key.events

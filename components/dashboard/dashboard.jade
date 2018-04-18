@@ -3,36 +3,39 @@ template(name='dashboard')
         i.line.chart.icon
         | Dashboard
     .ui.padded.three.column.grid
-        .column
-            .ui.segment
-                .ui.header 
-                    i.info.icon
-                    |General Account Info
-        .column
-            .ui.segment
-                a(href='/incidents')
-                    .ui.header
-                        i.edit.icon
-                        | Incidents
-        .column
-            .ui.segment
-                a(href='/my-office')
+        .row
+            .column
+                .ui.segment
+                    a(href='/incidents')
+                        .ui.header
+                            i.edit.icon
+                            | Incidents
+            .column
+                .ui.disabled.segment
+                    .ui.header 
+                        i.info.icon
+                        |General Account Info
+            .column
+                .ui.disabled.segment
                     .ui.header
                         i.building.icon
                         | Local Office Information
-        .column
-            .ui.segment
-                a(href='/my-office')
+        .row
+            .column
+                .ui.disabled.segment
                     .ui.header
                         i.building.icon
                         | Home Office Permissions
-    h2.ui.center.aligned.header 
-        i.transactions.icon
-        | Account Status/ Billing
-    .ui.segment
-        |Billing and Payment History
-    .ui.segment
-        | Scheduled Services
+            .column
+                .ui.disabled.segment
+                    .ui.header 
+                        i.dollar.icon
+                        |Billing and Payment History
+            .column
+                .ui.disabled.segment
+                    .ui.header
+                        i.clock.icon
+                        |Scheduled Services
 
 
     

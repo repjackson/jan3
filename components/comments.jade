@@ -1,7 +1,31 @@
 template(name='comments')
-    .ui.horizontal.dividing.header
+    h3.ui.dividing.header 
         i.comments.icon
         |Comments
-    .ui.disabled.button 
-        i.plus.icon
-        |Add Comment
+    // .ui.disabled.button 
+    //         i.plus.icon
+    //         |Add Comment
+    .ui.comments
+        .comment
+            .disabled.avatar
+                i.user.icon
+            .content
+                a.disabled.author User 1
+                .metadata
+                    span.date Yesterday at 12:30AM
+                .text
+                    p Comment
+                .actions
+                    a.disabled.reply Reply
+            .comments
+                .comment
+                    .disabled.avatar
+                        i.user.icon
+                    .content
+                        a.disabled.author User 2
+                        .metadata
+                            span.date Just now
+                        .text
+                            | Response
+                        .actions
+                            a.disabled.reply Reply
