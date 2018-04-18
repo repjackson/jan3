@@ -1,13 +1,14 @@
 template(name='incidents')
     .ui.container
+        h3.ui.center.aligned.header Incidents
         .ui.stackable.divided.grid
             .twelve.wide.column
-                .ui.relaxed.divided.items
+                .ui.cards
                     each incidents
-                        +incident_item
+                        +incident_card
             .four.wide.column
-                #add_incident.ui.compact.basic.fluid.button
-                    i.green.plus.corner.icon
+                #add_incident.ui.fluid.button
+                    i.plus.corner.icon
                     |Add Incident
 
 
@@ -15,14 +16,14 @@ template(name='my_incidents')
     .ui.fluid.card
         .content
             .ui.header My Docs
-            .ui.divided.list
+            .ui.cards
                 each my_incidents
                     .item 
                         a(href="/view/#{_id}") #{title}
 
 
 template(name='incident')
-    .ui.fluid.card
+    .ui.card
         .ui.centered.image
             a(href="/view/#{_id}")
                 img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
@@ -58,6 +59,23 @@ template(name='incident_item')
                 |View
                 i.chevron.right.icon
                 
+template(name='incident_card')
+    .ui.card
+        a.image(href="/view/#{_id}")
+            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
+        .content
+            a.header(href="/view/#{_id}") #{title}
+            .meta Created by #{createdBy}
+            .meta Type #{type}
+            .meta Number #{number}
+            .description
+                .ui.header Body
+                |!{body}
+        .content
+            a.ui.button(href="/view/#{_id}") 
+                |View
+                i.chevron.right.icon
+                
                 
 template(name='edit_incident')
     with doc
@@ -65,8 +83,9 @@ template(name='edit_incident')
         .ui.grid
             .twelve.wide.column
                 .ui.form
-                    +edit_title  
-                    +edit_number
+                    +edit_text_field key='title' label='Title'  
+                    +edit_number_field key='incident_number' label='Incident Number'
+                    +edit_date_field key='date' label='Date'
             .four.wide.column
                 a.ui.button(href="/view/#{_id}") Save Incident
         

@@ -1,21 +1,38 @@
 template(name='dashboard')
     h2.ui.center.aligned.header 
         i.line.chart.icon
-        | Account Status Dashboard
+        | Dashboard
     .ui.padded.three.column.grid
         .column
             .ui.segment
-                .ui.header General Account Info
+                .ui.header 
+                    i.info.icon
+                    |General Account Info
         .column
             .ui.segment
                 a(href='/incidents')
                     .ui.header
                         i.edit.icon
-                        h4.content Incidents
+                        | Incidents
         .column
             .ui.segment
                 a(href='/my-office')
                     .ui.header
                         i.building.icon
-                        h4.content Local Office Information
+                        | Local Office Information
+        .column
+            .ui.segment
+                a(href='/my-office')
+                    .ui.header
+                        i.building.icon
+                        | Home Office Permissions
+    h2.ui.center.aligned.header 
+        i.transactions.icon
+        | Account Status/ Billing
+    .ui.segment
+        |Billing and Payment History
+    .ui.segment
+        | Scheduled Services
+
+
     

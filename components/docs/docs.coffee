@@ -50,15 +50,15 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
         
     Template.view_doc.onRendered ->
-        @autorun =>
-            if @subscriptionsReady()
-                doc = Docs.findOne FlowRouter.getParam('doc_id')
-                Meteor.setTimeout ->
-                    if doc
-                        if doc.title
-                            document.title = doc.title
-                    $('.ui.dropdown').dropdown()
-                , 500
+        # @autorun =>
+        #     if @subscriptionsReady()
+        #         doc = Docs.findOne FlowRouter.getParam('doc_id')
+        #         Meteor.setTimeout ->
+        #             if doc
+        #                 if doc.title
+        #                     document.title = doc.title
+        #             $('.ui.dropdown').dropdown()
+        #         , 500
         
     
     Template.view_doc.helpers

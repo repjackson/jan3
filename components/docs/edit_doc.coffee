@@ -8,11 +8,11 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'templates'
     
     Template.edit_doc.onRendered ->
-        @autorun =>
-            if @subscriptionsReady()
-                Meteor.setTimeout ->
-                    $('.ui.accordion').accordion()
-                , 1000
+        # @autorun =>
+        #     if @subscriptionsReady()
+        #         Meteor.setTimeout ->
+        #             $('.ui.accordion').accordion()
+        #         , 1000
             
     
     Template.edit_doc.helpers
