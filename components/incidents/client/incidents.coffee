@@ -1,9 +1,9 @@
-Template.view_incident.onCreated ->
+Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-Template.view_incident.helpers
+Template.incident_view.helpers
     incident: -> Docs.findOne FlowRouter.getParam('doc_id')
-Template.view_incident.events
-    'click .edit_incident': -> FlowRouter.go "/edit/#{@_id}"
+Template.incident_view.events
+    'click .incident_edit': -> FlowRouter.go "/edit/#{@_id}"
 
 
 
@@ -35,18 +35,18 @@ Template.incident.events
     'click .incident_tag': ->
         if @valueOf() in selected_incident_tags.array() then selected_incident_tags.remove @valueOf() else selected_incident_tags.push @valueOf()
 
-    'click .edit_incident': -> FlowRouter.go "/edit/#{@_id}"
+    'click .incident_edit': -> FlowRouter.go "/edit/#{@_id}"
 
 
 
 
-Template.edit_incident.onCreated ->
+Template.incident_edit.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
-Template.edit_incident.helpers
+Template.incident_edit.helpers
     incident: -> Doc.findOne FlowRouter.getParam('doc_id')
     
-Template.edit_incident.events
+Template.incident_edit.events
     'click #delete': ->
         template = Template.currentData()
         swal {

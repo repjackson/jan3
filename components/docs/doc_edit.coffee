@@ -1,13 +1,13 @@
 if Meteor.isClient
     FlowRouter.route '/edit/:doc_id', action: (params) ->
         BlazeLayout.render 'layout',
-            main: 'edit_doc'
+            main: 'doc_edit'
     
-    Template.edit_doc.onCreated ->
+    Template.doc_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
         @autorun -> Meteor.subscribe 'templates'
     
-    Template.edit_doc.onRendered ->
+    Template.doc_edit.onRendered ->
         # @autorun =>
         #     if @subscriptionsReady()
         #         Meteor.setTimeout ->
@@ -15,12 +15,12 @@ if Meteor.isClient
         #         , 1000
             
     
-    Template.edit_doc.helpers
+    Template.doc_edit.helpers
         doc: -> Docs.findOne FlowRouter.getParam('doc_id')
         edit_type_template: -> "edit_#{@type}"
     
     
-    Template.edit_doc.events
+    Template.doc_edit.events
         # 'change #toggle_title': (e,t)->
         #     # console.log e.currentTarget.value
         #     value = $('#toggle_title').is(":checked")

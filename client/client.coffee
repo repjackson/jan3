@@ -1,10 +1,8 @@
 @selected_tags = new ReactiveArray []
 
-
 $.cloudinary.config
     cloud_name:"facet"
 
-    
 FlowRouter.notFound =
     action: ->
         BlazeLayout.render 'layout', 

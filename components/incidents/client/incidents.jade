@@ -38,7 +38,7 @@ template(name='incident')
         .content
             each tags
                 .ui.compact.button.incident_tag(class=tag_class) #{this}
-            .edit_incident.ui.primary.basic.right.floated.button
+            .incident_edit.ui.primary.basic.right.floated.button
                 i.pencil.icon
                 |Edit Incident    
             
@@ -77,7 +77,7 @@ template(name='incident_card')
                 i.chevron.right.icon
                 
                 
-template(name='edit_incident')
+template(name='incident_edit')
     with doc
         .ui.center.aligned.header Edit Incident
         .ui.grid
@@ -104,7 +104,7 @@ template(name='edit_incident')
                     | Delete
         
         
-template(name='view_incident')
+template(name='incident_view')
     with incident
         .ui.container.divided.grid
             .row
@@ -131,6 +131,6 @@ template(name='view_incident')
                     h4.ui.header Logged by
                     +author_info
                     h4.ui.header Logged Date: #{when}
-                    .edit_incident.ui.button
+                    .incident_edit.ui.button
                         i.edit.icon
                         |Edit Incident

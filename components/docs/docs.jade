@@ -24,18 +24,18 @@
 //                 small #{this.count}
 
 
-template(name='docs')
-    .ui.container
-        div
-            #add.ui.green.basic.button
-                i.plus.icon
-                | Full Add
-            .ui.icon.input
-                i.lightning.icon
-                input#quick_add(type='text' placeholder='Quick Add')
-        +doc_cloud
-        each docs
-            +view
+// template(name='docs')
+//     .ui.container
+//         div
+//             #add.ui.green.basic.button
+//                 i.plus.icon
+//                 | Full Add
+//             .ui.icon.input
+//                 i.lightning.icon
+//                 input#quick_add(type='text' placeholder='Quick Add')
+//         +doc_cloud
+//         each docs
+//             +view
 
         
 
@@ -58,11 +58,11 @@ template(name='docs')
 //             else
 //                 | by #{author.username} #{when}
 
-template(name='edit_doc')
+template(name='doc_edit')
     with doc
         +Template.dynamic template=edit_type_template
 
-template(name='view_doc')
+template(name='doc_view')
     with doc
         +Template.dynamic template=view_type
                             
