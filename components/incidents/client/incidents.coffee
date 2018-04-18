@@ -1,7 +1,7 @@
 Template.incident_page.onCreated ->
-    @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam('incident_id')
+    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 Template.incident_page.helpers
-    incident: -> Incidents.findOne FlowRouter.getParam('incident_id')
+    incident: -> Docs.findOne FlowRouter.getParam('doc_id')
 Template.incident_page.events
     'click .edit_incident': -> FlowRouter.go "/incident/edit/#{@_id}"
 
@@ -11,24 +11,23 @@ Template.incident_page.events
 FlowRouter.route '/incidents', action: ->
     BlazeLayout.render 'layout', main: 'incidents'
 
-FlowRouter.route '/incident/edit/:incident_id', action: (params) ->
+FlowRouter.route '/incident/edit/:doc_id', action: (params) ->
     BlazeLayout.render 'layout', main: 'edit_incident'
 
-FlowRouter.route '/incident/new', action: (params) ->
-    BlazeLayout.render 'layout', main: 'new_incident'
-
-FlowRouter.route '/incident/view/:incident_id', action: (params) ->
+FlowRouter.route '/incident/view/:doc_id', action: (params) ->
     BlazeLayout.render 'layout', main: 'incident_page'
 
 
 @selected_incident_tags = new ReactiveArray []
 
 Template.incidents.onCreated ->
-    @autorun -> Meteor.subscribe('incidents')
+    @autorun -> Meteor.subscribe('docs',[],'incident')
 Template.incidents.helpers
-    incidents: ->  Incidents.find {}
+    incidents: ->  Docs.find { type:'incident'}
 Template.incidents.events
-    'click #add_incident': -> FlowRouter.go "/incident/new"
+    'click #add_incident': -> 
+        id = Docs.insert type:'incident'
+        FlowRouter.go "/incident/edit/#{id}"
 
 Template.incident.helpers
     tag_class: -> if @valueOf() in selected_incident_tags.array() then 'primary' else 'basic'
@@ -45,3 +44,11 @@ Template.incident.events
     'click .edit_incident': -> FlowRouter.go "/incident/edit/#{@_id}"
 
 
+
+
+Template.edit_incident.onCreated ->
+    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+
+Template.edit_incident.helpers
+    incident: -> Doc.findOne FlowRouter.getParam('doc_id')
+    

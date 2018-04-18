@@ -1,19 +1,14 @@
 template(name='incidents')
     .ui.container
         .ui.stackable.divided.grid
-            .eight.wide.column
+            .twelve.wide.column
                 .ui.relaxed.divided.items
                     each incidents
                         +incident_item
-            .eight.wide.column
-                .ui.center.aligned.dividing.header Add Incident
-                // #add_incident.ui.compact.basic.fluid.button
-                //     i.large.icons
-                //         i.sticky.note.outline.icon
-                //         i.green.plus.corner.icon
-                //     |Add Incident
-                |{{> quickForm collection="Incidents" doc=incident id="updateBookForm" type="insert"}}
-
+            .four.wide.column
+                #add_incident.ui.compact.basic.fluid.button
+                    i.green.plus.corner.icon
+                    |Add Incident
 
 
 template(name='my_incidents')
@@ -62,3 +57,42 @@ template(name='incident_item')
             a.ui.button(href="/incident/view/#{_id}") 
                 |View
                 i.chevron.right.icon
+                
+                
+template(name='edit_incident')
+    .ui.center.aligned.header Edit Incident
+    .ui.form
+        +edit_title                
+        
+        
+        
+        
+template(name='incident_page')
+    with incident
+        .ui.container.divided.grid
+            .row
+                a.ui.top.left.attached.basic.button(href="/incidents")
+                    i.arrow.left.icon
+                    |Incidents
+            .centered.row
+                h1.ui.center.aligned.header #{title}
+                if image_id
+                    img.ui.centered.image(src="{{c.url image_id height=500 width=800 background='white' crop='lpad'}}")
+            .row
+                .ten.wide.column
+                    .ui.header Type: #{type}
+                    .ui.header Number: #{number}
+                    if publish_date
+                        h4.ui.header Published #{publish_when}
+                    .ui.basic.segment
+                        |!{description}
+                    if tags
+                        .ui.basic.segment
+                            each tags
+                                .ui.basic.label #{this}
+                    // +comments
+                .five.wide.column
+                    // +user_card
+                    .edit_incident.ui.basic.large.button
+                        i.edit.icon
+                        |Edit

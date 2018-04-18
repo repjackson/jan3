@@ -93,7 +93,7 @@ if Meteor.isServer
     
     
     
-    Meteor.publish 'docs', (selected_tags, filter)->
+    Meteor.publish 'docs', (selected_tags, type)->
     
         # user = Meteor.users.findOne @userId
         # current_herd = user.profile.current_herd
@@ -103,9 +103,7 @@ if Meteor.isServer
         # selected_tags.push current_herd
         # match.tags = $all: selected_tags
         if selected_tags.length > 0 then match.tags = $all: selected_tags
-        if filter then match.type = filter
-
-        
+        if type then match.type = type
 
         Docs.find match,
             limit: 20

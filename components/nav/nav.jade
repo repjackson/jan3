@@ -4,11 +4,11 @@ template(name='nav')
             i.line.chart.icon
             |JP
         // .header.item GR
-        a.item(href='/people' class="{{isActivePath '/people'}}")
-            i.users.icon
-            | Users
+        // a.item(href='/people' class="{{isActivePath '/people'}}")
+        //     i.users.icon
+        //     | Users
         a.item(href='/incidents' class="{{isActivePath '/incidents'}}")
-            i.sticky.note.outline.icon
+            i.edit.icon
             |Incidents
         // a.item(href='/checkin' class="{{isActivePath '/checkin'}}")
         //     i.sign.in.icon
@@ -36,9 +36,7 @@ template(name='nav')
                     else
                         | Profile
                 a#logout.ui.item(href='#') 
-                    i.sign.out.icon
-                    // | Sign Out
+                    | Sign Out
             else
                 a.ui.item(href='/sign-in') 
-                    i.sign.in.icon
                     | Sign In

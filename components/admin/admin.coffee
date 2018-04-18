@@ -13,7 +13,7 @@ if Meteor.isClient
     Template.user_table.helpers
         users: -> Meteor.users.find {}
             
-        is_staff: -> Roles.userIsInRole(@_id, 'staff')
+        is_admin: -> Roles.userIsInRole(@_id, 'admin')
         is_owner: -> Roles.userIsInRole(@_id, 'owner')
         is_dev: -> Roles.userIsInRole(@_id, 'dev')
         is_resident: -> Roles.userIsInRole(@_id, 'resident')
@@ -27,10 +27,10 @@ if Meteor.isClient
             
     
     
-        'click .remove_staff': ->
+        'click .remove_admin': ->
             self = @
             swal {
-                title: "Remove #{@emails[0].address} from staffs?"
+                title: "Remove #{@emails[0].address} from admins?"
                 # text: 'You will not be able to recover this imaginary file!'
                 type: 'warning'
                 animation: false
@@ -39,25 +39,25 @@ if Meteor.isClient
                 confirmButtonText: 'Remove Privilages'
                 closeOnConfirm: false
             }, ->
-                Roles.removeUsersFromRoles self._id, 'staff'
-                swal "Removed staff Privilages from #{self.emails[0].address}", "",'success'
+                Roles.removeUsersFromRoles self._id, 'admin'
+                swal "Removed admin Privilages from #{self.emails[0].address}", "",'success'
                 return
     
     
-        'click .make_staff': ->
+        'click .make_admin': ->
             self = @
             swal {
-                title: "Make #{@emails[0].address} an staff?"
+                title: "Make #{@emails[0].address} an admin?"
                 # text: 'You will not be able to recover this imaginary file!'
                 type: 'warning'
                 animation: false
                 showCancelButton: true
                 # confirmButtonColor: '#DD6B55'
-                confirmButtonText: 'Make staff'
+                confirmButtonText: 'Make admin'
                 closeOnConfirm: false
             }, ->
-                Roles.addUsersToRoles self._id, 'staff'
-                swal "Made #{self.emails[0].address} a staff", "",'success'
+                Roles.addUsersToRoles self._id, 'admin'
+                swal "Made #{self.emails[0].address} a admin", "",'success'
                 return
     
         'click .remove_owner': ->

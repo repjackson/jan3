@@ -12,12 +12,6 @@ Cloudinary.config
     api_secret: Meteor.settings.cloudinary_secret
 
 
-Meteor.publish 'incidents', ->
-    Incidents.find {}
-        
-Meteor.publish 'incident', (i_id)->
-    Incidents.find i_id
-        
         
 Meteor.publish 'facet_doc', (tags)->
     split_array = tags.split ','

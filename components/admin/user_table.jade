@@ -2,9 +2,9 @@ template(name='admin')
     +user_table
 template(name='user_table')
     .ui.container
-        a#add_user.ui.basic.green.labeled.icon.button(href='/user/add')
-            i.plus.icon
-            |Add User
+        // a#add_user.ui.basic.green.labeled.icon.button(href='/user/add')
+        //     i.plus.icon
+        //     |Add User
         table.ui.sortable.striped.table
             thead
                 tr
@@ -38,31 +38,31 @@ template(name='user_table')
                                         i.plus.icon 
                             .ui.hidden.fitted.divider
                             .ui.left.labeled.button
-                                if is_staff
-                                    .ui.green.label staff
-                                    .remove_staff.ui.basic.icon.button
+                                if is_admin
+                                    .ui.green.label Admin
+                                    .remove_admin.ui.basic.icon.button
                                         i.remove.icon 
                                 else
-                                    .ui.basic.label staff
-                                    .make_staff.ui.basic.icon.button
+                                    .ui.basic.label Admin
+                                    .make_admin.ui.basic.icon.button
                                         i.plus.icon 
                             .ui.hidden.fitted.divider
                             .ui.left.labeled.button
                                 if is_owner
-                                    .ui.green.label owner
+                                    .ui.green.label User
                                     .remove_beta.ui.basic.icon.button
                                         i.remove.icon 
                                 else
-                                    .ui.basic.label owner
+                                    .ui.basic.label User
                                     .make_owner.ui.basic.icon.button
                                         i.plus.icon 
-                            .ui.hidden.fitted.divider
-                            .ui.left.labeled.button
-                                if is_resident
-                                    .ui.green.label Resident
-                                    .remove_resident.ui.basic.icon.button
-                                        i.remove.icon 
-                                else
-                                    .ui.basic.label Resident
-                                    .make_resident.ui.basic.icon.button
-                                        i.plus.icon 
+                            // .ui.hidden.fitted.divider
+                            // .ui.left.labeled.button
+                            //     if is_resident
+                            //         .ui.green.label Resident
+                            //         .remove_resident.ui.basic.icon.button
+                            //             i.remove.icon 
+                            //     else
+                            //         .ui.basic.label Resident
+                            //         .make_resident.ui.basic.icon.button
+                            //             i.plus.icon 
