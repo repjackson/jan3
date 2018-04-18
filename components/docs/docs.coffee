@@ -38,6 +38,34 @@ Meteor.methods
 
 
 if Meteor.isClient
+    FlowRouter.route '/view/:doc_id', 
+        name: 'view'
+        action: (params) ->
+            BlazeLayout.render 'layout',
+                # nav: 'nav'
+                main: 'view_doc'
+    
+    
+    Template.view_doc.onCreated ->
+        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+        
+    Template.view_doc.onRendered ->
+        @autorun =>
+            if @subscriptionsReady()
+                doc = Docs.findOne FlowRouter.getParam('doc_id')
+                Meteor.setTimeout ->
+                    if doc
+                        if doc.title
+                            document.title = doc.title
+                    $('.ui.dropdown').dropdown()
+                , 500
+        
+    
+    Template.view_doc.helpers
+        doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+        view_type: -> "view_#{@type}"
+            
+
     Template.docs.onCreated -> 
         @autorun -> Meteor.subscribe('docs', selected_tags.array())
 
@@ -53,17 +81,17 @@ if Meteor.isClient
         selected_tags: -> selected_tags.array()
 
     
-    Template.view.helpers
-        is_author: -> Meteor.userId() and @author_id is Meteor.userId()
+    # Template.view.helpers
+    #     is_author: -> Meteor.userId() and @author_id is Meteor.userId()
     
-        tag_class: -> if @valueOf() in selected_tags.array() then 'primary' else 'basic'
+    #     tag_class: -> if @valueOf() in selected_tags.array() then 'primary' else 'basic'
     
-        when: -> moment(@timestamp).fromNow()
+    #     when: -> moment(@timestamp).fromNow()
 
-    Template.view.events
-        'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
+    # Template.view.events
+    #     'click .tag': -> if @valueOf() in selected_tags.array() then selected_tags.remove(@valueOf()) else selected_tags.push(@valueOf())
     
-        'click .edit': -> FlowRouter.go("/edit/#{@_id}")
+    #     'click .edit': -> FlowRouter.go("/edit/#{@_id}")
 
     Template.docs.events
         'click #add': ->

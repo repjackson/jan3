@@ -4,7 +4,6 @@ if Meteor.isClient
             sub_nav: 'staff_nav'
             main: 'tasks'
             
-            
     FlowRouter.route '/task/edit/:doc_id', action: ->
         BlazeLayout.render 'layout', 
             main: 'edit_task'

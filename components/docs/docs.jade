@@ -40,20 +40,87 @@ template(name='docs')
         
 
 
-template(name='view')
-    .ui.segment.container
-        .content
-            a(href="/view/#{_id}")
-                .image
-                    img.ui.large.centered.image(src="{{c.url image_id }}")
-                h1.ui.header #{title}
-            .meta
-                each tags
-                    .ui.button.tag(class=tag_class) #{this}
-            .description
-                |!{description}
-            if can_edit
-                .edit.ui.icon.circular.basic.button
-                    i.pencil.icon.icon
-            else
-                | by #{author.username} #{when}
+// template(name='view')
+//     .ui.segment.container
+//         .content
+//             a(href="/view/#{_id}")
+//                 .image
+//                     img.ui.large.centered.image(src="{{c.url image_id }}")
+//                 h1.ui.header #{title}
+//             .meta
+//                 each tags
+//                     .ui.button.tag(class=tag_class) #{this}
+//             .description
+//                 |!{description}
+//             if can_edit
+//                 .edit.ui.icon.circular.basic.button
+//                     i.pencil.icon.icon
+//             else
+//                 | by #{author.username} #{when}
+
+template(name='edit_doc')
+    with doc
+        .ui.padded.stackable.grid
+            .centered.middle.aligned.row
+                .three.wide.center.aligned.column
+                    a.ui.button(href="/view/#{_id}") Save
+                .ten.wide.center.aligned.column
+                    h1.ui.inverted.header
+                        if icon_class
+                            +icon96 name=icon_class classes='ui image'
+                        |Edit 
+                        if title
+                            |#{title}
+                        else
+                            |#{parent.title} Item
+
+                .three.wide.center.aligned.column
+                    +delete_button
+            .centered.row
+                .twelve.wide.column
+                    if type
+                        +Template.dynamic template=edit_type_template
+                    else
+                        // +parent_doc_accordion
+                        +edit_html_field key='content' type='direct'
+                        // +published
+                .four.wide.column
+                    if is_admin
+                        .ui.fluid.styled.accordion
+                            .active.title
+                                |Template:#{template}
+                                i.dropdown.icon
+                            .active.content
+                                each templates
+                                    +toggle_key key='template' value=slug icon=icon_class label=title
+                    // +published
+                    .shadowed-box
+                        .ui.dividing.header Options
+                        
+                    // +edit_type
+
+template(name='view_doc')
+    with doc
+        if type
+            +Template.dynamic template=view_type
+        else            
+            .ui.grid
+                .row
+                    .three.wide.center.aligned.column
+                        // +parent_link
+                    .ten.wide.column
+                        h1.ui.inverted.center.aligned.header 
+                            if icon_class
+                                +icon96 name=icon_class classes='ui inline image'
+                            |#{title}
+                    .three.wide.center.aligned.column
+                        if can_edit
+                            a.ui.button(href="/edit/#{_id}") Edit
+                .centered.row
+                    .ten.wide.column
+                        // +parent_doc_accordion
+                        .shadowed-box
+                            +view_html_field key='content' type='direct'
+                            +author_info
+                            |#{when}
+                            

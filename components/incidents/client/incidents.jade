@@ -18,17 +18,17 @@ template(name='my_incidents')
             .ui.divided.list
                 each my_incidents
                     .item 
-                        a(href="/incident/view/#{_id}") #{title}
+                        a(href="/view/#{_id}") #{title}
 
 
 template(name='incident')
     .ui.fluid.card
         .ui.centered.image
-            a(href="/incident/view/#{_id}")
+            a(href="/view/#{_id}")
                 img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
         .content
             h1.ui.header
-                a(href="/incident/view/#{_id}") #{title}
+                a(href="/view/#{_id}") #{title}
             if publish_date
                 .meta
                     | Published #{publish_when}
@@ -44,34 +44,39 @@ template(name='incident')
             
 template(name='incident_item')
     .ui.item
-        a.image(href="/incident/view/#{_id}")
+        a.image(href="/view/#{_id}")
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
-            a.header(href="/incident/view/#{_id}") #{title}
+            a.header(href="/view/#{_id}") #{title}
             .meta Created by #{createdBy}
             .meta Type #{type}
             .meta Number #{number}
             .description
                 .ui.header Body
                 |!{body}
-            a.ui.button(href="/incident/view/#{_id}") 
+            a.ui.button(href="/view/#{_id}") 
                 |View
                 i.chevron.right.icon
                 
                 
 template(name='edit_incident')
-    .ui.center.aligned.header Edit Incident
-    .ui.form
-        +edit_title                
+    with doc
+        .ui.center.aligned.header Edit Incident
+        .ui.grid
+            .twelve.wide.column
+                .ui.form
+                    +edit_title  
+                    +edit_number
+            .four.wide.column
+                a.ui.button(href="/view/#{_id}") Save Incident
         
         
         
-        
-template(name='incident_page')
+template(name='view_incident')
     with incident
         .ui.container.divided.grid
             .row
-                a.ui.top.left.attached.basic.button(href="/incidents")
+                a.ui.top.left.attached.button(href="/incidents")
                     i.arrow.left.icon
                     |Incidents
             .centered.row
@@ -93,6 +98,6 @@ template(name='incident_page')
                     // +comments
                 .five.wide.column
                     // +user_card
-                    .edit_incident.ui.basic.large.button
+                    .edit_incident.ui.button
                         i.edit.icon
-                        |Edit
+                        |Edit Incident

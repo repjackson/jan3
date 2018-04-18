@@ -1,21 +1,15 @@
-Template.incident_page.onCreated ->
+Template.view_incident.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-Template.incident_page.helpers
+Template.view_incident.helpers
     incident: -> Docs.findOne FlowRouter.getParam('doc_id')
-Template.incident_page.events
-    'click .edit_incident': -> FlowRouter.go "/incident/edit/#{@_id}"
+Template.view_incident.events
+    'click .edit_incident': -> FlowRouter.go "/edit/#{@_id}"
 
 
 
 
 FlowRouter.route '/incidents', action: ->
     BlazeLayout.render 'layout', main: 'incidents'
-
-FlowRouter.route '/incident/edit/:doc_id', action: (params) ->
-    BlazeLayout.render 'layout', main: 'edit_incident'
-
-FlowRouter.route '/incident/view/:doc_id', action: (params) ->
-    BlazeLayout.render 'layout', main: 'incident_page'
 
 
 @selected_incident_tags = new ReactiveArray []
@@ -27,7 +21,7 @@ Template.incidents.helpers
 Template.incidents.events
     'click #add_incident': -> 
         id = Docs.insert type:'incident'
-        FlowRouter.go "/incident/edit/#{id}"
+        FlowRouter.go "/edit/#{id}"
 
 Template.incident.helpers
     tag_class: -> if @valueOf() in selected_incident_tags.array() then 'primary' else 'basic'
@@ -41,7 +35,7 @@ Template.incident.events
     'click .incident_tag': ->
         if @valueOf() in selected_incident_tags.array() then selected_incident_tags.remove @valueOf() else selected_incident_tags.push @valueOf()
 
-    'click .edit_incident': -> FlowRouter.go "/incident/edit/#{@_id}"
+    'click .edit_incident': -> FlowRouter.go "/edit/#{@_id}"
 
 
 

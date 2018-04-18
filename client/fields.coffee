@@ -1,10 +1,8 @@
-Template.edit_price.events
-    'change #price': ->
-        doc_id = FlowRouter.getParam('doc_id')
-        price = $('#price').val()
-
-        Docs.update doc_id,
-            $set: price: price
+Template.edit_number.events
+    'change #number': ->
+        number = $('#number').val()
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: number: number
             
 Template.edit_title.events
     'blur #title': ->

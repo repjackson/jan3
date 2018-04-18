@@ -1,17 +1,21 @@
 template(name='dashboard')
-    .ui.container
-        h1.ui.dividing.center.aligned.header 
-            i.circle.info.icon
-            | Account Status Dashboard
-        
-        .ui.centered.cards
-            a.ui.card(href='/incidents')
-                .content
-                    .ui.icon.header
+    h2.ui.center.aligned.header 
+        i.line.chart.icon
+        | Account Status Dashboard
+    .ui.padded.three.column.grid
+        .column
+            .ui.segment
+                .ui.header General Account Info
+        .column
+            .ui.segment
+                a(href='/incidents')
+                    .ui.header
                         i.edit.icon
-                        h2.content Incidents
-            a.ui.card(href='/my-office')
-                .content
-                    .ui.icon.header
+                        h4.content Incidents
+        .column
+            .ui.segment
+                a(href='/my-office')
+                    .ui.header
                         i.building.icon
-                        h2.content My Office
+                        h4.content Local Office Information
+    
