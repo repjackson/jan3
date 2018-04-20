@@ -3,50 +3,58 @@ template(name='dashboard')
         .centered.row
             .three.wide.column
             .ten.wide.column
-                h2.ui.center.aligned.header 
+                h1.ui.center.aligned.header 
                     i.line.chart.icon
                     | Dashboard
             .three.wide.column
         .row
             .column
-                .ui.secondary.segment
-                    a(href='/incidents')
-                        .ui.header
+                .ui.styled.accordion
+                    .active.title
+                        h3
                             i.edit.icon
-                            | Incidents
-                    .ui.divided.link.items    
-                        each incidents
-                            a.item(href="/view/#{_id}")
-                                .ui.tiny.rounded.image
-                                    img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
-                                .content
-                                    .header ##{incident_number}
-                                        +incident_type_label
-                                    .meta #{when}
-                                    .description #{incident_details}
-                                    .extra
-                                        if customer
-                                            .ui.label 
-                                                i.user.icon
-                                                |#{customer.first_name} #{customer.last_name}
-                                        if office
-                                            .ui.label 
-                                                i.building.icon
-                                                |#{office.office_name}
+                            |Incidents
+                            i.dropdown.icon
+                    .active.content
+                        .ui.divided.link.items    
+                            each incidents
+                                a.item(href="/view/#{_id}")
+                                    .ui.tiny.rounded.image
+                                        img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
+                                    .content
+                                        .header ##{incident_number}
+                                            +incident_type_label
+                                        .meta #{when}
+                                        .description #{incident_details}
+                                        .extra
+                                            if customer
+                                                .ui.label 
+                                                    i.user.icon
+                                                    |#{customer.first_name} #{customer.last_name}
+                                            if office
+                                                .ui.label 
+                                                    i.building.icon
+                                                    |#{office.office_name}
             .column
-                .ui.secondary.segment
-                    .ui.header 
-                        i.info.icon
-                        |General Account Info
-                    with person
-                        +person_card
+                .ui.styled.accordion
+                    .active.title
+                        h3
+                            i.info.icon
+                            |General Account Info
+                            i.dropdown.icon
+                    .active.content
+                        with person
+                            +person_card
             .column
-                .ui.secondary.segment
-                    .ui.header
-                        i.building.icon
-                        | Local Office Information
-                    with office
-                        +office_card
+                .ui.styled.accordion
+                    .active.title
+                        h3
+                            i.building.icon
+                            | Local Office Information
+                            i.dropdown.icon
+                    .active.content
+                        with office
+                            +office_card
         .row
             .column
                 .ui.disabled.segment

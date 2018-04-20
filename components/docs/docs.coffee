@@ -5,6 +5,17 @@ Docs.before.insert (userId, doc)->
     doc.author_id = Meteor.userId()
     return
 
+Meteor.users.helpers
+    name: -> 
+        if @profile?.first_name and @profile?.last_name
+            "#{@profile.first_name}  #{@profile.last_name}"
+        else
+            "#{@username}"
+    last_login: -> 
+        moment(@status?.lastLogin.date).fromNow()
+
+    five_tags: -> if @tags then @tags[0..3]
+    
 
 Docs.helpers
     author: -> Meteor.users.findOne @author_id
