@@ -9,21 +9,44 @@ template(name='dashboard')
             .three.wide.column
         .row
             .column
-                .ui.segment
+                .ui.secondary.segment
                     a(href='/incidents')
                         .ui.header
                             i.edit.icon
                             | Incidents
+                    .ui.divided.link.items    
+                        each incidents
+                            a.item(href="/view/#{_id}")
+                                .ui.tiny.rounded.image
+                                    img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
+                                .content
+                                    .header ##{incident_number}
+                                        +incident_type_label
+                                    .meta #{when}
+                                    .description #{incident_details}
+                                    .extra
+                                        if customer
+                                            .ui.label 
+                                                i.user.icon
+                                                |#{customer.first_name} #{customer.last_name}
+                                        if office
+                                            .ui.label 
+                                                i.building.icon
+                                                |#{office.office_name}
             .column
-                .ui.disabled.segment
+                .ui.secondary.segment
                     .ui.header 
                         i.info.icon
                         |General Account Info
+                    with person
+                        +person_card
             .column
-                .ui.disabled.segment
+                .ui.secondary.segment
                     .ui.header
                         i.building.icon
                         | Local Office Information
+                    with office
+                        +office_card
         .row
             .column
                 .ui.disabled.segment

@@ -9,6 +9,8 @@ Docs.before.insert (userId, doc)->
 Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
+    office: -> Docs.findOne @referenced_office_id
+    customer: -> Docs.findOne @referenced_customer_id
 
 Meteor.methods
     add: (tags=[])->
@@ -63,9 +65,22 @@ if Meteor.isServer
             limit: 20
             
     
-    Meteor.publish 'doc', (id)->
-        Docs.find id
-    
+    publishComposite 'doc', (id)->
+        {
+            find: -> Docs.find id
+            children: [
+                {
+                    find: (doc)-> Meteor.users.find _id:doc.author_id
+                }
+                {
+                    find: (doc)-> Docs.find _id:doc.referenced_office_id
+                }
+                {
+                    find: (doc)-> Docs.find _id:doc.referenced_customer_id
+                }
+            ]
+        }
+
     
     
     Meteor.publish 'doc_tags', (selected_tags)->

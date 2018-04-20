@@ -11,11 +11,13 @@ Template.add_button.events
         FlowRouter.go "/edit/#{id}"
 
 
-Template.reference_single_doc.onCreated ->
+Template.reference_office.onCreated ->
+    @autorun =>  Meteor.subscribe 'docs', [], @data.type
+Template.reference_customer.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], @data.type
 
 
-Template.reference_single_doc.helpers
+Template.reference_office.helpers
     settings: -> 
         # console.log @
         {
@@ -24,16 +26,48 @@ Template.reference_single_doc.helpers
             rules: [
                 {
                     collection: Docs
-                    field: 'office_name'
+                    field: "#{@search_field}"
                     matchAll: true
-                    filter: { type: 'office' }
-                    template: Template.search_result
+                    filter: { type: "#{@type}" }
+                    template: Template.office_result
+                }
+            ]
+        }
+
+Template.reference_customer.helpers
+    settings: -> 
+        # console.log @
+        {
+            position: 'bottom'
+            limit: 10
+            rules: [
+                {
+                    collection: Docs
+                    field: "#{@search_field}"
+                    matchAll: true
+                    filter: { type: "#{@type}" }
+                    template: Template.customer_result
                 }
             ]
         }
 
 
-Template.reference_single_doc.events
+Template.reference_office.events
     'autocompleteselect #search': (event, template, doc) ->
-        console.log 'selected ', doc
+        # console.log 'selected ', doc
+        searched_value = doc["#{template.data.key}"]
+        # console.log 'template ', template
+        # console.log 'search value ', searched_value
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: "#{template.data.key}": "#{doc._id}"
+        $('#search').val ''
+
+Template.reference_customer.events
+    'autocompleteselect #search': (event, template, doc) ->
+        # console.log 'selected ', doc
+        searched_value = doc["#{template.data.key}"]
+        # console.log 'template ', template
+        # console.log 'search value ', searched_value
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: "#{template.data.key}": "#{doc._id}"
         $('#search').val ''

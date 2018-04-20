@@ -19,7 +19,7 @@ template(name='person_card')
                 img.ui.fluid.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
         .content
             a(href="/view/#{_id}")
-                h2.ui.center.aligned.header #{first_name} #{last_name}
+                .ui.header #{first_name} #{last_name}
             each five_tags
                 .ui.compact.small.circular.button.person_tag(class=tag_class) 
                     strong #{this}

@@ -32,27 +32,6 @@ template(name='my_incidents')
                         a(href="/view/#{_id}") #{title}
 
 
-template(name='incident')
-    .ui.card
-        .ui.centered.image
-            a(href="/view/#{_id}")
-                img(src="{{c.url image_id  height=300 crop='fill' gravity='face' }}")
-        .content
-            h1.ui.header
-                a(href="/view/#{_id}") #{title}
-            if publish_date
-                .meta
-                    | Published #{publish_when}
-            .description
-                |{{nl2br body}}
-        .content
-            each tags
-                .ui.compact.button.incident_tag(class=tag_class) #{this}
-            .incident_edit.ui.primary.basic.right.floated.button
-                i.pencil.icon
-                |Edit Incident    
-            
-            
 template(name='incident_item')
     .ui.item
         a.image(href="/view/#{_id}")
@@ -96,37 +75,43 @@ template(name='incident_card')
                 
                 
 template(name='incident_edit')
-    h1.ui.center.aligned.header Edit Incident #{incident_number}
     .ui.padded.stackable.centered.grid
-        .eight.wide.column
-            .ui.large.form
-                // +edit_text_field key='title' label='Title'  
-                +edit_image_field
-                +edit_textarea key='incident_details' label='Details'
-                .field
-                    label Type
-                    +toggle_key key='incident_type' value='missed_service' label='Missed Service'
-                    +toggle_key key='incident_type' value='poor_service' label='Poor Service'
-                    +toggle_key key='incident_type' value='employee_issue' label='Employee Issue'
-                    +toggle_key key='incident_type' value='other' label='Other'
-                
-        .four.wide.column
-            .ui.large.form
-                +reference_single_doc key='jan_office_id' label='Jan Office' type='office'
+        .centered.row
+            .three.wide.column
+                +save_button
+            .ten.wide.column
+                h1.ui.center.aligned.header Edit Incident #{incident_number}
+            .three.wide.column
+                #delete.ui.fluid.button
+                    i.trash.icon
+                    | Delete
+        .row
+            .five.wide.column
+                .ui.large.form
+                    +edit_image_field
+                    +edit_textarea key='incident_details' label='Details'
+                    .field
+                        label Type
+                        +toggle_key key='incident_type' value='missed_service' label='Missed Service'
+                        +toggle_key key='incident_type' value='poor_service' label='Poor Service'
+                        +toggle_key key='incident_type' value='employee_issue' label='Employee Issue'
+                        +toggle_key key='incident_type' value='other' label='Other'
+                    
+            .five.wide.column
+                .ui.large.form
+                    +edit_number_field key='incident_number' label='Number' icon='hashtag'
+                    +edit_date_field key='incident_date' label='Date' icon='calendar'
+                    +reference_customer key='referenced_customer_id' search_field='first_name' label='Change Customer' type='person'
+                    if customer
+                        with customer
+                            +person_card
+            .five.wide.column
+                +reference_office key='referenced_office_id' search_field='office_name' label='Change Office' type='office'
+                if office
+                    with office
+                        +office_card
+            
 
-                +edit_text_field key='jan_office_id' label='Jan Pro Office ID' icon='building'
-                +edit_text_field key='customer_id' label='Customer ID' icon='user'
-                +edit_number_field key='incident_number' label='Number' icon='hashtag'
-                +edit_date_field key='incident_date' label='Date' icon='calendar'
-            .ui.hidden.divider
-            a.ui.fluid.basic.big.button(href="/view/#{_id}") 
-                i.save.icon
-                strong Save
-            .ui.hidden.divider
-            #delete.ui.basic.fluid.button
-                i.trash.icon
-                | Delete
-        
         
 template(name='incident_view')
     .ui.padded.stackable.centered.grid
@@ -138,8 +123,10 @@ template(name='incident_view')
             .ten.wide.column
                 h1.ui.center.aligned.header Incident #{incident_number}
             .three.wide.column
+                +edit_button
+
         .row
-            .eight.wide.column
+            .ten.wide.column
                 if image_id
                     img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
                 .ui.dividing.header 
@@ -148,23 +135,26 @@ template(name='incident_view')
                 .ui.basic.segment
                     strong #{incident_details}
                 +comments
-            .four.wide.column
+            .six.wide.column
                 .ui.large.relaxed.list
                     +list_item key='customer_id' label='Customer ID' icon='user'
                     +list_item icon='hashtag' label='Number' key='incident_number'
                     +list_item icon='calendar' label='Date' key='incident_date'
-                    +list_item icon='building' label='Jan-Pro Office Id' key='jan_office_id'
                     +list_item icon='file.image' label='Associated Documents'
+                .ui.header
+                    +incident_type_label
                 .ui.header
                     | Logged
                     +author_info
                 .ui.header #{formal_when}
-                .ui.header
-                    +incident_type_label
+                with office
+                    +office_card
                 .ui.hidden.divider
-                +edit_button
+                if customer
+                    with customer
+                        +person_card
         .row
-            .twelve.wide.column
+            .sixteen.wide.column
                 .ui.fluid.steps
                     .active.step
                         i.edit.icon

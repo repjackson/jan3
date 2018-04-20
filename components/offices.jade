@@ -73,6 +73,9 @@ template(name='office_view')
                 .ui.segment
                     .ui.header Map
             .four.wide.column
+                a.ui.fluid.button(href="tel:#{phone_number}") 
+                    i.phone.icon
+                    |Call #{phone_number}
                 .ui.large.relaxed.list
                     +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
                     +list_item key='office_name' label='Office Name' icon='code'

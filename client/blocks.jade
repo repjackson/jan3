@@ -51,10 +51,26 @@ template(name='add_button')
         |Add #{label}
 
 
-template(name='reference_single_doc')
+template(name='reference_office')
     .ui.form
         .field
             label #{label}
             .ui.left.icon.input
                 i.search.icon
                 +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+
+template(name='reference_customer')
+    .ui.form
+        .field
+            label #{label}
+            .ui.left.icon.input
+                i.search.icon
+                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+
+
+
+template(name="office_result")
+    .item #{office_name} (#{jan_office_id})
+
+template(name="customer_result")
+    .item #{first_name} #{last_name}

@@ -1,20 +1,18 @@
 template(name='edit_image_field')
-    if image_id
-        .field
-            label Image
-            .ui.large.image
+    .ui.basic.segment
+        if image_id
+            .ui.image
                 img(src="{{c.url image_id }}")
                 a#remove_photo.ui.top.left.attached.link.basic.label Remove
-                .ui.bottom.right.attached.basic.label Image Id: #{image_id}
-    else
-        .ui.basic.segment
-            label Upload Image
+                // .ui.bottom.right.attached.basic.label Image Id: #{image_id}
+        else
+            .ui.header Upload Image
             input(type='file' name='upload_picture' accept='image/*')
         // if isInRole 'admin'
         //     .field
         //         label or Choose Cloudinary Image Id
         //         input#input_image_id(type='text')
-
+    
 
 
 template(name='edit_number_field')
