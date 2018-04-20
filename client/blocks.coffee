@@ -85,3 +85,24 @@ Template.toggle_view_mode_button.events
         else
             Session.set 'viewing_list', true
             
+Template.set_session_button.events
+    'click .set_session_filter': -> Session.set "#{@key}", @value
+            
+Template.set_session_button.helpers
+    filter_class: -> 
+        if Session.equals("#{@key}","all") 
+            if @value is 'all'
+                'active' 
+            else
+                'basic'
+        else if Session.get("#{@key}")
+            if Session.equals("#{@key}", parseInt(@value))
+                'active'
+            else
+                'basic'
+            
+            
+            
+Template.set_session_item.events
+    'click .set_session_filter': -> Session.set "#{@key}", @value
+            

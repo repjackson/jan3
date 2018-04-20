@@ -1,6 +1,12 @@
 if Meteor.isClient
+    FlowRouter.route '/incidents', action: ->
+        BlazeLayout.render 'layout', main: 'incidents'
+ 
+ 
     Template.incident_view.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+ 
+ 
  
     Template.incident_view.onRendered ->
         Meteor.setTimeout ->
@@ -37,18 +43,22 @@ if Meteor.isClient
     
             
         
-    FlowRouter.route '/incidents', action: ->
-        BlazeLayout.render 'layout', main: 'incidents'
     
     
     @selected_incident_tags = new ReactiveArray []
     
     Template.incidents.onCreated ->
-        @autorun -> Meteor.subscribe('docs',[],'incident')
+        @autorun -> Meteor.subscribe('incidents',parseInt(Session.get('level')))
         @autorun -> Meteor.subscribe('docs',[],'comment')
+        @autorun -> Meteor.subscribe('docs',[],'office')
     Template.incidents.helpers
-        incidents: ->  Docs.find { type:'incident'}
-    
+        incidents: ->  
+            if Session.equals('level','all')
+                Docs.find type:'incident'
+            else
+                Docs.find 
+                    type:'incident'
+                    current_level:parseInt(Session.get('level'))
         viewing_list: -> Session.equals 'viewing_list',true    
     
     Template.incident_edit.onCreated ->

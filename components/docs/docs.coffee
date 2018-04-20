@@ -65,6 +65,28 @@ if Meteor.isServer
                 self = @
                 match = {}
                 if type then match.type = type
+                # console.log match
+                Docs.find match,
+                    limit:20
+            children: [
+                {
+                    find: (doc)-> Meteor.users.find _id:doc.author_id
+                }
+                {
+                    find: (doc)-> Docs.find _id:doc.parent_id
+                }
+            ]
+        }
+
+
+    publishComposite 'incidents', (level)->
+        {
+            find: ->
+                self = @
+                match = {}
+                # match.current_level = parseInt(level)
+                match.type = 'incident'
+                # console.log match
                 Docs.find match,
                     limit:20
             children: [

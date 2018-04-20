@@ -82,3 +82,14 @@ template(name='toggle_view_mode_button')
             i.list.large.icon
         else
             i.th.large.icon
+            
+            
+template(name='set_session_button')
+    .set_session_filter.ui.button(class=filter_class)
+        |#{label}
+        
+template(name='set_session_item')
+    a.set_session_filter.item 
+        |#{label}
+        
+        
