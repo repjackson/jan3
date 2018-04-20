@@ -23,10 +23,6 @@ if Meteor.isClient
     
     
     Template.user_table.events
-        'click #add_user': ->
-            
-    
-    
         'click .remove_admin': ->
             self = @
             swal {

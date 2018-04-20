@@ -1,68 +1,66 @@
 template(name='admin')
     +user_table
 template(name='user_table')
-    .ui.container
-        // a#add_user.ui.basic.green.labeled.icon.button(href='/user/add')
-        //     i.plus.icon
-        //     |Add User
-        table.ui.sortable.striped.table
-            thead
-                tr
-                    th Image
-                    th Profile
-                    th Roles
-            tbody
-                each users
+    .ui.padded.grid
+        .sixteen.wide.column
+            a.ui.button(href='/user/add')
+                i.plus.icon
+                |Add User
+            table.ui.sortable.striped.table
+                thead
                     tr
-                        td 
-                            img.ui.tiny.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        td 
-                            .ui.header 
-                                |#{name}
-                            div 
-                                | Username: #{username}
-                            each emails
-                                |#{address}
-                            a(href="/account/profile/edit/#{_id}")
-                                |Edit
-                        td 
-                            .ui.hidden.fitted.divider
-                            .ui.left.labeled.button
-                                if is_dev
-                                    .ui.green.label Dev
-                                    .remove_dev.ui.basic.icon.button
-                                        i.remove.icon 
-                                else
-                                    .ui.basic.label Dev
-                                    .make_dev.ui.basic.icon.button
-                                        i.plus.icon 
-                            .ui.hidden.fitted.divider
-                            .ui.left.labeled.button
-                                if is_admin
-                                    .ui.green.label Admin
-                                    .remove_admin.ui.basic.icon.button
-                                        i.remove.icon 
-                                else
-                                    .ui.basic.label Admin
-                                    .make_admin.ui.basic.icon.button
-                                        i.plus.icon 
-                            .ui.hidden.fitted.divider
-                            .ui.left.labeled.button
-                                if is_owner
-                                    .ui.green.label User
-                                    .remove_beta.ui.basic.icon.button
-                                        i.remove.icon 
-                                else
-                                    .ui.basic.label User
-                                    .make_owner.ui.basic.icon.button
-                                        i.plus.icon 
-                            // .ui.hidden.fitted.divider
-                            // .ui.left.labeled.button
-                            //     if is_resident
-                            //         .ui.green.label Resident
-                            //         .remove_resident.ui.basic.icon.button
-                            //             i.remove.icon 
-                            //     else
-                            //         .ui.basic.label Resident
-                            //         .make_resident.ui.basic.icon.button
-                            //             i.plus.icon 
+                        th Image
+                        th Profile
+                        th Roles
+                        th Actions
+                tbody
+                    each users
+                        tr
+                            td 
+                                img.ui.tiny.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            td 
+                                .ui.header 
+                                    |#{name}
+                                a.ui.header(href="/profile/#{_id}") #{username}
+                                div
+                                    each emails
+                                        |#{address}
+                            td 
+                                .ui.hidden.fitted.divider
+                                .ui.left.labeled.button
+                                    if is_dev
+                                        .ui.green.label Dev
+                                        .remove_dev.ui.basic.icon.button
+                                            i.remove.icon 
+                                    else
+                                        .ui.basic.label Dev
+                                        .make_dev.ui.basic.icon.button
+                                            i.plus.icon 
+                                .ui.hidden.fitted.divider
+                                .ui.left.labeled.button
+                                    if is_admin
+                                        .ui.green.label Admin
+                                        .remove_admin.ui.basic.icon.button
+                                            i.remove.icon 
+                                    else
+                                        .ui.basic.label Admin
+                                        .make_admin.ui.basic.icon.button
+                                            i.plus.icon 
+                                .ui.hidden.fitted.divider
+                                .ui.left.labeled.button
+                                    if is_owner
+                                        .ui.green.label User
+                                        .remove_beta.ui.basic.icon.button
+                                            i.remove.icon 
+                                    else
+                                        .ui.basic.label User
+                                        .make_owner.ui.basic.icon.button
+                                            i.plus.icon 
+                            td
+                                a.ui.button(href="/account/profile/edit/#{_id}")
+                                    i.edit.icon
+                                    |Edit
+                                a.ui.button(href="/profile/#{_id}")
+                                    |View
+                                    i.chevron.right.icon
+                                

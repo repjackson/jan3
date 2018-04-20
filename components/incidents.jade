@@ -112,6 +112,8 @@ template(name='incident_edit')
                 
         .four.wide.column
             .ui.large.form
+                +reference_single_doc key='jan_office_id' label='Jan Office' type='office'
+
                 +edit_text_field key='jan_office_id' label='Jan Pro Office ID' icon='building'
                 +edit_text_field key='customer_id' label='Customer ID' icon='user'
                 +edit_number_field key='incident_number' label='Number' icon='hashtag'

@@ -32,11 +32,11 @@ template(name='toggle_boolean')
             .ui.basic.label Unfeatured
 
 template(name='save_button')
-    a.ui.fluid.basic.big.button(href="/view/#{_id}") 
+    a.ui.fluid.big.button(href="/view/#{_id}") 
         i.save.icon
         strong Save
 template(name='edit_button')
-    a.ui.fluid.basic.large.button(href="/edit/#{_id}") 
+    a.ui.fluid.large.button(href="/edit/#{_id}") 
         i.edit.icon
         strong Edit
 
@@ -49,3 +49,12 @@ template(name='add_button')
     #add.ui.fluid.button
         i.plus.icon
         |Add #{label}
+
+
+template(name='reference_single_doc')
+    .ui.form
+        .field
+            label #{label}
+            .ui.left.icon.input
+                i.search.icon
+                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'

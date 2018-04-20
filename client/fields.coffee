@@ -13,8 +13,15 @@ Template.edit_image_field.events
                 # console.dir res
                 if err
                     console.error 'Error uploading', err
+                    Bert.alert "Error uploading #{@label}: #{err}", 'danger', 'growl-top-right'
                 else
-                    Docs.update doc_id, $set: image_id: res.public_id
+                    Docs.update doc_id, 
+                        { $set: image_id: res.public_id }
+                        , (err,res)=>
+                            if err
+                                Bert.alert "Error Updating Image: #{error.reason}", 'danger', 'growl-top-right'
+                            else
+                                Bert.alert "Updated Image", 'success', 'growl-top-right'
                 return
 
     'keydown #input_image_id': (e,t)->
@@ -47,7 +54,7 @@ Template.edit_image_field.events
                         $unset: image_id: 1
 
                 else
-                    throw new Meteor.Error "it failed miserably"
+                    throw new Meteor.Error "it failed"
 
     #         console.log Cloudinary
     # 		Cloudinary.delete "37hr", (err,res) ->
@@ -58,10 +65,6 @@ Template.edit_image_field.events
     #                 # Docs.update FlowRouter.getParam('doc_id'), 
     #                 #     $unset: image_id: 1
 
-
-            
-            
-            
     # Template.edit_image.helpers
     #     log: -> console.log @
 
@@ -71,29 +74,49 @@ Template.edit_number_field.events
     'change #number_field': (e,t)->
         number_value = parseInt e.currentTarget.value
         Docs.update FlowRouter.getParam('doc_id'),
-            $set: "#{@key}": number_value
+            { $set: "#{@key}": number_value }
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
             
 Template.edit_textarea.events
     'blur #textarea': (e,t)->
         doc_id = FlowRouter.getParam('doc_id')
         textarea_value = $('#textarea').val()
         Docs.update doc_id,
-            $set: 
-                "#{@key}": textarea_value
+            { $set: "#{@key}": textarea_value }
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 
 Template.edit_date_field.events
     'change #date_field': (e,t)->
         date_value = e.currentTarget.value
         Docs.update FlowRouter.getParam('doc_id'),
-            $set: "#{@key}": date_value
+            { $set: "#{@key}": date_value } 
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 
 Template.edit_text_field.events
     'change #text_field': (e,t)->
         text_value = e.currentTarget.value
         Docs.update FlowRouter.getParam('doc_id'),
-            $set: "#{@key}": text_value
+            { $set: "#{@key}": text_value }
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
+
 
 
 
