@@ -1,20 +1,31 @@
 template(name='nav')
-    .ui.stackable.top.attached.large.inverted.menu
+    .ui.top.attached.large.inverted.menu
+        .mobile.only.ui.dropdown.icon.link.item
+            i.th.large.icon
+            .ui.menu
+                a.item(href='/people' class="{{isActivePath '/people'}}")
+                    i.users.icon
+                    | Users
+                a.item(href='/incidents' class="{{isActivePath '/incidents'}}")
+                    i.edit.icon
+                    | Incidents
+                a.item(href='/offices' class="{{isActivePath '/offices'}}")
+                    i.building.icon
+                    | Offices
         a.header.item(href='/' class="{{isActivePath '/'}}") 
             i.line.chart.icon
             |JP
-        // .header.item GR
-        a.item(href='/people' class="{{isActivePath '/people'}}")
+        a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
             i.users.icon
             | Users
-        a.item(href='/incidents' class="{{isActivePath '/incidents'}}")
+        a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}")
             i.edit.icon
             | Incidents
-        a.item(href='/offices' class="{{isActivePath '/offices'}}")
+        a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}")
             i.building.icon
             | Offices
         .right.menu
-            a.item(href='/admin' class="{{isActivePath '/admin'}}")
+            a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}")
                 i.configure.icon
                 |Admin
             .icon.item
@@ -36,7 +47,7 @@ template(name='nav')
                     else
                         i.user.icon
                     if currentUser.name
-                        | #{currentUser.name}
+                        .mobile.hidden #{currentUser.name}
                     else
                         | Profile
                 a#logout.ui.item(href='#') 

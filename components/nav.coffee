@@ -9,9 +9,15 @@ if Meteor.isClient
             Meteor.subscribe 'me'
             Meteor.subscribe 'my_notifications'
         
+    Template.dashboard.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.dropdown').dropdown()
+        , 400
+        
+        
+        
     Template.nav.helpers
-        notifications: -> 
-            Notifications.find()
+        notifications: -> Notifications.find()
 
 
 

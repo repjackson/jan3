@@ -7,6 +7,7 @@ template(name='incidents')
                     i.edit.icon
                     |Incidents
             .three.wide.column
+                +toggle_view_mode_button
         .centered.row
             .three.wide.column
                 +add_button type='incident' label='Incident'
@@ -17,9 +18,14 @@ template(name='incidents')
                 .ui.dividing.header Status
                 .ui.dividing.header Office
             .thirteen.wide.column
-                .ui.centered.stackable.cards
-                    each incidents
-                        +incident_card
+                if viewing_list
+                    .ui.items
+                        each incidents
+                            +incident_item
+                else
+                    .ui.centered.stackable.cards
+                        each incidents
+                            +incident_card
 
 
 template(name='my_incidents')
@@ -37,16 +43,15 @@ template(name='incident_item')
         a.image(href="/view/#{_id}")
             img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
         .content
-            a.header(href="/view/#{_id}") #{title}
-            .meta Created by #{createdBy}
-            .meta Type #{type}
-            .meta Number #{number}
-            .description
-                .ui.header Body
-                |!{body}
-            a.ui.button(href="/view/#{_id}") 
-                |View
-                i.chevron.right.icon
+            a.header(href="/view/#{_id}") 
+                |##{incident_number}
+                +incident_type_label
+            .ui.basic.segment.description
+                .large130 #{incident_details}
+            | Created by #{author.username}
+            .meta Logged #{when}
+            .right.floated
+                +view_button
                 
 template(name='incident_card')
     .ui.card
@@ -66,12 +71,7 @@ template(name='incident_card')
             .right.floated
                 +incident_type_label
             i.comment.icon
-            | 4 Comments
-        // .content
-        //     // +view_full_button
-        //     a.ui.button(href="/view/#{_id}") 
-        //         |View
-        //         i.chevron.right.icon
+            | #{comment_count} Comments
                 
                 
 template(name='incident_edit')
@@ -117,7 +117,7 @@ template(name='incident_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                a.ui.top.left.attached.button(href="/incidents")
+                a.ui.button(href="/incidents")
                     i.chevron.left.icon
                     |Incidents
             .ten.wide.column

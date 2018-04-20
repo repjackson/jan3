@@ -36,7 +36,7 @@ template(name='save_button')
         i.save.icon
         strong Save
 template(name='edit_button')
-    a.ui.fluid.large.button(href="/edit/#{_id}") 
+    a.ui.fluid.button(href="/edit/#{_id}") 
         i.edit.icon
         strong Edit
 
@@ -74,3 +74,11 @@ template(name="office_result")
 
 template(name="customer_result")
     .item #{first_name} #{last_name}
+
+
+template(name='toggle_view_mode_button')
+    #toggle_view_mode.ui.large.icon.circular.button
+        if viewing_list
+            i.list.large.icon
+        else
+            i.th.large.icon

@@ -30,7 +30,7 @@ if Meteor.isClient
     Template.incidents.helpers
         incidents: ->  Docs.find { type:'incident'}
     
-    
+        viewing_list: -> Session.equals 'viewing_list',true    
     
     Template.incident_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')

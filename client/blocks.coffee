@@ -71,3 +71,17 @@ Template.reference_customer.events
         Docs.update FlowRouter.getParam('doc_id'),
             $set: "#{template.data.key}": "#{doc._id}"
         $('#search').val ''
+
+
+
+
+Template.toggle_view_mode_button.helpers
+    viewing_list: -> Session.equals 'viewing_list', false
+
+Template.toggle_view_mode_button.events
+    'click #toggle_view_mode': ->
+        if Session.equals 'viewing_list', true
+            Session.set 'viewing_list', false
+        else
+            Session.set 'viewing_list', true
+            
