@@ -29,8 +29,9 @@ Template.registerHelper 'formal_when', () -> moment(@timestamp).format('MMMM Do 
 
 
 Template.registerHelper 'key_value', () -> 
-    current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-    current_doc["#{@key}"]
+    current_doc = Template.parentData(1)
+    if current_doc
+        current_doc["#{@key}"]
 
 
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment

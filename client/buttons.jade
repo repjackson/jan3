@@ -32,3 +32,17 @@ template(name='toggle_boolean')
         else
             .ui.basic.label Unfeatured
 
+template(name='save_button')
+    a.ui.fluid.basic.big.button(href="/view/#{_id}") 
+        i.save.icon
+        strong Save
+template(name='edit_button')
+    a.ui.fluid.basic.big.button(href="/edit/#{_id}") 
+        i.edit.icon
+        strong Edit
+
+template(name='view_button')
+    a.ui.button(href="/view/#{_id}") 
+        |View
+        i.chevron.right.icon
+        

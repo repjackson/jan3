@@ -1,33 +1,10 @@
-DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.json www.goldrun.meteorapp.com
-
-
-mongo --ssl --sslAllowInvalidCertificates aws-us-east-1-portal.21.dblayer.com:10444/facetdb -u facetadmin -pTurnf34ragainst!
-
-member login
-profile
-
-admin
-    pool readings
-    
-    
-front desk
-    scheduling
-    shift change
-    messaging
-    
-lost and found
-
-
-resident
-    login
-    classifides
-    services
-    events
-    
-todo
-    cloudinary id
-    
-    
-    
 good to be back
     confirmation modals after user interactions
+    submit for processing 
+    
+    
+just build each schema, and improve upward like with twi.  she showed you the way.  
+you have to know how to evolve it each step.  
+
+list view mode switch, lets fuck this up
+    

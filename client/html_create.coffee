@@ -1,8 +1,8 @@
 if Meteor.isClient
-    Template.facet_staff_select.onCreated ->
+    Template.html_create.onCreated ->
         @autorun => Meteor.subscribe 'facet_doc', @data.tags
         
-    Template.facet_staff_select.helpers
+    Template.html_create.helpers
         doc: ->
             tags = Template.currentData().tags
             split_array = tags.split ','
@@ -14,7 +14,7 @@ if Meteor.isClient
     
         doc_classes: -> Template.parentData().classes
 
-    Template.facet_staff_select.events
+    Template.html_create.events
         'click .create_doc': (e,t)->
             tags = t.data.tags
             split_array = tags.split ','

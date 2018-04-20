@@ -4,15 +4,15 @@ template(name='nav')
             i.line.chart.icon
             |JP
         // .header.item GR
-        // a.item(href='/people' class="{{isActivePath '/people'}}")
-        //     i.users.icon
-        //     | Users
+        a.item(href='/people' class="{{isActivePath '/people'}}")
+            i.users.icon
+            | Users
         a.item(href='/incidents' class="{{isActivePath '/incidents'}}")
             i.edit.icon
-            |Incidents
-        // a.item(href='/checkin' class="{{isActivePath '/checkin'}}")
-        //     i.sign.in.icon
-        //     |Check In
+            | Incidents
+        a.item(href='/offices' class="{{isActivePath '/offices'}}")
+            i.building.icon
+            | Offices
         .right.menu
             a.item(href='/admin' class="{{isActivePath '/admin'}}")
                 i.configure.icon

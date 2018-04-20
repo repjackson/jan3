@@ -1,0 +1,90 @@
+template(name='offices')
+    h1.ui.center.aligned.header 
+        i.edit.icon
+        | Offices
+    .ui.stackable.grid
+        .three.wide.column
+            #add_office.ui.fluid.button
+                i.plus.icon
+                |Add
+        .thirteen.wide.column
+            .ui.centered.stackable.cards
+                each offices
+                    +office_card
+
+template(name='office_card')
+    .ui.card
+        .content
+            a.header(href="/view/#{_id}") #{office_name}
+        .content
+            .ui.list
+                +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
+                +list_item key='office_name' label='Office Name'
+                +list_item key='office_address' label='Office Address'
+                +list_item key='phone_number' label='Phone Number'
+                +list_item key='email_address' label='Email Address'
+                +list_item key='level_1_user_ud' label='Level 1 User Id'
+                +list_item key='level_2_user_ud' label='Level 2 User Id'
+                +list_item key='level_3_user_ud' label='Level 3 User Id'
+        +view_button
+        
+        
+        
+template(name='office_edit')
+    h1.ui.center.aligned.header Edit Office #{jan_office_id}
+    .ui.padded.stackable.centered.grid
+        .eight.wide.column
+            .ui.large.form
+                +edit_text_field key='jan_office_id' label='Jan Pro Office ID' icon='building'
+                +edit_text_field key='office_name' label='Office Name' icon='code'
+                +edit_text_field key='office_address' label='Office Address' icon='compass'
+                +edit_text_field key='phone_number' label='Phone Number' icon='phone'
+                +edit_text_field key='email_address' label='Email Address' icon='envelope'
+                +edit_text_field key='level_1_user_ud' label='Level 1 User Id' icon='user' 
+                +edit_text_field key='level_2_user_ud' label='Level 2 User Id' icon='user'
+                +edit_text_field key='level_3_user_ud' label='Level 3 User Id' icon='user'
+        .four.wide.column
+            +save_button
+            .ui.hidden.divider
+            #delete.ui.basic.fluid.button
+                i.trash.icon
+                | Delete
+        
+        
+template(name='office_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                a.ui.button(href='/offices')
+                    i.left.chevron.icon
+                    | Offices
+            .ten.wide.column
+                h1.ui.center.aligned.header Office #{jan_office_id}
+            .three.wide.column
+        .row
+            .eight.wide.column
+                .ui.segment
+                    .ui.header Associated Users
+                .ui.segment
+                    .ui.header Associated Incidents
+                .ui.segment
+                    .ui.header Map
+            .four.wide.column
+                .ui.large.relaxed.list
+                    +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
+                    +list_item key='office_name' label='Office Name'
+                    +list_item key='office_address' label='Office Address'
+                    +list_item key='phone_number' label='Phone Number'
+                    +list_item key='email_address' label='Email Address'
+                    +list_item key='level_1_user_ud' label='Level 1 User Id'
+                    +list_item key='level_2_user_ud' label='Level 2 User Id'
+                    +list_item key='level_3_user_ud' label='Level 3 User Id'
+                +edit_button
+                
+                
+
+template(name='list_item')
+    .item
+        i.icon(class='icon')
+        .content
+            .description #{label}: #{key_value}
