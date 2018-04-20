@@ -20,18 +20,7 @@ if Meteor.isClient
             FlowRouter.go "/person/edit/#{id}"
     
 
-    Template.person_view.helpers
-        person: -> 
-            doc_id = FlowRouter.getParam('doc_id')
-            # console.log doc_id
-            Docs.findOne doc_id 
-    
     Template.person_edit.helpers
-        person: -> 
-            doc_id = FlowRouter.getParam('doc_id')
-            # console.log doc_id
-            Docs.findOne doc_id 
-
         unassigned_roles: ->
             role_list = [
                 'admin'

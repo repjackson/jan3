@@ -1,22 +1,25 @@
 template(name='incidents')
-    h1.ui.center.aligned.header 
-        i.edit.icon
-        |Incidents
-    .ui.stackable.grid
-        .three.wide.column
-            #add_incident.ui.fluid.button
-                i.plus.icon
-                |Add
-            .ui.dividing.header
-                i.filter.icon
-                |Filters
-            .ui.dividing.header Type
-            .ui.dividing.header Status
-            .ui.dividing.header Office
-        .thirteen.wide.column
-            .ui.centered.stackable.cards
-                each incidents
-                    +incident_card
+    .ui.stackable.padded.centered.grid
+        .centered.row
+            .three.wide.column
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    i.edit.icon
+                    |Incidents
+            .three.wide.column
+        .centered.row
+            .three.wide.column
+                +add_button type='incident' label='Incident'
+                .ui.dividing.header
+                    i.filter.icon
+                    |Filters
+                .ui.dividing.header Type
+                .ui.dividing.header Status
+                .ui.dividing.header Office
+            .thirteen.wide.column
+                .ui.centered.stackable.cards
+                    each incidents
+                        +incident_card
 
 
 template(name='my_incidents')
@@ -110,6 +113,7 @@ template(name='incident_edit')
         .four.wide.column
             .ui.large.form
                 +edit_text_field key='jan_office_id' label='Jan Pro Office ID' icon='building'
+                +edit_text_field key='customer_id' label='Customer ID' icon='user'
                 +edit_number_field key='incident_number' label='Number' icon='hashtag'
                 +edit_date_field key='incident_date' label='Date' icon='calendar'
             .ui.hidden.divider
@@ -124,12 +128,14 @@ template(name='incident_edit')
         
 template(name='incident_view')
     .ui.padded.stackable.centered.grid
-        // .row
-        //     a.ui.top.left.attached.button(href="/incidents")
-        //         i.arrow.left.icon
-        //         |Incidents
         .centered.row
-            h1.ui.center.aligned.header Incident #{incident_number}
+            .three.wide.column
+                a.ui.top.left.attached.button(href="/incidents")
+                    i.chevron.left.icon
+                    |Incidents
+            .ten.wide.column
+                h1.ui.center.aligned.header Incident #{incident_number}
+            .three.wide.column
         .row
             .eight.wide.column
                 if image_id
@@ -142,47 +148,19 @@ template(name='incident_view')
                 +comments
             .four.wide.column
                 .ui.large.relaxed.list
-                    .item
-                        i.user.icon
-                        .content
-                            .description Customer ID: #{customer_id}
-                    .item
-                        i.hashtag.icon
-                        .content
-                            .description Number: #{incident_number}
-                    .item
-                        i.calendar.icon
-                        .content
-                            .description Date: #{incident_date}
-                    .item
-                        i.building.icon
-                        .content
-                            .description Jan-Pro Office Id: #{jan_office_id}
-                    .item
-                        i.user.icon
-                        .content
-                            .description Logged by:
-                                +author_info
-                    .item
-                        i.clipboard.icon
-                        .content
-                            .description
-                                +incident_type_label
-                    .item
-                        i.file.image.icon
-                        .content
-                            .description Associated Documents:
-                    .item
-                        i.id.card.icon
-                        .content
-                            .description Jan-Pro Office Id:
-                .ui.dividing.header 
-                    i.checkmark.icon
-                    |Incident Status
-                h4.ui.header Logged Date: #{formal_when}
-                .incident_edit.ui.fluid.large.basic.button
-                    i.edit.icon
-                    |Edit
+                    +list_item key='customer_id' label='Customer ID' icon='user'
+                    +list_item icon='hashtag' label='Number' key='incident_number'
+                    +list_item icon='calendar' label='Date' key='incident_date'
+                    +list_item icon='building' label='Jan-Pro Office Id' key='jan_office_id'
+                    +list_item icon='file.image' label='Associated Documents'
+                .ui.header
+                    | Logged
+                    +author_info
+                .ui.header #{formal_when}
+                .ui.header
+                    +incident_type_label
+                .ui.hidden.divider
+                +edit_button
         .row
             .twelve.wide.column
                 .ui.fluid.steps

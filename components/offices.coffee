@@ -14,10 +14,8 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe('docs',[],'office')
     Template.offices.helpers
         offices: ->  Docs.find { type:'office'}
-    Template.offices.events
-        'click #add_office': -> 
-            id = Docs.insert type:'office'
-            FlowRouter.go "/edit/#{id}"
+
+
     
     
     Template.office_edit.onCreated ->

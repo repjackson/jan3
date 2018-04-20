@@ -1,10 +1,16 @@
 template(name='people') 
-    .ui.container
-        h1.ui.center.aligned.header People
-            i#add_person.green.plus.link.icon 
-        .ui.centered.cards
-            each people
-                +person_card
+    .ui.padded.stackable.grid
+        .centered.row
+            h1.ui.header 
+                i.users.icon
+                |Users
+        .row
+            .four.wide.column
+                +add_button type='person' label='Person'
+            .twelve.wide.column
+                .ui.centered.cards
+                    each people
+                        +person_card
                 
 template(name='person_card')                
     .ui.card
@@ -37,7 +43,7 @@ template(name='person_view')
                     i.left.chevron.icon
                     | People
             .ui.ten.wide.column
-                a(href="/person/#{_id}")
+                a(href="/view/#{_id}")
                     h2.ui.center.aligned.header #{first_name} #{last_name}
             .ui.three.wide.column
         .row
@@ -68,7 +74,7 @@ template(name='person_edit')
                     if first_name
                         |#{first_name} #{last_name}
                     else
-                        |Person
+                        |People
         .row
             .eight.wide.column
                 .ui.form

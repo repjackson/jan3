@@ -7,3 +7,45 @@ template(name='author_info')
         a(href="/user/#{username}") #{username} 
         // +staus_indicator
     // .ui.sub.header #{when}
+
+
+template(name='list_item')
+    .item
+        i.icon(class=icon)
+        .content
+            .description 
+                |#{label}
+                strong #{key_value}
+
+
+template(name='toggle_boolean')
+    .field
+        if featured
+            #make_unfeatured.ui.basic.icon.button
+                i.toggle.on.icon
+        else
+            #make_featured.ui.basic.icon.button
+                i.toggle.off.icon
+        if featured
+            .ui.green.basic.label Featured
+        else
+            .ui.basic.label Unfeatured
+
+template(name='save_button')
+    a.ui.fluid.basic.big.button(href="/view/#{_id}") 
+        i.save.icon
+        strong Save
+template(name='edit_button')
+    a.ui.fluid.basic.large.button(href="/edit/#{_id}") 
+        i.edit.icon
+        strong Edit
+
+template(name='view_button')
+    a.ui.button(href="/view/#{_id}") 
+        |View
+        i.chevron.right.icon
+        
+template(name='add_button')
+    #add.ui.fluid.button
+        i.plus.icon
+        |Add #{label}
