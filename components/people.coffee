@@ -4,25 +4,9 @@ if Meteor.isClient
             main: 'people'
             
             
-    FlowRouter.route '/person/edit/:doc_id', action: ->
-        BlazeLayout.render 'layout', 
-            main: 'edit_person'
-    
-    FlowRouter.route '/person/view/:doc_id', action: ->
-        BlazeLayout.render 'layout', 
-            main: 'person_page'
-    
-    
     Template.people.onCreated ->
         @autorun -> Meteor.subscribe('docs', [], 'person')
    
-    Template.edit_person.onCreated ->
-        @autorun -> Meteor.subscribe('doc', FlowRouter.getParam('doc_id'))
-
-    Template.person_page.onCreated ->
-        @autorun -> Meteor.subscribe('doc', FlowRouter.getParam('doc_id'))
-
-
 
     Template.people.helpers
         people: -> 
@@ -36,13 +20,13 @@ if Meteor.isClient
             FlowRouter.go "/person/edit/#{id}"
     
 
-    Template.person_page.helpers
+    Template.person_view.helpers
         person: -> 
             doc_id = FlowRouter.getParam('doc_id')
             # console.log doc_id
             Docs.findOne doc_id 
     
-    Template.edit_person.helpers
+    Template.person_edit.helpers
         person: -> 
             doc_id = FlowRouter.getParam('doc_id')
             # console.log doc_id
@@ -51,16 +35,13 @@ if Meteor.isClient
         unassigned_roles: ->
             role_list = [
                 'admin'
-                'desk'
-                'staff'
-                'resident'
-                'owner'
-                'board'
+                'customer'
+                'user_master'
                 ]
             _.difference role_list, @roles
 
 
-    Template.edit_person.events
+    Template.person_edit.events
         'click #delete_person': (e,t)->
             swal {
                 title: 'Delete person?'
@@ -85,33 +66,3 @@ if Meteor.isClient
             Docs.update FlowRouter.getParam('doc_id'),
                 $pull: 
                     roles: @valueOf()
-
-        'blur #first_name': ->
-            first_name = $('#first_name').val().trim()
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: first_name: first_name
-
-        'blur #last_name': ->
-            last_name = $('#last_name').val().trim()
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: last_name: last_name
-
-        'blur #email': ->
-            email = $('#email').val().trim()
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: email: email
-
-        'blur #phone': ->
-            phone = $('#phone').val().trim()
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: phone: phone
-
-        'blur #company': ->
-            company = $('#company').val().trim()
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: company: company
-
-        'blur #position': ->
-            position = $('#position').val().trim()
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: position: position
