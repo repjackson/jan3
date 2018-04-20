@@ -1,7 +1,22 @@
 if Meteor.isClient
     Template.incident_view.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    Template.incident_view.helpers
+ 
+    Template.incident_view.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.checkbox').checkbox()
+        #     $('.ui.tabular.menu .item').tab()
+        , 400
+        
+        # $('.step').on('click', () ->
+        #     console.log 'hi'
+        #     $.tab('change tab', 'two')
+        #     )
+    Template.incident_level_set.events
+        'click .set_level': ->
+            incident = Template.parentData(1)
+            Docs.update incident._id,
+                $set: current_level:@level
     
     Template.incident_type_label.helpers
         incident_type_label: ->
@@ -17,6 +32,9 @@ if Meteor.isClient
                 when 'poor_service' then 'blue basic'
                 when 'employee_issue' then 'violet basic'
                 when 'other' then 'grey'
+    
+    
+    
             
         
     FlowRouter.route '/incidents', action: ->
@@ -27,6 +45,7 @@ if Meteor.isClient
     
     Template.incidents.onCreated ->
         @autorun -> Meteor.subscribe('docs',[],'incident')
+        @autorun -> Meteor.subscribe('docs',[],'comment')
     Template.incidents.helpers
         incidents: ->  Docs.find { type:'incident'}
     

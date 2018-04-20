@@ -1,27 +1,33 @@
-template(name='notifications')
+template(name='mail')
     .ui.stackable.centered.padded.grid
         .centered.row
             .three.wide.column
             .ten.wide.column
                 h1.ui.center.aligned.header 
-                    i.bell.icon
-                    | Notifications
+                    i.envelope.icon
+                    | Mail
             .three.wide.column
         .centered.row
             .four.wide.column
-                .ui.vertical.large.menu
+                #compose.ui.fluid.button
+                    i.plus.icon
+                    | New
+                .ui.vertical.large.fluid.menu
                     .item
                         |Inbox
                         i.inbox.icon
+                    .item
+                        |Drafts
+                        i.edit.icon
+                    .item
+                        |Sent
+                        i.send.icon
                     .item
                         | Archived
                         i.archive.icon
             .twelve.wide.column
                 .ui.segment
-                    .ui.header notifications
+                    .ui.header mail
 
                 
 
-template(name='notification')
-    .item
-        .header notice

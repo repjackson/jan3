@@ -1,31 +1,25 @@
 template(name='comments')
-    h3.ui.dividing.header 
-        i.comments.icon
-        |Comments
-    // .ui.disabled.button 
-    //         i.plus.icon
-    //         |Add Comment
-    .ui.comments
-        .comment
-            .disabled.avatar
-                i.user.icon
-            .content
-                a.disabled.author User 1
-                .metadata
-                    span.date Yesterday at 12:30AM
-                .text
-                    p Comment
-                .actions
-                    a.disabled.reply Reply
-            .comments
-                .comment
-                    .disabled.avatar
-                        i.user.icon
-                    .content
-                        a.disabled.author User 2
-                        .metadata
-                            span.date Just now
-                        .text
-                            | Response
-                        .actions
-                            a.disabled.reply Reply
+    .ui.fluid.styled.accordion
+        .active.title
+            h3 
+                i.comments.icon
+                |#{comment_count} Comments
+                i.dropdown.icon
+        .active.content
+            .ui.comments
+                each comments
+                    .comment
+                        .disabled.avatar
+                            i.user.icon
+                        .content
+                            a.disabled.author #{author.username}
+                            .metadata
+                                span.date #{when}
+                            .text
+                                p #{text}
+                            .actions
+                                // a.reply Reply
+                                a.delete_comment Delete
+            .ui.large.fluid.icon.input
+                i.plus.icon
+                input#new_comment(type='text')

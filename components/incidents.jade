@@ -155,25 +155,103 @@ template(name='incident_view')
                         +person_card
         .row
             .sixteen.wide.column
-                .ui.fluid.steps
-                    .active.step
-                        i.edit.icon
-                        .content
-                            .title Process
-                            .description Fill in required fields to submit for processing
-                    .step
-                        i.circle.outline.icon
-                        .content
-                            .title Level 2
-                            .description
-                    .disabled.step
-                        i.dot.circle.outline.icon
-                        .content
-                            .title Level 3
-                    .disabled.step
-                        i.checkmark.icon
-                        .content
-                            .title Satisfaction Survey
+                .ui.header 
+                    i.tasks.icon
+                    |Status: #{current_level}
+                .ui.segments
+                    .ui.segment
+                        .ui.header
+                            i.edit.icon
+                            | Submit
+                        .description
+                            .ui.segment
+                                h4.ui.header
+                                    .ui.toggle.checkbox
+                                        input(type="checkbox" checked="checked")
+                                        label 2
+
+                                    |Fields Completed
+                                |Fill in required fields to submit for processing
+                            .ui.segment
+                                h4.ui.header
+                                    .ui.toggle.checkbox
+                                        input(type="checkbox" checked="checked")
+                                        label 2
+
+                                    |Processed
+                            .ui.segment
+                                h4.ui.header
+                                    .ui.toggle.checkbox
+                                        input(type="checkbox" checked="checked")
+                                        label 2
+
+                                    |Completed within SLA
+                    // +incident_level_set level=1
+                    .ui.segment
+                        .ui.header
+                            i.circle.outline.icon
+                            | Level 2
+                        .description
+                            .ui.segment
+                                h4.ui.header
+                                    .ui.toggle.checkbox
+                                        input(type="checkbox" checked="checked")
+                                        label 2
+
+                                    |Processed
+                            .ui.segment
+                                h4.ui.header
+                                    .ui.toggle.checkbox
+                                        input(type="checkbox" checked="checked")
+                                        label 2
+
+                                    |Completed within SLA
+                    // +incident_level_set level=2
+                    .ui.segment
+                        .ui.header
+                            i.dot.circle.outline.icon
+                            | Level 3
+                        .description
+                            .ui.segment
+                                h4.ui.header
+                                    .ui.toggle.checkbox
+                                        input(type="checkbox" checked="checked")
+                                        label 2
+
+                                    |Processed
+                            .ui.segment
+                                h4.ui.header
+                                    .ui.toggle.checkbox
+                                        input(type="checkbox" checked="checked")
+                                        label 2
+
+                                    |Completed within SLA
+                    // +incident_level_set level=3
+                    .ui.segment
+                        .ui.header
+                            i.checkmark.icon
+                            | Satisfaction Survey
+                        .description
+                            .ui.segment
+                                h4.ui.header
+                                    .ui.toggle.checkbox
+                                        input(type="checkbox" checked="checked")
+                                        label 2
+
+                                    |Processed
+                            .ui.segment
+                                h4.ui.header
+                                    .ui.toggle.checkbox
+                                        input(type="checkbox" checked="checked")
+                                        label 2
+
+                                    |SLA
+                    // +incident_level_set level=4
+                            
+template(name='incident_level_set')
+    .set_level.ui.bottom.attached.button 
+        |Set to #{level}
+                        
                         
 template(name='incident_type_label')                    
     .ui.label(class=type_label_class) #{incident_type_label}

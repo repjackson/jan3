@@ -22,6 +22,7 @@ Docs.helpers
     when: -> moment(@timestamp).fromNow()
     office: -> Docs.findOne @referenced_office_id
     customer: -> Docs.findOne @referenced_customer_id
+    comment_count: -> Docs.find({type:'comment', parent_id:@_id}).count()
 
 Meteor.methods
     add: (tags=[])->
@@ -55,25 +56,44 @@ if Meteor.isServer
         # update: (user_id, doc) -> doc.author_id is user_id or Roles.userIsInRole(user_id, 'admin')
         # remove: (user_id, doc) -> doc.author_id is user_id or Roles.userIsInRole(user_id, 'admin')
         update: (user_id, doc) -> true
-        remove: (user_id, doc) -> user_d
+        remove: (user_id, doc) -> user_id
     
     
-    
-    
-    Meteor.publish 'docs', (selected_tags, type)->
-    
-        # user = Meteor.users.findOne @userId
-        # current_herd = user.profile.current_herd
-    
-        self = @
-        match = {}
-        # selected_tags.push current_herd
-        # match.tags = $all: selected_tags
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
-        if type then match.type = type
+    publishComposite 'docs', (selected_tags, type)->
+        {
+            find: ->
+                self = @
+                match = {}
+                if type then match.type = type
+                Docs.find match,
+                    limit:20
+            children: [
+                {
+                    find: (doc)-> Meteor.users.find _id:doc.author_id
+                }
+                {
+                    find: (doc)-> Docs.find _id:doc.parent_id
+                }
+            ]
+        }
 
-        Docs.find match,
-            limit: 20
+
+
+    
+    # Meteor.publish 'docs', (selected_tags, type)->
+    
+    #     # user = Meteor.users.findOne @userId
+    #     # current_herd = user.profile.current_herd
+    
+    #     self = @
+    #     match = {}
+    #     # selected_tags.push current_herd
+    #     # match.tags = $all: selected_tags
+    #     if selected_tags.length > 0 then match.tags = $all: selected_tags
+    #     if type then match.type = type
+
+    #     Docs.find match,
+    #         limit: 20
             
     
     publishComposite 'doc', (id)->
@@ -88,6 +108,9 @@ if Meteor.isServer
                 }
                 {
                     find: (doc)-> Docs.find _id:doc.referenced_customer_id
+                }
+                {
+                    find: (doc)-> Docs.find _id:doc.parent_id
                 }
             ]
         }

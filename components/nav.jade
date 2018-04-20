@@ -28,9 +28,9 @@ template(name='nav')
             a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}")
                 i.configure.icon
                 |Admin
-            .icon.item
+            a.icon.item(href="/notifications")
                 i.bell.icon
-            .icon.item
+            a.icon.item(href='/mail')
                 i.envelope.icon
             // .ui.simple.dropdown.icon.item
             //     i.alarm.icon
