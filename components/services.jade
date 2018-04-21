@@ -63,25 +63,19 @@ template(name='service_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                a.ui.button(href='/services')
-                    i.left.chevron.icon
-                    | Services
+                +link_button link='/services' icon='left chevron' label='Services'
             .ten.wide.column
                 h1.ui.center.aligned.header 
                     i.truck.icon
                     |Service #{jan_service_id}
             .three.wide.column
+                +edit_button
         .row
             .five.wide.column
-                .ui.segment
-                    .ui.header 
-                        i.users.icon
-                        |Associated Users
+                +associated_users
+                +comments
             .six.wide.column
-                .ui.segment
-                    .ui.header 
-                        i.edit.icon
-                        |Associated Incidents
+                +associated_incidents
                 +office_map
             .five.wide.column
                 .ui.large.relaxed.list
@@ -92,6 +86,5 @@ template(name='service_view')
                     +list_item key='service_date' label='Service Date' icon='calendar'
                     +list_item key='service_status' label='Service Status' icon='checkmark'
                     +list_item key='service_fee' label='Service Fee' icon='dollar'
-                +edit_button
                 
                 

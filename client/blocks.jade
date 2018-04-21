@@ -48,7 +48,7 @@ template(name='view_button')
 template(name='add_button')
     #add.ui.fluid.button
         i.plus.icon
-        |Add #{label}
+        |#{label}
 
 
 template(name='reference_office')
@@ -195,3 +195,31 @@ template(name='bookmark_button')
     else
         .ui.circular.icon.active.button
             i.bookmark.icon
+            
+            
+template(name='associated_incidents')
+    .ui.segment
+        .ui.header 
+            i.edit.icon
+            |Associated Incidents
+            
+            
+            
+template(name='associated_users')
+    .ui.segment
+        .ui.header 
+            i.users.icon
+            |Associated Users
+            
+            
+template(name='call_phone_button')
+    a.ui.fluid.button(href="tel:#{phone_number}") 
+        i.phone.icon
+        |Call #{phone_number}
+            
+            
+            
+template(name='link_button')    
+    a.ui.button(href=link)
+        i.icon(class=icon)
+        | #{label}

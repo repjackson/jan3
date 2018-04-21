@@ -18,5 +18,5 @@ if Meteor.isClient
     Template.dashboard.helpers
         office: -> Docs.findOne type:'office'
         person: -> Docs.findOne type:'person'
-        incidents: -> Docs.find {type:'incident'}, limit:5
+        incidents: -> Docs.find {type:'incident'}, limit:3
     

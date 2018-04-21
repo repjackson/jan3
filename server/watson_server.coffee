@@ -42,13 +42,14 @@ Meteor.methods
         else return 
         
     call_watson: (parameters, doc_id) ->
+        console.log 'calling watson'
         natural_language_understanding.analyze parameters, Meteor.bindEnvironment((err, response) ->
             if err
                 console.log 'error:', err
             else
                 keyword_array = _.pluck(response.keywords, 'text')
                 lowered_keywords = keyword_array.map (tag)-> tag.toLowerCase()
-                # console.dir response
+                console.dir response
                 Docs.update { _id: doc_id }, 
                     $set:
                         watson: response

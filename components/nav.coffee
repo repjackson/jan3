@@ -14,6 +14,11 @@ if Meteor.isClient
             $('.ui.dropdown').dropdown()
         , 400
         
+    Template.nav.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.dropdown').dropdown()
+        , 1000
+        
         
         
     Template.nav.helpers

@@ -29,7 +29,8 @@ template(name='office_card')
                 +list_item key='level_1_user_ud' label='Level 1 User Id' icon='user'
                 +list_item key='level_2_user_ud' label='Level 2 User Id' icon='user'
                 +list_item key='level_3_user_ud' label='Level 3 User Id' icon='user'
-        +view_button
+        .content
+            +view_button
         
         
         
@@ -58,24 +59,19 @@ template(name='office_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                a.ui.button(href='/offices')
-                    i.left.chevron.icon
-                    | Offices
+                +link_button link='/offices' icon='left chevron' label='Offices'
             .ten.wide.column
                 h1.ui.center.aligned.header Office #{jan_office_id}
             .three.wide.column
+                +edit_button
         .row
             .five.wide.column
-                .ui.segment
-                    .ui.header Associated Users
+                +associated_users
+                +comments
             .six.wide.column
-                .ui.segment
-                    .ui.header Associated Incidents
                 +office_map
             .five.wide.column
-                a.ui.fluid.button(href="tel:#{phone_number}") 
-                    i.phone.icon
-                    |Call #{phone_number}
+                +call_phone_button
                 .ui.large.relaxed.list
                     +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
                     +list_item key='office_name' label='Office Name' icon='code'
@@ -85,7 +81,6 @@ template(name='office_view')
                     +list_item key='level_1_user_ud' label='Level 1 User Id' icon='user'
                     +list_item key='level_2_user_ud' label='Level 2 User Id' icon='user'
                     +list_item key='level_3_user_ud' label='Level 3 User Id' icon='user'
-                +edit_button
                 
                 
 

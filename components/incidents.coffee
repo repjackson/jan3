@@ -43,9 +43,9 @@ if Meteor.isClient
         
         type_label_class: ->
             switch @incident_type
-                when 'missed_service' then 'teal basic'
-                when 'poor_service' then 'blue basic'
-                when 'employee_issue' then 'violet basic'
+                when 'missed_service' then 'basic'
+                when 'poor_service' then 'basic'
+                when 'employee_issue' then 'basic'
                 when 'other' then 'grey'
     
     

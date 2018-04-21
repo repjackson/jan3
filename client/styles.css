@@ -2,6 +2,10 @@
     margin-top: 12px;
 }
 
+body {
+	margin-top:50px;
+}
+
 
 /* Mobile */
  @media only screen and (max-width: 767px) {

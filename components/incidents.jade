@@ -62,21 +62,21 @@ template(name='incident_item')
                 +incident_type_label
                 .ui.label #{office.office_name}
                 .ui.label Level #{current_level}
-            .ui.basic.segment.description
+            .description
                 .large130 #{incident_details}
             .meta by #{author.username}
-            .meta Logged #{when}
-            .meta
+            .meta 
+                |Logged #{when}
                 +incident_level_set level=1
                 +incident_level_set level=2
                 +incident_level_set level=3
                 +incident_level_set level=4
+                +view_button
             if comment_count
-                .meta 
+                a.meta(href="/view/#{_id}")
                     i.comments.icon
                     |#{comment_count} Comments
-            .right.floated
-                +view_button
+            // .right.floated
                 
 template(name='incident_card')
     .ui.card
@@ -160,21 +160,7 @@ template(name='incident_view')
                 +edit_button
 
         .row
-            .ten.wide.column
-                if image_id
-                    img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                +call_visual_analysis
-                if visual
-                    each visual
-                        .ui.label #{class}
-                .ui.dividing.header 
-                    i.align.left.icon
-                    |Details
-                .ui.basic.segment
-                    strong #{incident_details}
-                +call_watson
-                +comments
-            .six.wide.column
+            .four.wide.column
                 .ui.large.relaxed.list
                     +list_item key='customer_id' label='Customer ID' icon='user'
                     +list_item icon='hashtag' label='Number' key='incident_number'
@@ -186,26 +172,40 @@ template(name='incident_view')
                     | Logged
                     +author_info
                 .ui.header #{formal_when}
-                with office
-                    +office_card
-                .ui.hidden.divider
-                if customer
-                    with customer
-                        +person_card
-        .row
-            .sixteen.wide.column
+                .ui.divider
+                if watson
+                    +doc_sentiment
+                    +watson_keywords
+                    +doc_emotion
+            .eight.wide.column
+                if image_id
+                    img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
+                +call_visual_analysis
+                if visual
+                    each visual
+                        .ui.label #{class}
+                .ui.dividing.header 
+                    i.align.left.icon
+                    |Details
+                .ui.basic.segment
+                    strong {{nl2br incident_details}}
+                +call_watson
+                +analyzed_watson_keywords
+                +comments
                 .ui.header 
                     i.tasks.icon
-                    |Status: #{current_level}
-                .ui.segments
-                    .ui.segment
-                        .ui.header
+                    |Status (current level: #{current_level})
+                .ui.styled.accordion
+                    .title
+                        h3
                             i.edit.icon
                             | Submit
+                            i.dropdown.icon
+                    .content    
                         .description
                             .ui.segment
                                 h4.ui.header
-                                    .ui.disabled.toggle.checkbox
+                                    .ui.toggle.checkbox
                                         input(type="checkbox" checked="checked")
                                         // label 2
 
@@ -213,79 +213,92 @@ template(name='incident_view')
                                 |Fill in required fields to submit for processing
                             .ui.segment
                                 h4.ui.header
-                                    .ui.disabled.toggle.checkbox
+                                    .ui.toggle.checkbox
                                         input(type="checkbox" checked="checked")
                                         // label 2
 
                                     |Processed
                             .ui.segment
                                 h4.ui.header
-                                    .ui.disabled.toggle.checkbox
+                                    .ui.toggle.checkbox
                                         input(type="checkbox" checked="checked")
                                         // label 2
 
                                     |Completed within SLA
-                    +incident_level_set level=1
-                    .ui.segment
-                        .ui.header
+                        +incident_level_set level=1
+                    .title
+                        h3
                             i.circle.outline.icon
                             | Level 2
+                            i.dropdown.icon
+                    .content    
                         .description
                             .ui.segment
                                 h4.ui.header
-                                    .ui.disabled.toggle.checkbox
+                                    .ui.toggle.checkbox
                                         input(type="checkbox" checked="checked")
                                         // label 2
 
                                     |Processed
                             .ui.segment
                                 h4.ui.header
-                                    .ui.disabled.toggle.checkbox
+                                    .ui.toggle.checkbox
                                         input(type="checkbox" checked="checked")
                                         // label 2
 
                                     |Completed within SLA
-                    +incident_level_set level=2
-                    .ui.segment
-                        .ui.header
+                        +incident_level_set level=2
+                    .title
+                        h3
                             i.dot.circle.outline.icon
                             | Level 3
+                            i.dropdown.icon
+                    .content
                         .description
                             .ui.segment
                                 h4.ui.header
-                                    .ui.disabled.toggle.checkbox
+                                    .ui.toggle.checkbox
                                         input(type="checkbox" checked="checked")
                                         // label 2
 
                                     |Processed
                             .ui.segment
                                 h4.ui.header
-                                    .ui.disabled.toggle.checkbox
+                                    .ui.toggle.checkbox
                                         input(type="checkbox" checked="checked")
                                         // label 2
 
                                     |Completed within SLA
-                    +incident_level_set level=3
-                    .ui.segment
-                        .ui.header
+                        +incident_level_set level=3
+                    .title
+                        h3
                             i.checkmark.icon
                             | Satisfaction Survey
+                            i.dropdown.icon
+                    .content
                         .description
                             .ui.segment
                                 h4.ui.header
-                                    .ui.disabled.toggle.checkbox
+                                    .ui.toggle.checkbox
                                         input(type="checkbox" checked="checked")
                                         // label 2
 
                                     |Processed
                             .ui.segment
                                 h4.ui.header
-                                    .ui.disabled.toggle.checkbox
+                                    .ui.toggle.checkbox
                                         input(type="checkbox" checked="checked")
                                         // label 2
 
                                     |SLA
-                    +incident_level_set level=4
+                        +incident_level_set level=4
+            .four.wide.column
+                with office
+                    +office_card
+                .ui.hidden.divider
+                if customer
+                    with customer
+                        +person_card
                             
 template(name='incident_level_set')
     .set_level.ui.compact.button(title='Set Level')

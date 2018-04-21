@@ -28,13 +28,11 @@ Template.doc_emotion.helpers
     is_positive: -> if @doc_sentiment_label is 'positive' then true else false    
 
 
-    # Template.analyzed_watson_keywords.helpers
+Template.analyzed_watson_keywords.helpers
     relevance_percent: -> (@relevance*100).toFixed()
 
     sentiment_percent: -> 
         (@sentiment.score*100).toFixed()
-
-
 
     sadness_percent: -> (@sadness*100).toFixed()            
     joy_percent: -> (@joy*100).toFixed()   

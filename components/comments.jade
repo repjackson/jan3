@@ -1,7 +1,8 @@
 template(name='comments')
-    .ui.fluid.styled.accordion
+    .ui.hidden.divider
+    .ui.fluid.large.styled.accordion
         .active.title
-            h3 
+            h3
                 i.comments.icon
                 |#{comment_count} Comments
                 i.dropdown.icon
@@ -9,10 +10,13 @@ template(name='comments')
             .ui.comments
                 each comments
                     .comment
-                        .disabled.avatar
-                            i.user.icon
+                        a.avatar(href="/profile/#{author._id}")
+                            if author.profile.image_id
+                                img.ui.avatar.spaced.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                            else
+                                i.user.icon
                         .content
-                            a.disabled.author #{author.username}
+                            a.author(href="/profile/#{author._id}") #{author.username}
                             .metadata
                                 span.date #{when}
                             .text
@@ -20,6 +24,6 @@ template(name='comments')
                             .actions
                                 // a.reply Reply
                                 a.delete_comment Delete
-            .ui.large.fluid.icon.input
+            .ui.large.fluid.left.icon.input
                 i.plus.icon
                 input#new_comment(type='text')

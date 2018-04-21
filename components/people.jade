@@ -16,17 +16,15 @@ template(name='person_card')
     .ui.card
         .image
             a(href="/view/#{_id}")
-                img.ui.fluid.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
+                img.ui.fluid.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
         .content
             a(href="/view/#{_id}")
-                .ui.header #{first_name} #{last_name}
+                .ui.center.aligned.header #{first_name} #{last_name}
             each five_tags
                 .ui.compact.small.circular.button.person_tag(class=tag_class) 
                     strong #{this}
         .content
            .ui.list
-                +list_item key='first_name' label='First Name'
-                +list_item key='last_name' label='Last Name'
                 +list_item key='email' label='Email'
                 +list_item key='phone' label='Phone'
                 +list_item key='company' label='Company'
@@ -39,17 +37,16 @@ template(name='person_view')
     .ui.stackable.centered.grid
         .row
             .ui.three.wide.column
-                a.ui.button(href='/people')
-                    i.left.chevron.icon
-                    | People
+                +link_button link='/people' icon='left chevron' label='People'
             .ui.ten.wide.column
                 a(href="/view/#{_id}")
                     h2.ui.center.aligned.header #{first_name} #{last_name}
             .ui.three.wide.column
+                +edit_button
         .row
             .four.wide.column
                 .image
-                    img.ui.circular.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
+                    img.ui.rounded.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
                 .ui.large.relaxed.list
                     +list_item key='first_name' label='First Name'
                     +list_item key='last_name' label='Last Name'
@@ -57,17 +54,23 @@ template(name='person_view')
                     +list_item key='phone' label='Phone'
                     +list_item key='company' label='Company'
                     +list_item key='position' label='Position'
-                +edit_button
             .eight.wide.column
                 .ui.segment
                     .ui.header Recent Posts
                 .ui.segment
                     .ui.header Activity
+                .ui.segment
+                    .ui.header Linked Office
+                .ui.segment
+                    .ui.header Incidents
+                        
 
 
 template(name='person_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
+            .three.wide.column
+                +save_button
             .ten.wide.column
                 h1.ui.center.aligned.header
                     |Edit
@@ -75,6 +78,10 @@ template(name='person_edit')
                         |#{first_name} #{last_name}
                     else
                         |People
+            .three.wide.column
+                #delete_person.ui.fluid.button
+                    i.trash.icon
+                    |Delete
         .row
             .eight.wide.column
                 .ui.form
@@ -84,11 +91,17 @@ template(name='person_edit')
                     +edit_text_field key='phone' label='Phone'
                     +edit_text_field key='company' label='Company'
                     +edit_text_field key='position' label='Position'
+            .eight.wide.column
+                +edit_image_field
+                .ui.header 
+                    i.building.icon
+                    |Local Office
+                .ui.form
                     .field
                         label Roles
                         .ui.header Assigned Roles:
                         each roles
-                            .unassign_role.ui.blue.animated.fade.button
+                            .unassign_role.ui.active.animated.button
                                 .visible.content
                                     |#{this}
                                 .hidden.content
@@ -96,17 +109,8 @@ template(name='person_edit')
                                 
                         .ui.header Available Roles:
                         each unassigned_roles
-                            .assign_role.ui.basic.animated.fade.button 
+                            .assign_role.ui.animated.button 
                                 .visible.content
                                     |#{this}    
                                 .hidden.content
                                     i.plus.icon
-            .four.wide.column
-                +edit_image_field
-                .ui.hidden.divider
-                +save_button
-                .ui.hidden.divider
-                #delete_person.ui.basic.fluid.button
-                    i.trash.icon
-                    |Delete
-        
