@@ -24,6 +24,9 @@ template(name='nav')
         a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}")
             i.building.icon
             | Offices
+        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}")
+            i.shipping.fast.icon
+            | Services
         .right.menu
             a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}")
                 i.configure.icon

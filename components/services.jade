@@ -1,0 +1,97 @@
+template(name='services')
+    .ui.stackable.centered.padded.grid
+        .centered.row
+            .three.wide.column
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    i.edit.icon
+                    | Services
+            .three.wide.column
+        .centered.row
+            .three.wide.column
+                +add_button type='service' label='Service'
+            .thirteen.wide.column
+                .ui.centered.stackable.cards
+                    each services
+                        +service_card
+
+template(name='service_card')
+    .ui.card
+        .content
+            a.header(href="/view/#{_id}") #{jan_service_id}
+        .content
+            .ui.list
+                +list_item key='jan_service_id' label='Jan Pro Service ID' icon='hashtag'
+                +list_item key='jan_pro_office_id' label='Jan Pro Office ID' icon='building'
+                +list_item key='customer_id' label='Customer ID' icon='user'
+                +list_item key='service_type' label='Service Type' icon='clone'
+                +list_item key='service_date' label='Service Date' icon='calendar'
+                +list_item key='service_status' label='Service Status' icon='checkmark'
+                +list_item key='service_fee' label='Service Fee' icon='dollar'
+        .content
+            +bookmark_button
+            +view_button
+        
+        
+        
+template(name='service_edit')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +save_button
+            .ten.wide.column
+                h1.ui.center.aligned.header Edit Service #{jan_service_id}
+            .three.wide.column
+                #delete.ui.fluid.button
+                    i.trash.icon
+                    | Delete
+        .centered.row
+            .eight.wide.column
+                .ui.form
+                    +edit_text_field key='jan_service_id' label='Jan Pro Service ID' icon='hashtag'
+                    +edit_text_field key='jan_pro_office_id' label='Jan Pro Office ID' icon='building'
+                    +edit_text_field key='customer_id' label='Customer ID' icon='user'
+            .eight.wide.column
+                .ui.form
+                    +edit_text_field key='service_type' label='Service Type' icon='clone'
+                    +edit_date_field key='service_date' label='Service Date' icon='calendar'
+                    +edit_text_field key='service_status' label='Service Status' icon='checkmark'
+                    +edit_number_field key='service_fee' label='Service Fee' icon='dollar'
+        
+        
+template(name='service_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                a.ui.button(href='/services')
+                    i.left.chevron.icon
+                    | Services
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    i.truck.icon
+                    |Service #{jan_service_id}
+            .three.wide.column
+        .row
+            .five.wide.column
+                .ui.segment
+                    .ui.header 
+                        i.users.icon
+                        |Associated Users
+            .six.wide.column
+                .ui.segment
+                    .ui.header 
+                        i.edit.icon
+                        |Associated Incidents
+                +office_map
+            .five.wide.column
+                .ui.large.relaxed.list
+                    +list_item key='jan_service_id' label='Jan Pro Service ID' icon='hashtag'
+                    +list_item key='jan_pro_office_id' label='Jan Pro Office ID' icon='building'
+                    +list_item key='customer_id' label='Customer ID' icon='user'
+                    +list_item key='service_type' label='Service Type' icon='clone'
+                    +list_item key='service_date' label='Service Date' icon='calendar'
+                    +list_item key='service_status' label='Service Status' icon='checkmark'
+                    +list_item key='service_fee' label='Service Fee' icon='dollar'
+                +edit_button
+                
+                

@@ -65,14 +65,14 @@ template(name='office_view')
                 h1.ui.center.aligned.header Office #{jan_office_id}
             .three.wide.column
         .row
-            .eight.wide.column
+            .five.wide.column
                 .ui.segment
                     .ui.header Associated Users
+            .six.wide.column
                 .ui.segment
                     .ui.header Associated Incidents
-                    +google_places_input
                 +office_map
-            .four.wide.column
+            .five.wide.column
                 a.ui.fluid.button(href="tel:#{phone_number}") 
                     i.phone.icon
                     |Call #{phone_number}
@@ -92,6 +92,7 @@ template(name='office_view')
 template(name='office_map')
     .ui.segment
         .ui.header Map
+        +google_places_input
         #map
         
 template(name='google_places_input')
