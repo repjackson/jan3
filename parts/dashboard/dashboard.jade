@@ -21,6 +21,7 @@ template(name='dashboard')
                                 a.item(href="/view/#{_id}")
                                     .ui.tiny.rounded.image
                                         img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
+                                        +doc_sentiment
                                     .content
                                         .header ##{incident_number}
                                             +incident_type_label

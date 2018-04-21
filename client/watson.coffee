@@ -28,19 +28,19 @@ Template.doc_emotion.helpers
     is_positive: -> if @doc_sentiment_label is 'positive' then true else false    
 
 
-Template.analyzed_watson_keywords.helpers
+Template.watson_keywords.helpers
     relevance_percent: -> (@relevance*100).toFixed()
 
     sentiment_percent: -> 
         (@sentiment.score*100).toFixed()
 
     sadness_percent: -> (@sadness*100).toFixed()            
-    joy_percent: -> (@joy*100).toFixed()   
+    # joy_percent: -> (@joy*100).toFixed()   
     disgust_percent: -> (@disgust*100).toFixed()         
     anger_percent: -> (@anger*100).toFixed()
     fear_percent: -> (@fear*100).toFixed()
 
-Template.analyzed_watson_keywords.onRendered ->
+Template.watson_keywords.onRendered ->
     Meteor.setTimeout ->
         $('.progress').progress()
     , 2000
@@ -56,20 +56,20 @@ Template.call_watson.events
             # 'html': @content
             'text': @incident_details
             'features':
-                # 'entities':
-                #     'emotion': true
-                #     'sentiment': true
-                #     # 'limit': 2
+                'entities':
+                    'emotion': true
+                    'sentiment': true
+                    # 'limit': 2
                 'keywords':
                     'emotion': true
                     'sentiment': true
                     # 'limit': 2
-                # 'concepts': {}
-                # 'categories': {}
+                'concepts': {}
+                'categories': {}
                 'emotion': {}
                 # 'metadata': {}
-                # 'relations': {}
-                # 'semantic_roles': {}
+                'relations': {}
+                'semantic_roles': {}
                 'sentiment': {}
         Meteor.call 'call_watson', parameters, @_id, ->
             # alert "Transaction with Content Analysis created"

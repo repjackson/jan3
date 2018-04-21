@@ -81,7 +81,7 @@ template(name='incident_item')
 template(name='incident_card')
     .ui.card
         a.image(href="/view/#{_id}")
-            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' }}")
+            img.ui.rounded.image(src="{{c.url image_id  width=300 height=300 crop='fill' }}")
         .content
             .right.floated.meta
                 // .ui.circular.label(title='Incident Number') #{incident_number}
@@ -93,14 +93,11 @@ template(name='incident_card')
                 |Logged #{when}
             i.user.icon
             | #{author.username}
-        .content
-            +incident_level_set level=1
-            +incident_level_set level=2
-            +incident_level_set level=3
-            +incident_level_set level=4
         .content    
             .description
                 |#{incident_details}
+        .content
+            +doc_sentiment
         .content
             .right.floated
                 +incident_type_label
@@ -112,26 +109,15 @@ template(name='incident_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +save_button
-            .ten.wide.column
-                h1.ui.center.aligned.header Edit Incident #{incident_number}
-            .three.wide.column
                 #delete.ui.fluid.button
                     i.trash.icon
                     | Delete
+            .ten.wide.column
+                h1.ui.center.aligned.header Edit Incident #{incident_number}
+            .three.wide.column
+                +save_button
         .row
-            .five.wide.column
-                .ui.large.form
-                    +edit_image_field
-                    +edit_textarea key='incident_details' label='Details'
-                    .field
-                        label Type
-                        +toggle_key key='incident_type' value='missed_service' label='Missed Service'
-                        +toggle_key key='incident_type' value='poor_service' label='Poor Service'
-                        +toggle_key key='incident_type' value='employee_issue' label='Employee Issue'
-                        +toggle_key key='incident_type' value='other' label='Other'
-                    
-            .five.wide.column
+            .four.wide.column
                 .ui.large.form
                     +edit_number_field key='incident_number' label='Number' icon='hashtag'
                     +edit_date_field key='incident_date' label='Date' icon='calendar'
@@ -139,7 +125,18 @@ template(name='incident_edit')
                     if customer
                         with customer
                             +person_card
-            .five.wide.column
+                    
+            .eight.wide.column
+                .ui.large.form
+                    +edit_textarea key='incident_details' label='Details'
+                    +edit_image_field
+                    .field
+                        label Type
+                        +toggle_key key='incident_type' value='missed_service' label='Missed Service'
+                        +toggle_key key='incident_type' value='poor_service' label='Poor Service'
+                        +toggle_key key='incident_type' value='employee_issue' label='Employee Issue'
+                        +toggle_key key='incident_type' value='other' label='Other'
+            .four.wide.column
                 +reference_office key='referenced_office_id' search_field='office_name' label='Change Office' type='office'
                 if office
                     with office
@@ -151,9 +148,7 @@ template(name='incident_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                a.ui.button(href="/incidents")
-                    i.chevron.left.icon
-                    |Incidents
+                +link_button link='/incidents' label='Incidents' icon='chevron left'
             .ten.wide.column
                 h1.ui.center.aligned.header Incident #{incident_number}
             .three.wide.column
@@ -161,36 +156,40 @@ template(name='incident_view')
 
         .row
             .four.wide.column
-                .ui.large.relaxed.list
-                    +list_item key='customer_id' label='Customer ID' icon='user'
-                    +list_item icon='hashtag' label='Number' key='incident_number'
-                    +list_item icon='calendar' label='Date' key='incident_date'
-                    +list_item icon='file.image' label='Associated Documents'
-                .ui.header
-                    +incident_type_label
-                .ui.header
-                    | Logged
-                    +author_info
-                .ui.header #{formal_when}
-                .ui.divider
+                .ui.segment
+                    .ui.header
+                        | Logged
+                        +author_info
+                    h2.ui.sub.header #{when}
+                    .ui.large.relaxed.list
+                        +list_item key='customer_id' label='Customer ID' icon='user'
+                        +list_item icon='hashtag' label='Number' key='incident_number'
+                        +list_item icon='calendar' label='Date' key='incident_date'
+                        +list_item icon='file.image' label='Associated Documents'
+                    .ui.header
+                        +incident_type_label
+                    .ui.header #{formal_when}
                 if watson
                     +doc_sentiment
-                    +watson_keywords
                     +doc_emotion
+                    +watson_entities
+                    +watson_concepts
+                    +watson_categories
             .eight.wide.column
-                if image_id
-                    img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                +call_visual_analysis
-                if visual
-                    each visual
-                        .ui.label #{class}
-                .ui.dividing.header 
-                    i.align.left.icon
-                    |Details
-                .ui.basic.segment
-                    strong {{nl2br incident_details}}
+                .ui.segment
+                    if image_id
+                        img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
+                    +call_visual_analysis
+                    if visual
+                        each visual
+                            .ui.label(title=type_hierarchy)
+                                | #{class} {{to_percent score }}%
+                // .ui.dividing.header 
+                //     i.align.left.icon
+                //     |Details
+                .large150 {{nl2br incident_details}}
                 +call_watson
-                +analyzed_watson_keywords
+                +watson_keywords
                 +comments
                 .ui.header 
                     i.tasks.icon
