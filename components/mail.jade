@@ -9,25 +9,47 @@ template(name='mail')
             .three.wide.column
         .centered.row
             .four.wide.column
-                #compose.ui.fluid.button
+                #new_conversation.ui.fluid.button
                     i.plus.icon
-                    | New
-                .ui.vertical.large.fluid.menu
-                    .item
-                        |Inbox
-                        i.inbox.icon
-                    .item
-                        |Drafts
-                        i.edit.icon
-                    .item
-                        |Sent
-                        i.send.icon
-                    .item
-                        | Archived
-                        i.archive.icon
+                    | Conversation
+                .ui.vertical.segments
+                    each conversations
+                        +conversation
             .twelve.wide.column
                 .ui.segment
-                    .ui.header mail
+                    .ui.header message pane
+        
+template(name='conversation')
+    .ui.segment
+        .ui.grid
+            .twelve.wide.column
+                +message
+            .four.wide.column
+                .ui.header convo
+                .ui.icon.red.button
+                    i.remove.icon
+                .ui.dividing.header Users
+                .ui.list
+                    .item user 1
+                    .item user 2
+                    .item user 3
+
+                        
+                        
+template(name='message')
+    .ui.comment
+        .disabled.avatar
+            i.user.icon
+        .content
+            a.disabled.author #{author.username}
+            .metadata
+                span.date #{when}
+            .text
+                p #{text}
+            .actions
+                // a.reply Reply
+                a.delete_comment Delete
+    
 
                 
 

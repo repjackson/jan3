@@ -163,11 +163,13 @@ template(name='incident_view')
             .ten.wide.column
                 if image_id
                     img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
+                +call_visual_analysis
                 .ui.dividing.header 
                     i.align.left.icon
                     |Details
                 .ui.basic.segment
                     strong #{incident_details}
+                +call_watson
                 +comments
             .six.wide.column
                 .ui.large.relaxed.list

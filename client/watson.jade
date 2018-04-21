@@ -1,0 +1,147 @@
+template(name='doc_sentiment') 
+    .ui.dividing.header 
+        |Sentiment
+    .ui.tiny.progress(data-percent=sentiment_score_percent class=sentiment_bar_class)
+        .bar
+        .progress
+        .label
+            if is_positive
+                |#{sentiment_score_percent}% Positive
+            else
+                |#{sentiment_score_percent}% Negative
+
+        // |#{doc_sentiment_label}
+        // |#{sentiment_score_percent}
+
+template(name='watson_keywords') 
+    .ui.dividing.header 
+        |Analyzed Keywords
+
+template(name='doc_emotion') 
+    .ui.fluid.shadowed.padded10.accordion
+        .title
+            .ui.small.progress(data-percent=sentiment_score_percent class=sentiment_bar_class)
+                .bar
+                .progress
+                .label
+                    if is_positive
+                        |#{sentiment_score_percent}% Positive
+                    else
+                        |#{sentiment_score_percent}% Negative
+        .content
+            with watson.emotion.document.emotion
+                .ui.blue.small.progress(data-percent=sadness_percent)
+                    .bar
+                    .progress
+                    .label #{sadness_percent}% Sadness 
+                .ui.green.small.progress(data-percent=joy_percent)
+                    .bar
+                    .progress
+                    .label #{joy_percent}% Joy 
+                .ui.black.small.progress(data-percent=fear_percent)
+                    .bar
+                    .progress
+                    .label #{fear_percent}% Fear 
+                .ui.yellow.small.progress(data-percent=disgust_percent)
+                    .bar
+                    .progress
+                    .label #{disgust_percent}% Disgust 
+                .ui.red.small.progress(data-percent=anger_percent)
+                    .bar
+                    .progress
+                    .label #{anger_percent}% Anger 
+        .title
+            each watson_keywords
+                .ui.basic.label #{this}
+            // |#{watson.keywords.length} Analyzed Keywords
+            // i.dropdown.icon
+        .content
+            .ui.cards
+                each watson.keywords
+                    .ui.card
+                        .content
+                            .header 
+                                |#{text}
+                                .right.floated
+                                    small(data-tooltip='Relevance') #{relevance_percent}%
+                            // .meta
+                            //     |Sentiment: #{sentiment.score}
+                            .description
+                                with emotion
+                                    .ui.blue.tiny.progress.compacted-progress(data-percent=sadness_percent data-tooltip="#{sadness_percent}% Sadness")
+                                        .bar
+                                        // .progress
+                                        // .label #{sadness_percent}% Sadness
+                                    .ui.green.tiny.progress.compacted-progress(data-percent=joy_percent data-tooltip="#{joy_percent}% Joy")
+                                        .bar
+                                        // .progress
+                                        // .label #{joy_percent}% Joy 
+                                    .ui.black.tiny.progress.compacted-progress(data-percent=fear_percent data-tooltip="#{fear_percent}% Fear")
+                                        .bar
+                                        // .progress
+                                        // .label #{fear_percent}% Fear
+                                    .ui.yellow.tiny.progress.compacted-progress(data-percent=disgust_percent data-tooltip="#{disgust_percent}% Disgust")
+                                        .bar
+                                        // .progress
+                                        // .label #{disgust_percent}% Disgust 
+                                    .ui.red.tiny.progress.compacted-progress(data-percent=anger_percent data-tooltip="#{anger_percent}% Anger")
+                                        .bar
+                                        // .progress
+                                        // .label #{anger_percent}% Anger 
+
+    // .ui.dividing.header 
+    //     +icon48 name='make-decision' classes='ui mini spaced image'
+    //     |Emotion
+            
+template(name='call_watson')
+    #call_watson.ui.basic.fluid.button 
+        i.refresh.icon
+        |Analyze Text
+
+template(name='call_visual_analysis')
+    #call_visual.ui.basic.fluid.button 
+        i.image.icon
+        |Analyze Image
+
+template(name='analyzed_watson_keywords')
+    .ui.fluid.shadowed.padded10.accordion
+        .title
+            .ui.header 
+                |#{watson.keywords.length} Analyzed Keywords
+                i.dropdown.icon
+        .content
+            .ui.two.stackable.cards
+                each watson.keywords
+                    .ui.card
+                        .content
+                            .header 
+                                i.tag.icon
+                                // +icon48 name='tag' classes='ui mini spaced image'
+                                |#{text}
+                            .meta
+                                |#{relevance_percent}% Relevant
+                            // .meta
+                            //     |Sentiment: #{sentiment.score}
+                            .description
+                                with emotion
+                                    .ui.list
+                                        .ui.blue.tiny.progress(data-percent=sadness_percent)
+                                            .bar
+                                            .progress
+                                            .label #{sadness_percent}% Sadness
+                                        .ui.green.tiny.progress(data-percent=joy_percent)
+                                            .bar
+                                            .progress
+                                            .label #{joy_percent}% Joy 
+                                        .ui.black.tiny.progress(data-percent=fear_percent)
+                                            .bar
+                                            .progress
+                                            .label #{fear_percent}% Fear
+                                        .ui.yellow.tiny.progress(data-percent=disgust_percent)
+                                            .bar
+                                            .progress
+                                            .label #{disgust_percent}% Disgust 
+                                        .ui.red.tiny.progress(data-percent=anger_percent)
+                                            .bar
+                                            .progress
+                                            .label #{anger_percent}% Anger 

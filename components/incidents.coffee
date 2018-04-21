@@ -2,6 +2,7 @@ if Meteor.isClient
     FlowRouter.route '/incidents', action: ->
         BlazeLayout.render 'layout', main: 'incidents'
  
+    Session.setDefault 'level','all'
  
     Template.incident_view.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')

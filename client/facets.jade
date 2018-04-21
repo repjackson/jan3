@@ -1,0 +1,175 @@
+
+template(name='tag_facet')
+    // .ui.left.icon.small.inline.input
+    //     i.search.icon
+    //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+    // |&nbsp;    
+    .ui.inverted.header 
+        +icon48 name='hashtag' classes='ui mini inline image' tooltip='Browse Themes'
+        |Theme Tags
+    if selected_theme_tags
+        #clear_theme_tags.ui.large.icon.circular.active.button
+            i.remove.icon
+        each selected_theme_tags
+            .unselect_theme_tag.ui.large.circular.active.button
+                strong #{this}
+    each theme_tags
+        .ui.circular.button.select_theme_tag(class=theme_tag_class) 
+            strong #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+    
+    
+template(name='ancestor_facet')
+    // +icon48 name='node' classes='ui mini inline image' tooltip='Browse Themes'
+    // .ui.left.icon.small.inline.input
+    //     i.search.icon
+    //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+    // |&nbsp;    
+    // .ui.header ancestors
+    // if selected_ancestor_ids
+    //     #clear_ancestor_ids.ui.large.icon.circular.button
+    //         i.remove.icon
+    //     each selected_ancestor_ids
+    //         .unselect_ancestor_id.ui.large.circular.button
+    //             strong #{this}
+
+    each ancestors
+        // a.ui.circular.button.select_ancestor_id(class=ancestor_id_class) 
+        .ui.button.select_ancestor_id
+            // strong #{this.name}
+            if icon_class
+                +icon48 name=icon_class classes='ui inline image'
+            strong #{title}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+
+template(name='location_facet')
+    .ui.inverted.header 
+        +icon48 name='park-bench' classes='ui mini inline image' tooltip='Location Tags'
+        |Location Tags
+    if selected_location_tags
+        #clear_location_tags.ui.large.icon.circular.button
+            i.remove.icon
+        each selected_location_tags
+            .unselect_location_tag.ui.large.circular.button
+                strong #{this}
+    each location_tags
+        .ui.circular.button.select_location_tag(class=location_tag_class) 
+            strong #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+
+template(name='timestamp_facet')
+    .ui.inverted.header
+        +icon48 name='calendar' classes='ui mini inline image' tooltip='Date Tags'
+        |Date Tags
+    if selected_timestamp_tags
+        #clear_timestamp_tags.ui.large.icon.circular.button
+            i.remove.icon
+        each selected_timestamp_tags
+            .unselect_timestamp_tag.ui.large.circular.button
+                strong #{this}
+    each timestamp_tags
+        .ui.circular.button.select_timestamp_tag(class=timestamp_tag_class) 
+            strong #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+
+template(name='intention_facet')
+    .ui.inverted.header
+        +icon48 name='spotlight' classes='ui mini inline image' tooltip='Intention Tags'
+        | Intention Tags
+    if selected_intention_tags
+        #clear_intention_tags.ui.large.icon.circular.button
+            i.remove.icon
+        each selected_intention_tags
+            .unselect_intention_tag.ui.large.circular.button
+                strong #{this}
+    // .ui.hidden.fitted.divider
+    each intention_tags
+        .ui.circular.button.select_intention_tag(class=intention_tag_class) 
+            strong #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+
+template(name='keyword_facet')
+    .ui.inverted.header 
+        |Browse Keywords
+        +icon48 name='hashtag'
+    // .ui.left.icon.small.input
+    //     i.search.icon
+    //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+    if selected_keywords
+        // .ui.inverted.header Selected keywords
+        #clear_keywords.ui.large.icon.circular.button
+            i.remove.icon
+        each selected_keywords
+            .unselect_keyword.ui.large.circular.button
+                strong #{this}
+    // .ui.hidden.fitted.divider
+    each keywords
+        .ui.circular.button.select_keyword(class=cloud_keyword_class) 
+            strong #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
+
+
+
+template(name='username_facet')
+    .ui.inverted.header
+        img(src="https://png.icons8.com/color/100/000000/couple-man-woman.png")
+        // +icon48 name='couple' classes='ui mini inline image' tooltip='Filter Authors'
+        | Authors
+    if selected_author_ids
+        #clear_authors.ui.large.icon.circular.button
+            i.remove.icon
+        each selected_author_ids
+            .unselect_author.ui.large.circular.button
+                strong #{this}
+    each author_tags
+        .ui.circular.button.select_author(class=cloud_tag_class) 
+            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            strong #{username}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+
+template(name='parent_facet')
+    .ui.inverted.header
+        // img(src="https://png.icons8.com/color/100/000000/couple-man-woman.png")
+        // +icon48 name='couple' classes='ui mini inline image' tooltip='Filter Authors'
+        | Parent Docs
+    if selected_parent_ids
+        #clear_parents.ui.large.icon.circular.button
+            i.remove.icon
+        each selected_parent_ids
+            .unselect_parent.ui.large.circular.button
+                strong #{this}
+    each available_parent_docs
+        .ui.circular.button.select_author(class=cloud_tag_class) 
+            +icon48 name=icon_class
+            | #{title}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+
+template(name='participant_facet')
+    .ui.inverted.header
+        +icon48 name='couple'
+        |Browse Participants
+    if selected_participant_ids
+        #clear_participants.ui.large.icon.circular.button
+            i.remove.icon
+        each selected_participant_ids
+            .unselect_participant.ui.large.circular.button
+                strong #{this}
+    each participant_tags
+        .ui.circular.button.select_participant(class=cloud_tag_class) 
+            | #{this.username}
+            small #{this.count}
