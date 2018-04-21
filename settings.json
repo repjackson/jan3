@@ -22,6 +22,9 @@
       "url": "https://gateway.watsonplatform.net/personality-insights/api",
       "username": "a80ae329-2664-438a-84b4-55d6866947a0",
       "password": "bMI0PgCgyP3k"
+    },
+    "google": {
+      "places": "AIzaSyDjxr1W7FhbxSIlmZKJ9x3tisiG7pmUxt4"
     }
   },
   "cloudinary_key": "754714459692734",

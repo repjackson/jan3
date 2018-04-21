@@ -50,3 +50,8 @@
 	margin-top: .2em !important;
     margin-bottom: .2em !important;
 }
+
+#map {
+    min-height: 350px;
+    min-width: 100%;
+  }

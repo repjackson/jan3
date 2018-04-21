@@ -70,8 +70,8 @@ template(name='office_view')
                     .ui.header Associated Users
                 .ui.segment
                     .ui.header Associated Incidents
-                .ui.segment
-                    .ui.header Map
+                    +google_places_input
+                +office_map
             .four.wide.column
                 a.ui.fluid.button(href="tel:#{phone_number}") 
                     i.phone.icon
@@ -89,3 +89,13 @@ template(name='office_view')
                 
                 
 
+template(name='office_map')
+    .ui.segment
+        .ui.header Map
+        #map
+        
+template(name='google_places_input')
+    .ui.header Place Lookup
+    .ui.large.fluid.icon.input
+        i.compass.icon
+        input#google_places_field(type='text' placeholder='Search Address')

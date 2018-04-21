@@ -22,17 +22,24 @@ visualRecognition = new VisualRecognitionV3({
 
 
 Meteor.methods
-    call_visual: ()->
-        params =
-            url:"https://res.cloudinary.com/facet/image/upload/c_fit,h_500/u53x8dwhcmldja82vjni"
-            # images_file: images_file
-            # classifier_ids: classifier_ids
-        visualRecognition.classify(params, (err, response)->
-            if (err)
-                console.log(err);
-            else
-                console.log(JSON.stringify(response, null, 2))
-        )
+    call_visual: (doc_id)->
+        self = @
+        doc = Docs.findOne doc_id
+        if doc.image_id
+            params =
+                url:"https://res.cloudinary.com/facet/image/upload/#{doc.image_id}"
+                # images_file: images_file
+                # classifier_ids: classifier_ids
+            visualRecognition.classify params, Meteor.bindEnvironment((err, response)->
+                if err
+                    console.log err
+                else
+                    Docs.update { _id: doc_id},
+                        $set:
+                            visual: response.images[0].classifiers[0].classes
+                    # console.log(JSON.stringify(response.images[0].classifiers[0].classes[0].class, null, 2))
+            )
+        else return 
         
     call_watson: (parameters, doc_id) ->
         natural_language_understanding.analyze parameters, Meteor.bindEnvironment((err, response) ->

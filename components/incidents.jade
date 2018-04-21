@@ -33,7 +33,7 @@ template(name='incidents')
                 +set_session_button key='level' value=3 label='NYC'
             .thirteen.wide.column
                 if viewing_list
-                    .ui.items
+                    .ui.divided.items
                         each incidents
                             +incident_item
                 else
@@ -164,6 +164,9 @@ template(name='incident_view')
                 if image_id
                     img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
                 +call_visual_analysis
+                if visual
+                    each visual
+                        .ui.label #{class}
                 .ui.dividing.header 
                     i.align.left.icon
                     |Details

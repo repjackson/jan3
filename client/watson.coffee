@@ -100,7 +100,7 @@ Template.call_visual_analysis.events
         #         # 'semantic_roles': {}
         #         'sentiment': {}
         # Meteor.call 'call_visual', parameters, @_id, ->
-        Meteor.call 'call_visual', ->
+        Meteor.call 'call_visual', FlowRouter.getParam('doc_id'), ->
             # alert "Transaction with Content Analysis created"
 
 
