@@ -1,65 +1,73 @@
 template(name='nav')
-    .ui.inverted.fixed.menu
+    .ui.inverted.top.attached.labeled.icon.menu
         .mobile.only.ui.dropdown.icon.link.item
             i.th.large.icon
             .ui.menu
                 a.item(href='/people' class="{{isActivePath '/people'}}")
                     i.users.icon
-                    | Users
+                    | users
                 a.item(href='/incidents' class="{{isActivePath '/incidents'}}")
                     i.clipboard.icon
-                    | Incidents
+                    | incidents
                 a.item(href='/offices' class="{{isActivePath '/offices'}}")
                     i.building.icon
-                    | Offices
+                    | offices
         a.header.item(href='/' class="{{isActivePath '/'}}") 
             i.line.chart.icon
-            |JanPro
+            | home
         a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
             i.users.icon
-            | Users
+            |  users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}")
             i.clipboard.icon
-            | Incidents
+            |  incidents
         a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}")
             i.building.icon
-            | Offices
+            |  offices
         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}")
             i.shipping.fast.icon
-            | Services
+            | services
         .right.menu
             a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}")
-                i.configure.icon
-                |Admin
-            a.icon.item(href="/notifications")
-                i.bell.icon
-            a.icon.item(href='/mail')
-                i.envelope.icon
-            .ui.simple.dropdown.icon.item
-                i.bell.icon
-                .menu
-                    if notifications
-                        each notifications
-                            .item #{text}
-                    else
-                        | No Notifications
+                i.shield.alternate.icon
+                |admin
+            // .ui.simple.dropdown.icon.item
+            //     i.bell.icon
+            //     .menu
+            //         if notifications
+            //             each notifications
+            //                 .item #{text}
+            //         else
+            //             | No Notifications
             if currentUser
                 a.ui.dropdown.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
-                    if currentUser.name
-                        .mobile.hidden #{currentUser.name}
-                    else
-                        | Profile
                     if currentUser.profile.image_id
                         img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
-                    .inverted.menu
-                        a.item Profile
-                        a.item Settings
+                    |#{currentUser.username}
+                    // if currentUser.name
+                    //     .mobile.hidden #{currentUser.name}
+                    // else
+                    //     | Profile
+                    .ui.inverted.menu
+                        a.item(href="/notifications")
+                            i.bell.icon
+                            | notifications
+                        a.item(href='/mail')
+                            i.envelope.icon
+                            | Mail
+                        a.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
+                            i.user.icon
+                            | profile
+                        a.disabled.item 
+                            i.cog.icon
+                            |settings
                         .divider
                         a#logout.ui.item(href='#') 
-                            | Sign Out
+                            | sign out
                             
             else
                 a.ui.item(href='/sign-in') 
-                    | Sign In
+                    i.right.chevron.icon
+                    | sign in

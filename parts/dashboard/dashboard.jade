@@ -1,14 +1,17 @@
 template(name='dashboard')
-    .ui.padded.three.column.stackable.grid
-        .centered.row
-            .three.wide.column
-            .ten.wide.column
-                h1.ui.center.aligned.header 
-                    i.line.chart.icon
-                    | Dashboard
-            .three.wide.column
+    .ui.padded.stackable.grid
         .row
-            .column
+            .four.wide.column
+                .ui.styled.accordion
+                    .active.title
+                        h3
+                            i.info.icon
+                            |General Account Info
+                            i.dropdown.icon
+                    .active.content
+                        with person
+                            +person_card
+            .eight.wide.column
                 .ui.styled.accordion
                     .active.title
                         h3
@@ -36,17 +39,7 @@ template(name='dashboard')
                                                 .ui.label 
                                                     i.building.icon
                                                     |#{office.office_name}
-            .column
-                .ui.styled.accordion
-                    .active.title
-                        h3
-                            i.info.icon
-                            |General Account Info
-                            i.dropdown.icon
-                    .active.content
-                        with person
-                            +person_card
-            .column
+            .four.wide.column
                 .ui.styled.accordion
                     .active.title
                         h3
@@ -57,17 +50,17 @@ template(name='dashboard')
                         with office
                             +office_card
         .row
-            .column
+            .five.wide.column
                 .ui.disabled.segment
                     .ui.header
                         i.building.icon
                         | Home Office Permissions
-            .column
+            .five.wide.column
                 .ui.disabled.segment
                     .ui.header 
                         i.dollar.icon
                         |Billing and Payment History
-            .column
+            .five.wide.column
                 .ui.disabled.segment
                     .ui.header
                         i.clock.icon

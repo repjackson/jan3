@@ -4,9 +4,6 @@ template(name='incidents')
             .three.wide.column
                 +add_button type='incident' label='Incident'
                 +toggle_view_mode_button
-                .ui.dividing.header
-                    i.filter.icon
-                    |Filters
                 .ui.dividing.header Level
                 +set_session_button key='level' value='all' label='All'
                 +set_session_button key='level' value=1 label='1'
