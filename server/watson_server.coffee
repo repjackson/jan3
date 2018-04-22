@@ -90,47 +90,46 @@ Meteor.methods
             )
         else return 
         
-    call_watson: (parameters, doc_id) ->
+    call_watson: (doc_id) ->
         # console.log 'calling watson'
         self = @
         doc = Docs.findOne doc_id
-        parameters = 
-            # 'html': doc.content
-            text: doc.incident_details
-            features:
-                entities:
-                    emotion: true
-                    sentiment: true
-                    # limit: 2
-                keywords:
-                    emotion: true
-                    sentiment: true
-                    # limit: 2
-                concepts: {}
-                categories: {}
-                emotion: {}
-                # metadata: {}
-                relations: {}
-                semantic_roles: {}
-                sentiment: {}
+        if doc.incident_details
+            parameters = 
+                # 'html': doc.content
+                text: doc.incident_details
+                features:
+                    entities:
+                        emotion: true
+                        sentiment: true
+                        # limit: 2
+                    keywords:
+                        emotion: true
+                        sentiment: true
+                        # limit: 2
+                    concepts: {}
+                    categories: {}
+                    emotion: {}
+                    # metadata: {}
+                    relations: {}
+                    semantic_roles: {}
+                    sentiment: {}
 
-        natural_language_understanding.analyze parameters, Meteor.bindEnvironment((err, response) ->
-            if err
-                console.log 'error:', err
-            else
-                keyword_array = _.pluck(response.keywords, 'text')
-                lowered_keywords = keyword_array.map (tag)-> tag.toLowerCase()
-                console.dir response
-                Docs.update { _id: doc_id }, 
-                    $set:
-                        watson: response
-                        watson_keywords: lowered_keywords
-                        doc_sentiment_score: response.sentiment.document.score
-                        doc_sentiment_label: response.sentiment.document.label
-            return
-        )
-        
-        # Meteor.call 'create_transaction', 'tk5W7DukuCZjB7262', doc_id
+            natural_language_understanding.analyze parameters, Meteor.bindEnvironment((err, response) ->
+                if err
+                    console.log 'error:', err
+                else
+                    keyword_array = _.pluck(response.keywords, 'text')
+                    lowered_keywords = keyword_array.map (tag)-> tag.toLowerCase()
+                    # console.dir response
+                    Docs.update { _id: doc_id }, 
+                        $set:
+                            watson: response
+                            watson_keywords: lowered_keywords
+                            doc_sentiment_score: response.sentiment.document.score
+                            doc_sentiment_label: response.sentiment.document.label
+                return
+            )
         
         return
         

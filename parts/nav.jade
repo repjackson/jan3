@@ -7,7 +7,7 @@ template(name='nav')
                     i.users.icon
                     | Users
                 a.item(href='/incidents' class="{{isActivePath '/incidents'}}")
-                    i.edit.icon
+                    i.clipboard.icon
                     | Incidents
                 a.item(href='/offices' class="{{isActivePath '/offices'}}")
                     i.building.icon
@@ -19,7 +19,7 @@ template(name='nav')
             i.users.icon
             | Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}")
-            i.edit.icon
+            i.clipboard.icon
             | Incidents
         a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}")
             i.building.icon

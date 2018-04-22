@@ -11,7 +11,7 @@ template(name='author_info')
 
 template(name='list_item')
     .item
-        i.icon(class=icon title=key)
+        i.large.icon(class=icon title=key)
         .content
             .description 
                 |#{label}
@@ -32,24 +32,23 @@ template(name='toggle_boolean')
             .ui.basic.label #{negative_label}
 
 template(name='save_button')
-    a.ui.large.button(href="/view/#{_id}") 
-        i.save.icon
-        strong save
+    a.ui.big.circular.basic.icon.button(href="/view/#{_id}") 
+        i.checkmark.green.icon
+        // strong save
         
 template(name='edit_button')
-    a.ui.button(href="/edit/#{_id}") 
+    a.ui.circular.icon.big.basic.button(href="/edit/#{_id}" title='Edit') 
         i.edit.icon
-        strong edit
+        // strong edit
 
 template(name='view_button')
-    a.ui.button(href="/view/#{_id}") 
-        |view
+    a.ui.large.circular.icon.basic.button(href="/view/#{_id}" title='View Details') 
         i.chevron.right.icon
         
 template(name='add_button')
-    #add.ui.fluid.button
+    #add.ui.large.circular.icon.basic.button(title='add')
         i.plus.icon
-        |#{label}
+        // |#{label}
 
 
 template(name='reference_office')
@@ -78,7 +77,7 @@ template(name="customer_result")
 
 
 template(name='toggle_view_mode_button')
-    #toggle_view_mode.ui.large.icon.circular.button
+    #toggle_view_mode.ui.big.icon.circular.basic.button
         if viewing_list
             i.list.large.icon
         else
@@ -117,7 +116,7 @@ template(name='edit_number_field')
         label #{label}
         .ui.left.icon.input
             if icon
-                i.icon(class=icon)
+                i.large.icon(class=icon)
             input#number_field(type='number' min='0' value=key_value)
 
 
@@ -132,7 +131,7 @@ template(name='edit_text_field')
         .ui.labeled.large.fluid.input
             .ui.label 
                 if icon
-                    i.icon(class=icon)
+                    i.large.icon(class=icon)
                 |#{label}
             input#text_field(type='text' value=key_value)
 
@@ -149,7 +148,7 @@ template(name='edit_date_field')
         label #{label}
         .ui.left.icon.input
             if icon
-                i.icon(class=icon)
+                i.large.icon(class=icon)
             input#date_field(type='date' value=key_value)        
         
         
@@ -217,6 +216,10 @@ template(name='call_phone_button')
             
             
 template(name='link_button')    
-    a.ui.button(href=link)
-        i.icon(class=icon)
-        | #{label}
+    a.ui.big.icon.basic.circular.button(href=link title=label)
+        i.large.icon(class=icon)
+
+
+template(name='delete_button')
+    #delete.ui.red.icon.button
+        i.trash.icon

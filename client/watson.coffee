@@ -52,7 +52,7 @@ Template.keywords.onRendered ->
 Template.call_watson.events
     'click #call_watson': ->
         # console.log @
-        Meteor.call 'call_watson',  @_id, ->
+        Meteor.call 'call_watson', FlowRouter.getParam('doc_id'), ->
 
 Template.call_personality.events
     'click #call_personality': ->

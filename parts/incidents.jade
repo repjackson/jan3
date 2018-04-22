@@ -3,14 +3,7 @@ template(name='incidents')
         .centered.row
             .three.wide.column
                 +add_button type='incident' label='Incident'
-            .ten.wide.column
-                h1.ui.center.aligned.header 
-                    i.edit.icon
-                    |Incidents
-            .three.wide.column
                 +toggle_view_mode_button
-        .centered.row
-            .three.wide.column
                 .ui.dividing.header
                     i.filter.icon
                     |Filters
@@ -67,10 +60,10 @@ template(name='incident_item')
             .meta by #{author.username}
             .meta 
                 |Logged #{when}
-                +incident_level_set level=1
-                +incident_level_set level=2
-                +incident_level_set level=3
-                +incident_level_set level=4
+                // +incident_level_set level=1
+                // +incident_level_set level=2
+                // +incident_level_set level=3
+                // +incident_level_set level=4
                 +view_button
             if comment_count
                 a.meta(href="/view/#{_id}")
@@ -108,10 +101,9 @@ template(name='incident_card')
 template(name='incident_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
-                #delete.ui.fluid.button
-                    i.trash.icon
-                    | Delete
+            .three.wide.center.aligned.column
+                #delete.ui.basic.circular.icon.big.button
+                    i.red.trash.icon
             .ten.wide.column
                 h1.ui.center.aligned.header Edit Incident #{incident_number}
             .three.wide.column
@@ -147,11 +139,11 @@ template(name='incident_edit')
 template(name='incident_view')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
-                +link_button link='/incidents' label='Incidents' icon='chevron left'
-            .ten.wide.column
-                h1.ui.center.aligned.header Incident #{incident_number}
-            .three.wide.column
+            .three.wide.center.aligned.column
+                +link_button link='/incidents' label='Incidents' icon='clipboard'
+            .ten.wide.center.aligned.column
+                h1.ui.header Incident #{incident_number}
+            .three.wide.center.aligned.column
                 +edit_button
 
         .row
