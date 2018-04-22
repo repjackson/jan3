@@ -17,8 +17,8 @@ template(name='doc_sentiment')
 
 
 template(name='doc_emotion') 
-    .ui.dividing.header 
-        | emotion
+    // .ui.dividing.header 
+    //     | emotion
     with watson.emotion.document.emotion
         .ui.blue.small.progress(data-percent=sadness_percent)
             .bar
@@ -66,9 +66,10 @@ template(name='keywords')
                         .content
                             h4
                                 |#{text}
-                                |{{ to_percent relevance }}%
                             .meta
-                                |Sentiment: #{sentiment.score}
+                                |{{ to_percent relevance }}% relevant
+                            .meta
+                                |sentiment: {{ to_percent sentiment.score }}%
                             .description
                                 with emotion
                                     .ui.list
@@ -158,31 +159,57 @@ template(name='personality')
             |#{personality.length} personality 
             #call_personality.ui.icon.button 
                 i.refresh.icon
-        .active.content    
+        .active.content   
+            .title
+                |personality
+                i.dropdown.icon
+            .content
+                each personality.personality
+                    .ui.header
+                        |#{name} {{ to_percent raw_score }}%
+                    .ui.list
+                        each children
+                            .item #{name} {{ to_percent raw_score }}%
+            .title 
+                |needs
+                i.dropdown.icon
+            .content
+                each personality.needs
+                    .ui.list
+                        .item #{name} {{ to_percent raw_score }}%
+            .title 
+                |values
+                i.dropdown.icon
+            .content
+                each personality.values
+                    .ui.list
+                        .item #{name} {{ to_percent raw_score }}%
+            .title 
+                |behaviors
+                i.dropdown.icon
+            .content
+                each personality.behaviors
+                    .ui.list
+                        .item #{name} {{ to_percent raw_score }}%
+
             +jsonView(json=personality)
-            .ui.segment
-                .ui.list
-                    .item word count: #{word_count}
-            // .ui.list
-            //     each watson.personality
-            //         .item
-            //             strong #{label}
-            //             |{{ to_percent score }}%
+
 
 
 template(name='tone')
-    .ui.styled.accordion
-        .title
-            |#{tone.length} tone
-            #call_tone.ui.button 
-                i.sun.icon
-                |tone
-        .content    
-            +jsonView(json=tone)
-            // .ui.list
-            //     each watson.tone
-            //         .item
-            //             strong #{label}
-            //             |{{ to_percent score }}%
-
-
+    .ui.styled.fluid.accordion
+        .active.title 
+            | document tone
+            i.dropdown.icon
+        .active.content
+            each tone.document_tone.tones
+                .ui.header #{tone_id} {{ to_percent score }}%
+            .ui.list
+                each tone.sentences_tone
+                    .item
+                        .ui.label(title='sentence id') #{sentence_id}
+                        each tones
+                            .ui.label #{tone_id} {{ to_percent score }}%
+                        | #{text}
+            i#call_tone.refresh.large.link.icon
+                // +jsonView(json=tone)
