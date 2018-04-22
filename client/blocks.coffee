@@ -147,8 +147,8 @@ Template.publish_button.events
             
 Template.call_method.events
     'click .call_method': -> 
-        console.log name
-        Meteor.call @name, FlowRouter.getParam('doc_id'), (err,res)->
-            if err then console.log err
-            else
-                console.log 'res', res
+        # console.log Template.parentData(1)
+        Meteor.call @name, Template.parentData(1)._id, (err,res)->
+            # if err then console.log err
+            # else
+                # console.log 'res', res

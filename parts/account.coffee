@@ -1,5 +1,6 @@
-        
-        
+FlowRouter.route '/account/settings', action: (params) ->
+    BlazeLayout.render 'layout',
+        main: 'account_settings'
 if Meteor.isClient
     Template.account_settings.onCreated ->
         @autorun -> Meteor.subscribe 'my_profile', FlowRouter.getParam('user_id') 

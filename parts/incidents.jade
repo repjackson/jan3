@@ -81,7 +81,10 @@ template(name='incident_card')
         .content
             +doc_sentiment
         .content
-            +call_method name='tagify_date_time'
+            +call_method name='tagify_timestamp'
+            if date_array
+                each date_array
+                    .ui.label #{this}
             .right.floated
                 +incident_type_label
             i.comment.icon

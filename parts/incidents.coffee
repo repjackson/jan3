@@ -57,9 +57,19 @@ if Meteor.isClient
     @selected_incident_tags = new ReactiveArray []
     
     Template.incidents.onCreated ->
-        @autorun -> Meteor.subscribe('incidents',parseInt(Session.get('level')))
-        @autorun -> Meteor.subscribe('docs',[],'comment')
-        @autorun -> Meteor.subscribe('docs',[],'office')
+        # @autorun -> Meteor.subscribe('incidents',parseInt(Session.get('level')))
+        # @autorun -> Meteor.subscribe('docs',[],'comment')
+        # @autorun -> Meteor.subscribe('docs',[],'office')
+        @autorun => Meteor.subscribe 'facet', 
+            selected_theme_tags.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_timestamp_tags.array()
+            type='incident'
+            author_id=null
+
+        
+        
     Template.incidents.helpers
         incidents: ->  
             if Session.equals('level','all')
