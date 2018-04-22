@@ -4,23 +4,25 @@ template(name='incidents')
             .three.wide.column
                 +add_button type='incident' label='Incident'
                 +toggle_view_mode_button
-                .ui.dividing.header Level
-                +set_session_button key='level' value='all' label='All'
-                +set_session_button key='level' value=1 label='1'
-                +set_session_button key='level' value=2 label='2'
-                +set_session_button key='level' value=3 label='3'
-                +set_session_button key='level' value=4 label='4'
-                .ui.dividing.header Type
-                +set_session_button key='type' value='missed_service' label='Missed Service'
-                +set_session_button key='type' value='poor_service' label='Poor Service'
-                +set_session_button key='type' value='employee_issue' label='Employee Issue'
-                +set_session_button key='type' value='other' label='Other'
-                .ui.dividing.header 
-                    i.building.icon
-                    |Office
-                +set_session_button key='level' value=1 label='Denver'
-                +set_session_button key='level' value=2 label='Chicago'
-                +set_session_button key='level' value=3 label='NYC'
+                +timestamp_facet
+                +location_facet
+                // .ui.dividing.header Level
+                // +set_session_button key='level' value='all' label='All'
+                // +set_session_button key='level' value=1 label='1'
+                // +set_session_button key='level' value=2 label='2'
+                // +set_session_button key='level' value=3 label='3'
+                // +set_session_button key='level' value=4 label='4'
+                // .ui.dividing.header Type
+                // +set_session_button key='type' value='missed_service' label='Missed Service'
+                // +set_session_button key='type' value='poor_service' label='Poor Service'
+                // +set_session_button key='type' value='employee_issue' label='Employee Issue'
+                // +set_session_button key='type' value='other' label='Other'
+                // .ui.dividing.header 
+                //     i.building.icon
+                //     |Office
+                // +set_session_button key='level' value=1 label='Denver'
+                // +set_session_button key='level' value=2 label='Chicago'
+                // +set_session_button key='level' value=3 label='NYC'
             .thirteen.wide.column
                 if viewing_list
                     .ui.divided.items
@@ -30,16 +32,6 @@ template(name='incidents')
                     .ui.centered.stackable.cards
                         each incidents
                             +incident_card
-
-
-template(name='my_incidents')
-    .ui.fluid.card
-        .content
-            .ui.header My Docs
-            .ui.cards
-                each my_incidents
-                    .item 
-                        a(href="/view/#{_id}") #{title}
 
 
 template(name='incident_item')
@@ -89,6 +81,7 @@ template(name='incident_card')
         .content
             +doc_sentiment
         .content
+            +call_method name='tagify_date_time'
             .right.floated
                 +incident_type_label
             i.comment.icon
@@ -179,9 +172,7 @@ template(name='incident_view')
                 .large130 {{nl2br incident_details}}
                 +semantic_roles
                 +relations
-                +call_personality
                 +personality
-                +call_tone
                 +tone
                 .ui.styled.accordion
                     .title 

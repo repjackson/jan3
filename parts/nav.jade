@@ -56,13 +56,13 @@ template(name='nav')
                             | notifications
                         a.item(href='/mail')
                             i.envelope.icon
-                            | Mail
+                            | mail
                         a.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                             i.user.icon
                             | profile
-                        a.disabled.item 
+                        a.item(href='/account/settings' class="{{isActivePath '/account/settings'}}") 
                             i.cog.icon
-                            |settings
+                            | settings
                         .divider
                         a#logout.ui.item(href='#') 
                             | sign out

@@ -16,12 +16,46 @@ template(name='notifications')
                     .item
                         | Archived
                         i.archive.icon
+                +tag_facet
+                +timestamp_facet
+                .ui.hidden.divider
+                // .ui.header People
+                // .ui.header Type
+                // .ui.dividing.header Actions
+                //     #mark_all_read.ui.basic.button 
+                //         i.visible.icon
+                //         |Mark All Read
+                // if isInRole 'admin'
+                //     .ui.header Options
+                //     if notifications_allowed
+                //         .ui.basic.disabled.button Desktop Notifications Allowed
+                //         #disallow_notifications.ui.basic.red.button
+                //             i.remove.icon
+                //             |Remove Permissions
+                // else
+                //     #allow_notifications.ui.basic.button Allow Desktop Notifications
             .twelve.wide.column
                 .ui.segment
                     .ui.header notifications
 
-                
-
+            
 template(name='notification')
-    .item
-        .header notice
+    .ui.segment.notification_segment(class=notification_segment_class)
+        .ui.feed
+            .event
+                .label
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                .content
+                    .summary
+                        // a.user(href="/profile/#{subject.username}")
+                        //     | #{subject_name}
+                        // | #{predicate}
+                        a.user(href="/profile/#{author.username}")
+                            | #{author.username}.
+                        .date
+                            | #{when}
+                    .extra.text
+                        p !{content}
+                    .meta
+                        +mark_read_button
+                        // +session_delete_button                

@@ -125,3 +125,30 @@ Template.delete_button.events
             # Docs.remove doc._id, ->
             #     FlowRouter.go "/docs"
             console.log template
+
+
+
+Template.edit_link.events
+    'blur #link': ->
+        link = $('#link').val()
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: link: link
+            
+            
+Template.publish_button.events
+    'click #publish': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: published: true
+
+    'click #unpublish': ->
+        Docs.update FlowRouter.getParam('doc_id'),
+            $set: published: false
+            
+            
+Template.call_method.events
+    'click .call_method': -> 
+        console.log name
+        Meteor.call @name, FlowRouter.getParam('doc_id'), (err,res)->
+            if err then console.log err
+            else
+                console.log 'res', res

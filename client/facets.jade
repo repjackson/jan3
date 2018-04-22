@@ -5,8 +5,7 @@ template(name='tag_facet')
     //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
     // |&nbsp;    
     .ui.inverted.header 
-        +icon48 name='hashtag' classes='ui mini inline image' tooltip='Browse Themes'
-        |Theme Tags
+        |theme tags
     if selected_theme_tags
         #clear_theme_tags.ui.large.icon.circular.active.button
             i.remove.icon
@@ -22,7 +21,6 @@ template(name='tag_facet')
     
     
 template(name='ancestor_facet')
-    // +icon48 name='node' classes='ui mini inline image' tooltip='Browse Themes'
     // .ui.left.icon.small.inline.input
     //     i.search.icon
     //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
@@ -39,17 +37,13 @@ template(name='ancestor_facet')
         // a.ui.circular.button.select_ancestor_id(class=ancestor_id_class) 
         .ui.button.select_ancestor_id
             // strong #{this.name}
-            if icon_class
-                +icon48 name=icon_class classes='ui inline image'
             strong #{title}
             // if isInRole 'admin'
             //     small #{this.count}
     // .ui.divider
 
 template(name='location_facet')
-    .ui.inverted.header 
-        +icon48 name='park-bench' classes='ui mini inline image' tooltip='Location Tags'
-        |Location Tags
+    .ui.header location tags
     if selected_location_tags
         #clear_location_tags.ui.large.icon.circular.button
             i.remove.icon
@@ -64,9 +58,7 @@ template(name='location_facet')
     // .ui.divider
 
 template(name='timestamp_facet')
-    .ui.inverted.header
-        +icon48 name='calendar' classes='ui mini inline image' tooltip='Date Tags'
-        |Date Tags
+    .ui.header date tags
     if selected_timestamp_tags
         #clear_timestamp_tags.ui.large.icon.circular.button
             i.remove.icon
@@ -82,8 +74,7 @@ template(name='timestamp_facet')
 
 template(name='intention_facet')
     .ui.inverted.header
-        +icon48 name='spotlight' classes='ui mini inline image' tooltip='Intention Tags'
-        | Intention Tags
+        | intention tags
     if selected_intention_tags
         #clear_intention_tags.ui.large.icon.circular.button
             i.remove.icon
@@ -100,8 +91,7 @@ template(name='intention_facet')
 
 template(name='keyword_facet')
     .ui.inverted.header 
-        |Browse Keywords
-        +icon48 name='hashtag'
+        |browse keywords
     // .ui.left.icon.small.input
     //     i.search.icon
     //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
@@ -124,8 +114,7 @@ template(name='keyword_facet')
 template(name='username_facet')
     .ui.inverted.header
         img(src="https://png.icons8.com/color/100/000000/couple-man-woman.png")
-        // +icon48 name='couple' classes='ui mini inline image' tooltip='Filter Authors'
-        | Authors
+        | authors
     if selected_author_ids
         #clear_authors.ui.large.icon.circular.button
             i.remove.icon
@@ -143,8 +132,7 @@ template(name='username_facet')
 template(name='parent_facet')
     .ui.inverted.header
         // img(src="https://png.icons8.com/color/100/000000/couple-man-woman.png")
-        // +icon48 name='couple' classes='ui mini inline image' tooltip='Filter Authors'
-        | Parent Docs
+        | parent docs
     if selected_parent_ids
         #clear_parents.ui.large.icon.circular.button
             i.remove.icon
@@ -153,7 +141,6 @@ template(name='parent_facet')
                 strong #{this}
     each available_parent_docs
         .ui.circular.button.select_author(class=cloud_tag_class) 
-            +icon48 name=icon_class
             | #{title}
             // if isInRole 'admin'
             //     small #{this.count}
@@ -161,8 +148,7 @@ template(name='parent_facet')
 
 template(name='participant_facet')
     .ui.inverted.header
-        +icon48 name='couple'
-        |Browse Participants
+        |browse participants
     if selected_participant_ids
         #clear_participants.ui.large.icon.circular.button
             i.remove.icon
