@@ -172,9 +172,9 @@ template(name='incident_view')
                 if watson
                     +doc_sentiment
                     +doc_emotion
-                    +watson_entities
-                    +watson_concepts
-                    +watson_categories
+                    +entities
+                    +concepts
+                    +categories
             .eight.wide.column
                 .ui.segment
                     if image_id
@@ -187,9 +187,22 @@ template(name='incident_view')
                 // .ui.dividing.header 
                 //     i.align.left.icon
                 //     |Details
-                .large150 {{nl2br incident_details}}
+                .large130 {{nl2br incident_details}}
+                +semantic_roles
+                +relations
+                +call_personality
+                +personality
+                +call_tone
+                +tone
+                .ui.styled.accordion
+                    .title 
+                        i.code.icon
+                        |full analysis data
+                        i.dropdown.icon
+                    .content
+                        +jsonView(json=watson)
                 +call_watson
-                +watson_keywords
+                +keywords
                 +comments
                 .ui.header 
                     i.tasks.icon

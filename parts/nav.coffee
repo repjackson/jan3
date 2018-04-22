@@ -8,6 +8,7 @@ if Meteor.isClient
         @autorun -> 
             Meteor.subscribe 'me'
             Meteor.subscribe 'my_notifications'
+            Meteor.subscribe 'users'
         
     Template.dashboard.onRendered ->
         Meteor.setTimeout ->

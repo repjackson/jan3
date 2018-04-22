@@ -9,6 +9,7 @@ FlowRouter.notFound =
         BlazeLayout.render 'layout', 
             main: 'not_found'
 
+
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
 

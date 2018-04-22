@@ -21,28 +21,29 @@ template(name='list_item')
 template(name='toggle_boolean')
     .field
         if featured
-            #make_unfeatured.ui.basic.icon.button
+            #turn_on.ui.basic.icon.button
                 i.toggle.on.icon
         else
-            #make_featured.ui.basic.icon.button
+            #turn_off.ui.basic.icon.button
                 i.toggle.off.icon
         if featured
-            .ui.green.basic.label Featured
+            .ui.green.basic.label #{positive_label}
         else
-            .ui.basic.label Unfeatured
+            .ui.basic.label #{negative_label}
 
 template(name='save_button')
-    a.ui.fluid.big.button(href="/view/#{_id}") 
+    a.ui.large.button(href="/view/#{_id}") 
         i.save.icon
-        strong Save
+        strong save
+        
 template(name='edit_button')
-    a.ui.fluid.button(href="/edit/#{_id}") 
+    a.ui.button(href="/edit/#{_id}") 
         i.edit.icon
-        strong Edit
+        strong edit
 
 template(name='view_button')
     a.ui.button(href="/view/#{_id}") 
-        |View
+        |view
         i.chevron.right.icon
         
 template(name='add_button')
@@ -57,7 +58,7 @@ template(name='reference_office')
             label #{label}
             .ui.left.icon.input
                 i.search.icon
-                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='search...'
 
 template(name='reference_customer')
     .ui.form
@@ -65,7 +66,7 @@ template(name='reference_customer')
             label #{label}
             .ui.left.icon.input
                 i.search.icon
-                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='search...'
 
 
 
@@ -94,19 +95,15 @@ template(name='set_session_item')
         
         
         
-        
-
-
-
 template(name='edit_image_field')
     .ui.basic.segment
         if image_id
             .ui.image
                 img(src="{{c.url image_id }}")
-                a#remove_photo.ui.top.left.attached.link.basic.label Remove
+                a#remove_photo.ui.top.left.attached.link.basic.label remove
                 // .ui.bottom.right.attached.basic.label Image Id: #{image_id}
         else
-            .ui.header Upload Image
+            .ui.header upload image
             input(type='file' name='upload_picture' accept='image/*')
         // if isInRole 'admin'
         //     .field
@@ -158,9 +155,9 @@ template(name='edit_date_field')
         
 template(name='complete')            
     .field
-        label Completed
-        #mark_complete.ui.button(class=complete_class) Yes 
-        #mark_incomplete.ui.button(class=incomplete_class) No 
+        label completed
+        #mark_complete.ui.button(class=complete_class) yes 
+        #mark_incomplete.ui.button(class=incomplete_class) no 
 
 
 template(name='toggle_key')
@@ -181,11 +178,11 @@ template(name='toggle_follow')
         if is_following
             #remove_friend.ui.button
                 i.minus.large.icon
-                |Unfollow
+                |unfollow
         else
             #add_friend.ui.button
                 i.plus.large.icon
-                |Follow
+                |follow
 
 
 template(name='bookmark_button')
@@ -201,7 +198,7 @@ template(name='associated_incidents')
     .ui.segment
         .ui.header 
             i.edit.icon
-            |Associated Incidents
+            |ssociated incidents
             
             
             
@@ -209,13 +206,13 @@ template(name='associated_users')
     .ui.segment
         .ui.header 
             i.users.icon
-            |Associated Users
+            |associated Users
             
             
 template(name='call_phone_button')
     a.ui.fluid.button(href="tel:#{phone_number}") 
         i.phone.icon
-        |Call #{phone_number}
+        |call #{phone_number}
             
             
             

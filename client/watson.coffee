@@ -28,7 +28,7 @@ Template.doc_emotion.helpers
     is_positive: -> if @doc_sentiment_label is 'positive' then true else false    
 
 
-Template.watson_keywords.helpers
+Template.keywords.helpers
     relevance_percent: -> (@relevance*100).toFixed()
 
     sentiment_percent: -> 
@@ -40,7 +40,7 @@ Template.watson_keywords.helpers
     anger_percent: -> (@anger*100).toFixed()
     fear_percent: -> (@fear*100).toFixed()
 
-Template.watson_keywords.onRendered ->
+Template.keywords.onRendered ->
     Meteor.setTimeout ->
         $('.progress').progress()
     , 2000
@@ -52,54 +52,21 @@ Template.watson_keywords.onRendered ->
 Template.call_watson.events
     'click #call_watson': ->
         # console.log @
-        parameters = 
-            # 'html': @content
-            'text': @incident_details
-            'features':
-                'entities':
-                    'emotion': true
-                    'sentiment': true
-                    # 'limit': 2
-                'keywords':
-                    'emotion': true
-                    'sentiment': true
-                    # 'limit': 2
-                'concepts': {}
-                'categories': {}
-                'emotion': {}
-                # 'metadata': {}
-                'relations': {}
-                'semantic_roles': {}
-                'sentiment': {}
-        Meteor.call 'call_watson', parameters, @_id, ->
-            # alert "Transaction with Content Analysis created"
+        Meteor.call 'call_watson',  @_id, ->
+
+Template.call_personality.events
+    'click #call_personality': ->
+        # console.log @
+        Meteor.call 'call_personality', @_id, ->
 
 
 Template.call_visual_analysis.events
     'click #call_visual': ->
-        # console.log @
-        # parameters = 
-        #     # 'html': @content
-        #     'text': @incident_details
-        #     'features':
-        #         # 'entities':
-        #         #     'emotion': true
-        #         #     'sentiment': true
-        #         #     # 'limit': 2
-        #         'keywords':
-        #             'emotion': true
-        #             'sentiment': true
-        #             # 'limit': 2
-        #         # 'concepts': {}
-        #         # 'categories': {}
-        #         'emotion': {}
-        #         # 'metadata': {}
-        #         # 'relations': {}
-        #         # 'semantic_roles': {}
-        #         'sentiment': {}
-        # Meteor.call 'call_visual', parameters, @_id, ->
         Meteor.call 'call_visual', FlowRouter.getParam('doc_id'), ->
-            # alert "Transaction with Content Analysis created"
+
+Template.call_tone.events
+    'click #call_tone': ->
+        Meteor.call 'call_tone', FlowRouter.getParam('doc_id'), ->
 
 
 

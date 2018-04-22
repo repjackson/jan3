@@ -5,6 +5,3 @@ good to be back
     
 just build each schema, and improve upward like with twi.  she showed you the way.  
 you have to know how to evolve it each step.  
-
-list view mode switch, lets fuck this up
-    

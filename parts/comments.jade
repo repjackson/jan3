@@ -4,7 +4,7 @@ template(name='comments')
         .active.title
             h3
                 i.comments.icon
-                |#{comment_count} Comments
+                |#{comment_count} comments
                 i.dropdown.icon
         .active.content
             .ui.comments
@@ -23,7 +23,7 @@ template(name='comments')
                                 p #{text}
                             .actions
                                 // a.reply Reply
-                                a.delete_comment Delete
+                                a.delete_comment delete
             .ui.large.fluid.left.icon.input
                 i.plus.icon
                 input#new_comment(type='text')

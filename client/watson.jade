@@ -1,7 +1,7 @@
 template(name='doc_sentiment') 
     .ui.dividing.header 
         |sentiment
-    .ui.progress(data-percent=sentiment_score_percent class=sentiment_bar_class)
+    .ui.small.progress(data-percent=sentiment_score_percent class=sentiment_bar_class)
         .bar
         .progress
         .label
@@ -45,13 +45,23 @@ template(name='call_watson')
     #call_watson.ui.button 
         i.chess.knight.icon
         |analyze
+        
+        
+template(name='call_personality')
+    #call_personality.ui.button 
+        i.sun.icon
+        |personality
+template(name='call_tone')
+    #call_tone.ui.button 
+        i.sun.icon
+        |tone
 
 template(name='call_visual_analysis')
     #call_visual.ui.button 
         i.image.icon
         |tag image
 
-template(name='watson_keywords')
+template(name='keywords')
     .ui.fluid.styled.accordion
         .title
             .ui.header 
@@ -92,7 +102,7 @@ template(name='watson_keywords')
                                             // .label #{anger_percent}% anger 
 
 
-template(name='watson_entities')
+template(name='entities')
     .ui.segment
         .ui.header 
             |#{watson.entities.length} entities
@@ -101,7 +111,7 @@ template(name='watson_entities')
                 .item
                     |#{type}: #{text}
 
-template(name='watson_concepts')
+template(name='concepts')
     .ui.segment
         .ui.header 
             |#{watson.concepts.length} concepts
@@ -114,7 +124,7 @@ template(name='watson_concepts')
 
 
 
-template(name='watson_categories')
+template(name='categories')
     .ui.segment
         .ui.header 
             |#{watson.categories.length} categories
@@ -123,3 +133,56 @@ template(name='watson_categories')
                 .item
                     strong #{label}
                     |{{ to_percent score }}%
+
+
+template(name='semantic_roles')
+    .ui.styled.accordion
+        .title
+            |#{watson.semantic_roles.length} semantic_roles
+        .content
+            +jsonView(json=watson.semantic_roles)
+            .ui.list
+                each watson.semantic_roles
+                    .item
+                        strong #{label}
+                        |{{ to_percent score }}%
+
+
+template(name='relations')
+    .ui.styled.accordion
+        .title
+            |#{watson.relations.length} relations
+        .content    
+            +jsonView(json=watson.relations)
+            .ui.list
+                each watson.relations
+                    .item
+                        strong #{label}
+                        |{{ to_percent score }}%
+
+template(name='personality')
+    .ui.styled.accordion
+        .title
+            |#{personality.length} personality
+        .content    
+            +jsonView(json=personality)
+            // .ui.list
+            //     each watson.personality
+            //         .item
+            //             strong #{label}
+            //             |{{ to_percent score }}%
+
+
+template(name='tone')
+    .ui.styled.accordion
+        .title
+            |#{tone.length} tone
+        .content    
+            +jsonView(json=tone)
+            // .ui.list
+            //     each watson.tone
+            //         .item
+            //             strong #{label}
+            //             |{{ to_percent score }}%
+
+
