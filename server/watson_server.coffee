@@ -33,7 +33,7 @@ Meteor.methods
                 content: doc.incident_details,
                 content_type: 'text/plain',
                 consumption_preferences: true,
-                raw_scores: true
+                raw_scores: false
             personality_insights.profile params, Meteor.bindEnvironment((err, response)->
                 if err
                     console.log err

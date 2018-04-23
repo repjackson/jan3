@@ -178,20 +178,20 @@ template(name='incident_view')
                     // +entities
                     +concepts
                     +categories
-            .eight.wide.column
-                +personality
+                    +tone
 
-                // .ui.segment
-                //     if image_id
-                //         img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                //     +call_visual_analysis
-                //     if visual
-                //         each visual
-                //             .ui.label(title=type_hierarchy)
-                //                 | #{class} {{to_percent score }}%
-                // .large130 {{nl2br incident_details}}
-                // // +semantic_roles
-                // // +relations
+            .eight.wide.column
+                .ui.segment
+                    if image_id
+                        img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
+                    +call_visual_analysis
+                    if visual
+                        each visual
+                            .ui.label(title=type_hierarchy)
+                                | #{class} {{to_percent score }}%
+                .large130 {{nl2br incident_details}}
+                // +semantic_roles
+                // +relations
                 // .ui.styled.accordion
                 //     .title 
                 //         i.code.icon
@@ -199,18 +199,18 @@ template(name='incident_view')
                 //         i.dropdown.icon
                 //     .content
                 //         +jsonView(json=watson)
-                // +call_watson
-                // +keywords
-                // +comments
-                // +incident_status
+                +keywords
+                +comments
+                +incident_status
             .four.wide.column
-                // with office
-                //     +office_card
-                // .ui.hidden.divider
-                // if customer
-                //     with customer
-                //         +person_card
-                // +tone
+                with office
+                    +office_card
+                +call_watson
+                if customer
+                    with customer
+                        +person_card
+                +personality
+                +consumption_preferences
                             
 template(name='incident_level_set')
     .set_level.ui.compact.button(title='Set Level')

@@ -156,51 +156,56 @@ template(name='relations')
 template(name='personality')
     .ui.styled.accordion
         .active.title
-            |#{personality.length} personality 
+            h3
+                | author personality 
+                i.dropdown.icon
+        .active.content   
+            each personality.personality
+                h4.ui.header
+                    |#{name} {{ to_percent percentile }}%
+                .ui.list
+                    each children
+                        .item #{name} {{ to_percent percentile }}%
+            .ui.header needs
+            each personality.needs
+                .ui.list
+                        .item #{name} {{ to_percent percentile }}%
+            .ui.header values
+            each personality.values
+                .ui.list
+                    .item #{name} {{ to_percent percentile }}%
+            if personality.behavior
+                .title 
+                    |behavior
+                    i.dropdown.icon
+                .content
+                    each personality.behavior
+                        .ui.list
+                            .item #{name} {{ to_percent percentage }}%
             #call_personality.ui.icon.button 
                 i.refresh.icon
-        .active.content   
-            .title
-                |personality
-                i.dropdown.icon
-            .content
-                each personality.personality
-                    .ui.header
-                        |#{name} {{ to_percent raw_score }}%
-                    .ui.list
-                        each children
-                            .item #{name} {{ to_percent raw_score }}%
-            .title 
-                |needs
-                i.dropdown.icon
-            .content
-                each personality.needs
-                    .ui.list
-                        .item #{name} {{ to_percent raw_score }}%
-            .title 
-                |values
-                i.dropdown.icon
-            .content
-                each personality.values
-                    .ui.list
-                        .item #{name} {{ to_percent raw_score }}%
-            .title 
-                |behaviors
-                i.dropdown.icon
-            .content
-                each personality.behaviors
-                    .ui.list
-                        .item #{name} {{ to_percent raw_score }}%
 
-            +jsonView(json=personality)
+
+template(name='consumption_preferences')
+    h2.ui.header consumption preferences
+    each personality.consumption_preferences
+        h3.ui.header #{name}
+        .ui.list
+            each consumption_preferences
+                if score
+                    .item #{name}
+                else
+                    .disabled.item #{name}
+    // +jsonView(json=personality.consumption_preferences)
 
 
 
 template(name='tone')
     .ui.styled.fluid.accordion
         .active.title 
-            | document tone
-            i.dropdown.icon
+            h3
+                | document tone
+                i.dropdown.icon
         .active.content
             each tone.document_tone.tones
                 .ui.header #{tone_id} {{ to_percent score }}%
