@@ -16,7 +16,22 @@ if Meteor.isClient
         offices: ->  Docs.find { type:'office'}
 
 
-    
+    Template.office_card.onCreated ->
+        GoogleMaps.ready('exampleMap', (map)->
+            marker = new google.maps.Marker
+                position: map.options.center
+                map: map.instance
+        )
+
+    Template.office_card.helpers
+        exampleMapOptions: ()->
+            # console.log @
+            if GoogleMaps.loaded()
+                return {
+                    center: new google.maps.LatLng( @location_lat, @location_lng),
+                    zoom: 8
+                }
+
     
     Template.office_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')

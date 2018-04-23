@@ -156,11 +156,11 @@ template(name='relations')
 template(name='personality')
     if personality
         .ui.styled.accordion
-            .active.title
+            .title
                 h3
                     | #{customer.first_name} personality 
                     i.dropdown.icon
-            .active.content   
+            .content   
                 each personality.personality
                     h4.ui.header
                         |#{name} {{ to_percent percentile }}%

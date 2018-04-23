@@ -3,6 +3,7 @@ template(name='offices')
         .centered.row
             .three.wide.column
                 +add_button type='office' label='Office'
+                +location_facet type='office'
             .thirteen.wide.column
                 .ui.centered.stackable.cards
                     each offices
@@ -10,14 +11,19 @@ template(name='offices')
 
 template(name='office_card')
     .ui.card
+        // iframe(src="{{location_ob.url}}" width="290" height="250" frameborder="0" style="border:0" allowfullscreen)
+        .map-card
+            +googleMap(name="exampleMap" options=exampleMapOptions)
+
         .content
             a.header(href="/view/#{_id}")
                 i.building.icon
-                |#{office_name}
+                |#{office_name} ##{jan_office_id}
         .content
             .ui.list
-                +list_item key='jan_office_id' icon='building'
-                +list_item key='office_address' icon='compass'
+                // +list_item key='jan_office_id' icon='building'
+                with geocode
+                    +list_item key='formatted_address' label='Office Address' icon='compass'
                 +list_item key='phone_number' icon='phone'
                 +list_item key='email_address' icon='envelope'
                 +list_item key='level_1_user_ud' icon='user'
@@ -38,11 +44,12 @@ template(name='office_card')
 template(name='office_edit')
     h1.ui.center.aligned.header Edit Office #{jan_office_id}
     .ui.padded.stackable.centered.grid
-        .eight.wide.column
-            .ui.large.form
+        .six.wide.column
+            +office_map
+        .six.wide.column
+            .ui.form
                 +edit_text_field key='jan_office_id' label='Jan Pro Office ID' icon='building'
                 +edit_text_field key='office_name' label='Office Name' icon='code'
-                +edit_text_field key='office_address' label='Office Address' icon='compass'
                 +edit_text_field key='phone_number' label='Phone Number' icon='phone'
                 +edit_text_field key='email_address' label='Email Address' icon='envelope'
                 +edit_text_field key='level_1_user_ud' label='Level 1 User Id' icon='user' 
