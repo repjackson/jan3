@@ -36,13 +36,16 @@ Meteor.methods
                 raw_scores: false
             personality_insights.profile params, Meteor.bindEnvironment((err, response)->
                 if err
-                    console.log err
+                    # console.log err
+                    Docs.update { _id: doc_id},
+                        $set:
+                            personality: false
                 else
-                    console.dir response
+                    # console.dir response
                     Docs.update { _id: doc_id},
                         $set:
                             personality: response
-                    console.log(JSON.stringify(response, null, 2))
+                    # console.log(JSON.stringify(response, null, 2))
             )
         else return 
         

@@ -154,67 +154,72 @@ template(name='relations')
                         |{{ to_percent score }}%
 
 template(name='personality')
-    .ui.styled.accordion
-        .active.title
-            h3
-                | author personality 
-                i.dropdown.icon
-        .active.content   
-            each personality.personality
-                h4.ui.header
-                    |#{name} {{ to_percent percentile }}%
-                .ui.list
-                    each children
-                        .item #{name} {{ to_percent percentile }}%
-            .ui.header needs
-            each personality.needs
-                .ui.list
-                        .item #{name} {{ to_percent percentile }}%
-            .ui.header values
-            each personality.values
-                .ui.list
-                    .item #{name} {{ to_percent percentile }}%
-            if personality.behavior
-                .title 
-                    |behavior
+    if personality
+        .ui.styled.accordion
+            .active.title
+                h3
+                    | author personality 
                     i.dropdown.icon
-                .content
-                    each personality.behavior
-                        .ui.list
-                            .item #{name} {{ to_percent percentage }}%
-            #call_personality.ui.icon.button 
-                i.refresh.icon
+            .active.content   
+                each personality.personality
+                    h4.ui.header
+                        |#{name} {{ to_percent percentile }}%
+                    .ui.list
+                        each children
+                            .item #{name} {{ to_percent percentile }}%
+                .ui.header needs
+                each personality.needs
+                    .ui.list
+                            .item #{name} {{ to_percent percentile }}%
+                .ui.header values
+                each personality.values
+                    .ui.list
+                        .item #{name} {{ to_percent percentile }}%
+                if personality.behavior
+                    .title 
+                        |behavior
+                        i.dropdown.icon
+                    .content
+                        each personality.behavior
+                            .ui.list
+                                .item #{name} {{ to_percent percentage }}%
+    else
+        p not enough words to analyze author personality
+    #call_personality.ui.icon.button(title='analyze personality')
+        i.refresh.icon
 
 
 template(name='consumption_preferences')
-    h2.ui.header consumption preferences
-    each personality.consumption_preferences
-        h3.ui.header #{name}
-        .ui.list
-            each consumption_preferences
-                if score
-                    .item #{name}
-                else
-                    .disabled.item #{name}
+    if personality
+        h3.ui.header author consumption preferences
+        each personality.consumption_preferences
+            h3.ui.header #{name}
+            .ui.list
+                each consumption_preferences
+                    if score
+                        .item #{name}
+                    else
+                        .disabled.item #{name}
     // +jsonView(json=personality.consumption_preferences)
 
 
 
 template(name='tone')
     .ui.styled.fluid.accordion
-        .active.title 
+        .title 
             h3
                 | document tone
                 i.dropdown.icon
-        .active.content
-            each tone.document_tone.tones
-                .ui.header #{tone_id} {{ to_percent score }}%
+        .content
+            .ui.bulleted.list
+                each tone.document_tone.tones
+                    .item #{tone_id} {{ to_percent score }}%
             .ui.list
                 each tone.sentences_tone
                     .item
-                        .ui.label(title='sentence id') #{sentence_id}
-                        each tones
-                            .ui.label #{tone_id} {{ to_percent score }}%
+                        strong #{sentence_id}: 
                         | #{text}
+                        each tones
+                            .ui.basic.label #{tone_id} {{ to_percent score }}%
             i#call_tone.refresh.large.link.icon
                 // +jsonView(json=tone)

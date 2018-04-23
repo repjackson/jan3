@@ -5,7 +5,8 @@ template(name='incidents')
                 +add_button type='incident' label='Incident'
                 +toggle_view_mode_button
                 +timestamp_facet
-                +location_facet
+                // +location_facet
+                +keyword_facet
                 // .ui.dividing.header Level
                 // +set_session_button key='level' value='all' label='All'
                 // +set_session_button key='level' value=1 label='1'
@@ -36,43 +37,46 @@ template(name='incidents')
 
 template(name='incident_item')
     .ui.item
-        a.image(href="/view/#{_id}")
-            img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
-            each visual
-                .ui.basic.small.label #{class}
+        if image_id
+            a.image(href="/view/#{_id}")
+                img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
+                // each visual
+                //     .ui.basic.small.label #{class}
         .content
             a.header(href="/view/#{_id}") 
                 |##{incident_number}
-                +incident_type_label
-                if office.office_name
-                    .ui.label #{office.office_name}
-                if current_level
-                    .ui.label Level #{current_level}
             .description
-                .ui.two.column.grid
-                    .column
-                        .large130 #{incident_details}
-                    .column
+                .ui.grid
+                    .twelve.wide.column
+                        .large130 {{nl2br incident_details}}
+                        +tone
+                        .meta 
+                            .ui.horizontal.list
+                                each watson_keywords
+                                    .item #{this}
+                    .four.wide.column
+                        .meta #{when}
+                        .meta #{formal_when}
+                        // .ui.horizontal.list
+                        //     each date_array
+                        //         .item #{this}
+                        +incident_type_label
+                        if office.office_name
+                            .ui.label #{office.office_name}
+                        if current_level
+                            .ui.label Level #{current_level}
+                        .meta by #{author.username}
+                        if comment_count
+                            a.meta(href="/view/#{_id}")
+                                i.comments.icon
+                                |#{comment_count} comments
+                        +view_button
                         if watson
                             +doc_sentiment
                             +doc_emotion
-                            // +entities
-                            +concepts
-                            +categories
-            .meta by #{author.username}
-            .meta 
-                |logged #{when}
-                each date_array
-                    .ui.label #{this}
-                // +incident_level_set level=1
-                // +incident_level_set level=2
-                // +incident_level_set level=3
-                // +incident_level_set level=4
-                +view_button
-            if comment_count
-                a.meta(href="/view/#{_id}")
-                    i.comments.icon
-                    |#{comment_count} comments
+                        each tone.document_tone.tones
+                            h4.ui.header #{tone_id} {{ to_percent score }}%
+        
 
                 
 template(name='incident_card')
@@ -153,7 +157,7 @@ template(name='incident_view')
             .three.wide.center.aligned.column
                 +link_button link='/incidents' label='incidents' icon='clipboard'
             .ten.wide.center.aligned.column
-                h1.ui.header incident #{incident_number}
+                h1.ui.header incident ##{incident_number}
             .three.wide.center.aligned.column
                 +edit_button
 
@@ -175,21 +179,20 @@ template(name='incident_view')
                 if watson
                     +doc_sentiment
                     +doc_emotion
-                    // +entities
+                    +tone
                     +concepts
                     +categories
-                    +tone
 
             .eight.wide.column
-                .ui.segment
-                    if image_id
-                        img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
+                .ui.basic.segment
+                    .large130 {{nl2br incident_details}}
+                if image_id
+                    img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
                     +call_visual_analysis
                     if visual
                         each visual
                             .ui.label(title=type_hierarchy)
                                 | #{class} {{to_percent score }}%
-                .large130 {{nl2br incident_details}}
                 // +semantic_roles
                 // +relations
                 // .ui.styled.accordion
@@ -199,6 +202,7 @@ template(name='incident_view')
                 //         i.dropdown.icon
                 //     .content
                 //         +jsonView(json=watson)
+                .ui.hidden.divider
                 +keywords
                 +comments
                 +incident_status

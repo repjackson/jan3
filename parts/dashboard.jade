@@ -2,53 +2,41 @@ template(name='dashboard')
     .ui.padded.stackable.grid
         .row
             .four.wide.column
-                .ui.styled.accordion
-                    .active.title
-                        h3
-                            i.info.icon
-                            |General Account Info
-                            i.dropdown.icon
-                    .active.content
-                        with person
-                            +person_card
+                .ui.dividing.header
+                    i.info.icon
+                    |General Account Info
+                with person
+                    +person_card
             .eight.wide.column
-                .ui.styled.accordion
-                    .active.title
-                        h3
-                            i.edit.icon
-                            |Incidents
-                            i.dropdown.icon
-                    .active.content
-                        .ui.divided.link.items    
-                            each incidents
-                                a.item(href="/view/#{_id}")
-                                    .ui.tiny.rounded.image
-                                        img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
-                                        +doc_sentiment
-                                    .content
-                                        .header ##{incident_number}
-                                            +incident_type_label
-                                        .meta #{when}
-                                        .description #{incident_details}
-                                        .extra
-                                            if customer
-                                                .ui.label 
-                                                    i.user.icon
-                                                    |#{customer.first_name} #{customer.last_name}
-                                            if office
-                                                .ui.label 
-                                                    i.building.icon
-                                                    |#{office.office_name}
+                .ui.dividing.header
+                    i.clipboard.icon
+                    |Incidents
+                .ui.divided.link.items    
+                    each incidents
+                        a.item(href="/view/#{_id}")
+                            .ui.tiny.rounded.image
+                                img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
+                                +doc_sentiment
+                            .content
+                                .header ##{incident_number}
+                                    +incident_type_label
+                                .meta #{when}
+                                .description #{incident_details}
+                                .extra
+                                    if customer
+                                        .ui.label 
+                                            i.user.icon
+                                            |#{customer.first_name} #{customer.last_name}
+                                    if office
+                                        .ui.label 
+                                            i.building.icon
+                                            |#{office.office_name}
             .four.wide.column
-                .ui.styled.accordion
-                    .active.title
-                        h3
-                            i.building.icon
-                            | Local Office Information
-                            i.dropdown.icon
-                    .active.content
-                        with office
-                            +office_card
+                .ui.dividing.header
+                    i.building.icon
+                    | Local Office Information
+                with office
+                    +office_card
         .row
             .five.wide.column
                 .ui.disabled.segment

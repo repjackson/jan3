@@ -3,6 +3,7 @@
 
 Meteor.publish 'facet', (
     selected_theme_tags
+    selected_keywords
     selected_author_ids=[]
     selected_location_tags
     selected_timestamp_tags
@@ -15,7 +16,7 @@ Meteor.publish 'facet', (
         
         # match.tags = $all: selected_theme_tags
         if type then match.type = type
-        console.log selected_timestamp_tags
+        # console.log selected_timestamp_tags
 
         # if view_private is true
         #     match.author_id = Meteor.userId()
@@ -28,6 +29,7 @@ Meteor.publish 'facet', (
         if selected_author_ids.length > 0 
             match.author_id = $in: selected_author_ids
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
+        if selected_keywords.length > 0 then match.watson_keywords = $all: selected_keywords
         if selected_timestamp_tags.length > 0 then match.date_array = $all: selected_timestamp_tags
         
 
@@ -97,22 +99,22 @@ Meteor.publish 'facet', (
 
 
 
-        # watson_keyword_cloud = Docs.aggregate [
-        #     { $match: match }
-        #     { $project: watson_keywords: 1 }
-        #     { $unwind: "$watson_keywords" }
-        #     { $group: _id: '$watson_keywords', count: $sum: 1 }
-        #     { $match: _id: $nin: selected_theme_tags }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $limit: 20 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # # console.log 'cloud, ', cloud
-        # watson_keyword_cloud.forEach (keyword, i) ->
-        #     self.added 'watson_keywords', Random.id(),
-        #         name: keyword.name
-        #         count: keyword.count
-        #         index: i
+        watson_keyword_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: watson_keywords: 1 }
+            { $unwind: "$watson_keywords" }
+            { $group: _id: '$watson_keywords', count: $sum: 1 }
+            { $match: _id: $nin: selected_theme_tags }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'watson cloud, ', watson_keyword_cloud
+        watson_keyword_cloud.forEach (keyword, i) ->
+            self.added 'watson_keywords', Random.id(),
+                name: keyword.name
+                count: keyword.count
+                index: i
 
         timestamp_tags_cloud = Docs.aggregate [
             { $match: match }
@@ -124,7 +126,7 @@ Meteor.publish 'facet', (
             { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
-        console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
+        # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
         timestamp_tags_cloud.forEach (timestamp_tag, i) ->
             self.added 'timestamp_tags', Random.id(),
                 name: timestamp_tag.name
