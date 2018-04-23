@@ -60,9 +60,9 @@ template(name='incident_item')
                         // .ui.horizontal.list
                         //     each date_array
                         //         .item #{this}
-                        +incident_type_label
                         if office.office_name
                             .ui.label #{office.office_name}
+                        +incident_type_label
                         if current_level
                             .ui.label Level #{current_level}
                         .meta by #{author.username}
@@ -176,6 +176,7 @@ template(name='incident_view')
                     .ui.header
                         +incident_type_label
                     .ui.header #{formal_when}
+                +call_watson
                 if watson
                     +doc_sentiment
                     +doc_emotion
@@ -209,7 +210,6 @@ template(name='incident_view')
             .four.wide.column
                 with office
                     +office_card
-                +call_watson
                 if customer
                     with customer
                         +person_card

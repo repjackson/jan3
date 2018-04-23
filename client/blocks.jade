@@ -254,7 +254,7 @@ template(name='html_create')
         with doc
             if is_editing
                 .ui.labeled.fluid.input
-                    .ui.basic.label Select Staff
+                    .ui.basic.label select staff
                     input#staff(type='text' value=staff)
             else
                 div(class=doc_classes)
@@ -263,8 +263,23 @@ template(name='html_create')
             +session_edit_icon
     else
         // if isInRole 'admin'
-        .ui.header No Doc Found
+        .ui.header no coc found
         .create_doc.ui.basic.button
             i.plus.icon
-            |Create HTML with #{template_tags}
+            |create html with #{template_tags}
     
+    
+    
+
+template(name='office_map')
+    .ui.segment
+        .ui.header
+            i.map.marker.icon
+            | #{office_address}
+        +google_places_input
+        #map
+        
+template(name='google_places_input')
+    .ui.large.fluid.icon.input
+        i.search.icon
+        input#google_places_field(type='text' placeholder='change address...')    

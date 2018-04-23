@@ -84,16 +84,3 @@ template(name='office_view')
                     +list_item key='level_3_user_ud' label='Level 3 User Id' icon='user'
                 
                 
-
-template(name='office_map')
-    .ui.segment
-        .ui.header
-            i.map.marker.icon
-            | #{office_address}
-        +google_places_input
-        #map
-        
-template(name='google_places_input')
-    .ui.large.fluid.icon.input
-        i.search.icon
-        input#google_places_field(type='text' placeholder='Change Address...')

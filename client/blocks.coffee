@@ -181,3 +181,37 @@ Template.html_create.events
         staff = $('#staff').val()
         Docs.update @_id,
             $set: staff: staff                
+            
+            
+Template.google_places_input.onRendered ->
+    # input = document.getElementById('google_places_field');
+    # options = {
+    #     types: ['geocode'],
+    #     # componentRestrictions: {country: 'fr'}
+    # }
+    # @autocomplete = new google.maps.places.Autocomplete(input, options);
+    # # console.log @autocomplete.getPlace
+    @autorun(() =>
+        if GoogleMaps.loaded()
+            # $('#google_places_field').geocomplete();
+            $("#google_places_field").geocomplete().bind("geocode:result", (event, result)->
+                console.log(result)
+                Meteor.call 'update_location', FlowRouter.getParam('doc_id'), result, ->
+                    console.log 'hi'
+                )
+    )
+
+
+# Template.google_places_input.events
+    # 'change #google_places_field': (e,t)->
+    #     console.log $('#google_places_field').geocomplete();
+
+        # result = t.autocomplete.gm_accessors_.place.jd.w3
+        # console.dir result
+        # Meteor.call 'update_location', FlowRouter.getParam('doc_id'), result, (err,res)->
+            # console./log res
+        # stuff = Template.instance().autocomplete.gm_accessors_.place
+        # Docs.update FlowRouter.getParam('doc_id'),
+        #     $set: stuff: stuff
+        # console.dir stuff.jd.formattedPrediction
+        

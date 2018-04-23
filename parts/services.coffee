@@ -42,18 +42,3 @@ if Meteor.isClient
                 # console.log doc
                 Docs.remove doc._id, ->
                     FlowRouter.go "/services"
-
-
-    Template.google_places_input.onRendered ->
-        input = document.getElementById('google_places_field');
-        options = {}
-            # types: ['(cities)'],
-            # componentRestrictions: {country: 'fr'}
-        
-        @autocomplete = new google.maps.places.Autocomplete(input, options);
-    
-    Template.google_places_input.events
-        'change #google_places_field': (e,t)->
-            console.log t
-            place = t.autocomplete.getPlace();
-            console.log place

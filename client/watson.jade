@@ -158,7 +158,7 @@ template(name='personality')
         .ui.styled.accordion
             .active.title
                 h3
-                    | author personality 
+                    | #{customer.first_name} personality 
                     i.dropdown.icon
             .active.content   
                 each personality.personality
@@ -168,20 +168,20 @@ template(name='personality')
                         each children
                             .item #{name} {{ to_percent percentile }}%
                 .ui.header needs
-                each personality.needs
-                    .ui.list
-                            .item #{name} {{ to_percent percentile }}%
+                .ui.list
+                    each personality.needs
+                        .item #{name} {{ to_percent percentile }}%
                 .ui.header values
-                each personality.values
-                    .ui.list
+                .ui.list
+                    each personality.values
                         .item #{name} {{ to_percent percentile }}%
                 if personality.behavior
                     .title 
                         |behavior
                         i.dropdown.icon
                     .content
-                        each personality.behavior
-                            .ui.list
+                        .ui.list
+                            each personality.behavior
                                 .item #{name} {{ to_percent percentage }}%
     else
         p not enough words to analyze author personality
@@ -191,16 +191,21 @@ template(name='personality')
 
 template(name='consumption_preferences')
     if personality
-        h3.ui.header author consumption preferences
-        each personality.consumption_preferences
-            h3.ui.header #{name}
-            .ui.list
-                each consumption_preferences
-                    if score
-                        .item #{name}
-                    else
-                        .disabled.item #{name}
-    // +jsonView(json=personality.consumption_preferences)
+        .ui.styled.accordion
+            .title
+                h3.ui.header
+                    |#{customer.first_name} preferences
+                    i.dropdown.icon
+            .content
+                each personality.consumption_preferences
+                    h3.ui.header #{name}
+                    .ui.list
+                        each consumption_preferences
+                            if score
+                                .item #{name}
+                            else
+                                .disabled.item #{name}
+            // +jsonView(json=personality.consumption_preferences)
 
 
 

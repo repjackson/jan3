@@ -8,6 +8,11 @@ FlowRouter.notFound =
     action: ->
         BlazeLayout.render 'layout', 
             main: 'not_found'
+Meteor.startup( () =>
+    GoogleMaps.load
+        key: 'AIzaSyAK_vkvxDH5vsqGkd0Qn-dDmq-rShTA7UA',
+        libraries: 'places'
+)
 
 
 Template.body.events
