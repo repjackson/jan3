@@ -205,7 +205,7 @@ template(name='associated_users')
     .ui.segment
         .ui.header 
             i.users.icon
-            |associated Users
+            |associated users
             
             
 template(name='call_phone_button')
@@ -275,7 +275,7 @@ template(name='office_map')
     .ui.segment
         .ui.header
             i.map.marker.icon
-            | #{office_address}
+            | #{geocode.formatted_address}
         +google_places_input
         #map
         

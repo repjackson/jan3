@@ -70,21 +70,39 @@ Meteor.methods
                 recipient_id:recipient_id
                 content: 
                     "<p>#{Meteor.user().name()} has notified you about <a href=#{doc_link}>#{parent.title} entry</a>.</p>"
+    
     update_location: (doc_id, result)->
-        addresstags = (component.long_name for component in result.address_components)
-        loweredAddressTags = _.map(addresstags, (tag)->
+        address_tags = (component.long_name for component in result.address_components)
+        parts = result.address_components
+        
+        geocode = {}
+        for part in parts
+            geocode["#{part.types[0]}"] = part.short_name 
+                # console.log part.types[0]
+                # console.log part.short_name
+        geocode['formatted_address'] = result.formatted_address
+        console.log result.lat
+        console.log result.lng
+        # console.log parts[0].types
+        # # street_address = _.where(parts, {types:[ 'street_number' ]})
+        # street_address = parts[0].short_name
+        # console.log 'street address', street_address
+
+        lowered_address_tags = _.map(address_tags, (tag)->
             tag.toLowerCase()
             )
 
-        console.log addresstags
+        # console.log address_tags
 
         doc = Docs.findOne doc_id
-        tagsWithoutAddress = _.difference(doc.tags, doc.addresstags)
-        tagsWithNew = _.union(tagsWithoutAddress, loweredAddressTags)
+        tags_without_address = _.difference(doc.tags, doc.address_tags)
+        tags_with_new = _.union(tags_without_address, lowered_address_tags)
 
         Docs.update doc_id,
             $set:
-                tags: tagsWithNew
-                locationob: result
-                addresstags: loweredAddressTags
-
+                tags:tags_with_new
+                location_ob:result
+                address_tags:lowered_address_tags
+                geocode:geocode
+                location_lat: result.lat
+                location_lng: result.lng

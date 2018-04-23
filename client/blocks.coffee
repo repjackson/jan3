@@ -196,8 +196,12 @@ Template.google_places_input.onRendered ->
             # $('#google_places_field').geocomplete();
             $("#google_places_field").geocomplete().bind("geocode:result", (event, result)->
                 console.log(result)
-                Meteor.call 'update_location', FlowRouter.getParam('doc_id'), result, ->
-                    console.log 'hi'
+                lat = result.geometry.location.lat()
+                long = result.geometry.location.lng()
+                result.lat = lat
+                result.lng = long
+                if confirm "change location to #{result.formatted_address}?"
+                    Meteor.call 'update_location', FlowRouter.getParam('doc_id'), result
                 )
     )
 
@@ -215,3 +219,13 @@ Template.google_places_input.onRendered ->
         #     $set: stuff: stuff
         # console.dir stuff.jd.formattedPrediction
         
+Template.office_map.onRendered ->
+    doc = Docs.findOne FlowRouter.getParam('doc_id')
+    # console.log doc.location_ob.geometry
+    mymap = L.map('map').setView([doc.location_lat, doc.location_lng], 15);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        # attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: 'pk.eyJ1IjoicmVwamFja3NvbiIsImEiOiJjamc4dGtiYm4yN245MnFuNWMydWNuaXJlIn0.z3_-xuCT46yTC_6Zhl34kQ'
+    }).addTo(mymap);

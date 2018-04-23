@@ -69,6 +69,7 @@ template(name='office_view')
             .five.wide.column
                 +associated_users
                 +comments
+                // +jsonView(json=location_ob)
             .six.wide.column
                 +office_map
             .five.wide.column
@@ -76,7 +77,8 @@ template(name='office_view')
                 .ui.large.relaxed.list
                     +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
                     +list_item key='office_name' label='Office Name' icon='code'
-                    +list_item key='office_address' label='Office Address' icon='compass'
+                    with geocode
+                        +list_item key='formatted_address' label='Office Address' icon='compass'
                     +list_item key='phone_number' label='Phone Number' icon='phone'
                     +list_item key='email_address' label='Email Address' icon='envelope'
                     +list_item key='level_1_user_ud' label='Level 1 User Id' icon='user'
