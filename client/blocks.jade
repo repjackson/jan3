@@ -102,7 +102,7 @@ template(name='edit_image_field')
                 a#remove_photo.ui.top.left.attached.link.basic.label remove
                 // .ui.bottom.right.attached.basic.label Image Id: #{image_id}
         else
-            .ui.header upload image
+            .ui.header Upload Image
             input(type='file' name='upload_picture' accept='image/*')
         // if isInRole 'admin'
         //     .field
@@ -116,7 +116,7 @@ template(name='edit_number_field')
         label #{label}
         .ui.left.icon.input
             if icon
-                i.large.icon(class=icon)
+                i.icon(class=icon)
             input#number_field(type='number' min='0' value=key_value)
 
 
@@ -148,7 +148,7 @@ template(name='edit_date_field')
         label #{label}
         .ui.left.icon.input
             if icon
-                i.large.icon(class=icon)
+                i.icon(class=icon)
             input#date_field(type='date' value=key_value)        
         
         
@@ -197,7 +197,7 @@ template(name='associated_incidents')
     .ui.segment
         .ui.header 
             i.clipboard.icon
-            |incidents
+            | Incidents
             
             
             
@@ -205,7 +205,7 @@ template(name='associated_users')
     .ui.segment
         .ui.header 
             i.users.icon
-            |users
+            | Users
             
             
 template(name='call_phone_button')

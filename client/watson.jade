@@ -7,9 +7,9 @@ template(name='doc_sentiment')
         .label
             |{{ to_percent doc_sentiment_score }}%
             if is_positive
-                | positive
+                | Positive
             else
-                | negative
+                | Negative
 
         // |#{doc_sentiment_label}
         // |#{sentiment_score_percent}
@@ -23,41 +23,41 @@ template(name='doc_emotion')
         .ui.blue.small.progress(data-percent=sadness_percent)
             .bar
             .progress
-            .label {{to_percent sadness}}% sadness 
+            .label {{to_percent sadness}}% Sadness 
         .ui.green.small.progress(data-percent=joy_percent)
             .bar
             .progress
-            .label {{to_percent joy}}% joy 
+            .label {{to_percent joy}}% Joy 
         .ui.black.small.progress(data-percent=fear_percent)
             .bar
             .progress
-            .label {{to_percent fear}}% fear 
+            .label {{to_percent fear}}% Fear 
         .ui.yellow.small.progress(data-percent=disgust_percent)
             .bar
             .progress
-            .label {{to_percent disgust}}% disgust 
+            .label {{to_percent disgust}}% Disgust 
         .ui.red.small.progress(data-percent="{{to_percent anger}}")
             .bar
             .progress
-            .label {{to_percent anger}}% anger 
+            .label {{to_percent anger}}% Anger 
             
 template(name='call_watson')
-    #call_watson.ui.button 
+    #call_watson.ui.basic.fluid.button 
         i.chess.knight.icon
-        |analyze
+        | Analyze Language
         
         
 
 template(name='call_visual_analysis')
-    #call_visual.ui.button 
+    #call_visual.ui.basic.button 
         i.image.icon
-        |tag image
+        |Tag
 
 template(name='keywords')
     .ui.fluid.styled.accordion
         .title
             .ui.header 
-                |#{watson.keywords.length} keywords
+                |#{watson.keywords.length} Keywords
                 i.dropdown.icon
         .content
             .ui.three.stackable.cards
@@ -67,38 +67,38 @@ template(name='keywords')
                             h4
                                 |#{text}
                             .meta
-                                |{{ to_percent relevance }}% relevant
+                                |{{ to_percent relevance }}% Relevant
                             .meta
-                                |sentiment: {{ to_percent sentiment.score }}%
+                                |Sentiment: {{ to_percent sentiment.score }}%
                             .description
                                 with emotion
                                     .ui.list
                                         .ui.blue.small.progress(data-percent=sadness_percent title="{{to_percent sadness}}% sadness")
                                             .bar
                                             .progress
-                                            .label {{ to_percent sadness }}% sadness
+                                            .label {{ to_percent sadness }}% Sadness
                                         .ui.green.small.progress(data-percent=joy_percent title="{{to_percent joy}}% joy")
                                             .bar
                                             .progress
-                                            .label {{ to_percent joy }}% joy 
+                                            .label {{ to_percent joy }}% Joy 
                                         .ui.black.small.progress(data-percent=fear_percent title="{{to_percent fear}}% fear")
                                             .bar
                                             .progress
-                                            .label {{ to_percent fear }}% fear
+                                            .label {{ to_percent fear }}% Fear
                                         .ui.yellow.small.progress(data-percent=disgust_percent title="{{to_percent joy}}% joy")
                                             .bar
                                             .progress
-                                            .label {{ to_percent disgust }}% disgust 
+                                            .label {{ to_percent disgust }}% Disgust 
                                         .ui.red.small.progress(data-percent=anger_percent title="{{to_percent joy}}% joy")
                                             .bar
                                             .progress
-                                            .label {{ to_percent anger }}% anger 
+                                            .label {{ to_percent anger }}% Anger 
 
 
 template(name='entities')
     .ui.segment
         .ui.header 
-            |#{watson.entities.length} entities
+            |#{watson.entities.length} Entities
         .ui.list
             each watson.entities
                 .item
@@ -107,7 +107,7 @@ template(name='entities')
 template(name='concepts')
     .ui.segment
         .ui.header 
-            |#{watson.concepts.length} concepts
+            |#{watson.concepts.length} Concepts
         .ui.list
         each watson.concepts
             .item
@@ -120,7 +120,7 @@ template(name='concepts')
 template(name='categories')
     .ui.segment
         .ui.header 
-            |#{watson.categories.length} categories
+            |#{watson.categories.length} Categories
         .ui.list
             each watson.categories
                 .item
@@ -131,7 +131,7 @@ template(name='categories')
 template(name='semantic_roles')
     .ui.styled.accordion
         .title
-            |#{watson.semantic_roles.length} semantic_roles
+            |#{watson.semantic_roles.length} Semantic Roles
         .content
             +jsonView(json=watson.semantic_roles)
             .ui.list
@@ -144,7 +144,7 @@ template(name='semantic_roles')
 template(name='relations')
     .ui.styled.accordion
         .title
-            |#{watson.relations.length} relations
+            |#{watson.relations.length} Relations
         .content    
             +jsonView(json=watson.relations)
             .ui.list
@@ -158,7 +158,7 @@ template(name='personality')
         .ui.styled.accordion
             .title
                 h3
-                    | #{customer.first_name} personality 
+                    | #{customer.first_name} Personality 
                     i.dropdown.icon
             .content   
                 each personality.personality
@@ -167,24 +167,24 @@ template(name='personality')
                     .ui.list
                         each children
                             .item #{name} {{ to_percent percentile }}%
-                .ui.header needs
+                .ui.header Needs
                 .ui.list
                     each personality.needs
                         .item #{name} {{ to_percent percentile }}%
-                .ui.header values
+                .ui.header Values
                 .ui.list
                     each personality.values
                         .item #{name} {{ to_percent percentile }}%
                 if personality.behavior
                     .title 
-                        |behavior
+                        | Behavior
                         i.dropdown.icon
                     .content
                         .ui.list
                             each personality.behavior
                                 .item #{name} {{ to_percent percentage }}%
     else
-        p not enough words to analyze author personality
+        p Not enough words to analyze author personality
     #call_personality.ui.icon.button(title='analyze personality')
         i.refresh.icon
 
@@ -194,7 +194,7 @@ template(name='consumption_preferences')
         .ui.styled.accordion
             .title
                 h3.ui.header
-                    |#{customer.first_name} preferences
+                    |#{customer.first_name} Preferences
                     i.dropdown.icon
             .content
                 each personality.consumption_preferences
@@ -213,7 +213,7 @@ template(name='tone')
     .ui.styled.fluid.accordion
         .title 
             h3
-                | document tone
+                | Document Tone
                 i.dropdown.icon
         .content
             .ui.bulleted.list

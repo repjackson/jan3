@@ -5,32 +5,32 @@ template(name='nav')
             .ui.menu
                 a.item(href='/people' class="{{isActivePath '/people'}}")
                     i.users.icon
-                    | users
+                    | Users
                 a.item(href='/incidents' class="{{isActivePath '/incidents'}}")
                     i.clipboard.icon
-                    | incidents
+                    | Incidents
                 a.item(href='/offices' class="{{isActivePath '/offices'}}")
                     i.building.icon
-                    | offices
+                    | Offices
         a.header.item(href='/' class="{{isActivePath '/'}}") 
             i.line.chart.icon
-            | home
+            | Home
         a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
             i.users.icon
-            |  users
+            | Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}")
             i.clipboard.icon
-            |  incidents
+            | Incidents
         a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}")
             i.building.icon
-            |  offices
+            | Offices
         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}")
             i.shipping.fast.icon
-            | services
+            | Services
         .right.menu
             a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}")
                 i.shield.alternate.icon
-                |admin
+                | Admin
             // .ui.simple.dropdown.icon.item
             //     i.bell.icon
             //     .menu
@@ -53,21 +53,21 @@ template(name='nav')
                     .ui.inverted.menu
                         a.item(href="/notifications")
                             i.bell.icon
-                            | notifications
+                            | Notifications
                         a.item(href='/mail')
                             i.envelope.icon
-                            | mail
+                            | Mail
                         a.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                             i.user.icon
-                            | profile
+                            | Profile
                         a.item(href='/account/settings' class="{{isActivePath '/account/settings'}}") 
                             i.cog.icon
-                            | settings
+                            | Settings
                         .divider
                         a#logout.ui.item(href='#') 
-                            | sign out
+                            | Sign Out
                             
             else
                 a.ui.item(href='/sign-in') 
                     i.right.chevron.icon
-                    | sign in
+                    | Sign In

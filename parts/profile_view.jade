@@ -1,34 +1,45 @@
+template(name='user_nav')
+    .ui.menu
+        .header.item item #{profile.first_name} #{profile.last_name}
+        img.ui.small.image.item(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .item
+            i.info.icon
+            | About
+        .item
+            | Docs
+        .item
+            | Social
+
+
 template(name='view_profile')
-    with person
-        .ui.container.stackable.grid
-            .five.wide.column
-                img.ui.centered.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
-                if can_edit_profile
-                    .ui.hidden.divider
-                        a.ui.fluid.button(href="/account/profile/edit/#{_id}") edit
-            .ten.wide.column
-                h2.ui.header
-                    |#{profile.first_name} #{profile.last_name}
-                if tags
-                    each tags
-                        .ui.basic.label #{this}
-                if profile.position
-                    .ui.header Position 
-                    | #{profile.position}
-                if profile.phone
-                    .ui.header Phone
-                    | #{profile.phone}
-                if profile.company
-                    .ui.header Company
-                    | #{profile.company}
-                if profile.website
-                    .ui.header Website 
-                    a(href=profile.website target='_blank') #{profile.website}
-                .ui.horizontal.divider.header 
-                    i.building.icon
-                    |Local Office
-                // if isInRole 'admin'
-                //     .ui.horizontal.divider.header
-                //         i.red.configure.icon
-                //         | Admin
-                // +timecard
+    .ui.grid
+        .four.wide.column
+            if tags
+                each tags
+                    .ui.basic.label #{this}
+            .ui.list
+                .item
+                    if profile.position
+                        strong Position 
+                        | #{profile.position}
+                .item
+                    if profile.phone
+                        strong Phone
+                        | #{profile.phone}
+                .item    
+                    if profile.company
+                        strong Company
+                        | #{profile.company}
+                .item    
+                    if profile.website
+                        strong Website 
+                        a(href=profile.website target='_blank') #{profile.website}
+            .ui.horizontal.divider.header 
+                i.building.icon
+                |Local Office
+            if can_edit_profile
+                .ui.hidden.divider
+                    a.ui.large.basic.button(href="/account/profile/edit/#{_id}")
+                        i.edit.icon
+                        | Edit Profile
+        .ten.wide.column

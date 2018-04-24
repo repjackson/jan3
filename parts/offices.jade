@@ -1,10 +1,10 @@
 template(name='offices')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .three.wide.column
+            .two.wide.column
                 +add_button type='office' label='Office'
-                +location_facet type='office'
-            .thirteen.wide.column
+                // +location_facet type='office'
+            .fourteen.wide.column
                 .ui.centered.stackable.cards
                     each offices
                         +office_card

@@ -7,9 +7,9 @@ Template.timestamp_facet.helpers
         if 0 < doc_count < 3
             Timestamp_tags.find { 
                 count: $lt: doc_count
-                }, limit:20
+                }, limit:10
         else
-            Timestamp_tags.find({}, limit:20)
+            Timestamp_tags.find({}, limit:10)
             
             
     timestamp_tag_class: ->

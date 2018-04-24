@@ -1,9 +1,10 @@
 template(name='people') 
     .ui.padded.stackable.grid
         .row
-            .four.wide.column
+            .two.wide.column
                 +add_button type='person' label='Person'
-            .twelve.wide.column
+                .ui.dividing.header Filter
+            .fourteen.wide.column
                 .ui.centered.cards
                     each people
                         +person_card

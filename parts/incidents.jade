@@ -157,7 +157,7 @@ template(name='incident_view')
             .three.wide.center.aligned.column
                 +link_button link='/incidents' label='incidents' icon='clipboard'
             .ten.wide.center.aligned.column
-                h1.ui.header incident ##{incident_number}
+                h1.ui.header Incident ##{incident_number}
             .three.wide.center.aligned.column
                 +edit_button
 
@@ -165,7 +165,7 @@ template(name='incident_view')
             .four.wide.column
                 .ui.segment
                     .ui.header
-                        | logged
+                        | Logged
                         +author_info
                     h2.ui.sub.header #{when}
                     .ui.large.relaxed.list
@@ -192,7 +192,7 @@ template(name='incident_view')
                     +call_visual_analysis
                     if visual
                         each visual
-                            .ui.label(title=type_hierarchy)
+                            .ui.basic.label(title=type_hierarchy)
                                 | #{class} {{to_percent score }}%
                 // +semantic_roles
                 // +relations

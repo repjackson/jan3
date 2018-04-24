@@ -58,7 +58,9 @@ template(name='location_facet')
     // .ui.divider
 
 template(name='timestamp_facet')
-    .ui.header date tags
+    .ui.header 
+        i.calendar.icon
+        |Date
     if selected_timestamp_tags
         #clear_timestamp_tags.ui.icon.active.button
             i.remove.icon
@@ -74,7 +76,7 @@ template(name='timestamp_facet')
 
 template(name='intention_facet')
     .ui.inverted.header
-        | intention tags
+        | Intention Tags
     if selected_intention_tags
         #clear_intention_tags.ui.large.icon.button
             i.remove.icon
@@ -91,7 +93,8 @@ template(name='intention_facet')
 
 template(name='keyword_facet')
     .ui.header 
-        |browse keywords
+        i.tags.icon
+        | Browse Keywords
     // .ui.left.icon.small.input
     //     i.search.icon
     //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
@@ -113,8 +116,8 @@ template(name='keyword_facet')
 
 template(name='username_facet')
     .ui.inverted.header
-        img(src="https://png.icons8.com/color/100/000000/couple-man-woman.png")
-        | authors
+        i.users.icon
+        | Authors
     if selected_author_ids
         #clear_authors.ui.large.icon.button
             i.remove.icon

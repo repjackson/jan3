@@ -1,17 +1,20 @@
 template(name='services')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .three.wide.column
+            .eight.wide.column
                 +add_button type='service' label='Service'
-            .thirteen.wide.column
+                // .ui.dividing.header Filter
+                // .ui.dividing.header My Scheduled Services
                 .ui.centered.stackable.cards
                     each services
                         +service_card
+            .eight.wide.column
+                +fullcalendar
 
 template(name='service_card')
     .ui.card
         .content
-            a.header(href="/view/#{_id}") #{jan_service_id}
+            a.header(href="/view/#{_id}") Service ##{jan_service_id}
         .content
             .ui.list
                 +list_item key='jan_service_id' label='Jan Pro Service ID' icon='hashtag'

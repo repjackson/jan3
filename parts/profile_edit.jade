@@ -1,5 +1,5 @@
 template(name='edit_profile')
-    h1.ui.center.aligned.header edit profile 
+    h1.ui.center.aligned.header Edit Profile 
     with user
         .ui.grid.padded.stackable.centered.grid
             .four.wide.column    
@@ -17,44 +17,43 @@ template(name='edit_profile')
                         else
                             label upload image
                             input(type='file' name='upload_picture' accept='image/*')
-                    .ui.divider
-                        .ui.center.aligned.basic.segment
-                            #save_profile.ui.fluid.big.button
-                                i.checkmark.icon
-                                |Save
+                .ui.center.aligned.basic.segment
+                    #save_profile.ui.fluid.big.basic.button
+                        i.checkmark.green.icon
+                        |Save
             .eight.wide.column    
                 .ui.large.form
                     .field
-                        label first name 
+                        label First Name 
                         .ui.input
                             input#first_name(type='text' value=profile.first_name)
                     .field
-                        label last name 
+                        label Last Name 
                         .ui.input
                             input#last_name(type='text' value=profile.last_name)
                     .field
-                        label email
+                        label Email
                         each emails
                             .ui.basic.label #{address}
                     .field
-                        label phone
+                        label Phone
                         .ui.input
                             input#phone(type='text' value=profile.phone)
                             
                     .field
-                        label company 
+                        label Company 
                         .ui.input
                             input#company(type='text' value=profile.company)
                     .field
-                        label position 
+                        label Position 
                         .ui.input
                             input#position(type='text' value=profile.position)
                     .field
-                        label website 
+                        label Website 
                         .ui.input
                             input#website(type='text' value=profile.website)
                     .field
-                        label tags
+                        label Tags
                         each tags
                             .ui.basic.button.doc_tag(class=doc_tag_class)
                                 i.minus.icon
