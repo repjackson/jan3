@@ -227,4 +227,4 @@ template(name='tone')
                         each tones
                             .ui.basic.label #{tone_id} {{ to_percent score }}%
             i#call_tone.refresh.large.link.icon
-                // +jsonView(json=tone)
+                +jsonView(json=tone)

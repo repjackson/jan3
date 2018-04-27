@@ -1,0 +1,57 @@
+template(name='table')
+    // .ui.multiple.dropdown
+    //     input(type='hidden', name='fields')
+    //     i.filter.icon
+    //     span.text Select Columns
+    //     .menu
+    //         .ui.icon.search.input
+    //             i.search.icon
+    //             input(type='text', placeholder='Search fields...')
+    //         .divider
+    //         .ui.header Choose Fields
+    //         .scrolling.menu
+    //             .item(data-value='id') id
+    //             .item(data-value='number') Number
+    //             .item(data-value='current_level') Level
+    //             .item(data-value='date') Date
+
+    table.ui.celled.selectable.table
+        thead
+            tr
+                // th.filter_column id
+                th.ascending
+                    .filter_column #
+                th
+                    .filter_column Image
+                th
+                    .filter_column Date
+                th
+                    .filter_column Sentiment
+                th
+                    .filter_column Level
+                th
+                    .filter_column Details
+                th
+                    .filter_column Actions
+        tbody
+            each docs
+                tr
+                    // td #{_id}
+                    td #{incident_number}
+                    td 
+                        img.ui.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    td #{incident_date}
+                    td 
+                        +doc_sentiment
+                    td #{current_level}
+                    td 
+                        .launch_modal.ui.icon.basic.circular.button
+                            i.external.icon
+                    td
+                        +view_button
+                        +edit_button
+                        
+    .ui.modal
+        .ui.header Details
+        .content
+            .large130 !{current_doc.incident_details}

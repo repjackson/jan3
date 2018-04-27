@@ -3,7 +3,10 @@ template(name='incidents')
         .centered.row
             .three.wide.column
                 +add_button type='incident' label='Incident'
-                +toggle_view_mode_button
+                div
+                +set_view_mode view='cards' icon='clone'
+                +set_view_mode view='list' icon='list'
+                +set_view_mode view='table' icon='table'
                 +timestamp_facet
                 // +location_facet
                 +keyword_facet
@@ -29,7 +32,9 @@ template(name='incidents')
                     .ui.divided.items
                         each incidents
                             +incident_item
-                else
+                if viewing_table
+                    +table type='incident'
+                if viewing_cards
                     .ui.centered.stackable.cards
                         each incidents
                             +incident_card
@@ -74,8 +79,8 @@ template(name='incident_item')
                         if watson
                             +doc_sentiment
                             +doc_emotion
-                        each tone.document_tone.tones
-                            h4.ui.header #{tone_id} {{ to_percent score }}%
+                        // each tone.document_tone.tones
+                        //     h4.ui.header #{tone_id} {{ to_percent score }}%
         
 
                 

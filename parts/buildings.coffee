@@ -14,7 +14,7 @@ if Meteor.isClient
             main: 'view_building'
     
     
-    Template.buildings.onRendered ->
+    Template.buildings.onRendered =>
         Meteor.setTimeout (->
             $('table').tablesort()
         ), 500    

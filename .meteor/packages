@@ -35,7 +35,6 @@ raix:handlebar-helpers
 matb33:collection-hooks
 themeteorchef:bert
 mizzao:autocomplete
-dynamic-import@0.3.0
 mquandalle:jade
 useraccounts:semantic-ui
 alanning:roles

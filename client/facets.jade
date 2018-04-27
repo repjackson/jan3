@@ -13,7 +13,7 @@ template(name='tag_facet')
             .unselect_theme_tag.ui.large.active.button
                 strong #{this}
     each theme_tags
-        .ui.button.select_theme_tag(class=theme_tag_class) 
+        .ui.basic.button.select_theme_tag(class=theme_tag_class) 
             strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
@@ -68,7 +68,7 @@ template(name='timestamp_facet')
             .unselect_timestamp_tag.ui.active.button
                 strong #{this}
     each timestamp_tags
-        .ui.compact.button.select_timestamp_tag(class=timestamp_tag_class) 
+        .ui.basic.button.select_timestamp_tag(class=timestamp_tag_class) 
             strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
@@ -94,7 +94,7 @@ template(name='intention_facet')
 template(name='keyword_facet')
     .ui.header 
         i.tags.icon
-        | Browse Keywords
+        | Keywords
     // .ui.left.icon.small.input
     //     i.search.icon
     //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
@@ -107,7 +107,7 @@ template(name='keyword_facet')
                 strong #{this}
     // .ui.hidden.fitted.divider
     each keywords
-        .ui.button.compact.select_keyword(class=cloud_keyword_class) 
+        .ui.basic.button.select_keyword(class=cloud_keyword_class) 
             strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}

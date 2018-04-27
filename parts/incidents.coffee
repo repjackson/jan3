@@ -3,6 +3,7 @@ if Meteor.isClient
         BlazeLayout.render 'layout', main: 'incidents'
  
     Session.setDefault 'level','all'
+    Session.setDefault 'view_mode','table'
  
     Template.incident_view.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
@@ -65,13 +66,16 @@ if Meteor.isClient
         
     Template.incidents.helpers
         incidents: ->  
-            if Session.equals('level','all')
-                Docs.find type:'incident'
-            else
-                Docs.find 
-                    type:'incident'
-                    current_level:parseInt(Session.get('level'))
-        viewing_list: -> Session.equals 'viewing_list',true    
+            Docs.find {type:'incident'}, {limit:7}
+            # if Session.equals('level','all')
+            #     Docs.find type:'incident'
+            # else
+            #     Docs.find 
+            #         type:'incident'
+            #         current_level:parseInt(Session.get('level'))
+        viewing_list: -> Session.equals 'view_mode','list'    
+        viewing_table: -> Session.equals 'view_mode','table'    
+        viewing_cards: -> Session.equals 'view_mode','cards'    
     
     Template.incident_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')

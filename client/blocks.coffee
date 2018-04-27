@@ -75,15 +75,11 @@ Template.reference_customer.events
 
 
 
-Template.toggle_view_mode_button.helpers
-    viewing_list: -> Session.equals 'viewing_list', false
+Template.set_view_mode.helpers
+    view_mode_button_class: -> if Session.equals('view_mode', @view) then 'active' else 'basic'
 
-Template.toggle_view_mode_button.events
-    'click #toggle_view_mode': ->
-        if Session.equals 'viewing_list', true
-            Session.set 'viewing_list', false
-        else
-            Session.set 'viewing_list', true
+Template.set_view_mode.events
+    'click #set_view_mode': -> Session.set 'view_mode', @view
             
 Template.set_session_button.events
     'click .set_session_filter': -> Session.set "#{@key}", @value

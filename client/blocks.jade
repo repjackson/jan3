@@ -76,12 +76,9 @@ template(name="customer_result")
     .item #{first_name} #{last_name}
 
 
-template(name='toggle_view_mode_button')
-    #toggle_view_mode.ui.big.icon.circular.basic.button
-        if viewing_list
-            i.list.large.icon
-        else
-            i.th.large.icon
+template(name='set_view_mode')
+    #set_view_mode.ui.big.icon.circular.button(title=label class=view_mode_button_class)
+        i.large.icon(class=icon)
             
             
 template(name='set_session_button')

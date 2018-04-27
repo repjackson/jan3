@@ -15,6 +15,8 @@ Meteor.startup( () =>
 )
 
 
+
+
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
 
