@@ -72,7 +72,7 @@ Meteor.methods
                     "<p>#{Meteor.user().name()} has notified you about <a href=#{doc_link}>#{parent.title} entry</a>.</p>"
     
     update_location: (doc_id, result)->
-        address_tags = (component.long_name for component in result.address_components)
+        location_tags = (component.long_name for component in result.address_components)
         parts = result.address_components
         
         geocode = {}
@@ -88,21 +88,21 @@ Meteor.methods
         # street_address = parts[0].short_name
         # console.log 'street address', street_address
 
-        lowered_address_tags = _.map(address_tags, (tag)->
+        lowered_location_tags = _.map(location_tags, (tag)->
             tag.toLowerCase()
             )
 
-        # console.log address_tags
+        # console.log location_tags
 
         doc = Docs.findOne doc_id
-        tags_without_address = _.difference(doc.tags, doc.address_tags)
-        tags_with_new = _.union(tags_without_address, lowered_address_tags)
+        tags_without_address = _.difference(doc.tags, doc.location_tags)
+        tags_with_new = _.union(tags_without_address, lowered_location_tags)
 
         Docs.update doc_id,
             $set:
                 tags:tags_with_new
                 location_ob:result
-                address_tags:lowered_address_tags
+                location_tags:lowered_location_tags
                 geocode:geocode
                 location_lat: result.lat
                 location_lng: result.lng

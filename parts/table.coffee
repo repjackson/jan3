@@ -1,7 +1,13 @@
 if Meteor.isClient
     Template.table.onCreated ->
-        @autorun =>  Meteor.subscribe 'table', 
+        @autorun => Meteor.subscribe 'facet', 
+            selected_theme_tags.array()
+            selected_keywords.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_timestamp_tags.array()
             type='incident'
+            author_id=null
 
     Template.table.onRendered ->
 

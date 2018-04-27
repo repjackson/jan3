@@ -195,7 +195,10 @@ template(name='associated_incidents')
         .ui.header 
             i.clipboard.icon
             | Incidents
-            
+        .ui.list
+            each incidents
+                .item ##{incident_number} #{when}
+        
             
             
 template(name='associated_users')
@@ -203,12 +206,15 @@ template(name='associated_users')
         .ui.header 
             i.users.icon
             | Users
+        .ui.list
+            each users
+                .item #{first_name} #{last_name}
             
             
 template(name='call_phone_button')
-    a.ui.fluid.button(href="tel:#{phone_number}") 
+    a.ui.fluid.basic.button(href="tel:#{phone_number}") 
         i.phone.icon
-        |call #{phone_number}
+        | Call #{phone_number}
             
             
             

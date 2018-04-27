@@ -11,7 +11,14 @@ if Meteor.isClient
     @selected_office_tags = new ReactiveArray []
     
     Template.offices.onCreated ->
-        @autorun -> Meteor.subscribe('docs',[],'office')
+        @autorun => Meteor.subscribe 'facet', 
+            selected_theme_tags.array()
+            selected_keywords.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_timestamp_tags.array()
+            type='office'
+            author_id=null
     Template.offices.helpers
         offices: ->  Docs.find { type:'office'}
 

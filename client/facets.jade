@@ -43,7 +43,9 @@ template(name='ancestor_facet')
     // .ui.divider
 
 template(name='location_facet')
-    .ui.header location tags
+    .ui.dividing.header 
+        i.compass.icon
+        | Location
     if selected_location_tags
         #clear_location_tags.ui.large.icon.button
             i.remove.icon
@@ -51,7 +53,7 @@ template(name='location_facet')
             .unselect_location_tag.ui.large.button
                 strong #{this}
     each location_tags
-        .ui.button.select_location_tag(class=location_tag_class) 
+        .ui.basic.button.select_location_tag(class=location_tag_class) 
             strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
@@ -107,7 +109,8 @@ template(name='keyword_facet')
                 strong #{this}
     // .ui.hidden.fitted.divider
     each keywords
-        .ui.basic.button.select_keyword(class=cloud_keyword_class) 
+        // .ui.basic.button.select_keyword(class=cloud_keyword_class) 
+        .ui.basic.button.select_keyword 
             strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}

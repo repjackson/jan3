@@ -3,7 +3,7 @@ template(name='offices')
         .centered.row
             .two.wide.column
                 +add_button type='office' label='Office'
-                // +location_facet type='office'
+                +location_facet type='office'
             .fourteen.wide.column
                 .ui.centered.stackable.cards
                     each offices
@@ -42,25 +42,29 @@ template(name='office_card')
         
         
 template(name='office_edit')
-    h1.ui.center.aligned.header Edit Office #{jan_office_id}
     .ui.padded.stackable.centered.grid
-        .six.wide.column
+        .centered.row
+            .three.wide.column
+                #delete.ui.basic.button
+                    i.trash.icon
+                    | Delete
+            .ten.wide.column
+                h1.ui.center.aligned.header Edit Office ##{jan_office_id}
+            .three.wide.column
+                +save_button
+        .five.wide.column
             +office_map
-        .six.wide.column
+        .five.wide.column
             .ui.form
                 +edit_text_field key='jan_office_id' label='Jan Pro Office ID' icon='building'
                 +edit_text_field key='office_name' label='Office Name' icon='code'
                 +edit_text_field key='phone_number' label='Phone Number' icon='phone'
                 +edit_text_field key='email_address' label='Email Address' icon='envelope'
+        .five.wide.column
+            .ui.form
                 +edit_text_field key='level_1_user_ud' label='Level 1 User Id' icon='user' 
                 +edit_text_field key='level_2_user_ud' label='Level 2 User Id' icon='user'
                 +edit_text_field key='level_3_user_ud' label='Level 3 User Id' icon='user'
-        .four.wide.column
-            +save_button
-            .ui.hidden.divider
-            #delete.ui.basic.fluid.button
-                i.trash.icon
-                | Delete
         
         
 template(name='office_view')
@@ -75,6 +79,7 @@ template(name='office_view')
         .row
             .five.wide.column
                 +associated_users
+                +associated_incidents
                 +comments
                 // +jsonView(json=location_ob)
             .six.wide.column

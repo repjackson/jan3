@@ -16,6 +16,16 @@ Template.reference_office.onCreated ->
 Template.reference_customer.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], @data.type
 
+Template.associated_users.onCreated ->
+    @autorun =>  Meteor.subscribe 'docs', [], 'person'
+Template.associated_users.helpers
+    users: -> Docs.find type:'person'
+
+Template.associated_incidents.onCreated ->
+    @autorun =>  Meteor.subscribe 'docs', [], 'incident'
+Template.associated_incidents.helpers
+    incidents: -> Docs.find type:'incident'
+
 
 Template.reference_office.helpers
     settings: -> 
