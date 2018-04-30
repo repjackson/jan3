@@ -2,11 +2,11 @@ template(name='account_settings')
     .ui.container
         h1.ui.center.aligned.header 
             i.cog.icon
-            |account
+            | Account
         |{{> atForm state='changePwd'}}
         h2.ui.center.aligned.header 
             i.envelope.icon
-            |email(s)
+            | Email(s)
         .ui.segment
             .ui.divided.list
                 each currentUser.emails
@@ -17,18 +17,18 @@ template(name='account_settings')
                         .content
                             |#{address}
                             if verified
-                                .ui.green.label verified
+                                .ui.green.label Verified
                             else
-                                .ui.label unverified
-                                .send_verification_email.ui.button verify
+                                .ui.basic.label Unverified
+                                .send_verification_email.ui.button Verify
             .ui.action.fluid.input
                 input#new_email(type='email')
-                #add_email.ui.submit.button add email
+                #add_email.ui.submit.button Add Email
         .ui.segment
             h2.ui.center.aligned.header 
-                |username: 
-                .ui.label #{currentUser.username}
+                |Username: 
+                .ui.basic.label #{currentUser.username}
             .ui.action.fluid.input
                 input#new_username(type='text' placeholder='change...')
-                #change_username.ui.submit.button change
+                #change_username.ui.submit.button Change
             

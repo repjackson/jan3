@@ -82,5 +82,13 @@ template(name='service_view')
                     +list_item key='service_date' label='Service Date' icon='calendar'
                     +list_item key='service_status' label='Service Status' icon='checkmark'
                     +list_item key='service_fee' label='Service Fee' icon='dollar'
+                +service_transactions
+                +requst_service_button
                 
                 
+template(name='service_transactions')
+    .ui.segment 
+        .ui.header Transaction History
+        
+template(name='requst_service_button')
+    .ui.button Request Service

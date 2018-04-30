@@ -30,8 +30,6 @@ template(name='table')
                 th
                     .filter_column Level
                 th
-                    .filter_column Details
-                th
                     .filter_column Actions
         tbody
             each docs
@@ -44,12 +42,11 @@ template(name='table')
                     td 
                         +doc_sentiment
                     td #{current_level}
-                    td 
-                        .launch_modal.ui.icon.basic.circular.button
-                            i.external.icon
                     td
-                        +view_button
+                        .launch_modal.ui.icon.basic.circular.button(data-content='View Details')
+                            i.external.large.icon
                         +edit_button
+                        +view_button
                         
     .ui.modal
         .ui.header Details

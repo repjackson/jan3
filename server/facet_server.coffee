@@ -162,7 +162,7 @@ Meteor.publish 'facet', (
             { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
-        console.log 'location location_tag_cloud, ', location_tag_cloud
+        # console.log 'location location_tag_cloud, ', location_tag_cloud
         location_tag_cloud.forEach (location_tag, i) ->
             self.added 'location_tags', Random.id(),
                 name: location_tag.name
@@ -195,7 +195,7 @@ Meteor.publish 'facet', (
                 count: author_id.count
 
         # found_docs = Docs.find(match).fetch()
-        console.log 'match', match
+        # console.log 'match', match
         # console.log 'found_docs', found_docs
         # found_docs.forEach (found_doc) ->
         #     self.added 'docs', doc._id, fields

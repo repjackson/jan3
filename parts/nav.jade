@@ -54,10 +54,10 @@ template(name='nav')
                     // else
                     //     | Profile
                     .ui.inverted.menu
-                        a.item(href="/notifications")
+                        .disabled.item
                             i.bell.icon
                             | Notifications
-                        a.item(href='/mail')
+                        .disabled.item
                             i.envelope.icon
                             | Mail
                         a.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")

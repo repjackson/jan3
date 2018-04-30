@@ -37,8 +37,8 @@ template(name='save_button')
         // strong save
         
 template(name='edit_button')
-    a.ui.circular.icon.big.basic.button(href="/edit/#{_id}" title='Edit') 
-        i.edit.icon
+    a.ui.circular.icon.basic.button(href="/edit/#{_id}" title='Edit') 
+        i.edit.large.icon
         // strong edit
 
 template(name='view_button')
@@ -108,46 +108,6 @@ template(name='edit_image_field')
     
 
 
-template(name='edit_number_field')
-    .field
-        label #{label}
-        .ui.left.icon.input
-            if icon
-                i.icon(class=icon)
-            input#number_field(type='number' min='0' value=key_value)
-
-
-template(name='edit_textarea')
-    .field
-        label #{label}
-        textarea#textarea(rows='10') #{key_value}
-
-
-template(name='edit_text_field')
-    .ui.basic.segment
-        .ui.labeled.fluid.input
-            .ui.label 
-                if icon
-                    i.icon(class=icon)
-                |#{label}
-            input#text_field(type='text' value=key_value)
-
-        
-template(name='edit_html_field')
-    .field
-        label #{label}
-        .froala-container
-            +froalaReactive getFEContext
-        
-        
-template(name='edit_date_field')            
-    .field
-        label #{label}
-        .ui.left.icon.input
-            if icon
-                i.icon(class=icon)
-            input#date_field(type='date' value=key_value)        
-        
         
 template(name='complete')            
     .field

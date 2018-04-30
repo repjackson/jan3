@@ -140,7 +140,8 @@ template(name='incident_edit')
                     
             .eight.wide.column
                 .ui.large.form
-                    +edit_textarea key='incident_details' label='Details'
+                    +edit_html_field
+                    // +edit_textarea key='incident_details' label='Details'
                     +edit_image_field
                     .field
                         label Type

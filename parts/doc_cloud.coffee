@@ -3,11 +3,6 @@ if Meteor.isClient
     Template.doc_cloud.onCreated ->
         @autorun -> Meteor.subscribe('doc_tags', selected_tags.array())
     
-    
-
-    
-    
-    
     Template.doc_cloud.helpers
         all_tags: ->
             doc_count = Docs.find().count()
