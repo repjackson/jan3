@@ -13,6 +13,11 @@ template(name='edit_html_field')
         .froala-container
             +froalaReactive getFEContext
         
+template(name='edit_html')
+    .field
+        .froala-container
+            +froalaReactive getFEContext
+        
         
 template(name='edit_date_field')            
     .field
@@ -37,3 +42,25 @@ template(name='edit_textarea')
 
 
         
+template(name='view_array_field')
+    if field_value
+        .ui.segment
+            each field_value
+                .ui.large.label #{this}
+    
+    
+template(name='edit_array_field')
+    i.tags.icon
+    |#{key}
+    .ui.input
+        input.new_entry(type='text' maxlength='50' )
+        // .ui.icon.button
+        //     i.right.arrow.icon
+    // .ui.mini.input
+    //     +inputAutocomplete settings=theme_select_settings id="theme_tag_select" class="" autocomplete="off"
+    // each field_value
+    each ../tags
+        // a.ui.circular.button.doc_tag #{this}
+        a.ui.button.doc_tag
+            i.remove.icon
+            |#{this}

@@ -198,7 +198,7 @@ Template.toggle_key.events
 
 
 
-Template.edit_html_field.events
+Template.edit_html.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
@@ -206,7 +206,7 @@ Template.edit_html_field.events
 
         Docs.update doc_id,
             $set: 
-                description: html
+                html: html
 
 
 Template.edit_html_field.events
@@ -234,6 +234,21 @@ Template.edit_html_field.helpers
             height: 300
         }
 
+Template.edit_html.helpers
+    getFEContext: ->
+        @current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        self = @
+        {
+            _value: self.current_doc.html
+            _keepMarkers: true
+            _className: 'froala-reactive-meteorized-override'
+            toolbarInline: false
+            initOnClick: false
+            # imageInsertButtons: ['imageBack', '|', 'imageByURL']
+            tabSpaces: false
+            height: 300
+        }
+
 
 Template.toggle_boolean.events
     'click #make_featured': ->
@@ -243,3 +258,66 @@ Template.toggle_boolean.events
     'click #make_unfeatured': ->
         Docs.update FlowRouter.getParam('doc_id'),
             $set: featured: false
+
+Template.edit_array_field.events
+    # "autocompleteselect input": (event, template, doc) ->
+    #     # console.log("selected ", doc)
+    #     Docs.update @doc_id,
+    #         $addToSet: tags: doc.name
+    #     $('.new_entry').val('')
+   
+    'keyup .new_entry': (e,t)->
+        # console.log Template.parentData(0)
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        
+
+        e.preventDefault()
+        # val = $('.new_entry').val().toLowerCase().trim()                    
+        val = $(e.currentTarget).closest('.new_entry').val().toLowerCase().trim()   
+
+        switch e.which
+            when 13 #enter
+                unless val.length is 0
+                    Docs.update FlowRouter.getParam('doc_id'),
+                        $addToSet: "#{@key}": val
+                    # $('.new_entry').val ''
+                    $(e.currentTarget).closest('.new_entry').val('')
+
+            # when 8
+            #     if val.length is 0
+            #         result = Docs.findOne(@doc_id).tags.slice -1
+            #         $('.new_entry').val result[0]
+            #         Docs.update @doc_id,
+            #             $pop: tags: 1
+
+
+    'click .doc_tag': (e,t)->
+        # console.log @valueOf()
+        # console.log Template.parentData(0).key
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+
+        tag = @valueOf()
+        Docs.update @doc_id,
+            $pull: "#{Template.parentData(0).key}": tag
+        t.$('.new_entry').val(tag)
+        
+Template.edit_array_field.helpers
+    # editing_mode: -> 
+    #     console.log Session.get 'editing'
+    #     if Session.equals 'editing', true then true else false
+    # theme_select_settings: -> {
+    #     position: 'top'
+    #     limit: 10
+    #     rules: [
+    #         {
+    #             collection: Tags
+    #             field: 'name'
+    #             matchAll: false
+    #             template: Template.tag_result
+    #         }
+    #         ]
+    # }

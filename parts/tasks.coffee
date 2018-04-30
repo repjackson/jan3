@@ -25,12 +25,12 @@ if Meteor.isClient
     
     Template.task.events
         'click #turn_on': ->
-            console.log @complete
+            # console.log @complete
             Docs.update {_id:@_id}, 
                 $set: complete: true
     
         'click #turn_off': ->
-            console.log @complete
+            # console.log @complete
             Docs.update {_id:@_id}, 
                 $set: complete: false
 

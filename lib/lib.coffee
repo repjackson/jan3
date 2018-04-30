@@ -1,4 +1,4 @@
-@Ancestor_ids = new Meteor.Collection 'ancestor_ids'
+# @Ancestor_ids = new Meteor.Collection 'ancestor_ids'
 @Location_tags = new Meteor.Collection 'location_tags'
 @Intention_tags = new Meteor.Collection 'intention_tags'
 @Timestamp_tags = new Meteor.Collection 'timestamp_tags'
