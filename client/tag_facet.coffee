@@ -1,17 +1,16 @@
-@selected_theme_tags = new ReactiveArray []
+@selected_tags = new ReactiveArray []
 
 Template.tag_facet.helpers
-    theme_tags: ->
-        
+    tags: ->
         doc_count = Docs.find().count()
-        # if selected_theme_tags.array().length
+        # if selected_tags.array().length
         if 0 < doc_count < 3
             Tags.find { 
                 # type:Template.currentData().type
                 count: $lt: doc_count
-                }, limit:20
+                }, limit:42
         else
-            cursor = Tags.find({}, limit:20)
+            cursor = Tags.find({}, limit:42)
             # console.log cursor.fetch()
             return cursor
             
@@ -24,7 +23,7 @@ Template.tag_facet.helpers
             when @index <= 20 then button_class.push ' mini'
         return button_class
 
-    selected_theme_tags: -> selected_theme_tags.array()
+    selected_tags: -> selected_tags.array()
     settings: -> {
         position: 'bottom'
         limit: 10
@@ -41,9 +40,9 @@ Template.tag_facet.helpers
 
 
 Template.tag_facet.events
-    'click .select_theme_tag': -> selected_theme_tags.push @name
-    'click .unselect_theme_tag': -> selected_theme_tags.remove @valueOf()
-    'click #clear_theme_tags': -> selected_theme_tags.clear()
+    'click .select_tag': -> selected_tags.push @name
+    'click .unselect_tag': -> selected_tags.remove @valueOf()
+    'click #clear_tags': -> selected_tags.clear()
 
     'keyup #search': (e,t)->
         e.preventDefault()
@@ -52,17 +51,17 @@ Template.tag_facet.events
             when 13 #enter
                 switch val
                     when 'clear'
-                        selected_theme_tags.clear()
+                        selected_tags.clear()
                         $('#search').val ''
                     else
                         unless val.length is 0
-                            selected_theme_tags.push val.toString()
+                            selected_tags.push val.toString()
                             $('#search').val ''
             when 8
                 if val.length is 0
-                    selected_theme_tags.pop()
+                    selected_tags.pop()
                     
     'autocompleteselect #search': (event, template, doc) ->
         # console.log 'selected ', doc
-        selected_theme_tags.push doc.name
+        selected_tags.push doc.name
         $('#search').val ''

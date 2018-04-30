@@ -2,7 +2,7 @@
 #     console.log match
 
 Meteor.publish 'facet', (
-    selected_theme_tags
+    selected_tags
     selected_keywords
     selected_author_ids=[]
     selected_location_tags
@@ -14,7 +14,7 @@ Meteor.publish 'facet', (
         self = @
         match = {}
         
-        # match.tags = $all: selected_theme_tags
+        # match.tags = $all: selected_tags
         if type then match.type = type
         # console.log selected_timestamp_tags
 
@@ -24,7 +24,7 @@ Meteor.publish 'facet', (
         # if view_private is false
         #     match.published = $in: [0,1]
 
-        if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+        if selected_tags.length > 0 then match.tags = $all: selected_tags
 
         if selected_author_ids.length > 0 
             match.author_id = $in: selected_author_ids
@@ -85,9 +85,9 @@ Meteor.publish 'facet', (
             { $project: tags: 1 }
             { $unwind: "$tags" }
             { $group: _id: '$tags', count: $sum: 1 }
-            { $match: _id: $nin: selected_theme_tags }
+            { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
+            { $limit: 42 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'theme theme_tag_cloud, ', theme_tag_cloud
@@ -104,7 +104,7 @@ Meteor.publish 'facet', (
             { $project: watson_keywords: 1 }
             { $unwind: "$watson_keywords" }
             { $group: _id: '$watson_keywords', count: $sum: 1 }
-            { $match: _id: $nin: selected_theme_tags }
+            { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
             { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }
@@ -317,7 +317,7 @@ Meteor.publish 'facet', (
 # # #             { $project: parent_id: 1 }
 # # #             # { $unwind: "$tags" }
 # # #             { $group: _id: '$parent_id', count: $sum: 1 }
-# # #             { $match: _id: $nin: selected_theme_tags }
+# # #             { $match: _id: $nin: selected_tags }
 # # #             { $sort: count: -1, _id: 1 }
 # # #             { $limit: 20 }
 # # #             { $project: _id: 0, name: '$_id', count: 1 }
@@ -332,7 +332,7 @@ Meteor.publish 'facet', (
 #     console.log match
 
 # Meteor.publish 'facet', (
-#     selected_theme_tags
+#     selected_tags
 #     selected_author_ids=[]
 #     selected_location_tags
 #     selected_intention_tags
@@ -349,7 +349,7 @@ Meteor.publish 'facet', (
 #         self = @
 #         match = {}
         
-#         # match.tags = $all: selected_theme_tags
+#         # match.tags = $all: selected_tags
 #         if type then match.type = type
 #         if parent_id then match.parent_id = parent_id
 
@@ -359,7 +359,7 @@ Meteor.publish 'facet', (
 #         # if view_private is false
 #         #     match.published = $in: [0,1]
 
-#         if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+#         if selected_tags.length > 0 then match.tags = $all: selected_tags
 
 #         if selected_author_ids.length > 0 
 #             match.author_id = $in: selected_author_ids
@@ -423,7 +423,7 @@ Meteor.publish 'facet', (
 #             { $project: tags: 1 }
 #             { $unwind: "$tags" }
 #             { $group: _id: '$tags', count: $sum: 1 }
-#             { $match: _id: $nin: selected_theme_tags }
+#             { $match: _id: $nin: selected_tags }
 #             { $sort: count: -1, _id: 1 }
 #             { $limit: limit }
 #             { $project: _id: 0, name: '$_id', count: 1 }
@@ -442,7 +442,7 @@ Meteor.publish 'facet', (
 #         #     { $project: watson_keywords: 1 }
 #         #     { $unwind: "$watson_keywords" }
 #         #     { $group: _id: '$watson_keywords', count: $sum: 1 }
-#         #     { $match: _id: $nin: selected_theme_tags }
+#         #     { $match: _id: $nin: selected_tags }
 #         #     { $sort: count: -1, _id: 1 }
 #         #     { $limit: limit }
 #         #     { $project: _id: 0, name: '$_id', count: 1 }
@@ -654,7 +654,7 @@ Meteor.publish 'facet', (
 # # #             { $project: parent_id: 1 }
 # # #             # { $unwind: "$tags" }
 # # #             { $group: _id: '$parent_id', count: $sum: 1 }
-# # #             { $match: _id: $nin: selected_theme_tags }
+# # #             { $match: _id: $nin: selected_tags }
 # # #             { $sort: count: -1, _id: 1 }
 # # #             { $limit: limit }
 # # #             { $project: _id: 0, name: '$_id', count: 1 }

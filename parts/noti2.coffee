@@ -19,7 +19,7 @@
 #         @autorun => Meteor.subscribe 'all_notifications'
 #         # @autorun => 
 #         #     Meteor.subscribe('facet', 
-#         #         selected_theme_tags.array()
+#         #         selected_tags.array()
 #         #         selected_author_ids.array()
 #         #         selected_location_tags.array()
 #         #         selected_intention_tags.array()

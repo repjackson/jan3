@@ -301,7 +301,7 @@ Template.edit_array_field.events
         # console.log Template.parentData(3)
 
         tag = @valueOf()
-        Docs.update @doc_id,
+        Docs.update FlowRouter.getParam('doc_id'),
             $pull: "#{Template.parentData(0).key}": tag
         t.$('.new_entry').val(tag)
         

@@ -2,35 +2,121 @@ template(name='tasks')
     .ui.stackable.centered.padded.grid
         .centered.row
             .three.wide.column
+                +add_button type='task'
             .ten.wide.column
                 h1.ui.center.aligned.header 
-                    i.tasks.icon
-                    | Tasks
+                    i.shield.icon
+                    | admin
             .three.wide.column
         .centered.row
-            .sixteen.wide.column
-                #new_task.ui.icon.button
-                    i.plus.icon
-                // .ui.multiple.dropdown
-                //     input(type='hidden', name='fields')
-                //     i.filter.icon
-                //     span.text Select Columns
-                //     .menu
-                //         .ui.icon.search.input
-                //             i.search.icon
-                //             input(type='text', placeholder='Search fields...')
-                //         .divider
-                //         .ui.header Choose Fields
-                //         .scrolling.menu
-                //             .item(data-value='id') id
-                //             .item(data-value='number') Number
-                //             .item(data-value='current_level') Level
-                //             .item(data-value='date') Date
+            .four.wide.column
+                +tag_facet
+            .twelve.wide.column
+                .ui.cards
+                    each tasks
+                        +task_card
+                        
+                        
+template(name='task_item')
+    .ui.item
+        if image_id
+            a.image(href="/view/#{_id}")
+                img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
+                // each visual
+                //     .ui.basic.small.label #{class}
+        .content
+            a.header(href="/view/#{_id}") 
+                |##{task_number}
+            .description
+                .ui.grid
+                    .twelve.wide.column
+                        .large130 {{nl2br task_details}}
+                        +tone
+                        .meta 
+                            .ui.horizontal.list
+                                each watson_keywords
+                                    .item #{this}
+                    .four.wide.column
+                        .meta #{when}
+                        .meta #{formal_when}
+                        // .ui.horizontal.list
+                        //     each date_array
+                        //         .item #{this}
+                        if office.office_name
+                            .ui.label #{office.office_name}
+                        if current_level
+                            .ui.label Level #{current_level}
+                        .meta by #{author.username}
+                        if comment_count
+                            a.meta(href="/view/#{_id}")
+                                i.comments.icon
+                                |#{comment_count} comments
+                        +view_button
+                        if watson
+                            +doc_sentiment
+                            +doc_emotion
+                        // each tone.document_tone.tones
+                        //     h4.ui.header #{tone_id} {{ to_percent score }}%
+        
 
-                table.ui.celled.selectable.table
-                    tbody
-                        each tasks
-                            +task
+                
+template(name='task_card')
+    .ui.fluid.card
+        if image_id
+            a.image(href="/view/#{_id}")
+                img.ui.rounded.image(src="{{c.url image_id  width=300 height=300 crop='fill' }}")
+        .content
+            // .right.floated.meta
+            //     // .ui.circular.label(title='task Number') #{task_number}
+            //     | #{when}
+            if complete
+                i.large.green.checkmark.icon
+
+            a.header(href="/view/#{_id}") 
+                |#{title} #{text}
+            if complete
+                #turn_off.ui.basic.icon.button
+                    i.toggle.on.large.icon
+            else
+                #turn_on.ui.basic.icon.button
+                    i.toggle.off.large.icon
+        .content    
+            .right.floated 
+                |#{when}
+            i.user.icon
+            | #{author.username}
+        .content
+            .ui.accordion
+                .title 
+                    |html
+                    i.dropdown.icon
+                .content
+                    .description
+                        |!{html}
+        .content
+            each tags
+                .ui.label #{this}
+        if watson
+            .content
+                +doc_sentiment
+        .content
+            // +call_method name='tagify_timestamp'
+            // if date_array
+            //     each date_array
+            //         .ui.label #{this}
+            | #{comment_count}
+            i.comment.icon
+            +edit_button
+            +view_button
+
+
+
+
+template(name='task_table')
+    table.ui.celled.selectable.table
+        tbody
+            each tasks
+                +task
                 
                 
 template(name='task')                
@@ -38,20 +124,15 @@ template(name='task')
         // td #{_id}
         td 
             a(href="/view/#{_id}") #{text}
+            |#{title}
             // if editing_this_task
             //     .ui.fluid.input
             //         input.task_text(type='text' value=text placeholder='Task Text')
-            if complete
-                i.large.green.checkmark.icon
         td #{when}
         // td #{due_date_when}
         td 
-            if complete
-                #turn_off.ui.basic.icon.button
-                    i.toggle.on.large.icon
-            else
-                #turn_on.ui.basic.icon.button
-                    i.toggle.off.large.icon
+            +edit_button
+            +view_full_button
         // td
             // if editing_this_task
             //     .save_task.ui.icon.button
@@ -59,9 +140,6 @@ template(name='task')
             // else
             //     .edit_task.ui.icon.button
             //         i.edit.icon
-        td 
-            +edit_button
-            +view_full_button
             
             
 template(name='task_view')
@@ -70,9 +148,7 @@ template(name='task_view')
             .three.wide.column
                 +link_button link='/admin/tasks' icon='tasks' label='Tasks'
             .ten.wide.column
-                h1.ui.center.aligned.header 
-                    i.task.icon
-                    |Task
+                h1.ui.center.aligned.header view #{title}
             .three.wide.column
                 +edit_button
         .row
@@ -92,25 +168,15 @@ template(name='task_edit')
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.header Edit Task
+                h1.ui.center.aligned.header edit #{title}
             .three.wide.column
-                #delete.ui.fluid.button
+                #delete.ui.icon.button
                     i.trash.icon
-                    | Delete
         .centered.row
-            .eight.wide.column
-                .ui.form
-                    +edit_text_field key='title' label='title' icon=''
-                    +edit_html
-                    +edit_array_field key='tags'
-                
-                    // +edit_text_field key='jan_pro_office_id' label='Jan Pro Office ID' icon='building'
-                    // +edit_text_field key='customer_id' label='Customer ID' icon='user'
-            .eight.wide.column
-                .ui.form
-                    // +edit_text_field key='service_type' label='Service Type' icon='clone'
-                    // +edit_date_field key='service_date' label='Service Date' icon='calendar'
-                    // +edit_text_field key='service_status' label='Service Status' icon='checkmark'
-                    // +edit_number_field key='service_fee' label='Service Fee' icon='dollar'
+            .twelve.wide.column
+                +edit_text_field key='title' label='title' icon=''
+                +edit_html
+            .four.wide.column
+                +edit_array_field key='tags'
         
             

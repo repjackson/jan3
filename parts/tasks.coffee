@@ -5,14 +5,31 @@ if Meteor.isClient
             main: 'tasks'
     
     Template.tasks.onCreated ->
-        @autorun -> Meteor.subscribe 'tasks'
+        @autorun => Meteor.subscribe 'facet', 
+            selected_tags.array()
+            selected_keywords.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_timestamp_tags.array()
+            type='task'
+            author_id=null
+    
+    Template.tasks.onCreated ->
+        Meteor.setTimeout ->
+            $('.progress').progress()
+        , 1000
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 1000
+    
+    
+    
     
     Template.tasks.helpers
         tasks: -> Docs.find type:'task'
         editing_this_task: -> Session.equals 'editing_id', @_id
         
     Template.tasks.events
-        'click #new_task': -> Docs.insert type:'task'
         'click .save_task': -> Session.set 'editing_id',null
         'click .edit_task': -> Session.set 'editing_id',@_id
         'keyup .task_text': (e,t)->
@@ -23,7 +40,7 @@ if Meteor.isClient
                     $set: text: val
                 Bert.alert "Updated Text", 'success', 'growl-top-right'
     
-    Template.task.events
+    Template.task_card.events
         'click #turn_on': ->
             # console.log @complete
             Docs.update {_id:@_id}, 
@@ -35,9 +52,4 @@ if Meteor.isClient
                 $set: complete: false
 
 
-if Meteor.isServer
-    Meteor.publish 'tasks', ->
-        Docs.find type:'task'
-        
-        
         

@@ -3,7 +3,7 @@
 Template.keyword_facet.onCreated ->
     @autorun => 
         Meteor.subscribe('facet', 
-            selected_theme_tags.array()
+            selected_tags.array()
             selected_keywords.array()
             selected_author_ids.array()
             selected_location_tags.array()

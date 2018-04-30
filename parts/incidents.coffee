@@ -54,7 +54,7 @@ if Meteor.isClient
         # @autorun -> Meteor.subscribe('docs',[],'comment')
         # @autorun -> Meteor.subscribe('docs',[],'office')
         @autorun => Meteor.subscribe 'facet', 
-            selected_theme_tags.array()
+            selected_tags.array()
             selected_keywords.array()
             selected_author_ids.array()
             selected_location_tags.array()
