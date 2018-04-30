@@ -1,9 +1,9 @@
 Template.toggle_boolean.events
-    'click #make_featured': ->
-        Docs.update FlowRouter.getParam('doc_id'), $set: featured: true
+    'click #turn_on': ->
+        Docs.update Template.parentData()._id, $set: complete: true
 
-    'click #make_unfeatured': ->
-        Docs.update FlowRouter.getParam('doc_id'), $set: featured: false
+    'click #turn_off': ->
+        Docs.update Template.parentData()._id, $set: complete: false
 
 Template.add_button.events
     'click #add': -> 

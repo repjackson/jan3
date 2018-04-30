@@ -20,16 +20,12 @@ template(name='list_item')
 
 template(name='toggle_boolean')
     .field
-        if featured
+        if ../complete
             #turn_on.ui.basic.icon.button
-                i.toggle.on.icon
+                i.toggle.on.large.icon
         else
             #turn_off.ui.basic.icon.button
-                i.toggle.off.icon
-        if featured
-            .ui.green.basic.label #{positive_label}
-        else
-            .ui.basic.label #{negative_label}
+                i.toggle.off.large.icon
 
 template(name='save_button')
     a.ui.big.circular.basic.icon.button(href="/view/#{_id}") 

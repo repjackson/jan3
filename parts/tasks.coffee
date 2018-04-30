@@ -22,6 +22,17 @@ if Meteor.isClient
                 Docs.update @_id,
                     $set: text: val
                 Bert.alert "Updated Text", 'success', 'growl-top-right'
+    
+    Template.task.events
+        'click #turn_on': ->
+            console.log @complete
+            Docs.update {_id:@_id}, 
+                $set: complete: true
+    
+        'click #turn_off': ->
+            console.log @complete
+            Docs.update {_id:@_id}, 
+                $set: complete: false
 
 
 if Meteor.isServer

@@ -9,41 +9,51 @@ template(name='tasks')
             .three.wide.column
         .centered.row
             .sixteen.wide.column
-                #new_task.ui.button
+                #new_task.ui.icon.button
                     i.plus.icon
-                    | Task
-                .ui.multiple.dropdown
-                    input(type='hidden', name='fields')
-                    i.filter.icon
-                    span.text Select Columns
-                    .menu
-                        .ui.icon.search.input
-                            i.search.icon
-                            input(type='text', placeholder='Search fields...')
-                        .divider
-                        .ui.header Choose Fields
-                        .scrolling.menu
-                            .item(data-value='id') id
-                            .item(data-value='number') Number
-                            .item(data-value='current_level') Level
-                            .item(data-value='date') Date
+                // .ui.multiple.dropdown
+                //     input(type='hidden', name='fields')
+                //     i.filter.icon
+                //     span.text Select Columns
+                //     .menu
+                //         .ui.icon.search.input
+                //             i.search.icon
+                //             input(type='text', placeholder='Search fields...')
+                //         .divider
+                //         .ui.header Choose Fields
+                //         .scrolling.menu
+                //             .item(data-value='id') id
+                //             .item(data-value='number') Number
+                //             .item(data-value='current_level') Level
+                //             .item(data-value='date') Date
 
                 table.ui.celled.selectable.table
                     tbody
                         each tasks
-                            tr
-                                // td #{_id}
-                                td 
-                                    |#{text}
-                                    if editing_this_task
-                                        .ui.fluid.input
-                                            input.task_text(type='text' value=text placeholder='Task Text')
-                                td #{when}
-                                td #{due_date_when}
-                                td
-                                    if editing_this_task
-                                        .save_task.ui.icon.button
-                                            i.checkmark.icon
-                                    else
-                                        .edit_task.ui.icon.button
-                                            i.edit.icon
+                            +task
+                
+                
+template(name='task')                
+    tr
+        // td #{_id}
+        td 
+            |#{text}
+            if editing_this_task
+                .ui.fluid.input
+                    input.task_text(type='text' value=text placeholder='Task Text')
+        td #{when}
+        td #{due_date_when}
+        td 
+            if complete
+                #turn_off.ui.basic.icon.button
+                    i.toggle.on.large.icon
+            else
+                #turn_on.ui.basic.icon.button
+                    i.toggle.off.large.icon
+        td
+            if editing_this_task
+                .save_task.ui.icon.button
+                    i.checkmark.icon
+            else
+                .edit_task.ui.icon.button
+                    i.edit.icon
