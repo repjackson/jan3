@@ -3,47 +3,47 @@ template(name='nav')
         .mobile.only.ui.dropdown.icon.link.item
             i.th.large.icon
             .ui.menu
-                a.item(href='/people' class="{{isActivePath '/people'}}")
-                    i.users.icon
-                    | Users
-                a.item(href='/incidents' class="{{isActivePath '/incidents'}}")
-                    i.clipboard.icon
-                    | Incidents
-                a.item(href='/offices' class="{{isActivePath '/offices'}}")
-                    i.building.icon
-                    | Offices
-                a.item(href='/services' class="{{isActivePath '/services'}}")
-                    i.shipping.fast.icon
-                    | Services
+                a.icon.item(href='/people' class="{{isActivePath '/people'}}")
+                    i.large.users.icon
+                    // | Users
+                a.icon.item(href='/incidents' class="{{isActivePath '/incidents'}}")
+                    i.large.clipboard.icon
+                    // | Incidents
+                a.icon.item(href='/offices' class="{{isActivePath '/offices'}}")
+                    i.large.building.icon
+                    // | Offices
+                a.icon.item(href='/services' class="{{isActivePath '/services'}}")
+                    i.large.shipping.fast.icon
+                    // | Services
         a.toggle_sidebar.item 
             i.bars.icon
-        a.header.item(href='/' class="{{isActivePath '/'}}") 
-            i.line.chart.icon
+        a.header.item(href='/' class="{{isActivePath '/'}}" data-content='Home')
+            i.large.line.chart.icon
             | Home
-        a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}")
-            i.users.icon
+        a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}" data-content='Users')
+            i.large.users.icon
             | Users
-        a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}")
-            i.clipboard.icon
+        a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-content='Incidents')
+            i.large.clipboard.icon
             | Incidents
-        a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}")
-            i.building.icon
+        a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-content='Offices')
+            i.large.building.icon
             | Offices
-        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}")
-            i.shipping.fast.icon
+        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-content='Services')
+            i.large.shipping.fast.icon
             | Services
         .right.menu
             a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}")
                 i.shield.alternate.icon
                 | Admin
-            // .ui.simple.dropdown.icon.item
+            // .icon.item
             //     i.bell.icon
-            //     .menu
-            //         if notifications
-            //             each notifications
-            //                 .item #{text}
-            //         else
-            //             | No Notifications
+            .icon.item
+                i.envelope.icon
+            .ui.simple.dropdown.icon.item
+                i.bell.icon
+                .menu
+                    .item No Notifications
             if currentUser
                 a.ui.dropdown.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                     if currentUser.profile.image_id

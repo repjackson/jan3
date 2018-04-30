@@ -72,3 +72,7 @@ body {
     min-height: 350px;
     min-width: 100%;
   }
+#main_area {
+    min-height: 500px;
+    min-width: 100%;
+  }
