@@ -1,7 +1,9 @@
 template(name='dashboard')
     .ui.padded.stackable.divided.grid
-        .row
-            +dashboard_header
+        // +dashboard_header
+        .centered.row
+            .sixteen.wide.column
+                .ui.center.aligned.header Customer Portal
         .row
             .four.wide.column
                 .ui.center.aligned.secondary.fluid.segment
@@ -14,6 +16,10 @@ template(name='dashboard')
             .sixteen.wide.column
                 .ui.secondary.fluid.segment
                     +my_cleaning_schedule
+        .row
+            .sixteen.wide.column
+                .ui.secondary.fluid.segment
+                    +my_office_contacts
 
         .row
             .four.wide.column
@@ -54,9 +60,40 @@ template(name='customer_menu')
             
             
 template(name='my_cleaning_schedule')
-    #cleaning_schedule
-        .ui.center.aligned.header My Cleaning Schedule
-        +fullcalendar cal_options
+    .ui.accordion
+        .active.title
+            .ui.center.aligned.header 
+                |My Cleaning Schedule
+                i.dropdown.icon
+        .active.content
+            #cleaning_schedule
+                +fullcalendar cal_options
+            
+template(name='my_office_contacts')
+    .ui.center.aligned.header My Office Contacts
+    table.ui.sortable.striped.table
+        tbody
+            tr
+                td.header Service and Quality Control
+                td Service Manager Name
+                td Contact Number
+                td Email Address
+                td
+                    i.mail.icon
+            tr
+                td.header Accounts Payable
+                td Accounts Payable Name
+                td Contact Number
+                td Email Address
+                td
+                    i.mail.icon
+            tr
+                td.header Account Manager
+                td Account Manager Name
+                td Contact Number
+                td Email Address
+                td
+                    i.mail.icon
             
             
         
