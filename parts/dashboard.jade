@@ -1,8 +1,7 @@
 template(name='dashboard')
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.divided.grid
         .row
-            .sixteen.wide.column
-                +dashboard_header
+            +dashboard_header
         .row
             .four.wide.column
                 .ui.center.aligned.secondary.fluid.segment
@@ -10,25 +9,12 @@ template(name='dashboard')
                     .ui.button Sign In
                     .ui.button Register
             .twelve.wide.column
-                .ui.center.aligned.header My Cleaning Crew
-                .ui.four.cards
-                    .ui.card
-                        with person
-                            +person_card
-                    .ui.card
-                        with person
-                            +person_card
-                    .ui.card
-                        with person
-                            +person_card
-                    .ui.card
-                        with person
-                            +person_card
+                +my_cleaning_crew
         .row
             .sixteen.wide.column
                 .ui.secondary.fluid.segment
-                    .ui.center.aligned.header My Cleaning Schedule
-                
+                    +my_cleaning_schedule
+
         .row
             .four.wide.column
                 +general_account_info
@@ -57,14 +43,21 @@ template(name='dashboard')
 
     
 template(name='customer_menu')
-    .ui.large.menu
+    .ui.large.top.attached.menu
         .right.menu
-            .disabled.item Account
+            a.item(href='/account/settings') Account
             .disabled.item Log a Ticket
             .disabled.item Schedule Cleaning
             .disabled.item Consumables
             .disabled.item Service Request
             .disabled.item Help
+            
+            
+template(name='my_cleaning_schedule')
+    #cleaning_schedule
+        .ui.center.aligned.header My Cleaning Schedule
+        +fullcalendar cal_options
+            
             
         
         
@@ -116,8 +109,33 @@ template(name='local_office_information')
         
 template(name='dashboard_header')
     h1.ui.center.aligned.header Jan Pro Customer Portal
+    // img(src="{{c.url 'night' height='300'  width='1000' overlay='text:Arial_80:Flowers' crop='crop'}}")
+
         
         
         
-        
-        
+template(name='my_cleaning_crew')
+    .ui.center.aligned.header My Cleaning Crew
+    .ui.four.cards
+        each crew
+            .ui.card
+                +crew_card
+
+template(name='crew_card')
+    .ui.card
+        .image
+            a(href="/view/#{_id}")
+                img.ui.fluid.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
+        .content
+            a(href="/view/#{_id}")
+                .ui.center.aligned.header #{first_name} #{last_name}
+            each five_tags
+                .ui.compact.small.circular.button.person_tag(class=tag_class) 
+                    strong #{this}
+        // .content
+        //   .ui.list
+        //         +list_item key='email' label='Email'
+        //         +list_item key='phone' label='Phone'
+        //         +list_item key='company' label='Company'
+        //         +list_item key='position' label='Position'
+        +view_button
