@@ -1,5 +1,13 @@
 template(name='admin')
     +user_table
+    
+    
+template(name='admin_nav')    
+    .ui.menu
+        a.item(href='/admin/users') Users
+        a.item(href='/admin/tasks') Tasks
+    
+    
 template(name='user_table')
     .ui.padded.grid
         .sixteen.wide.column

@@ -2,6 +2,7 @@
 FlowRouter.route '/admin', action: (params) ->
     BlazeLayout.render 'layout',
         nav: 'nav'
+        sub_nav: 'admin_nav'
         main: 'user_table'
  
  
@@ -14,9 +15,6 @@ if Meteor.isClient
         users: -> Meteor.users.find {}
             
         is_admin: -> Roles.userIsInRole(@_id, 'admin')
-        is_owner: -> Roles.userIsInRole(@_id, 'owner')
-        is_dev: -> Roles.userIsInRole(@_id, 'dev')
-        is_resident: -> Roles.userIsInRole(@_id, 'resident')
     
     
     
