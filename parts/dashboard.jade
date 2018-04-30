@@ -1,42 +1,42 @@
 template(name='dashboard')
     .ui.padded.stackable.grid
         .row
+            .sixteen.wide.column
+                +dashboard_header
+        .row
             .four.wide.column
-                .ui.dividing.header
-                    i.info.icon
-                    |General Account Info
-                with person
-                    +person_card
+                .ui.center.aligned.secondary.fluid.segment
+                    .ui.header Welcome
+                    .ui.button Sign In
+                    .ui.button Register
+            .twelve.wide.column
+                .ui.center.aligned.header My Cleaning Crew
+                .ui.four.cards
+                    .ui.card
+                        with person
+                            +person_card
+                    .ui.card
+                        with person
+                            +person_card
+                    .ui.card
+                        with person
+                            +person_card
+                    .ui.card
+                        with person
+                            +person_card
+        .row
+            .sixteen.wide.column
+                .ui.secondary.fluid.segment
+                    .ui.center.aligned.header My Cleaning Schedule
+                
+        .row
+            .four.wide.column
+                +general_account_info
             .eight.wide.column
-                .ui.dividing.header
-                    i.clipboard.icon
-                    |Incidents
-                .ui.divided.link.items    
-                    each incidents
-                        a.item(href="/view/#{_id}")
-                            .ui.tiny.rounded.image
-                                img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
-                                +doc_sentiment
-                            .content
-                                .header ##{incident_number}
-                                    +incident_type_label
-                                .meta #{when}
-                                .description #{incident_details}
-                                .extra
-                                    if customer
-                                        .ui.label 
-                                            i.user.icon
-                                            |#{customer.first_name} #{customer.last_name}
-                                    if office
-                                        .ui.label 
-                                            i.building.icon
-                                            |#{office.office_name}
+                +incident_widget
+                
             .four.wide.column
-                .ui.dividing.header
-                    i.building.icon
-                    | Local Office Information
-                with office
-                    +office_card
+                +local_office_information
         .row
             .five.wide.column
                 .ui.disabled.segment
@@ -56,3 +56,68 @@ template(name='dashboard')
 
 
     
+template(name='customer_menu')
+    .ui.large.menu
+        .right.menu
+            .disabled.item Account
+            .disabled.item Log a Ticket
+            .disabled.item Schedule Cleaning
+            .disabled.item Consumables
+            .disabled.item Service Request
+            .disabled.item Help
+            
+        
+        
+template(name='incident_widget')
+    .ui.dividing.header
+        i.clipboard.icon
+        |Incidents
+    .ui.divided.link.items    
+        each incidents
+            a.item(href="/view/#{_id}")
+                .ui.tiny.rounded.image
+                    img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
+                    +doc_sentiment
+                .content
+                    .header ##{incident_number}
+                        +incident_type_label
+                    .meta #{when}
+                    .description #{incident_details}
+                    .extra
+                        if customer
+                            .ui.label 
+                                i.user.icon
+                                |#{customer.first_name} #{customer.last_name}
+                        if office
+                            .ui.label 
+                                i.building.icon
+                                |#{office.office_name}
+        
+        
+        
+template(name='general_account_info')
+    .ui.dividing.header
+        i.info.icon
+        |General Account Info
+    with person
+        +person_card
+        
+        
+        
+template(name='local_office_information')
+    .ui.dividing.header
+        i.building.icon
+        | Local Office Information
+    with office
+        +office_card
+        
+        
+        
+        
+template(name='dashboard_header')
+    h1.ui.center.aligned.header Jan Pro Customer Portal
+        
+        
+        
+        
+        

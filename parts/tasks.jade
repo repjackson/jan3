@@ -69,17 +69,17 @@ template(name='task_card')
             // .right.floated.meta
             //     // .ui.circular.label(title='task Number') #{task_number}
             //     | #{when}
-            if complete
-                i.large.green.checkmark.icon
-
+            .right.floated
+                if complete
+                    #turn_off.ui.basic.icon.button
+                        i.toggle.on.large.icon
+                else
+                    #turn_on.ui.basic.icon.button
+                        i.toggle.off.large.icon
             a.header(href="/view/#{_id}") 
+                if complete
+                    i.large.green.checkmark.icon
                 |#{title} #{text}
-            if complete
-                #turn_off.ui.basic.icon.button
-                    i.toggle.on.large.icon
-            else
-                #turn_on.ui.basic.icon.button
-                    i.toggle.off.large.icon
         .content    
             .right.floated 
                 |#{when}

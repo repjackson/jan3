@@ -1,6 +1,7 @@
 if Meteor.isClient
     FlowRouter.route '/', action: ->
         BlazeLayout.render 'layout', 
+            sub_nav:'customer_menu'
             main: 'dashboard'
     
     Template.dashboard.onCreated ->
@@ -15,8 +16,12 @@ if Meteor.isClient
 
     
     
-    Template.dashboard.helpers
+    Template.local_office_information.helpers
         office: -> Docs.findOne type:'office'
+    Template.general_account_info.helpers
         person: -> Docs.findOne type:'person'
+    Template.dashboard.helpers
+        person: -> Docs.findOne type:'person'
+    Template.incident_widget.helpers
         incidents: -> Docs.find {type:'incident'}, limit:3
     

@@ -1,25 +1,25 @@
 template(name='nav')
     .ui.inverted.top.attached.large.menu
-        .mobile.only.ui.dropdown.icon.link.item
-            i.th.large.icon
-            .ui.menu
-                a.icon.item(href='/people' class="{{isActivePath '/people'}}")
-                    i.large.users.icon
-                    // | Users
-                a.icon.item(href='/incidents' class="{{isActivePath '/incidents'}}")
-                    i.large.clipboard.icon
-                    // | Incidents
-                a.icon.item(href='/offices' class="{{isActivePath '/offices'}}")
-                    i.large.building.icon
-                    // | Offices
-                a.icon.item(href='/services' class="{{isActivePath '/services'}}")
-                    i.large.shipping.fast.icon
-                    // | Services
+        // .mobile.only.ui.dropdown.icon.link.item
+        //     i.th.large.icon
+        //     .ui.menu
+        //         a.icon.item(href='/people' class="{{isActivePath '/people'}}")
+        //             i.large.users.icon
+        //             // | Users
+        //         a.icon.item(href='/incidents' class="{{isActivePath '/incidents'}}")
+        //             i.large.clipboard.icon
+        //             // | Incidents
+        //         a.icon.item(href='/offices' class="{{isActivePath '/offices'}}")
+        //             i.large.building.icon
+        //             // | Offices
+        //         a.icon.item(href='/services' class="{{isActivePath '/services'}}")
+        //             i.large.shipping.fast.icon
+        //             // | Services
         a.toggle_sidebar.item 
             i.bars.icon
-        a.header.item(href='/' class="{{isActivePath '/'}}" data-content='Home')
-            i.large.line.chart.icon
-            | Home
+        a.header.icon.item(href='/' class="{{isActivePath '/'}}" data-content='Home')
+            i.large.home.icon
+            // | Home
         a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}" data-content='Users')
             i.large.users.icon
             | Users
