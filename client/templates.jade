@@ -43,19 +43,19 @@ template(name='not_found')
 
 template(name='sidebar')
     .ui.left.inline.vertical.sidebar.inverted.fixed.large.menu
-        a.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
+        a.toggle_sidebar.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
             i.home.icon
             |JanPro
-        a.item(href='/people' class="{{isActivePath '/people'}}")
+        a.toggle_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
             i.large.users.icon
             | Users
-        a.item(href='/incidents' class="{{isActivePath '/incidents'}}")
+        a.toggle_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}")
             i.large.clipboard.icon
             | Incidents
-        a.item(href='/offices' class="{{isActivePath '/offices'}}")
+        a.toggle_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
             i.large.building.icon
             | Offices
-        a.item(href='/services' class="{{isActivePath '/services'}}")
+        a.toggle_sidebar.item(href='/services' class="{{isActivePath '/services'}}")
             i.large.shipping.fast.icon
             | Services
         .ui.divider
