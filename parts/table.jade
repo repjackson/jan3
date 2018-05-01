@@ -37,7 +37,8 @@ template(name='table')
                     // td #{_id}
                     td #{incident_number}
                     td 
-                        img.ui.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        a(href="/view/#{_id}")
+                            img.ui.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
                     td #{incident_date}
                     td 
                         +doc_sentiment

@@ -1,25 +1,22 @@
 template(name='dashboard')
     .ui.padded.stackable.divided.grid
         // +dashboard_header
-        .centered.row
-            .sixteen.wide.column
-                .ui.center.aligned.header Customer Portal
+        // .centered.row
+        //     .sixteen.wide.column
+        //         .ui.center.aligned.header Customer Portal
         .row
             .four.wide.column
-                .ui.center.aligned.secondary.fluid.segment
-                    .ui.header Welcome
-                    .ui.button Sign In
-                    .ui.button Register
+                .ui.header Welcome
+                .ui.button Sign In
+                .ui.button Register
             .twelve.wide.column
                 +my_cleaning_crew
         .row
             .sixteen.wide.column
-                .ui.secondary.fluid.segment
-                    +my_cleaning_schedule
+                +my_cleaning_schedule
         .row
             .sixteen.wide.column
-                .ui.secondary.fluid.segment
-                    +my_office_contacts
+                +my_office_contacts
 
         .row
             .four.wide.column
@@ -107,7 +104,7 @@ template(name='incident_widget')
             a.item(href="/view/#{_id}")
                 .ui.tiny.rounded.image
                     img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
-                    +doc_sentiment
+                    +small_sentiment
                 .content
                     .header ##{incident_number}
                         +incident_type_label
@@ -128,7 +125,7 @@ template(name='incident_widget')
 template(name='general_account_info')
     .ui.dividing.header
         i.info.icon
-        |General Account Info
+        |Account
     with person
         +person_card
         
@@ -137,7 +134,7 @@ template(name='general_account_info')
 template(name='local_office_information')
     .ui.dividing.header
         i.building.icon
-        | Local Office Information
+        | Office
     with office
         +office_card
         
@@ -153,7 +150,7 @@ template(name='dashboard_header')
         
 template(name='my_cleaning_crew')
     .ui.center.aligned.header My Cleaning Crew
-    .ui.four.cards
+    .ui.four.stackable.cards
         each crew
             .ui.card
                 +crew_card
@@ -175,4 +172,4 @@ template(name='crew_card')
         //         +list_item key='phone' label='Phone'
         //         +list_item key='company' label='Company'
         //         +list_item key='position' label='Position'
-        +view_button
+        // +view_button

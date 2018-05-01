@@ -6,6 +6,18 @@ Template.doc_emotion.onCreated ->
         $('.ui.accordion').accordion()
     , 1000
 
+Template.small_sentiment.onCreated ->
+    Meteor.setTimeout ->
+        $('.progress').progress()
+    , 1000
+
+Template.small_sentiment.helpers
+    sentiment_score_percent: -> 
+        if @doc_sentiment_score > 0
+            (@doc_sentiment_score*100).toFixed()
+        else
+            (@doc_sentiment_score*-100).toFixed()
+    sentiment_bar_class: -> if @doc_sentiment_label is 'positive' then 'green' else 'red'
 
 
 Template.doc_emotion.helpers

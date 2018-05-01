@@ -7,14 +7,18 @@ template(name='doc_sentiment')
         .label
             |{{ to_percent doc_sentiment_score }}%
             if is_positive
-                | Positive
+                | positive
             else
-                | Negative
+                | negative
 
         // |#{doc_sentiment_label}
         // |#{sentiment_score_percent}
 
 
+template(name='small_sentiment') 
+    .ui.small.progress(data-percent=sentiment_score_percent class=sentiment_bar_class)
+        .bar
+        .progress
 
 template(name='doc_emotion') 
     // .ui.dividing.header 
@@ -23,23 +27,23 @@ template(name='doc_emotion')
         .ui.blue.small.progress(data-percent=sadness_percent)
             .bar
             .progress
-            .label {{to_percent sadness}}% Sadness 
+            .label {{to_percent sadness}}% sadness 
         .ui.green.small.progress(data-percent=joy_percent)
             .bar
             .progress
-            .label {{to_percent joy}}% Joy 
+            .label {{to_percent joy}}% joy 
         .ui.black.small.progress(data-percent=fear_percent)
             .bar
             .progress
-            .label {{to_percent fear}}% Fear 
+            .label {{to_percent fear}}% fear 
         .ui.yellow.small.progress(data-percent=disgust_percent)
             .bar
             .progress
-            .label {{to_percent disgust}}% Disgust 
+            .label {{to_percent disgust}}% disgust 
         .ui.red.small.progress(data-percent="{{to_percent anger}}")
             .bar
             .progress
-            .label {{to_percent anger}}% Anger 
+            .label {{to_percent anger}}% anger 
             
 template(name='call_watson')
     #call_watson.ui.basic.fluid.button 
