@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.inverted.top.attached.large.menu
+    .ui.inverted.fixed.menu
         // .mobile.only.ui.dropdown.icon.link.item
         //     i.th.large.icon
         //     .ui.menu
@@ -15,8 +15,8 @@ template(name='nav')
         //         a.icon.item(href='/services' class="{{isActivePath '/services'}}")
         //             i.large.shipping.fast.icon
         //             // | Services
-        a.toggle_sidebar.item 
-            i.bars.icon
+        a.toggle_sidebar.icon.item 
+            i.bars.large.icon
         a.header.icon.item(href='/' class="{{isActivePath '/'}}" data-content='Home')
             i.large.home.icon
             // | Home

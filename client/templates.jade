@@ -44,7 +44,7 @@ template(name='not_found')
 template(name='sidebar')
     .ui.left.inline.vertical.sidebar.inverted.fixed.large.menu
         a.toggle_sidebar.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
-            i.home.icon
+            i.home.large.icon
             |JanPro
         a.toggle_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
             i.large.users.icon
@@ -71,23 +71,23 @@ template(name='sidebar')
             //     i.mail.icon
             // if isInRole 'admin'
             a.icon.toggle_sidebar.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}")
-                i.configure.icon
+                i.configure.large.icon
                 |Admin
             a.toggle_sidebar.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                 if currentUser.profile.image_id
                     img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 else
-                    i.user.icon
+                    i.user.large.icon
                 if currentUser.name
                     | #{currentUser.name}
                 else
                     | Profile
             a#logout.ui.toggle_sidebar.item(href='#') 
-                i.sign.out.icon
+                i.sign.out.large.icon
                 | Sign Out
         else
             a.ui.toggle_sidebar.item(href='/sign-in') 
-                i.sign.in.icon
+                i.sign.in.large.icon
                 | Sign In
 
 

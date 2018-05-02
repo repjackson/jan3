@@ -1,11 +1,27 @@
 template(name='admin')
+    .ui.center.aligned.header 
+        i.shield.icon
+        |Admin
     +user_table
     
     
 template(name='admin_nav')    
-    .ui.menu
-        a.item(href='/admin/users') Users
-        a.item(href='/admin/tasks') Tasks
+    .ui.large.five.item.menu
+        a.item(href='/admin/users') 
+            i.users.icon
+            |Users
+        a.item(href='/admin/tasks')
+            i.tasks.icon
+            |Tasks
+        a.item(href='/admin/roles')
+            i.shield.icon
+            |Roles
+        a.item(href='/admin/roles')
+            i.bell.icon
+            |Notification Settings
+        a.item(href='/admin/roles')
+            i.shield.icon
+            |Notification Rules
     
     
 template(name='user_table')
