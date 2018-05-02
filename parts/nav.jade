@@ -22,27 +22,32 @@ template(name='nav')
             img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             // | Home
         a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}" data-content='Users')
-            i.large.users.icon
-            | Users
+            // i.large.users.icon
+            +mini_sprite name='user-group-man-woman'
+            // | &nbsp; Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-content='Incidents')
-            i.large.clipboard.icon
-            | Incidents
+            +mini_sprite name='urgent-property'
+            // i.large.clipboard.icon
+            // | &nbsp; Incidents
         a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-content='Offices')
-            i.large.building.icon
-            | Offices
+            +mini_sprite name='organization'
+            // i.large.building.icon
+            // | &nbsp; Offices
         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-content='Services')
-            i.large.shipping.fast.icon
-            | Services
+            +mini_sprite name='duster'
+            // i.large.shipping.fast.icon
+            // | &nbsp; Services
         .right.menu
-            a.mobile.hidden.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}")
-                i.shield.alternate.icon
-                | Admin
+            a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}" data-content='Admin')
+                // i.shield.alternate.icon
+                +mini_sprite name='user-shield'
+                // | Admin
             // .icon.item
             //     i.bell.icon
-            .icon.item
-                i.envelope.icon
+            a.icon.item(href='/mail')
+                +mini_sprite name='secured-letter'
             .ui.simple.dropdown.icon.item
-                i.bell.icon
+                +mini_sprite name='appointment-reminders'
                 .menu
                     .item No Notifications
             if currentUser

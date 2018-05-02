@@ -73,8 +73,9 @@ template(name="customer_result")
 
 
 template(name='set_view_mode')
-    #set_view_mode.ui.big.icon.circular.button(title=label class=view_mode_button_class)
-        i.large.icon(class=icon)
+    #set_view_mode.ui.circular.icon.button(title=label class=view_mode_button_class)
+        // i.large.icon(class=icon)
+        +mini_sprite name=icon
             
             
 template(name='set_session_button')
@@ -182,6 +183,7 @@ template(name='link_button')
 template(name='delete_button')
     #delete.ui.red.icon.button(title='delete')
         i.trash.icon
+        +mini_sprite name='trash'
         
         
 template(name='edit_link')
@@ -242,3 +244,16 @@ template(name='google_places_input')
     .ui.large.fluid.icon.input
         i.search.icon
         input#google_places_field(type='text' placeholder='change address...')    
+        
+        
+        
+template(name='mini_sprite')
+    img.ui.mini.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='tiny_sprite')
+    img.ui.tiny.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='avatar_sprite')
+    img.ui.avatar.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='small_sprite')
+    img.ui.small.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='medium_sprite')
+    img.ui.medium.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)

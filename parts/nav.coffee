@@ -14,14 +14,14 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.ui.dropdown').dropdown()
         , 400
-        # Meteor.setTimeout ->
-        #     $('.item').popup()
-        # , 400
         
     Template.nav.onRendered ->
         Meteor.setTimeout ->
             $('.ui.dropdown').dropdown()
         , 1000
+        Meteor.setTimeout ->
+            $('.item').popup()
+        , 400
         
         
         

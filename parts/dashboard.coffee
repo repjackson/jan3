@@ -34,6 +34,7 @@ if Meteor.isClient
                 right: 'title'
             editable: true
             firstDay: 1
+            height: 400
             selectable: true
             defaultView: 'agendaWeek'
             allDaySlot: false
@@ -49,7 +50,7 @@ if Meteor.isClient
     Template.general_account_info.helpers
         person: -> Docs.findOne type:'person'
     Template.my_cleaning_crew.helpers
-        crew: -> Docs.find type:'person'
+        crew: -> Docs.find {type:'person'}, limit:5
     Template.incident_widget.helpers
-        incidents: -> Docs.find {type:'incident'}, limit:3
+        incidents: -> Docs.find {type:'incident'}, limit:5
     

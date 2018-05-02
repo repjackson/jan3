@@ -90,8 +90,8 @@ template(name='user_table')
                                 
         
 template(name='admin_rules')
-    .ui.center.aligned.header 
-        i.shield.icon
+    .ui.center.aligned.header
+        +tiny_sprite name='serial-tasks'
         | Rules
     .ui.header Action pipelines/SLA managment
     .ui.header eg, When incident of priority 'high' is created email 'local manager'

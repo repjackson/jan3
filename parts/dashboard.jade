@@ -2,15 +2,17 @@ template(name='dashboard')
     .ui.padded.stackable.divided.grid
         // +dashboard_header
         .centered.row
-            .sixteen.wide.column
+            .sixteen.wide.center.aligned.column
+                img.ui.large.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
                 h1.ui.center.aligned.header 
-                    i.line.chart.icon
+                    // i.line.chart.icon
                     |Customer Portal
         .row
             .two.wide.column
-                .ui.center.aligned.header Welcome
-                .ui.disabled.button Sign In
-                .ui.disabled.button Register
+                .ui.center.aligned.fluid.segment
+                    h3.ui.header Welcome
+                    .ui.basic.button Sign In
+                    .ui.basic.button Register
             .fourteen.wide.column
                 +my_cleaning_crew
         .row
@@ -62,6 +64,7 @@ template(name='my_cleaning_schedule')
     .ui.styled.fluid.accordion
         .active.title
             h3.ui.center.aligned.header 
+                +tiny_sprite name='planner'
                 |My Cleaning Schedule
                 i.dropdown.icon
         .active.content
@@ -153,7 +156,7 @@ template(name='dashboard_header')
 template(name='my_cleaning_crew')
     .ui.segment
         .ui.center.aligned.header My Cleaning Crew
-        .ui.four.stackable.cards
+        .ui.five.stackable.cards
             each crew
                 .ui.card
                     +crew_card
