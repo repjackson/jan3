@@ -49,13 +49,13 @@ template(name='location_facet')
     +mini_inline_sprite name='marker'
         // | Location
     if selected_location_tags
-        #clear_location_tags.ui.large.icon.primary.circular.button
+        #clear_location_tags.ui.large.icon.primary.button
             i.remove.icon
         each selected_location_tags
-            .unselect_location_tag.ui.large.primary.circular.button
+            .unselect_location_tag.ui.large.primary.button
                 strong #{this}
     each location_tags
-        .ui.basic.circular.button.select_location_tag(class=location_tag_class) 
+        .ui.compact.button.select_location_tag(class=location_tag_class) 
             strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
@@ -73,7 +73,7 @@ template(name='timestamp_facet')
             .unselect_timestamp_tag.ui.primary.button
                 strong #{this}
     each timestamp_tags
-        .ui.basic.compact.button.select_timestamp_tag(class=timestamp_tag_class) 
+        .ui.compact.button.select_timestamp_tag(class=timestamp_tag_class) 
             strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
@@ -114,8 +114,8 @@ template(name='keyword_facet')
                 strong #{this}
     // .ui.hidden.fitted.divider
     each keywords
-        // .ui.basic.compact.button.select_keyword(class=cloud_keyword_class) 
-        .ui.basic.compact.button.select_keyword 
+        // .ui.compact.button.select_keyword(class=cloud_keyword_class) 
+        .ui.compact.button.select_keyword 
             strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}

@@ -21,28 +21,28 @@ template(name='list_item')
 template(name='toggle_boolean')
     .field
         if ../complete
-            #turn_on.ui.basic.icon.button
+            #turn_on.ui.icon.button
                 i.toggle.on.large.icon
         else
-            #turn_off.ui.basic.icon.button
+            #turn_off.ui.icon.button
                 i.toggle.off.large.icon
 
 template(name='save_button')
-    a.ui.big.circular.basic.icon.button(href="/view/#{_id}") 
+    a.ui.big.circular.icon.button(href="/view/#{_id}") 
         i.checkmark.green.icon
         // strong save
         
 template(name='edit_button')
-    a.ui.circular.icon.basic.button(href="/edit/#{_id}" title='Edit') 
+    a.ui.circular.icon.button(href="/edit/#{_id}" title='Edit') 
         i.edit.large.icon
         // strong edit
 
 template(name='view_button')
-    a.ui.large.circular.icon.basic.button(href="/view/#{_id}" title='View Details') 
+    a.ui.large.circular.icon.button(href="/view/#{_id}" title='View Details') 
         i.chevron.right.icon
         
 template(name='add_button')
-    #add.ui.large.circular.icon.basic.button(title='add')
+    #add.ui.large.circular.icon.button(title='add')
         i.plus.icon
         // |#{label}
 
@@ -89,12 +89,12 @@ template(name='set_session_item')
         
         
 template(name='edit_image_field')
-    .ui.basic.segment
+    .ui.segment
         if image_id
             .ui.image
                 img(src="{{c.url image_id }}")
-                a#remove_photo.ui.top.left.attached.link.basic.label remove
-                // .ui.bottom.right.attached.basic.label Image Id: #{image_id}
+                a#remove_photo.ui.top.left.attached.link.label remove
+                // .ui.bottom.right.attached.label Image Id: #{image_id}
         else
             .ui.header Upload Image
             input(type='file' name='upload_picture' accept='image/*')
@@ -169,14 +169,14 @@ template(name='associated_users')
             
             
 template(name='call_phone_button')
-    a.ui.fluid.basic.button(href="tel:#{phone_number}") 
+    a.ui.fluid.button(href="tel:#{phone_number}") 
         i.phone.icon
         | Call #{phone_number}
             
             
             
 template(name='link_button')    
-    a.ui.big.icon.basic.circular.button(href=link title=label)
+    a.ui.big.icon.circular.button(href=link title=label)
         i.large.icon(class=icon)
 
 
@@ -201,7 +201,7 @@ template(name='publish_button')
             #unpublish.ui.green.button
                 |Published
         else
-            #publish.ui.basic.button
+            #publish.ui.button
                 |Private
 
 
@@ -215,7 +215,7 @@ template(name='html_create')
         with doc
             if is_editing
                 .ui.labeled.fluid.input
-                    .ui.basic.label select staff
+                    .ui.label select staff
                     input#staff(type='text' value=staff)
             else
                 div(class=doc_classes)
@@ -225,7 +225,7 @@ template(name='html_create')
     else
         // if isInRole 'admin'
         .ui.header no coc found
-        .create_doc.ui.basic.button
+        .create_doc.ui.button
             i.plus.icon
             |create html with #{template_tags}
     

@@ -8,12 +8,12 @@ template(name='dashboard')
                     // i.line.chart.icon
                     |Customer Portal
         .row
-            .two.wide.column
-                .ui.center.aligned.fluid.segment
-                    h3.ui.header Welcome
-                    .ui.basic.button Sign In
-                    .ui.basic.button Register
-            .fourteen.wide.column
+            // .two.wide.column
+            //     .ui.center.aligned.fluid.segment
+            //         h3.ui.header Welcome
+            //         .ui.button Sign In
+            //         .ui.button Register
+            .sixteen.wide.column
                 +my_cleaning_crew
         .row
             .sixteen.wide.column
@@ -155,7 +155,9 @@ template(name='dashboard_header')
         
 template(name='my_cleaning_crew')
     .ui.segment
-        .ui.center.aligned.header My Cleaning Crew
+        h3.ui.center.aligned.header 
+            +small_sprite name='housekeeper-male'
+            |My Cleaning Crew
         .ui.five.stackable.cards
             each crew
                 .ui.card
