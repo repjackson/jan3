@@ -1,15 +1,17 @@
 template(name='dashboard')
     .ui.padded.stackable.divided.grid
         // +dashboard_header
-        // .centered.row
-        //     .sixteen.wide.column
-        //         .ui.center.aligned.header Customer Portal
+        .centered.row
+            .sixteen.wide.column
+                h1.ui.center.aligned.header 
+                    i.line.chart.icon
+                    |Customer Portal
         .row
-            .four.wide.column
+            .two.wide.column
                 .ui.center.aligned.header Welcome
-                .ui.button Sign In
-                .ui.button Register
-            .twelve.wide.column
+                .ui.disabled.button Sign In
+                .ui.disabled.button Register
+            .fourteen.wide.column
                 +my_cleaning_crew
         .row
             .sixteen.wide.column
@@ -57,9 +59,9 @@ template(name='customer_menu')
             
             
 template(name='my_cleaning_schedule')
-    .ui.accordion
+    .ui.styled.fluid.accordion
         .active.title
-            .ui.center.aligned.header 
+            h3.ui.center.aligned.header 
                 |My Cleaning Schedule
                 i.dropdown.icon
         .active.content
@@ -149,11 +151,12 @@ template(name='dashboard_header')
         
         
 template(name='my_cleaning_crew')
-    .ui.center.aligned.header My Cleaning Crew
-    .ui.four.stackable.cards
-        each crew
-            .ui.card
-                +crew_card
+    .ui.segment
+        .ui.center.aligned.header My Cleaning Crew
+        .ui.four.stackable.cards
+            each crew
+                .ui.card
+                    +crew_card
 
 template(name='crew_card')
     .ui.card

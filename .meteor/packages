@@ -37,7 +37,6 @@ themeteorchef:bert
 mizzao:autocomplete
 mquandalle:jade
 useraccounts:semantic-ui
-alanning:roles
 ecmascript@0.10.6
 coffeescript
 juliancwirko:postcss
@@ -48,3 +47,4 @@ yasinuslu:json-view
 jeremy:geocomplete
 davesierra:fullcalendar
 froala:editor-reactive@=2.4.2
+alanning:roles

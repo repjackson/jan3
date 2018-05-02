@@ -11,6 +11,24 @@ FlowRouter.route '/admin/users', action: (params) ->
         sub_nav: 'admin_nav'
         main: 'user_table'
  
+FlowRouter.route '/admin/notifications', action: (params) ->
+    BlazeLayout.render 'layout',
+        nav: 'nav'
+        sub_nav: 'admin_nav'
+        main: 'user_table'
+ 
+FlowRouter.route '/admin/roles', action: (params) ->
+    BlazeLayout.render 'layout',
+        nav: 'nav'
+        sub_nav: 'admin_nav'
+        main: 'roles'
+ 
+FlowRouter.route '/admin/rules', action: (params) ->
+    BlazeLayout.render 'layout',
+        nav: 'nav'
+        sub_nav: 'admin_nav'
+        main: 'admin_rules'
+ 
  
 if Meteor.isClient
     Template.user_table.onCreated ->

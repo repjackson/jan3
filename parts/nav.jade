@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.inverted.fixed.menu
+    .ui.inverted.blue.fixed.menu
         // .mobile.only.ui.dropdown.icon.link.item
         //     i.th.large.icon
         //     .ui.menu
@@ -17,8 +17,9 @@ template(name='nav')
         //             // | Services
         a.toggle_sidebar.icon.item 
             i.bars.large.icon
-        a.header.icon.item(href='/' class="{{isActivePath '/'}}" data-content='Home')
-            i.large.home.icon
+        a.header.item(href='/' class="{{isActivePath '/'}}" data-content='Home')
+            // i.large.home.icon
+            img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             // | Home
         a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}" data-content='Users')
             i.large.users.icon

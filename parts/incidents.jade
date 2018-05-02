@@ -4,9 +4,9 @@ template(name='incidents')
             .three.wide.column
                 +add_button type='incident' label='Incident'
                 div
-                +set_view_mode view='cards' icon='clone'
-                +set_view_mode view='list' icon='list'
-                +set_view_mode view='table' icon='table'
+                +set_view_mode view='cards' icon='clone' label='Set Cards View'
+                +set_view_mode view='list' icon='list' label='Set List View'
+                +set_view_mode view='table' icon='table' label='Set Table View'
                 +timestamp_facet
                 // +location_facet
                 +keyword_facet

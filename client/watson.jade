@@ -137,7 +137,7 @@ template(name='semantic_roles')
         .title
             |#{watson.semantic_roles.length} Semantic Roles
         .content
-            +jsonView(json=watson.semantic_roles)
+            // +jsonView(json=watson.semantic_roles)
             .ui.list
                 each watson.semantic_roles
                     .item
@@ -230,5 +230,5 @@ template(name='tone')
                         | #{text}
                         each tones
                             .ui.basic.label #{tone_id} {{ to_percent score }}%
-            i#call_tone.refresh.large.link.icon
-                +jsonView(json=tone)
+            i#call_tone.refresh.large.link.icon(title='refresh tone analysis')
+                // +jsonView(json=tone)
