@@ -1,7 +1,7 @@
 {
   "definitions": {
     "accordion": true,
-    "ad": true,
+    "ad": false,
     "api": true,
     "breadcrumb": true,
     "button": true,
@@ -65,7 +65,7 @@
     "instagram": false,
     "material": false,
     "pulsar": false,
-    "raised": false,
+    "raised": true,
     "resetcss": false,
     "round": false,
     "rtl": false,

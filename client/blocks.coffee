@@ -98,12 +98,12 @@ Template.set_session_button.helpers
     filter_class: -> 
         if Session.equals("#{@key}","all") 
             if @value is 'all'
-                'active' 
+                'primary' 
             else
                 'basic'
         else if Session.get("#{@key}")
             if Session.equals("#{@key}", parseInt(@value))
-                'active'
+                'primary'
             else
                 'basic'
             

@@ -2,11 +2,12 @@ template(name='incidents')
     .ui.stackable.padded.centered.grid
         .centered.row
             .three.wide.column
-                +add_button type='incident' label='Incident'
-                div
+                .ui.basic.center.aligned.segment
+                    +add_button type='incident' label='Incident'
                 +set_view_mode view='cards' icon='medium-icons' label='Cards View'
                 +set_view_mode view='list' icon='list' label='List View'
                 +set_view_mode view='table' icon='data-sheet' label='Table View'
+                .ui.hidden.divider
                 +timestamp_facet
                 // +location_facet
                 +keyword_facet
@@ -54,8 +55,11 @@ template(name='incident_item')
                 .ui.grid
                     .twelve.wide.column
                         .large130 {{nl2br incident_details}}
+                        .ui.hidden.divider
                         +tone
                         .meta 
+                            |Keywords: 
+                            |&nbsp;
                             .ui.horizontal.list
                                 each watson_keywords
                                     .item #{this}

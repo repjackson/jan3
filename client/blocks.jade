@@ -143,7 +143,7 @@ template(name='bookmark_button')
         .ui.circular.icon.button
             i.bookmark.icon
     else
-        .ui.circular.icon.active.button
+        .ui.circular.icon.primary.button
             i.bookmark.icon
             
             
@@ -247,6 +247,8 @@ template(name='google_places_input')
         
         
         
+template(name='mini_inline_sprite')
+    img.ui.mini.inline.spaced.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
 template(name='mini_sprite')
     img.ui.mini.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
 template(name='tiny_sprite')
