@@ -18,7 +18,7 @@ template(name='task_item')
                 // each visual
                 //     .ui.basic.small.label #{class}
         .content
-            a.header(href="/view/#{_id}") 
+            a.grey.header(href="/view/#{_id}") 
                 |##{task_number}
             .description
                 .ui.grid
@@ -139,7 +139,7 @@ template(name='task_view')
             .three.wide.column
                 +link_button link='/admin/tasks' icon='tasks' label='Tasks'
             .ten.wide.column
-                h1.ui.center.aligned.header view #{title}
+                h1.ui.center.aligned.grey.header view #{title}
             .three.wide.column
                 +edit_button
         .row
@@ -159,7 +159,7 @@ template(name='task_edit')
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.header edit #{title}
+                h1.ui.center.aligned.grey.header edit #{title}
             .three.wide.column
                 #delete.ui.icon.button
                     i.trash.icon

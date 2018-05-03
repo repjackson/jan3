@@ -23,6 +23,18 @@ Template.timestamp_facet.helpers
 
     selected_timestamp_tags: -> selected_timestamp_tags.array()
 
+    settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Timestamp_tags
+                field: 'name'
+                matchAll: false
+                template: Template.tag_result
+            }
+            ]
+    }
 
 
 Template.timestamp_facet.events

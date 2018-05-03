@@ -32,7 +32,19 @@ Template.username_facet.helpers
             selected_author_usernames.push Meteor.users.findOne(selected_author_id).username
         selected_author_usernames
     
-    
+    settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Watson_keywords
+                field: 'name'
+                matchAll: false
+                template: Template.tag_result
+            }
+            ]
+    }
+
 Template.username_facet.events
     'click .select_author': ->
         selected_author = Meteor.users.findOne username: @username

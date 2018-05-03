@@ -29,7 +29,7 @@ template(name='edit_building')
             
 template(name='buildings')
     .ui.container
-        h1.ui.center.aligned.header Buildings
+        h1.ui.center.aligned.grey.header Buildings
             i#add_building.green.plus.link.icon 
         +cloud filter='building'
         table.ui.striped.sortable.table
@@ -63,7 +63,7 @@ template(name='view_building')
         |Buildings
     with building
         .ui.container
-            h1.ui.center.aligned.header Building #{building_code} Page
+            h1.ui.center.aligned.grey.header Building #{building_code} Page
             .ui.stackable.grid
                 .ten.wide.column
                     .ui.dividing.header Notices

@@ -3,18 +3,21 @@ template(name='chat')
         .centered.row
             .three.wide.column
             .ten.wide.column
-                h1.ui.center.aligned.header 
+                h1.ui.center.aligned.grey.header 
                     +icon name='chat'
                     | Chat
             .three.wide.column
         .centered.row
+            .four.wide.column
+                +timestamp_facet
+
             .twelve.wide.column
                 .ui.comments
                     each chat_messages
                         +chat_message
                 .ui.fluid.icon.big.input
                     i.plus.green.icon
-                    input#new_chat_message(type='text')
+                    input#new_chat_message(type='text' placeholder='add...')
                         
 template(name='chat_message')
     .ui.comment

@@ -14,7 +14,7 @@ template(name='schedule')
 template(name='event_card')
     .ui.card
         .content
-            a.header(href="/view/#{_id}") event ##{jan_event_id}
+            a.grey.header(href="/view/#{_id}") event ##{jan_event_id}
         .content
             .ui.list
                 +list_item key='jan_event_id' label='Jan Pro event ID' icon='hashtag'
@@ -36,7 +36,7 @@ template(name='event_edit')
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.header Edit event #{jan_event_id}
+                h1.ui.center.aligned.grey.header Edit event #{jan_event_id}
             .three.wide.column
                 #delete.ui.fluid.button
                     i.trash.icon
@@ -61,7 +61,7 @@ template(name='event_view')
             .three.wide.column
                 +link_button link='/schedule' icon='left chevron' label='schedule'
             .ten.wide.column
-                h1.ui.center.aligned.header 
+                h1.ui.center.aligned.grey.header 
                     i.truck.icon
                     | My Schedule #{jan_event_id}
             .three.wide.column

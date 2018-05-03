@@ -1,5 +1,5 @@
 template(name='people') 
-    h1.ui.center.aligned.header 
+    h1.ui.center.aligned.grey.header 
         i.blue.users.icon
         |Users
     .ui.padded.stackable.grid
@@ -72,7 +72,7 @@ template(name='person_edit')
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.header
+                h1.ui.center.aligned.grey.header
                     |Edit
                     if first_name
                         |#{first_name} #{last_name}

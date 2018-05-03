@@ -21,9 +21,7 @@ if Meteor.isClient
 
 
     Template.table.helpers
-        docs: ->
-            Docs.find {}, sort:incident_number:1
-
+        docs: -> Docs.find {}, sort:incident_number:1
 
         current_doc: -> Session.get 'current_doc'
 
@@ -37,6 +35,10 @@ if Meteor.isClient
             $('.ui.modal').modal('show')
             # console.log @
             Session.set 'current_doc', @
+
+        'click .tagify': (e,t)->
+            # console.log @
+            Meteor.call 'tagify_timestamp', @_id
 
 
 if Meteor.isServer

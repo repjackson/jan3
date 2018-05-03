@@ -3,7 +3,7 @@ template(name='services')
         .centered.row
             .three.wide.column
             .ten.wide.column
-                h1.ui.center.aligned.header
+                h1.ui.center.aligned.grey.header
                     +icon name='duster'
                     | Services
             .three.wide.column
@@ -19,7 +19,7 @@ template(name='services')
 template(name='service_card')
     .ui.card
         .content
-            a.header(href="/view/#{_id}") Service ##{jan_service_id}
+            a.grey.header(href="/view/#{_id}") Service ##{jan_service_id}
         .content
             .ui.list
                 +list_item key='jan_service_id' label='Jan Pro Service ID' icon='hashtag'
@@ -41,7 +41,7 @@ template(name='service_edit')
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.header Edit Service #{jan_service_id}
+                h1.ui.center.aligned.grey.header Edit Service #{jan_service_id}
             .three.wide.column
                 #delete.ui.fluid.button
                     i.trash.icon
@@ -66,7 +66,7 @@ template(name='service_view')
             .three.wide.column
                 +link_button link='/services' icon='left chevron' label='Services'
             .ten.wide.column
-                h1.ui.center.aligned.header 
+                h1.ui.center.aligned.grey.header 
                     i.truck.icon
                     |Service #{jan_service_id}
             .three.wide.column

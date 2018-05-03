@@ -30,7 +30,7 @@ Meteor.publish 'facet', (
             match.author_id = $in: selected_author_ids
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
         if selected_keywords.length > 0 then match.watson_keywords = $all: selected_keywords
-        if selected_timestamp_tags.length > 0 then match.date_array = $all: selected_timestamp_tags
+        if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags
         
 
         # if view_private is true then match.author_id = @userId
@@ -118,9 +118,9 @@ Meteor.publish 'facet', (
 
         timestamp_tags_cloud = Docs.aggregate [
             { $match: match }
-            { $project: date_array: 1 }
-            { $unwind: "$date_array" }
-            { $group: _id: '$date_array', count: $sum: 1 }
+            { $project: timestamp_tags: 1 }
+            { $unwind: "$timestamp_tags" }
+            { $group: _id: '$timestamp_tags', count: $sum: 1 }
             { $match: _id: $nin: selected_timestamp_tags }
             { $sort: count: -1, _id: 1 }
             { $limit: 10 }

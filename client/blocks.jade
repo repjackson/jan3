@@ -28,23 +28,21 @@ template(name='toggle_boolean')
 
 template(name='save_button')
     a.ui.big.circular.icon.button(href="/view/#{_id}") 
-        i.checkmark.green.icon
+        +avatar_sprite name='checkmark'
         // strong save
         
 template(name='edit_button')
     a.ui.circular.icon.button(href="/edit/#{_id}" title='Edit') 
-        i.edit.large.icon
+        +avatar_sprite name='edit'
         // strong edit
 
 template(name='view_button')
-    a.ui.large.circular.icon.button(href="/view/#{_id}" title='View Details') 
-        i.chevron.right.icon
+    a.ui.circular.icon.button(href="/view/#{_id}" title='View Details') 
+        +avatar_sprite name='chevron-right'
         
 template(name='add_button')
     #add.ui.large.circular.icon.button(title='add')
-        i.plus.icon
-        // |#{label}
-
+        +mini_inline_sprite name='plus'
 
 template(name='reference_office')
     .ui.form

@@ -1,12 +1,12 @@
 template(name='incidents')
     .ui.stackable.padded.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +set_view_mode view='cards' icon='medium-icons' label='Cards View'
                 +set_view_mode view='list' icon='list' label='List View'
                 +set_view_mode view='table' icon='data-sheet' label='Table View'
             .ten.wide.column
-                h1.ui.center.aligned.header
+                h1.ui.center.aligned.grey.header
                     +icon name='urgent-property'
                     | Incidents
             .three.wide.column
@@ -57,10 +57,10 @@ template(name='incident_item')
                 // each visual
                 //     .ui.basic.small.label #{class}
         .content
-            a.header(href="/view/#{_id}") 
+            a.grey.header(href="/view/#{_id}") 
                 |##{incident_number}
             .description
-                .ui.grid
+                .ui.stackable.grid
                     .twelve.wide.column
                         .large130 {{nl2br incident_details}}
                         .ui.hidden.divider
@@ -72,22 +72,22 @@ template(name='incident_item')
                                 each watson_keywords
                                     .item #{this}
                     .four.wide.column
+                        +view_button
                         .meta #{when}
                         .meta #{formal_when}
                         // .ui.horizontal.list
                         //     each date_array
                         //         .item #{this}
                         if office.office_name
-                            .ui.label #{office.office_name}
+                            .ui.basic.label #{office.office_name}
                         +incident_type_label
                         if current_level
-                            .ui.label Level #{current_level}
-                        .meta by #{author.username}
+                            .ui.basic.label Level #{current_level}
+                        +author_info
                         if comment_count
                             a.meta(href="/view/#{_id}")
                                 i.comments.icon
                                 |#{comment_count} comments
-                        +view_button
                         if watson
                             +doc_sentiment
                             +doc_emotion
@@ -103,14 +103,13 @@ template(name='incident_card')
         .content
             .right.floated.meta
                 // .ui.circular.label(title='Incident Number') #{incident_number}
-                .ui.label #{office.office_name}
-                .ui.label level #{current_level}
-            a.header(href="/view/#{_id}") ##{incident_number}
+                .ui.basic.label #{office.office_name}
+                .ui.basic.label level #{current_level}
+            a.grey.header(href="/view/#{_id}") ##{incident_number}
         .content    
             .right.floated 
                 |logged #{when}
-            i.user.icon
-            | #{author.username}
+            +author_info
         // .content
         //     .ui.accordion
         //         .title details
@@ -123,7 +122,7 @@ template(name='incident_card')
             // +call_method name='tagify_timestamp'
             // if date_array
             //     each date_array
-            //         .ui.label #{this}
+            //         .ui.basic.label #{this}
             .right.floated
                 +incident_type_label
             i.comment.icon
@@ -137,7 +136,7 @@ template(name='incident_edit')
                 #delete.ui.circular.icon.big.button
                     i.red.trash.icon
             .ten.wide.column
-                h1.ui.center.aligned.header Edit Incident #{incident_number}
+                h1.ui.center.aligned.grey.header Edit Incident #{incident_number}
             .three.wide.column
                 +save_button
         .row
@@ -167,7 +166,6 @@ template(name='incident_edit')
                     with office
                         +office_card
             
-
         
 template(name='incident_view')
     .ui.padded.stackable.centered.grid
@@ -241,7 +239,7 @@ template(name='incident_level_set')
                         
                         
 template(name='incident_type_label')                    
-    .ui.label(class=type_label_class) #{incident_type_label}
+    .ui.basic.label(class=type_label_class) #{incident_type_label}
 
 
 template(name='incident_status')

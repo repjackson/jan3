@@ -3,7 +3,14 @@ if Meteor.isClient
         BlazeLayout.render 'layout', main: 'chat'
     
     Template.chat.onCreated ->
-        @autorun -> Meteor.subscribe 'chat_messages'
+        @autorun => Meteor.subscribe 'facet', 
+            selected_tags.array()
+            selected_keywords.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_timestamp_tags.array()
+            type='chat_message'
+            author_id=null
     
     Template.chat.helpers
         chat_messages: ->
@@ -26,11 +33,3 @@ if Meteor.isClient
             if confirm 'Delete comment?'
                 Docs.remove @_id
 
-
-if Meteor.isServer
-    Meteor.publish 'chat_messages', ->
-        Docs.find type:'chat_message'
-        
-        
-        
-        

@@ -41,7 +41,7 @@ Meteor.methods
             # date_array = _.each(date_array, (el)-> console.log(typeof el))
             # console.log date_array
             Docs.update doc_id,
-                $set: date_array: date_array
+                $set: timestamp_tags: date_array
             return date_array
 
 

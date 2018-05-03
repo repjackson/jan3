@@ -1,6 +1,6 @@
 template(name='users') 
     .ui.container
-        h1.ui.center.aligned.header Users
+        h1.ui.center.aligned.grey.header Users
         .ui.centered.cards
             each users
                 +user
@@ -78,7 +78,7 @@ template(name='user_table')
                 a.ui.button(href='/user/add' data-content='Add User')
                     +mini_sprite name='add-user-male'
             .ten.wide.column
-                h1.ui.center.aligned.header 
+                h1.ui.center.aligned.grey.header 
                     +icon name='group-foreground-selected'
                     | Users
             .three.wide.column

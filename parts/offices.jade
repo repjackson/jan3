@@ -2,16 +2,20 @@ template(name='offices')
     .ui.stackable.centered.padded.grid
         .centered.row
             .three.wide.column
+                +set_view_mode view='cards' icon='medium-icons' label='Cards'
+                +set_view_mode view='list' icon='list' label='List'
+                +set_view_mode view='table' icon='data-sheet' label='Table'
+
             .ten.wide.column
-                h1.ui.center.aligned.header
+                h1.ui.center.aligned.grey.header
                     +icon name='organization'
                     | Offices
             .three.wide.column
                 +add_button type='office' label='Office'
         .centered.row
-            .two.wide.column
+            .four.wide.column
                 +location_facet type='office'
-            .fourteen.wide.column
+            .twelve.wide.column
                 .ui.centered.stackable.cards
                     each offices
                         +office_card
@@ -23,19 +27,21 @@ template(name='office_card')
             +googleMap(name="exampleMap" options=exampleMapOptions)
 
         .content
-            a.header(href="/view/#{_id}")
-                +mini_sprite name='organization'
-                |#{office_name} ##{jan_office_id}
+            a.grey.header(href="/view/#{_id}")
+                // +mini_sprite name='organization'
+                // |##{jan_office_id}
+                |#{office_name} 
         .content
             .ui.list
-                // +list_item key='jan_office_id' icon='building'
+                +list_item key='jan_office_id' icon='building'
                 with geocode
                     +list_item key='formatted_address' icon='compass'
                 +list_item key='phone_number' icon='phone'
-                +list_item key='email_address' icon='envelope'
-                +list_item key='level_1_user_ud' icon='user'
-                +list_item key='level_2_user_ud' icon='user'
-                +list_item key='level_3_user_ud' icon='user'
+                if email_address
+                    +list_item key='email_address' icon='envelope'
+                // +list_item key='level_1_user_ud' icon='user'
+                // +list_item key='level_2_user_ud' icon='user'
+                // +list_item key='level_3_user_ud' icon='user'
                 // +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
                 // +list_item key='office_address' label='Office Address' icon='compass'
                 // +list_item key='phone_number' label='Phone Number' icon='phone'
@@ -56,7 +62,7 @@ template(name='office_edit')
                     i.trash.icon
                     | Delete
             .ten.wide.column
-                h1.ui.center.aligned.header Edit Office ##{jan_office_id}
+                h1.ui.center.aligned.grey.header Edit Office ##{jan_office_id}
             .three.wide.column
                 +save_button
         .five.wide.column
@@ -80,7 +86,7 @@ template(name='office_view')
             .three.wide.column
                 +link_button link='/offices' icon='left chevron' label='Offices'
             .ten.wide.column
-                h1.ui.center.aligned.header Office ##{jan_office_id}
+                h1.ui.center.aligned.grey.header Office ##{jan_office_id}
             .three.wide.column
                 +edit_button
         .row

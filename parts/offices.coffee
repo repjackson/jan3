@@ -20,7 +20,7 @@ if Meteor.isClient
             type='office'
             author_id=null
     Template.offices.helpers
-        offices: ->  Docs.find { type:'office'}
+        offices: ->  Docs.find {type:'office'}, limit:3
 
 
     Template.office_card.onCreated ->

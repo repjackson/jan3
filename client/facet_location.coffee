@@ -23,6 +23,18 @@ Template.location_facet.helpers
 
     selected_location_tags: -> selected_location_tags.array()
 
+    settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Location_tags
+                field: 'name'
+                matchAll: false
+                template: Template.tag_result
+            }
+            ]
+    }
 
 
 Template.location_facet.events
