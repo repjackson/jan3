@@ -1,0 +1,145 @@
+template(name='users') 
+    .ui.container
+        h1.ui.center.aligned.header Users
+        .ui.centered.cards
+            each users
+                +user
+                
+template(name='user')                
+    .ui.card
+        .image
+            a(href="/profile/#{_id}")
+                img.ui.fluid.image(src="{{c.url profile.image_id height=400 width=800 background='white' crop='pad'}}")
+        .content
+            a(href="/profile/#{_id}")
+                h2.ui.center.aligned.header #{profile.first_name} #{profile.last_name}
+            each five_tags
+                .ui.compact.small.circular.button.person_tag(class=tag_class) 
+                    strong #{this}
+        .content
+            if position
+                |#{position}
+            if company
+                |at #{company}
+        .extra.content
+            .ui.horizontal.divider.header
+                i.red.configure.icon
+                | Admin
+
+            
+template(name='user_cloud')
+    #cloud.ui.basic.center.aligned.segment
+        // .ui.hidden.divider
+        // .ui.left.icon.small.input
+        //     i.search.icon
+        //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search..'
+        if selected_people_tags
+            #clear_tags.ui.icon.big.active.button
+                i.remove.icon
+            each selected_people_tags
+                .unselect_tag.ui.big.active.button
+                    strong #{this}
+        each all_people_tags
+            .ui.button.select_tag(class=cloud_tag_class) #{this.name}
+                small #{this.count}
+                // small [#{this.index}]
+                
+                
+                
+template(name='person_card2')
+    .image
+        a(href="/user/#{username}")
+            img.ui.fluid.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+    .content
+        .center.aligned.header
+            a(href="/user/#{username}")
+                if profile.first_name
+                    | #{profile.first_name}
+                if profile.last_name
+                    | #{profile.last_name}
+                else    
+                    | #{username}
+                // +staus_indicator
+        if profile.location
+            .center.aligned.meta
+                | #{profile.location}
+        // .center.aligned.meta
+        //     +color_dots
+    // .extra.content
+    //     each ten_tags
+    //         .ui.compact.tiny.button.user_tag(class=person_tag_class) #{this}
+            
+            
+            
+template(name='user_table')
+    .ui.padded.grid
+        .centered.row
+            .three.wide.column
+                a.ui.button(href='/user/add' data-content='Add User')
+                    +mini_sprite name='add-user-male'
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    +icon name='group-foreground-selected'
+                    | Users
+            .three.wide.column
+        .row
+            .sixteen.wide.column
+                table.ui.sortable.striped.table
+                    // thead
+                    //     tr
+                    //         th Image
+                    //         th Profile
+                    //         th Roles
+                    //         th Actions
+                    tbody
+                        each users
+                            tr
+                                td 
+                                    img.ui.small.image(src="{{c.url profile.image_id width=300 height=300 gravity='face' crop='fill'}}")
+                                td 
+                                    .ui.header 
+                                        |#{name}
+                                    a.ui.header(href="/profile/#{_id}") #{username}
+                                    div
+                                        each emails
+                                            |#{address}
+                                td 
+                                    .ui.hidden.fitted.divider
+                                    .ui.left.labeled.button
+                                        if is_dev
+                                            .ui.green.label Dev
+                                            .remove_dev.ui.icon.button
+                                                i.remove.icon 
+                                        else
+                                            .ui.label Dev
+                                            .make_dev.ui.icon.button
+                                                i.plus.icon 
+                                    .ui.hidden.fitted.divider
+                                    .ui.left.labeled.button
+                                        if is_admin
+                                            .ui.green.label Admin
+                                            .remove_admin.ui.icon.button
+                                                i.remove.icon 
+                                        else
+                                            .ui.label Admin
+                                            .make_admin.ui.icon.button
+                                                i.plus.icon 
+                                    .ui.hidden.fitted.divider
+                                    .ui.left.labeled.button
+                                        if is_owner
+                                            .ui.green.label User
+                                            .remove_beta.ui.icon.button
+                                                i.remove.icon 
+                                        else
+                                            .ui.label User
+                                            .make_owner.ui.icon.button
+                                                i.plus.icon 
+                                td
+                                    .ui.disabled.button
+                                        +avatar_sprite name='secured-letter'
+                                    a.ui.button(href="/account/profile/edit/#{_id}")
+                                        +avatar_sprite name='edit'
+                                    a.ui.button(href="/profile/#{_id}")
+                                        +avatar_sprite name='chevron-right'
+                                
+            

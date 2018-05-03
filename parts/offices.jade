@@ -1,8 +1,15 @@
 template(name='offices')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .two.wide.column
+            .three.wide.column
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    +icon name='organization'
+                    | Offices
+            .three.wide.column
                 +add_button type='office' label='Office'
+        .centered.row
+            .two.wide.column
                 +location_facet type='office'
             .fourteen.wide.column
                 .ui.centered.stackable.cards
@@ -17,13 +24,13 @@ template(name='office_card')
 
         .content
             a.header(href="/view/#{_id}")
-                i.building.icon
+                +mini_sprite name='organization'
                 |#{office_name} ##{jan_office_id}
         .content
             .ui.list
                 // +list_item key='jan_office_id' icon='building'
                 with geocode
-                    +list_item key='formatted_address' label='Office Address' icon='compass'
+                    +list_item key='formatted_address' icon='compass'
                 +list_item key='phone_number' icon='phone'
                 +list_item key='email_address' icon='envelope'
                 +list_item key='level_1_user_ud' icon='user'

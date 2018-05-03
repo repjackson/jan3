@@ -11,12 +11,6 @@ FlowRouter.route '/admin/users', action: (params) ->
         sub_nav: 'admin_nav'
         main: 'user_table'
  
-FlowRouter.route '/admin/notifications', action: (params) ->
-    BlazeLayout.render 'layout',
-        nav: 'nav'
-        sub_nav: 'admin_nav'
-        main: 'user_table'
- 
 FlowRouter.route '/admin/roles', action: (params) ->
     BlazeLayout.render 'layout',
         nav: 'nav'

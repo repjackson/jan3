@@ -44,8 +44,9 @@ template(name='table')
                         +doc_sentiment
                     td #{current_level}
                     td
-                        .launch_modal.ui.icon.basic.circular.button(data-content='View Details')
-                            i.external.large.icon
+                        .launch_modal.ui.icon.circular.button(data-content='View Details')
+                            // i.external.large.icon
+                            +mini_sprite name='view-details'
                         +edit_button
                         +view_button
                         

@@ -1,15 +1,8 @@
 template(name='tasks')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .three.wide.column
-                +add_button type='task'
-            .ten.wide.column
-                h1.ui.center.aligned.header 
-                    i.tasks.icon
-                    | Tasks
-            .three.wide.column
-        .centered.row
             .four.wide.column
+                +add_button type='task'
                 +tag_facet
             .twelve.wide.column
                 .ui.cards
@@ -69,22 +62,20 @@ template(name='task_card')
             // .right.floated.meta
             //     // .ui.circular.label(title='task Number') #{task_number}
             //     | #{when}
-            .right.floated
-                if complete
-                    #turn_off.ui.basic.icon.button
-                        i.toggle.on.large.icon
-                else
-                    #turn_on.ui.basic.icon.button
-                        i.toggle.off.large.icon
-            a.header(href="/view/#{_id}") 
+            a(href="/view/#{_id}") 
                 if complete
                     i.large.green.checkmark.icon
                 |#{title}
         .content    
+            if complete
+                a#turn_off
+                    +mini_sprite name='toggle-on'
+            else
+                a#turn_on
+                    +mini_sprite name='toggle-off'
             .right.floated 
                 |#{when}
-            i.user.icon
-            | #{author.username}
+                +author_info
         .content
             .ui.accordion
                 .title 
@@ -95,7 +86,7 @@ template(name='task_card')
                         |!{html}
         .content
             each tags
-                .ui.label #{this}
+                .ui.large.basic.label #{this}
         if watson
             .content
                 +doc_sentiment
@@ -105,7 +96,7 @@ template(name='task_card')
             //     each date_array
             //         .ui.label #{this}
             | #{comment_count}
-            i.comment.icon
+            +mini_sprite name='comments'
             +edit_button
             +view_button
 

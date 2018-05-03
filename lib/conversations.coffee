@@ -1,58 +1,8 @@
-@Notifications = new Meteor.Collection 'notifications'
-
-
-FlowRouter.route '/notifications', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'notifications'
-
-if Meteor.isClient
-    Template.notifications.onCreated -> 
-        @autorun -> Meteor.subscribe('notifications')
-
-    Template.notifications.helpers
-        notifications: -> 
-            Notifications.find { }
-    
-    Template.notification.events
-        'click .edit': -> FlowRouter.go("/notification/edit/#{@_id}")
-
-    Template.notifications.events
-        # 'click #add_module': ->
-        #     id = notifications.insert({})
-        #     FlowRouter.go "/edit_module/#{id}"
-    
-    
-
-
-if Meteor.isServer
-    Notifications.allow
-        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-    
-    
-    
-    
-    Meteor.publish 'notifications', ()->
-    
-        self = @
-        match = {}
-        # selected_tags.push current_herd
-        # match.tags = $all: selected_tags
-        # if selected_tags.length > 0 then match.tags = $all: selected_tags
-
-        
-
-        Notifications.find match
-    
-    Meteor.publish 'notification', (id)->
-        Notifications.find id
-    
 
 Meteor.methods
-    # add_notification: (subject_id, predicate, object_id) ->
+    # add_conversation: (subject_id, predicate, object_id) ->
     #     new_id = Docs.insert
-    #         type: 'notification'
+    #         type: 'conversation'
     #         subject_id: subject_id
     #         predicate: predicate
     #         object_id: object_id
@@ -60,8 +10,8 @@ Meteor.methods
 
 
 if Meteor.isClient
-    Template.notifications.onCreated ->
-        @autorun => Meteor.subscribe 'notifications', Meteor.userId()
+    Template.conversations.onCreated ->
+        @autorun => Meteor.subscribe 'conversations', Meteor.userId()
         # @autorun => 
         #     Meteor.subscribe('facet', 
         #         selected_theme_tags.array()
@@ -69,7 +19,7 @@ if Meteor.isClient
         #         selected_location_tags.array()
         #         selected_intention_tags.array()
         #         selected_timestamp_tags.array()
-        #         type = 'notification'
+        #         type = 'conversation'
         #         author_id = null
         #         parent_id = null
         #         tag_limit = 20
@@ -84,94 +34,96 @@ if Meteor.isClient
     
         #         )
 
-    Template.notifications.helpers
-        notifications: -> 
+    Template.conversations.helpers
+        conversations: -> 
             Docs.find {
-                type: 'notification'
+                type: 'conversation'
                 }, 
                 sort: timestamp: -1
         
         
-        # notifications_allowed: ->
-        #     # console.log notification.permission
-        #     if notification.permission is 'denied' or 'default' 
-        #         # console.log 'notifications are denied'
+        # conversations_allowed: ->
+        #     # console.log conversation.permission
+        #     if conversation.permission is 'denied' or 'default' 
+        #         # console.log 'conversations are denied'
         #         # return false
-        #     if notification.permission is 'granted'
+        #     if conversation.permission is 'granted'
         #         # console.log 'yes granted'
         #         # return true
             
             
-    Template.notifications.events
-        'click #allow_notifications': ->
-            notification.requestPermission()
+    Template.conversations.events
+        # 'click #allow_conversations': ->
+        #     conversation.requestPermission()
         
-        'click #mark_all_read': ->
-            if confirm 'Mark all notifications read?'
-                Docs.update {},
-                    $addToSet: read_by: Meteor.userId()
+        # 'click #mark_all_read': ->
+        #     if confirm 'Mark all conversations read?'
+        #         Docs.update {},
+        #             $addToSet: read_by: Meteor.userId()
                     
-    Template.notification.helpers
-        product_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''
+    Template.conversation.helpers
+        conversation_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''
         
         subject_name: -> if @subject_id is Meteor.userId() then 'You' else @subject().name()
         object_name: -> if @object_id is Meteor.userId() then 'you' else @object().name()
 
+    Template.conversation.events
+    
 
 if Meteor.isServer
-    publishComposite 'received_notifications', ->
+    publishComposite 'received_conversations', ->
         {
             find: ->
                 Docs.find
-                    type: 'notification'
+                    type: 'conversation'
                     recipient_id: Meteor.userId()
             children: [
-                { find: (notification) ->
+                { find: (conversation) ->
                     Meteor.users.find 
-                        _id: notification.author_id
+                        _id: conversation.author_id
                     }
                 ]    
         }
         
-    publishComposite 'all_notifications', ->
+    publishComposite 'all_conversations', ->
         {
             find: ->
-                Docs.find type: 'notification'
+                Docs.find type: 'conversation'
             children: [
-                { find: (notification) ->
+                { find: (conversation) ->
                     Meteor.users.find 
-                        _id: notification.subject_id
+                        _id: conversation.subject_id
                     }
-                { find: (notification) ->
+                { find: (conversation) ->
                     Meteor.users.find 
-                        _id: notification.object_id
+                        _id: conversation.object_id
                     }
                 ]    
         }
         
         
-    publishComposite 'unread_notifications', ->
+    publishComposite 'unread_conversations', ->
         {
             find: ->
                 Docs.find
-                    type: 'notification'
+                    type: 'conversation'
                     recipient_id: Meteor.userId()
                     read: false
             children: [
-                { find: (notification) ->
+                { find: (conversation) ->
                     Meteor.users.find 
-                        _id: notification.author_id
+                        _id: conversation.author_id
                     }
                 ]    
         }
         
         
-    Meteor.publish 'notification_subjects', (selected_subjects)->
+    Meteor.publish 'conversation_subjects', (selected_subjects)->
         self = @
         match = {}
         
         if selected_tags.length > 0 then match.tags = $all: selected_tags
-        match.type = 'notification'
+        match.type = 'conversation'
 
         cloud = Docs.aggregate [
             { $match: match }
@@ -183,10 +135,10 @@ if Meteor.isServer
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud, ', cloud
-        cloud.forEach (notification_subject, i) ->
-            self.added 'notification_subjects', Random.id(),
-                name: notification_subject.name
-                count: notification_subject.count
+        cloud.forEach (conversation_subject, i) ->
+            self.added 'conversation_subjects', Random.id(),
+                name: conversation_subject.name
+                count: conversation_subject.count
                 index: i
     
         self.ready()

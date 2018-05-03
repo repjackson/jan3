@@ -4,7 +4,7 @@ template(name='mail')
             .three.wide.column
             .ten.wide.column
                 h1.ui.center.aligned.header 
-                    i.envelope.icon
+                    +icon name='secured-letter'
                     | Mail
             .three.wide.column
         .centered.row
@@ -19,20 +19,20 @@ template(name='mail')
                 .ui.segment
                     .ui.header message pane
         
-template(name='conversation')
-    .ui.segment
-        .ui.grid
-            .twelve.wide.column
-                +message
-            .four.wide.column
-                .ui.header convo
-                .ui.icon.red.button
-                    i.remove.icon
-                .ui.dividing.header Users
-                .ui.list
-                    .item user 1
-                    .item user 2
-                    .item user 3
+// template(name='conversation')
+//     .ui.segment
+//         .ui.grid
+//             .twelve.wide.column
+//                 +message
+//             .four.wide.column
+//                 .ui.header convo
+//                 .ui.icon.red.button
+//                     i.remove.icon
+//                 .ui.dividing.header Users
+//                 .ui.list
+//                     .item user 1
+//                     .item user 2
+//                     .item user 3
 
                         
                         

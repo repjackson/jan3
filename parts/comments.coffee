@@ -1,16 +1,16 @@
 if Meteor.isClient
     Template.comments.onCreated ->
-        @autorun -> Meteor.subscribe 'comments', FlowRouter.getParam('doc_id')
+        # @autorun -> Meteor.subscribe 'comments', Session.get('editing_id')
     
     Template.comments.helpers
-        comments: -> Docs.find { parent_id:FlowRouter.getParam('doc_id'), type:'comment'}
+        # comments: -> Docs.find { parent_id:Session.get('editing_id'), type:'comment'}
     
     
     Template.comments.onRendered ->
         Meteor.setTimeout ->
             $('.ui.accordion').accordion()
         , 400
-
+    
     Template.comments.events
         'keyup #new_comment': (e,t)->
             e.preventDefault()
@@ -22,17 +22,9 @@ if Meteor.isClient
                     Docs.insert
                         type:'comment'
                         text:comment
-                        parent_id:FlowRouter.getParam('doc_id')
+                        parent_id:Session.get('editing_id')
                  
         'click .delete_comment': ->
-            if confirm 'Delete Comment?'
+            if confirm 'delete comment?'
                 Docs.remove @_id
-
-if Meteor.isServer
-    Meteor.publish 'comments', (parent_id)->
-        Docs.find
-            type:'comment'
-            parent_id:parent_id
-
-                        
-                        
+                # console.log @_id

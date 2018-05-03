@@ -86,7 +86,7 @@ Template.reference_customer.events
 
 
 Template.set_view_mode.helpers
-    view_mode_button_class: -> if Session.equals('view_mode', @view) then 'primary' else 'basic'
+    view_mode_button_class: -> if Session.equals('view_mode', @view) then 'active' else ''
 
 Template.set_view_mode.events
     'click #set_view_mode': -> Session.set 'view_mode', @view

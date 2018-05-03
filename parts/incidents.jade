@@ -2,11 +2,19 @@ template(name='incidents')
     .ui.stackable.padded.centered.grid
         .centered.row
             .three.wide.column
-                .ui.basic.center.aligned.segment
-                    +add_button type='incident' label='Incident'
                 +set_view_mode view='cards' icon='medium-icons' label='Cards View'
                 +set_view_mode view='list' icon='list' label='List View'
                 +set_view_mode view='table' icon='data-sheet' label='Table View'
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    +icon name='urgent-property'
+                    | Incidents
+            .three.wide.column
+                +add_button type='incident' label='Incident'
+
+        .centered.row
+            .three.wide.column
+                // .ui.basic.center.aligned.segment
                 .ui.hidden.divider
                 +timestamp_facet
                 // +location_facet
@@ -126,7 +134,7 @@ template(name='incident_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
-                #delete.ui.basic.circular.icon.big.button
+                #delete.ui.circular.icon.big.button
                     i.red.trash.icon
             .ten.wide.column
                 h1.ui.center.aligned.header Edit Incident #{incident_number}

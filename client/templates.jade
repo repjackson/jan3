@@ -42,10 +42,10 @@ template(name='not_found')
 
 
 template(name='sidebar')
-    .ui.left.inline.vertical.sidebar.inverted.fixed.large.menu
+    .ui.left.inline.vertical.sidebar.inverted.blue.large.menu
         a.toggle_sidebar.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
             i.home.large.icon
-            |JanPro
+            |Jan-Pro
         a.toggle_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
             i.large.users.icon
             | Users
@@ -55,6 +55,9 @@ template(name='sidebar')
         a.toggle_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
             i.large.building.icon
             | Offices
+        a.toggle_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
+            i.large.building.icon
+            | Schedule
         a.toggle_sidebar.item(href='/services' class="{{isActivePath '/services'}}")
             i.large.shipping.fast.icon
             | Services

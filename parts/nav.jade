@@ -17,7 +17,7 @@ template(name='nav')
         //             // | Services
         a.toggle_sidebar.icon.item 
             i.bars.large.icon
-        a.header.item(href='/' class="{{isActivePath '/'}}" data-content='Home')
+        a.header.item(href='/' class="{{isActivePath '/'}}" )
             // i.large.home.icon
             img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             // | Home
@@ -34,9 +34,19 @@ template(name='nav')
             // i.large.building.icon
             // | &nbsp; Offices
         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-content='Services')
-            +mini_sprite name='duster'
+            +mini_sprite name='housekeeping'
+        // a.mobile.hidden.disabled.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-content='Schedule')
+        // .mobile.hidden.item(data-content='Schedule')
+        //     +dots name='planner'
+        // .mobile.hidden.item(href='/consumerables' class="{{isActivePath '/consumerables'}}" data-content='Consumerables')
+        // .mobile.hidden.item(data-content='Consumerables')
+        //     +dots name='toilet-paper'
             // i.large.shipping.fast.icon
             // | &nbsp; Services
+        .mobile.hidden.item
+            .ui.icon.transparent.inverted.input
+                input(type='text' placeholder='Search...')
+                i.search.link.icon
         .right.menu
             a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}" data-content='Admin')
                 // i.shield.alternate.icon
@@ -44,9 +54,13 @@ template(name='nav')
                 // | Admin
             // .icon.item
             //     i.bell.icon
-            a.icon.item(href='/mail')
+            a.icon.mobile.hidden.item(href='/chat')
+                +mini_sprite name='chat'
+            // a.icon.mobile.hidden.item(href='/cart')
+            //     +mini_sprite name='shopping-cart'
+            a.icon.mobile.hidden.item(href='/mail')
                 +mini_sprite name='secured-letter'
-            .ui.simple.dropdown.icon.item
+            a.ui.simple.dropdown.icon.mobile.hidden.item(href='/notifications')
                 +mini_sprite name='appointment-reminders'
                 .menu
                     .item No Notifications

@@ -1,0 +1,40 @@
+template(name='admin')
+    h1.ui.center.aligned.header 
+        i.shield.icon
+        |Admin
+    
+template(name='admin_nav')    
+    .ui.top.attached.four.item.big.compact.menu
+        a.item(href='/admin/users') 
+            +mini_sprite name='group-foreground-selected'
+            |&nbsp;
+            | Users
+        a.item(href='/admin/tasks')
+            +mini_sprite name='to-do'
+            |&nbsp;
+            | Tasks
+        a.item(href='/admin/roles')
+            +mini_sprite name='theatre-mask'
+            |&nbsp;
+            | Roles
+        // a.item(href='/admin/roles')
+        //     +mini_sprite name='administrative-tools'
+        //     |&nbsp;
+        //     | Notification Settings
+        a.item(href='/admin/rules')
+            +mini_sprite name='serial-tasks'
+            |&nbsp;
+            | Rules
+    
+    
+        
+template(name='admin_rules')
+    .ui.center.aligned.header
+        +tiny_sprite name='serial-tasks'
+        | Rules
+    .ui.header Action pipelines/SLA managment
+    .ui.header eg, When incident of priority 'high' is created email 'local manager'
+        
+        
+        
+        

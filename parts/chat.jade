@@ -1,0 +1,50 @@
+template(name='chat')
+    .ui.stackable.centered.padded.grid
+        .centered.row
+            .three.wide.column
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    +icon name='chat'
+                    | Chat
+            .three.wide.column
+        .centered.row
+            .twelve.wide.column
+                .ui.vertical.segments
+                    each conversations
+                        +conversation
+                    each chat_messages
+                        +chat_message
+                        
+                .ui.fluid.icon.input
+                    i.plus.icon
+                    input(type='text')
+                        
+template(name='chat_message')
+    .ui.segment
+        .ui.grid
+            .twelve.wide.column
+                +message
+            .four.wide.column
+                .ui.header convo
+                .ui.icon.red.button
+                    i.remove.icon
+
+                        
+                        
+// template(name='message')
+//     .ui.comment
+//         .disabled.avatar
+//             i.user.icon
+//         .content
+//             a.disabled.author #{author.username}
+//             .metadata
+//                 span.date #{when}
+//             .text
+//                 p #{text}
+//             .actions
+//                 // a.reply Reply
+//                 a.delete_comment Delete
+    
+
+                
+
