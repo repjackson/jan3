@@ -1,15 +1,20 @@
 template(name='services')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .eight.wide.column
+            .three.wide.column
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    +icon name='duster'
+                    | Services
+            .three.wide.column
                 +add_button type='service' label='Service'
-                // .ui.dividing.header Filter
-                // .ui.dividing.header My Scheduled Services
+        .centered.row
+            .four.wide.column
+                .ui.dividing.header Filter
+            .twelve.wide.column
                 .ui.centered.stackable.cards
                     each services
                         +service_card
-            .eight.wide.column
-                +fullcalendar
 
 template(name='service_card')
     .ui.card

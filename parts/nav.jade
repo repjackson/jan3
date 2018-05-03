@@ -34,10 +34,10 @@ template(name='nav')
             // i.large.building.icon
             // | &nbsp; Offices
         a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-content='Services')
-            +mini_sprite name='housekeeping'
+            +mini_sprite name='duster'
         // a.mobile.hidden.disabled.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-content='Schedule')
-        // .mobile.hidden.item(data-content='Schedule')
-        //     +dots name='planner'
+        a.mobile.hidden.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-content='Schedule')
+            +mini_sprite name='planner'
         // .mobile.hidden.item(href='/consumerables' class="{{isActivePath '/consumerables'}}" data-content='Consumerables')
         // .mobile.hidden.item(data-content='Consumerables')
         //     +dots name='toilet-paper'

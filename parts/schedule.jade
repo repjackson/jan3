@@ -1,0 +1,94 @@
+template(name='schedule')
+    .ui.stackable.centered.padded.grid
+        .centered.row
+            .eight.wide.column
+                +add_button type='event' label='event'
+                .ui.dividing.header Filter
+                .ui.dividing.header My Scheduled schedule
+                .ui.centered.stackable.cards
+                    each schedule
+                        +event_card
+            .eight.wide.column
+                +fullcalendar
+
+template(name='event_card')
+    .ui.card
+        .content
+            a.header(href="/view/#{_id}") event ##{jan_event_id}
+        .content
+            .ui.list
+                +list_item key='jan_event_id' label='Jan Pro event ID' icon='hashtag'
+                +list_item key='jan_pro_office_id' label='Jan Pro Office ID' icon='building'
+                +list_item key='customer_id' label='Customer ID' icon='user'
+                +list_item key='event_type' label='event Type' icon='clone'
+                +list_item key='event_date' label='event Date' icon='calendar'
+                +list_item key='event_status' label='event Status' icon='checkmark'
+                +list_item key='event_fee' label='event Fee' icon='dollar'
+        .content
+            +bookmark_button
+            +view_button
+        
+        
+        
+template(name='event_edit')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +save_button
+            .ten.wide.column
+                h1.ui.center.aligned.header Edit event #{jan_event_id}
+            .three.wide.column
+                #delete.ui.fluid.button
+                    i.trash.icon
+                    | Delete
+        .centered.row
+            .eight.wide.column
+                .ui.form
+                    +edit_text_field key='jan_event_id' label='Jan Pro event ID' icon='hashtag'
+                    +edit_text_field key='jan_pro_office_id' label='Jan Pro Office ID' icon='building'
+                    +edit_text_field key='customer_id' label='Customer ID' icon='user'
+            .eight.wide.column
+                .ui.form
+                    +edit_text_field key='event_type' label='event Type' icon='clone'
+                    +edit_date_field key='event_date' label='event Date' icon='calendar'
+                    +edit_text_field key='event_status' label='event Status' icon='checkmark'
+                    +edit_number_field key='event_fee' label='event Fee' icon='dollar'
+        
+        
+template(name='event_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +link_button link='/schedule' icon='left chevron' label='schedule'
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    i.truck.icon
+                    | My Schedule #{jan_event_id}
+            .three.wide.column
+                +edit_button
+        .row
+            .five.wide.column
+                +associated_users
+                +comments
+            .six.wide.column
+                +associated_incidents
+                +office_map
+            .five.wide.column
+                .ui.large.relaxed.list
+                    +list_item key='jan_event_id' label='Jan Pro event ID' icon='hashtag'
+                    +list_item key='jan_pro_office_id' label='Jan Pro Office ID' icon='building'
+                    +list_item key='customer_id' label='Customer ID' icon='user'
+                    +list_item key='event_type' label='event Type' icon='clone'
+                    +list_item key='event_date' label='event Date' icon='calendar'
+                    +list_item key='event_status' label='event Status' icon='checkmark'
+                    +list_item key='event_fee' label='event Fee' icon='dollar'
+                +event_transactions
+                +requst_event_button
+                
+                
+template(name='event_transactions')
+    .ui.segment 
+        .ui.header Transaction History
+        
+template(name='requst_event_button')
+    .ui.button Request event

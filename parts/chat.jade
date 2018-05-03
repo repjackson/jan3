@@ -9,41 +9,27 @@ template(name='chat')
             .three.wide.column
         .centered.row
             .twelve.wide.column
-                .ui.vertical.segments
-                    each conversations
-                        +conversation
+                .ui.comments
                     each chat_messages
                         +chat_message
-                        
-                .ui.fluid.icon.input
-                    i.plus.icon
-                    input(type='text')
+                .ui.fluid.icon.big.input
+                    i.plus.green.icon
+                    input#new_chat_message(type='text')
                         
 template(name='chat_message')
-    .ui.segment
-        .ui.grid
-            .twelve.wide.column
-                +message
-            .four.wide.column
-                .ui.header convo
-                .ui.icon.red.button
-                    i.remove.icon
-
-                        
-                        
-// template(name='message')
-//     .ui.comment
-//         .disabled.avatar
-//             i.user.icon
-//         .content
-//             a.disabled.author #{author.username}
-//             .metadata
-//                 span.date #{when}
-//             .text
-//                 p #{text}
-//             .actions
-//                 // a.reply Reply
-//                 a.delete_comment Delete
+    .ui.comment
+        .avatar
+            img.ui.avatar.spaced.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .content
+            a.author #{author.username}
+            .metadata
+                span.date #{when}
+            .text
+                p.large130 #{text}
+            .actions
+                // a.reply Reply
+                a.delete_comment
+                    i.trash.icon
     
 
                 
