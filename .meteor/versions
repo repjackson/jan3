@@ -19,6 +19,7 @@ caching-compiler@1.1.11
 caching-html-compiler@1.1.2
 callback-hook@1.1.0
 check@1.3.1
+clarencel:highcharts-drilldown@0.3.3
 coffeescript@1.0.17
 constellation:autopublish@0.4.7
 constellation:console@1.4.7
@@ -73,6 +74,8 @@ livedata@1.0.18
 localstorage@1.2.0
 logging@1.1.20
 maazalik:highcharts@0.4.0
+maazalik:highcharts-3d@0.4.0
+maazalik:highcharts-gauge@0.4.0
 manuel:reactivearray@1.0.6
 matb33:collection-hooks@0.8.4
 meteor@1.8.6
