@@ -15,31 +15,31 @@ template(name='nav')
         //         a.icon.item(href='/services' class="{{isActivePath '/services'}}")
         //             i.large.shipping.fast.icon
         //             // | Services
-        a.toggle_sidebar.icon.item 
+        a.toggle_left_sidebar.icon.item 
             i.bars.large.icon
         a.header.item(href='/' class="{{isActivePath '/'}}" )
             // i.large.home.icon
             img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             // | Home
-        a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}" data-content='Users')
+        a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}" data-position="top center" data-content='Users')
             // i.large.users.icon
             +mini_sprite name='user-group-man-woman'
             // | &nbsp; Users
-        a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-content='Incidents')
+        a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="top center" data-content='Incidents')
             +mini_sprite name='urgent-property'
             // i.large.clipboard.icon
             // | &nbsp; Incidents
-        a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-content='Offices')
+        a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="top center" data-content='Offices')
             +mini_sprite name='organization'
             // i.large.building.icon
             // | &nbsp; Offices
-        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-content='Services')
+        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-position="top center" data-content='Services')
             +mini_sprite name='duster'
-        // a.mobile.hidden.disabled.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-content='Schedule')
-        a.mobile.hidden.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-content='Schedule')
+        // a.mobile.hidden.disabled.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
+        a.mobile.hidden.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
             +mini_sprite name='planner'
-        // .mobile.hidden.item(href='/consumerables' class="{{isActivePath '/consumerables'}}" data-content='Consumerables')
-        // .mobile.hidden.item(data-content='Consumerables')
+        // .mobile.hidden.item(href='/consumerables' class="{{isActivePath '/consumerables'}}" data-position="top center" data-content='Consumerables')
+        // .mobile.hidden.item(data-position="top center" data-content='Consumerables')
         //     +dots name='toilet-paper'
             // i.large.shipping.fast.icon
             // | &nbsp; Services
@@ -48,7 +48,7 @@ template(name='nav')
                 input(type='text' placeholder='Search...')
                 i.search.link.icon
         .right.menu
-            a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}" data-content='Admin')
+            a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="top center" data-content='Admin')
                 // i.shield.alternate.icon
                 +mini_sprite name='user-shield'
                 // | Admin
@@ -65,32 +65,17 @@ template(name='nav')
                 .menu
                     .item No Notifications
             if currentUser
-                a.ui.dropdown.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
+                a.toggle_right_sidebar.item
                     if currentUser.profile.image_id
                         img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
-                    |#{currentUser.username}
-                    // if currentUser.name
-                    //     .mobile.hidden #{currentUser.name}
-                    // else
+                    if currentUser.name
+                        .mobile.hidden #{currentUser.name}
+                    else
+                        |#{currentUser.username}
                     //     | Profile
-                    .ui.inverted.menu
-                        .disabled.item
-                            i.bell.icon
-                            | Notifications
-                        .disabled.item
-                            i.envelope.icon
-                            | Mail
-                        a.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
-                            i.user.icon
-                            | Profile
-                        a.item(href='/account/settings' class="{{isActivePath '/account/settings'}}") 
-                            i.cog.icon
-                            | Settings
-                        .divider
-                        a#logout.ui.item(href='#') 
-                            | Sign Out
+                    // (href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                             
             else
                 a.ui.item(href='/sign-in') 

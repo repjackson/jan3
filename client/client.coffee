@@ -48,17 +48,30 @@ Template.registerHelper 'key_value', () ->
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment
 
 
-Template.sidebar.onRendered ->
+Template.left_sidebar.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->
-                $('.context.example .ui.sidebar')
+                $('.context.example .ui.left.sidebar')
                     .sidebar({
                         context: $('.context.example .bottom.segment')
                         dimPage: false
-                        transition:  'push'
+                        transition:  'scale'
                     })
-                    .sidebar('attach events', '.context.example .menu .toggle_sidebar.item')
-            , 500
+                    .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')
+            , 750
+            
+Template.right_sidebar.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.context.example .ui.right.sidebar')
+                    .sidebar({
+                        context: $('.context.example .bottom.segment')
+                        dimPage: false
+                        transition:  'overlay'
+                    })
+                    .sidebar('attach events', '.context.example .menu .toggle_right_sidebar.item')
+            , 1000
             
             

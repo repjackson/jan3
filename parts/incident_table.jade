@@ -23,6 +23,8 @@ template(name='table')
                     .filter_column #
                 th
                     .filter_column Image
+                // th
+                //     .filter_column Tags
                 th
                     .filter_column Date
                 th
@@ -39,6 +41,9 @@ template(name='table')
                     td 
                         a(href="/view/#{_id}")
                             img.ui.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    // td 
+                    //     each watson.keywords
+                    //         .ui.basic.label #{text}
                     td #{incident_date}
                     td 
                         +doc_sentiment

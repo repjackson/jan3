@@ -24,7 +24,8 @@ template(name='layout')
         //         i.sidebar.icon
         //         |     Menu
         .ui.bottom.attached.basic.segment.pushable
-            +sidebar
+            // +top_sidebar
+            +left_sidebar
             .pusher
                 #main_area
                     .ui.basic.fluid.segment
@@ -32,6 +33,8 @@ template(name='layout')
                         +Template.dynamic template=sub_nav
                         +Template.dynamic template=sub_sub_nav
                         +Template.dynamic template=main
+            +right_sidebar
+            // +bottom_sidebar
         +footer
         // +jsonView json=doc
 
@@ -43,24 +46,24 @@ template(name='not_found')
             |Not Found
 
 
-template(name='sidebar')
-    .ui.left.inline.vertical.sidebar.inverted.blue.large.menu
-        a.toggle_sidebar.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
+template(name='left_sidebar')
+    .ui.left.inline.vertical.thin.sidebar.inverted.blue.menu
+        a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
             i.home.large.icon
             |Jan-Pro
-        a.toggle_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
+        a.toggle_left_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
             i.large.users.icon
             | Users
-        a.toggle_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}")
+        a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}")
             i.large.clipboard.icon
             | Incidents
-        a.toggle_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
+        a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
             i.large.building.icon
             | Offices
-        a.toggle_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
+        a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
             i.large.building.icon
             | Schedule
-        a.toggle_sidebar.item(href='/services' class="{{isActivePath '/services'}}")
+        a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}")
             i.large.shipping.fast.icon
             | Services
         .ui.divider
@@ -96,3 +99,56 @@ template(name='sidebar')
                 | Sign In
 
 
+template(name='right_sidebar')
+    .ui.right.inline.vertical.thin.sidebar.inverted.blue.menu
+        a.toggle_right_sidebar.toggle_sidebar.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
+            i.home.large.icon
+            |Profile
+        a.toggle_right_sidebar.item(href='/notifications')
+            i.bell.icon
+            | Notifications
+        a.toggle_right_sidebar.item(href='/mail')
+            i.envelope.icon
+            | Mail
+        a.toggle_right_sidebar.item(href='/mail')
+            i.envelope.icon
+            | Bookmarks
+        a.toggle_right_sidebar.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
+            i.user.icon
+            | Profile
+        a.toggle_right_sidebar.item(href='/account/settings' class="{{isActivePath '/account/settings'}}") 
+            i.cog.icon
+            | Settings
+        .divider
+        a#logout.ui.item(href='#') 
+            | Sign Out
+
+template(name='top_sidebar')
+    .ui.top.horizontal.sidebar.inverted.blue.large.menu
+        a.toggle_sidebar.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
+            i.home.large.icon
+            |Top
+        a.toggle_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
+            i.large.users.icon
+            | Users
+        a.toggle_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}")
+            i.large.clipboard.icon
+            | Incidents
+        a.toggle_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
+            i.large.building.icon
+            | Offices
+
+template(name='bottom_sidebar')
+    .ui.bottom.horizontal.sidebar.inverted.blue.large.menu
+        a.toggle_sidebar.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
+            i.home.large.icon
+            |Bottom
+        a.toggle_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
+            i.large.users.icon
+            | Users
+        a.toggle_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}")
+            i.large.clipboard.icon
+            | Incidents
+        a.toggle_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
+            i.large.building.icon
+            | Offices

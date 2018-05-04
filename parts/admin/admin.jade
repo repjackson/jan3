@@ -5,23 +5,23 @@ template(name='admin')
     
 template(name='admin_nav')    
     .ui.top.attached.four.item.big.compact.menu
-        a.item(href='/admin/users') 
+        a.item(href='/admin/users' class="{{isActivePath '/admin/users'}}")
             +mini_sprite name='group-foreground-selected'
             |&nbsp;
             | Users
-        a.item(href='/admin/tasks')
+        a.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}")
             +mini_sprite name='to-do'
             |&nbsp;
             | Tasks
-        a.item(href='/admin/roles')
+        a.item(href='/admin/roles' class="{{isActivePath '/admin/roles'}}")
             +mini_sprite name='theatre-mask'
             |&nbsp;
             | Roles
-        // a.item(href='/admin/roles')
+        // a.item(href='/admin/roles /admin/roles' class="{{isActivePath '/admin/roles'}}")
         //     +mini_sprite name='administrative-tools'
         //     |&nbsp;
         //     | Notification Settings
-        a.item(href='/admin/rules')
+        a.item(href='/admin/rules' class="{{isActivePath '/admin/rules'}}")
             +mini_sprite name='serial-tasks'
             |&nbsp;
             | Rules

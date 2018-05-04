@@ -18,7 +18,7 @@ template(name='edit_profile')
                             label upload image
                             input(type='file' name='upload_picture' accept='image/*')
                 .ui.center.aligned.basic.segment
-                    #save_profile.ui.fluid.big.basic.button
+                    #save_profile.ui.button
                         i.checkmark.green.icon
                         |Save
             .eight.wide.column    
@@ -55,7 +55,7 @@ template(name='edit_profile')
                     .field
                         label Tags
                         each tags
-                            .ui.basic.button.doc_tag(class=doc_tag_class)
+                            .ui.button.doc_tag(class=doc_tag_class)
                                 i.minus.icon
                                 |#{this}
                         .ui.left.icon.four.wide.input

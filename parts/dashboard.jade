@@ -1,5 +1,5 @@
 template(name='dashboard')
-    .ui.padded.stackable.divided.grid
+    .ui.padded.stackable.grid
         // +dashboard_header
         .centered.row
             .sixteen.wide.center.aligned.column
@@ -10,7 +10,7 @@ template(name='dashboard')
         .row
             // .two.wide.column
             //     .ui.center.aligned.fluid.segment
-            //         h3.ui.header Welcome
+            //         h3.ui.center.aligned.header Welcome
             //         .ui.button Sign In
             //         .ui.button Register
             .sixteen.wide.column
@@ -33,17 +33,17 @@ template(name='dashboard')
         .row
             .five.wide.column
                 .ui.disabled.segment
-                    .ui.header
+                    .ui.center.aligned.header
                         i.building.icon
                         | Home Office Permissions
             .five.wide.column
                 .ui.disabled.segment
-                    .ui.header 
+                    .ui.center.aligned.header 
                         i.dollar.icon
                         |Billing and Payment History
             .five.wide.column
                 .ui.disabled.segment
-                    .ui.header
+                    .ui.center.aligned.header
                         i.clock.icon
                         |Scheduled Services
 
@@ -72,7 +72,9 @@ template(name='my_cleaning_schedule')
                 +fullcalendar cal_options
             
 template(name='my_office_contacts')
-    .ui.center.aligned.header My Office Contacts
+    .ui.center.aligned.header 
+        +tiny_sprite name='contacts'
+        |My Office Contacts
     table.ui.sortable.striped.table
         tbody
             tr
@@ -101,8 +103,8 @@ template(name='my_office_contacts')
         
         
 template(name='incident_widget')
-    .ui.dividing.header
-        i.clipboard.icon
+    .ui.center.aligned.header
+        +icon name='urgent-property'
         |Incidents
     .ui.divided.link.items    
         each incidents
@@ -128,8 +130,8 @@ template(name='incident_widget')
         
         
 template(name='general_account_info')
-    .ui.dividing.header
-        i.info.icon
+    .ui.center.aligned.header
+        +icon name='about'
         |Account
     with person
         +person_card
@@ -137,8 +139,8 @@ template(name='general_account_info')
         
         
 template(name='local_office_information')
-    .ui.dividing.header
-        i.building.icon
+    .ui.center.aligned.header
+        +icon name='organization'
         | Office
     with office
         +office_card

@@ -1,0 +1,69 @@
+template(name='edit_chart')
+    with chart
+        .ui.container
+            .ui.header Edit chart
+            .ui.form
+                +chart_code
+                .field
+                    label chart Numbers
+                    .ui.divided.list
+                        each chart_numbers
+                            .item
+                                | #{this}
+                                i.remove_number.red.link.remove.icon
+                    .ui.action.input
+                        input#new_chart_number(type='number' min='0')
+                        #add_chart_number.ui.button Add chart Number
+                +edit_tags
+                .field
+                    label chart Street: #{chart_street}
+                    // input#chart_street(type='text' value=chart_street)
+                    select#select_chart_street
+                        option Change Street
+                        option(value='Shadow Creek Dr') Shadow Creek Dr
+                        option(value='Sundown Ln') Sundown Ln
+                        option(value='Springdale Ln') Springdale Ln
+                a.ui.green.big.button(href="/chart/view/#{_id}") Save chart
+                #delete_chart.ui.red.icon.button
+                    i.trash.icon            
+            
+template(name='charts')
+    .ui.container
+        h1.ui.center.aligned.grey.header charts
+        +cloud filter='chart'
+        +highchartsHelper(chartId="test" chartWidth="100%" charHeight="100%" chartObject=test_chart)
+
+            
+            
+template(name='view_chart')
+    a.ui.basic.button(href='/charts')
+        i.left.arrow.icon
+        |charts
+    with chart
+        .ui.container
+            h1.ui.center.aligned.grey.header chart #{chart_code} Page
+            .ui.stackable.grid
+                .ten.wide.column
+                    .ui.dividing.header Notices
+                    .ui.dividing.header Incidents
+                    .ui.dividing.header Maintenance Requests
+                    .ui.dividing.header Residents
+            
+            
+                .six.wide.column
+                    .ui.form
+                        .inline.field
+                            label Code
+                            .ui.basic.large.label #{chart_code}
+                        .inline.field
+                            label Numbers
+                                each chart_numbers
+                                    .ui.basic.large.label #{this}
+                        .inline.field
+                            label Street
+                            .ui.basic.large.label #{chart_street}
+                    .ui.dividing.header
+                        i.configure.icon
+                        |Admin
+                    a.ui.basic.button(href="/chart/edit/#{_id}") Edit chart
+                
