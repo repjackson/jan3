@@ -29,8 +29,10 @@ template(name='edit_chart')
             
 template(name='charts')
     .ui.container
-        h1.ui.center.aligned.grey.header charts
-        +cloud filter='chart'
+        h1.ui.center.aligned.grey.header 
+            +icon name='combo-chart'
+            |Charts
+        // +cloud filter='chart'
         +highchartsHelper(chartId="test" chartWidth="100%" charHeight="100%" chartObject=test_chart)
 
             

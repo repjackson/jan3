@@ -25,6 +25,10 @@ template(name='nav')
             // i.large.users.icon
             +mini_sprite name='user-group-man-woman'
             // | &nbsp; Users
+        a.mobile.hidden.item(href='/charts' class="{{isActivePath '/charts'}}" data-position="top center" data-content='Charts')
+            // i.large.users.icon
+            +mini_sprite name='combo-chart'
+            // | &nbsp; Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="top center" data-content='Incidents')
             +mini_sprite name='urgent-property'
             // i.large.clipboard.icon
