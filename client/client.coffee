@@ -56,7 +56,7 @@ Template.left_sidebar.onRendered ->
                     .sidebar({
                         context: $('.context.example .bottom.segment')
                         dimPage: false
-                        transition:  'scale'
+                        transition:  'overlay'
                     })
                     .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')
             , 750
@@ -71,7 +71,8 @@ Template.right_sidebar.onRendered ->
                         dimPage: false
                         transition:  'overlay'
                     })
-                    .sidebar('attach events', '.context.example .menu .toggle_right_sidebar.item')
-            , 1000
+                    .sidebar('attach events', '.toggle_right_sidebar.item')
+                    # .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')
+            , 1500
             
             

@@ -47,24 +47,29 @@ template(name='not_found')
 
 
 template(name='left_sidebar')
-    .ui.left.inline.vertical.thin.sidebar.inverted.blue.menu
-        a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
-            i.home.large.icon
-            |Jan-Pro
+    .ui.left.vertical.thin.sidebar.inverted.blue.menu
+        // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
+        //     i.home.large.icon
+        //     |Jan-Pro
         a.toggle_left_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
-            i.large.users.icon
+            i.large.icon
+                +mini_sprite name='user-group-man-woman'
             | Users
         a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}")
-            i.large.clipboard.icon
+            i.large.icon
+                +mini_sprite name='urgent-property'
             | Incidents
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
-            i.large.building.icon
+            i.large.icon
+                +mini_sprite name='organization'
             | Offices
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
-            i.large.building.icon
+            i.large.icon
+                +mini_sprite name='calendar'
             | Schedule
         a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}")
-            i.large.shipping.fast.icon
+            i.large.icon
+                +mini_sprite name='duster'
             | Services
         .ui.divider
         if currentUser
@@ -79,7 +84,8 @@ template(name='left_sidebar')
             //     i.mail.icon
             // if isInRole 'admin'
             a.icon.toggle_sidebar.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}")
-                i.configure.large.icon
+                i.large.icon
+                    +mini_sprite name='user-shield'
                 |Admin
             a.toggle_sidebar.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                 if currentUser.profile.image_id
@@ -89,66 +95,49 @@ template(name='left_sidebar')
                 if currentUser.name
                     | #{currentUser.name}
                 else
-                    | Profile
+                    | #{currentUser.username}
             a#logout.ui.toggle_sidebar.item(href='#') 
-                i.sign.out.large.icon
+                i.large.icon
+                    +mini_sprite name='edit'
                 | Sign Out
         else
             a.ui.toggle_sidebar.item(href='/sign-in') 
-                i.sign.in.large.icon
+                i.large.icon
+                    +mini_sprite name='enter'
                 | Sign In
 
 
 template(name='right_sidebar')
     .ui.right.inline.vertical.thin.sidebar.inverted.blue.menu
-        a.toggle_right_sidebar.toggle_sidebar.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
-            i.home.large.icon
-            |Profile
-        a.toggle_right_sidebar.item(href='/notifications')
-            i.bell.icon
-            | Notifications
-        a.toggle_right_sidebar.item(href='/mail')
-            i.envelope.icon
-            | Mail
-        a.toggle_right_sidebar.item(href='/mail')
-            i.envelope.icon
-            | Bookmarks
-        a.toggle_right_sidebar.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
-            i.user.icon
+        a.toggle_right_sidebar.header.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
+            img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             | Profile
+        a.toggle_right_sidebar.item(href='/notifications')
+            | Alerts
+            i.large.icon
+                +mini_sprite name='appointment-reminders'
+        a.toggle_right_sidebar.item(href='/mail')
+            i.large.icon
+                +mini_sprite name='secured-letter'
+            | Mail
+        a.toggle_right_sidebar.item(href='/chat')
+            i.large.icon
+                +mini_sprite name='chat'
+            | Chat
+        a.toggle_right_sidebar.item(href='/bookmarks')
+            i.large.icon
+                +mini_sprite name='bookmark'
+            | Bookmarks
         a.toggle_right_sidebar.item(href='/account/settings' class="{{isActivePath '/account/settings'}}") 
-            i.cog.icon
+            i.large.icon
+                +mini_sprite name='settings'
             | Settings
         .divider
+        a.toggle_right_sidebar.item(href='/admin' class="{{isActivePath '/admin'}}")
+            i.large.icon
+                +mini_sprite name='user-shield'
+            | Admin
         a#logout.ui.item(href='#') 
+            i.large.icon
+                +mini_sprite name='exit'
             | Sign Out
-
-template(name='top_sidebar')
-    .ui.top.horizontal.sidebar.inverted.blue.large.menu
-        a.toggle_sidebar.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
-            i.home.large.icon
-            |Top
-        a.toggle_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
-            i.large.users.icon
-            | Users
-        a.toggle_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}")
-            i.large.clipboard.icon
-            | Incidents
-        a.toggle_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
-            i.large.building.icon
-            | Offices
-
-template(name='bottom_sidebar')
-    .ui.bottom.horizontal.sidebar.inverted.blue.large.menu
-        a.toggle_sidebar.header.toggle_sidebar.item(href='/' class="{{isActivePath '/'}}") 
-            i.home.large.icon
-            |Bottom
-        a.toggle_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
-            i.large.users.icon
-            | Users
-        a.toggle_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}")
-            i.large.clipboard.icon
-            | Incidents
-        a.toggle_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
-            i.large.building.icon
-            | Offices

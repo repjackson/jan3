@@ -1,12 +1,14 @@
 template(name='people') 
-    h1.ui.center.aligned.grey.header 
-        i.blue.users.icon
-        |Users
     .ui.padded.stackable.grid
         .row
-            .two.wide.column
+            .three.wide.column
                 +add_button type='person' label='Person'
-                // .ui.dividing.header Filter
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header 
+                    +icon name='user-group-man-woman'
+                    |Users
+            .three.wide.column
+        .row
             .fourteen.wide.column
                 .ui.centered.cards
                     each people

@@ -21,11 +21,11 @@ template(name='nav')
             // i.large.home.icon
             img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             // | Home
-        a.mobile.hidden.item(href='/people' class="{{isActivePath '/people'}}" data-position="top center" data-content='Users')
+        a.computer.only.item(href='/people' class="{{isActivePath '/people'}}" data-position="top center" data-content='Users')
             // i.large.users.icon
             +mini_sprite name='user-group-man-woman'
             // | &nbsp; Users
-        a.mobile.hidden.item(href='/charts' class="{{isActivePath '/charts'}}" data-position="top center" data-content='Charts')
+        a.computer.only.item(href='/charts' class="{{isActivePath '/charts'}}" data-position="top center" data-content='Charts')
             // i.large.users.icon
             +mini_sprite name='combo-chart'
             // | &nbsp; Users
@@ -33,14 +33,14 @@ template(name='nav')
             +mini_sprite name='urgent-property'
             // i.large.clipboard.icon
             // | &nbsp; Incidents
-        a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="top center" data-content='Offices')
+        a.computer.only.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="top center" data-content='Offices')
             +mini_sprite name='organization'
             // i.large.building.icon
             // | &nbsp; Offices
-        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-position="top center" data-content='Services')
+        a.computer.only.item(href='/services' class="{{isActivePath '/services'}}" data-position="top center" data-content='Services')
             +mini_sprite name='duster'
         // a.mobile.hidden.disabled.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
-        a.mobile.hidden.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
+        a.computer.only.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
             +mini_sprite name='planner'
         // .mobile.hidden.item(href='/consumerables' class="{{isActivePath '/consumerables'}}" data-position="top center" data-content='Consumerables')
         // .mobile.hidden.item(data-position="top center" data-content='Consumerables')
@@ -62,9 +62,9 @@ template(name='nav')
                 +mini_sprite name='chat'
             // a.icon.mobile.hidden.item(href='/cart')
             //     +mini_sprite name='shopping-cart'
-            a.icon.mobile.hidden.item(href='/mail')
+            a.icon.computer.only.item(href='/mail')
                 +mini_sprite name='secured-letter'
-            a.ui.simple.dropdown.icon.mobile.hidden.item(href='/notifications')
+            a.ui.simple.dropdown.icon.computer.only.item(href='/notifications')
                 +mini_sprite name='appointment-reminders'
                 .menu
                     .item No Notifications
@@ -75,9 +75,9 @@ template(name='nav')
                     else
                         i.user.icon
                     if currentUser.name
-                        .mobile.hidden #{currentUser.name}
+                        .computer.only #{currentUser.name}
                     else
-                        |#{currentUser.username}
+                        .computer.only #{currentUser.username}
                     //     | Profile
                     // (href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                             
