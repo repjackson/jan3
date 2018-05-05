@@ -1,10 +1,10 @@
 template(name='tasks')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .four.wide.column
+            .eight.wide.column
                 +add_button type='task'
                 +tag_facet
-            .twelve.wide.column
+            .eight.wide.column
                 .ui.cards
                     each tasks
                         +task_card

@@ -374,3 +374,172 @@ if Meteor.isClient
                     ]
                 } ]
             }
+        
+        column: ->
+            {
+                chart: type: 'column'
+                title: text: 'Monthly Average Rainfall'
+                subtitle: text: 'Source: WorldClimate.com'
+                credits: enabled: false
+                xAxis: categories: [
+                    'Jan'
+                    'Feb'
+                    'Mar'
+                    'Apr'
+                    'May'
+                    'Jun'
+                    'Jul'
+                    'Aug'
+                    'Sep'
+                    'Oct'
+                    'Nov'
+                    'Dec'
+                ]
+                yAxis:
+                    min: 0
+                    title: text: 'Rainfall (mm)'
+                tooltip:
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>'
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' + '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>'
+                    footerFormat: '</table>'
+                    shared: true
+                    useHTML: true
+                plotOptions: column:
+                    pointPadding: 0.2
+                    borderWidth: 0
+                series: [
+                    {
+                        name: 'Tokyo'
+                        data: [
+                            49.9
+                            71.5
+                            106.4
+                            129.2
+                            144.0
+                            176.0
+                            135.6
+                            148.5
+                            216.4
+                            194.1
+                            95.6
+                            54.4
+                        ]
+                    }
+                    {
+                        name: 'New York'
+                        data: [
+                            83.6
+                            78.8
+                            98.5
+                            93.4
+                            106.0
+                            84.5
+                            105.0
+                            104.3
+                            91.2
+                            83.5
+                            106.6
+                            92.3
+                        ]
+                    }
+                    {
+                        name: 'London'
+                        data: [
+                            48.9
+                            38.8
+                            39.3
+                            41.4
+                            47.0
+                            48.3
+                            59.0
+                            59.6
+                            52.4
+                            65.2
+                            59.3
+                            51.2
+                        ]
+                    }
+                    {
+                        name: 'Berlin'
+                        data: [
+                            42.4
+                            33.2
+                            34.5
+                            39.7
+                            52.6
+                            75.5
+                            57.4
+                            60.4
+                            47.6
+                            39.1
+                            46.8
+                            51.1
+                        ]
+                    }
+                ]
+            }
+            
+        rgauge: ->
+            chart = undefined
+            data = new Array
+            data[0] = 80
+            if Session.get('reactive') != undefined
+                data[0] = Session.get('reactive')
+            {
+                chart: type: 'solidgauge'
+                title: null
+                pane:
+                    center: [
+                        '50%'
+                        '85%'
+                    ]
+                    size: '140%'
+                    startAngle: -90
+                    endAngle: 90
+                    background:
+                        backgroundColor: '#EEE'
+                        innerRadius: '60%'
+                        outerRadius: '100%'
+                        shape: 'arc'
+                tooltip: enabled: false
+                yAxis:
+                    stops: [
+                        [
+                            0.1
+                            '#55BF3B'
+                        ]
+                        [
+                            0.5
+                            '#DDDF0D'
+                        ]
+                        [
+                            0.9
+                            '#DF5353'
+                        ]
+                    ]
+                    lineWidth: 0
+                    minorTickInterval: null
+                    tickPixelInterval: 400
+                    tickWidth: 0
+                    title: y: -70
+                    labels: y: 16
+                    min: 0
+                    max: 200
+                    title: text: 'Speed'
+                plotOptions: solidgauge: dataLabels:
+                    y: 5
+                    borderWidth: 0
+                    useHTML: true
+                credits: enabled: false
+                series: [ {
+                    name: 'Speed'
+                    data: data
+                    dataLabels: format: '<div style="text-align:center"><span style="font-size:25px;color:black">{y}</span><br/>' + '<span style="font-size:12px;color:silver">km/h</span></div>'
+                    tooltip: valueSuffix: ' km/h'
+                } ]
+            }
+
+
+    Template.charts.events = 'change #reactive': (event, template) ->
+        newValue = $(event.target).val()
+        Session.set 'reactive', parseInt(newValue)

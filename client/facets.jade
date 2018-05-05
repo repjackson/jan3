@@ -1,5 +1,7 @@
 
 template(name='tag_facet')
+    +highchartsHelper(chartId='cloud_chart' chartWidth='100%' charHeight='100%' chartObject=cloud_object)
+
     .ui.left.icon.small.inline.input
         i.search.icon
         +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'

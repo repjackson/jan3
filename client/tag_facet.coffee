@@ -1,6 +1,23 @@
 @selected_tags = new ReactiveArray []
 
 Template.tag_facet.helpers
+    cloud_object: ->
+        tags = Tags.find().fetch()
+        chart_series = []
+        for tag in tags
+            chart_series.push(
+                type: 'column'
+                name: tag.name
+                data: [tag.count]
+                )
+        console.log 'chart_series?', chart_series
+        if chart_series
+            return {
+                title: text: 'Tags'
+                series: chart_series
+                }
+
+
     tags: ->
         doc_count = Docs.find().count()
         # if selected_tags.array().length
