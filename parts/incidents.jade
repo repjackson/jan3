@@ -16,9 +16,9 @@ template(name='incidents')
             .three.wide.column
                 // .ui.basic.center.aligned.segment
                 .ui.hidden.divider
-                +timestamp_facet
+                +timestamp_facet type='incident'
                 // +location_facet
-                +keyword_facet
+                +keyword_facet type='incident'
                 // .ui.dividing.header Level
                 // +set_session_button key='level' value='all' label='All'
                 // +set_session_button key='level' value=1 label='1'

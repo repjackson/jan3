@@ -1,10 +1,10 @@
 template(name='tasks')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .eight.wide.column
+            .six.wide.column
                 +add_button type='task'
                 +tag_facet
-            .eight.wide.column
+            .ten.wide.column
                 .ui.cards
                     each tasks
                         +task_card
@@ -76,14 +76,14 @@ template(name='task_card')
             .right.floated 
                 |#{when}
                 +author_info
-        .content
-            .ui.accordion
-                .title 
-                    |html
-                    i.dropdown.icon
-                .content
-                    .description
-                        |!{html}
+        // .content
+        //     // .ui.accordion
+        //     //     .title 
+        //     //         |html
+        //         //     i.dropdown.icon
+        //         // .content
+        //     .description
+        //         |!{html}
         .content
             each tags
                 .ui.large.basic.label #{this}
