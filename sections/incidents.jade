@@ -71,9 +71,8 @@ template(name='incident_item')
                         .meta 
                             |Keywords: 
                             |&nbsp;
-                            .ui.horizontal.list
-                                each watson_keywords
-                                    .item #{this}
+                            each watson_keywords
+                                .ui.basic.label #{this}
                     .four.wide.column
                         +view_button
                         .meta #{when}
@@ -174,7 +173,7 @@ template(name='incident_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
-                +link_button link='/incidents' label='incidents' icon='clipboard'
+                +link_button link='/incidents' label='incidents' icon='urgent-property'
             .ten.wide.center.aligned.column
                 h1.ui.header Incident ##{incident_number}
             .three.wide.center.aligned.column
@@ -232,6 +231,7 @@ template(name='incident_view')
                 if customer
                     with customer
                         +person_card
+                +notify_button
                 +personality
                 +consumption_preferences
                             

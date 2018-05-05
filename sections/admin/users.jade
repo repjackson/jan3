@@ -104,36 +104,7 @@ template(name='user_table')
                                         each emails
                                             |#{address}
                                 td 
-                                    .ui.hidden.fitted.divider
-                                    .ui.left.labeled.button
-                                        if is_dev
-                                            .ui.green.label Dev
-                                            .remove_dev.ui.icon.button
-                                                i.remove.icon 
-                                        else
-                                            .ui.label Dev
-                                            .make_dev.ui.icon.button
-                                                i.plus.icon 
-                                    .ui.hidden.fitted.divider
-                                    .ui.left.labeled.button
-                                        if is_admin
-                                            .ui.green.label Admin
-                                            .remove_admin.ui.icon.button
-                                                i.remove.icon 
-                                        else
-                                            .ui.label Admin
-                                            .make_admin.ui.icon.button
-                                                i.plus.icon 
-                                    .ui.hidden.fitted.divider
-                                    .ui.left.labeled.button
-                                        if is_owner
-                                            .ui.green.label User
-                                            .remove_beta.ui.icon.button
-                                                i.remove.icon 
-                                        else
-                                            .ui.label User
-                                            .make_owner.ui.icon.button
-                                                i.plus.icon 
+                                    +role_selector
                                 td
                                     .ui.disabled.button
                                         +avatar_sprite name='secured-letter'
@@ -142,4 +113,6 @@ template(name='user_table')
                                     a.ui.button(href="/profile/#{_id}")
                                         +avatar_sprite name='chevron-right'
                                 
-            
+template(name='role_selector')
+    each user_roles
+        .ui.button #{name}

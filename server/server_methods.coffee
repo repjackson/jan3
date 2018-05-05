@@ -106,3 +106,73 @@ Meteor.methods
                 geocode:geocode
                 location_lat: result.lat
                 location_lng: result.lng
+                
+                
+    create_message: (recipient_id, text, parent_id)->
+        # console.log 'recipient_id', recipient_id
+        
+        found_conversation = Docs.findOne
+            type: 'conversation'
+            participant_ids: $all: [Meteor.userId(), recipient_id]
+            
+        if found_conversation 
+            # console.log 'found conversation with id:', found_conversation._id
+            convo_id = found_conversation._id
+        else
+            new_conversation_id = 
+                Docs.insert
+                    type: 'conversation'
+                    participant_ids: [Meteor.userId(), recipient_id]
+            # console.log 'convo NOT found, created new one with id:', new_conversation_id
+            convo_id = new_conversation_id
+        new_message_id = 
+            new_message_id = Docs.insert
+                type: 'message'
+                group_id: convo_id
+                parent_id: parent_id
+                body: text
+        return new_message_id
+            
+            
+            
+    notify_user_about_document: (doc_id, recipient_id)->
+        doc = Docs.findOne doc_id
+        parent = Docs.findOne doc.parent_id
+        recipient = Meteor.users.findOne recipient_id
+        
+        
+        doc_link = "/view/#{doc._id}"
+        notification = 
+            Docs.findOne
+                type:'notification'
+                object_id:doc_id
+                recipient_id:recipient_id
+        if notification
+            throw new Meteor.Error 500, 'User already notified.'
+            return
+        else
+            Docs.insert
+                type:'notification'
+                object_id:doc_id
+                recipient_id:recipient_id
+                content: 
+                    "<p>#{Meteor.user().name()} has notified you about <a href=#{doc_link}>#{parent.title} entry</a>.</p>"
+                
+                
+    remove_notification: (doc_id, recipient_id)->
+        doc = Docs.findOne doc_id
+        recipient = Meteor.users.findOne recipient_id
+        
+        notification = 
+            Docs.findOne
+                type:'notification'
+                object_id:doc_id
+                recipient_id:recipient_id
+        
+        if notification 
+            Docs.remove notification._id
+        else
+            console.log 'trying to remove unknown notification'
+                
+        return
+        

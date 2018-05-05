@@ -4,53 +4,43 @@ if Meteor.isClient
     Template.roles.helpers
     
     
-    FlowRouter.route '/offices', action: ->
-        BlazeLayout.render 'layout', main: 'offices'
+    FlowRouter.route '/roles', action: ->
+        BlazeLayout.render 'layout', 
+            sub_nav: 'admin_nav'
+            main: 'roles'
     
     
-    @selected_office_tags = new ReactiveArray []
+    @selected_role_tags = new ReactiveArray []
     
-    Template.offices.onCreated ->
+    Template.roles.onCreated ->
         @autorun => Meteor.subscribe 'facet', 
             selected_tags.array()
             selected_keywords.array()
             selected_author_ids.array()
             selected_location_tags.array()
             selected_timestamp_tags.array()
-            type='office'
+            type='role'
             author_id=null
-    Template.offices.helpers
-        offices: ->  Docs.find { type:'office'}
+    Template.roles.helpers
+        roles: ->  Docs.find { type:'role'}
 
 
-    Template.office_card.onCreated ->
-        GoogleMaps.ready('exampleMap', (map)->
-            marker = new google.maps.Marker
-                position: map.options.center
-                map: map.instance
-        )
+    Template.role_card.onCreated ->
 
-    Template.office_card.helpers
-        exampleMapOptions: ()->
-            # console.log @
-            if GoogleMaps.loaded()
-                return {
-                    center: new google.maps.LatLng( @location_lat, @location_lng),
-                    zoom: 8
-                }
-
+    Template.role_card.helpers
+        
     
-    Template.office_edit.onCreated ->
+    Template.role_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     
-    Template.office_edit.helpers
-        office: -> Doc.findOne FlowRouter.getParam('doc_id')
+    Template.role_edit.helpers
+        role: -> Doc.findOne FlowRouter.getParam('doc_id')
         
-    Template.office_edit.events
+    Template.role_edit.events
         'click #delete': ->
             template = Template.currentData()
             swal {
-                title: 'Delete office?'
+                title: 'Delete role?'
                 # text: 'Confirm delete?'
                 type: 'error'
                 animation: false
@@ -63,6 +53,6 @@ if Meteor.isClient
                 doc = Docs.findOne FlowRouter.getParam('doc_id')
                 # console.log doc
                 Docs.remove doc._id, ->
-                    FlowRouter.go "/offices"
+                    FlowRouter.go "/roles"
 
 

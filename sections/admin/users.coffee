@@ -18,8 +18,11 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe('people', selected_people_tags.array())
     Template.user.onCreated ->
         @autorun -> Meteor.subscribe('user', @_id)
+    Template.role_selector.onCreated ->
+        @autorun -> Meteor.subscribe('type', 'role')
     
-    
+    Template.role_selector.helpers
+        user_roles: -> Docs.find type:'role'
     
     
     Template.users.helpers

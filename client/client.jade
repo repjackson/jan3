@@ -47,59 +47,59 @@ template(name='not_found')
 
 
 template(name='left_sidebar')
-    .ui.left.vertical.thin.sidebar.inverted.blue.large.menu
+    .ui.left.vertical.very.thin.sidebar.inverted.blue.large.menu
         // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
         //     i.home.large.icon
         //     |Jan-Pro
-        a.toggle_left_sidebar.item(href='/people' class="{{isActivePath '/people'}}")
-            i.large.icon
-                +mini_sprite name='user-group-man-woman'
-            | Users
-        a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}")
-            i.large.icon
-                +mini_sprite name='urgent-property'
-            | Incidents
-        a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
-            i.large.icon
-                +mini_sprite name='organization'
-            | Offices
-        a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}")
-            i.large.icon
-                +mini_sprite name='calendar'
-            | Schedule
-        a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}")
-            i.large.icon
-                +mini_sprite name='duster'
-            | Services
+        a.toggle_left_sidebar.item(href='/people' class="{{isActivePath '/people'}}" data-position="right center" data-content='Users')
+            // i.large.icon
+            +mini_sprite name='user-group-man-woman'
+            // | Users
+        a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="right center" data-content='Incidents')
+            // i.large.icon
+            +mini_sprite name='urgent-property'
+            // | Incidents
+        a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Offices')
+            // i.large.icon
+            +mini_sprite name='organization'
+            // | Offices
+        a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Schedule')
+            // i.large.icon
+            +mini_sprite name='calendar'
+            // | Schedule
+        a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
+            // i.large.icon
+            +mini_sprite name='duster'
+            // | Services
         .ui.divider
         if currentUser
-            // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}")
+            // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}" data-position="right center" data-content='Charts')
             //     i.line.chart.icon
             // .ui.simple.dropdown.icon.item
             //     i.alarm.icon
             //     .menu
             //         each notifications
             //             .item #{text}
-            // a.icon.item(href='/messages' class="{{isActivePath '/messages'}}")
+            // a.icon.item(href='/messages' class="{{isActivePath '/messages'}}" data-position="right center" data-content='Charts')
             //     i.mail.icon
             // if isInRole 'admin'
-            a.icon.toggle_sidebar.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}")
-                i.large.icon
-                    +mini_sprite name='user-shield'
-                |Admin
-            a.toggle_sidebar.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
-                if currentUser.profile.first_name
-                    | #{currentUser.profile.first_name}
-                else
-                    | #{currentUser.username}
-                if currentUser.profile.image_id
-                    img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                else
-                    i.user.large.icon
-            a#logout.ui.toggle_sidebar.item(href='#') 
-                i.large.icon
-                    +mini_sprite name='edit'
-                | Sign Out
+            a.icon.toggle_sidebar.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}" data-position="right center" data-content='Admin')
+                // i.large.icon
+                +mini_sprite name='user-shield'
+                // |Admin
+            // a.toggle_sidebar.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}" data-position="right center" data-content='Charts')
+            //     if currentUser.profile.first_name
+            //         | #{currentUser.profile.first_name}
+            //     else
+            //         | #{currentUser.username}
+            //     if currentUser.profile.image_id
+            //         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}" data-position="right center" data-content='Charts')
+            //     else
+            //         i.user.large.icon
+            // a#logout.ui.toggle_sidebar.item(href='#') 
+            //     i.large.icon
+            //         +mini_sprite name='edit'
+            //     | Sign Out
         else
             a.ui.toggle_sidebar.item(href='/sign-in') 
                 i.large.icon
