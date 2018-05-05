@@ -9,11 +9,9 @@ template(name='roles')
             .three.wide.column
                 +add_button type='role'
         .row 
-            .four.wide.column
-            .twelve.wide.column
-                .ui.centered.stackable.cards
-                    each roles
-                        +role_card
+            .ui.centered.stackable.cards
+                each roles
+                    +role_card
 
 template(name='role_card')
     .ui.card

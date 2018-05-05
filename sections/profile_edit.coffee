@@ -95,7 +95,7 @@ if Meteor.isClient
             $('#add_tag').val(tag)
     
         'click #save_profile': ->
-            FlowRouter.go "/profile/#{@_id}"
+            FlowRouter.go "/profile/#{@username}"
     
         "change input[type='file']": (e) ->
             files = e.currentTarget.files

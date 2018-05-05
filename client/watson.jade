@@ -46,7 +46,7 @@ template(name='doc_emotion')
             .label {{to_percent anger}}% anger 
             
 template(name='call_watson')
-    #call_watson.ui.basic.fluid.button 
+    #call_watson.ui.button 
         i.chess.knight.icon
         | Analyze Language
         
@@ -188,7 +188,7 @@ template(name='personality')
                             each personality.behavior
                                 .item #{name} {{ to_percent percentage }}%
     else
-        p Not enough words to analyze author personality
+        // p Not enough words to analyze author personality
     #call_personality.ui.icon.button(title='analyze personality')
         i.refresh.icon
 

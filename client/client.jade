@@ -78,7 +78,7 @@ template(name='left_sidebar')
             // .ui.simple.dropdown.icon.item
             //     i.alarm.icon
             //     .menu
-            //         each notifications
+            //         each alerts
             //             .item #{text}
             // a.icon.item(href='/messages' class="{{isActivePath '/messages'}}" data-position="right center" data-content='Charts')
             //     i.mail.icon
@@ -112,7 +112,7 @@ template(name='right_sidebar')
         a.toggle_right_sidebar.header.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
             img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             | Profile
-        a.toggle_right_sidebar.item(href='/notifications')
+        a.toggle_right_sidebar.item(href='/alerts')
             | Alerts
             i.large.icon
                 +mini_sprite name='appointment-reminders'

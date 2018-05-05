@@ -1,20 +1,40 @@
 template(name='admin')
     h1.ui.center.aligned.grey.header 
-        i.shield.icon
+        +icon name='user-shield'
         |Admin
+    .ui.centered.cards
+        .card
+            .content
+                .ui.header Users
+        .card
+            .content
+                .ui.header Tasks
+        .card
+            .content
+                .ui.header Roles
+        .card
+            .content
+                .ui.header Rules
+    
+    
+    
     
 template(name='admin_nav')    
-    .ui.top.attached.four.item.big.compact.stackable.menu
+    .ui.top.attached.five.item.big.compact.stackable.menu
+        a.item(href='/admin' class="{{isActivePath '/admin'}}")
+            +avatar_sprite name='user-shield'
+            |&nbsp;
+            | Admin
         a.item(href='/admin/users' class="{{isActivePath '/admin/users'}}")
-            +mini_sprite name='group-foreground-selected'
+            +avatar_sprite name='group-foreground-selected'
             |&nbsp;
             | Users
         a.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}")
-            +mini_sprite name='to-do'
+            +avatar_sprite name='to-do'
             |&nbsp;
             | Tasks
         a.item(href='/admin/roles' class="{{isActivePath '/admin/roles'}}")
-            +mini_sprite name='theatre-mask'
+            +avatar_sprite name='theatre-mask'
             |&nbsp;
             | Roles
         // a.item(href='/admin/roles /admin/roles' class="{{isActivePath '/admin/roles'}}")

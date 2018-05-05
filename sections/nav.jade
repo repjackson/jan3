@@ -64,10 +64,10 @@ template(name='nav')
             //     +mini_sprite name='shopping-cart'
             a.icon.computer.only.item(href='/mail')
                 +mini_sprite name='secured-letter'
-            a.ui.simple.dropdown.icon.computer.only.item(href='/notifications')
+            a.ui.simple.dropdown.icon.computer.only.item(href='/alerts')
                 +mini_sprite name='appointment-reminders'
                 .menu
-                    .item No Notifications
+                    .item No alerts
             if currentUser
                 a.toggle_right_sidebar.item
                     if currentUser.profile.image_id

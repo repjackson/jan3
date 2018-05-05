@@ -30,7 +30,7 @@ Template.thanks_button.helpers
     thanks_button_class: ->
         if not Meteor.userId() then 'disabled'
         else if @upvoters and Meteor.userId() in @upvoters then 'blue'
-        else 'basic'
+        else ''
 
 # Template.thanks_button.onRendered ->
 #     self = @
@@ -90,7 +90,7 @@ Template.favorite_button.events
 Template.mark_complete_button.helpers
     complete_button_class: -> 
         if Meteor.user()
-            if @completed_ids and Meteor.userId() in @completed_ids then 'inverted' else 'basic'
+            if @completed_ids and Meteor.userId() in @completed_ids then 'inverted' else ''
         else 'grey disabled'
     # completed: -> 
     #     if Meteor.user()
@@ -109,7 +109,7 @@ Template.mark_complete_button.events
 
 
 Template.mark_doc_complete_button.helpers
-    # complete_button_class: -> if @complete then 'blue' else 'basic'
+    # complete_button_class: -> if @complete then 'blue' else ''
 Template.mark_doc_complete_button.events
     'click .mark_complete': (e,t)-> 
         if @complete is true then Docs.update @_id, $set: complete: false else  Docs.update @_id, $set:complete: true
@@ -129,7 +129,7 @@ Template.mark_doc_approved_button.events
 Template.bookmark_button.helpers
     bookmark_button_class: -> 
         if Meteor.user()
-            if @bookmarked_ids and Meteor.userId() in  @bookmarked_ids then 'blue' else 'basic'
+            if @bookmarked_ids and Meteor.userId() in  @bookmarked_ids then 'blue' else ''
         else 'basic disabled'
         
     bookmarked: -> Meteor.user()?.bookmarked_ids and @_id in Meteor.user().bookmarked_ids
@@ -149,7 +149,7 @@ Template.bookmark_button.events
 # Template.pin_button.helpers
 #     pin_button_class: -> 
 #         if Meteor.user()
-#             if @pinned_ids and Meteor.userId() in  @pinned_ids then 'blue' else 'basic'
+#             if @pinned_ids and Meteor.userId() in  @pinned_ids then 'blue' else ''
 #         else 'grey disabled'
         
 #     pinned: -> Meteor.user()?.pinned_ids and @_id in Meteor.user().pinned_ids
@@ -201,7 +201,7 @@ Template.respond_button.events
 Template.resonate_button.helpers
     resonate_button_class: -> 
         if Meteor.userId()
-            if @favoriters and Meteor.userId() in @favoriters then 'blue' else 'basic'
+            if @favoriters and Meteor.userId() in @favoriters then 'blue' else ''
         else 'disabled basic'
 
 Template.resonate_button.events

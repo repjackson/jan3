@@ -1,58 +1,33 @@
-@Notifications = new Meteor.Collection 'notifications'
+@alerts = new Meteor.Collection 'alerts'
 
 
-FlowRouter.route '/notifications', action: (params) ->
+FlowRouter.route '/alerts', action: (params) ->
     BlazeLayout.render 'layout',
-        main: 'notifications'
+        main: 'alerts'
 
 if Meteor.isClient
-    Template.notifications.onCreated -> 
-        @autorun -> Meteor.subscribe('notifications')
+    Template.alerts.onCreated -> 
+        @autorun -> Meteor.subscribe('alerts')
 
-    Template.notifications.helpers
-        notifications: -> 
-            Notifications.find { }
+    Template.alerts.helpers
+        alerts: -> 
+            alerts.find { }
     
-    Template.notification.events
-        'click .edit': -> FlowRouter.go("/notification/edit/#{@_id}")
+    Template.alert.events
+        'click .edit': -> FlowRouter.go("/alert/edit/#{@_id}")
 
-    Template.notifications.events
+    Template.alerts.events
         # 'click #add_module': ->
-        #     id = notifications.insert({})
+        #     id = alerts.insert({})
         #     FlowRouter.go "/edit_module/#{id}"
     
     
 
 
-if Meteor.isServer
-    Notifications.allow
-        insert: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        update: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-        remove: (userId, doc) -> Roles.userIsInRole(userId, 'admin')
-    
-    
-    
-    
-    Meteor.publish 'notifications', ()->
-    
-        self = @
-        match = {}
-        # selected_tags.push current_herd
-        # match.tags = $all: selected_tags
-        # if selected_tags.length > 0 then match.tags = $all: selected_tags
-
-        
-
-        Notifications.find match
-    
-    Meteor.publish 'notification', (id)->
-        Notifications.find id
-    
-
 Meteor.methods
-    # add_notification: (subject_id, predicate, object_id) ->
+    # add_alert: (subject_id, predicate, object_id) ->
     #     new_id = Docs.insert
-    #         type: 'notification'
+    #         type: 'alert'
     #         subject_id: subject_id
     #         predicate: predicate
     #         object_id: object_id
@@ -60,8 +35,8 @@ Meteor.methods
 
 
 if Meteor.isClient
-    Template.notifications.onCreated ->
-        @autorun => Meteor.subscribe 'notifications', Meteor.userId()
+    Template.alerts.onCreated ->
+        @autorun => Meteor.subscribe 'alerts', Meteor.userId()
         # @autorun => 
         #     Meteor.subscribe('facet', 
         #         selected_theme_tags.array()
@@ -69,7 +44,7 @@ if Meteor.isClient
         #         selected_location_tags.array()
         #         selected_intention_tags.array()
         #         selected_timestamp_tags.array()
-        #         type = 'notification'
+        #         type = 'alert'
         #         author_id = null
         #         parent_id = null
         #         tag_limit = 20
@@ -84,34 +59,21 @@ if Meteor.isClient
     
         #         )
 
-    Template.notifications.helpers
-        notifications: -> 
+    Template.alerts.helpers
+        alerts: -> 
             Docs.find {
-                type: 'notification'
+                type: 'alert'
                 }, 
                 sort: timestamp: -1
         
         
-        # notifications_allowed: ->
-        #     # console.log notification.permission
-        #     if notification.permission is 'denied' or 'default' 
-        #         # console.log 'notifications are denied'
-        #         # return false
-        #     if notification.permission is 'granted'
-        #         # console.log 'yes granted'
-        #         # return true
-            
-            
-    Template.notifications.events
-        'click #allow_notifications': ->
-            notification.requestPermission()
-        
+    Template.alerts.events
         'click #mark_all_read': ->
-            if confirm 'Mark all notifications read?'
+            if confirm 'Mark all alerts read?'
                 Docs.update {},
                     $addToSet: read_by: Meteor.userId()
                     
-    Template.notification.helpers
+    Template.alert.helpers
         product_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''
         
         subject_name: -> if @subject_id is Meteor.userId() then 'You' else @subject().name()
@@ -119,59 +81,59 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    publishComposite 'received_notifications', ->
+    publishComposite 'received_alerts', ->
         {
             find: ->
                 Docs.find
-                    type: 'notification'
+                    type: 'alert'
                     recipient_id: Meteor.userId()
             children: [
-                { find: (notification) ->
+                { find: (alert) ->
                     Meteor.users.find 
-                        _id: notification.author_id
+                        _id: alert.author_id
                     }
                 ]    
         }
         
-    publishComposite 'all_notifications', ->
+    publishComposite 'all_alerts', ->
         {
             find: ->
-                Docs.find type: 'notification'
+                Docs.find type: 'alert'
             children: [
-                { find: (notification) ->
+                { find: (alert) ->
                     Meteor.users.find 
-                        _id: notification.subject_id
+                        _id: alert.subject_id
                     }
-                { find: (notification) ->
+                { find: (alert) ->
                     Meteor.users.find 
-                        _id: notification.object_id
+                        _id: alert.object_id
                     }
                 ]    
         }
         
         
-    publishComposite 'unread_notifications', ->
+    publishComposite 'unread_alerts', ->
         {
             find: ->
                 Docs.find
-                    type: 'notification'
+                    type: 'alert'
                     recipient_id: Meteor.userId()
                     read: false
             children: [
-                { find: (notification) ->
+                { find: (alert) ->
                     Meteor.users.find 
-                        _id: notification.author_id
+                        _id: alert.author_id
                     }
                 ]    
         }
         
         
-    Meteor.publish 'notification_subjects', (selected_subjects)->
+    Meteor.publish 'alert_subjects', (selected_subjects)->
         self = @
         match = {}
         
         if selected_tags.length > 0 then match.tags = $all: selected_tags
-        match.type = 'notification'
+        match.type = 'alert'
 
         cloud = Docs.aggregate [
             { $match: match }
@@ -183,10 +145,10 @@ if Meteor.isServer
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud, ', cloud
-        cloud.forEach (notification_subject, i) ->
-            self.added 'notification_subjects', Random.id(),
-                name: notification_subject.name
-                count: notification_subject.count
+        cloud.forEach (alert_subject, i) ->
+            self.added 'alert_subjects', Random.id(),
+                name: alert_subject.name
+                count: alert_subject.count
                 index: i
     
         self.ready()

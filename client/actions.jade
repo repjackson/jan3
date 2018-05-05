@@ -127,7 +127,7 @@ template(name='resonate_button')
         
 template(name='notify_button')
     if currentUser
-        .ui.fluid.accordion.shadowed.padded10
+        .ui.fluid.styled.accordion
             .title 
                 +avatar_sprite name='bell' classes='ui inline image'
                 |Notify Someone

@@ -10,13 +10,13 @@ template(name='comments')
             .ui.comments
                 each comments
                     .comment
-                        a.avatar(href="/profile/#{author._id}")
+                        a.avatar(href="/profile/#{author.username}")
                             if author.profile.image_id
                                 img.ui.avatar.spaced.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                             else
                                 i.user.icon
                         .content
-                            a.author(href="/profile/#{author._id}") #{author.username}
+                            a.author(href="/profile/#{author.username}") #{author.username}
                             .metadata
                                 span.date #{when}
                             .text

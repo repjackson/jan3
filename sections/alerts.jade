@@ -1,21 +1,14 @@
-template(name='notifications')
+template(name='alerts')
     .ui.stackable.centered.padded.grid
         .centered.row
             .three.wide.column
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
                     i.bell.icon
-                    | Notifications
+                    | alerts
             .three.wide.column
         .centered.row
             .four.wide.column
-                .ui.vertical.large.menu
-                    .item
-                        |Inbox
-                        i.inbox.icon
-                    .item
-                        | Archived
-                        i.archive.icon
                 +tag_facet
                 +timestamp_facet
                 .ui.hidden.divider
@@ -27,20 +20,20 @@ template(name='notifications')
                 //         |Mark All Read
                 // if isInRole 'admin'
                 //     .ui.header Options
-                //     if notifications_allowed
-                //         .ui.basic.disabled.button Desktop Notifications Allowed
-                //         #disallow_notifications.ui.basic.red.button
+                //     if alerts_allowed
+                //         .ui.basic.disabled.button Desktop alerts Allowed
+                //         #disallow_alerts.ui.basic.red.button
                 //             i.remove.icon
                 //             |Remove Permissions
                 // else
-                //     #allow_notifications.ui.basic.button Allow Desktop Notifications
+                //     #allow_alerts.ui.basic.button Allow Desktop alerts
             .twelve.wide.column
                 .ui.segment
-                    .ui.header notifications
+                    .ui.header alerts
 
             
-template(name='notification')
-    .ui.segment.notification_segment(class=notification_segment_class)
+template(name='alert')
+    .ui.segment.alert_segment(class=alert_segment_class)
         .ui.feed
             .event
                 .label
