@@ -4,7 +4,7 @@ template(name='admin')
         |Admin
     
 template(name='admin_nav')    
-    .ui.top.attached.four.item.big.compact.menu
+    .ui.top.attached.four.item.big.compact.stackable.menu
         a.item(href='/admin/users' class="{{isActivePath '/admin/users'}}")
             +mini_sprite name='group-foreground-selected'
             |&nbsp;
