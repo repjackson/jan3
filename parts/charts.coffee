@@ -1,8 +1,23 @@
 if Meteor.isClient
-    FlowRouter.route '/charts', action: ->
-        BlazeLayout.render 'layout', 
-            main: 'charts'
-    
+    FlowRouter.route '/charts', 
+        action: ->
+            selected_timestamp_tags.clear()
+            selected_keywords.clear()
+            BlazeLayout.render 'layout', 
+                main: 'charts'
+
+    Template.charts.onCreated ->
+        @autorun => Meteor.subscribe 'facet', 
+            selected_tags.array()
+            selected_keywords.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_timestamp_tags.array()
+            type='task'
+            author_id=null
+
+
+
     Template.charts.helpers
         charts: -> Docs.find type:'chart'
                 
@@ -176,13 +191,23 @@ if Meteor.isClient
                     } ]
             }
                 
-        pie: ->        
+        pie: ->     
+            tags = Tags.find().fetch()
+            pie_data = []
+            for tag in tags
+                pie_data.push(
+                    [
+                        tag.name
+                        tag.count
+                    ]
+                )
+
             {
                 chart:
                     plotBackgroundColor: null
                     plotBorderWidth: null
                     plotShadow: false
-                title: text: @username + '\'s top genres'
+                title: text: 'area'
                 tooltip: pointFormat: '<b>{point.percentage:.1f}%</b>'
                 plotOptions: pie:
                     allowPointSelect: true
@@ -194,29 +219,8 @@ if Meteor.isClient
                         connectorColor: 'silver'
                 series: [ {
                     type: 'pie'
-                    name: 'genre'
-                    data: [
-                        [
-                            'Adventure'
-                            45.0
-                        ]
-                        [
-                            'Action'
-                            26.8
-                        ]
-                        [
-                            'Ecchi'
-                            12.8
-                        ]
-                        [
-                            'Comedy'
-                            8.5
-                        ]
-                        [
-                            'Yuri'
-                            6.2
-                        ]
-                    ]
+                    name: 'tag'
+                    data: pie_data
                 } ]
             }
         gauge: ->
