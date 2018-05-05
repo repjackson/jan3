@@ -3,7 +3,7 @@ template(name='nav')
         // .mobile.only.ui.dropdown.icon.link.item
         //     i.th.large.icon
         //     .ui.menu
-        //         a.icon.item(href='/people' class="{{isActivePath '/people'}}")
+        //         a.icon.item(href='/users' class="{{isActivePath '/users'}}")
         //             i.large.users.icon
         //             // | Users
         //         a.icon.item(href='/incidents' class="{{isActivePath '/incidents'}}")
@@ -21,11 +21,11 @@ template(name='nav')
             // i.large.home.icon
             img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             // | Home
-        a.computer.only.item(href='/people' class="{{isActivePath '/people'}}" data-position="top center" data-content='Users')
+        a.desktop.only.item(href='/users' class="{{isActivePath '/users'}}" data-position="top center" data-content='Users')
             // i.large.users.icon
             +mini_sprite name='user-group-man-woman'
             // | &nbsp; Users
-        a.computer.only.item(href='/charts' class="{{isActivePath '/charts'}}" data-position="top center" data-content='Charts')
+        a.desktop.only.item(href='/charts' class="{{isActivePath '/charts'}}" data-position="top center" data-content='Charts')
             // i.large.users.icon
             +mini_sprite name='combo-chart'
             // | &nbsp; Users
@@ -33,14 +33,14 @@ template(name='nav')
             +mini_sprite name='urgent-property'
             // i.large.clipboard.icon
             // | &nbsp; Incidents
-        a.computer.only.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="top center" data-content='Offices')
+        a.desktop.only.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="top center" data-content='Offices')
             +mini_sprite name='organization'
             // i.large.building.icon
             // | &nbsp; Offices
-        a.computer.only.item(href='/services' class="{{isActivePath '/services'}}" data-position="top center" data-content='Services')
+        a.desktop.only.item(href='/services' class="{{isActivePath '/services'}}" data-position="top center" data-content='Services')
             +mini_sprite name='duster'
         // a.mobile.hidden.disabled.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
-        a.computer.only.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
+        a.desktop.only.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
             +mini_sprite name='planner'
         // .mobile.hidden.item(href='/consumerables' class="{{isActivePath '/consumerables'}}" data-position="top center" data-content='Consumerables')
         // .mobile.hidden.item(data-position="top center" data-content='Consumerables')
@@ -62,9 +62,9 @@ template(name='nav')
                 +mini_sprite name='chat'
             // a.icon.mobile.hidden.item(href='/cart')
             //     +mini_sprite name='shopping-cart'
-            a.icon.computer.only.item(href='/mail')
+            a.icon.desktop.only.item(href='/mail')
                 +mini_sprite name='secured-letter'
-            a.ui.simple.dropdown.icon.computer.only.item(href='/alerts')
+            a.ui.simple.dropdown.icon.desktop.only.item(href='/alerts')
                 +mini_sprite name='appointment-reminders'
                 .menu
                     .item No alerts
@@ -75,9 +75,9 @@ template(name='nav')
                     else
                         i.user.icon
                     if currentUser.name
-                        .computer.only #{currentUser.name}
+                        .desktop.only #{currentUser.name}
                     else
-                        .computer.only #{currentUser.username}
+                        .desktop.only #{currentUser.username}
                     //     | Profile
                     // (href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
                             

@@ -1,32 +1,26 @@
 template(name='users') 
-    .ui.container
-        h1.ui.center.aligned.grey.header Users
-        .ui.centered.cards
-            each users
-                +user
-                
-template(name='user')                
-    .ui.card
-        .image
-            a(href="/profile/#{_id}")
-                img.ui.fluid.image(src="{{c.url profile.image_id height=400 width=800 background='white' crop='pad'}}")
-        .content
-            a(href="/profile/#{_id}")
-                h2.ui.center.aligned.header #{profile.first_name} #{profile.last_name}
-            each five_tags
-                .ui.compact.small.circular.button.person_tag(class=tag_class) 
-                    strong #{this}
-        .content
-            if position
-                |#{position}
-            if company
-                |at #{company}
-        .extra.content
-            .ui.horizontal.divider.header
-                i.red.configure.icon
-                | Admin
+    .ui.padded.stackable.grid
+        .four.wide.column 
+            +set_view_mode view='cards' icon='medium-icons' label='Cards'
+            +set_view_mode view='table' icon='data-sheet' label='Table'
+        .eight.wide.column 
+            h1.ui.center.aligned.grey.header 
+                +icon name='user-group-man-woman'
+                |Users
+        .four.wide.column 
+            a.ui.button(href='/user/add' data-content='Add User')
+                +mini_sprite name='add-user-male'
+        if viewing_cards
+            .ui.centered.stackable.cards
+                each users
+                    +user_card
+        if viewing_table
+            +user_table
 
-            
+        
+        
+        
+        
 template(name='user_cloud')
     #cloud.ui.basic.center.aligned.segment
         // .ui.hidden.divider
@@ -44,44 +38,33 @@ template(name='user_cloud')
                 small #{this.count}
                 // small [#{this.index}]
                 
+template(name='user_card')                
+    .ui.card
+        .image
+            a(href="/profile/#{username}")
+                img.ui.fluid.image(src="{{c.url profile.image_id height=400 width=800 background='white' crop='pad'}}")
+        .content
+            a(href="/profile/#{username}")
+                .ui.center.aligned.header #{profile.first_name} #{profile.last_name}
+            each five_tags
+                .ui.compact.small.circular.button.person_tag(class=tag_class) 
+                    strong #{this}
+        .content
+           .ui.list
+                +list_item key='email' label='Email'
+                +list_item key='phone' label='Phone'
+                +list_item key='company' label='Company'
+                +list_item key='position' label='Position'
+        .content
+            +bookmark_button
+            +view_button
+        
+        
+        
+                        
                 
-                
-template(name='person_card2')
-    .image
-        a(href="/user/#{username}")
-            img.ui.fluid.rounded.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
-    .content
-        .center.aligned.header
-            a(href="/user/#{username}")
-                if profile.first_name
-                    | #{profile.first_name}
-                if profile.last_name
-                    | #{profile.last_name}
-                else    
-                    | #{username}
-                // +staus_indicator
-        if profile.location
-            .center.aligned.meta
-                | #{profile.location}
-        // .center.aligned.meta
-        //     +color_dots
-    // .extra.content
-    //     each ten_tags
-    //         .ui.compact.tiny.button.user_tag(class=person_tag_class) #{this}
-            
-            
-            
 template(name='user_table')
     .ui.padded.grid
-        .centered.row
-            .three.wide.column
-                a.ui.button(href='/user/add' data-content='Add User')
-                    +mini_sprite name='add-user-male'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header 
-                    +icon name='group-foreground-selected'
-                    | Users
-            .three.wide.column
         .row
             .sixteen.wide.column
                 table.ui.sortable.striped.table

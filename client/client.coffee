@@ -56,7 +56,7 @@ Template.left_sidebar.onRendered ->
                     .sidebar({
                         context: $('.context.example .bottom.segment')
                         dimPage: false
-                        transition:  'overlay'
+                        transition:  'push'
                     })
                     .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')
             , 750
@@ -69,7 +69,7 @@ Template.right_sidebar.onRendered ->
                     .sidebar({
                         context: $('.context.example .bottom.segment')
                         dimPage: false
-                        transition:  'overlay'
+                        transition:  'slide out'
                     })
                     .sidebar('attach events', '.toggle_right_sidebar.item')
                     # .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')

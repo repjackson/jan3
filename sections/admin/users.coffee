@@ -16,8 +16,8 @@ if Meteor.isClient
     
     Template.users.onCreated ->
         @autorun -> Meteor.subscribe('people', selected_people_tags.array())
-    Template.user.onCreated ->
-        @autorun -> Meteor.subscribe('user', @_id)
+    # Template.user.onCreated ->
+    #     @autorun -> Meteor.subscribe('user', @_id)
     Template.role_selector.onCreated ->
         @autorun -> Meteor.subscribe('type', 'role')
     
@@ -35,15 +35,19 @@ if Meteor.isClient
                     tag_count: 1
                 limit: 20
     
+        viewing_list: -> Session.equals 'view_mode','list'    
+        viewing_table: -> Session.equals 'view_mode','table'    
+        viewing_cards: -> Session.equals 'view_mode','cards'    
+        viewing_chart: -> Session.equals 'view_mode','charts'    
+
+    # Template.user.events
+    #     'click .user_tag': ->
+    #         if @valueOf() in selected_people_tags.array() then selected_people_tags.remove @valueOf() else selected_people_tags.push @valueOf()
     
-    Template.user.events
-        'click .user_tag': ->
-            if @valueOf() in selected_people_tags.array() then selected_people_tags.remove @valueOf() else selected_people_tags.push @valueOf()
+    # Template.user.helpers
+    #     ten_tags: -> if @tags then @tags[.6]
     
-    Template.user.helpers
-        ten_tags: -> if @tags then @tags[.6]
-    
-        user_tag_class: -> if @valueOf() in selected_people_tags.array() then 'teal' else 'basic'
+    #     user_tag_class: -> if @valueOf() in selected_people_tags.array() then 'teal' else 'basic'
     
     
     
