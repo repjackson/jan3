@@ -26,6 +26,7 @@ template(name='layout')
         .ui.bottom.attached.basic.segment.pushable
             // +top_sidebar
             +left_sidebar
+            +right_sidebar
             .pusher
                 #main_area
                     .ui.basic.fluid.segment
@@ -33,7 +34,6 @@ template(name='layout')
                         +Template.dynamic template=sub_nav
                         +Template.dynamic template=sub_sub_nav
                         +Template.dynamic template=main
-            +right_sidebar
             // +bottom_sidebar
         +footer
         // +jsonView json=doc

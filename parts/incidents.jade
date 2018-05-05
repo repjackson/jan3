@@ -5,6 +5,7 @@ template(name='incidents')
                 +set_view_mode view='cards' icon='medium-icons' label='Cards View'
                 +set_view_mode view='list' icon='list' label='List View'
                 +set_view_mode view='table' icon='data-sheet' label='Table View'
+                +set_view_mode view='charts' icon='combo-chart' label='Graph View'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header
                     +icon name='urgent-property'
@@ -43,6 +44,8 @@ template(name='incidents')
                             +incident_item
                 if viewing_table
                     +table type='incident'
+                if viewing_chart
+                    +charts
                 if viewing_cards
                     .ui.centered.stackable.cards
                         each incidents
