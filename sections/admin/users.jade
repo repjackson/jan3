@@ -4,20 +4,15 @@ template(name='users')
             .four.wide.column 
                 +set_view_mode view='cards' icon='medium-icons' label='Cards'
                 +set_view_mode view='table' icon='data-sheet' label='Table'
-            .eight.wide.column 
-                h1.ui.center.aligned.grey.header 
-                    +icon name='user-group-man-woman'
-                    |Users
-            .four.wide.column 
-                a.ui.button(href='/user/add' data-content='Add User')
-                    +mini_sprite name='add-user-male'
-        .centered.row
-            if viewing_cards
-                .ui.centered.stackable.cards
-                    each users
-                        +user_card
-            if viewing_table
-                +user_table
+                a(href='/user/add' data-content='Add User')
+                    i.plus.big.link.icon
+            .twelve.wide.column 
+                if viewing_cards
+                    .ui.centered.stackable.cards
+                        each users
+                            +user_card
+                if viewing_table
+                    +user_table
 
         
         

@@ -47,29 +47,25 @@ template(name='not_found')
 
 
 template(name='left_sidebar')
-    .ui.left.vertical.thin.sidebar.inverted.blue.large.labeled.icon.menu
+    .ui.left.vertical.very.thin.sidebar.inverted.large.icon.menu
         // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
         //     i.home.large.icon
         //     |Jan-Pro
         a.toggle_left_sidebar.item(href='/users' class="{{isActivePath '/users'}}" data-position="right center" data-content='Users')
-            // i.large.icon
-            +tiny_sprite name='user-group-man-woman'
+            i.large.users.icon
             // | Users
         a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="right center" data-content='Incidents')
-            // i.large.icon
-            +tiny_sprite name='urgent-property'
+            i.large.clipboard.icon
             // | Incidents
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Offices')
-            // i.large.icon
-            +tiny_sprite name='organization'
+            i.large.building.icon
             // | Offices
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Schedule')
-            // i.large.icon
-            +tiny_sprite name='calendar'
+            i.large.calendar.icon
             // | Schedule
         a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
-            // i.large.icon
-            +tiny_sprite name='duster'
+            i.clock.icon
+            // +tiny_sprite name='duster'
             // | Services
         .ui.divider
         if currentUser
@@ -108,7 +104,7 @@ template(name='left_sidebar')
 
 
 template(name='right_sidebar')
-    .ui.right.inline.vertical.thin.sidebar.inverted.blue.large.menu
+    .ui.right.inline.vertical.thin.sidebar.inverted.large.menu
         a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
             img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             | Profile

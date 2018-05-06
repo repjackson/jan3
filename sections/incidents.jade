@@ -1,20 +1,12 @@
 template(name='incidents')
     .ui.stackable.padded.centered.grid
         .centered.row
-            .three.wide.center.aligned.column
+            .three.wide.column
                 +set_view_mode view='cards' icon='medium-icons' label='Cards View'
                 +set_view_mode view='list' icon='list' label='List View'
                 +set_view_mode view='table' icon='data-sheet' label='Table View'
                 +set_view_mode view='charts' icon='combo-chart' label='Graph View'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header
-                    +icon name='urgent-property'
-                    | Incidents
-            .three.wide.column
                 +add_button type='incident' label='Incident'
-
-        .centered.row
-            .three.wide.column
                 // .ui.basic.center.aligned.segment
                 .ui.hidden.divider
                 +timestamp_facet type='incident'

@@ -16,7 +16,7 @@ template(name='task_item')
             a.image(href="/view/#{_id}")
                 img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
                 // each visual
-                //     .ui.basic.small.label #{class}
+                //     .ui.small.label #{class}
         .content
             a.grey.header(href="/view/#{_id}") 
                 |##{task_number}
@@ -25,10 +25,10 @@ template(name='task_item')
                     .twelve.wide.column
                         .large130 {{nl2br task_details}}
                         +tone
-                        .meta 
-                            .ui.horizontal.list
-                                each watson_keywords
-                                    .item #{this}
+                        // .meta 
+                        //     .ui.horizontal.list
+                        //         each watson_keywords
+                        //             .item #{this}
                     .four.wide.column
                         .meta #{when}
                         .meta #{formal_when}
@@ -84,9 +84,9 @@ template(name='task_card')
         //         // .content
         //     .description
         //         |!{html}
-        .content
-            each tags
-                .ui.large.basic.label #{this}
+        // .content
+        //     each tags
+        //         .ui.large.label #{this}
         if watson
             .content
                 +doc_sentiment

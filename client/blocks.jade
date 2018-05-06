@@ -32,17 +32,19 @@ template(name='save_button')
         // strong save
         
 template(name='edit_button')
-    a.ui.circular.icon.button(href="/edit/#{_id}" title='Edit') 
-        +avatar_sprite name='edit'
+    a(href="/edit/#{_id}" title='edit') 
+        i.big.link.pencil.icon
         // strong edit
 
 template(name='view_button')
-    a.ui.circular.icon.button(href="/view/#{_id}" title='View Details') 
-        +avatar_sprite name='chevron-right'
+    a(href="/view/#{_id}" title='View Details') 
+        // +avatar_sprite name='chevron-right'
+        i.right.chevron.large.link.icon
         
 template(name='add_button')
-    #add.ui.icon.circular.button(title='add')
-        +mini_inline_sprite name='plus'
+    #add(title='add')
+        i.plus.large.link.icon
+        // +mini_inline_sprite name='plus'
 
 template(name='reference_office')
     .ui.form
@@ -70,7 +72,7 @@ template(name="customer_result")
 
 
 template(name='set_view_mode')
-    #set_view_mode.ui.circular.compact.icon.button(title=label class=view_mode_button_class)
+    #set_view_mode(title=label class=view_mode_button_class)
         // i.large.icon(class=icon)
         +mini_sprite name=icon
             

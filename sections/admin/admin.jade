@@ -1,7 +1,7 @@
 template(name='admin')
     h1.ui.center.aligned.grey.header 
-        +icon name='user-shield'
-        |Admin
+        i.shield.icon
+        // |Admin
     .ui.centered.cards
         .card
             .content
@@ -20,31 +20,25 @@ template(name='admin')
     
     
 template(name='admin_nav')    
-    .ui.top.attached.five.item.big.compact.stackable.menu
+    .ui.top.attached.five.item.compact.stackable.menu
         a.item(href='/admin' class="{{isActivePath '/admin'}}")
-            +avatar_sprite name='user-shield'
-            |&nbsp;
-            | Admin
+            i.shield.icon
+            | admin
         a.item(href='/admin/users' class="{{isActivePath '/admin/users'}}")
-            +avatar_sprite name='group-foreground-selected'
-            |&nbsp;
-            | Users
+            i.users.icon
+            | users
         a.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}")
-            +avatar_sprite name='to-do'
-            |&nbsp;
-            | Tasks
+            i.tasks.icon
+            | tasks
         a.item(href='/admin/roles' class="{{isActivePath '/admin/roles'}}")
-            +avatar_sprite name='theatre-mask'
-            |&nbsp;
-            | Roles
+            i.users.icon
+            | roles
         // a.item(href='/admin/roles /admin/roles' class="{{isActivePath '/admin/roles'}}")
         //     +mini_sprite name='administrative-tools'
         //     |&nbsp;
         //     | Notification Settings
         a.item(href='/admin/rules' class="{{isActivePath '/admin/rules'}}")
-            +mini_sprite name='serial-tasks'
-            |&nbsp;
-            | Rules
+            | rules
     
     
         
