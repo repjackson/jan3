@@ -1,6 +1,6 @@
 template(name='edit_profile')
-    h1.ui.center.aligned.grey.header Edit Profile 
     with user
+        h1.ui.center.aligned.grey.header Edit #{profile.first_name} 
         .ui.grid.padded.stackable.centered.grid
             .four.wide.column    
                 .ui.large.form
@@ -9,7 +9,7 @@ template(name='edit_profile')
                         //     label Current image_id: #{image_id}
                         //     input#input_image_id(type='text' placeholder='Change')
                         if profile.image_id
-                            label image
+                            // label image
                             .ui.centered.image
                                 img.ui.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
                                 a#remove_photo.ui.right.corner.link.label
@@ -18,8 +18,7 @@ template(name='edit_profile')
                             label upload image
                             input(type='file' name='upload_picture' accept='image/*')
                 .ui.center.aligned.basic.segment
-                    #save_profile.ui.big.icon.button
-                        i.checkmark.icon
+                    i#save_profile.checkmark.big.link.green.icon
             .eight.wide.column    
                 .ui.large.form
                     .field
