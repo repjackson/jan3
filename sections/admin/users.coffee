@@ -50,7 +50,26 @@ if Meteor.isClient
     #     user_tag_class: -> if @valueOf() in selected_people_tags.array() then 'teal' else 'basic'
     
     
+    Template.role_selector.events
+        'click .toggle_role': ->
+            console.log @
     
+        #  'click .remove_role': ->
+        #     self = @
+        #     swal {
+        #         title: "Remove #{@username} from roles?"
+        #         # text: 'You will not be able to recover this imaginary file!'
+        #         type: 'warning'
+        #         animation: false
+        #         showCancelButton: true
+        #         # confirmButtonColor: '#DD6B55'
+        #         confirmButtonText: 'Remove role Status'
+        #         closeOnConfirm: false
+        #     }, ->
+        #         Meteor.users.update self._id, 
+        #             $pull: roles: 'role'
+        #         swal "Removed role privilages from #{self.username}", "",'success'
+        #         return
     @selected_people_tags = new ReactiveArray []
     
     Template.user_cloud.onCreated ->

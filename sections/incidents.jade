@@ -143,31 +143,36 @@ template(name='incident_edit')
                 +save_button
         .row
             .four.wide.column
+                +edit_author
                 .ui.large.form
                     +edit_number_field key='incident_number' label='Number' icon='hashtag'
                     +edit_date_field key='incident_date' label='Date' icon='calendar'
-                    +reference_customer key='referenced_customer_id' search_field='first_name' label='Change Customer' type='person'
-                    if customer
-                        with customer
-                            +person_card
                     
             .eight.wide.column
                 .ui.large.form
-                    +edit_html_field
-                    // +edit_textarea key='incident_details' label='Details'
-                    +edit_image_field
                     .field
                         label Type
                         +toggle_key key='incident_type' value='missed_service' label='Missed Service'
                         +toggle_key key='incident_type' value='poor_service' label='Poor Service'
                         +toggle_key key='incident_type' value='employee_issue' label='Employee Issue'
                         +toggle_key key='incident_type' value='other' label='Other'
+    
+                    +edit_html_field
+                    // +edit_textarea key='incident_details' label='Details'
             .four.wide.column
                 +reference_office key='referenced_office_id' search_field='office_name' label='Change Office' type='office'
                 if office
                     with office
                         +office_card
-            
+        .row
+            .four.wide.column
+                +reference_customer key='referenced_customer_id' search_field='first_name' label='Change Customer' type='person'
+                with author
+                    +user_card
+            .eight.wide.column
+                +edit_image_field
+            .four.wide.column
+
         
 template(name='incident_view')
     .ui.padded.stackable.centered.grid
@@ -230,7 +235,7 @@ template(name='incident_view')
                     +office_card
                 if customer
                     with customer
-                        +person_card
+                        +user_card
                 +notify_button
                 +personality
                 +consumption_preferences

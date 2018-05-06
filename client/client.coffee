@@ -26,7 +26,7 @@ Template.registerHelper 'is_editing', () ->
 
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
 
-Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or Roles.userIsInRole(Meteor.userId(), 'admin')
+Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
 
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()         
 
@@ -69,7 +69,7 @@ Template.right_sidebar.onRendered ->
                     .sidebar({
                         context: $('.context.example .bottom.segment')
                         dimPage: false
-                        transition:  'slide out'
+                        transition:  'push'
                     })
                     .sidebar('attach events', '.toggle_right_sidebar.item')
                     # .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')

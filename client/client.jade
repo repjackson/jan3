@@ -47,29 +47,29 @@ template(name='not_found')
 
 
 template(name='left_sidebar')
-    .ui.left.vertical.very.thin.sidebar.inverted.blue.large.menu
+    .ui.left.vertical.thin.sidebar.inverted.blue.large.labeled.icon.menu
         // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
         //     i.home.large.icon
         //     |Jan-Pro
         a.toggle_left_sidebar.item(href='/users' class="{{isActivePath '/users'}}" data-position="right center" data-content='Users')
             // i.large.icon
-            +mini_sprite name='user-group-man-woman'
+            +tiny_sprite name='user-group-man-woman'
             // | Users
         a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="right center" data-content='Incidents')
             // i.large.icon
-            +mini_sprite name='urgent-property'
+            +tiny_sprite name='urgent-property'
             // | Incidents
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Offices')
             // i.large.icon
-            +mini_sprite name='organization'
+            +tiny_sprite name='organization'
             // | Offices
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Schedule')
             // i.large.icon
-            +mini_sprite name='calendar'
+            +tiny_sprite name='calendar'
             // | Schedule
         a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
             // i.large.icon
-            +mini_sprite name='duster'
+            +tiny_sprite name='duster'
             // | Services
         .ui.divider
         if currentUser
@@ -87,7 +87,7 @@ template(name='left_sidebar')
                 // i.large.icon
                 +mini_sprite name='user-shield'
                 // |Admin
-            // a.toggle_sidebar.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}" data-position="right center" data-content='Charts')
+            // a.toggle_sidebar.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}" data-position="right center" data-content='Charts')
             //     if currentUser.profile.first_name
             //         | #{currentUser.profile.first_name}
             //     else
@@ -109,7 +109,7 @@ template(name='left_sidebar')
 
 template(name='right_sidebar')
     .ui.right.inline.vertical.thin.sidebar.inverted.blue.large.menu
-        a.toggle_right_sidebar.header.item(href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
+        a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
             img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             | Profile
         a.toggle_right_sidebar.item(href='/alerts')

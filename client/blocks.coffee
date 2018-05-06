@@ -235,3 +235,32 @@ Template.office_map.onRendered ->
         id: 'mapbox.streets',
         accessToken: 'pk.eyJ1IjoicmVwamFja3NvbiIsImEiOiJjamc4dGtiYm4yN245MnFuNWMydWNuaXJlIn0.z3_-xuCT46yTC_6Zhl34kQ'
     }).addTo(mymap);
+
+
+
+Template.edit_author.onCreated ->
+    Meteor.subscribe 'usernames'
+
+Template.edit_author.events
+    "autocompleteselect input": (event, template, doc) ->
+        # console.log("selected ", doc)
+        if confirm 'Change author?'
+            Docs.update FlowRouter.getParam('doc_id'),
+                $set: author_id: doc._id
+            $('#author_select').val("")
+
+
+
+Template.edit_author.helpers
+    author_edit_settings: -> {
+        position: 'bottom'
+        limit: 10
+        rules: [
+            {
+                collection: Meteor.users
+                field: 'username'
+                matchAll: true
+                template: Template.user_pill
+            }
+            ]
+    }

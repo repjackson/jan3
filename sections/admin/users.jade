@@ -1,21 +1,23 @@
 template(name='users') 
     .ui.padded.stackable.grid
-        .four.wide.column 
-            +set_view_mode view='cards' icon='medium-icons' label='Cards'
-            +set_view_mode view='table' icon='data-sheet' label='Table'
-        .eight.wide.column 
-            h1.ui.center.aligned.grey.header 
-                +icon name='user-group-man-woman'
-                |Users
-        .four.wide.column 
-            a.ui.button(href='/user/add' data-content='Add User')
-                +mini_sprite name='add-user-male'
-        if viewing_cards
-            .ui.centered.stackable.cards
-                each users
-                    +user_card
-        if viewing_table
-            +user_table
+        .centered.row
+            .four.wide.column 
+                +set_view_mode view='cards' icon='medium-icons' label='Cards'
+                +set_view_mode view='table' icon='data-sheet' label='Table'
+            .eight.wide.column 
+                h1.ui.center.aligned.grey.header 
+                    +icon name='user-group-man-woman'
+                    |Users
+            .four.wide.column 
+                a.ui.button(href='/user/add' data-content='Add User')
+                    +mini_sprite name='add-user-male'
+        .centered.row
+            if viewing_cards
+                .ui.centered.stackable.cards
+                    each users
+                        +user_card
+            if viewing_table
+                +user_table
 
         
         
@@ -82,20 +84,15 @@ template(name='user_table')
                                 td 
                                     .ui.header 
                                         |#{name}
-                                    a.ui.header(href="/profile/#{_id}") #{username}
+                                    a.ui.header(href="/profile/#{username}") #{username}
                                     div
                                         each emails
                                             |#{address}
                                 td 
                                     +role_selector
                                 td
-                                    .ui.disabled.button
-                                        +avatar_sprite name='secured-letter'
-                                    a.ui.button(href="/account/profile/edit/#{_id}")
-                                        +avatar_sprite name='edit'
-                                    a.ui.button(href="/profile/#{_id}")
-                                        +avatar_sprite name='chevron-right'
-                                
-template(name='role_selector')
-    each user_roles
-        .ui.button #{name}
+                                    i.large.message.icon                                        
+                                    a(href="/profile/edit/#{_id}")
+                                        i.big.pencil.link.icon                                        
+                                    a(href="/profile/#{username}")
+                                        i.big.external.link.icon

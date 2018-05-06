@@ -23,25 +23,25 @@ template(name='nav')
             // | Home
         a.desktop.only.item(href='/users' class="{{isActivePath '/users'}}" data-position="top center" data-content='Users')
             // i.large.users.icon
-            +mini_sprite name='user-group-man-woman'
+            +avatar_sprite name='user-group-man-woman'
             // | &nbsp; Users
         a.desktop.only.item(href='/charts' class="{{isActivePath '/charts'}}" data-position="top center" data-content='Charts')
             // i.large.users.icon
-            +mini_sprite name='combo-chart'
+            +avatar_sprite name='combo-chart'
             // | &nbsp; Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="top center" data-content='Incidents')
-            +mini_sprite name='urgent-property'
+            +avatar_sprite name='urgent-property'
             // i.large.clipboard.icon
             // | &nbsp; Incidents
         a.desktop.only.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="top center" data-content='Offices')
-            +mini_sprite name='organization'
+            +avatar_sprite name='organization'
             // i.large.building.icon
             // | &nbsp; Offices
         a.desktop.only.item(href='/services' class="{{isActivePath '/services'}}" data-position="top center" data-content='Services')
-            +mini_sprite name='duster'
+            +avatar_sprite name='duster'
         // a.mobile.hidden.disabled.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
         a.desktop.only.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
-            +mini_sprite name='planner'
+            +avatar_sprite name='planner'
         // .mobile.hidden.item(href='/consumerables' class="{{isActivePath '/consumerables'}}" data-position="top center" data-content='Consumerables')
         // .mobile.hidden.item(data-position="top center" data-content='Consumerables')
         //     +dots name='toilet-paper'
@@ -79,7 +79,7 @@ template(name='nav')
                     else
                         .desktop.only #{currentUser.username}
                     //     | Profile
-                    // (href="/account/profile/edit/#{currentUser._id}" class="{{isActivePath '/account/profile/edit/#{currentUser._id}'}}")
+                    // (href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
                             
             else
                 a.ui.item(href='/sign-in') 

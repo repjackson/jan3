@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/account/profile/edit/:user_id', action: (params) ->
+    FlowRouter.route '/profile/edit/:user_id', action: (params) ->
         BlazeLayout.render 'layout',
             main: 'edit_profile'
     

@@ -57,3 +57,8 @@ template(name='role_view')
                 .ui.header Description: !{html}
                 +associated_users
                 +comments
+                
+                
+template(name='role_selector')
+    each user_roles
+        .toggle_role.ui.button #{name}            
