@@ -34,11 +34,21 @@ if Meteor.isClient
     
     Template.schema_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    Template.schema_view.onCreated ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc
+            @autorun -> Meteor.subscribe 'type', doc.slug
     
-    Template.schema_edit.helpers
-        schema: -> Doc.findOne FlowRouter.getParam('doc_id')
+    # Template.schema_edit.helpers
+    #     schema: -> Doc.findOne FlowRouter.getParam('doc_id')
         
+    Template.schema_view.helpers
+        schema_docs: -> 
+            schema = Docs.findOne FlowRouter.getParam('doc_id')
+            Docs.find type:schema.slug
         
+    Template.schema_view.events
+
     Template.schema_edit.events
         'click #delete': ->
             template = Template.currentData()
@@ -70,41 +80,36 @@ if Meteor.isClient
     Template.field_edit.events
         'click .remove_field': -> console.log @
 
-        'change .field_key': (e,t)->
-            text_value = e.currentTarget.value
-            console.log text_value
-            Docs.update { _id:FlowRouter.getParam('doc_id'), fields:@ },
-                { $set: "fields.$.key": text_value }
-                , (err,res)=>
-                    if err
-                        Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
-                    else
-                        Bert.alert "Updated Field Key to #{text_value}", 'success', 'growl-top-right'
 
         'change .field_title': (e,t)->
-            text_value = e.currentTarget.value
+            self = @
+            new_title = e.currentTarget.value
             doc_id = FlowRouter.getParam('doc_id')
-            console.log text_value
-            Meteor.call 'update_field_title', doc_id, @, text_value, (err,res)=>
+            Meteor.call 'update_field_title', doc_id, @, new_title, (err,res)=>
+                # if err
+                #     Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                # else
+                #     Bert.alert "Updated Field Title to #{new_title}", 'success', 'growl-top-right'
+            Meteor.call 'slugify', doc_id, @, new_title, (err,res)=>
                 if err
                     Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
                 else
-                    Bert.alert "Updated Field Title to #{text_value}", 'success', 'growl-top-right'
+                    console.log res
+                    Meteor.call 'update_field_slug', doc_id, @, res, (err,res)=>
 
-        'change .field_key': (e,t)->
+                
+
+        'change .field_slug': (e,t)->
             text_value = e.currentTarget.value
             doc_id = FlowRouter.getParam('doc_id')
-            console.log text_value
-            Meteor.call 'update_field_key', doc_id, @, text_value, (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated Field key to #{text_value}", 'success', 'growl-top-right'
+            # console.log text_value
+            Meteor.call 'update_field_slug', doc_id, @, text_value, (err,res)=>
+                # if err
+                #     Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                # else
+                #     Bert.alert "Updated Field slug to #{text_value}", 'success', 'growl-top-right'
 
 
-
-    
-            
     Template.select_field_type.helpers
         select_field_type_button_class: -> 
             # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -121,10 +126,10 @@ if Meteor.isClient
             field = Template.parentData()
             doc_id = FlowRouter.getParam('doc_id')
             Meteor.call 'update_field_type', doc_id, field, @value, (err,res)=>
-                if err
-                    Bert.alert "Error updating field type to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated field type to #{@value}", 'success', 'growl-top-right'
+                # if err
+                #     Bert.alert "Error updating field type to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
+                # else
+                #     Bert.alert "Updated field type to #{@value}", 'success', 'growl-top-right'
 
 
         # 'change .field_type': (e,t)->
@@ -139,9 +144,12 @@ Meteor.methods
         Docs.update { _id:doc_id, fields:field_object },
             { $set: "fields.$.title": title }
 
-    update_field_key: (doc_id, field_object, key)->
+    update_field_slug: (doc_id, field_object, slug)->
+        # console.log doc_id
+        # console.log field_object
+        # console.log slug
         Docs.update { _id:doc_id, fields:field_object },
-            { $set: "fields.$.key": key }
+            { $set: "fields.$.slug": slug }
 
 
     update_field_type: (doc_id, field_object, type)->
@@ -149,3 +157,11 @@ Meteor.methods
             { $set: "fields.$.type": type }
 
 
+    slugify: (doc_id, field_object, title)->
+        slug = title.toString().toLowerCase().replace(/\s+/g, '_').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '_').replace(/^-+/, '').replace(/-+$/,'')
+        return slug
+        # console.log field_object
+        # console.log doc_id
+        # # Docs.update { _id:doc_id, fields:field_object },
+        # Docs.update { _id:doc_id, fields:field_object },
+        #     { $set: "fields.$.slug": slug }

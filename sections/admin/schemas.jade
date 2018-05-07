@@ -17,14 +17,19 @@ template(name='schemas')
                         +schema_card
 
 template(name='schema_card')
-    .ui.card
+    .ui.fluid.card
         .content
             a.grey.header(href="/view/#{_id}")
                 |#{name} 
         .content
+            h5 Slug: #{slug}
             |!{html}
             each tags
                 .ui.label #{this}
+        .content
+            .ui.list
+                each fields
+                    .item #{title} (#{slug}) [#{type}]
         .content
             +edit_button
             +view_button
@@ -35,17 +40,20 @@ template(name='schema_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
+                +save_button
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Edit '#{name}' Schema
+            .three.wide.column
                 #delete.ui.icon.button
                     i.trash.icon
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit Schema #{name}
-            .three.wide.column
-                +save_button
-        .twelve.wide.column
-            .ui.form
-                +edit_text_field key='name' label='Schema Name'
-                +edit_array_field key='tags'
-                // +reference_type_multiple key='field_ids' label='Fields' type='field'
+        .centered.row
+            .four.wide.column
+                .ui.form
+                    +edit_text_field key='name' label='Schema Name'
+                    +edit_text_field key='slug' label='Slug'
+                    +edit_array_field key='tags'
+                    // +reference_type_multiple key='field_ids' label='Fields' type='field'
+            .twelve.wide.column
                 #add_field.ui.button
                     i.plus.icon
                     | field
@@ -63,23 +71,27 @@ template(name='field_edit')
                     input.field_title(type='text' value=title)
             .field
                 .ui.labeled.fluid.input
-                    .ui.label Key
-                    input.field_key(type='text' value=key)
+                    .ui.label slug
+                    input.field_slug(type='text' value=slug)
 
         // +edit_text_field key='key' label='Slug (lowercase title)'
         // +edit_text_field key='type' label='Type'
         +select_field_type key='field_type' value='date' label='Date'
         +select_field_type key='field_type' value='text' label='Text'
-        +select_field_type key='field_type' value='multiple_reference' label='Multiple Reference'
+        +select_field_type key='field_type' value='multiple_reference' label='Multiple References'
         +select_field_type key='field_type' value='single_reference' label='Single Reference'
         +select_field_type key='field_type' value='number' label='Number'
         +select_field_type key='field_type' value='address' label='Address'
+        +select_field_type key='field_type' value='phone' label='Phone'
+        +select_field_type key='field_type' value='html' label='HTML'
+        +select_field_type key='field_type' value='file' label='File'
+        +select_field_type key='field_type' value='user_reference' label='User Reference'
         .remove_field.ui.icon.large.button
             i.remove.icon
 
 
 template(name='select_field_type')
-    .select_field_type.ui.button(class=select_field_type_button_class) #{label}
+    .select_field_type.ui.small.compact.button(class=select_field_type_button_class) #{label}
 
         
 template(name='schema_view')
@@ -88,13 +100,26 @@ template(name='schema_view')
             .three.wide.column
                 +link_button link='/schemas' icon='chevron left' label='schemas'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header schema: #{name}
+                h1.ui.center.aligned.grey.header #{name} Schema
             .three.wide.column
                 +edit_button
         .row
-            .eight.wide.column
+            .twelve.wide.column
                 .ui.header Name: #{name}
-                .ui.header Description: !{html}
+                .ui.header Slug: #{slug}
+                | !{html}
+                each tags
+                    .ui.label #{this}
+                .ui.header Fields
+                .ui.list
+                    each fields
+                        .item #{title} (#{slug}) [#{type}]
+                .ui.segment
+                    .ui.header #{name} Docs
+                    +add_button type=slug
+                    each schema_docs
+                        h4 #{_id}
+            .four.wide.column
                 +comments
                 
                 
