@@ -26,7 +26,21 @@ if Meteor.isClient
     
     
     Template.tasks.helpers
-        tasks: -> Docs.find type:'task'
+        tasks: -> 
+            # Docs.find type:'task'
+            if Session.equals('view_complete', true)
+                Docs.find 
+                    type:'task'
+                    complete:true
+            if Session.equals('view_complete', false)
+                Docs.find 
+                    type:'task'
+                    complete:false
+            else
+                Docs.find 
+                    type:'task'
+        
+        
         editing_this_task: -> Session.equals 'editing_id', @_id
         
     Template.tasks.events

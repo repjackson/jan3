@@ -86,7 +86,7 @@ template(name='nav')
 
 
 template(name='left_sidebar')
-    .ui.left.vertical.thin.sidebar.inverted.labeled.icon.menu
+    .ui.left.vertical.thin.sidebar.inverted.menu
         // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
         //     i.home.large.icon
         //     |Jan-Pro
@@ -118,7 +118,7 @@ template(name='left_sidebar')
             // a.icon.item(href='/messages' class="{{isActivePath '/messages'}}" data-position="right center" data-content='Charts')
             //     i.mail.icon
             // if isInRole 'admin'
-            a.icon.toggle_left_sidebar.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}" data-position="right center" data-content='Admin')
+            a.icon.toggle_left_sidebar.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="right center" data-content='Admin')
                 i.large.shield.icon
                 // +mini_sprite name='user-shield'
                 |Admin
@@ -143,7 +143,7 @@ template(name='left_sidebar')
 
 
 template(name='right_sidebar')
-    .ui.right.inline.vertical.thin.sidebar.inverted.labeled.icon.menu
+    .ui.right.inline.vertical.thin.sidebar.inverted.menu
         a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
             img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             | Profile

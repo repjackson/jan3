@@ -19,7 +19,7 @@ template(name='admin')
     
     
 template(name='admin_nav')    
-    .ui.top.attached.six.item.compact.stackable.menu
+    .ui.top.attached.six.item.compact.large.stackable.menu
         a.item(href='/admin' class="{{isActivePath '/admin'}}")
             i.shield.icon
             | Admin
@@ -36,13 +36,14 @@ template(name='admin_nav')
             i.users.icon
             | Roles
         a.item(href='/rules' class="{{isActivePath '/rules'}}")
+            i.code.icon
             | Rules
     
     
         
 template(name='admin_rules')
     .ui.center.aligned.header
-        +icon name='serial-tasks'
+        i.code.icon
         | Rules
     .ui.header Action pipelines/SLA managment
     .ui.header eg, When incident of priority 'high' is created email 'local manager'

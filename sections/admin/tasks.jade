@@ -3,6 +3,8 @@ template(name='tasks')
         .centered.row
             .four.wide.column
                 +add_button type='task'
+                +set_session_button key='view_complete' value=true label='complete'
+                +set_session_button key='view_complete' value=false label='incomplete'
                 +tag_facet
             .twelve.wide.column
                 .ui.cards
@@ -137,7 +139,7 @@ template(name='task_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +link_button link='/admin/tasks' icon='tasks' label='Tasks'
+                +link_button link='/tasks' icon='tasks' label='Tasks'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header view #{title}
             .three.wide.column

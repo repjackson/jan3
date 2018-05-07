@@ -152,13 +152,13 @@ template(name='incident_edit')
                     +edit_html_field
                     // +edit_textarea key='incident_details' label='Details'
             .four.wide.column
-                +reference_office key='referenced_office_id' search_field='office_name' label='Change Office' type='office'
+                // +reference_office key='referenced_office_id' search_field='office_name' label='Change Office' type='office'
                 if office
                     with office
                         +office_card
         .row
             .four.wide.column
-                +reference_customer key='referenced_customer_id' search_field='first_name' label='Change Customer' type='person'
+                // +reference_customer key='referenced_customer_id' search_field='first_name' label='Change Customer' type='person'
                 with author
                     +user_card
             .eight.wide.column
@@ -170,67 +170,85 @@ template(name='incident_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
-                +link_button link='/incidents' label='incidents' icon='urgent-property'
+                +link_button link='/incidents' label='incidents' icon='clipboard'
             .ten.wide.center.aligned.column
                 h1.ui.header Incident ##{incident_number}
             .three.wide.center.aligned.column
                 +edit_button
-
         .row
-            .four.wide.column
-                .ui.segment
-                    .ui.header
-                        | Logged
-                        +author_info
-                    h2.ui.sub.header #{when}
-                    .ui.large.relaxed.list
-                        +list_item key='customer_id' label='Customer ID' icon='user'
-                        +list_item icon='hashtag' label='Number' key='incident_number'
-                        +list_item icon='calendar' label='Date' key='incident_date'
-                        +list_item icon='file.image' label='Associated Documents'
-                    .ui.header
-                        +incident_type_label
-                    .ui.header #{formal_when}
-                +call_watson
-                if watson
-                    +doc_sentiment
-                    +doc_emotion
-                    +tone
-                    +concepts
-                    +categories
+            .ui.top.attached.tabular.large.four.item.menu
+                a.active.item(data-tab='info') Info
+                a.item(data-tab='talk') Talk
+                a.item(data-tab='status') Status
+                a.item(data-tab='analysis') Analysis
+            .ui.bottom.attached.active.tab.segment(data-tab='info')
+                .ui.padded.stackable.centered.grid
+                    .four.wide.column
+                        .ui.segment
+                            .ui.header
+                                | Logged
+                                +author_info
+                            h2.ui.sub.header #{when}
+                            .ui.large.relaxed.list
+                                +list_item key='customer_id' label='Customer ID' icon='user'
+                                +list_item icon='hashtag' label='Number' key='incident_number'
+                                +list_item icon='calendar' label='Date' key='incident_date'
+                                +list_item icon='file.image' label='Associated Documents'
+                            .ui.header
+                                +incident_type_label
+                            .ui.header #{formal_when}
+                    .eight.wide.column
+                        .ui.basic.segment
+                            .large130 {{nl2br incident_details}}
+                        if image_id
+                            img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
+                            +call_visual_analysis
+                            if visual
+                                each visual
+                                    .ui.basic.label(title=type_hierarchy)
+                                        | #{class} {{to_percent score }}%
+                    .four.wide.column
+                        if customer
+                            with customer
+                                +user_card
+                        with office
+                            +office_card
+            .ui.bottom.attached.tab.segment(data-tab='status')
+                .ui.padded.stackable.centered.grid
+                    .eight.wide.column
+                        +incident_status
+            .ui.bottom.attached.tab.segment(data-tab='talk')
+                .ui.padded.stackable.centered.grid
+                    .eight.wide.column
+                        +comments
+                    .four.wide.column
+                        +notify_button
+            .ui.bottom.attached.tab.segment(data-tab='analysis')
+                .ui.padded.stackable.centered.grid
+                    .four.wide.column
+                        +call_watson
+                        if watson
+                            +doc_sentiment
+                            +doc_emotion
+                            +tone
+                            +concepts
+                            +categories
+                    .eight.wide.column
+                        +semantic_roles
+                        +relations
+                        // .ui.styled.accordion
+                        //     .title 
+                        //         i.code.icon
+                        //         |full analysis data
+                        //         i.dropdown.icon
+                        //     .content
+                        //         +jsonView(json=watson)
+                        .ui.hidden.divider
+                        +keywords
+                    .four.wide.column
+                        +personality
+                        +consumption_preferences
 
-            .eight.wide.column
-                .ui.basic.segment
-                    .large130 {{nl2br incident_details}}
-                if image_id
-                    img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                    +call_visual_analysis
-                    if visual
-                        each visual
-                            .ui.basic.label(title=type_hierarchy)
-                                | #{class} {{to_percent score }}%
-                // +semantic_roles
-                // +relations
-                // .ui.styled.accordion
-                //     .title 
-                //         i.code.icon
-                //         |full analysis data
-                //         i.dropdown.icon
-                //     .content
-                //         +jsonView(json=watson)
-                .ui.hidden.divider
-                +keywords
-                +comments
-                +incident_status
-            .four.wide.column
-                with office
-                    +office_card
-                if customer
-                    with customer
-                        +user_card
-                +notify_button
-                +personality
-                +consumption_preferences
                             
 template(name='incident_level_set')
     .set_level.ui.compact.button(title='Set Level')
