@@ -178,13 +178,12 @@ template(name='link_button')
         i.large.icon(class=icon)
 
 template(name='edit_author')
-    .ui.segment
-        .ui.header Edit Author
-        with author
-            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-            |#{username}
-        .ui.input
-            +inputAutocomplete settings=author_edit_settings id="author_select" class="" autocomplete="off" placeholder='Lookup...'
+    .ui.header Edit Author
+    with author
+        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        |#{username}
+    .ui.input
+        +inputAutocomplete settings=author_edit_settings id="author_select" class="" autocomplete="off" placeholder='Lookup...'
                     
 
 

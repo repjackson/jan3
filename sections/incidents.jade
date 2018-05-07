@@ -176,38 +176,37 @@ template(name='incident_view')
             .three.wide.center.aligned.column
                 +edit_button
         .row
-            .ui.top.attached.tabular.large.five.item.menu
-                a.active.item(data-tab='info') 
-                    i.info.icon
-                    |Info
-                a.item(data-tab='talk') 
-                    i.chat.icon
-                    |Talk
-                a.item(data-tab='status') 
-                    i.clock.icon
-                    |Status
-                a.item(data-tab='analysis') 
-                    i.line.chart.icon
-                    |Analysis
-                a.item(data-tab='activity') 
-                    i.rss.icon
-                    | Activity
+            .ui.top.attached.tabular.large.five.item.icon.menu
+                a.active.icon.item(data-tab='info') 
+                    i.large.info.icon
+                    // |Info
+                a.icon.item(data-tab='talk') 
+                    i.large.chat.icon
+                    // |Talk
+                a.icon.item(data-tab='status') 
+                    i.large.clock.icon
+                    // |Status
+                a.icon.item(data-tab='analysis') 
+                    i.large.line.chart.icon
+                    // |Analysis
+                a.icon.item(data-tab='activity') 
+                    i.large.rss.icon
+                    // | Activity
             .ui.bottom.attached.active.tab.segment(data-tab='info')
                 .ui.padded.stackable.centered.grid
                     .four.wide.column
-                        .ui.segment
-                            .ui.header
-                                | Logged
-                                +author_info
-                            h2.ui.sub.header #{when}
-                            .ui.large.relaxed.list
-                                +list_item key='customer_id' label='Customer ID' icon='user'
-                                +list_item icon='hashtag' label='Number' key='incident_number'
-                                +list_item icon='calendar' label='Date' key='incident_date'
-                                +list_item icon='file.image' label='Associated Documents'
-                            .ui.header
-                                +incident_type_label
-                            .ui.header #{formal_when}
+                        .ui.header
+                            | Logged
+                            +author_info
+                        h2.ui.sub.header #{when}
+                        .ui.large.relaxed.list
+                            +list_item key='customer_id' label='Customer ID' icon='user'
+                            +list_item icon='hashtag' label='Number' key='incident_number'
+                            +list_item icon='calendar' label='Date' key='incident_date'
+                            +list_item icon='file.image' label='Associated Documents'
+                        .ui.header
+                            +incident_type_label
+                        .ui.header #{formal_when}
                     .eight.wide.column
                         .ui.basic.segment
                             .large130 {{nl2br incident_details}}
@@ -230,10 +229,10 @@ template(name='incident_view')
                         +incident_status
             .ui.bottom.attached.tab.segment(data-tab='talk')
                 .ui.padded.stackable.centered.grid
-                    .eight.wide.column
-                        +comments
                     .four.wide.column
                         +notify_button
+                    .twelve.wide.column
+                        +comments
             .ui.bottom.attached.tab.segment(data-tab='activity')
                 .ui.padded.stackable.centered.grid
                     .eight.wide.column

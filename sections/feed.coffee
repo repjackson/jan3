@@ -6,7 +6,7 @@ if Meteor.isClient
             BlazeLayout.render 'layout', 
                 main: 'feed'
 
-    Template.charts.onCreated ->
+    Template.feed.onCreated ->
         @autorun => Meteor.subscribe 'facet', 
             selected_tags.array()
             selected_keywords.array()
@@ -18,6 +18,6 @@ if Meteor.isClient
 
 
 
-    Template.charts.helpers
-        charts: -> Docs.find type:'chart'
+    Template.feed.helpers
+        feed: -> Docs.find type:'event'
                 

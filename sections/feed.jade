@@ -1,10 +1,10 @@
 template(name='feed')
     .ui.padded.grid
-        .row
+        .centered.row
             .ui.center.aligned.header
                 i.rss.icon
                 | Feed
         .row
-            each events
-                .ui.feed
-                    .event hi
+            each feed_events
+                .item
+                    .ui.header hi

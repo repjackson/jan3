@@ -58,45 +58,41 @@ template(name='call_visual_analysis')
         |Tag
 
 template(name='keywords')
-    .ui.fluid.styled.accordion
-        .active.title
-            .ui.header 
-                |#{watson.keywords.length} Keywords
-                i.dropdown.icon
-        .active.content
-            .ui.three.stackable.cards
-                each watson.keywords
-                    .ui.card
-                        .content
-                            h4
-                                |#{text}
-                            .meta
-                                |{{ to_percent relevance }}% Relevant
-                            .meta
-                                |Sentiment: {{ to_percent sentiment.score }}%
-                            .description
-                                with emotion
-                                    .ui.list
-                                        .ui.blue.small.progress(data-percent=sadness_percent title="{{to_percent sadness}}% sadness")
-                                            .bar
-                                            .progress
-                                            .label {{ to_percent sadness }}% Sadness
-                                        .ui.green.small.progress(data-percent=joy_percent title="{{to_percent joy}}% joy")
-                                            .bar
-                                            .progress
-                                            .label {{ to_percent joy }}% Joy 
-                                        .ui.black.small.progress(data-percent=fear_percent title="{{to_percent fear}}% fear")
-                                            .bar
-                                            .progress
-                                            .label {{ to_percent fear }}% Fear
-                                        .ui.yellow.small.progress(data-percent=disgust_percent title="{{to_percent joy}}% joy")
-                                            .bar
-                                            .progress
-                                            .label {{ to_percent disgust }}% Disgust 
-                                        .ui.red.small.progress(data-percent=anger_percent title="{{to_percent joy}}% joy")
-                                            .bar
-                                            .progress
-                                            .label {{ to_percent anger }}% Anger 
+    .ui.header 
+        |#{watson.keywords.length} Keywords
+    .ui.three.stackable.cards
+        each watson.keywords
+            .ui.card
+                .content
+                    h4
+                        |#{text}
+                    .meta
+                        |{{ to_percent relevance }}% Relevant
+                    .meta
+                        |Sentiment: {{ to_percent sentiment.score }}%
+                    .description
+                        with emotion
+                            .ui.list
+                                .ui.blue.small.progress(data-percent=sadness_percent title="{{to_percent sadness}}% sadness")
+                                    .bar
+                                    .progress
+                                    .label {{ to_percent sadness }}% Sadness
+                                .ui.green.small.progress(data-percent=joy_percent title="{{to_percent joy}}% joy")
+                                    .bar
+                                    .progress
+                                    .label {{ to_percent joy }}% Joy 
+                                .ui.black.small.progress(data-percent=fear_percent title="{{to_percent fear}}% fear")
+                                    .bar
+                                    .progress
+                                    .label {{ to_percent fear }}% Fear
+                                .ui.yellow.small.progress(data-percent=disgust_percent title="{{to_percent joy}}% joy")
+                                    .bar
+                                    .progress
+                                    .label {{ to_percent disgust }}% Disgust 
+                                .ui.red.small.progress(data-percent=anger_percent title="{{to_percent joy}}% joy")
+                                    .bar
+                                    .progress
+                                    .label {{ to_percent anger }}% Anger 
 
 
 template(name='entities')
@@ -214,21 +210,18 @@ template(name='consumption_preferences')
 
 
 template(name='tone')
-    .ui.styled.fluid.accordion
-        .active.title 
-            h3
-                | Document Tone
-                i.dropdown.icon
-        .active.content
-            .ui.bulleted.list
-                each tone.document_tone.tones
-                    .item #{tone_id} {{ to_percent score }}%
-            .ui.list
-                each tone.sentences_tone
-                    .item
-                        strong #{sentence_id}: 
-                        | #{text}
-                        each tones
-                            .ui.basic.label #{tone_id} {{ to_percent score }}%
-            i#call_tone.refresh.large.link.icon(title='Refresh Tone Analysis')
-                // +jsonView(json=tone)
+    h3
+        | Document Tone
+    .ui.bulleted.list
+        each tone.document_tone.tones
+            .item #{tone_id} {{ to_percent score }}%
+    .ui.list
+        each tone.sentences_tone
+            .item
+                strong #{sentence_id}: 
+                | #{text}
+                each tones
+                    .ui.basic.label #{tone_id} {{ to_percent score }}%
+    #call_tone.ui.icon.button(title='Refresh Tone Analysis')
+        i.refresh.icon
+        // +jsonView(json=tone)

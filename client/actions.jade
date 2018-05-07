@@ -127,23 +127,19 @@ template(name='resonate_button')
         
 template(name='notify_button')
     if currentUser
-        .ui.fluid.styled.accordion
-            .active.title 
-                i.large.bell.icon
-                |Notify Someone
-                i.dropdown.icon
-            .active.content
-                .ui.fluid.input
-                    +inputAutocomplete settings=recipient_select_settings id="recipient_select" class="" autocomplete="off" placeholder='Lookup...'
-                .ui.header Notified People
-                .ui.list
-                    each notified_users
-                        .item
-                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            .content
-                                |#{username}
-                            .right.floated.content
-                                i.remove_notified_user.large.link.red.remove.icon
+        h3
+            i.large.bell.icon
+            |Notify Someone
+    .ui.fluid.input
+        +inputAutocomplete settings=recipient_select_settings id="recipient_select" class="" autocomplete="off" placeholder='Lookup...'
+    .ui.list
+        each notified_users
+            .item
+                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                .content
+                    |#{username}
+                .right.floated.content
+                    i.remove_notified_user.large.link.red.remove.icon
                 
 template(name='mark_read_button')
     if currentUser

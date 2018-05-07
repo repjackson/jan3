@@ -19,25 +19,25 @@ template(name='admin')
     
     
 template(name='admin_nav')    
-    .ui.top.attached.six.item.compact.large.stackable.menu
+    .ui.top.attached.six.item.icon.large.stackable.menu
         a.item(href='/admin' class="{{isActivePath '/admin'}}")
-            i.shield.icon
-            | Admin
+            i.large.shield.icon
+            // | Admin
         a.item(href='/users' class="{{isActivePath '/users'}}")
-            i.users.icon
-            | Users
+            i.large.users.icon
+            // | Users
         a.item(href='/tasks' class="{{isActivePath '/tasks'}}")
-            i.tasks.icon
-            | Tasks
+            i.large.tasks.icon
+            // | Tasks
         a.item(href='/schemas' class="{{isActivePath '/schemas'}}")
-            i.database.icon
-            | Schemas
+            i.large.database.icon
+            // | Schemas
         a.item(href='/roles' class="{{isActivePath '/roles'}}")
-            i.users.icon
-            | Roles
+            i.large.users.icon
+            // | Roles
         a.item(href='/rules' class="{{isActivePath '/rules'}}")
-            i.code.icon
-            | Rules
+            i.large.code.icon
+            // | Rules
     
     
         

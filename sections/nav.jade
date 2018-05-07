@@ -59,12 +59,14 @@ template(name='nav')
                 i.comments.large.icon
             // a.icon.mobile.hidden.item(href='/cart')
             //     +mini_sprite name='shopping-cart'
-            a.icon.desktop.only.item(href='/mail' class="{{isActivePath '/mail'}}")
-                i.envelope.large.icon
-            a.ui.simple.dropdown.icon.desktop.only.item(href='/alerts' class="{{isActivePath '/alerts'}}")
-                i.bell.large.icon
-                .menu
-                    .item No alerts
+            // a.icon.desktop.only.item(href='/mail' class="{{isActivePath '/mail'}}")
+            //     i.envelope.large.icon
+            a.icon.desktop.only.item(href='/feed' class="{{isActivePath '/feed'}}")
+                i.rss.large.icon
+            // a.ui.simple.dropdown.icon.desktop.only.item(href='/alerts' class="{{isActivePath '/alerts'}}")
+            //     i.bell.large.icon
+            //     .menu
+            //         .item No alerts
             if currentUser
                 a.toggle_right_sidebar.item
                     if currentUser.profile.image_id
@@ -152,6 +154,9 @@ template(name='right_sidebar')
             // | Alerts
         a.toggle_right_sidebar.item(href='/mail')
             i.envelope.icon
+            // | Mail
+        a.toggle_right_sidebar.item(href='/feed')
+            i.rss.icon
             // | Mail
         a.toggle_right_sidebar.item(href='/chat')
             i.chat.icon
