@@ -14,12 +14,13 @@ template(name='schema_card')
         .content
             a.grey.header(href="/view/#{_id}")
                 |#{name} 
-        .content
             h5 Slug: #{slug}
-            |!{html}
+        if html
+            .content
+                |!{html}
+        .content
             each tags
                 .ui.label #{this}
-        .content
             .ui.list
                 each fields
                     .item #{title} (#{slug}) [#{type}]

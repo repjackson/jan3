@@ -72,7 +72,7 @@ template(name='timestamp_facet')
     div
     // +mini_inline_sprite name='timer'
     if timestamp_tags
-        .ui.left.icon.small.inline.input
+        .ui.left.icon.fluid.input
             i.clock.icon
             +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Time Tags'
     |&nbsp;    
@@ -112,7 +112,7 @@ template(name='keyword_facet')
     // +mini_inline_sprite name='tags'
     // |&nbsp;   
     if keywords
-        .ui.left.icon.small.input
+        .ui.left.icon.small.fluid.input
             i.tags.icon
             +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Tags'
     if selected_keywords

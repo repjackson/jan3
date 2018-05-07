@@ -196,27 +196,27 @@ template(name='incident_view')
                 .ui.padded.stackable.centered.grid
                     .four.wide.column
                         .ui.header
-                            | Logged
+                            // | Logged
                             +author_info
                         h2.ui.sub.header #{when}
                         .ui.large.relaxed.list
                             +list_item key='customer_id' label='Customer ID' icon='user'
                             +list_item icon='hashtag' label='Number' key='incident_number'
                             +list_item icon='calendar' label='Date' key='incident_date'
-                            +list_item icon='file.image' label='Associated Documents'
-                        .ui.header
-                            +incident_type_label
+                            // +list_item icon='file.image' label='Associated Documents'
+                        +incident_type_label
                         .ui.header #{formal_when}
                     .eight.wide.column
                         .ui.basic.segment
                             .large130 {{nl2br incident_details}}
                         if image_id
                             img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                            +call_visual_analysis
                             if visual
                                 each visual
                                     .ui.basic.label(title=type_hierarchy)
                                         | #{class} {{to_percent score }}%
+                            else
+                                +call_visual_analysis
                     .four.wide.column
                         if customer
                             with customer
@@ -241,12 +241,13 @@ template(name='incident_view')
             .ui.bottom.attached.tab.segment(data-tab='analysis')
                 .ui.padded.stackable.centered.grid
                     .four.wide.column
-                        +call_watson
                         if watson
                             +doc_sentiment
                             +doc_emotion
                             +concepts
                             +categories
+                        else
+                            +call_watson
                     .eight.wide.column
                         // +semantic_roles
                         +tone
@@ -271,108 +272,108 @@ template(name='incident_level_set')
         |#{level}
                         
                         
-template(name='incident_type_label')                    
-    .ui.basic.label(class=type_label_class) #{incident_type_label}
+template(name='incident_type_label')      
+    if incident_type_label
+        .ui.basic.label(class=type_label_class) #{incident_type_label}
 
 
 template(name='incident_status')
-    .ui.header 
-        i.tasks.icon
-        |Status (current level: #{current_level})
-    .ui.styled.accordion
-        .title
-            h3
-                i.edit.icon
-                | Submit
-                i.dropdown.icon
-        .content    
-            .description
-                .ui.segment
-                    h4.ui.header
-                        .ui.toggle.checkbox
-                            input(type="checkbox" checked="checked")
-                            // label 2
+    .ui.padded.grid
+        .four.wide.column
+            .ui.header 
+                i.tasks.icon
+                |Status (current level: #{current_level})
+        .twelve.wide.column
+            .ui.segment
+                h3
+                    i.edit.icon
+                    | Submit
+            .ui.divider
+            .ui.segment
+                h4.ui.header
+                    .ui.toggle.checkbox
+                        input(type="checkbox" checked="checked")
+                        // label 2
 
-                        |Fields Completed
-                    |Fill in required fields to submit for processing
-                .ui.segment
-                    h4.ui.header
-                        .ui.toggle.checkbox
-                            input(type="checkbox" checked="checked")
-                            // label 2
+                    |Fields Completed
+                |Fill in required fields to submit for processing
+            .ui.divider
+            .ui.segment
+                h4.ui.header
+                    .ui.toggle.checkbox
+                        input(type="checkbox" checked="checked")
+                        // label 2
 
-                        |Processed
-                .ui.segment
-                    h4.ui.header
-                        .ui.toggle.checkbox
-                            input(type="checkbox" checked="checked")
-                            // label 2
+                    |Processed
+            .ui.divider
+            .ui.segment
+                h4.ui.header
+                    .ui.toggle.checkbox
+                        input(type="checkbox" checked="checked")
+                        // label 2
 
-                        |Completed within SLA
+                    |Completed within SLA
             +incident_level_set level=1
-        .title
+            .ui.divider
             h3
                 i.circle.outline.icon
                 | Level 2
                 i.dropdown.icon
-        .content    
             .description
                 .ui.segment
                     h4.ui.header
                         .ui.toggle.checkbox
                             input(type="checkbox" checked="checked")
                             // label 2
-
+    
                         |Processed
                 .ui.segment
                     h4.ui.header
                         .ui.toggle.checkbox
                             input(type="checkbox" checked="checked")
                             // label 2
-
+    
                         |Completed within SLA
             +incident_level_set level=2
-        .title
+            .ui.divider
             h3
                 i.dot.circle.outline.icon
                 | Level 3
                 i.dropdown.icon
-        .content
             .description
                 .ui.segment
                     h4.ui.header
                         .ui.toggle.checkbox
                             input(type="checkbox" checked="checked")
                             // label 2
-
+    
                         |Processed
                 .ui.segment
                     h4.ui.header
                         .ui.toggle.checkbox
                             input(type="checkbox" checked="checked")
                             // label 2
-
+    
                         |Completed within SLA
             +incident_level_set level=3
-        .title
+            .ui.divider
             h3
                 i.checkmark.icon
                 | Satisfaction Survey
                 i.dropdown.icon
-        .content
             .description
                 .ui.segment
                     h4.ui.header
                         .ui.toggle.checkbox
                             input(type="checkbox" checked="checked")
                             // label 2
-
+    
                         |Processed
                 .ui.segment
                     h4.ui.header
                         .ui.toggle.checkbox
                             input(type="checkbox" checked="checked")
                             // label 2
-
+    
                         |SLA
             +incident_level_set level=4

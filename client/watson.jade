@@ -96,36 +96,33 @@ template(name='keywords')
 
 
 template(name='entities')
-    .ui.segment
-        .ui.header 
-            |#{watson.entities.length} Entities
-        .ui.list
-            each watson.entities
-                .item
-                    |#{type}: #{text}
+    .ui.header 
+        |#{watson.entities.length} Entities
+    .ui.list
+        each watson.entities
+            .item
+                |#{type}: #{text}
 
 template(name='concepts')
-    .ui.segment
-        .ui.header 
-            |#{watson.concepts.length} Concepts
-        .ui.list
-        each watson.concepts
-            .item
-                a(href=dbpedia_resource target='_blank') #{text}
-                | {{to_percent relevance}}%
+    .ui.header 
+        |#{watson.concepts.length} Concepts
+    .ui.list
+    each watson.concepts
+        .item
+            a(href=dbpedia_resource target='_blank') #{text}
+            | {{to_percent relevance}}%
 
 
 
 
 template(name='categories')
-    .ui.segment
-        .ui.header 
-            |#{watson.categories.length} Categories
-        .ui.list
-            each watson.categories
-                .item
-                    strong #{label}
-                    |{{ to_percent score }}%
+    .ui.header 
+        |#{watson.categories.length} Categories
+    .ui.list
+        each watson.categories
+            .item
+                strong #{label}
+                |{{ to_percent score }}%
 
 
 template(name='semantic_roles')
@@ -155,34 +152,30 @@ template(name='relations')
 
 template(name='personality')
     if personality
-        .ui.styled.accordion
-            .active.title
-                h3
-                    | #{customer.first_name} Personality 
-                    i.dropdown.icon
-            .active.content   
-                each personality.personality
-                    h4.ui.header
-                        |#{name} {{ to_percent percentile }}%
-                    .ui.list
-                        each children
-                            .item #{name} {{ to_percent percentile }}%
-                .ui.header Needs
+        h3
+            | #{customer.first_name} Personality 
+        each personality.personality
+            h4.ui.header
+                |#{name} {{ to_percent percentile }}%
+            .ui.list
+                each children
+                    .item #{name} {{ to_percent percentile }}%
+        .ui.header Needs
+        .ui.list
+            each personality.needs
+                .item #{name} {{ to_percent percentile }}%
+        .ui.header Values
+        .ui.list
+            each personality.values
+                .item #{name} {{ to_percent percentile }}%
+        if personality.behavior
+            .title 
+                | Behavior
+                i.dropdown.icon
+            .content
                 .ui.list
-                    each personality.needs
-                        .item #{name} {{ to_percent percentile }}%
-                .ui.header Values
-                .ui.list
-                    each personality.values
-                        .item #{name} {{ to_percent percentile }}%
-                if personality.behavior
-                    .title 
-                        | Behavior
-                        i.dropdown.icon
-                    .content
-                        .ui.list
-                            each personality.behavior
-                                .item #{name} {{ to_percent percentage }}%
+                    each personality.behavior
+                        .item #{name} {{ to_percent percentage }}%
     else
         // p Not enough words to analyze author personality
     #call_personality.ui.icon.button(title='analyze personality')
@@ -191,20 +184,16 @@ template(name='personality')
 
 template(name='consumption_preferences')
     if personality
-        .ui.styled.accordion
-            .active.title
-                h3.ui.header
-                    |#{customer.first_name} Preferences
-                    i.dropdown.icon
-            .active.content
-                each personality.consumption_preferences
-                    h3.ui.header #{name}
-                    .ui.list
-                        each consumption_preferences
-                            if score
-                                .item #{name}
-                            else
-                                .disabled.item #{name}
+        h3.ui.header
+            |#{customer.first_name} Preferences
+        each personality.consumption_preferences
+            h3.ui.header #{name}
+            .ui.list
+                each consumption_preferences
+                    if score
+                        .item #{name}
+                    else
+                        .disabled.item #{name}
             // +jsonView(json=personality.consumption_preferences)
 
 
@@ -222,6 +211,7 @@ template(name='tone')
                 | #{text}
                 each tones
                     .ui.basic.label #{tone_id} {{ to_percent score }}%
-    #call_tone.ui.icon.button(title='Refresh Tone Analysis')
-        i.refresh.icon
-        // +jsonView(json=tone)
+    unless tone                
+        #call_tone.ui.icon.button(title='Refresh Tone Analysis')
+            i.refresh.icon
+            // +jsonView(json=tone)
