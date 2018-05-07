@@ -2,43 +2,42 @@ template(name='admin')
     h1.ui.center.aligned.grey.header 
         i.shield.icon
         // |Admin
-    .ui.centered.cards
-        .card
-            .content
-                .ui.header Users
-        .card
-            .content
-                .ui.header Tasks
-        .card
-            .content
-                .ui.header Roles
-        .card
-            .content
-                .ui.header Rules
-    
+    // .ui.centered.cards
+        // .card
+        //     .content
+        //         .ui.header Users
+        // .card
+        //     .content
+        //         .ui.header Tasks
+        // .card
+        //     .content
+        //         .ui.header Roles
+        // .card
+        //     .content
+        //         .ui.header Rules
+    +add_button type='schema'
     
     
     
 template(name='admin_nav')    
-    .ui.top.attached.five.item.compact.stackable.menu
+    .ui.top.attached.six.item.compact.stackable.menu
         a.item(href='/admin' class="{{isActivePath '/admin'}}")
             i.shield.icon
-            | admin
-        a.item(href='/admin/users' class="{{isActivePath '/admin/users'}}")
+            | Admin
+        a.item(href='/users' class="{{isActivePath '/users'}}")
             i.users.icon
-            | users
-        a.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}")
+            | Users
+        a.item(href='/tasks' class="{{isActivePath '/tasks'}}")
             i.tasks.icon
-            | tasks
-        a.item(href='/admin/roles' class="{{isActivePath '/admin/roles'}}")
+            | Tasks
+        a.item(href='/schemas' class="{{isActivePath '/schemas'}}")
+            i.database.icon
+            | Schemas
+        a.item(href='/roles' class="{{isActivePath '/roles'}}")
             i.users.icon
-            | roles
-        // a.item(href='/admin/roles /admin/roles' class="{{isActivePath '/admin/roles'}}")
-        //     +mini_sprite name='administrative-tools'
-        //     |&nbsp;
-        //     | Notification Settings
-        a.item(href='/admin/rules' class="{{isActivePath '/admin/rules'}}")
-            | rules
+            | Roles
+        a.item(href='/rules' class="{{isActivePath '/rules'}}")
+            | Rules
     
     
         
@@ -48,7 +47,6 @@ template(name='admin_rules')
         | Rules
     .ui.header Action pipelines/SLA managment
     .ui.header eg, When incident of priority 'high' is created email 'local manager'
-        
         
         
         

@@ -2,10 +2,10 @@ template(name='incidents')
     .ui.stackable.padded.centered.grid
         .centered.row
             .three.wide.column
-                +set_view_mode view='cards' icon='medium-icons' label='Cards View'
+                +set_view_mode view='cards' icon='clone' label='Cards View'
                 +set_view_mode view='list' icon='list' label='List View'
-                +set_view_mode view='table' icon='data-sheet' label='Table View'
-                +set_view_mode view='charts' icon='combo-chart' label='Graph View'
+                +set_view_mode view='table' icon='table' label='Table View'
+                +set_view_mode view='charts' icon='line chart' label='Graph View'
                 +add_button type='incident' label='Incident'
                 // .ui.basic.center.aligned.segment
                 .ui.hidden.divider

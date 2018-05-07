@@ -185,16 +185,16 @@ Template.toggle_key.helpers
 
 Template.toggle_key.events
     'click #toggle_key': ->
-        # console.log @
-        if @value
-            Docs.update FlowRouter.getParam('doc_id'), 
-                $set: "#{@key}": "#{@value}"
-        else if Template.parentData()["#{@key}"] is true
-            Docs.update FlowRouter.getParam('doc_id'), 
-                $set: "#{@key}": false
-        else
-            Docs.update FlowRouter.getParam('doc_id'), 
-                $set: "#{@key}": true
+        console.log Template.parentData()
+        # if @value
+        #     Docs.update FlowRouter.getParam('doc_id'), 
+        #         $set: "#{@key}": "#{@value}"
+        # else if Template.parentData()["#{@key}"] is true
+        #     Docs.update FlowRouter.getParam('doc_id'), 
+        #         $set: "#{@key}": false
+        # else
+        #     Docs.update FlowRouter.getParam('doc_id'), 
+        #         $set: "#{@key}": true
 
 
 

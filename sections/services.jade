@@ -1,15 +1,8 @@
 template(name='services')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .three.wide.column
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header
-                    +icon name='duster'
-                    | Services
-            .three.wide.column
-                +add_button type='service' label='Service'
-        .centered.row
             .four.wide.column
+                +add_button type='service' label='Service'
                 .ui.dividing.header Filter
             .twelve.wide.column
                 .ui.centered.stackable.cards

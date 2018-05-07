@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/admin/tasks', action: ->
+    FlowRouter.route '/tasks', action: ->
         BlazeLayout.render 'layout', 
             sub_nav:'admin_nav'
             main: 'tasks'

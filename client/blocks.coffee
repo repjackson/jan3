@@ -11,9 +11,9 @@ Template.add_button.events
         FlowRouter.go "/edit/#{id}"
 
 
-Template.reference_office.onCreated ->
+Template.reference_type_single.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], @data.type
-Template.reference_customer.onCreated ->
+Template.reference_type_multiple.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], @data.type
 
 Template.associated_users.onCreated ->
@@ -27,7 +27,7 @@ Template.associated_incidents.helpers
     incidents: -> Docs.find type:'incident'
 
 
-Template.reference_office.helpers
+Template.reference_type_single.helpers
     settings: -> 
         # console.log @
         {
@@ -44,7 +44,7 @@ Template.reference_office.helpers
             ]
         }
 
-Template.reference_customer.helpers
+Template.reference_type_multiple.helpers
     settings: -> 
         # console.log @
         {
@@ -62,7 +62,7 @@ Template.reference_customer.helpers
         }
 
 
-Template.reference_office.events
+Template.reference_type_single.events
     'autocompleteselect #search': (event, template, doc) ->
         # console.log 'selected ', doc
         searched_value = doc["#{template.data.key}"]
@@ -72,14 +72,16 @@ Template.reference_office.events
             $set: "#{template.data.key}": "#{doc._id}"
         $('#search').val ''
 
-Template.reference_customer.events
+
+
+Template.reference_type_multiple.events
     'autocompleteselect #search': (event, template, doc) ->
         # console.log 'selected ', doc
         searched_value = doc["#{template.data.key}"]
         # console.log 'template ', template
         # console.log 'search value ', searched_value
         Docs.update FlowRouter.getParam('doc_id'),
-            $set: "#{template.data.key}": "#{doc._id}"
+            $addToSet: "#{template.data.key}": "#{doc._id}"
         $('#search').val ''
 
 

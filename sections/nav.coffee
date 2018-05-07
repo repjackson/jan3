@@ -7,7 +7,6 @@ if Meteor.isClient
     Template.nav.onCreated ->
         @autorun -> 
             Meteor.subscribe 'me'
-            Meteor.subscribe 'my_notifications'
             Meteor.subscribe 'users'
         
     Template.dashboard.onRendered ->
@@ -26,15 +25,10 @@ if Meteor.isClient
         
         
     Template.nav.helpers
-        notifications: -> Notifications.find()
 
 
 
 if Meteor.isServer
-    Meteor.publish 'my_notifications', ->
-        Notifications.find()
-        
-        
     Meteor.publish 'me', ->
         Meteor.users.find @userId,
             fields: 

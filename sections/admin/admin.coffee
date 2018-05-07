@@ -5,19 +5,19 @@ FlowRouter.route '/admin', action: (params) ->
         sub_nav: 'admin_nav'
         main: 'admin'
  
-FlowRouter.route '/admin/users', action: (params) ->
+FlowRouter.route '/users', action: (params) ->
     BlazeLayout.render 'layout',
         nav: 'nav'
         sub_nav: 'admin_nav'
         main: 'user_table'
  
-FlowRouter.route '/admin/roles', action: (params) ->
+FlowRouter.route '/roles', action: (params) ->
     BlazeLayout.render 'layout',
         nav: 'nav'
         sub_nav: 'admin_nav'
         main: 'roles'
  
-FlowRouter.route '/admin/rules', action: (params) ->
+FlowRouter.route '/rules', action: (params) ->
     BlazeLayout.render 'layout',
         nav: 'nav'
         sub_nav: 'admin_nav'

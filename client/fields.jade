@@ -50,8 +50,9 @@ template(name='view_array_field')
     
     
 template(name='edit_array_field')
-    i.tags.icon
-    |#{key}
+    .ui.header 
+        i.tags.icon
+        |#{key}
     .ui.input
         input.new_entry(type='text' maxlength='50' )
         // .ui.icon.button

@@ -55,13 +55,13 @@ template(name='nav')
             a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="top center" data-content='Admin')
                 i.shield.alternate.large.icon
                 // | Admin
-            a.icon.mobile.hidden.item(href='/chat')
+            a.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}")
                 i.comments.large.icon
             // a.icon.mobile.hidden.item(href='/cart')
             //     +mini_sprite name='shopping-cart'
-            a.icon.desktop.only.item(href='/mail')
+            a.icon.desktop.only.item(href='/mail' class="{{isActivePath '/mail'}}")
                 i.envelope.large.icon
-            a.ui.simple.dropdown.icon.desktop.only.item(href='/alerts')
+            a.ui.simple.dropdown.icon.desktop.only.item(href='/alerts' class="{{isActivePath '/alerts'}}")
                 i.bell.large.icon
                 .menu
                     .item No alerts
@@ -82,3 +82,89 @@ template(name='nav')
                 a.ui.item(href='/sign-in') 
                     i.right.chevron.icon
                     | Sign In
+
+
+
+template(name='left_sidebar')
+    .ui.left.vertical.thin.sidebar.inverted.labeled.icon.menu
+        // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
+        //     i.home.large.icon
+        //     |Jan-Pro
+        a.toggle_left_sidebar.item(href='/users' class="{{isActivePath '/users'}}" data-position="right center" data-content='Users')
+            i.large.users.icon
+            | Users
+        a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="right center" data-content='Incidents')
+            i.large.clipboard.icon
+            | Incidents
+        a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Offices')
+            i.large.building.icon
+            | Offices
+        a.toggle_left_sidebar.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="right center" data-content='Schedule')
+            i.large.calendar.icon
+            | Schedule
+        a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
+            i.clock.icon
+            // +tiny_sprite name='duster'
+            | Services
+        .ui.divider
+        if currentUser
+            // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}" data-position="right center" data-content='Charts')
+            //     i.line.chart.icon
+            // .ui.simple.dropdown.icon.item
+            //     i.alarm.icon
+            //     .menu
+            //         each alerts
+            //             .item #{text}
+            // a.icon.item(href='/messages' class="{{isActivePath '/messages'}}" data-position="right center" data-content='Charts')
+            //     i.mail.icon
+            // if isInRole 'admin'
+            a.icon.toggle_left_sidebar.item(href='/admin/tasks' class="{{isActivePath '/admin/tasks'}}" data-position="right center" data-content='Admin')
+                i.large.shield.icon
+                // +mini_sprite name='user-shield'
+                |Admin
+            // a.toggle_sidebar.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}" data-position="right center" data-content='Charts')
+            //     if currentUser.profile.first_name
+            //         | #{currentUser.profile.first_name}
+            //     else
+            //         | #{currentUser.username}
+            //     if currentUser.profile.image_id
+            //         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}" data-position="right center" data-content='Charts')
+            //     else
+            //         i.user.large.icon
+            // a#logout.ui.toggle_sidebar.item(href='#') 
+            //     i.large.icon
+            //         +mini_sprite name='edit'
+            //     | Sign Out
+        else
+            a.ui.toggle_sidebar.item(href='/sign-in') 
+                i.large.icon
+                    +mini_sprite name='enter'
+                | Sign In
+
+
+template(name='right_sidebar')
+    .ui.right.inline.vertical.thin.sidebar.inverted.labeled.icon.menu
+        a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
+            img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+            | Profile
+        a.toggle_right_sidebar.item(href='/alerts')
+            i.bell.icon
+            | Alerts
+        a.toggle_right_sidebar.item(href='/mail')
+            i.envelope.icon
+            | Mail
+        a.toggle_right_sidebar.item(href='/chat')
+            i.chat.icon
+            | Chat
+        a.toggle_right_sidebar.item(href='/bookmarks')
+            i.bookmark.icon
+            | Bookmarks
+        a.toggle_right_sidebar.item(href='/account/settings' class="{{isActivePath '/account/settings'}}") 
+            i.cog.icon
+            | Settings
+        .divider
+        a.toggle_right_sidebar.item(href='/admin' class="{{isActivePath '/admin'}}")
+            i.shield.icon
+            | Admin
+        a#logout.ui.item(href='#') 
+            | Sign Out

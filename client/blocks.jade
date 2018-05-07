@@ -20,33 +20,33 @@ template(name='list_item')
 template(name='toggle_boolean')
     .field
         if ../complete
-            #turn_on.ui.icon.button
+            #turn_on.ui.icon.large.button
                 i.toggle.on.large.icon
         else
-            #turn_off.ui.icon.button
+            #turn_off.ui.icon.large.button
                 i.toggle.off.large.icon
 
 template(name='save_button')
-    a.ui.big.circular.icon.button(href="/view/#{_id}") 
+    a.ui.big.icon.button(href="/view/#{_id}") 
         +avatar_sprite name='checkmark'
         // strong save
         
 template(name='edit_button')
-    a(href="/edit/#{_id}" title='edit') 
-        i.big.link.pencil.icon
+    a.ui.icon.large.button(href="/edit/#{_id}" title='edit') 
+        i.pencil.icon
         // strong edit
 
 template(name='view_button')
-    a(href="/view/#{_id}" title='View Details') 
+    a.ui.icon.large.button(href="/view/#{_id}" title='View Details') 
         // +avatar_sprite name='chevron-right'
-        i.right.chevron.large.link.icon
+        i.right.chevron.icon
         
 template(name='add_button')
-    #add(title='add')
-        i.plus.large.link.icon
+    #add.ui.large.icon.button(title='add')
+        i.plus.large.icon
         // +mini_inline_sprite name='plus'
 
-template(name='reference_office')
+template(name='reference_type_single')
     .ui.form
         .field
             label #{label}
@@ -54,13 +54,13 @@ template(name='reference_office')
                 i.search.icon
                 +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='search...'
 
-template(name='reference_customer')
+template(name='reference_type_multiple')
     .ui.form
         .field
             label #{label}
             .ui.left.icon.input
                 i.search.icon
-                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='search...'
+                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder="add..."
 
 
 
@@ -72,9 +72,8 @@ template(name="customer_result")
 
 
 template(name='set_view_mode')
-    #set_view_mode(title=label class=view_mode_button_class)
-        // i.large.icon(class=icon)
-        +mini_sprite name=icon
+    #set_view_mode.ui.icon.large.button(title=label class=view_mode_button_class)
+        i.large.icon(class=icon)
             
             
 template(name='set_session_button')
@@ -139,10 +138,10 @@ template(name='toggle_follow')
 
 // template(name='bookmark_button')
 //     if bookmarked
-//         .ui.circular.icon.button
+//         .ui.icon.large.button
 //             i.bookmark.icon
 //     else
-//         .ui.circular.icon.primary.button
+//         .ui.icon.primary.button
 //             i.bookmark.icon
             
             
@@ -175,8 +174,8 @@ template(name='call_phone_button')
             
             
 template(name='link_button')    
-    a.ui.big.icon.circular.button(href=link title=label)
-        +mini_sprite name=icon
+    a.ui.big.icon.button(href=link title=label)
+        i.large.icon(class=icon)
 
 template(name='edit_author')
     .ui.segment
@@ -270,8 +269,6 @@ template(name='medium_sprite')
     img.ui.medium.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
 template(name='dots')
     img(src="https://png.icons8.com/hide/#{name}/100/000000" class=classes title=tooltip)
-
-
 template(name='icon')
     img.ui.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
 

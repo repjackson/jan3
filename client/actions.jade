@@ -1,18 +1,18 @@
 template(name='action')
-    .ui.basic.circular.icon.button.toggle_action(class=action_button_class data-tooltip=action_doc.title)
+    .ui.basic.icon.button.toggle_action(class=action_button_class data-tooltip=action_doc.title)
         +avatar_sprite name=action_doc.icon_class classes='ui mini inline image'
 
 
 template(name='thanks_button')
     if said_thanks
-        .ui.circular.icon.blue.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
+        .ui.icon.blue.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
             // img(src="https://png.icons8.com/small/50/000000/pray.png")
             img(src="https://png.icons8.com/ios/50/000000/pray.png")
     else
-        .ui.circular.icon.basic.compact.button.vote_up
+        .ui.icon.basic.compact.button.vote_up
             img(src="https://png.icons8.com/ios/50/000000/pray.png")
             // img(src="https://png.icons8.com/small/50/000000/pray.png")
-    // .ui.circular.icon.basic.mini.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
+    // .ui.icon.basic.mini.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
         // img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
         // if said_thanks
         //     |Thanks #{author.profile.first_name}
@@ -43,38 +43,38 @@ template(name='thanks_button')
 
 template(name='respond_button')
     if currentUser
-        #respond.ui.circular.basic.icon.button(data-tooltip='Respond')
+        #respond.ui.basic.icon.button(data-tooltip='Respond')
             +mini_sprite name='response' classes='ui inline image'
     else
-        .ui.circular.basic.disabled.icon.button(data-tooltip='Respond')
+        .ui.basic.disabled.icon.button(data-tooltip='Respond')
             +mini_sprite name='response' classes='ui inline image'
 
 
 template(name='reflect_button')
     if currentUser
-        #reflect.ui.circular.basic.icon.button(data-tooltip='Reflect in Journal')
+        #reflect.ui.basic.icon.button(data-tooltip='Reflect in Journal')
             +mini_sprite name='mirror' classes='ui mini inline image'
     else
-        .ui.circular.basic.disabled.icon.button(data-tooltip='Reflect in Journal')
+        .ui.basic.disabled.icon.button(data-tooltip='Reflect in Journal')
             +mini_sprite name='mirror' classes='ui mini inline image'
 
 template(name='vote_button')
-    .ui.basic.circular.icon.button
+    .ui.basic.icon.button
         i.thumbs.up.link.big.icon.vote_up(class=vote_up_button_class)
-    // .ui.basic.circular.icon.button
+    // .ui.basic.icon.button
     //     i.thumbs.down.link.big.icon.vote_down(class=vote_down_button_class)
         // |#{points}
 
 
 
 template(name='favorite_button')
-    .ui.basic.circular.icon.button.favorite_item(class=favorite_item_class)
+    .ui.basic.icon.button.favorite_item(class=favorite_item_class)
         +avatar_sprite name='hearts' classes='ui mini inline image'
         if favorite_count
             | #{favorite_count}
 
 template(name='mark_complete_button')
-    .mark_complete.ui.circular.white.button(class=complete_button_class) 
+    .mark_complete.ui.white.button(class=complete_button_class) 
         if completed
             +mini_sprite name='checked-checkbox' classes='ui mini inline image'
             | Completed
@@ -83,7 +83,7 @@ template(name='mark_complete_button')
             | Mark Complete
         
 template(name='mark_doc_complete_button')
-    .mark_complete.ui.circular.icon.basic.button(class=complete_button_class) 
+    .mark_complete.ui.icon.basic.button(class=complete_button_class) 
         if complete
             +mini_sprite name='checkmark' classes='ui mini inline image'
             // | Completed
@@ -93,15 +93,15 @@ template(name='mark_doc_complete_button')
         
 template(name='mark_doc_approved_button')
     if approved
-        .unapprove.ui.circular.icon.basic.button(data-tooltip='Unapprove')
+        .unapprove.ui.icon.basic.button(data-tooltip='Unapprove')
             +ultraviolet_icon40 name='approval' classes='ui mini inline image'
     else
-        .approve.ui.circular.icon.basic.button(data-tooltip='Approve')
+        .approve.ui.icon.basic.button(data-tooltip='Approve')
             +mini_sprite name='approval' classes='ui mini inline image'
          
 template(name='bookmark_button')
-    .bookmark_button.ui.circular.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
-        +mini_sprite name='bookmark-ribbon' classes='ui mini inline image'
+    .bookmark_button.ui.icon.button(class=bookmark_button_class data-tooltip='Bookmark') 
+        i.large.bookmark.icon
         // if bookmarked
         //     | Bookmarked
         // else
@@ -109,7 +109,7 @@ template(name='bookmark_button')
         
         
 template(name='pin_button')
-    .pin_button.ui.circular.icon.button(class=pin_button_class data-tooltip='Pin this') 
+    .pin_button.ui.icon.button(class=pin_button_class data-tooltip='Pin this') 
         if pinned
             +avatar_sprite name="pin" classes='ui mini inline image'
             // | Pinned
@@ -119,7 +119,7 @@ template(name='pin_button')
         
 
 template(name='resonate_button')
-    .resonate_button.ui.circular.icon.button(class=resonate_button_class data-tooltip='This Resonates with Me')
+    .resonate_button.ui.icon.button(class=resonate_button_class data-tooltip='This Resonates with Me')
         // i.big.red.heartbeat.icon
         // <img src="https://png.icons8.com/heart-with-pulse/dusk/64" title="Heart with Pulse" width="64" height="64">        
         img.ui.mini.inline.image(src="https://png.icons8.com/heart-with-pulse/dusk/64" width="64" height="64")
@@ -129,7 +129,7 @@ template(name='notify_button')
     if currentUser
         .ui.fluid.styled.accordion
             .title 
-                +avatar_sprite name='bell' classes='ui inline image'
+                i.large.bell.icon
                 |Notify Someone
                 i.dropdown.icon
             .content
@@ -148,11 +148,11 @@ template(name='notify_button')
 template(name='mark_read_button')
     if currentUser
         if read
-            .mark_unread.ui.circular.button(data-tooltip='Mark Unread')
+            .mark_unread.ui.button(data-tooltip='Mark Unread')
                 +mini_sprite name='read-message' classes='avatar'
                 |Read
         else
-            .mark_read.ui.basic.circular.button(data-tooltip='Mark Read')
+            .mark_read.ui.basic.button(data-tooltip='Mark Read')
                 +mini_sprite name='message' classes='ui mini inline image'
                 |Unread
     +read_by_list
