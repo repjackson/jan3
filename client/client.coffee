@@ -39,10 +39,13 @@ Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 Template.registerHelper 'formal_when', () -> moment(@timestamp).format('MMMM Do YYYY, h:mm:ss a')
 
 
-Template.registerHelper 'key_value', () -> 
-    current_doc = Template.parentData(1)
+Template.registerHelper 'key_value', (key) -> 
+    doc_field = Template.parentData(2)
+    current_doc = Template.parentData(5)
+    console.log doc_field.data.slug
+    console.log Template.parentData(5)
     if current_doc
-        current_doc["#{@key}"]
+        current_doc["#{doc_field.data.slug}"]
 
 
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment

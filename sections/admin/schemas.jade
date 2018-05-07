@@ -86,6 +86,7 @@ template(name='field_edit')
         +select_field_type key='field_type' value='html' label='HTML'
         +select_field_type key='field_type' value='file' label='File'
         +select_field_type key='field_type' value='user_reference' label='User Reference'
+        +select_field_type key='field_type' value='email' label='Email'
         .remove_field.ui.icon.large.button
             i.remove.icon
 
@@ -117,8 +118,9 @@ template(name='schema_view')
                 .ui.segment
                     .ui.header #{name} Docs
                     +add_button type=slug
-                    each schema_docs
-                        h4 #{_id}
+                    .ui.stackable.cards
+                        each schema_docs
+                            +schema_doc
             .four.wide.column
                 +comments
                 
@@ -126,3 +128,13 @@ template(name='schema_view')
 template(name='schema_selector')
     each user_schemas
         .toggle_schema.ui.button #{name}            
+        
+        
+template(name='schema_doc')
+    .ui.card
+        .content
+            .header #{_id}
+            each ../fields
+                +Template.dynamic template=view_field_template
+                // |{{ key_value key=slug}}
+                // .ui.label slug:#{slug}

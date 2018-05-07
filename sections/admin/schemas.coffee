@@ -121,6 +121,20 @@ if Meteor.isClient
             if Template.parentData().type is @value then 'active' else 'basic'
     
     
+    Template.schema_doc.helpers
+        schema_fields: -> 
+            # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+            # console.log current_doc["#{@key}"]
+            console.log @
+            console.log Template.parentData()
+            console.log Template.parentData(2)
+            # console.log Template.parentData()["#{@key}"]
+            
+            # if Template.parentData().type is @value then 'active' else 'basic'
+    
+        view_field_template: -> "view_#{@type}_field"
+            
+    
     Template.select_field_type.events
         'click .select_field_type': ->
             field = Template.parentData()
