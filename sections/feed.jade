@@ -1,0 +1,10 @@
+template(name='feed')
+    .ui.padded.grid
+        .row
+            .ui.center.aligned.header
+                i.rss.icon
+                | Feed
+        .row
+            each events
+                .ui.feed
+                    .event hi

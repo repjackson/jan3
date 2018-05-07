@@ -176,11 +176,22 @@ template(name='incident_view')
             .three.wide.center.aligned.column
                 +edit_button
         .row
-            .ui.top.attached.tabular.large.four.item.menu
-                a.active.item(data-tab='info') Info
-                a.item(data-tab='talk') Talk
-                a.item(data-tab='status') Status
-                a.item(data-tab='analysis') Analysis
+            .ui.top.attached.tabular.large.five.item.menu
+                a.active.item(data-tab='info') 
+                    i.info.icon
+                    |Info
+                a.item(data-tab='talk') 
+                    i.chat.icon
+                    |Talk
+                a.item(data-tab='status') 
+                    i.clock.icon
+                    |Status
+                a.item(data-tab='analysis') 
+                    i.line.chart.icon
+                    |Analysis
+                a.item(data-tab='activity') 
+                    i.rss.icon
+                    | Activity
             .ui.bottom.attached.active.tab.segment(data-tab='info')
                 .ui.padded.stackable.centered.grid
                     .four.wide.column
@@ -215,7 +226,7 @@ template(name='incident_view')
                             +office_card
             .ui.bottom.attached.tab.segment(data-tab='status')
                 .ui.padded.stackable.centered.grid
-                    .eight.wide.column
+                    .twelve.wide.column
                         +incident_status
             .ui.bottom.attached.tab.segment(data-tab='talk')
                 .ui.padded.stackable.centered.grid
@@ -223,6 +234,11 @@ template(name='incident_view')
                         +comments
                     .four.wide.column
                         +notify_button
+            .ui.bottom.attached.tab.segment(data-tab='activity')
+                .ui.padded.stackable.centered.grid
+                    .eight.wide.column
+                        h4 doc_feed
+                        // +doc_feed
             .ui.bottom.attached.tab.segment(data-tab='analysis')
                 .ui.padded.stackable.centered.grid
                     .four.wide.column
@@ -230,11 +246,13 @@ template(name='incident_view')
                         if watson
                             +doc_sentiment
                             +doc_emotion
-                            +tone
                             +concepts
                             +categories
                     .eight.wide.column
-                        +semantic_roles
+                        // +semantic_roles
+                        +tone
+                        +keywords
+                        .ui.hidden.divider
                         +relations
                         // .ui.styled.accordion
                         //     .title 
@@ -243,8 +261,6 @@ template(name='incident_view')
                         //         i.dropdown.icon
                         //     .content
                         //         +jsonView(json=watson)
-                        .ui.hidden.divider
-                        +keywords
                     .four.wide.column
                         +personality
                         +consumption_preferences

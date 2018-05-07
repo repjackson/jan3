@@ -59,11 +59,11 @@ template(name='call_visual_analysis')
 
 template(name='keywords')
     .ui.fluid.styled.accordion
-        .title
+        .active.title
             .ui.header 
                 |#{watson.keywords.length} Keywords
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.three.stackable.cards
                 each watson.keywords
                     .ui.card
@@ -160,11 +160,11 @@ template(name='relations')
 template(name='personality')
     if personality
         .ui.styled.accordion
-            .title
+            .active.title
                 h3
                     | #{customer.first_name} Personality 
                     i.dropdown.icon
-            .content   
+            .active.content   
                 each personality.personality
                     h4.ui.header
                         |#{name} {{ to_percent percentile }}%
@@ -196,11 +196,11 @@ template(name='personality')
 template(name='consumption_preferences')
     if personality
         .ui.styled.accordion
-            .title
+            .active.title
                 h3.ui.header
                     |#{customer.first_name} Preferences
                     i.dropdown.icon
-            .content
+            .active.content
                 each personality.consumption_preferences
                     h3.ui.header #{name}
                     .ui.list
@@ -215,11 +215,11 @@ template(name='consumption_preferences')
 
 template(name='tone')
     .ui.styled.fluid.accordion
-        .title 
+        .active.title 
             h3
                 | Document Tone
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.bulleted.list
                 each tone.document_tone.tones
                     .item #{tone_id} {{ to_percent score }}%
