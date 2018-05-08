@@ -22,7 +22,7 @@ if Meteor.isClient
                     Docs.insert
                         type:'comment'
                         text:comment
-                        parent_id:Session.get('editing_id')
+                        parent_id: @_id
                  
         'click .delete_comment': ->
             if confirm 'delete comment?'
