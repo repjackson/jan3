@@ -9,53 +9,23 @@ template(name='front')
             a.ui.huge.primary.button(href='/sign-up')
                 | Get Started 
                 i.right.arrow.icon
-    .ui.vertical.very.padded.segment
-        .ui.middle.aligned.stackable.relaxed.grid.container
-            .eight.wide.column
-                h2.ui.header
-                    i.calculator.icon
-                    .content
-                        | Emotional Analysis
-                        .sub.header Analyze Customer Incident Text
-            .eight.wide.column
-                h2.ui.header
-                    i.users.icon
-                    .content
-                        | CRM
-                        .sub.header Manage employees/customers
-            .eight.wide.column
-                h2.ui.header
-                    i.calendar.icon
-                    .content
-                        | Scheduling
-                        .sub.header Manage your services
-            .eight.wide.column
-                h2.ui.header
-                    i.cart.icon
-                    .content
-                        | Ecommerce
-                        .sub.header Full online store
-            .eight.wide.column
-                h2.ui.header
-                    i.bell.icon
-                    .content
-                        | Alerts
-                        .sub.header Customizable for time/emotion/roles/actions
-            .eight.wide.column
-                h2.ui.header
-                    i.envelope.icon
-                    .content
-                        | Mail
-                        .sub.header Internal Mesaging System
-            +add_button type='feature'    
-            each features
-                .eight.wide.column
-                    h2.ui.header
-                        i.icon(class=icon)
-                        .content
-                            | #{title}
-                            .sub.header #{text}
-            // .row
+    .ui.vertical.padded.segment
+        .ui.middle.aligned.stackable.padded.grid
+            .row
+                .fifteen.wide.column
+                    +tag_facet
+            .row
+                each features
+                    .five.wide.column
+                        h2.ui.header
+                            i.icon(class=icon)
+                            .content
+                                | #{title}
+                                .sub.header #{text}
+                        +edit_button
+            .row
+                +add_button type='feature'    
+                // .row
             //     .center.aligned.column
             //         a.ui.huge.button Check Them Out
     // .ui.vertical.stripe.quote.segment
