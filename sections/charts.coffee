@@ -24,7 +24,7 @@ if Meteor.isClient
         area: -> 
             {
                 chart: type: 'area'
-                title:text: 'US and USSR nuclear stockpiles'
+                title:text: 'area chart'
                 credits: enabled: false
                 subtitle: text: 'Source: <a href="http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf">' + 'thebulletin.metapress.com</a>'
                 xAxis:

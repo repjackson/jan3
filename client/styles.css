@@ -1,88 +1,210 @@
 .-autocomplete-container {
-    margin-top: 12px;
+        margin-top: 12px;
+}
+
+#nav.ui.inverted.menu {
+  /*border: 0px solid transparent; */
+  border: none !important; 
+  background: #0d5f9e;
+  box-shadow: none
 }
 
 body {
-	margin-top:60px;
-	font-family: 'Ubuntu', sans-serif !important;
-	min-height: 500px;
+  margin-top:52px;
+  font-family: 'Roboto', sans-serif !important;
+  min-height: 500px;
 }
-
+.ui.header{
+  font-family: 'Work Sans', sans-serif !important;
+}
+  
 .map-container {
-  width: 800px;
-  max-width: 100%;
-  height: 500px;
+    width: 800px;
+    max-width: 100%;
+    height: 500px;
 }
 .map-card {
-  width: 300px;
-  max-width: 100%;
-  height: 200px;
+    width: 300px;
+    max-width: 100%;
+    height: 200px;
 }
 
 #footer {
-    /*position: absolute;*/
-    bottom: 0;
-    width: 100%;
-    margin: 0 !important;
+        /*position: absolute;*/
+        bottom: 0;
+        width: 100%;
+        margin: 0 !important;
 }
 
 /* Mobile */
- @media only screen and (max-width: 767px) {
-	 .mobile.hidden, .tablet.only, .computer.only, .large.monitor.only, .widescreen.monitor.only {
-		 display: none !important;
-	}
+  @media only screen and (max-width: 767px) {
+    .mobile.hidden, .tablet.only, .computer.only, .large.monitor.only, .widescreen.monitor.only {
+      display: none !important;
+  }
 }
 /* Tablet / iPad Portrait */
- @media only screen and (min-width: 768px) and (max-width: 991px) {
-	 .mobile.only, .tablet.hidden, .computer.only, .large.monitor.only, .widescreen.monitor.only {
-		 display: none !important;
-	}
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    .mobile.only, .tablet.hidden, .computer.only, .large.monitor.only, .widescreen.monitor.only {
+      display: none !important;
+  }
 }
 /* Computer / Desktop / iPad Landscape */
- @media only screen and (min-width: 992px) and (max-width: 1199px) {
-	 .mobile.only, .tablet.only, .computer.hidden, .large.monitor.only, .widescreen.monitor.only {
-		 display: none !important;
-	}
+  @media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .mobile.only, .tablet.only, .computer.hidden, .large.monitor.only, .widescreen.monitor.only {
+      display: none !important;
+  }
 }
 /* Large Monitor */
- @media only screen and (min-width: 1200px) and (max-width: 1919px) {
-	 .mobile.only, .tablet.only, .computer.only, .large.monitor.hidden, .widescreen.monitor.only {
-		 display: none !important;
-	}
+  @media only screen and (min-width: 1200px) and (max-width: 1919px) {
+    .mobile.only, .tablet.only, .computer.only, .large.monitor.hidden, .widescreen.monitor.only {
+      display: none !important;
+  }
 }
 /* Widescreen Monitor */
- @media only screen and (min-width: 1920px) {
-	 .mobile.only, .tablet.only, .computer.only, .large.monitor.only, .widescreen.monitor.hidden {
-		 display: none !important;
-	}
+  @media only screen and (min-width: 1920px) {
+    .mobile.only, .tablet.only, .computer.only, .large.monitor.only, .widescreen.monitor.hidden {
+      display: none !important;
+  }
 }
- .large130 {
-	 font-size: 130%;
-	 line-height: 130%;
+  .large130 {
+    font-size: 130%;
+    line-height: 130%;
 }
- .large120 {
-	 font-size: 120%;
-	 line-height: 120%;
+  .large120 {
+    font-size: 120%;
+    line-height: 120%;
 }
- .large150 {
-	 font-size: 150%;
-	 line-height: 130%;
+  .large150 {
+    font-size: 150%;
+    line-height: 130%;
 }
- 
+  
 .ui.button, .ui.label.tag {
-	margin-top: .2em !important;
-    margin-bottom: .2em !important;
+  margin-top: .2em !important;
+        margin-bottom: .2em !important;
 }
 
 #map {
-    min-height: 350px;
-    min-width: 100%;
-  }
+        min-height: 350px;
+        min-width: 100%;
+    }
 #main_area {
-    min-height: 500px;
-    min-width: 100%;
-  }
+        min-height: 500px;
+        min-width: 100%;
+    }
 /*#cleaning_schedule {*/
 /*    max-height: 300px;*/
-    /*min-width: 100%;*/
+        /*min-width: 100%;*/
 /*  }*/
+
+#home.masthead {
+  background: rgb(24,42,115);
+  background: -moz-linear-gradient(-45deg,  rgba(24,42,115,1) 0%, rgba(33,138,174,1) 69%, rgba(32,167,172,1) 89%);
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(24,42,115,1)), color-stop(69%,rgba(33,138,174,1)), color-stop(89%,rgba(32,167,172,1)));
+  background: -webkit-linear-gradient(-45deg,  rgba(24,42,115,1) 0%,rgba(33,138,174,1) 69%,rgba(32,167,172,1) 89%);
+  background: -o-linear-gradient(-45deg,  rgba(24,42,115,1) 0%,rgba(33,138,174,1) 69%,rgba(32,167,172,1) 89%);
+  background: -ms-linear-gradient(-45deg,  rgba(24,42,115,1) 0%,rgba(33,138,174,1) 69%,rgba(32,167,172,1) 89%);
+  background: linear-gradient(135deg,  rgba(24,42,115,1) 0%,rgba(33,138,174,1) 69%,rgba(32,167,172,1) 89%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#182a73', endColorstr='#20a7ac',GradientType=1 );
+  border-radius: 0;
+  margin: 0em;
+  width: 100% !important;
+  padding: 1rem 0rem 0;
+}
+#dash_header.masthead {
+  background: rgb(24,42,115);
+  background: -moz-linear-gradient(-45deg,  rgba(24,42,115,1) 0%, rgba(33,138,174,1) 69%, rgba(32,167,172,1) 89%);
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(24,42,115,1)), color-stop(69%,rgba(33,138,174,1)), color-stop(89%,rgba(32,167,172,1)));
+  background: -webkit-linear-gradient(-45deg,  rgba(24,42,115,1) 0%,rgba(33,138,174,1) 69%,rgba(32,167,172,1) 89%);
+  background: -o-linear-gradient(-45deg,  rgba(24,42,115,1) 0%,rgba(33,138,174,1) 69%,rgba(32,167,172,1) 89%);
+  background: -ms-linear-gradient(-45deg,  rgba(24,42,115,1) 0%,rgba(33,138,174,1) 69%,rgba(32,167,172,1) 89%);
+  background: linear-gradient(135deg,  rgba(24,42,115,1) 0%,rgba(33,138,174,1) 69%,rgba(32,167,172,1) 89%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#182a73', endColorstr='#20a7ac',GradientType=1 );
+  border-radius: 0;
+  margin: 0em;
+  width: 100% !important;
+  padding: 1rem 0rem 0;
+}
+
+.hidden.menu {
+  display: none;
+}
+.masthead.segment {
+  min-height: 300px;
+  padding: 1em 0em;
+}
+#dash_header.masthead.segment {
+  min-height: 100px;
+  padding: 1em 0em;
+}
+.masthead .logo.item img {
+  margin-right: 1em;
+}
+.masthead .ui.menu .ui.button {
+  margin-left: 0.5em;
+}
+.masthead h1.ui.header {
+  margin-top: .5em;
+  margin-bottom: 0em;
+  font-size: 4em;
+  font-weight: normal;
+}
+.masthead h2 {
+  font-size: 1.7em;
+  font-weight: normal;
+}
+.ui.vertical.stripe {
+  padding: 8em 0em;
+}
+.ui.vertical.stripe h3 {
+  font-size: 2em;
+}
+.ui.vertical.stripe .button + h3,
+.ui.vertical.stripe p + h3 {
+  margin-top: 3em;
+}
+.ui.vertical.stripe .floated.image {
+  clear: both;
+}
+.ui.vertical.stripe p {
+  font-size: 1.33em;
+}
+.ui.vertical.stripe .horizontal.divider {
+  margin: 3em 0em;
+}
+.quote.stripe.segment {
+  padding: 0em;
+}
+.quote.stripe.segment .grid .column {
+  padding-top: 5em;
+  padding-bottom: 5em;
+}
+.footer.segment {
+  padding: 5em 0em;
+}
+.secondary.pointing.menu .toc.item {
+  display: none;
+}
+@media only screen and (max-width: 700px) {
+  .ui.fixed.menu {
+  display: none !important;
+}
+.secondary.pointing.menu .item,
+.secondary.pointing.menu .menu {
+  display: none;
+}
+.secondary.pointing.menu .toc.item {
+  display: block;
+}
+.masthead.segment {
+  min-height: 300px;
+}
+.masthead h1.ui.header {
+  font-size: 2em;
+  margin-top: 1.5em;
+}
+.masthead h2 {
+  margin-top: 0.5em;
+  font-size: 1.5em;
+}
+}

@@ -1,6 +1,15 @@
 template(name='dashboard')
+    #dash_header.ui.vertical.masthead.center.aligned.segment
+        .ui.container
+            img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            h2.ui.inverted.header Customer Portal
+            // h2 Do whatever you want when you want to.
+            // .ui.huge.primary.button
+            //     | Get Started 
+            //     i.right.arrow.icon
+        +customer_menu
     .ui.padded.stackable.grid
-        // +dashboard_header
+
         // .centered.row
         //     .sixteen.wide.center.aligned.column
         //         img.ui.large.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
@@ -50,14 +59,13 @@ template(name='dashboard')
 
     
 template(name='customer_menu')
-    .ui.large.top.attached.menu
-        .right.menu
-            a.item(href='/account/settings') Account
-            .disabled.item Log a Ticket
-            .disabled.item Schedule Cleaning
-            .disabled.item Consumables
-            .disabled.item Service Request
-            .disabled.item Help
+    .ui.large.six.item.menu
+        a.item(href='/account/settings') Account
+        .disabled.item Log a Ticket
+        .disabled.item Schedule Cleaning
+        .disabled.item Consumables
+        .disabled.item Service Request
+        .disabled.item Help
             
             
 template(name='my_cleaning_schedule')
@@ -164,11 +172,11 @@ template(name='my_cleaning_crew')
 template(name='crew_card')
     .ui.card
         .image
-            a(href="/view/#{_id}")
-                img.ui.fluid.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
+            a(href="/profile/#{username}")
+                img.ui.fluid.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
         .content
-            a(href="/view/#{_id}")
-                .ui.center.aligned.header #{first_name} #{last_name}
+            a(href="/profile/#{username}")
+                .ui.center.aligned.header #{profile.first_name} #{profile.last_name}
             each five_tags
                 .ui.compact.small.circular.button.person_tag(class=tag_class) 
                     strong #{this}

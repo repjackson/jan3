@@ -1,14 +1,13 @@
 if Meteor.isClient
     FlowRouter.route '/', action: ->
         BlazeLayout.render 'layout', 
-            sub_nav:'customer_menu'
             main: 'dashboard'
     
     Template.dashboard.onCreated ->
         @autorun -> Meteor.subscribe('docs', [], 'office')
         @autorun -> Meteor.subscribe('docs', [], 'incident')
     Template.my_cleaning_crew.onCreated ->
-        @autorun -> Meteor.subscribe('docs', [], 'person')
+        @autorun -> Meteor.subscribe('users')
     
     Template.dashboard.onRendered ->
         Meteor.setTimeout ->
@@ -50,7 +49,7 @@ if Meteor.isClient
     Template.general_account_info.helpers
         person: -> Docs.findOne type:'person'
     Template.my_cleaning_crew.helpers
-        crew: -> Docs.find {type:'person'}, limit:5
+        crew: -> Meteor.users.find {}, limit:5
     Template.incident_widget.helpers
         incidents: -> Docs.find {type:'incident'}, limit:5
     

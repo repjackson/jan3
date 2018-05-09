@@ -65,16 +65,14 @@ template(name='task_card')
             //     // .ui.circular.label(title='task Number') #{task_number}
             //     | #{when}
             a(href="/view/#{_id}") 
-                if complete
-                    i.large.green.checkmark.icon
                 |#{title}
         .content    
             if complete
-                a#turn_off
-                    +mini_sprite name='toggle-on'
+                i#turn_off.link.large.toggle.on.icon
             else
-                a#turn_on
-                    +mini_sprite name='toggle-off'
+                i#turn_on.link.large.toggle.off.icon
+            if complete
+                i.large.green.checkmark.icon
             .right.floated 
                 |#{when}
                 +author_info

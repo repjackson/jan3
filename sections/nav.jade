@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.inverted.fixed.borderless.icon.large.menu
+    #nav.ui.inverted.fixed.borderless.icon.menu
         // .mobile.only.ui.dropdown.icon.link.item
         //     i.th.large.icon
         //     .ui.menu
@@ -16,41 +16,37 @@ template(name='nav')
         //             i.large.shipping.fast.icon
         //             // | Services
         a.toggle_left_sidebar.icon.item 
-            i.bars.icon
+            i.large.bars.icon
+        a.header.item(href='/front' class="{{isActivePath '/front'}}" )
+            i.large.home.icon
+            // | Home
         a.header.item(href='/' class="{{isActivePath '/'}}" )
             // i.home.icon
             img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             // | Home
         a.desktop.only.icon.item(href='/users' class="{{isActivePath '/users'}}")
-            i.users.icon
-            // +avatar_sprite name='user-group-man-woman'
+            i.large.users.icon
             // | &nbsp; Users
         a.desktop.only.item(href='/charts' class="{{isActivePath '/charts'}}")
-            i.line.chart.icon
+            i.large.line.chart.icon
             // +avatar_sprite name='combo-chart'
             // | &nbsp; Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}")
             // +avatar_sprite name='urgent-property'
-            i.clipboard.icon
+            i.large.clipboard.icon
             // | &nbsp; Incidents
         a.desktop.only.item(href='/offices' class="{{isActivePath '/offices'}}")
             // +avatar_sprite name='organization'
-            i.building.icon
+            i.large.building.icon
             // | &nbsp; Offices
         a.desktop.only.icon.item(href='/services' class="{{isActivePath '/services'}}")
-            i.shipping.fast.icon
+            i.large.shipping.fast.icon
             // +avatar_sprite name='duster'
-        a.icon.desktop.only.item(href='/ideas' class="{{isActivePath '/ideas'}}")
-            i.lightbulb.icon
-        a.icon.desktop.only.item(href='/questions' class="{{isActivePath '/questions'}}")
-            i.question.icon
-        a.icon.desktop.only.item(href='/rankings' class="{{isActivePath '/rankings'}}")
-            i.trophy.icon
         a.icon.desktop.only.item(href='/feed' class="{{isActivePath '/feed'}}")
-            i.rss.icon
+            i.large.rss.icon
         // a.mobile.hidden.disabled.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}")
         a.desktop.only.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}")
-            i.calendar.icon
+            i.large.calendar.icon
         // .mobile.hidden.item(href='/consumerables' class="{{isActivePath '/consumerables'}}" data-position="top center" data-content='Consumerables')
         // .mobile.hidden.item(data-position="top center" data-content='Consumerables')
         //     +dots name='toilet-paper'
@@ -61,16 +57,16 @@ template(name='nav')
         //         i.search.icon
         .right.menu
             a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="top center" data-content='Admin')
-                i.shield.alternate.icon
+                i.large.shield.alternate.icon
                 // | Admin
             a.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}")
-                i.comments.icon
+                i.large.comments.icon
             a.icon.mobile.hidden.item(href='/cart')
-                i.shopping.cart.icon
+                i.large.shopping.cart.icon
             a.icon.desktop.only.item(href='/mail' class="{{isActivePath '/mail'}}")
-                i.envelope.icon
+                i.large.envelope.icon
             a.ui.simple.dropdown.icon.desktop.only.item(href='/alerts' class="{{isActivePath '/alerts'}}")
-                i.bell.icon
+                i.large.bell.icon
                 .menu
                     .item No alerts
             if currentUser
@@ -94,42 +90,30 @@ template(name='nav')
 
 
 template(name='left_sidebar')
-    .ui.left.vertical.vary.thin.sidebar.inverted.icon.menu
+    .ui.left.vertical.very.thin.sidebar.inverted.icon.menu
         // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
         //     i.home.icon
         //     |Jan-Pro
         a.toggle_left_sidebar.item(href='/users' class="{{isActivePath '/users'}}" data-position="right center" data-content='Users')
-            i.large.users.big.icon
+            i.large.users.icon
             // | Users
         a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="right center" data-content='Incidents')
-            i.large.clipboard.big.icon
+            i.large.clipboard.icon
             // | Incidents
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Offices')
-            i.large.building.big.icon
+            i.large.building.icon
             // | Offices
         a.toggle_left_sidebar.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="right center" data-content='Schedule')
-            i.large.calendar.big.icon
+            i.large.calendar.icon
             // | Schedule
         a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
-            i.clock.big.icon
+            i.large.clock.icon
             // +tiny_sprite name='duster'
             // | Services
-        .ui.divider
-        if currentUser
             // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}" data-position="right center" data-content='Charts')
             //     i.line.chart.icon
-            // .ui.simple.dropdown.icon.item
-            //     i.alarm.icon
-            //     .menu
-            //         each alerts
-            //             .item #{text}
-            // a.icon.item(href='/messages' class="{{isActivePath '/messages'}}" data-position="right center" data-content='Charts')
-            //     i.mail.icon
-            // if isInRole 'admin'
-            a.icon.toggle_left_sidebar.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="right center" data-content='Admin')
-                i.large.shield.icon
-                // +mini_sprite name='user-shield'
-                // |Admin
+        a.icon.toggle_left_sidebar.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="right center" data-content='Admin')
+            i.large.shield.icon
             // a.toggle_sidebar.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}" data-position="right center" data-content='Charts')
             //     if currentUser.profile.first_name
             //         | #{currentUser.profile.first_name}
@@ -143,7 +127,7 @@ template(name='left_sidebar')
             //     i.large.icon
             //         +mini_sprite name='edit'
             //     | Sign Out
-        else
+        unless currentUser
             a.ui.toggle_sidebar.item(href='/sign-in') 
                 // i.large.icon
                 //     +mini_sprite name='enter'
@@ -155,27 +139,33 @@ template(name='right_sidebar')
         a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
             img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             |#{currentUser.username}
+        a.icon.toggle_right_sidebar.item(href='/ideas' class="{{isActivePath '/ideas'}}")
+            i.lightbulb.large.icon
+        a.icon.toggle_right_sidebar.item(href='/questions' class="{{isActivePath '/questions'}}")
+            i.question.large.icon
+        a.icon.toggle_right_sidebar.item(href='/rankings' class="{{isActivePath '/rankings'}}")
+            i.trophy.large.icon
         a.toggle_right_sidebar.item(href='/alerts')
-            i.bell.big.icon
+            i.bell.large.icon
             // | Alerts
         a.toggle_right_sidebar.item(href='/mail')
-            i.envelope.big.icon
+            i.envelope.large.icon
             // | Mail
         a.toggle_right_sidebar.item(href='/feed')
-            i.rss.big.icon
+            i.rss.large.icon
             // | Mail
         a.toggle_right_sidebar.item(href='/chat')
-            i.chat.big.icon
+            i.chat.large.icon
             // | Chat
         a.toggle_right_sidebar.item(href='/bookmarks')
-            i.bookmark.big.icon
+            i.bookmark.large.icon
             // | Bookmarks
         a.toggle_right_sidebar.item(href='/account/settings' class="{{isActivePath '/account/settings'}}") 
-            i.cog.big.icon
+            i.cog.large.icon
             // | Settings
         .divider
         a.toggle_right_sidebar.item(href='/admin' class="{{isActivePath '/admin'}}")
-            i.shield.big.icon
+            i.shield.large.icon
             // | Admin
         a#logout.ui.item(href='#') 
             | Sign Out
