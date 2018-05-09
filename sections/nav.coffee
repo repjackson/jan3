@@ -1,5 +1,5 @@
 if Meteor.isClient
-    Template.nav.events
+    Template.right_sidebar.events
         'click #logout': -> 
             AccountsTemplates.logout()
             

@@ -60,13 +60,13 @@ template(name='dashboard')
 
     
 template(name='customer_menu')
-    .ui.large.six.item.menu
+    .ui.six.item.stackable.large.menu
         a.item(href='/account/settings') Account
-        .disabled.item Log a Ticket
-        .disabled.item Schedule Cleaning
-        .disabled.item Consumables
-        .disabled.item Service Request
-        .disabled.item Help
+        a.item(href='/incidents') Log a Ticket
+        a.item(href='/schedule') Schedule Cleaning
+        a.item(href='/store') Consumables
+        a.item(href='/services') Service Request
+        a.item(href='/questions') Help
             
             
 template(name='my_cleaning_schedule')

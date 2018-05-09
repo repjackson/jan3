@@ -48,6 +48,12 @@ Template.registerHelper 'key_value', (key) ->
         if doc_field.data and doc_field.data.slug
             current_doc["#{doc_field.data.slug}"]
 
+Template.registerHelper 'page_key_value', (key) -> 
+    # doc_field = Template.parentData(2)
+    current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+    if current_doc
+        current_doc["#{@key}"]
+
 
 Template.registerHelper 'is_dev', () -> Meteor.isDevelopment
 

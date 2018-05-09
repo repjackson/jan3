@@ -3,7 +3,7 @@ template(name='front')
         .ui.hidden.divider
         .ui.container
             img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            h3.ui.inverted.header
+            h2.ui.inverted.header
                 | Customer Portal
             // h2 Do whatever you want when you want to.
             a.ui.huge.primary.button(href='/sign-up')
@@ -47,78 +47,14 @@ template(name='front')
                     .content
                         | Mail
                         .sub.header Internal Mesaging System
-            .eight.wide.column
-                h2.ui.header
-                    i.bell.icon
-                    .content
-                        | Alerts
-                        .sub.header Customizable for time/emotion/roles/actions
-            .eight.wide.column
-                h2.ui.header
-                    i.envelope.icon
-                    .content
-                        | Mail
-                        .sub.header Internal Mesaging System
-            .eight.wide.column
-                h2.ui.header
-                    i.bell.icon
-                    .content
-                        | Alerts
-                        .sub.header Customizable for time/emotion/roles/actions
-            .eight.wide.column
-                h2.ui.header
-                    i.envelope.icon
-                    .content
-                        | Mail
-                        .sub.header Internal Mesaging System
-            .eight.wide.column
-                h2.ui.header
-                    i.bell.icon
-                    .content
-                        | Alerts
-                        .sub.header Customizable for time/emotion/roles/actions
-            .eight.wide.column
-                h2.ui.header
-                    i.envelope.icon
-                    .content
-                        | Mail
-                        .sub.header Internal Mesaging System
-            .eight.wide.column
-                h2.ui.header
-                    i.bell.icon
-                    .content
-                        | Alerts
-                        .sub.header Customizable for time/emotion/roles/actions
-            .eight.wide.column
-                h2.ui.header
-                    i.envelope.icon
-                    .content
-                        | Mail
-                        .sub.header Internal Mesaging System
-            .eight.wide.column
-                h2.ui.header
-                    i.bell.icon
-                    .content
-                        | Alerts
-                        .sub.header Customizable for time/emotion/roles/actions
-            .eight.wide.column
-                h2.ui.header
-                    i.envelope.icon
-                    .content
-                        | Mail
-                        .sub.header Internal Mesaging System
-            .eight.wide.column
-                h2.ui.header
-                    i.bell.icon
-                    .content
-                        | Alerts
-                        .sub.header Customizable for time/emotion/roles/actions
-            .eight.wide.column
-                h2.ui.header
-                    i.envelope.icon
-                    .content
-                        | Mail
-                        .sub.header Internal Mesaging System
+            +add_button type='feature'    
+            each features
+                .eight.wide.column
+                    h2.ui.header
+                        i.icon(class=icon)
+                        .content
+                            | #{title}
+                            .sub.header #{text}
             // .row
             //     .center.aligned.column
             //         a.ui.huge.button Check Them Out
@@ -145,3 +81,47 @@ template(name='front')
     //         p
     //             | Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but its really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.
     //         a.ui.large.button I'm Still Quite Interested
+
+
+
+
+                        
+template(name='feature_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +link_button link='/front' icon='globe' label='features'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header view #{title}
+            .three.wide.column
+                +edit_button
+        .row
+            .three.wide.column
+                .ui.header tags
+                each tags
+                    .ui.label #{this}
+            .thirteen.wide.column
+                .ui.heade #{title}
+                |#{text}
+                +comments
+            
+        
+template(name='feature_edit')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +save_button
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header edit #{title} feature
+            .three.wide.column
+                #delete.ui.icon.button
+                    i.trash.icon
+        .centered.row
+            .twelve.wide.column
+                +edit_text_field key='title' label='title'
+                +edit_text_field key='icon' label='icon'
+                +edit_text_field key='text' label='text'
+            .four.wide.column
+                +edit_array_field key='tags'
+        
+            

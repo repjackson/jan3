@@ -87,8 +87,9 @@ template(name='user_table')
                                 td 
                                     +role_selector
                                 td
-                                    i.large.message.icon                                        
-                                    a(href="/profile/edit/#{_id}")
-                                        i.big.pencil.link.icon                                        
-                                    a(href="/profile/#{username}")
-                                        i.big.external.link.icon
+                                    a.ui.icon.disabled.button
+                                        i.large.envelope.icon                                        
+                                    a.ui.icon.button(href="/profile/edit/#{_id}")
+                                        i.large.pencil.icon                                        
+                                    a.ui.icon.button(href="/profile/#{username}")
+                                        i.large.external.icon
