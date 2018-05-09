@@ -1,5 +1,5 @@
 template(name='nav')
-    #nav.ui.inverted.fixed.borderless.icon.menu
+    #nav.ui.inverted.borderless.icon.top.attached.menu
         // .mobile.only.ui.dropdown.icon.link.item
         //     i.th.large.icon
         //     .ui.menu
@@ -17,14 +17,14 @@ template(name='nav')
         //             // | Services
         a.toggle_left_sidebar.icon.item 
             i.large.bars.icon
-        a.header.item(href='/front' class="{{isActivePath '/front'}}" )
+        a.header.item(href='/front' class="{{isActivePath '/front'}}" data-position="top center" data-content='Sales Page')
             i.large.globe.icon
             // | Home
-        a.header.item(href='/' class="{{isActivePath '/'}}" )
+        a.header.item(href='/' class="{{isActivePath '/'}}" data-position="top center" data-content='Dashboard')
             // i.home.icon
             img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             // | Home
-        a.desktop.only.icon.item(href='/users' class="{{isActivePath '/users'}}" data-position="top center" data-content='Users')
+        a.mobile.hidden.desktop.only.icon.item(href='/users' class="{{isActivePath '/users'}}" data-position="top center" data-content='Users')
             i.large.users.icon
             // | &nbsp; Users
         // a.desktop.only.item(href='/charts' class="{{isActivePath '/charts'}}" data-position="top center" data-content='Chart Demo')
@@ -35,17 +35,17 @@ template(name='nav')
             // +avatar_sprite name='urgent-property'
             i.large.clipboard.icon
             // | &nbsp; Incidents
-        a.desktop.only.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="top center" data-content='Offices')
+        a.mobile.hidden.desktop.only.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="top center" data-content='Offices')
             // +avatar_sprite name='organization'
             i.large.building.icon
             // | &nbsp; Offices
-        a.desktop.only.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="top center" data-content='Services/Ecommerce')
+        a.mobile.hidden.desktop.only.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="top center" data-content='Services/Ecommerce')
             i.large.shipping.fast.icon
             // +avatar_sprite name='duster'
         // a.icon.desktop.only.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="top center" data-content='Feed')
         //     i.large.rss.icon
         // a.mobile.hidden.disabled.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}")
-        a.desktop.only.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
+        a.mobile.hidden.desktop.only.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
             i.large.calendar.icon
         // .mobile.hidden.item(href='/consumerables' class="{{isActivePath '/consumerables'}}" data-position="top center" data-content='Consumerables')
         // .mobile.hidden.item(data-position="top center" data-content='Consumerables')
@@ -65,9 +65,9 @@ template(name='nav')
                 i.large.shopping.cart.icon
             // a.icon.mobile.hidden.item(href='/cart' data-position="top center" data-content='Cart')
             //     i.large.shopping.cart.icon
-            a.icon.desktop.only.item(href='/mail' class="{{isActivePath '/mail'}}" data-position="top center" data-content='Mail')
+            a.icon.mobile.hidden.desktop.only.item(href='/mail' class="{{isActivePath '/mail'}}" data-position="top center" data-content='Mail')
                 i.large.envelope.icon
-            a.ui.simple.dropdown.icon.desktop.only.item(href='/alerts' class="{{isActivePath '/alerts'}}")
+            a.ui.simple.dropdown.icon.mobile.hidden.desktop.only.item(href='/alerts' class="{{isActivePath '/alerts'}}")
                 i.large.bell.icon
                 .menu
                     .item No alerts
@@ -92,7 +92,7 @@ template(name='nav')
 
 
 template(name='left_sidebar')
-    #nav.ui.left.vertical.thin.sidebar.inverted.fixed.menu
+    #nav.ui.left.vertical.sidebar.inverted.large.menu
         // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
         //     i.home.icon
         //     |Jan-Pro
@@ -138,7 +138,7 @@ template(name='left_sidebar')
 
 
 template(name='right_sidebar')
-    #nav.ui.right.inline.vertical.sidebar.inverted.menu
+    #nav.ui.right.inline.vertical.sidebar.inverted.large.menu
         a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
             img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             |#{currentUser.username}

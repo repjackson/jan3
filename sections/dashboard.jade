@@ -3,7 +3,7 @@ template(name='dashboard')
         .ui.container
             .ui.hidden.divider
             img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            h2.ui.inverted.header Customer Portal
+            h2.ui.inverted.header Dashboard
             // h2 Do whatever you want when you want to.
             // .ui.huge.primary.button
             //     | Get Started 
@@ -72,7 +72,7 @@ template(name='customer_menu')
 template(name='my_cleaning_schedule')
     .ui.fluid.accordion
         .active.title
-            h3.ui.center.aligned.header 
+            h2.ui.center.aligned.header 
                 |My Cleaning Schedule
                 i.dropdown.icon
         .active.content
@@ -80,7 +80,7 @@ template(name='my_cleaning_schedule')
                 +fullcalendar cal_options
             
 template(name='my_office_contacts')
-    .ui.center.aligned.header 
+    h2.ui.center.aligned.header 
         |My Office Contacts
     table.ui.sortable.striped.table
         tbody
@@ -156,7 +156,7 @@ template(name='local_office_information')
         
 template(name='my_cleaning_crew')
     .ui.segment
-        h3.ui.center.aligned.header 
+        h2.ui.center.aligned.header 
             |My Cleaning Crew
         .ui.five.stackable.centered.cards
             each crew
