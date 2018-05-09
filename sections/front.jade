@@ -1,69 +1,75 @@
 template(name='front')
-    #home.ui.vertical.masthead.center.aligned.segment
+    #home.ui.vertical.masthead.center.aligned.padded.segment
+        .ui.hidden.divider
         .ui.container
             img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             h3.ui.inverted.header
                 | Customer Portal
             // h2 Do whatever you want when you want to.
-            .ui.huge.primary.button
+            a.ui.huge.primary.button(href='/sign-up')
                 | Get Started 
                 i.right.arrow.icon
-    .ui.vertical.stripe.segment
-        .ui.middle.aligned.stackable.grid.container
-            .row
-                .eight.wide.column
-                    h3.ui.header We Help Companies and Companions
-                    p
-                        | We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs...through pure data analytics.
-                    h3.ui.header We Make Bananas That Can Dance
-                    p
-                        | Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.
-                .six.wide.right.floated.column
-                    img.ui.large.bordered.rounded.image(src='assets/images/wireframe/white-image.png')
-            .row
-                .center.aligned.column
-                    a.ui.huge.button Check Them Out
-    .ui.vertical.stripe.quote.segment
-        .ui.equal.width.stackable.internally.celled.grid
-            .center.aligned.row
-                .column
-                    h3 "what an app"
-                    p - a guy
-                .column
-                    h3 "I shouldn't have gone with their competitor."
-                    p
-                        // img.ui.avatar.image(src='assets/images/avatar/nan.jpg')
-                        | -  other guy
-    .ui.vertical.stripe.segment
-        .ui.text.container
-            h3.ui.header Breaking The Grid, Grabs Your Attention
-            p
-                | Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.
-            a.ui.large.button Read More
-            h4.ui.horizontal.header.divider
-                a(href='#') Case Studies
-            h3.ui.header Did We Tell You About Our Bananas?
-            p
-                | Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but its really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.
-            a.ui.large.button I'm Still Quite Interested
-    .ui.inverted.vertical.footer.segment
-        .ui.container
-            .ui.stackable.inverted.divided.equal.height.stackable.grid
-                .three.wide.column
-                    h4.ui.inverted.header About
-                    .ui.inverted.link.list
-                        a.item(href='#') Sitemap
-                        a.item(href='#') Contact Us
-                        a.item(href='#') Religious Ceremonies
-                        a.item(href='#') Gazebo Plans
-                .three.wide.column
-                    h4.ui.inverted.header Services
-                    .ui.inverted.link.list
-                        a.item(href='#') Banana Pre-Order
-                        a.item(href='#') DNA FAQ
-                        a.item(href='#') How To Access
-                        a.item(href='#') Favorite X-Men
-                .seven.wide.column
-                    h4.ui.inverted.header Footer Header
-                    p
-                        | Extra space for a call to action inside the footer that could help re-engage users.
+    .ui.vertical.very.padded.segment
+        .ui.middle.aligned.stackable.relaxed.grid.container
+            .eight.wide.column
+                h2.ui.header
+                    i.calculator.icon
+                    .content
+                        | Emotional Analysis
+                        .sub.header Analyze Customer Incident Text
+            .eight.wide.column
+                h2.ui.header
+                    i.users.icon
+                    .content
+                        | CRM
+                        .sub.header Manage employees/customers
+            .eight.wide.column
+                h2.ui.header
+                    i.calendar.icon
+                    .content
+                        | Scheduling
+                        .sub.header Manage your services
+            .eight.wide.column
+                h2.ui.header
+                    i.cart.icon
+                    .content
+                        | Ecommerce
+                        .sub.header Full online store
+            .eight.wide.column
+                h2.ui.header
+                    i.bell.icon
+                    .content
+                        | Alerts
+                        .sub.header Customizable for time/emotion/roles/actions
+            .eight.wide.column
+                h2.ui.header
+                    i.envelope.icon
+                    .content
+                        | Mail
+                        .sub.header Internal Mesaging System
+            // .row
+            //     .center.aligned.column
+            //         a.ui.huge.button Check Them Out
+    // .ui.vertical.stripe.quote.segment
+    //     .ui.equal.width.stackable.internally.celled.grid
+    //         .center.aligned.row
+    //             .column
+    //                 h3 "what an app"
+    //                 p - guy
+    //             .column
+    //                 h3 "I shouldn't have gone with their competitor"
+    //                 p
+    //                     // img.ui.avatar.image(src='assets/images/avatar/nan.jpg')
+    //                     | -  other guy
+    // .ui.vertical.stripe.segment
+    //     .ui.text.container
+    //         h3.ui.header Attract Customers
+    //         p
+    //             | Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.
+    //         a.ui.large.button Read More
+    //         h4.ui.horizontal.header.divider
+    //             a(href='#') Case Studies
+    //         h3.ui.header Emotional Analysis
+    //         p
+    //             | Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but its really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.
+    //         a.ui.large.button I'm Still Quite Interested

@@ -5,7 +5,7 @@
 #nav.ui.inverted.menu {
   /*border: 0px solid transparent; */
   border: none !important; 
-  background: #0d5f9e;
+  background: #0a4a7b;
   box-shadow: none
 }
 
@@ -13,6 +13,7 @@ body {
   margin-top:52px;
   font-family: 'Roboto', sans-serif !important;
   min-height: 500px;
+  background: #e1e6ea;
 }
 .ui.header{
   font-family: 'Work Sans', sans-serif !important;
@@ -30,10 +31,11 @@ body {
 }
 
 #footer {
-        /*position: absolute;*/
-        bottom: 0;
-        width: 100%;
-        margin: 0 !important;
+  /*position: absolute;*/
+  bottom: 0;
+  width: 100%;
+  margin: 0 !important;
+  background: #0a4a7b !important;
 }
 
 /* Mobile */
