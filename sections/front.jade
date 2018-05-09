@@ -7,12 +7,13 @@ template(name='front')
                 | Customer Portal
             // h2 Do whatever you want when you want to.
             a.ui.huge.primary.button(href='/sign-up')
-                | Get Started 
+                | Register 
                 i.right.arrow.icon
     .ui.vertical.padded.segment
-        .ui.middle.aligned.stackable.padded.grid
+        .ui.middle.aligned.stackable.padded.relaxed.grid
             .row
                 .fifteen.wide.column
+                    h2.ui.center.aligned.header Features
                     +tag_facet
             .row
                 each features
@@ -21,8 +22,9 @@ template(name='front')
                             i.icon(class=icon)
                             .content
                                 | #{title}
-                                .sub.header #{text}
-                        +edit_button
+                                a.sub.header(href=link) #{text}
+                        if is_admin
+                            +edit_button
             .row
                 +add_button type='feature'    
                 // .row
@@ -71,8 +73,10 @@ template(name='feature_view')
                 each tags
                     .ui.label #{this}
             .thirteen.wide.column
-                .ui.heade #{title}
-                |#{text}
+                .ui.header title: #{title}
+                .ui.header text: #{text}
+                .ui.header icon: #{icon}
+                .ui.header link: #{link}
                 +comments
             
         
@@ -91,6 +95,7 @@ template(name='feature_edit')
                 +edit_text_field key='title' label='title'
                 +edit_text_field key='icon' label='icon'
                 +edit_text_field key='text' label='text'
+                +edit_text_field key='link' label='link'
             .four.wide.column
                 +edit_array_field key='tags'
         

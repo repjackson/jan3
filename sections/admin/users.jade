@@ -86,6 +86,8 @@ template(name='user_table')
                                             |#{address}
                                 td 
                                     +role_selector
+                                    each roles
+                                        .ui.label #{this}
                                 td
                                     a.ui.icon.disabled.button
                                         i.large.envelope.icon                                        
