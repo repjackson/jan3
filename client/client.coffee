@@ -38,7 +38,9 @@ Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 
 Template.registerHelper 'formal_when', () -> moment(@timestamp).format('MMMM Do YYYY, h:mm:ss a')
 
-Template.registerHelper 'is_admin', () -> 'admin' in Meteor.user().roles
+Template.registerHelper 'is_admin', () -> 
+    if Meteor.user()
+        'admin' in Meteor.user().roles
 
 
 

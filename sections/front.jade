@@ -7,7 +7,7 @@ template(name='front')
                 | Customer Portal
             // h2 Do whatever you want when you want to.
             a.ui.huge.primary.button(href='/sign-up')
-                | Register 
+                | Get Started 
                 i.right.arrow.icon
     .ui.vertical.padded.segment
         .ui.middle.aligned.stackable.padded.relaxed.grid
@@ -18,15 +18,17 @@ template(name='front')
             .row
                 each features
                     .five.wide.column
-                        h2.ui.header
-                            i.icon(class=icon)
-                            .content
-                                | #{title}
-                                a.sub.header(href=link) #{text}
-                        if is_admin
-                            +edit_button
+                        a.ui.basic.padded.segment(href=link)
+                            h2.ui.header
+                                i.icon(class=icon)
+                                .content
+                                    | #{title}
+                                    .sub.header #{text}
+                            if is_admin
+                                +edit_button
             .row
-                +add_button type='feature'    
+                if is_admin
+                    +add_button type='feature'    
                 // .row
             //     .center.aligned.column
             //         a.ui.huge.button Check Them Out
