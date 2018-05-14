@@ -12,12 +12,12 @@ template(name='front')
     .ui.vertical.padded.segment
         .ui.middle.aligned.stackable.padded.relaxed.grid
             .row
-                .fifteen.wide.column
+                .fifteen.wide.center.aligned.column
                     h2.ui.center.aligned.header Features
                     +tag_facet
-            .row
+            .centered.row
                 each features
-                    .five.wide.column
+                    .feature.five.wide.column
                         a.ui.basic.padded.segment(href=link)
                             h2.ui.header
                                 i.icon(class=icon)

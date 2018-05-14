@@ -4,7 +4,7 @@ template(name='bookmarks')
             .three.wide.column
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
-                    +icon name='bookmark'
+                    i.bookmark.icon
                     | Bookmarks
             .three.wide.column
         .centered.row
@@ -15,7 +15,8 @@ template(name='bookmarks')
             .twelve.wide.column
                 each bookmarks
                     .ui.header #{_id}
-
+                else
+                    | No bookmarks
             
 template(name='bookmark')
     .ui.segment.bookmark_segment(class=bookmark_segment_class)

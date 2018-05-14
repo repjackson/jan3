@@ -32,4 +32,7 @@ if Meteor.isClient
     
     Template.front.helpers
         features: -> Docs.find {type:'feature'}
-        
+
+
+    Template.front.events
+        'click .feature': -> selected_tags.clear()

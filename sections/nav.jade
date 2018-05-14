@@ -1,5 +1,5 @@
 template(name='nav')
-    #nav.ui.inverted.borderless.icon.top.attached.menu
+    #nav.ui.inverted.borderless.top.attached.menu
         // .mobile.only.ui.dropdown.icon.link.item
         //     i.th.large.icon
         //     .ui.menu
@@ -26,7 +26,7 @@ template(name='nav')
             // | Home
         a.mobile.hidden.icon.item(href='/users' class="{{isActivePath '/users'}}" data-position="top center" data-content='Users')
             i.large.users.icon
-            // | &nbsp; Users
+            | &nbsp; Users
         // a.item(href='/charts' class="{{isActivePath '/charts'}}" data-position="top center" data-content='Chart Demo')
         //     i.large.line.chart.icon
             // +avatar_sprite name='combo-chart'
@@ -34,23 +34,24 @@ template(name='nav')
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="top center" data-content='Incidents')
             // +avatar_sprite name='urgent-property'
             i.large.clipboard.icon
-            // | &nbsp; Incidents
+            | &nbsp; Incidents
         a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="top center" data-content='Offices')
             // +avatar_sprite name='organization'
             i.large.building.icon
-            // | &nbsp; Offices
+            | &nbsp; Offices
         a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="top center" data-content='Services/Ecommerce')
             i.large.shipping.fast.icon
+            | &nbsp; Services
             // +avatar_sprite name='duster'
         // a.icon.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="top center" data-content='Feed')
         //     i.large.rss.icon
         // a.mobile.hidden.disabled.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}")
         a.mobile.hidden.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="top center" data-content='Schedule')
             i.large.calendar.icon
+            | &nbsp; Schedule
         // .mobile.hidden.item(href='/consumerables' class="{{isActivePath '/consumerables'}}" data-position="top center" data-content='Consumerables')
         // .mobile.hidden.item(data-position="top center" data-content='Consumerables')
         //     +dots name='toilet-paper'
-            // | &nbsp; Services
         // .mobile.hidden.item
         //     .ui.icon.transparent.inverted.disabled.input
         //         input(type='text' placeholder='Search...')
@@ -84,8 +85,8 @@ template(name='nav')
                             
             else
                 a.ui.item(href='/sign-in') 
-                    i.right.chevron.icon
                     | Sign In
+                    i.right.chevron.icon
 
 
 
@@ -179,4 +180,5 @@ template(name='right_sidebar')
             i.shield.large.icon
             | Admin
         a#logout.ui.item(href='#') 
+            i.right.chevron.icon
             | Sign Out

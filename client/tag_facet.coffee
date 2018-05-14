@@ -25,9 +25,9 @@ Template.tag_facet.helpers
             Tags.find { 
                 # type:Template.currentData().type
                 count: $lt: doc_count
-                }, limit:42
+                }, limit:20
         else
-            cursor = Tags.find({}, limit:42)
+            cursor = Tags.find({}, limit:20)
             # console.log cursor.fetch()
             return cursor
             

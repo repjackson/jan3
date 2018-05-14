@@ -1,5 +1,5 @@
 template(name='users') 
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.container.grid
         .centered.row
             .four.wide.column 
                 +set_view_mode view='cards' icon='clone' label='Cards'
@@ -45,7 +45,7 @@ template(name='user_card')
             a(href="/profile/#{username}")
                 .ui.center.aligned.header #{profile.first_name} #{profile.last_name}
             each five_tags
-                .ui.compact.small.circular.button.person_tag(class=tag_class) 
+                .ui.compact.disabled.button.person_tag(class=tag_class) 
                     strong #{this}
         .content
            .ui.list

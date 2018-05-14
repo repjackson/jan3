@@ -19,7 +19,7 @@ template(name='admin')
     
     
 template(name='admin_nav')    
-    .ui.top.attached.six.item.labeled.icon.large.stackable.menu
+    #nav.ui.top.attached.seven.item.labeled.large.icon.inverted.blue.stackable.menu
         a.item(href='/admin' class="{{isActivePath '/admin'}}")
             i.large.shield.icon
             | Admin
@@ -32,6 +32,9 @@ template(name='admin_nav')
         a.item(href='/schemas' class="{{isActivePath '/schemas'}}")
             i.large.database.icon
             | Schemas
+        a.item(href='/incident_types' class="{{isActivePath '/incident_types'}}")
+            i.large.exclamation.triangle.icon
+            | Incident Types
         a.item(href='/roles' class="{{isActivePath '/roles'}}")
             i.large.users.icon
             | Roles
@@ -42,11 +45,11 @@ template(name='admin_nav')
     
         
 template(name='admin_rules')
-    .ui.center.aligned.header
-        i.code.icon
-        | Rules
-    .ui.header Action pipelines/SLA managment
-    .ui.header eg, When incident of priority 'high' is created email 'local manager'
-        
-        
-        
+    .ui.stackable.padded.grid
+        .row 
+            .ten.wide.column
+                .ui.center.aligned.header
+                    i.code.icon
+                    | Rules
+                .ui.header Action pipelines/SLA managment
+                .ui.header eg, When incident of priority 'high' is created email 'local manager'
