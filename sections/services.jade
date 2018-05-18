@@ -2,8 +2,11 @@ template(name='services')
     .ui.stackable.centered.padded.grid
         .centered.row
             .four.wide.column
+                h2.ui.center.aligned.header 
+                    i.shipping.fast.icon
+                    |Services
                 +add_button type='service' label='Service'
-                .ui.dividing.header Filter
+                +tag_facet type='service'
             .twelve.wide.column
                 .ui.centered.stackable.cards
                     each services

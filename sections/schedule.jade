@@ -1,18 +1,17 @@
 template(name='schedule')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .eight.wide.column
+            .six.wide.column
                 +add_button type='event' label='event'
-                .ui.dividing.header Filter
+                +fullcalendar
+            .ten.wide.column
                 .ui.dividing.header My Schedule
-                .ui.centered.stackable.cards
+                .ui.centered.stackable.three.cards
                     each schedule
                         +event_card
-            .eight.wide.column
-                +fullcalendar
 
 template(name='event_card')
-    .ui.card
+    .card
         .content
             a.grey.header(href="/view/#{_id}") event ##{jan_event_id}
         .content

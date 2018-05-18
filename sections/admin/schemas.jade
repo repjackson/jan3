@@ -1,16 +1,16 @@
 template(name='schemas')
-    .ui.stackable.padded.container.grid
+    .ui.stackable.padded.grid
         .row 
             .three.wide.column
                 +add_button type='schema'
                 +tag_facet
             .ten.wide.column
-                .ui.centered.stackable.three.cards
+                .ui.centered.stackable.cards
                     each schemas
                         +schema_card
 
 template(name='schema_card')
-    .ui.card
+    .card
         .content
             a.grey.header(href="/view/#{_id}")
                 |#{name} 

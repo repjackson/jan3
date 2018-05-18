@@ -21,7 +21,7 @@ FlowRouter.route '/rules', action: (params) ->
     BlazeLayout.render 'layout',
         nav: 'nav'
         sub_nav: 'admin_nav'
-        main: 'admin_rules'
+        main: 'rules'
  
  
 if Meteor.isClient
@@ -34,6 +34,11 @@ if Meteor.isClient
         is_admin: -> Roles.userIsInRole(@_id, 'admin')
     
     
-    
+    Template.admin_nav.onRendered ->
+        Meteor.setTimeout ->
+            $('.item').popup()
+        , 400
+        
+
     
     

@@ -1,9 +1,9 @@
 if Meteor.isClient
     Template.comments.onCreated ->
-        # @autorun -> Meteor.subscribe 'comments', Session.get('editing_id')
+        @autorun -> Meteor.subscribe 'comments', FlowRouter.getParam('doc_id')
     
     Template.comments.helpers
-        # comments: -> Docs.find { parent_id:Session.get('editing_id'), type:'comment'}
+        comments: -> Docs.find { parent_id:FlowRouter.getParam('doc_id'), type:'comment'}
     
     
     Template.comments.onRendered ->

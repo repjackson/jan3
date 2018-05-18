@@ -1,35 +1,22 @@
 template(name='incidents')
     .ui.stackable.padded.centered.grid
         .centered.row
-            .three.wide.column
+            .four.wide.column
+                h2.ui.center.aligned.header 
+                    i.clipboard.icon
+                    | Incidents
                 +set_view_mode view='cards' icon='clone' label='Cards View'
                 +set_view_mode view='list' icon='list' label='List View'
                 +set_view_mode view='table' icon='table' label='Table View'
                 +set_view_mode view='charts' icon='line chart' label='Graph View'
+                div
                 +add_button type='incident' label='Incident'
                 // .ui.basic.center.aligned.segment
                 .ui.hidden.divider
                 +timestamp_facet type='incident'
                 // +location_facet
                 +keyword_facet type='incident'
-                // .ui.dividing.header Level
-                // +set_session_button key='level' value='all' label='All'
-                // +set_session_button key='level' value=1 label='1'
-                // +set_session_button key='level' value=2 label='2'
-                // +set_session_button key='level' value=3 label='3'
-                // +set_session_button key='level' value=4 label='4'
-                // .ui.dividing.header Type
-                // +set_session_button key='type' value='missed_service' label='Missed Service'
-                // +set_session_button key='type' value='poor_service' label='Poor Service'
-                // +set_session_button key='type' value='employee_issue' label='Employee Issue'
-                // +set_session_button key='type' value='other' label='Other'
-                // .ui.dividing.header 
-                //     i.building.icon
-                //     |Office
-                // +set_session_button key='level' value=1 label='Denver'
-                // +set_session_button key='level' value=2 label='Chicago'
-                // +set_session_button key='level' value=3 label='NYC'
-            .thirteen.wide.column
+            .twelve.wide.column
                 if viewing_list
                     .ui.divided.items
                         each incidents
@@ -218,9 +205,8 @@ template(name='incident_view')
                             else
                                 +call_visual_analysis
                     .four.wide.column
-                        if customer
-                            with customer
-                                +user_card
+                        with author
+                            +user_card
                         with office
                             +office_card
             .ui.bottom.attached.tab.segment(data-tab='status')

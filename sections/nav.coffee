@@ -1,8 +1,6 @@
 if Meteor.isClient
     Template.right_sidebar.events
-        'click #logout': -> 
-            AccountsTemplates.logout()
-            
+        'click #logout': -> AccountsTemplates.logout()
         
     Template.nav.onCreated ->
         @autorun -> 
@@ -18,9 +16,9 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.ui.dropdown').dropdown()
         , 1000
-        # Meteor.setTimeout ->
-        #     $('.item').popup()
-        # , 400
+        Meteor.setTimeout ->
+            $('.item').popup()
+        , 400
         
         
         

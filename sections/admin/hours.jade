@@ -1,20 +1,19 @@
-template(name='tasks')
+template(name='hours')
     .ui.stackable.centered.padded.grid
         .centered.row
             .four.wide.column
-                +add_button type='task'
-                div
-                +set_session_button key='view_complete' value=true label='complete'
-                +set_session_button key='view_complete' value=false label='incomplete'
-                div
+                h2.ui.center.aligned.header Work Hours
+                +add_button type='hour'
+                // +set_session_button key='view_complete' value=true label='complete'
+                // +set_session_button key='view_complete' value=false label='incomplete'
                 +tag_facet
             .twelve.wide.column
-                .ui.centered.cards
-                    each tasks
-                        +task_card
+                .ui.cards
+                    each hours
+                        +hour_card
                         
                         
-template(name='task_item')
+template(name='hour_item')
     .ui.item
         if image_id
             a.image(href="/view/#{_id}")
@@ -23,26 +22,17 @@ template(name='task_item')
                 //     .ui.small.label #{class}
         .content
             a.grey.header(href="/view/#{_id}") 
-                |##{task_number}
+                |##{hour_number}
             .description
                 .ui.grid
                     .twelve.wide.column
-                        .large130 {{nl2br task_details}}
-                        +tone
-                        // .meta 
-                        //     .ui.horizontal.list
-                        //         each watson_keywords
-                        //             .item #{this}
+                        .large130 {{nl2br hour_details}}
                     .four.wide.column
                         .meta #{when}
                         .meta #{formal_when}
                         // .ui.horizontal.list
                         //     each date_array
                         //         .item #{this}
-                        if office.office_name
-                            .ui.label #{office.office_name}
-                        if current_level
-                            .ui.label Level #{current_level}
                         .meta by #{author.username}
                         if comment_count
                             a.meta(href="/view/#{_id}")
@@ -57,38 +47,18 @@ template(name='task_item')
         
 
                 
-template(name='task_card')
+template(name='hour_card')
     .ui.card
-        if image_id
-            a.image(href="/view/#{_id}")
-                img.ui.rounded.image(src="{{c.url image_id  width=300 height=300 crop='fill' }}")
         .content
-            // .right.floated.meta
-            //     // .ui.circular.label(title='task Number') #{task_number}
-            //     | #{when}
-            a(href="/view/#{_id}") 
-                |#{title}
+            |!{html}
         .content    
-            if complete
-                i#turn_off.link.large.toggle.on.icon
-            else
-                i#turn_on.link.large.toggle.off.icon
-            if complete
-                i.large.green.checkmark.icon
+            |#{start}
             .right.floated 
-                |#{when}
+                // |#{when}
                 +author_info
-        // .content
-        //     // .ui.accordion
-        //     //     .title 
-        //     //         |html
-        //         //     i.dropdown.icon
-        //         // .content
-        //     .description
-        //         |!{html}
-        // .content
-        //     each tags
-        //         .ui.large.label #{this}
+        .content
+            each tags
+                .ui.label #{this}
         if watson
             .content
                 +doc_sentiment
@@ -103,41 +73,43 @@ template(name='task_card')
             +view_button
 
 
-template(name='task_table')
+
+
+template(name='hour_table')
     table.ui.celled.selectable.table
         tbody
-            each tasks
-                +task_row
+            each hours
+                +hour_row
                 
                 
-template(name='task_row')                
+template(name='hour_row')                
     tr
         // td #{_id}
         td 
             a(href="/view/#{_id}") #{text}
             |#{title}
-            // if editing_this_task
+            // if editing_this_hour
             //     .ui.fluid.input
-            //         input.task_text(type='text' value=text placeholder='Task Text')
+            //         input.hour_text(type='text' value=text placeholder='hour Text')
         td #{when}
         // td #{due_date_when}
         td 
             +edit_button
             +view_full_button
         // td
-            // if editing_this_task
-            //     .save_task.ui.icon.button
+            // if editing_this_hour
+            //     .save_hour.ui.icon.button
             //         i.checkmark.icon
             // else
-            //     .edit_task.ui.icon.button
+            //     .edit_hour.ui.icon.button
             //         i.edit.icon
             
             
-template(name='task_view')
+template(name='hour_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +link_button link='/tasks' icon='tasks' label='Tasks'
+                +link_button link='/hours' icon='hours' label='hours'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header view #{title}
             .three.wide.column
@@ -153,19 +125,19 @@ template(name='task_view')
                 +comments
             
         
-template(name='task_edit')
+template(name='hour_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.grey.header edit '#{title}' task
+                h1.ui.center.aligned.grey.header edit work hour
             .three.wide.column
                 #delete.ui.icon.button
                     i.trash.icon
         .centered.row
             .twelve.wide.column
-                +edit_text_field key='title' label='title' icon=''
+                +edit_date_field key='start' label='start' icon='clock'
                 +edit_html
             .four.wide.column
                 +edit_array_field key='tags'
