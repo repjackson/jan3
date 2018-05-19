@@ -30,6 +30,16 @@ template(name='edit_date_field')
             if icon
                 i.icon(class=icon)
             input#date_field(type='date' value=key_value)        
+
+
+template(name='edit_datetime_field')       
+        .field
+            label #{label}
+            #semcal.ui.calendar
+                .ui.input
+                    input#datetime_field(type='text' value=key_value)        
+
+
 template(name='edit_number_field')
     .field
         label #{label}

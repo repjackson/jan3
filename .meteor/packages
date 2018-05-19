@@ -41,7 +41,6 @@ ecmascript@0.10.6
 coffeescript
 juliancwirko:postcss
 less
-jquery
 reywood:publish-composite
 yasinuslu:json-view
 jeremy:geocomplete

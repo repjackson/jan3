@@ -70,11 +70,11 @@ template(name='task_card')
                 |#{title}
         .content    
             if complete
-                i#turn_off.link.large.toggle.on.icon
+                #turn_off.ui.icon.button
+                    i.large.toggle.on.green.icon
             else
-                i#turn_on.link.large.toggle.off.icon
-            if complete
-                i.large.green.checkmark.icon
+                #turn_on.ui.icon.button
+                    i.large.toggle.off.icon
             .right.floated 
                 |#{when}
                 +author_info

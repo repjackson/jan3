@@ -1,9 +1,10 @@
 
-FlowRouter.route '/admin', action: (params) ->
+FlowRouter.route '/dev', action: (params) ->
     BlazeLayout.render 'layout',
         nav: 'nav'
-        sub_nav: 'admin_nav'
-        main: 'admin'
+        sub_nav: 'dev_nav'
+        main: 'dev'
+ 
  
  
 if Meteor.isClient
@@ -13,14 +14,11 @@ if Meteor.isClient
     
     Template.user_table.helpers
         users: -> Meteor.users.find {}
-        is_admin: -> Roles.userIsInRole(@_id, 'admin')
+        is_dev: -> Roles.userIsInRole(@_id, 'dev')
     
     
-    Template.admin_nav.onRendered ->
+    Template.dev_nav.onRendered ->
         Meteor.setTimeout ->
             $('.item').popup()
         , 400
         
-
-    
-    

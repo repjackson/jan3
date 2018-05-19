@@ -1,7 +1,7 @@
 if Meteor.isClient
     FlowRouter.route '/hours', action: ->
         BlazeLayout.render 'layout', 
-            sub_nav:'admin_nav'
+            sub_nav:'dev_nav'
             main: 'hours'
     
     Template.hours.onCreated ->

@@ -1,0 +1,31 @@
+template(name='dev')
+    h1.ui.center.aligned.grey.header 
+        i.code.icon
+        | Dev
+    .ui.centered.cards
+        .card
+            .content
+                .ui.header Tasks
+        .card
+            .content
+                .ui.header Schemas
+        .card
+            .content
+                .ui.header Hours
+    
+    
+    
+template(name='dev_nav')    
+    .ui.top.attached.five.item.large.inverted.grey.menu
+        a.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="bottom center" data-content='Tasks')
+            i.large.tasks.icon
+            .mobile.hidden Tasks
+        a.item(href='/schemas' class="{{isActivePath '/schemas'}}" data-position="bottom center" data-content='Schemas')
+            i.large.database.icon
+            .mobile.hidden Schemas
+        a.item(href='/hours' class="{{isActivePath '/hours'}}" data-position="bottom center" data-content='Hours')
+            i.large.clock.icon
+            .mobile.hidden Hours
+        a.item(href='/roles' class="{{isActivePath '/roles'}}" data-position="bottom center" data-content='Roles')
+            i.large.users.icon
+            .mobile.hidden Roles

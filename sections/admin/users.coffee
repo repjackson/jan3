@@ -1,8 +1,10 @@
 if Meteor.isClient
-    FlowRouter.route '/users', action: ->
-        BlazeLayout.render 'layout', 
-            main: 'users'
-            
+    FlowRouter.route '/users', action: (params) ->
+        BlazeLayout.render 'layout',
+            nav: 'nav'
+            sub_nav: 'admin_nav'
+            main: 'user_table'
+
             
     Template.users.helpers
         users: -> Meteor.users.find()

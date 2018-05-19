@@ -93,6 +93,27 @@ Template.edit_textarea.events
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
+Template.edit_datetime_field.onRendered ->
+    Meteor.setTimeout ->
+        console.log 'hi'
+        $('#semcal').calendar(
+            type: 'datetime'
+            firstDayOfWeek: 0
+            constantHeight: true
+        )
+    , 500
+
+Template.edit_datetime_field.events
+    'change #datetime_field': (e,t)->
+        datetime_value = e.currentTarget.value
+        Docs.update FlowRouter.getParam('doc_id'),
+            { $set: "#{@key}": datetime_value } 
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
+
 
 Template.edit_date_field.events
     'change #date_field': (e,t)->

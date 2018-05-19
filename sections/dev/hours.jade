@@ -3,6 +3,7 @@ template(name='hours')
         .centered.row
             .four.wide.column
                 h2.ui.center.aligned.header Work Hours
+                .ui.center.aligned.sub.header #{hours.count} Total Hours Logged
                 +add_button type='hour'
                 // +set_session_button key='view_complete' value=true label='complete'
                 // +set_session_button key='view_complete' value=false label='incomplete'
@@ -137,7 +138,9 @@ template(name='hour_edit')
                     i.trash.icon
         .centered.row
             .twelve.wide.column
-                +edit_date_field key='start' label='start' icon='clock'
+                // +edit_date_field key='start' label='start' icon='clock'
+                +edit_datetime_field key='start' label='Start' icon='clock'
+            
                 +edit_html
             .four.wide.column
                 +edit_array_field key='tags'

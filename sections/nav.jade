@@ -1,5 +1,5 @@
 template(name='nav')
-    #nav.ui.inverted.borderless.top.attached.large.icon.menu
+    #nav.ui.inverted.borderless.top.attached.large.menu
         a.toggle_left_sidebar.icon.item 
             i.large.bars.icon
         a.header.item(href='/front' class="{{isActivePath '/front'}}" data-position="bottom center" data-content='Sales Page')
@@ -9,35 +9,38 @@ template(name='nav')
             // i.home.icon
             img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             // | Home
-        a.mobile.hidden.icon.item(href='/users' class="{{isActivePath '/users'}}" data-position="bottom center" data-content='Users')
+        a.mobile.hidden.item(href='/users' class="{{isActivePath '/users'}}" data-position="bottom center" data-content='Users')
             i.large.users.icon
-            // | &nbsp; Users
+            | Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="bottom center" data-content='Incidents')
             i.large.clipboard.icon
-            // | &nbsp; Incidents
-        a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
-            i.large.building.icon
+            | Incidents
+        // a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
+        //     i.large.building.icon
             // | &nbsp; Offices
-        a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
-            i.large.shipping.fast.icon
+        // a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
+        //     i.large.shipping.fast.icon
             // | &nbsp; Services
-        a.mobile.hidden.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')
-            i.large.calendar.icon
+        // a.mobile.hidden.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')
+        //     i.large.calendar.icon
             // | &nbsp; Schedule
         // .mobile.hidden.item
         //     .ui.icon.transparent.inverted.disabled.input
         //         input(type='text' placeholder='Search...')
         //         i.search.icon
         .right.menu
-            a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
+            a.mobile.hidden.icon.item(href='/dev' class="{{isActivePath '/dev'}}" data-position="bottom center" data-content='dev')
+                i.large.code.grey.icon
+                // | dev
+            a.mobile.hidden.icon.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
                 i.large.shield.alternate.icon
                 // | Admin
-            a.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
-                i.large.comments.icon
+            // a.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
+            //     i.large.comments.icon
             // .icon.mobile.hidden.disabled.item(data-position="bottom center" data-content='Cart')
             //     i.large.shopping.cart.icon
-            a.icon.mobile.hidden.item(href='/mail' class="{{isActivePath '/mail'}}" data-position="bottom center" data-content='Mail')
-                i.large.envelope.icon
+            // a.icon.mobile.hidden.item(href='/mail' class="{{isActivePath '/mail'}}" data-position="bottom center" data-content='Mail')
+            //     i.large.envelope.icon
             a.ui.simple.dropdown.icon.mobile.hidden.item(href='/alerts')
                 i.large.bell.icon
                 .menu
@@ -76,18 +79,18 @@ template(name='left_sidebar')
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Offices')
             i.large.building.icon
             | Offices
-        a.toggle_left_sidebar.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="right center" data-content='Schedule')
-            i.large.calendar.icon
-            | Schedule
-        a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
-            i.large.clock.icon
-            // +tiny_sprite name='duster'
-            | Services
-            // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}" data-position="right center" data-content='Charts')
-            //     i.line.chart.icon
-        a.toggle_left_sidebar.item(href='/store' data-position="bottom center" data-content='Store')
-            i.large.shopping.cart.icon
-            | Store
+        // a.toggle_left_sidebar.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="right center" data-content='Schedule')
+        //     i.large.calendar.icon
+        //     | Schedule
+        // a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
+        //     i.large.clock.icon
+        //     // +tiny_sprite name='duster'
+        //     | Services
+        //     // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}" data-position="right center" data-content='Charts')
+        //     //     i.line.chart.icon
+        // a.toggle_left_sidebar.item(href='/store' data-position="bottom center" data-content='Store')
+        //     i.large.shopping.cart.icon
+        //     | Store
             
         a.icon.toggle_left_sidebar.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="right center" data-content='Admin')
             i.large.shield.icon
@@ -117,33 +120,33 @@ template(name='right_sidebar')
         a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
             img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
             |#{currentUser.username}
-        a.icon.toggle_right_sidebar.item(href='/ideas' class="{{isActivePath '/ideas'}}")
-            i.lightbulb.large.icon
-            | Ideas
-        a.icon.toggle_right_sidebar.item(href='/questions' class="{{isActivePath '/questions'}}")
-            i.question.large.icon
-            | Q&A
-        a.icon.toggle_right_sidebar.item(href='/rankings' class="{{isActivePath '/rankings'}}")
-            i.trophy.large.icon
-            | Leaderboard
-        a.toggle_right_sidebar.item(href='/alerts')
-            i.bell.large.icon
-            | Alerts
-        a.toggle_right_sidebar.item(href='/charts')
-            i.large.line.chart.icon
-            | Chart Demo
-        a.toggle_right_sidebar.item(href='/mail')
-            i.envelope.large.icon
-            | Mail
+        // a.icon.toggle_right_sidebar.item(href='/ideas' class="{{isActivePath '/ideas'}}")
+        //     i.lightbulb.large.icon
+        //     | Ideas
+        // a.icon.toggle_right_sidebar.item(href='/questions' class="{{isActivePath '/questions'}}")
+        //     i.question.large.icon
+        //     | Q&A
+        // a.icon.toggle_right_sidebar.item(href='/rankings' class="{{isActivePath '/rankings'}}")
+        //     i.trophy.large.icon
+        //     | Leaderboard
+        // a.toggle_right_sidebar.item(href='/alerts')
+        //     i.bell.large.icon
+        //     | Alerts
+        // a.toggle_right_sidebar.item(href='/charts')
+        //     i.large.line.chart.icon
+        //     | Chart Demo
+        // a.toggle_right_sidebar.item(href='/mail')
+        //     i.envelope.large.icon
+        //     | Mail
         a.toggle_right_sidebar.item(href='/feed')
             i.rss.large.icon
             | Feed
-        a.toggle_right_sidebar.item(href='/chat')
-            i.chat.large.icon
-            | Chat
-        a.toggle_right_sidebar.item(href='/bookmarks')
-            i.bookmark.large.icon
-            | Bookmarks
+        // a.toggle_right_sidebar.item(href='/chat')
+        //     i.chat.large.icon
+        //     | Chat
+        // a.toggle_right_sidebar.item(href='/bookmarks')
+        //     i.bookmark.large.icon
+        //     | Bookmarks
         a.toggle_right_sidebar.item(href='/account/settings' class="{{isActivePath '/account/settings'}}") 
             i.cog.large.icon
             | Settings

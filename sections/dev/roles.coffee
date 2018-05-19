@@ -6,7 +6,7 @@ if Meteor.isClient
     
     FlowRouter.route '/roles', action: ->
         BlazeLayout.render 'layout', 
-            sub_nav: 'admin_nav'
+            sub_nav: 'dev_nav'
             main: 'roles'
     
     

@@ -22,27 +22,10 @@ template(name='admin_nav')
     #nav.ui.top.attached.eight.item.large.icon.inverted.blue.stackable.menu
         a.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
             i.large.shield.icon
-            // | Admin
         a.item(href='/users' class="{{isActivePath '/users'}}" data-position="bottom center" data-content='Users')
             i.large.users.icon
-            // | Users
-        a.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="bottom center" data-content='Tasks')
-            i.large.tasks.icon
-            // | Tasks
-        a.item(href='/schemas' class="{{isActivePath '/schemas'}}" data-position="bottom center" data-content='Schemas')
-            i.large.database.icon
-            // | Schemas
         a.item(href='/incident_types' class="{{isActivePath '/incident_types'}}" data-position="bottom center" data-content='Incident Types')
-            i.large.exclamation.triangle.icon
+            i.large.exclamation.icon
             // | Incident Types
-        a.item(href='/roles' class="{{isActivePath '/roles'}}" data-position="bottom center" data-content='Roles')
-            i.large.users.icon
-            // | Roles
-        a.item(href='/rules' class="{{isActivePath '/rules'}}" data-position="bottom center" data-content='Rules')
-            i.large.code.icon
-            // | Rules
-        a.item(href='/hours' class="{{isActivePath '/hours'}}" data-position="bottom center" data-content='Hours')
-            i.large.clock.icon
-            // | Rules
-    
-    
+        a.item(href='/rules' class="{{isActivePath '/rules'}}" data-position="bottom center" data-content='SLA Rules')
+            i.large.sort.numeric.down.icon

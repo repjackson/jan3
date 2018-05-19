@@ -1,10 +1,13 @@
 template(name='schemas')
     .ui.stackable.padded.grid
         .row 
-            .three.wide.column
+            .four.wide.column
+                h1.ui.header 
+                    i.database.icon
+                    |Schemas
                 +add_button type='schema'
                 +tag_facet
-            .ten.wide.column
+            .twelve.wide.column
                 .ui.centered.stackable.cards
                     each schemas
                         +schema_card
