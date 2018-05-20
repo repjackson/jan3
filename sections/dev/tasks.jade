@@ -3,10 +3,10 @@ template(name='tasks')
         .centered.row
             .four.wide.column
                 +add_button type='task'
-                div
-                +set_session_button key='view_complete' value=true label='complete'
-                +set_session_button key='view_complete' value=false label='incomplete'
-                div
+                .ui.hidden.divider
+                +set_session_button key='view_complete' value=true label='All'
+                +set_session_button key='view_complete' value=false label='Incomplete'
+                .ui.hidden.divider
                 +tag_facet
             .twelve.wide.column
                 .ui.centered.cards
@@ -66,8 +66,8 @@ template(name='task_card')
             // .right.floated.meta
             //     // .ui.circular.label(title='task Number') #{task_number}
             //     | #{when}
-            a(href="/view/#{_id}") 
-                |#{title}
+            a.header(href="/view/#{_id}") 
+               |#{title}
         .content    
             if complete
                 #turn_off.ui.icon.button
@@ -86,9 +86,9 @@ template(name='task_card')
         //         // .content
         //     .description
         //         |!{html}
-        // .content
-        //     each tags
-        //         .ui.large.label #{this}
+        .content
+            each tags
+                .ui.basic.label #{this}
         if watson
             .content
                 +doc_sentiment

@@ -93,15 +93,35 @@ Template.edit_textarea.events
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
-Template.edit_datetime_field.onRendered ->
+Template.edit_timerange_field.onRendered ->
     Meteor.setTimeout ->
-        console.log 'hi'
-        $('#semcal').calendar(
+        $('#time_start').calendar(
             type: 'datetime'
+            today:true
+            firstDayOfWeek: 0
+            constantHeight: true
+        )
+        $('#time_end').calendar(
+            type: 'datetime'
+            today:true
             firstDayOfWeek: 0
             constantHeight: true
         )
     , 500
+
+
+Template.edit_datetime_field.onRendered ->
+    Meteor.setTimeout ->
+        $('#semcal').calendar(
+            type: 'datetime'
+            today:true
+            inline:true
+            firstDayOfWeek: 0
+            constantHeight: true
+        )
+    , 500
+
+
 
 Template.edit_datetime_field.events
     'change #datetime_field': (e,t)->

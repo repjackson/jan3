@@ -43,7 +43,7 @@ template(name='view_button')
         
 template(name='add_button')
     #add.ui.large.icon.button(title='add')
-        i.plus.large.icon
+        i.plus.icon
         // +mini_inline_sprite name='plus'
 
 template(name='reference_type_single')
@@ -77,8 +77,8 @@ template(name='set_view_mode')
             
             
 template(name='set_session_button')
-    .set_session_filter.ui.button(class=filter_class)
-        |#{label}
+    .set_session_filter.ui.large.button(class=filter_class)
+        strong #{label}
         
 template(name='set_session_item')
     a.set_session_filter.item 
@@ -174,8 +174,8 @@ template(name='call_phone_button')
             
             
 template(name='link_button')    
-    a.ui.big.icon.button(href=link title=label)
-        i.large.icon(class=icon)
+    a.ui.large.icon.button(href=link title=label)
+        i.icon(class=icon)
 
 template(name='edit_author')
     .ui.header Edit Author
@@ -215,6 +215,14 @@ template(name='publish_button')
 template(name='call_method')
     .call_method.ui.button call #{name}
     
+    
+template(name='small_comment_count')
+    .ui.mini.statistic
+        .value
+            i.comment.icon
+            |#{comment_count}
+        // .label Comments
+
     
     
 template(name='html_create')

@@ -211,7 +211,6 @@ template(name='tone')
                 | #{text}
                 each tones
                     .ui.basic.label #{tone_id} {{ to_percent score }}%
-    unless tone                
-        #call_tone.ui.icon.button(title='Refresh Tone Analysis')
-            i.refresh.icon
-            // +jsonView(json=tone)
+    #call_tone.ui.icon.button(title='Refresh Tone Analysis')
+        i.refresh.icon
+        // +jsonView(json=tone)

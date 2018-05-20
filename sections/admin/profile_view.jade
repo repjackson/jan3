@@ -13,21 +13,22 @@ template(name='user_nav')
 template(name='view_profile')
     with person
         .ui.padded.stackable.grid
-            .row
-                .four.wide.column
-                .eight.wide.column
+            .middle.aligned.row
+                .four.wide.center.aligned.column
+                    +link_button link='/users' icon='users' label='Users'
+                .eight.wide.center.aligned.column
                     h1.header.item #{profile.first_name} #{profile.last_name}
-                .four.wide.column
-                    a(href="/profile/edit/#{_id}")
-                        i.big.link.pencil.icon
+                .four.wide.center.aligned.column
+                    a.ui.icon.button(href="/profile/edit/#{_id}")
+                        i.pencil.icon
 
             .row
                 .four.wide.column
                     img.ui.medium.image.item(src="{{c.url profile.image_id width=500 height=500 gravity='face' crop='fill'}}")
         
-                    if tags
-                        each tags
-                            .ui.label #{this}
+                    // if tags
+                    //     each tags
+                    //         .ui.label #{this}
                     .ui.list
                         .item
                             if profile.position
@@ -46,16 +47,16 @@ template(name='view_profile')
                                 strong Website 
                                 a(href=profile.website target='_blank') #{profile.website}
                     .ui.hidden.divider
-                .ten.wide.column
-                    .ui.cards
+                .twelve.wide.column
+                    .ui.button Send Message
+                    .ui.button Tag User
+                    .ui.three.centered.cards
                         .ui.card
                             .content
                                 .ui.header Following
                         .ui.card
                             .content
                                 .ui.header Followed By
-                        .ui.button Send Message
-                        .ui.button Tag User
                         .ui.card
                             .content
                                 .ui.header Incidents

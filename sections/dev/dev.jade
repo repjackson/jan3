@@ -12,20 +12,32 @@ template(name='dev')
         .card
             .content
                 .ui.header Hours
+        .card
+            .content
+                .ui.header Projects
     
     
     
 template(name='dev_nav')    
-    .ui.top.attached.five.item.large.inverted.grey.menu
+    .ui.top.attached.seven.item.inverted.grey.menu
         a.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="bottom center" data-content='Tasks')
             i.large.tasks.icon
-            .mobile.hidden Tasks
+            // .mobile.hidden Tasks
+        a.item(href='/projects' class="{{isActivePath '/projects'}}" data-position="bottom center" data-content='projects')
+            i.large.calendar.check.icon
+            // .mobile.hidden Projects
         a.item(href='/schemas' class="{{isActivePath '/schemas'}}" data-position="bottom center" data-content='Schemas')
             i.large.database.icon
-            .mobile.hidden Schemas
+            // .mobile.hidden Schemas
         a.item(href='/hours' class="{{isActivePath '/hours'}}" data-position="bottom center" data-content='Hours')
             i.large.clock.icon
-            .mobile.hidden Hours
+            // .mobile.hidden Hours
         a.item(href='/roles' class="{{isActivePath '/roles'}}" data-position="bottom center" data-content='Roles')
             i.large.users.icon
-            .mobile.hidden Roles
+            // .mobile.hidden Roles
+        a.item(href='/actions' class="{{isActivePath '/actions'}}" data-position="bottom center" data-content='Actions')
+            i.large.bolt.icon
+            // .mobile.hidden actions
+        a.item(href='/conditions' class="{{isActivePath '/conditions'}}" data-position="bottom center" data-content='Conditions')
+            i.large.umbrella.icon
+            // .mobile.hidden conditions

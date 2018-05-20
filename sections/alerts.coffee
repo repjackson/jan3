@@ -1,25 +1,15 @@
-@alerts = new Meteor.Collection 'alerts'
-
-
 FlowRouter.route '/alerts', action: (params) ->
     BlazeLayout.render 'layout',
         main: 'alerts'
 
 if Meteor.isClient
     Template.alerts.onCreated -> 
-        @autorun -> Meteor.subscribe('alerts')
+        @autorun -> Meteor.subscribe('docs',[], 'alert')
 
     Template.alerts.helpers
-        alerts: -> 
-            alerts.find { }
+        alerts: -> Docs.find type:'alert'
     
     Template.alert.events
-        'click .edit': -> FlowRouter.go("/alert/edit/#{@_id}")
-
-    Template.alerts.events
-        # 'click #add_module': ->
-        #     id = alerts.insert({})
-        #     FlowRouter.go "/edit_module/#{id}"
     
     
 

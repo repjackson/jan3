@@ -1,7 +1,7 @@
 template(name='admin')
     h1.ui.center.aligned.grey.header 
         i.shield.icon
-        // |Admin
+        |Admin
     .ui.centered.cards
         .card
             .content
@@ -19,13 +19,26 @@ template(name='admin')
     
     
 template(name='admin_nav')    
-    #nav.ui.top.attached.eight.item.large.icon.inverted.blue.stackable.menu
-        a.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
+    #nav.ui.top.attached.six.item.large.inverted.menu
+        // a.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
+        a.item(href='/admin' class="{{isActivePath '/admin'}}")
             i.large.shield.icon
-        a.item(href='/users' class="{{isActivePath '/users'}}" data-position="bottom center" data-content='Users')
+            .mobile.hidden Admin
+        // a.item(href='/users' class="{{isActivePath '/users'}}" data-position="bottom center" data-content='Users')
+        a.item(href='/users' class="{{isActivePath '/users'}}")
             i.large.users.icon
-        a.item(href='/incident_types' class="{{isActivePath '/incident_types'}}" data-position="bottom center" data-content='Incident Types')
+            .mobile.hidden Users
+        // a.item(href='/incident_types' class="{{isActivePath '/incident_types'}}" data-position="bottom center" data-content='Incident Types')
+        a.item(href='/incident_types' class="{{isActivePath '/incident_types'}}" )
             i.large.exclamation.icon
-            // | Incident Types
-        a.item(href='/rules' class="{{isActivePath '/rules'}}" data-position="bottom center" data-content='SLA Rules')
+            .mobile.hidden Incident Types
+        a.item(href='/triggers' class="{{isActivePath '/triggers'}}" )
+            i.large.bolt.icon
+            .mobile.hidden Triggers
+        a.item(href='/automations' class="{{isActivePath '/automations'}}" )
+            i.large.car.icon
+            .mobile.hidden Automations
+        // a.item(href='/rules' class="{{isActivePath '/rules'}}" data-position="bottom center" data-content='SLA Rules')
+        a.item(href='/rules' class="{{isActivePath '/rules'}}" )
             i.large.sort.numeric.down.icon
+            .mobile.hidden SLA Rules

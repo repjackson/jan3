@@ -33,11 +33,29 @@ template(name='edit_date_field')
 
 
 template(name='edit_datetime_field')       
+    h3 #{label}
+    #semcal.ui.calendar
+        .ui.left.icon.input
+            i.clock.icon
+            input#datetime_field(type='text' value=key_value)        
+
+template(name='edit_timerange_field') 
+    h3
+        |Time Range
+        // i.clock.icon
+    .ui.form
         .field
-            label #{label}
-            #semcal.ui.calendar
-                .ui.input
-                    input#datetime_field(type='text' value=key_value)        
+            // label Start
+            #time_start.ui.calendar
+                .ui.left.icon.input
+                    i.hourglass.start.icon
+                    input#time_start_value(type='text' value=key_value)        
+        .field
+            // label End
+            #time_end.ui.calendar
+                .ui.left.icon.input
+                    i.hourglass.end.icon
+                    input#time_end_value(type='text' value=key_value)        
 
 
 template(name='edit_number_field')
@@ -64,9 +82,9 @@ template(name='view_array_field')
     
     
 template(name='edit_array_field')
-    // .ui.header 
-    //     // i.tags.icon
-    //     |#{key}
+    .ui.header 
+        i.tags.icon
+        |#{label}
     .ui.input
         input.new_entry(type='text' maxlength='50' placeholder='add tag')
         // .ui.icon.button

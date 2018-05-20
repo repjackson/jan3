@@ -1,20 +1,20 @@
-template(name='hours')
+template(name='projects')
     .ui.stackable.centered.padded.grid
         .centered.row
             .four.wide.column
-                h2.ui.center.aligned.header Work Hours
-                .ui.center.aligned.sub.header #{hours.count} Total Hours Logged
-                +add_button type='hour'
-                // +set_session_button key='view_complete' value=true label='complete'
-                // +set_session_button key='view_complete' value=false label='incomplete'
+                +add_button type='project'
+                .ui.hidden.divider
+                +set_session_button key='view_complete' value=true label='All'
+                +set_session_button key='view_complete' value=false label='Incomplete'
+                .ui.hidden.divider
                 +tag_facet
             .twelve.wide.column
-                .ui.cards
-                    each hours
-                        +hour_card
+                .ui.centered.cards
+                    each projects
+                        +project_card
                         
                         
-template(name='hour_item')
+template(name='project_item')
     .ui.item
         if image_id
             a.image(href="/view/#{_id}")
@@ -23,17 +23,26 @@ template(name='hour_item')
                 //     .ui.small.label #{class}
         .content
             a.grey.header(href="/view/#{_id}") 
-                |##{hour_number}
+                |##{project_number}
             .description
                 .ui.grid
                     .twelve.wide.column
-                        .large130 {{nl2br hour_details}}
+                        .large130 {{nl2br project_details}}
+                        +tone
+                        // .meta 
+                        //     .ui.horizontal.list
+                        //         each watson_keywords
+                        //             .item #{this}
                     .four.wide.column
                         .meta #{when}
                         .meta #{formal_when}
                         // .ui.horizontal.list
                         //     each date_array
                         //         .item #{this}
+                        if office.office_name
+                            .ui.label #{office.office_name}
+                        if current_level
+                            .ui.label Level #{current_level}
                         .meta by #{author.username}
                         if comment_count
                             a.meta(href="/view/#{_id}")
@@ -48,18 +57,38 @@ template(name='hour_item')
         
 
                 
-template(name='hour_card')
+template(name='project_card')
     .ui.card
+        if image_id
+            a.image(href="/view/#{_id}")
+                img.ui.rounded.image(src="{{c.url image_id  width=300 height=300 crop='fill' }}")
         .content
-            |!{html}
+            // .right.floated.meta
+            //     // .ui.circular.label(title='project Number') #{project_number}
+            //     | #{when}
+            a.header(href="/view/#{_id}") 
+               |#{title}
         .content    
-            |#{start}
+            if complete
+                #turn_off.ui.icon.button
+                    i.large.toggle.on.green.icon
+            else
+                #turn_on.ui.icon.button
+                    i.large.toggle.off.icon
             .right.floated 
-                // |#{when}
+                |#{when}
                 +author_info
+        // .content
+        //     // .ui.accordion
+        //     //     .title 
+        //     //         |html
+        //         //     i.dropdown.icon
+        //         // .content
+        //     .description
+        //         |!{html}
         .content
             each tags
-                .ui.label #{this}
+                .ui.basic.label #{this}
         if watson
             .content
                 +doc_sentiment
@@ -74,75 +103,71 @@ template(name='hour_card')
             +view_button
 
 
-
-
-template(name='hour_table')
+template(name='project_table')
     table.ui.celled.selectable.table
         tbody
-            each hours
-                +hour_row
+            each projects
+                +project_row
                 
                 
-template(name='hour_row')                
+template(name='project_row')                
     tr
         // td #{_id}
         td 
             a(href="/view/#{_id}") #{text}
             |#{title}
-            // if editing_this_hour
+            // if editing_this_project
             //     .ui.fluid.input
-            //         input.hour_text(type='text' value=text placeholder='hour Text')
+            //         input.project_text(type='text' value=text placeholder='project Text')
         td #{when}
         // td #{due_date_when}
         td 
             +edit_button
             +view_full_button
         // td
-            // if editing_this_hour
-            //     .save_hour.ui.icon.button
+            // if editing_this_project
+            //     .save_project.ui.icon.button
             //         i.checkmark.icon
             // else
-            //     .edit_hour.ui.icon.button
+            //     .edit_project.ui.icon.button
             //         i.edit.icon
             
             
-template(name='hour_view')
+template(name='project_view')
     .ui.padded.stackable.centered.grid
-        .middle.aligned.row
-            .three.wide.center.aligned.column
-                +link_button link='/hours' icon='clock' label='hours'
-            .ten.wide.center.aligned.column
-                h1.ui.center.aligned.grey.header View Work Hour
-            .three.wide.center.aligned.column
+        .centered.row
+            .three.wide.column
+                +link_button link='/projects' icon='calendar check' label='projects'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header view #{title}
+            .three.wide.column
                 +edit_button
         .row
             .three.wide.column
-                .ui.header Tags
+                .ui.header tags
                 each tags
-                    .ui.large.basic.label #{this}
+                    .ui.label #{this}
             .thirteen.wide.column
                 .ui.heade #{title}
                 |!{html}
                 +comments
             
         
-template(name='hour_edit')
+template(name='project_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit Work Hour
+                h1.ui.center.aligned.grey.header Edit '#{title}' Project
             .three.wide.column
                 #delete.ui.icon.button
                     i.trash.icon
         .centered.row
-            .four.wide.column
-                +edit_timerange_field
-                +edit_array_field key='tags' label='Tags'
             .twelve.wide.column
+                +edit_text_field key='title' label='title' icon=''
                 +edit_html
-                // +edit_date_field key='start' label='start' icon='clock'
-            
+            .four.wide.column
+                +edit_array_field key='tags'
         
             

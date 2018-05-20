@@ -1,14 +1,10 @@
 template(name='alerts')
     .ui.stackable.centered.padded.grid
-        .centered.middle.aligned.row
-            .three.wide.column
-            .ten.wide.column
+        .centered.row
+            .four.wide.column
                 h1.ui.center.aligned.grey.header 
                     i.bell.icon
                     | Alerts
-            .three.wide.column
-        .centered.row
-            .four.wide.column
                 +tag_facet
                 +timestamp_facet
                 .ui.hidden.divider
@@ -28,8 +24,9 @@ template(name='alerts')
                 // else
                 //     #allow_alerts.ui.basic.button Allow Desktop alerts
             .twelve.wide.column
-                .ui.segment
-                    .ui.header Alerts
+                .ui.segments
+                    each alerts
+                        +alert
 
             
 template(name='alert')
@@ -40,6 +37,8 @@ template(name='alert')
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 .content
                     .summary
+                        div type: #{type}
+                        div alert type: #{alert_type}
                         // a.user(href="/profile/#{subject.username}")
                         //     | #{subject_name}
                         // | #{predicate}

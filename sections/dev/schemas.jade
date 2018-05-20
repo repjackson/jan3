@@ -2,10 +2,11 @@ template(name='schemas')
     .ui.stackable.padded.grid
         .row 
             .four.wide.column
-                h1.ui.header 
-                    i.database.icon
-                    |Schemas
+                // h1.ui.header 
+                //     i.database.icon
+                //     |Schemas
                 +add_button type='schema'
+                .ui.hidden.divider
                 +tag_facet
             .twelve.wide.column
                 .ui.centered.stackable.cards

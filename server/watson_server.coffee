@@ -31,7 +31,7 @@ Meteor.methods
         if doc.incident_details
             params =
                 content: doc.incident_details,
-                content_type: 'text/plain',
+                content_type: 'text/html',
                 consumption_preferences: true,
                 raw_scores: false
             personality_insights.profile params, Meteor.bindEnvironment((err, response)->
@@ -57,8 +57,8 @@ Meteor.methods
         if doc.incident_details
             # stringed = JSON.stringify(doc.incident_details, null, 2)
             params =
-                text:doc.incident_details
-                content_type:'text/plain'
+                html: doc.incident_details
+                content_type:'text/html'
             tone_analyzer.tone params, Meteor.bindEnvironment((err, response)->
                 if err
                     console.log err
@@ -99,8 +99,7 @@ Meteor.methods
         doc = Docs.findOne doc_id
         if doc.incident_details
             parameters = 
-                # 'html': doc.content
-                text: doc.incident_details
+                html: doc.incident_details
                 features:
                     entities:
                         emotion: true

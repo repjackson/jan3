@@ -17,8 +17,8 @@ template(name='edit_profile')
                         else
                             label upload image
                             input(type='file' name='upload_picture' accept='image/*')
-                .ui.center.aligned.basic.segment
-                    i#save_profile.checkmark.big.link.green.icon
+                #save_profile.ui.big.fluid.icon.button
+                    i.checkmark.large.green.icon
             .eight.wide.column    
                 .ui.large.form
                     .field
@@ -53,7 +53,7 @@ template(name='edit_profile')
                     .field
                         label Tags
                         each tags
-                            .ui.button.doc_tag(class=doc_tag_class)
+                            .ui.button.person_tag(class=doc_tag_class)
                                 i.minus.icon
                                 |#{this}
                         .ui.left.icon.four.wide.input

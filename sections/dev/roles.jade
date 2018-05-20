@@ -1,9 +1,9 @@
 template(name='roles')
     .ui.stackable.padded.grid
-        .row 
+        .middle.aligned.row 
             .three.wide.column
             .ten.wide.column
-                h1.ui.center.aligned.header 
+                h1.ui.center.aligned.grey.header 
                     i.users.icon
                     | Roles
             .three.wide.column
@@ -46,7 +46,7 @@ template(name='role_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +link_button link='/roles' icon='chevron-left' label='Roles'
+                +link_button link='/roles' icon='users' label='Roles'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Role: #{name}
             .three.wide.column
