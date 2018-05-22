@@ -3,18 +3,19 @@ template(name='dev')
         i.code.icon
         | Dev
     .ui.centered.cards
-        .card
-            .content
-                .ui.header Tasks
-        .card
-            .content
-                .ui.header Schemas
-        .card
-            .content
-                .ui.header Hours
-        .card
-            .content
-                .ui.header Projects
+        +task_widget
+        +widget_list type='schema' label='Schemas'
+        +widget_list type='hour' label='Hours'
+        +widget_list type='project' label='Projects'
+    
+    
+template(name='widget_list')
+    .ui.card
+        .content
+            a.header(href="/#{type}s") #{label}
+            .ui.list
+                each type_docs
+                    a.item(href="/view/#{_id}") #{name} #{title} !{html}
     
     
     

@@ -5,8 +5,15 @@ template(name='admin')
     .ui.centered.cards
         +user_widget
         +task_widget
-        +role_widget
-        +rule_widget
+        +widget_list type='rule' label='Rules'
+        +widget_list type='role' label='Roles'
+        +widget_list type='action' label='Actions'
+        +widget_list type='condition' label='Conditions'
+        +widget_list type='automation' label='Automations'
+        
+        // +task_widget
+        // +role_widget
+        // +rule_widget
     
     
 template(name='admin_nav')    

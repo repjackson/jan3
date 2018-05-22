@@ -46,6 +46,12 @@ if Meteor.isClient
         rules: -> Docs.find type:'rule'
     
 
+    Template.widget_list.onCreated ->
+        @autorun =>  Meteor.subscribe 'docs', [], @data.type
+    Template.widget_list.helpers
+        type_docs: -> Docs.find type:Template.currentData().type
+    
+
 
 
 
