@@ -19,7 +19,10 @@ template(name='dev')
     
     
 template(name='dev_nav')    
-    .ui.top.attached.seven.item.inverted.grey.menu
+    .ui.top.attached.eight.item.inverted.grey.menu
+        a.item(href='/dev' class="{{isActivePath '/dev'}}" data-position="bottom center" data-content='dev')
+            i.large.code.icon
+            // .mobile.hidden Tasks
         a.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="bottom center" data-content='Tasks')
             i.large.tasks.icon
             // .mobile.hidden Tasks

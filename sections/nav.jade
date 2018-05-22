@@ -1,22 +1,19 @@
 template(name='nav')
-    #nav.ui.inverted.borderless.top.attached.menu
+    #nav.ui.inverted.top.attached.menu
         a.toggle_left_sidebar.icon.item 
             i.large.bars.icon
-        a.header.item(href='/front' class="{{isActivePath '/front'}}" data-position="bottom center" data-content='Sales Page')
-            i.large.globe.icon
-            // | Home
         a.header.item(href='/' class="{{isActivePath '/'}}" data-position="bottom center" data-content='Dashboard')
             // i.home.icon
             img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             // | Home
         a.mobile.hidden.item(href='/users' class="{{isActivePath '/users'}}" )
             i.large.users.icon
-            | Users
+            // | Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" )
             i.large.clipboard.icon
-            | Incidents
-        // a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
-        //     i.large.building.icon
+            // | Incidents
+        a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
+            i.large.building.icon
             // | &nbsp; Offices
         // a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
         //     i.large.shipping.fast.icon
@@ -66,10 +63,13 @@ template(name='nav')
 
 
 template(name='left_sidebar')
-    #nav.ui.left.vertical.sidebar.inverted.large.menu
+    #nav.ui.left.vertical.sidebar.inverted.menu
         // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
         //     i.home.icon
         //     |Jan-Pro
+        a.toggle_left_sidebar.item(href='/front' class="{{isActivePath '/front'}}" data-position="bottom center" data-content='Sales Page')
+            i.large.globe.icon
+            | Sales Page
         a.toggle_left_sidebar.item(href='/users' class="{{isActivePath '/users'}}" data-position="right center" data-content='Users')
             i.large.users.icon
             | Users
@@ -138,6 +138,9 @@ template(name='right_sidebar')
         // a.toggle_right_sidebar.item(href='/mail')
         //     i.envelope.large.icon
         //     | Mail
+        a.toggle_right_sidebar.item(href='/dev' class="{{isActivePath '/dev'}}" data-position="bottom center" data-content='dev')
+            i.large.code.grey.icon
+            | Dev
         a.toggle_right_sidebar.item(href='/feed')
             i.rss.large.icon
             | Feed

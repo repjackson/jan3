@@ -4,8 +4,9 @@ template(name='rules')
             .four.wide.column
                 h2.ui.center.aligned.header SLA Rule
                 +add_button type='rule'
-                .ui.header Action pipelines/SLA managment
-                .ui.header eg, When incident of priority 'high' is created email 'local manager'
+                p A service level agreement (SLA) is a contract between you and your customers that specifies performance measures for support by ticket priority. For example, we respond to urgent tickets in ten minutes and resolve them within two hours. Your SLA policies are applied to tickets in the order they appear on this page, so drag to reorder as needed.Learn more
+
+
                 // +set_session_button key='view_complete' value=true label='complete'
                 // +set_session_button key='view_complete' value=false label='incomplete'
                 +tag_facet
@@ -52,6 +53,7 @@ template(name='rule_item')
 template(name='rule_card')
     .ui.card
         .content
+            .header #{name}
             |!{html}
         .content    
             |#{start}
@@ -111,9 +113,9 @@ template(name='rule_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +link_button link='/rules' icon='rules' label='rules'
+                +link_button link='/rules' icon='sort numeric down' label='rules'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header view #{title}
+                h1.ui.center.aligned.grey.header View #{name} SLA Policy
             .three.wide.column
                 +edit_button
         .row
@@ -139,6 +141,7 @@ template(name='rule_edit')
                     i.trash.icon
         .centered.row
             .twelve.wide.column
+                +edit_text_field key='name' label='Name'
                 +edit_date_field key='start' label='start' icon='clock'
                 +edit_html
             .four.wide.column

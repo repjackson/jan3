@@ -122,8 +122,19 @@ template(name='trigger_edit')
         .centered.row
             .twelve.wide.column
                 +edit_text_field key='title' label='Title'
-                +edit_html
+                +condition_selector
+                +action_selector
             .four.wide.column
                 +edit_array_field key='tags'
         
             
+            
+template(name='condition_selector')
+    .ui.header Condition Selector
+    .ui.sub.header Conditions that must be met for the trigger to run
+
+    
+template(name='action_selector')
+    .ui.header Action Selector
+    .ui.sub.header Actions that will occur if global conditions are satisfied
+

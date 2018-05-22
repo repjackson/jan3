@@ -57,7 +57,7 @@ Meteor.methods
         if doc.incident_details
             # stringed = JSON.stringify(doc.incident_details, null, 2)
             params =
-                html: doc.incident_details
+                text: doc.incident_details
                 content_type:'text/html'
             tone_analyzer.tone params, Meteor.bindEnvironment((err, response)->
                 if err
