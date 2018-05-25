@@ -112,7 +112,7 @@ template(name='complete')
 
 
 template(name='toggle_key')
-    #toggle_key.ui.button(class=toggle_key_button_class) #{label}
+    .toggle_key.ui.button(class=toggle_key_button_class) #{label}
 
 // template(name='vote_button')
 //     i.thumbs.up.link.large.icon.vote_up(class=vote_up_button_class)
@@ -148,11 +148,25 @@ template(name='toggle_follow')
 template(name='associated_incidents')
     .ui.segment
         .ui.header 
-            i.clipboard.icon
+            i.exclamation.circle.icon
             | Incidents
         .ui.list
             each incidents
                 .item ##{incident_number} #{when}
+        
+template(name='incidents_by_type')
+    .ui.segment
+        .ui.header 
+            i.exclamation.circle.icon
+            | Incidents
+        .ui.list
+            each typed_incidents
+                .item
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    .content
+                        a.header(href="/view/#{_id}") ##{incident_number} 
+                        .description
+                            |#{when}
         
             
             

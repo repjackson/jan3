@@ -40,7 +40,11 @@ Template.registerHelper 'formal_when', () -> moment(@timestamp).format('MMMM Do 
 Template.registerHelper 'is_admin', () -> 
     if Meteor.user()
         'admin' in Meteor.user().roles
+Template.registerHelper 'is_dev', () -> 
+    if Meteor.user()
+        'dev' in Meteor.user().roles
 
+Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 
 # Meteor.startup ->
 #     # HTTP.call('get',"https://avalon.extraview.net/jan-pro/ExtraView/ev_api.action?user_id=zpeckham&password=jpi19&statevar=get_roles", (err,res)->
@@ -65,7 +69,6 @@ Template.registerHelper 'page_key_value', (key) ->
         current_doc["#{@key}"]
 
 
-Template.registerHelper 'is_dev', () -> Meteor.isDevelopment
 
 
 Template.left_sidebar.onRendered ->

@@ -48,25 +48,18 @@ if Meteor.isClient
         'click #turn_on': ->
             # console.log @complete
             if confirm 'Mark Complete?'
+                doc_id = FlowRouter.getParam('doc_id')
                 Docs.update {_id:FlowRouter.getParam('doc_id')}, 
                     $set: complete: true
-            Docs.insert
-                type:'event'
-                parent_id: FlowRouter.getParam('doc_id')
-                event_type:'mark_complete'
-                action:'marked complete'
+                Meteor.call 'create_event', doc_id, 'mark_complete', 'marked complete'
     
         'click #turn_off': ->
             # console.log @complete
             if confirm 'Mark Incomplete?'
-                Docs.update {_id:FlowRouter.getParam('doc_id')}, 
+                doc_id = FlowRouter.getParam('doc_id')
+                Docs.update {_id:doc_id}, 
                     $set: complete: false
-            Docs.insert
-                type:'event'
-                parent_id: FlowRouter.getParam('doc_id')
-                event_type:'mark_incomplete'
-                action:'marked incomplete'
-
+                Meteor.call 'create_event', doc_id, 'mark_incomplete', 'marked incomplete'
 
     Template.task_card.events
         'click #turn_on': ->

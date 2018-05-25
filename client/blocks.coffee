@@ -277,3 +277,45 @@ Template.doc_history.helpers
         Docs.find
             parent_id:FlowRouter.getParam('doc_id')
             type:'event'
+            
+            
+            
+Template.incidents_by_type.onCreated ->
+    @autorun =>  Meteor.subscribe 'docs', [], 'incident'
+Template.incidents_by_type.helpers
+    typed_incidents: -> 
+        incident_type_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Docs.find {
+            type:'incident'
+            incident_type:incident_type_doc.slug
+        }, sort:timestamp:-1
+        
+        
+        
+Template.toggle_key.helpers
+    toggle_key_button_class: -> 
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log current_doc["#{@key}"]
+        # console.log @key
+        # console.log Template.parentData()
+        # console.log Template.parentData()["#{@key}"]
+        
+        if @value
+            if current_doc["#{@key}"] is @value then 'primary'
+        # else if current_doc["#{@key}"] is true then 'active' else 'basic'
+        else ''
+
+Template.toggle_key.events
+    'click .toggle_key': ->
+        # console.log Template.parentData()
+        if @value
+            Docs.update FlowRouter.getParam('doc_id'), 
+                $set: "#{@key}": "#{@value}"
+        else if Template.parentData()["#{@key}"] is true
+            Docs.update FlowRouter.getParam('doc_id'), 
+                $set: "#{@key}": false
+        else
+            Docs.update FlowRouter.getParam('doc_id'), 
+                $set: "#{@key}": true
+
+        

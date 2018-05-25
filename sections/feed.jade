@@ -1,10 +1,26 @@
 template(name='feed')
-    .ui.padded.grid
-        .centered.row
-            .ui.center.aligned.header
-                i.rss.icon
-                | Feed
+    .ui.padded.stackable.grid
         .row
-            each feed_events
-                .item
-                    .ui.header hi
+            .four.wide.column
+                h1.ui.center.aligned.header
+                    i.rss.icon
+                    | Feed
+            .twelve.wide.column
+                .ui.feed
+                    each feed_events
+                        +feed_event
+                        
+                        
+template(name='feed_event')
+    .event
+        .label
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .content
+            .summary
+                a.user #{author.username}
+                |#{action} 
+                a(href="/view/#{parent._id}") #{parent.title}
+                .date #{when}
+        .meta
+            if is_dev
+                i.remove_event.remove.link.icon

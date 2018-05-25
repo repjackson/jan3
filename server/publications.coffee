@@ -674,3 +674,127 @@ Meteor.publish 'type', (type)->
 Meteor.publish 'child_docs', (doc_id)->
     Docs.find
         parent_id: doc_id
+        
+        
+Meteor.publish 'parent_doc', (child_id)->
+    child =  Docs.findOne child_id
+    Docs.find
+        _id: child.parent_id
+        
+        
+        
+        
+
+
+publishComposite 'docs', (selected_tags, type)->
+    {
+        find: ->
+            self = @
+            match = {}
+            if type then match.type = type
+            # console.log match
+            Docs.find match,
+                limit:20
+        children: [
+            {
+                find: (doc)-> Meteor.users.find _id:doc.author_id
+            }
+            {
+                find: (doc)-> Docs.find _id:doc.parent_id
+            }
+        ]
+    }
+
+
+publishComposite 'incidents', (level)->
+    {
+        find: ->
+            self = @
+            match = {}
+            # match.current_level = parseInt(level)
+            match.type = 'incident'
+            # console.log match
+            Docs.find match,
+                limit:20
+        children: [
+            {
+                find: (doc)-> Meteor.users.find _id:doc.author_id
+            }
+            {
+                find: (doc)-> Docs.find _id:doc.parent_id
+            }
+        ]
+    }
+
+
+
+
+# Meteor.publish 'docs', (selected_tags, type)->
+
+#     # user = Meteor.users.findOne @userId
+#     # current_herd = user.profile.current_herd
+
+#     self = @
+#     match = {}
+#     # selected_tags.push current_herd
+#     # match.tags = $all: selected_tags
+#     if selected_tags.length > 0 then match.tags = $all: selected_tags
+#     if type then match.type = type
+
+#     Docs.find match,
+#         limit: 20
+        
+
+publishComposite 'doc', (id)->
+    {
+        find: -> Docs.find id
+        children: [
+            {
+                find: (doc)-> Meteor.users.find _id:doc.author_id
+            }
+            {
+                find: (doc)-> Docs.find _id:doc.referenced_office_id
+            }
+            {
+                find: (doc)-> Docs.find _id:doc.referenced_customer_id
+            }
+            {
+                find: (doc)-> Docs.find _id:doc.parent_id
+            }
+        ]
+    }
+
+
+
+Meteor.publish 'doc_tags', (selected_tags)->
+    
+    user = Meteor.users.findOne @userId
+    # current_herd = user.profile.current_herd
+    
+    self = @
+    match = {}
+    
+    # selected_tags.push current_herd
+    match.tags = $all: selected_tags
+
+    
+    cloud = Docs.aggregate [
+        { $match: match }
+        { $project: tags: 1 }
+        { $unwind: "$tags" }
+        { $group: _id: '$tags', count: $sum: 1 }
+        { $match: _id: $nin: selected_tags }
+        { $sort: count: -1, _id: 1 }
+        { $limit: 20 }
+        { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+    # console.log 'cloud, ', cloud
+    cloud.forEach (tag, i) ->
+        self.added 'tags', Random.id(),
+            name: tag.name
+            count: tag.count
+            index: i
+
+    self.ready()
+    
+    

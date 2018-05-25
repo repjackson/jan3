@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/`', action: ->
+    FlowRouter.route '/policies`', action: ->
         BlazeLayout.render 'layout', 
             sub_nav:'admin_nav'
             main: 'policies'

@@ -39,23 +39,25 @@ template(name='incident_type_edit')
         .eight.wide.column
             .ui.form
                 +edit_text_field key='name' label='Incident Type Name'
+                +edit_text_field key='slug' label='Slug (machine readable)'
                 +edit_html
         
         
 template(name='incident_type_view')
     .ui.padded.stackable.centered.grid
-        .centered.row
+        .centered.middle.aligned.row
             .three.wide.column
                 +link_button link='/incident_types' icon='exclamation triangle'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Incident Types: #{name}
+                h1.ui.center.aligned.grey.header Incident Type: #{name}
             .three.wide.column
                 +edit_button
         .row
-            .eight.wide.column
+            .four.wide.column
                 .ui.header Name: #{name}
                 .ui.header Description: !{html}
-                +associated_incidents
+                +incidents_by_type type=slug
+            .twelve.wide.column
                 +comments
                 
                 

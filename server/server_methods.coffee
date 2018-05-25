@@ -176,3 +176,10 @@ Meteor.methods
                 
         return
         
+        
+    create_event: (parent_id, event_type, action)->
+        Docs.insert
+            type:'event'
+            parent_id: parent_id
+            event_type: event_type
+            action:action

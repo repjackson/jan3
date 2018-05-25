@@ -2,7 +2,6 @@ if Meteor.isClient
     FlowRouter.route '/feed', 
         action: ->
             selected_timestamp_tags.clear()
-            selected_keywords.clear()
             BlazeLayout.render 'layout', 
                 main: 'feed'
 
@@ -15,9 +14,19 @@ if Meteor.isClient
             selected_timestamp_tags.array()
             type='event'
             author_id=null
-
-
-
     Template.feed.helpers
-        feed: -> Docs.find type:'event'
+        feed_events: -> Docs.find type:'event'
+
+
+    Template.feed_event.onCreated ->
+        @autorun => Meteor.subscribe 'parent_doc', @data._id
+    Template.feed_event.events
+        'click .remove_event': -> 
+            if confirm 'Delete Event?'
+                Docs.remove @_id
+
+                
+                
+                
+                
                 

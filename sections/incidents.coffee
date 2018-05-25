@@ -86,10 +86,11 @@ if Meteor.isClient
     
     Template.incident_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+        @autorun -> Meteor.subscribe 'docs', [], 'incident_type'
     
     Template.incident_edit.helpers
         incident: -> Doc.findOne FlowRouter.getParam('doc_id')
-        
+        incident_types: -> Docs.find type:'incident_type'
     Template.incident_edit.events
         'click #delete': ->
             template = Template.currentData()

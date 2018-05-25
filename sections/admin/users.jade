@@ -39,8 +39,8 @@ template(name='user_cloud')
 template(name='user_card')                
     .ui.card
         .image
-            a(href="/profile/#{username}")
-                img.ui.fluid.image(src="{{c.url profile.image_id height=400 width=800 background='white' crop='pad'}}")
+            // a(href="/profile/#{username}")
+            img.ui.fluid.image(src="{{c.url profile.image_id height=400 width=400 background='white' crop='pad'}}")
         .content
             a(href="/profile/#{username}")
                 .ui.center.aligned.header #{profile.first_name} #{profile.last_name}

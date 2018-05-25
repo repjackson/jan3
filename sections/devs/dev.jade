@@ -2,13 +2,15 @@ template(name='dev')
     h1.ui.center.aligned.grey.header 
         i.code.icon
         | Dev
-    #call_ev.ui.button call ev
+    // #call_ev.ui.button call ev
     .ui.centered.cards
         +task_widget
         +widget_list type='schema' label='Schemas'
         +widget_list type='hour' label='Hours'
         +widget_list type='project' label='Projects'
-    
+        +widget_list type='trigger' label='Triggers' icon='bolt'
+        +widget_list type='action' label='Actions' 
+    .ui.hidden.divider
     
 template(name='widget_list')
     .ui.card
