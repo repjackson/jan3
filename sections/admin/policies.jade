@@ -1,9 +1,9 @@
-template(name='rules')
+template(name='policies')
     .ui.stackable.centered.padded.grid
         .centered.row
             .four.wide.column
-                h2.ui.center.aligned.header SLA Rule
-                +add_button type='rule'
+                h2.ui.center.aligned.header SLA policy
+                +add_button type='policy'
                 p A service level agreement (SLA) is a contract between you and your customers that specifies performance measures for support by ticket priority. For example, we respond to urgent tickets in ten minutes and resolve them within two hours. Your SLA policies are applied to tickets in the order they appear on this page, so drag to reorder as needed.Learn more
 
 
@@ -12,11 +12,11 @@ template(name='rules')
                 +tag_facet
             .twelve.wide.column
                 .ui.cards
-                    each rules
-                        +rule_card
+                    each policies
+                        +policy_card
                         
                         
-template(name='rule_item')
+template(name='policy_item')
     .ui.item
         if image_id
             a.image(href="/view/#{_id}")
@@ -25,11 +25,11 @@ template(name='rule_item')
                 //     .ui.small.label #{class}
         .content
             a.grey.header(href="/view/#{_id}") 
-                |##{rule_number}
+                |##{policy_number}
             .description
                 .ui.grid
                     .twelve.wide.column
-                        .large130 {{nl2br rule_details}}
+                        .large130 {{nl2br policy_details}}
                     .four.wide.column
                         .meta #{when}
                         .meta #{formal_when}
@@ -50,10 +50,10 @@ template(name='rule_item')
         
 
                 
-template(name='rule_card')
+template(name='policy_card')
     .ui.card
         .content
-            .header #{name}
+            .header #{na
             |!{html}
         .content    
             |#{start}
@@ -79,41 +79,41 @@ template(name='rule_card')
 
 
 
-template(name='rule_table')
+template(name='policy_table')
     table.ui.celled.selectable.table
         tbody
-            each rules
-                +rule_row
+            each policies
+                +policy_row
                 
                 
-template(name='rule_row')                
+template(name='policy_row')                
     tr
         // td #{_id}
         td 
             a(href="/view/#{_id}") #{text}
             |#{title}
-            // if editing_this_rule
+            // if editing_this_policy
             //     .ui.fluid.input
-            //         input.rule_text(type='text' value=text placeholder='rule Text')
+            //         input.policy_text(type='text' value=text placeholder='policy Text')
         td #{when}
         // td #{due_date_when}
         td 
             +edit_button
             +view_full_button
         // td
-            // if editing_this_rule
-            //     .save_rule.ui.icon.button
+            // if editing_this_policy
+            //     .save_policy.ui.icon.button
             //         i.checkmark.icon
             // else
-            //     .edit_rule.ui.icon.button
+            //     .edit_policy.ui.icon.button
             //         i.edit.icon
             
             
-template(name='rule_view')
+template(name='policy_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +link_button link='/rules' icon='sort numeric down' label='rules'
+                +link_button link='/policies' icon='sort numeric down' label='policies'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header View #{name} SLA Policy
             .three.wide.column
@@ -129,13 +129,13 @@ template(name='rule_view')
                 +comments
             
         
-template(name='rule_edit')
+template(name='policy_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.grey.header edit work rule
+                h1.ui.center.aligned.grey.header edit work policy
             .three.wide.column
                 #delete.ui.icon.button
                     i.trash.icon

@@ -266,3 +266,14 @@ Template.edit_author.helpers
             }
             ]
     }
+
+
+Template.doc_history.onCreated ->
+    @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+
+
+Template.doc_history.helpers
+    doc_history_events: ->
+        Docs.find
+            parent_id:FlowRouter.getParam('doc_id')
+            type:'event'

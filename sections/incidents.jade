@@ -1,7 +1,7 @@
 template(name='incidents')
     .ui.stackable.padded.centered.grid
         .centered.row
-            .four.wide.column
+            .three.wide.column
                 h2.ui.center.aligned.header 
                     i.clipboard.icon
                     | Incidents
@@ -16,7 +16,7 @@ template(name='incidents')
                 +timestamp_facet type='incident'
                 // +location_facet
                 +keyword_facet type='incident'
-            .twelve.wide.column
+            .thirteen.wide.column
                 if viewing_list
                     .ui.divided.items
                         each incidents

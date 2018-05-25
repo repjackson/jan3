@@ -1,5 +1,5 @@
 template(name='nav')
-    #nav.ui.inverted.top.attached.menu
+    #nav.ui.inverted.top.attached.icon.menu
         a.toggle_left_sidebar.icon.item 
             i.large.bars.icon
         a.header.item(href='/' class="{{isActivePath '/'}}" data-position="bottom center" data-content='Dashboard')
@@ -15,8 +15,12 @@ template(name='nav')
         a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
             i.large.building.icon
             // | &nbsp; Offices
-        // a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
-        //     i.large.shipping.fast.icon
+        a.mobile.hidden.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
+            i.rss.large.icon
+            // | Feed
+            
+        a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
+            i.large.shipping.fast.icon
             // | &nbsp; Services
         // a.mobile.hidden.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')
         //     i.large.calendar.icon
@@ -32,8 +36,8 @@ template(name='nav')
             a.mobile.hidden.icon.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
                 i.large.shield.alternate.icon
                 // | Admin
-            // a.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
-            //     i.large.comments.icon
+            a.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
+                i.large.comments.icon
             // .icon.mobile.hidden.disabled.item(data-position="bottom center" data-content='Cart')
             //     i.large.shopping.cart.icon
             // a.icon.mobile.hidden.item(href='/mail' class="{{isActivePath '/mail'}}" data-position="bottom center" data-content='Mail')

@@ -1,20 +1,20 @@
 if Meteor.isClient
-    FlowRouter.route '/rules', action: ->
+    FlowRouter.route '/`', action: ->
         BlazeLayout.render 'layout', 
             sub_nav:'admin_nav'
-            main: 'rules'
+            main: 'policies'
     
-    Template.rules.onCreated ->
+    Template.policies.onCreated ->
         @autorun => Meteor.subscribe 'facet', 
             selected_tags.array()
             selected_keywords.array()
             selected_author_ids.array()
             selected_location_tags.array()
             selected_timestamp_tags.array()
-            type='rule'
+            type='policy'
             author_id=null
     
-    Template.rules.onCreated ->
+    Template.policies.onCreated ->
         Meteor.setTimeout ->
             $('.progress').progress()
         , 1000
@@ -25,21 +25,19 @@ if Meteor.isClient
     
     
     
-    Template.rules.helpers
-        rules: -> Docs.find type:'rule'
+    Template.policies.helpers
+        policies: -> Docs.find type:'policy'
         
-    Template.rules.events
-        'click .save_rule': -> Session.set 'editing_id',null
-        'click .edit_rule': -> Session.set 'editing_id',@_id
-        'keyup .rule_text': (e,t)->
+    Template.policies.events
+        'keyup .policy_text': (e,t)->
             e.preventDefault()
-            val = $('.rule_text').val().toLowerCase().trim()
+            val = $('.policy_text').val().toLowerCase().trim()
             if e.which is 13 #enter
                 Docs.update @_id,
                     $set: text: val
                 Bert.alert "Updated Text", 'success', 'growl-top-right'
     
-    Template.rule_card.events
+    Template.policy_card.events
         'click #turn_on': ->
             # console.log @complete
             Docs.update {_id:@_id}, 

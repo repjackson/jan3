@@ -46,10 +46,9 @@ yasinuslu:json-view
 jeremy:geocomplete
 davesierra:fullcalendar
 froala:editor-reactive@=2.4.2
-alanning:roles
 tomwasd:flow-router-autoscroll
 maazalik:highcharts
-maazalik:highcharts-gauge
 clarencel:highcharts-drilldown
-maazalik:highcharts-3d
 mdg:geolocation
+http
+peerlibrary:xml2js

@@ -3,7 +3,6 @@
 $.cloudinary.config
     cloud_name:"facet"
 
-
 FlowRouter.notFound =
     action: ->
         BlazeLayout.render 'layout', 
@@ -43,7 +42,13 @@ Template.registerHelper 'is_admin', () ->
         'admin' in Meteor.user().roles
 
 
-
+# Meteor.startup ->
+#     # HTTP.call('get',"https://avalon.extraview.net/jan-pro/ExtraView/ev_api.action?user_id=zpeckham&password=jpi19&statevar=get_roles", (err,res)->
+#     HTTP.call('get',"http://www.npr.org/rss/podcast.php?id=510307", (err,res)->
+#         if err then console.log 'ERROR', err
+#         else
+#             console.log res
+#     )
 Template.registerHelper 'key_value', (key) -> 
     doc_field = Template.parentData(2)
     current_doc = Template.parentData(5)

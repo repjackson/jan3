@@ -14,8 +14,13 @@ if Meteor.isClient
     
     Template.user_table.helpers
         users: -> Meteor.users.find {}
-        is_dev: -> Roles.userIsInRole(@_id, 'dev')
     
+    Template.dev.events
+        'click #call_ev': ->
+            Meteor.call 'call_ev', (err,res)->
+                if err then console.error err
+                else
+                    console.log res
     
     Template.dev_nav.onRendered ->
         Meteor.setTimeout ->

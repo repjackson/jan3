@@ -2,6 +2,7 @@ template(name='dev')
     h1.ui.center.aligned.grey.header 
         i.code.icon
         | Dev
+    #call_ev.ui.button call ev
     .ui.centered.cards
         +task_widget
         +widget_list type='schema' label='Schemas'
@@ -12,7 +13,10 @@ template(name='dev')
 template(name='widget_list')
     .ui.card
         .content
-            a.header(href="/#{type}s") #{label}
+            a.header(href="/#{type}s")
+                if icon
+                    i.icon(class=icon)
+                |#{label}
             .ui.list
                 each type_docs
                     a.item(href="/view/#{_id}") #{name} #{title} !{html}

@@ -9,98 +9,31 @@ template(name='tasks')
                 .ui.hidden.divider
                 +tag_facet
             .twelve.wide.column
-                .ui.centered.cards
+                .ui.cards
                     each tasks
                         +task_card
                         
                         
-template(name='task_item')
-    .ui.item
-        if image_id
-            a.image(href="/view/#{_id}")
-                img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
-                // each visual
-                //     .ui.small.label #{class}
-        .content
-            a.grey.header(href="/view/#{_id}") 
-                |##{task_number}
-            .description
-                .ui.grid
-                    .twelve.wide.column
-                        .large130 {{nl2br task_details}}
-                        +tone
-                        // .meta 
-                        //     .ui.horizontal.list
-                        //         each watson_keywords
-                        //             .item #{this}
-                    .four.wide.column
-                        .meta #{when}
-                        .meta #{formal_when}
-                        // .ui.horizontal.list
-                        //     each date_array
-                        //         .item #{this}
-                        if office.office_name
-                            .ui.label #{office.office_name}
-                        if current_level
-                            .ui.label Level #{current_level}
-                        .meta by #{author.username}
-                        if comment_count
-                            a.meta(href="/view/#{_id}")
-                                i.comments.icon
-                                |#{comment_count} comments
-                        +view_button
-                        if watson
-                            +doc_sentiment
-                            +doc_emotion
-                        // each tone.document_tone.tones
-                        //     h4.ui.header #{tone_id} {{ to_percent score }}%
-        
-
-                
 template(name='task_card')
-    .ui.card
-        if image_id
-            a.image(href="/view/#{_id}")
-                img.ui.rounded.image(src="{{c.url image_id  width=300 height=300 crop='fill' }}")
+    .ui.fluid.card
         .content
-            // .right.floated.meta
-            //     // .ui.circular.label(title='task Number') #{task_number}
-            //     | #{when}
             a.header(href="/view/#{_id}") 
-               |#{title}
-        .content    
+                if complete
+                    i.green.checkmark.icon
+                |#{title}
+            |!{html}
+        .content
             if complete
                 #turn_off.ui.icon.button
                     i.large.toggle.on.green.icon
             else
                 #turn_on.ui.icon.button
                     i.large.toggle.off.icon
-            .right.floated 
-                |#{when}
-                +author_info
-        // .content
-        //     // .ui.accordion
-        //     //     .title 
-        //     //         |html
-        //         //     i.dropdown.icon
-        //         // .content
-        //     .description
-        //         |!{html}
-        .content
-            each tags
-                .ui.basic.label #{this}
-        if watson
-            .content
-                +doc_sentiment
-        .content
-            // +call_method name='tagify_timestamp'
-            // if date_array
-            //     each date_array
-            //         .ui.label #{this}
-            | #{comment_count}
-            i.comments.icon
             +edit_button
             +view_button
+            each tags
+                .ui.basic.label #{this}
+            |#{when}
 
 
 template(name='task_table')
@@ -110,48 +43,35 @@ template(name='task_table')
                 +task_row
                 
                 
-template(name='task_row')                
-    tr
-        // td #{_id}
-        td 
-            a(href="/view/#{_id}") #{text}
-            |#{title}
-            // if editing_this_task
-            //     .ui.fluid.input
-            //         input.task_text(type='text' value=text placeholder='Task Text')
-        td #{when}
-        // td #{due_date_when}
-        td 
-            +edit_button
-            +view_full_button
-        // td
-            // if editing_this_task
-            //     .save_task.ui.icon.button
-            //         i.checkmark.icon
-            // else
-            //     .edit_task.ui.icon.button
-            //         i.edit.icon
-            
-            
 template(name='task_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
                 +link_button link='/tasks' icon='tasks' label='Tasks'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header view #{title}
+                h1.ui.center.aligned.grey.header #{title} Task
             .three.wide.column
                 +edit_button
         .row
-            .three.wide.column
-                .ui.header tags
+            .four.wide.column
+                +author_info
+                .ui.hidden.divider
+                if complete
+                    #turn_off.ui.icon.button
+                        i.large.toggle.on.green.icon
+                    .ui.header Complete
+                else
+                    #turn_on.ui.icon.button
+                        i.large.toggle.off.icon
+                    .ui.header Incomplete
+                .ui.header Tags
                 each tags
                     .ui.label #{this}
-            .thirteen.wide.column
+            .twelve.wide.column
                 .ui.heade #{title}
                 |!{html}
                 +comments
-            
+                +doc_history
         
 template(name='task_edit')
     .ui.padded.stackable.centered.grid

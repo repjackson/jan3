@@ -5,11 +5,12 @@ template(name='admin')
     .ui.centered.cards
         +user_widget
         +task_widget
-        +widget_list type='rule' label='Rules'
+        +widget_list type='rule' label='Rules' 
         +widget_list type='role' label='Roles'
-        +widget_list type='action' label='Actions'
-        +widget_list type='condition' label='Conditions'
-        +widget_list type='automation' label='Automations'
+        +widget_list type='trigger' label='Triggers' icon='bolt'
+        +widget_list type='action' label='Actions' 
+        +widget_list type='condition' label='Conditions' icon='umbrella'
+        +widget_list type='automation' label='Automations' icon='car'
         
         // +task_widget
         // +role_widget
@@ -33,7 +34,7 @@ template(name='admin_nav')
         a.item(href='/automations' class="{{isActivePath '/automations'}}" data-position="bottom center" data-content='Automations')
             i.large.car.icon
             // .mobile.hidden Automations
-        a.item(href='/rules' class="{{isActivePath '/rules'}}" data-position="bottom center" data-content='SLA Rules')
+        a.item(href='/policies' class="{{isActivePath '/policies'}}" data-position="bottom center" data-content='SLA Policies')
             i.large.sort.numeric.down.icon
             // .mobile.hidden SLA Rules
             
@@ -41,7 +42,9 @@ template(name='admin_nav')
 template(name='user_widget')
     .ui.card
         .content
-            a.header(href="/users") Users
+            a.header(href="/users")
+                i.users.icon
+                |Users
             .ui.list
                 each users
                     a.item(href="/view/#{_id}") #{username}
@@ -50,7 +53,9 @@ template(name='user_widget')
 template(name='task_widget')
     .ui.card
         .content
-            a.header(href="/tasks") Incomplete Tasks
+            a.header(href="/tasks") 
+                i.tasks.icon
+                |Incomplete Tasks
             .ui.list
                 each tasks
                     a.item(href="/view/#{_id}") #{title}
