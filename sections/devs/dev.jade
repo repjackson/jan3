@@ -1,21 +1,21 @@
 template(name='dev')
-    h1.ui.center.aligned.grey.header 
-        i.code.icon
+    h2.ui.center.aligned.grey.header 
+        i.terminal.icon
         | Development
     // #call_ev.ui.button call ev
     .ui.centered.cards
         +task_widget
-        +widget_list type='schema' label='Schemas'
-        +widget_list type='hour' label='Dev Log'
+        +widget_list type='schema' link='/schema' label='Schemas'
+        +widget_list type='work' link='/work' label='Dev Log'
         // +widget_list type='project' label='Projects'
-        +widget_list type='trigger' label='Triggers' icon='bolt'
-        +widget_list type='action' label='Actions' 
+        +widget_list type='trigger' link='/triggers' label='Triggers' icon='bolt'
+        +widget_list type='action' link='/action' label='Actions' 
     .ui.hidden.divider
     
 template(name='widget_list')
     .ui.card
         .content
-            a.header(href="/#{type}s")
+            a.header(href=link)
                 if icon
                     i.icon(class=icon)
                 |#{label}
@@ -28,26 +28,26 @@ template(name='widget_list')
 template(name='dev_nav')    
     .ui.top.attached.eight.item.inverted.grey.menu
         a.item(href='/dev' class="{{isActivePath '/dev'}}" data-position="bottom center" data-content='Dev')
-            i.code.icon
-            // .mobile.hidden Tasks
+            i.terminal.icon
+            .mobile.hidden Dev
         a.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="bottom center" data-content='Tasks')
             i.tasks.icon
-            // .mobile.hidden Tasks
+            .mobile.hidden Tasks
         // a.item(href='/projects' class="{{isActivePath '/projects'}}" data-position="bottom center" data-content='projects')
         //     i.calendar.check.icon
-        //     // .mobile.hidden Projects
+            // .mobile.hidden Projects
         a.item(href='/schemas' class="{{isActivePath '/schemas'}}" data-position="bottom center" data-content='Schemas')
             i.database.icon
-            // .mobile.hidden Schemas
-        a.item(href='/hours' class="{{isActivePath '/hours'}}" data-position="bottom center" data-content='Hours')
+            .mobile.hidden Schemas
+        a.item(href='/work' class="{{isActivePath '/work'}}" data-position="bottom center" data-content='Work Log')
             i.clock.icon
-            // .mobile.hidden Hours
+            .mobile.hidden Work
         a.item(href='/roles' class="{{isActivePath '/roles'}}" data-position="bottom center" data-content='Roles')
             i.users.icon
-            // .mobile.hidden Roles
+            .mobile.hidden Roles
         a.item(href='/actions' class="{{isActivePath '/actions'}}" data-position="bottom center" data-content='Actions')
             i.bolt.icon
-            // .mobile.hidden actions
+            .mobile.hidden Actions
         a.item(href='/conditions' class="{{isActivePath '/conditions'}}" data-position="bottom center" data-content='Conditions')
             i.umbrella.icon
-            // .mobile.hidden conditions
+            .mobile.hidden Conditions

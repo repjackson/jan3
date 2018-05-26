@@ -1,5 +1,5 @@
 template(name='nav')
-    #nav.ui.inverted.top.attached.borderless.icon.menu
+    #nav.ui.inverted.top.attached.borderless.menu
         a.toggle_left_sidebar.icon.item 
             i.bars.icon
         a.header.item(href='/' class="{{isActivePath '/'}}" data-position="bottom center" data-content='Dashboard')
@@ -8,16 +8,16 @@ template(name='nav')
             // | Home
         a.mobile.hidden.item(href='/users' class="{{isActivePath '/users'}}" )
             i.users.icon
-            // | Users
+            | Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" )
-            i.exclamation.circle.icon
-            // | Incidents
+            i.exclamation.icon
+            | Incidents
         a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
             i.building.icon
-            // | &nbsp; Offices
+            | &nbsp; Offices
         a.mobile.hidden.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
             i.rss.icon
-            // | Feed
+            | Feed
             
         // a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
         //     i.shipping.fast.icon
