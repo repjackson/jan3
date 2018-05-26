@@ -100,14 +100,38 @@ Template.edit_timerange_field.onRendered ->
             today:true
             firstDayOfWeek: 0
             constantHeight: true
+            endCalendar: $('#time_end')
         )
         $('#time_end').calendar(
             type: 'datetime'
             today:true
             firstDayOfWeek: 0
             constantHeight: true
+            startCalendar: $('#time_start')
         )
     , 500
+
+Template.edit_timerange_field.events
+    'blur #time_start': (e,t)->
+        value = $('#time_start').calendar('get date')
+        console.log value
+        Docs.update FlowRouter.getParam('doc_id'),
+            {$set: time_start: value}
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating Start Time: #{error.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated Start Time", 'success', 'growl-top-right'
+    'blur #time_end': (e,t)->
+        value = $('#time_end').calendar('get date')
+        console.log value
+        Docs.update FlowRouter.getParam('doc_id'),
+            {$set: time_end: value}
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating End Time: #{error.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated End Time", 'success', 'growl-top-right'
 
 
 Template.edit_datetime_field.onRendered ->

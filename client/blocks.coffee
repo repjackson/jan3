@@ -307,7 +307,8 @@ Template.toggle_key.helpers
 
 Template.toggle_key.events
     'click .toggle_key': ->
-        # console.log Template.parentData()
+        console.log Template.parentData()
+        console.log @
         if @value
             Docs.update FlowRouter.getParam('doc_id'), 
                 $set: "#{@key}": "#{@value}"

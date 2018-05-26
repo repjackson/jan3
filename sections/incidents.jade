@@ -131,7 +131,7 @@ template(name='incident_edit')
             .twelve.wide.column
                 .ui.segment
                     .ui.header Type
-                    each incident_types
+                    each incident_type_docs
                         +toggle_key key='incident_type' value=slug label=name
     
                 +edit_html_field
@@ -140,8 +140,8 @@ template(name='incident_edit')
 
         
 template(name='incident_view')
-    .ui.padded.stackable.centered.grid
-        .centered.row
+    .ui.padded.stackable.grid
+        .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 +link_button link='/incidents' label='incidents' icon='clipboard'
             .ten.wide.center.aligned.column
@@ -196,9 +196,7 @@ template(name='incident_view')
                         with office
                             +office_card
             .ui.bottom.attached.tab.segment(data-tab='status')
-                .ui.padded.stackable.centered.grid
-                    .twelve.wide.column
-                        +incident_status
+                +incident_status
             .ui.bottom.attached.tab.segment(data-tab='talk')
                 .ui.padded.stackable.centered.grid
                     .four.wide.column
@@ -255,7 +253,7 @@ template(name='incident_status')
                 i.tasks.icon
                 |Status (current level: #{current_level})
         .twelve.wide.column
-            .ui.segment
+            .ui.fluid.segment
                 h3
                     i.edit.icon
                     | Submit
@@ -265,7 +263,6 @@ template(name='incident_status')
                     .ui.toggle.checkbox
                         input(type="checkbox" checked="checked")
                         // label 2
-
                     |Fields Completed
                 |Fill in required fields to submit for processing
             .ui.divider
@@ -274,7 +271,6 @@ template(name='incident_status')
                     .ui.toggle.checkbox
                         input(type="checkbox" checked="checked")
                         // label 2
-
                     |Processed
             .ui.divider
             .ui.segment
@@ -282,7 +278,6 @@ template(name='incident_status')
                     .ui.toggle.checkbox
                         input(type="checkbox" checked="checked")
                         // label 2
-
                     |Completed within SLA
             +incident_level_set level=1
             .ui.divider
@@ -296,14 +291,12 @@ template(name='incident_status')
                         .ui.toggle.checkbox
                             input(type="checkbox" checked="checked")
                             // label 2
-    
                         |Processed
                 .ui.segment
                     h4.ui.header
                         .ui.toggle.checkbox
                             input(type="checkbox" checked="checked")
                             // label 2
-    
                         |Completed within SLA
             +incident_level_set level=2
             .ui.divider
@@ -317,14 +310,12 @@ template(name='incident_status')
                         .ui.toggle.checkbox
                             input(type="checkbox" checked="checked")
                             // label 2
-    
                         |Processed
                 .ui.segment
                     h4.ui.header
                         .ui.toggle.checkbox
                             input(type="checkbox" checked="checked")
                             // label 2
-    
                         |Completed within SLA
             +incident_level_set level=3
             .ui.divider

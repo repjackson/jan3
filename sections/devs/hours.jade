@@ -12,100 +12,30 @@ template(name='hours')
                 .ui.cards
                     each hours
                         +hour_card
-                        
-                        
-template(name='hour_item')
-    .ui.item
-        if image_id
-            a.image(href="/view/#{_id}")
-                img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
-                // each visual
-                //     .ui.small.label #{class}
-        .content
-            a.grey.header(href="/view/#{_id}") 
-                |##{hour_number}
-            .description
-                .ui.grid
-                    .twelve.wide.column
-                        .large130 {{nl2br hour_details}}
-                    .four.wide.column
-                        .meta #{when}
-                        .meta #{formal_when}
-                        // .ui.horizontal.list
-                        //     each date_array
-                        //         .item #{this}
-                        .meta by #{author.username}
-                        if comment_count
-                            a.meta(href="/view/#{_id}")
-                                i.comments.icon
-                                |#{comment_count} comments
-                        +view_button
-                        if watson
-                            +doc_sentiment
-                            +doc_emotion
-                        // each tone.document_tone.tones
-                        //     h4.ui.header #{tone_id} {{ to_percent score }}%
-        
-
                 
 template(name='hour_card')
-    .ui.card
+    .ui.fluid.card
         .content
             |!{html}
-        .content    
-            |#{start}
-            .right.floated 
-                // |#{when}
-                +author_info
         .content
             each tags
                 .ui.label #{this}
-        if watson
-            .content
-                +doc_sentiment
         .content
-            // +call_method name='tagify_timestamp'
-            // if date_array
-            //     each date_array
-            //         .ui.label #{this}
-            | #{comment_count}
-            i.comments.icon
+            |#{start_time} ->
+            |#{end_time}
+            .right.floated 
+                // |#{when}
+                +author_info
+                |#{when}
+            // each timestamp_tags
+            //     .ui.label #{this}
+            if comment_count
+                | #{comment_count}
+                i.comments.icon
             +edit_button
             +view_button
 
 
-
-
-template(name='hour_table')
-    table.ui.celled.selectable.table
-        tbody
-            each hours
-                +hour_row
-                
-                
-template(name='hour_row')                
-    tr
-        // td #{_id}
-        td 
-            a(href="/view/#{_id}") #{text}
-            |#{title}
-            // if editing_this_hour
-            //     .ui.fluid.input
-            //         input.hour_text(type='text' value=text placeholder='hour Text')
-        td #{when}
-        // td #{due_date_when}
-        td 
-            +edit_button
-            +view_full_button
-        // td
-            // if editing_this_hour
-            //     .save_hour.ui.icon.button
-            //         i.checkmark.icon
-            // else
-            //     .edit_hour.ui.icon.button
-            //         i.edit.icon
-            
-            
 template(name='hour_view')
     .ui.padded.stackable.centered.grid
         .middle.aligned.row
@@ -117,6 +47,10 @@ template(name='hour_view')
                 +edit_button
         .row
             .three.wide.column
+                .ui.header Start
+                |#{time_start}
+                .ui.header End
+                |#{time_end}
                 .ui.header Tags
                 each tags
                     .ui.large.basic.label #{this}
@@ -128,12 +62,12 @@ template(name='hour_view')
         
 template(name='hour_edit')
     .ui.padded.stackable.centered.grid
-        .centered.row
-            .three.wide.column
+        .centered.middle.aligned.row
+            .three.wide.center.aligned.column
                 +save_button
-            .ten.wide.column
+            .ten.wide.center.aligned.column
                 h1.ui.center.aligned.grey.header Edit Work Hour
-            .three.wide.column
+            .three.wide.center.aligned.column
                 #delete.ui.icon.button
                     i.trash.icon
         .centered.row

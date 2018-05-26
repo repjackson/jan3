@@ -19,6 +19,7 @@ template(name='incident_type_card')
         .content
             a.grey.header(href="/view/#{_id}")
                 |#{name} 
+            .meta Slug: #{slug}
         .content
             |!{html}
             +edit_button
@@ -28,7 +29,7 @@ template(name='incident_type_card')
         
 template(name='incident_type_edit')
     .ui.padded.stackable.centered.grid
-        .centered.row
+        .centered.middle.aligned.row
             .three.wide.column
                 #delete.ui.icon.button
                     i.trash.icon

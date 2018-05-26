@@ -49,13 +49,13 @@ template(name='edit_timerange_field')
             #time_start.ui.calendar
                 .ui.left.icon.input
                     i.hourglass.start.icon
-                    input#time_start_value(type='text' value=key_value)        
+                    input#time_start_input(type='text' value=time_start)        
         .field
             // label End
             #time_end.ui.calendar
                 .ui.left.icon.input
                     i.hourglass.end.icon
-                    input#time_end_value(type='text' value=key_value)        
+                    input#time_end_input(type='text' value=time_end)        
 
 
 template(name='edit_number_field')
@@ -83,9 +83,9 @@ template(name='view_array_field')
     
 template(name='edit_array_field')
     .ui.header 
-        i.tags.icon
+        // i.tags.icon
         |#{label}
-    .ui.input
+    .ui.fluid.input
         input.new_entry(type='text' maxlength='50' placeholder='add tag')
         // .ui.icon.button
         //     i.right.arrow.icon
