@@ -114,7 +114,7 @@ Template.edit_timerange_field.onRendered ->
 Template.edit_timerange_field.events
     'blur #time_start': (e,t)->
         value = $('#time_start').calendar('get date')
-        console.log value
+        # console.log value
         Docs.update FlowRouter.getParam('doc_id'),
             {$set: time_start: value}
             , (err,res)=>
@@ -124,7 +124,7 @@ Template.edit_timerange_field.events
                     Bert.alert "Updated Start Time", 'success', 'growl-top-right'
     'blur #time_end': (e,t)->
         value = $('#time_end').calendar('get date')
-        console.log value
+        # console.log value
         Docs.update FlowRouter.getParam('doc_id'),
             {$set: time_end: value}
             , (err,res)=>

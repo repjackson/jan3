@@ -2,13 +2,13 @@ template(name='incidents')
     .ui.stackable.padded.centered.grid
         .centered.row
             .three.wide.column
-                h2.ui.center.aligned.header 
+                h3.ui.center.aligned.header 
                     i.exclamation.circle.icon
                     | Incidents
                 +set_view_mode view='cards' icon='clone' label='Cards View'
-                +set_view_mode view='list' icon='list' label='List View'
+                // +set_view_mode view='list' icon='list' label='List View'
                 +set_view_mode view='table' icon='table' label='Table View'
-                +set_view_mode view='charts' icon='line chart' label='Graph View'
+                // +set_view_mode view='charts' icon='line chart' label='Graph View'
                 div
                 +add_button type='incident' label='Incident'
                 // .ui.basic.center.aligned.segment
@@ -159,9 +159,9 @@ template(name='incident_view')
                 a.icon.item(data-tab='status' title='SLA Status') 
                     i.large.sort.numeric.down.icon
                     // |Status
-                a.icon.item(data-tab='analysis' title='Analysis') 
-                    i.large.line.chart.icon
-                    // |Analysis
+                // a.icon.item(data-tab='analysis' title='Analysis') 
+                //     i.large.line.chart.icon
+                //     // |Analysis
                 a.icon.item(data-tab='activity' title='Activity') 
                     i.large.rss.icon
                     // | Activity
@@ -207,32 +207,32 @@ template(name='incident_view')
                 .ui.padded.stackable.centered.grid
                     .eight.wide.column
                         +doc_history
-            .ui.bottom.attached.tab.segment(data-tab='analysis')
-                .ui.padded.stackable.centered.grid
-                    .four.wide.column
-                        if watson
-                            +doc_sentiment
-                            +doc_emotion
-                            +concepts
-                            +categories
-                        else
-                            +call_watson
-                    .eight.wide.column
-                        // +semantic_roles
-                        +tone
-                        +keywords
-                        .ui.hidden.divider
-                        +relations
-                        // .ui.styled.accordion
-                        //     .title 
-                        //         i.code.icon
-                        //         |full analysis data
-                        //         i.dropdown.icon
-                        //     .content
-                        //         +jsonView(json=watson)
-                    .four.wide.column
-                        +personality
-                        +consumption_preferences
+            // .ui.bottom.attached.tab.segment(data-tab='analysis')
+            //     .ui.padded.stackable.centered.grid
+            //         .four.wide.column
+            //             if watson
+            //                 +doc_sentiment
+            //                 +doc_emotion
+            //                 +concepts
+            //                 +categories
+            //             else
+            //                 +call_watson
+            //         .eight.wide.column
+            //             // +semantic_roles
+            //             +tone
+            //             +keywords
+            //             .ui.hidden.divider
+            //             +relations
+            //             // .ui.styled.accordion
+            //             //     .title 
+            //             //         i.code.icon
+            //             //         |full analysis data
+            //             //         i.dropdown.icon
+            //             //     .content
+            //             //         +jsonView(json=watson)
+            //         .four.wide.column
+            //             +personality
+            //             +consumption_preferences
 
                             
 template(name='incident_level_set')

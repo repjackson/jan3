@@ -1,19 +1,19 @@
-template(name='hours')
+template(name='work')
     .ui.stackable.centered.padded.grid
         .centered.row
             .four.wide.column
-                h2.ui.center.aligned.header Work Hours
-                .ui.center.aligned.sub.header #{hours.count} Total Hours Logged
-                +add_button type='hour'
+                h2.ui.center.aligned.header Work Log
+                // .ui.center.aligned.sub.header #{work.count} Work Logged
+                +add_button type='work'
                 // +set_session_button key='view_complete' value=true label='complete'
                 // +set_session_button key='view_complete' value=false label='incomplete'
                 +tag_facet
             .twelve.wide.column
                 .ui.cards
-                    each hours
-                        +hour_card
+                    each work
+                        +work_card
                 
-template(name='hour_card')
+template(name='work_card')
     .ui.fluid.card
         .content
             |!{html}
@@ -21,12 +21,12 @@ template(name='hour_card')
             each tags
                 .ui.label #{this}
         .content
-            |#{start_time} ->
-            |#{end_time}
+            .ui.sub.header {{reg_format time_start}}
+            // .ui.sub.header {{reg_format time_end}}
             .right.floated 
                 // |#{when}
                 +author_info
-                |#{when}
+                |logged #{when}
             // each timestamp_tags
             //     .ui.label #{this}
             if comment_count
@@ -36,37 +36,36 @@ template(name='hour_card')
             +view_button
 
 
-template(name='hour_view')
+template(name='work_view')
     .ui.padded.stackable.centered.grid
         .middle.aligned.row
             .three.wide.center.aligned.column
-                +link_button link='/hours' icon='clock' label='hours'
+                +link_button link='/work' icon='clock' label='work'
             .ten.wide.center.aligned.column
-                h1.ui.center.aligned.grey.header View Work Hour
+                h1.ui.center.aligned.grey.header View Work
             .three.wide.center.aligned.column
                 +edit_button
         .row
-            .three.wide.column
-                .ui.header Start
-                |#{time_start}
-                .ui.header End
-                |#{time_end}
+            .four.wide.column
+                .ui.header {{reg_format time_start}}
+                // .ui.header End
+                // |#{time_end}
                 .ui.header Tags
                 each tags
                     .ui.large.basic.label #{this}
-            .thirteen.wide.column
-                .ui.heade #{title}
+            .twelve.wide.column
+                .ui.header #{title}
                 |!{html}
                 +comments
             
         
-template(name='hour_edit')
+template(name='work_edit')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 +save_button
             .ten.wide.center.aligned.column
-                h1.ui.center.aligned.grey.header Edit Work Hour
+                h1.ui.center.aligned.grey.header Edit Work work
             .three.wide.center.aligned.column
                 #delete.ui.icon.button
                     i.trash.icon

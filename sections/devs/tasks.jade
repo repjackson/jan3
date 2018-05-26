@@ -2,6 +2,9 @@ template(name='tasks')
     .ui.stackable.centered.padded.grid
         .centered.row
             .four.wide.column
+                .ui.header 
+                    i.tasks.icon
+                    | Tasks
                 +add_button type='task'
                 .ui.hidden.divider
                 +set_session_button key='view_complete' value=true label='All'
@@ -46,11 +49,11 @@ template(name='task_table')
 template(name='task_view')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/tasks' icon='tasks' label='Tasks'
-            .ten.wide.column
+            .ten.wide.center.aligned.column
                 h1.ui.center.aligned.grey.header #{title} Task
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +edit_button
         .row
             .four.wide.column
@@ -68,7 +71,7 @@ template(name='task_view')
                 each tags
                     .ui.label #{this}
             .twelve.wide.column
-                .ui.heade #{title}
+                .ui.header #{title}
                 |!{html}
                 +comments
                 +doc_history
@@ -76,16 +79,16 @@ template(name='task_view')
 template(name='task_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +save_button
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header edit '#{title}' task
-            .three.wide.column
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.grey.header Edit '#{title}' Task
+            .three.wide.center.aligned.column
                 #delete.ui.icon.button
                     i.trash.icon
         .centered.row
             .twelve.wide.column
-                +edit_text_field key='title' label='title' icon=''
+                +edit_text_field key='title' label='Title' 
                 +edit_html
             .four.wide.column
                 +edit_array_field key='tags'

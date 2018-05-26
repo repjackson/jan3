@@ -2,9 +2,9 @@ template(name='schemas')
     .ui.stackable.padded.grid
         .row 
             .four.wide.column
-                // h1.ui.header 
-                //     i.database.icon
-                //     |Schemas
+                .ui.header 
+                    i.database.icon
+                    |Schemas
                 +add_button type='schema'
                 .ui.hidden.divider
                 +tag_facet
@@ -14,7 +14,7 @@ template(name='schemas')
                         +schema_card
 
 template(name='schema_card')
-    .card
+    .ui.fluid.card
         .content
             a.grey.header(href="/view/#{_id}")
                 |#{name} 

@@ -5,38 +5,18 @@ template(name='triggers')
                 h2.ui.center.aligned.header 
                     i.bolt.icon(title='Triggers take action when a ticket is created or updated. For example, use a trigger to send email notifications when an agent adds a comment to a ticket. The order of your triggers is important because triggers can act on changes made by other triggers')
                     |Triggers
+                p Triggers take action when a ticket is created or updated. 
+                p For example, use a trigger to send email notifications when an agent adds a comment to a ticket. 
                 +add_button type='trigger'
                 +tag_facet
             .twelve.wide.column
-                // h4 Triggers take action when a ticket is created or updated. For example, use a trigger to send email notifications when an agent adds a comment to a ticket. The order of your triggers is important because triggers can act on changes made by other triggers.Learn more
                 .ui.cards
                     each triggers
                         +trigger_card
                         
                         
-template(name='trigger_item')
-    .ui.item
-        .content
-            a.grey.header(href="/view/#{_id}") 
-                |#{title}
-            .description
-                .ui.grid
-                    .twelve.wide.column
-                        |!{html}
-                    .four.wide.column
-                        .meta #{when}
-                        .meta #{formal_when}
-                        .meta by #{author.username}
-                        if comment_count
-                            a.meta(href="/view/#{_id}")
-                                i.comments.icon
-                                |#{comment_count} comments
-                        +view_button
-        
-
-                
 template(name='trigger_card')
-    .ui.card
+    .ui.fluid.card
         .content
             .header #{title}
         .content    
@@ -59,36 +39,6 @@ template(name='trigger_card')
 
 
 
-template(name='trigger_table')
-    table.ui.celled.selectable.table
-        tbody
-            each triggers
-                +trigger_row
-                
-                
-template(name='trigger_row')                
-    tr
-        // td #{_id}
-        td 
-            a(href="/view/#{_id}") #{text}
-            |#{title}
-            // if editing_this_trigger
-            //     .ui.fluid.input
-            //         input.trigger_text(type='text' value=text placeholder='trigger Text')
-        td #{when}
-        // td #{due_date_when}
-        td 
-            +edit_button
-            +view_full_button
-        // td
-            // if editing_this_trigger
-            //     .save_trigger.ui.icon.button
-            //         i.checkmark.icon
-            // else
-            //     .edit_trigger.ui.icon.button
-            //         i.edit.icon
-            
-            
 template(name='trigger_view')
     .ui.padded.stackable.centered.grid
         .centered.row

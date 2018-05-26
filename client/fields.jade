@@ -40,8 +40,8 @@ template(name='edit_datetime_field')
             input#datetime_field(type='text' value=key_value)        
 
 template(name='edit_timerange_field') 
-    h3
-        |Time Range
+    // h3
+    //     |Time Range
         // i.clock.icon
     .ui.form
         .field
@@ -50,12 +50,12 @@ template(name='edit_timerange_field')
                 .ui.left.icon.input
                     i.hourglass.start.icon
                     input#time_start_input(type='text' value=time_start)        
-        .field
-            // label End
-            #time_end.ui.calendar
-                .ui.left.icon.input
-                    i.hourglass.end.icon
-                    input#time_end_input(type='text' value=time_end)        
+        // .field
+        //     // label End
+        //     #time_end.ui.calendar
+        //         .ui.left.icon.input
+        //             i.hourglass.end.icon
+        //             input#time_end_input(type='text' value=time_end)        
 
 
 template(name='edit_number_field')

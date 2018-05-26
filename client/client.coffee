@@ -30,6 +30,7 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'adm
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()         
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
+Template.registerHelper 'reg_format', (input) -> moment(input).format('MMMM Do YYYY, h:mm:ss a')
 
 Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getParam('doc_id')
 

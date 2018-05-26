@@ -1,21 +1,18 @@
 template(name='incident_types')
     .ui.stackable.padded.grid
-        .middle.aligned.row 
-            .three.wide.column
-            .ten.wide.column
-                h1.ui.center.aligned.header 
+        .row 
+            .four.wide.column
+                .ui.center.aligned.header 
                     i.exclamation.triangle.icon
                     | Incident Types
-            .three.wide.column
                 +add_button type='incident_type'
-        .row 
-            .sixteen.wide.column
+            .twelve.wide.column
                 .ui.centered.stackable.cards
                     each incident_types
                         +incident_type_card
 
 template(name='incident_type_card')
-    .card
+    .ui.fluid.card
         .content
             a.grey.header(href="/view/#{_id}")
                 |#{name} 

@@ -10,7 +10,7 @@ template(name='author_info')
 
 template(name='list_item')
     .item
-        i.large.icon(class=icon title=key)
+        i.icon(class=icon title=key)
         .content
             .description 
                 |#{label}
@@ -20,11 +20,11 @@ template(name='list_item')
 template(name='toggle_boolean')
     .field
         if ../complete
-            #turn_on.ui.icon.large.button
-                i.toggle.on.large.icon
+            #turn_on.ui.icon.button
+                i.toggle.on.icon
         else
-            #turn_off.ui.icon.large.button
-                i.toggle.off.large.icon
+            #turn_off.ui.icon.button
+                i.toggle.off.icon
 
 template(name='save_button')
     a.ui.big.icon.button(href="/view/#{_id}") 
@@ -32,17 +32,17 @@ template(name='save_button')
         // strong save
         
 template(name='edit_button')
-    a.ui.icon.large.button(href="/edit/#{_id}" title='edit') 
+    a.ui.icon.button(href="/edit/#{_id}" title='edit') 
         i.pencil.icon
         // strong edit
 
 template(name='view_button')
-    a.ui.icon.large.button(href="/view/#{_id}" title='View Details') 
+    a.ui.icon.button(href="/view/#{_id}" title='View Details') 
         // +avatar_sprite name='chevron-right'
         i.right.chevron.icon
         
 template(name='add_button')
-    #add.ui.large.icon.button(title='add')
+    #add.ui.icon.button(title='add')
         i.plus.icon
         // +mini_inline_sprite name='plus'
 
@@ -72,12 +72,12 @@ template(name="customer_result")
 
 
 template(name='set_view_mode')
-    #set_view_mode.ui.icon.large.button(title=label class=view_mode_button_class)
-        i.large.icon(class=icon)
+    #set_view_mode.ui.icon.button(title=label class=view_mode_button_class)
+        i.icon(class=icon)
             
             
 template(name='set_session_button')
-    .set_session_filter.ui.large.button(class=filter_class)
+    .set_session_filter.ui.button(class=filter_class)
         strong #{label}
         
 template(name='set_session_item')
@@ -115,30 +115,30 @@ template(name='toggle_key')
     .toggle_key.ui.button(class=toggle_key_button_class) #{label}
 
 // template(name='vote_button')
-//     i.thumbs.up.link.large.icon.vote_up(class=vote_up_button_class)
-//     i.thumbs.down.large.link.icon.vote_down(class=vote_down_button_class)
+//     i.thumbs.up.link.icon.vote_up(class=vote_up_button_class)
+//     i.thumbs.down.link.icon.vote_down(class=vote_down_button_class)
 //     |#{points}
 
 
 template(name='view_full_button')
     a.floated.right(href="/view/#{_id}")
-        i.right.chevron.link.large.icon
+        i.right.chevron.link.icon
                         
 template(name='toggle_follow')
     if currentUser
         if is_following
             #remove_friend.ui.button
-                i.minus.large.icon
-                |unfollow
+                i.minus.icon
+                | Unfollow
         else
             #add_friend.ui.button
-                i.plus.large.icon
-                |follow
+                i.plus.icon
+                | Follow
 
 
 // template(name='bookmark_button')
 //     if bookmarked
-//         .ui.icon.large.button
+//         .ui.icon.button
 //             i.bookmark.icon
 //     else
 //         .ui.icon.primary.button
@@ -188,7 +188,7 @@ template(name='call_phone_button')
             
             
 template(name='link_button')    
-    a.ui.large.icon.button(href=link title=label)
+    a.ui.icon.button(href=link title=label)
         i.icon(class=icon)
 
 template(name='edit_author')
@@ -270,7 +270,7 @@ template(name='office_map')
         #map
         
 template(name='google_places_input')
-    .ui.large.fluid.icon.input
+    .ui.fluid.icon.input
         i.search.icon
         input#google_places_field(type='text' placeholder='change address...')    
         

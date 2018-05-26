@@ -5,13 +5,12 @@ template(name='admin')
     .ui.centered.cards
         +user_widget
         +task_widget
-        +widget_list type='policy' label='Policies' 
         +widget_list type='role' label='Roles'
         +widget_list type='trigger' label='Triggers' icon='bolt'
         +widget_list type='action' label='Actions' 
         +widget_list type='condition' label='Conditions' icon='umbrella'
         +widget_list type='automation' label='Automations' icon='car'
-        
+    .ui.hidden.divider
         // +task_widget
         // +role_widget
         // +rule_widget
@@ -20,22 +19,22 @@ template(name='admin')
 template(name='admin_nav')    
     #nav.ui.top.attached.six.item.inverted.icon.menu
         a.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
-            i.large.shield.icon
+            i.shield.icon
             // .mobile.hidden Admin
         a.item(href='/users' class="{{isActivePath '/users'}}" data-position="bottom center" data-content='Users')
-            i.large.users.icon
+            i.users.icon
             // .mobile.hidden Users
         a.item(href='/incident_types' class="{{isActivePath '/incident_types'}}" data-position="bottom center" data-content='Incident Types')
-            i.large.exclamation.icon
+            i.exclamation.icon
             // .mobile.hidden Incident Types
         a.item(href='/triggers' class="{{isActivePath '/triggers'}}" data-position="bottom center" data-content='Triggers')
-            i.large.bolt.icon
+            i.bolt.icon
             // .mobile.hidden Triggers
         a.item(href='/automations' class="{{isActivePath '/automations'}}" data-position="bottom center" data-content='Automations')
-            i.large.car.icon
+            i.car.icon
             // .mobile.hidden Automations
-        a.item(href='/policies' class="{{isActivePath '/policies'}}" data-position="bottom center" data-content='SLA Policies')
-            i.large.sort.numeric.down.icon
+        // a.item(href='/policies' class="{{isActivePath '/policies'}}" data-position="bottom center" data-content='SLA Policies')
+        //     i.sort.numeric.down.icon
             // .mobile.hidden SLA Rules
             
             
