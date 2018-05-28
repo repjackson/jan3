@@ -5,20 +5,14 @@ template(name='chat')
                 .ui.header 
                     i.comments.icon
                     | Communication
-                +add_button type='conversation'
+                +add_button type='chat'
                 +timestamp_facet
             .twelve.wide.column
                 .ui.cards
-                    each conversations
-                        +conversation_card
-                    // each messages
-                        +chat_message
-                // .ui.fluid.icon.big.input
-                //     i.plus.green.icon
-                //     input#new_chat_message(type='text' placeholder='add...')
+                    each chats
+                        +chat_card
                         
-                        
-template(name='conversation_card')
+template(name='chat_card')
     .ui.card
         .content
             .header 
@@ -26,13 +20,42 @@ template(name='conversation_card')
                     .ui.basic.label #{this}
         .content
             .ui.list
-                each conversation_messages
+                each chat_messages
                     .item #{text}
         .content
             +view_button
                         
                         
-template(name='chat_message')
+template(name='chat_view')
+    .ui.padded.stackable.centered.grid
+        .middle.aligned.row
+            .three.wide.center.aligned.column
+                +link_button link='/chat' icon='clock' label='Communication'
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.grey.header View chat
+            .three.wide.center.aligned.column
+                +edit_button
+        .row
+            .four.wide.column
+                .ui.header Tags
+                each tags
+                    .ui.large.basic.label #{this}
+                |!{html}
+            .twelve.wide.column
+                +chat_pane
+                
+template(name='chat_pane')
+    .ui.segment
+        .ui.comments
+            each messages
+                +message
+        .ui.fluid.icon.big.input
+            i.plus.green.icon
+            input#add_message(type='text' placeholder='add...')
+                    
+        
+            
+template(name='message')
     .ui.comment
         .avatar
             img.ui.avatar.spaced.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -47,36 +70,16 @@ template(name='chat_message')
                 a.delete_comment
                     i.trash.icon
     
-
                 
     
-template(name='conversation_view')
-    .ui.padded.stackable.centered.grid
-        .middle.aligned.row
-            .three.wide.center.aligned.column
-                +link_button link='/chat' icon='clock' label='Communication'
-            .ten.wide.center.aligned.column
-                h1.ui.center.aligned.grey.header View Conversation
-            .three.wide.center.aligned.column
-                +edit_button
-        .row
-            .four.wide.column
-                .ui.header Tags
-                each tags
-                    .ui.large.basic.label #{this}
-            .twelve.wide.column
-                .ui.header #{title}
-                |!{html}
-                +comments
-            
         
-template(name='conversation_edit')
+template(name='chat_edit')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 +save_button
             .ten.wide.center.aligned.column
-                h1.ui.center.aligned.grey.header Edit Conversation
+                h1.ui.center.aligned.grey.header Edit chat
             .three.wide.center.aligned.column
                 #delete.ui.icon.button
                     i.trash.icon

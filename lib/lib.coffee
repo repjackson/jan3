@@ -51,5 +51,120 @@ Docs.helpers
     customer: -> Docs.findOne @referenced_customer_id
     parent: -> Docs.findOne @parent_id
     comment_count: -> Docs.find({type:'comment', parent_id:@_id}).count()
-    notified_users: -> 
-        Meteor.users.find 
+    # notified_users: -> 
+    #     Meteor.users.find 
+    children: -> Docs.find parent_id:@_id
+
+
+Meteor.methods
+    vote_up: (id)->
+        doc = Docs.findOne id
+        if not doc.upvoters
+            Docs.update id,
+                $set: 
+                    upvoters: []
+                    downvoters: []
+        else if Meteor.userId() in doc.upvoters #undo upvote
+            Docs.update id,
+                $pull: upvoters: Meteor.userId()
+                $inc: points: -1
+            Meteor.users.update doc.author_id, $inc: points: -1
+            # Meteor.users.update Meteor.userId(), $inc: points: 1
+
+        else if Meteor.userId() in doc.downvoters #switch downvote to upvote
+            Docs.update id,
+                $pull: downvoters: Meteor.userId()
+                $addToSet: upvoters: Meteor.userId()
+                $inc: points: 2
+            # Meteor.users.update doc.author_id, $inc: points: 2
+
+        else #clean upvote
+            Docs.update id,
+                $addToSet: upvoters: Meteor.userId()
+                $inc: points: 1
+            Meteor.users.update doc.author_id, $inc: points: 1
+            # Meteor.users.update Meteor.userId(), $inc: points: -1
+        Meteor.call 'generate_upvoted_cloud', Meteor.userId()
+
+    vote_down: (id)->
+        doc = Docs.findOne id
+        if not doc.downvoters
+            Docs.update id,
+                $set: 
+                    upvoters: []
+                    downvoters: []
+        else if Meteor.userId() in doc.downvoters #undo downvote
+            Docs.update id,
+                $pull: downvoters: Meteor.userId()
+                $inc: points: 1
+            # Meteor.users.update doc.author_id, $inc: points: 1
+            # Meteor.users.update Meteor.userId(), $inc: points: 1
+
+        else if Meteor.userId() in doc.upvoters #switch upvote to downvote
+            Docs.update id,
+                $pull: upvoters: Meteor.userId()
+                $addToSet: downvoters: Meteor.userId()
+                $inc: points: -2
+            # Meteor.users.update doc.author_id, $inc: points: -2
+
+        else #clean downvote
+            Docs.update id,
+                $addToSet: downvoters: Meteor.userId()
+                $inc: points: -1
+            # Meteor.users.update doc.author_id, $inc: points: -1
+            # Meteor.users.update Meteor.userId(), $inc: points: -1
+        Meteor.call 'generate_downvoted_cloud', Meteor.userId()
+
+
+    favorite: (doc)->
+        if doc.favoriters and Meteor.userId() in doc.favoriters
+            Docs.update doc._id,
+                $pull: favoriters: Meteor.userId()
+                $inc: favorite_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: favoriters: Meteor.userId()
+                $inc: favorite_count: 1
+    
+    
+    mark_complete: (doc)->
+        if doc.completed_ids and Meteor.userId() in doc.completed_ids
+            Docs.update doc._id,
+                $pull: completed_ids: Meteor.userId()
+                $inc: completed_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: completed_ids: Meteor.userId()
+                $inc: completed_count: 1
+    
+    
+    bookmark: (doc)->
+        if doc.bookmarked_ids and Meteor.userId() in doc.bookmarked_ids
+            Docs.update doc._id,
+                $pull: bookmarked_ids: Meteor.userId()
+                $inc: bookmarked_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: bookmarked_ids: Meteor.userId()
+                $inc: bookmarked_count: 1
+    
+    pin: (doc)->
+        if doc.pinned_ids and Meteor.userId() in doc.pinned_ids
+            Docs.update doc._id,
+                $pull: pinned_ids: Meteor.userId()
+                $inc: pinned_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: pinned_ids: Meteor.userId()
+                $inc: pinned_count: 1
+    
+    subscribe: (doc)->
+        if doc.subscribed_ids and Meteor.userId() in doc.subscribed_ids
+            Docs.update doc._id,
+                $pull: subscribed_ids: Meteor.userId()
+                $inc: subscribed_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: subscribed_ids: Meteor.userId()
+                $inc: subscribed_count: 1
+    

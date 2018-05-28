@@ -9,28 +9,35 @@ if Meteor.isClient
             selected_author_ids.array()
             selected_location_tags.array()
             selected_timestamp_tags.array()
-            type='conversation'
+            type='chat'
             author_id=null
     
     Template.chat.helpers
-        conversations: ->
+        chats: ->
             Docs.find   
-                type:'conversation'
+                type:'chat'
     
+    Template.chat.onCreated ->
+        @autorun => Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+    Template.chat_view.onCreated ->
+        @autorun => Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+
+    Template.chat_pane.helpers
         messages: ->
             Docs.find
                 type:'message'
     
     
-    Template.chat.events
-        'keydown #new_message': (e,t)->
+    Template.chat_pane.events
+        'keydown #add_message': (e,t)->
             if e.which is 13
-                new_message = $('#new_message').val().trim()
-                if new_message.length > 0
+                add_message = $('#add_message').val().trim()
+                if add_message.length > 0
                     Docs.insert 
-                        text: new_message
+                        parent_id: FlowRouter.getParam('doc_id')
+                        text: add_message
                         type:'message'
-                    $('#new_message').val('')
+                    $('#add_message').val('')
 
     Template.message.events
         'click .delete_comment': ->

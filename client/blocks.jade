@@ -118,6 +118,26 @@ template(name='toggle_key')
 //     |#{points}
 
 
+
+template(name='parent_segment')
+    .ui.secondary.segment
+        .ui.header Parent Doc
+        with parent
+            +view_array_field key='tags'
+            .large130 #{text}
+            // +author_info
+            // |#{when}
+        +view_button
+
+template(name='parent_link')
+    with parent
+        a.ui.button(href="/view/#{_id}") 
+            i.chevron.up.icon
+            |#{text}
+                    
+
+
+
 template(name='view_full_button')
     a.floated.right(href="/view/#{_id}")
         i.right.chevron.link.icon

@@ -81,13 +81,13 @@ template(name='left_sidebar')
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Offices')
             i.building.icon
             | Offices
-        // a.toggle_left_sidebar.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="right center" data-content='Schedule')
-        //     i.calendar.icon
-        //     | Schedule
-        // a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
-        //     i.clock.icon
-        //     // +tiny_sprite name='duster'
-        //     | Services
+        a.toggle_left_sidebar.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="right center" data-content='Schedule')
+            i.calendar.icon
+            | Schedule
+        a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
+            i.clock.icon
+            // +tiny_sprite name='duster'
+            | Services
         //     // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}" data-position="right center" data-content='Charts')
         //     //     i.line.chart.icon
         // a.toggle_left_sidebar.item(href='/store' data-position="bottom center" data-content='Store')
@@ -123,12 +123,12 @@ template(name='right_sidebar')
             a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
                 img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 |#{currentUser.username}
-        // a.icon.toggle_right_sidebar.item(href='/ideas' class="{{isActivePath '/ideas'}}")
-        //     i.lightbulb.icon
-        //     | Ideas
-        // a.icon.toggle_right_sidebar.item(href='/questions' class="{{isActivePath '/questions'}}")
-        //     i.question.icon
-        //     | Q&A
+        a.icon.toggle_right_sidebar.item(href='/flow' class="{{isActivePath '/flow'}}")
+            i.sitemap.icon
+            | Flow
+        a.icon.toggle_right_sidebar.item(href='/questions' class="{{isActivePath '/questions'}}")
+            i.question.icon
+            | Q&A
         // a.icon.toggle_right_sidebar.item(href='/rankings' class="{{isActivePath '/rankings'}}")
         //     i.trophy.icon
         //     | Leaderboard
@@ -150,9 +150,9 @@ template(name='right_sidebar')
         // a.toggle_right_sidebar.item(href='/chat')
         //     i.chat.icon
         //     | Chat
-        // a.toggle_right_sidebar.item(href='/bookmarks')
-        //     i.bookmark.icon
-        //     | Bookmarks
+        a.toggle_right_sidebar.item(href='/bookmarks')
+            i.bookmark.icon
+            | Bookmarks
         a.toggle_right_sidebar.item(href='/account/settings' class="{{isActivePath '/account/settings'}}") 
             i.cog.icon
             | Settings

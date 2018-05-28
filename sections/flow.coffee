@@ -1,46 +1,54 @@
 if Meteor.isClient
-    Template.ideas.onCreated ->
+    Template.flow.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    Template.ideas.helpers
+    Template.flow.helpers
     
     
-    FlowRouter.route '/ideas', action: ->
+    FlowRouter.route '/flow', action: ->
         BlazeLayout.render 'layout', 
-            sub_nav: 'admin_nav'
-            main: 'ideas'
+            sub_nav: 'dev_nav'
+            main: 'flow'
     
     
-    @selected_idea_tags = new ReactiveArray []
+    @selected_flow_tags = new ReactiveArray []
     
-    Template.ideas.onCreated ->
+    Template.flow.onCreated ->
         @autorun => Meteor.subscribe 'facet', 
             selected_tags.array()
             selected_keywords.array()
             selected_author_ids.array()
             selected_location_tags.array()
             selected_timestamp_tags.array()
-            type='idea'
+            type='flow'
             author_id=null
-    Template.ideas.helpers
-        ideas: ->  Docs.find { type:'idea'}
+    Template.flow.helpers
+        flow: ->  Docs.find { type:'flow'}, sort:timestamp:-1
+
+    Template.create_child.events
+        'click .create_child': ->  
+            Docs.insert 
+                type: 'flow'
+                parent_id: FlowRouter.getParam('doc_id')
 
 
-    Template.idea_card.onCreated ->
+    Template.flow_view.onCreated ->
+        @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+        
 
-    Template.idea_card.helpers
+    Template.flow_card.helpers
         
     
-    Template.idea_edit.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    # Template.flow_edit.onCreated ->
+    #     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     
-    Template.idea_edit.helpers
-        idea: -> Doc.findOne FlowRouter.getParam('doc_id')
+    Template.flow_edit.helpers
+        flow: -> Doc.findOne FlowRouter.getParam('doc_id')
         
-    Template.idea_edit.events
+    Template.flow_edit.events
         'click #delete': ->
             template = Template.currentData()
             swal {
-                title: 'Delete idea?'
+                title: 'Delete flow?'
                 # text: 'Confirm delete?'
                 type: 'error'
                 animation: false
@@ -53,6 +61,6 @@ if Meteor.isClient
                 doc = Docs.findOne FlowRouter.getParam('doc_id')
                 # console.log doc
                 Docs.remove doc._id, ->
-                    FlowRouter.go "/ideas"
+                    FlowRouter.go "/flow"
 
 
