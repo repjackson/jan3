@@ -22,7 +22,7 @@ if Meteor.isClient
             type='flow'
             author_id=null
     Template.flow.helpers
-        flow: ->  Docs.find { type:'flow'}, sort:timestamp:-1
+        flow: ->  Docs.find { type:'flow'}, sort:timestamp:1
 
     Template.create_child.events
         'click .create_child': ->  
@@ -30,9 +30,17 @@ if Meteor.isClient
                 type: 'flow'
                 parent_id: FlowRouter.getParam('doc_id')
 
-
     Template.flow_view.onCreated ->
-        @autorun -> Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+        @autorun => Meteor.subscribe 'facet', 
+            selected_tags.array()
+            selected_keywords.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_timestamp_tags.array()
+            type='flow'
+            author_id=null
+            parent_id=FlowRouter.getParam('doc_id')
+
         
 
     Template.flow_card.helpers

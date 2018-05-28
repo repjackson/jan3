@@ -9,6 +9,7 @@ Meteor.publish 'facet', (
     selected_timestamp_tags
     type
     author_id
+    parent_id
     )->
     
         self = @
@@ -25,7 +26,7 @@ Meteor.publish 'facet', (
         #     match.published = $in: [0,1]
 
         if selected_tags.length > 0 then match.tags = $all: selected_tags
-
+        if parent_id then match.parent_id = parent_id
         if selected_author_ids.length > 0 
             match.author_id = $in: selected_author_ids
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags

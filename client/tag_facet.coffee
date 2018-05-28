@@ -1,21 +1,21 @@
 @selected_tags = new ReactiveArray []
 
 Template.tag_facet.helpers
-    cloud_object: ->
-        tags = Tags.find().fetch()
-        chart_series = []
-        for tag in tags
-            chart_series.push(
-                type: 'column'
-                name: tag.name
-                data: [tag.count]
-                )
-        # console.log 'chart_series?', chart_series
-        if chart_series
-            return {
-                title: text: 'bar'
-                series: chart_series
-                }
+    # cloud_object: ->
+    #     tags = Tags.find().fetch()
+    #     chart_series = []
+    #     for tag in tags
+    #         chart_series.push(
+    #             type: 'column'
+    #             name: tag.name
+    #             data: [tag.count]
+    #             )
+    #     # console.log 'chart_series?', chart_series
+    #     if chart_series
+    #         return {
+    #             title: text: 'bar'
+    #             series: chart_series
+    #             }
 
 
     tags: ->
