@@ -27,7 +27,7 @@ template(name='table')
                     .filter_column Type
                 th
                     .filter_column Date Logged
-                th
+                // th
                     // .filter_column Sentiment
                 th
                     .filter_column Status
@@ -45,7 +45,7 @@ template(name='table')
                             img.ui.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
                     td #{incident_type}
                     td #{when}
-                    td 
+                    // td 
                         // +doc_sentiment
                     td #{current_level}
                     td

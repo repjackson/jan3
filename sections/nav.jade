@@ -30,14 +30,14 @@ template(name='nav')
         //         input(type='text' placeholder='Search...')
         //         i.search.icon
         .right.menu
-            a.mobile.hidden.icon.item(href='/dev' class="{{isActivePath '/dev'}}" data-position="bottom center" data-content='Dev')
+            a.mobile.hidden.item(href='/dev' class="{{isActivePath '/dev'}}" data-position="bottom center" data-content='Dev')
                 i.terminal.icon
-                // | dev
-            a.mobile.hidden.icon.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
+                | Dev
+            a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
                 i.shield.alternate.icon
-                // | Admin
-            a.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
-                i.comments.icon
+                | Admin
+            // a.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
+            //     i.comments.icon
             // .icon.mobile.hidden.disabled.item(data-position="bottom center" data-content='Cart')
             //     i.shopping.cart.icon
             // a.icon.mobile.hidden.item(href='/mail' class="{{isActivePath '/mail'}}" data-position="bottom center" data-content='Mail')
@@ -121,9 +121,10 @@ template(name='left_sidebar')
 
 template(name='right_sidebar')
     #nav.ui.right.inline.vertical.sidebar.inverted.menu
-        a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
-            img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-            |#{currentUser.username}
+        if currentUser
+            a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
+                img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                |#{currentUser.username}
         // a.icon.toggle_right_sidebar.item(href='/ideas' class="{{isActivePath '/ideas'}}")
         //     i.lightbulb.icon
         //     | Ideas
@@ -143,7 +144,7 @@ template(name='right_sidebar')
         //     i.envelope.icon
         //     | Mail
         a.toggle_right_sidebar.item(href='/dev' class="{{isActivePath '/dev'}}" data-position="bottom center" data-content='dev')
-            i.code.grey.icon
+            i.terminal.icon
             | Dev
         a.toggle_right_sidebar.item(href='/feed')
             i.rss.icon

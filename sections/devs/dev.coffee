@@ -23,7 +23,7 @@ if Meteor.isClient
                     console.log res
     
     Template.dev_nav.onRendered ->
-        Meteor.setTimeout ->
-            $('.item').popup()
-        , 400
+        # Meteor.setTimeout ->
+        #     $('.item').popup()
+        # , 400
         

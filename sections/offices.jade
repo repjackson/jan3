@@ -2,7 +2,7 @@ template(name='offices')
     .ui.stackable.centered.padded.grid
         .centered.row
             .four.wide.column
-                h2.ui.center.aligned.header 
+                h2.ui.header 
                     i.building.icon
                     |Offices
                 +add_button type='office' label='Office'
@@ -27,24 +27,24 @@ template(name='office_card')
                 // +mini_sprite name='organization'
                 // |##{jan_office_id}
                 |#{office_name} 
-        .content
-            .ui.list
-                +list_item key='jan_office_id' icon='building'
-                with geocode
-                    +list_item key='formatted_address' icon='compass'
-                +list_item key='phone_number' icon='phone'
-                if email_address
-                    +list_item key='email_address' icon='envelope'
-                // +list_item key='level_1_user_ud' icon='user'
-                // +list_item key='level_2_user_ud' icon='user'
-                // +list_item key='level_3_user_ud' icon='user'
-                // +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
-                // +list_item key='office_address' label='Office Address' icon='compass'
-                // +list_item key='phone_number' label='Phone Number' icon='phone'
-                // +list_item key='email_address' label='Email Address' icon='envelope'
-                // +list_item key='level_1_user_ud' label='Level 1 User Id' icon='user'
-                // +list_item key='level_2_user_ud' label='Level 2 User Id' icon='user'
-                // +list_item key='level_3_user_ud' label='Level 3 User Id' icon='user'
+        // .content
+        //     .ui.list
+        //         +list_item key='jan_office_id' icon='building'
+        //         with geocode
+        //             +list_item key='formatted_address' icon='compass'
+        //         +list_item key='phone_number' icon='phone'
+        //         if email_address
+        //             +list_item key='email_address' icon='envelope'
+        //         // +list_item key='level_1_user_ud' icon='user'
+        //         // +list_item key='level_2_user_ud' icon='user'
+        //         // +list_item key='level_3_user_ud' icon='user'
+        //         // +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
+        //         // +list_item key='office_address' label='Office Address' icon='compass'
+        //         // +list_item key='phone_number' label='Phone Number' icon='phone'
+        //         // +list_item key='email_address' label='Email Address' icon='envelope'
+        //         // +list_item key='level_1_user_ud' label='Level 1 User Id' icon='user'
+        //         // +list_item key='level_2_user_ud' label='Level 2 User Id' icon='user'
+        //         // +list_item key='level_3_user_ud' label='Level 3 User Id' icon='user'
         .content
             +view_button
         

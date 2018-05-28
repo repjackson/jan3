@@ -21,7 +21,7 @@ if Meteor.isClient
 
 
     Template.table.helpers
-        docs: -> Docs.find {}, sort:incident_number:1
+        docs: -> Docs.find {}, sort:timestamp:-1
 
         current_doc: -> Session.get 'current_doc'
 

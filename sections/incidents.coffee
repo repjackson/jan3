@@ -72,7 +72,11 @@ if Meteor.isClient
         
     Template.incidents.helpers
         incidents: ->  
-            Docs.find {type:'incident'}, {limit:7}
+            Docs.find {type:'incident'}, 
+                {
+                    sort: timestamp:-1
+                    limit:7
+                    }
             # if Session.equals('level','all')
             #     Docs.find type:'incident'
             # else

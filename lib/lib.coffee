@@ -39,8 +39,7 @@ Meteor.users.helpers
             "#{@profile.first_name}  #{@profile.last_name}"
         else
             "#{@username}"
-    last_login: -> 
-        moment(@status?.lastLogin.date).fromNow()
+    last_login: -> moment(@status?.lastLogin.date).fromNow()
 
     five_tags: -> if @tags then @tags[0..3]
     
@@ -52,4 +51,5 @@ Docs.helpers
     customer: -> Docs.findOne @referenced_customer_id
     parent: -> Docs.findOne @parent_id
     comment_count: -> Docs.find({type:'comment', parent_id:@_id}).count()
-
+    notified_users: -> 
+        Meteor.users.find 

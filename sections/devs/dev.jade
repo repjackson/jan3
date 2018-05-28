@@ -1,15 +1,15 @@
 template(name='dev')
-    h2.ui.center.aligned.grey.header 
+    h2.ui.center.aligned.header 
         i.terminal.icon
         | Development
     // #call_ev.ui.button call ev
     .ui.centered.cards
         +task_widget
-        +widget_list type='schema' link='/schema' label='Schemas'
-        +widget_list type='work' link='/work' label='Dev Log'
+        +widget_list type='schema' link='/schema' label='Schemas' icon='database'
+        +widget_list type='work' link='/work' label='Dev Log' icon='code'
         // +widget_list type='project' label='Projects'
         +widget_list type='trigger' link='/triggers' label='Triggers' icon='bolt'
-        +widget_list type='action' link='/action' label='Actions' 
+        +widget_list type='action' link='/action' label='Actions' icon='bolt'
     .ui.hidden.divider
     
 template(name='widget_list')

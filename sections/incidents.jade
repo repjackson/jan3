@@ -2,7 +2,7 @@ template(name='incidents')
     .ui.stackable.padded.centered.grid
         .centered.row
             .three.wide.column
-                h3.ui.center.aligned.header 
+                h3.ui.header 
                     i.exclamation.circle.icon
                     | Incidents
                 +set_view_mode view='cards' icon='clone' label='Cards View'
@@ -200,7 +200,7 @@ template(name='incident_view')
             .ui.bottom.attached.tab.segment(data-tab='talk')
                 .ui.padded.stackable.centered.grid
                     .four.wide.column
-                        +notify_button
+                        // +notify_button
                     .twelve.wide.column
                         +comments
             .ui.bottom.attached.tab.segment(data-tab='activity')

@@ -2,8 +2,8 @@ template(name='work')
     .ui.stackable.centered.padded.grid
         .centered.row
             .four.wide.column
-                h2.ui.center.aligned.header Work Log
-                // .ui.center.aligned.sub.header #{work.count} Work Logged
+                h2.ui.header Work Log
+                .ui.sub.header #{work.count} Hours Logged
                 +add_button type='work'
                 // +set_session_button key='view_complete' value=true label='complete'
                 // +set_session_button key='view_complete' value=false label='incomplete'
