@@ -2,14 +2,35 @@ template(name='chat')
     .ui.stackable.centered.padded.grid
         .centered.row
             .four.wide.column
+                .ui.header 
+                    i.comments.icon
+                    | Communication
+                +add_button type='conversation'
                 +timestamp_facet
             .twelve.wide.column
-                .ui.comments
-                    each chat_messages
+                .ui.cards
+                    each conversations
+                        +conversation_card
+                    // each messages
                         +chat_message
-                .ui.fluid.icon.big.input
-                    i.plus.green.icon
-                    input#new_chat_message(type='text' placeholder='add...')
+                // .ui.fluid.icon.big.input
+                //     i.plus.green.icon
+                //     input#new_chat_message(type='text' placeholder='add...')
+                        
+                        
+template(name='conversation_card')
+    .ui.card
+        .content
+            .header 
+                each tags
+                    .ui.basic.label #{this}
+        .content
+            .ui.list
+                each conversation_messages
+                    .item #{text}
+        .content
+            +view_button
+                        
                         
 template(name='chat_message')
     .ui.comment
@@ -28,4 +49,43 @@ template(name='chat_message')
     
 
                 
-
+    
+template(name='conversation_view')
+    .ui.padded.stackable.centered.grid
+        .middle.aligned.row
+            .three.wide.center.aligned.column
+                +link_button link='/chat' icon='clock' label='Communication'
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.grey.header View Conversation
+            .three.wide.center.aligned.column
+                +edit_button
+        .row
+            .four.wide.column
+                .ui.header Tags
+                each tags
+                    .ui.large.basic.label #{this}
+            .twelve.wide.column
+                .ui.header #{title}
+                |!{html}
+                +comments
+            
+        
+template(name='conversation_edit')
+    .ui.padded.stackable.centered.grid
+        .centered.middle.aligned.row
+            .three.wide.center.aligned.column
+                +save_button
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.grey.header Edit Conversation
+            .three.wide.center.aligned.column
+                #delete.ui.icon.button
+                    i.trash.icon
+        .centered.row
+            .four.wide.column
+                +edit_array_field key='tags' label='Tags'
+            .twelve.wide.column
+                +edit_html
+                // +edit_date_field key='start' label='start' icon='clock'
+            
+        
+            

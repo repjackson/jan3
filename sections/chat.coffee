@@ -9,26 +9,30 @@ if Meteor.isClient
             selected_author_ids.array()
             selected_location_tags.array()
             selected_timestamp_tags.array()
-            type='chat_message'
+            type='conversation'
             author_id=null
     
     Template.chat.helpers
-        chat_messages: ->
+        conversations: ->
+            Docs.find   
+                type:'conversation'
+    
+        messages: ->
             Docs.find
-                type:'chat_message'
+                type:'message'
     
     
     Template.chat.events
-        'keydown #new_chat_message': (e,t)->
+        'keydown #new_message': (e,t)->
             if e.which is 13
-                new_chat_message = $('#new_chat_message').val().trim()
-                if new_chat_message.length > 0
+                new_message = $('#new_message').val().trim()
+                if new_message.length > 0
                     Docs.insert 
-                        text: new_chat_message
-                        type:'chat_message'
-                    $('#new_chat_message').val('')
+                        text: new_message
+                        type:'message'
+                    $('#new_message').val('')
 
-    Template.chat_message.events
+    Template.message.events
         'click .delete_comment': ->
             if confirm 'Delete comment?'
                 Docs.remove @_id

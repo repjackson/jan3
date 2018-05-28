@@ -19,12 +19,12 @@ template(name='nav')
             i.rss.icon
             | Feed
             
-        // a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
-        //     i.shipping.fast.icon
-            // | &nbsp; Services
-        // a.mobile.hidden.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')
-        //     i.calendar.icon
-            // | &nbsp; Schedule
+        a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
+            i.shipping.fast.icon
+            | &nbsp; Services
+        a.mobile.hidden.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')
+            i.calendar.icon
+            | &nbsp; Schedule
         // .mobile.hidden.item
         //     .ui.icon.transparent.inverted.disabled.input
         //         input(type='text' placeholder='Search...')
@@ -36,16 +36,14 @@ template(name='nav')
             a.mobile.hidden.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
                 i.shield.alternate.icon
                 | Admin
-            // a.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
-            //     i.comments.icon
+            a.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
+                i.comments.icon
             // .icon.mobile.hidden.disabled.item(data-position="bottom center" data-content='Cart')
             //     i.shopping.cart.icon
-            // a.icon.mobile.hidden.item(href='/mail' class="{{isActivePath '/mail'}}" data-position="bottom center" data-content='Mail')
-            //     i.envelope.icon
-            a.ui.simple.dropdown.icon.mobile.hidden.item(href='/alerts')
-                i.bell.icon
-                .menu
-                    .item No alerts
+            // a.ui.simple.dropdown.icon.mobile.hidden.item(href='/alerts')
+            //     i.bell.icon
+            //     .menu
+            //         .item No alerts
             if currentUser
                 a.toggle_right_sidebar.item
                     if currentUser.profile.image_id

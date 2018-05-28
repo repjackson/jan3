@@ -33,7 +33,7 @@
     "env": {
       "MONGO_URL": "mongodb://janadmin:jancleaningcustomerpassword@aws-us-east-1-portal.21.dblayer.com:10444/jandb?ssl=true",
       "ROOT_URL": "https://www.jan.meteorapp.com",
-      "MAIL_URL": "smtp://postmaster%40mg.toriwebster.com:turnfearagainstthose@smtp.mailgun.org:587"
+      "MAIL_URL": "smtp://jan%40sandbox1b77ad44ac3343d9bdf4c3ff681904c9.mailgun.org:janpropassword@smtp.mailgun.org:587"
     }
   }
 }
