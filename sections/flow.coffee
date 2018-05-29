@@ -26,9 +26,24 @@ if Meteor.isClient
 
     Template.create_child.events
         'click .create_child': ->  
-            Docs.insert 
+            new_id = Docs.insert 
                 type: 'flow'
                 parent_id: FlowRouter.getParam('doc_id')
+            FlowRouter.go "/edit/#{new_id}"
+
+    Template.flow_child.events
+        'click .start_move': ->  
+            Session.set 'moving_id', @_id
+        'click .end_move': ->  
+            target_doc = Docs.findOne @_id
+            moving_doc = Docs.findOne(Session.get('moving_id'))
+            if confirm "Move #{moving_doc.text} under #{target_doc.text}?"
+                Docs.update moving_doc._id,
+                    $set: parent_id: target_doc._id
+                Session.set 'moving_id', null
+
+    Template.flow_child.helpers
+        is_moving: -> Session.get 'moving_id'
 
     Template.flow_view.onCreated ->
         @autorun => Meteor.subscribe 'facet', 

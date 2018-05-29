@@ -14,7 +14,8 @@ template(name='flow')
 template(name='flow_card')
     .ui.card
         .content
-            a.grey.header(href="/view/#{_id}")
+            a.header(href="/view/#{_id}")
+                i.icon(class=icon)
                 |#{text} 
         // .content
         //     |!{html}
@@ -29,18 +30,18 @@ template(name='flow_card')
 template(name='flow_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
-            if parent_id
-                +parent_link
-        .centered.row
             .four.wide.column
+                h1.ui.center.aligned.grey.header Edit #{text}
                 +save_button
-                h1.ui.center.aligned.grey.header Edit flow #{name}
                 #delete.ui.icon.button
                     i.trash.icon
+                if parent_id
+                    +parent_segment
             .twelve.wide.column
                 .ui.form
-                    +edit_text_field key='text' label='text'
-                    +edit_array_field key='tags' label='relationship to parent'
+                    +edit_text_field key='text' label='Title'
+                    +edit_text_field key='icon' label='Icon'
+                    +edit_array_field key='tags' label='Relationship to parent'
                     +edit_html
         
         
@@ -53,31 +54,51 @@ template(name='flow_view')
                     +parent_link
         .centered.row
             .three.wide.column
-                +link_button link='/flow' icon='sitemap'
+                unless parent_id
+                    +link_button link='/flow' icon='sitemap'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header #{text}
+                h1.ui.center.aligned.grey.header 
+                    if icon
+                        i.icon(class=icon)
+                    |#{text}
             .three.wide.column
                 +edit_button
         .row
             .eight.wide.column
-                +view_array_field key='tags'
+                each tags
+                    .ui.label #{this}
                 | !{html}
-                // +associated_incidents
-                // +comments
         .row
             .sixteen.wide.column
                 +tag_facet
-                +create_child
                 .ui.centered.cards
                     each children    
-                        .ui.card
-                            .content
-                                a.header(href="/view/#{_id}") #{text}
-                                // each tags
-                                //     .ui.basic.label #{this}
-                            .content
-                                |!{html}
-                            +view_button
+                        +flow_child
+                +create_child
+
+
+
+template(name='flow_child')
+    .ui.card
+        .content
+            a.header(href="/view/#{_id}")
+                if icon
+                    i.icon(class=icon)
+                |#{text} 
+        .content
+            |!{html}
+        .content
+            unless is_moving
+                .start_move.ui.icon.button(title='Move')
+                    i.arrows.alternate.icon
+                +edit_button
+                +view_button
+            else
+                .end_move.ui.icon.blue.button(title='Place')
+                    i.arrow.down.icon
+            // +vote_button
+                
+
 
 template(name='create_child')
     .create_child.ui.icon.button
