@@ -53,15 +53,15 @@ template(name='flow_view')
                 if parent_id
                     +parent_link
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 unless parent_id
                     +link_button link='/flow' icon='sitemap'
-            .ten.wide.column
+            .ten.wide.center.aligned.column
                 h1.ui.center.aligned.grey.header 
                     if icon
                         i.icon(class=icon)
                     |#{text}
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +edit_button
         .row
             .eight.wide.column
@@ -70,7 +70,8 @@ template(name='flow_view')
                 | !{html}
         .row
             .sixteen.wide.column
-                +tag_facet
+                .center.aligned.row
+                    +tag_facet
                 .ui.centered.cards
                     each children    
                         +flow_child
@@ -85,8 +86,18 @@ template(name='flow_child')
                 if icon
                     i.icon(class=icon)
                 |#{text} 
+        if html
+            .content
+                |!{html}
         .content
-            |!{html}
+            if children
+                h5 Children
+                .ui.bulleted.list
+                    each children
+                        a.item(href="/view/#{_id}")
+                            if icon
+                                i.icon(class=icon)
+                            |#{text}
         .content
             unless is_moving
                 .start_move.ui.icon.button(title='Move')

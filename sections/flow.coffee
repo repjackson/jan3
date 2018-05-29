@@ -1,14 +1,12 @@
 if Meteor.isClient
     Template.flow.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+        # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     Template.flow.helpers
-    
     
     FlowRouter.route '/flow', action: ->
         BlazeLayout.render 'layout', 
             sub_nav: 'dev_nav'
             main: 'flow'
-    
     
     @selected_flow_tags = new ReactiveArray []
     
@@ -21,6 +19,7 @@ if Meteor.isClient
             selected_timestamp_tags.array()
             type='flow'
             author_id=null
+            
     Template.flow.helpers
         flow: ->  Docs.find { type:'flow'}, sort:timestamp:1
 
@@ -34,6 +33,8 @@ if Meteor.isClient
     Template.flow_child.events
         'click .start_move': ->  
             Session.set 'moving_id', @_id
+            
+            
         'click .end_move': ->  
             target_doc = Docs.findOne @_id
             moving_doc = Docs.findOne(Session.get('moving_id'))
@@ -56,16 +57,13 @@ if Meteor.isClient
             author_id=null
             parent_id=FlowRouter.getParam('doc_id')
 
-        
-
     Template.flow_card.helpers
         
+    Template.flow_child.onCreated ->
+        @autorun => Meteor.subscribe 'child_docs', @data._id
     
-    # Template.flow_edit.onCreated ->
-    #     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    
-    Template.flow_edit.helpers
-        flow: -> Doc.findOne FlowRouter.getParam('doc_id')
+    # Template.flow_edit.helpers
+    #     flow: -> Doc.findOne FlowRouter.getParam('doc_id')
         
     Template.flow_edit.events
         'click #delete': ->

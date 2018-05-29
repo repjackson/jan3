@@ -115,7 +115,6 @@ Meteor.methods
             # Meteor.users.update Meteor.userId(), $inc: points: -1
         Meteor.call 'generate_downvoted_cloud', Meteor.userId()
 
-
     favorite: (doc)->
         if doc.favoriters and Meteor.userId() in doc.favoriters
             Docs.update doc._id,
@@ -126,7 +125,6 @@ Meteor.methods
                 $addToSet: favoriters: Meteor.userId()
                 $inc: favorite_count: 1
     
-    
     mark_complete: (doc)->
         if doc.completed_ids and Meteor.userId() in doc.completed_ids
             Docs.update doc._id,
@@ -136,7 +134,6 @@ Meteor.methods
             Docs.update doc._id,
                 $addToSet: completed_ids: Meteor.userId()
                 $inc: completed_count: 1
-    
     
     bookmark: (doc)->
         if doc.bookmarked_ids and Meteor.userId() in doc.bookmarked_ids
