@@ -5,6 +5,12 @@
 #nav.ui.inverted.menu {
   /*border: 0px solid transparent; */
   border: none !important; 
+  background: #01336C;
+  box-shadow: none
+}
+#sub_nav.ui.inverted.menu {
+  /*border: 0px solid transparent; */
+  border: none !important; 
   background: #0a4a7b;
   box-shadow: none
 }
@@ -35,7 +41,7 @@ body {
   bottom: 0;
   width: 100%;
   margin: 0 !important;
-  background: #0a4a7b !important;
+  background: #01336C !important;
 }
 
 /* Mobile */

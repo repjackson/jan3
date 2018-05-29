@@ -65,7 +65,7 @@ template(name='flow_view')
                 // +associated_incidents
                 // +comments
         .row
-            .twelve.wide.column
+            .sixteen.wide.column
                 +tag_facet
                 +create_child
                 .ui.centered.cards
@@ -73,8 +73,8 @@ template(name='flow_view')
                         .ui.card
                             .content
                                 a.header(href="/view/#{_id}") #{text}
-                                each tags
-                                    .ui.basic.label #{this}
+                                // each tags
+                                //     .ui.basic.label #{this}
                             .content
                                 |!{html}
                             +view_button
