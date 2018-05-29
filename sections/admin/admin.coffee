@@ -8,9 +8,9 @@ FlowRouter.route '/admin', action: (params) ->
  
 if Meteor.isClient
     Template.admin_nav.onRendered ->
-        Meteor.setTimeout ->
-            $('.item').popup()
-        , 400
+        # Meteor.setTimeout ->
+        #     $('.item').popup()
+        # , 400
         
 
 
