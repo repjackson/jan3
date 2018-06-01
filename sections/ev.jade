@@ -47,21 +47,17 @@ template(name='report_view')
         .centered.row
             .four.wide.column
                 .run_report.ui.fluid.button Run Report
-            .ten.wide.column
+            .twelve.wide.column
                 .ui.segment
                     each tags
                         .ui.basic.label #{this}
                     .ui.basic.segment
+                        // |#{current_doc}
                         h5 report id: #{report_id}
                         h5 report_type: #{report_type}
                         h5 report_subtitle: #{report_subtitle}
                 .ui.centered.cards
                     each children    
-                        +report_child
-                        
-                        
-                        
-template(name='report_child')
-    .ui.card
-        .content
-            
+                        .card
+                            .content
+                                +jsonView json=ev

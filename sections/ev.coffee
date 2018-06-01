@@ -5,8 +5,9 @@ if Meteor.isClient
             BlazeLayout.render 'layout', 
                 main: 'ev'
 
-    Template.ev.onCreated ->
+    Template.report_view.onCreated ->
         @autorun => Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+    Template.ev.onCreated ->
         @autorun => Meteor.subscribe 'facet', 
             selected_tags.array()
             selected_keywords.array()
@@ -18,6 +19,8 @@ if Meteor.isClient
 
     Template.ev.helpers
         reports: -> Docs.find {type:'report'}, limit:20
+    Template.report_view.helpers
+        current_doc: -> JSON.stringify Docs.findOne(FlowRouter.getParam('doc_id'))
 
     Template.ev.events
         'click .call_ev': ->

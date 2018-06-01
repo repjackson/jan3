@@ -68,18 +68,14 @@ Meteor.methods
         xml2js.parseString res.content, {explicitArray:false, emptyTag:undefined, ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
-                console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                # json_string = JSON.stringify(json_result, null, 4)
-                # json_ob = JSON.parse(json_string)
-                # end_result = json_ob.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                # console.log end_result
-                # Docs.insert end_result
-                    
-
+                # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
                 # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                # return JSON.stringify json_result
-        #     for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..3]
-        #         console.log doc.CUST_NAME
-        # #         doc.type = 'customer'
-        # #         doc.parent_id = parent_id
-        # #         console.log doc
+                # new_id = Docs.insert 
+                # console.log 'new id', new_id
+
+            for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+                # console.log doc.CUST_NAME
+                # doc.type = 'customer'
+                Docs.insert 
+                    parent_id: parent_id
+                    ev: doc
