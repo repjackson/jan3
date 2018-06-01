@@ -1,11 +1,10 @@
 template(name='edit_text_field')
-    .ui.basic.segment
-        .ui.labeled.fluid.input
-            .ui.label 
-                if icon
-                    i.icon(class=icon)
-                |#{label}
-            input#text_field(type='text' value=page_key_value)
+    .ui.labeled.fluid.input
+        .ui.label 
+            if icon
+                i.icon(class=icon)
+            |#{label}
+        input#text_field(type='text' value=page_key_value)
 
         
 template(name='view_text_field')

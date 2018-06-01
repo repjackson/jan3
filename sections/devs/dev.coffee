@@ -16,11 +16,6 @@ if Meteor.isClient
         users: -> Meteor.users.find {}
     
     Template.dev.events
-        'click #call_ev': ->
-            Meteor.call 'call_ev', (err,res)->
-                if err then console.error err
-                else
-                    console.log res
     
     Template.dev_nav.onRendered ->
         # Meteor.setTimeout ->

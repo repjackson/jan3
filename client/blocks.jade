@@ -127,12 +127,17 @@ template(name='parent_segment')
             .large130 #{text}
             // +author_info
             // |#{when}
-        +view_button
+            |!{html}
+            +view_button
 
 template(name='parent_link')
     with parent
         a.ui.button(href="/view/#{_id}") 
             i.chevron.up.icon
+            if image_url
+                img.ui.small.centered.image(src=image_url)
+            if icon
+                i.icon(class=icon)
             |#{text}
                     
 

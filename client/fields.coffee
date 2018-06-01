@@ -1,3 +1,5 @@
+# import { truncatehtml } from 'truncate-html'
+# truncate = require('truncate-html')
 
 Template.edit_image_field.events
     "change input[type='file']": (e) ->
@@ -242,7 +244,9 @@ Template.edit_html.events
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
         doc_id = FlowRouter.getParam('doc_id')
-
+        # short = truncate(html, 5, { byWords: true })
+        # console.log html
+        # console.log truncate
         Docs.update doc_id,
             $set: 
                 html: html

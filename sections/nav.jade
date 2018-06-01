@@ -12,21 +12,24 @@ template(name='nav')
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" )
             i.exclamation.icon
             | &nbsp; Incidents
-        a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
-            i.building.icon
-            | &nbsp; Offices
+        // a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
+        //     i.building.icon
+        //     | &nbsp; Offices
         a.mobile.hidden.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
             i.rss.icon
             | Feed
-        a.mobile.hidden.icon.item(href='/view/P6GMxCjCFcQjuC63E' class="{{isActivePath '/view/P6GMxCjCFcQjuC63E'}}" data-position="bottom center" data-content='FlowChart')
+        a.mobile.hidden.item(href='/view/P6GMxCjCFcQjuC63E' class="{{isActivePath '/view/P6GMxCjCFcQjuC63E'}}" data-position="bottom center" data-content='FlowChart')
             i.sitemap.icon
-            | &nbsp; Flow Chart
-        a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
-            i.shipping.fast.icon
-            | &nbsp; Services
-        a.mobile.hidden.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')
-            i.calendar.icon
-            | &nbsp; Schedule
+            | &nbsp; Flow
+        a.mobile.hidden.item(href='/ev' class="{{isActivePath '/ev'}}" data-position="bottom center" data-content='EV Explorer')
+            | EV Explorer
+            
+        // a.mobile.hidden.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
+        //     i.shipping.fast.icon
+        //     | &nbsp; Services
+        // a.mobile.hidden.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')
+        //     i.calendar.icon
+        //     | &nbsp; Schedule
         // .mobile.hidden.item
         //     .ui.icon.transparent.inverted.disabled.input
         //         input(type='text' placeholder='Search...')

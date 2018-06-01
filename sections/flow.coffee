@@ -56,6 +56,11 @@ if Meteor.isClient
             type='flow'
             author_id=null
             parent_id=FlowRouter.getParam('doc_id')
+    
+    Template.flow_view.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 400
 
     Template.flow_card.helpers
         
