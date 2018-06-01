@@ -25,6 +25,8 @@ template(name='flow_card')
             +edit_button
             +view_button
             +vote_button
+                
+        
         
         
 template(name='flow_edit')
@@ -37,10 +39,6 @@ template(name='flow_edit')
                     i.trash.icon
                 if parent_id
                     +parent_segment
-                .ui.secondary.segment
-                    h5 Child View Template
-                    +toggle_key key='child_view_template' value='list' label='List'
-                    +toggle_key key='child_view_template' value='cards' label='Cards'
             .twelve.wide.column
                 .ui.form
                     +edit_text_field key='text' label='Title'
@@ -51,41 +49,34 @@ template(name='flow_edit')
         
         
 template(name='flow_view')
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.centered.grid
         .centered.row
             // +parent_segment
             if parent_id
                 +parent_link
         .centered.row
-            // .three.wide.center.aligned.column
-            //     unless parent_id
-            //         +link_button link='/flow' icon='sitemap'
-            .twelve.wide.column
-                .ui.segment
-                    .ui.accordion
-                        .active.title 
-                            if image_url
-                                img.ui.medium.centered.image(src=image_url)
-                            h1.ui.center.aligned.grey.header 
-                                if icon
-                                    i.icon(class=icon)
-                                |#{text}
-                        .active.content 
-                            a.ui.icon.button(href="/edit/#{_id}")
-                                i.pencil.icon
-                            each tags
-                                .ui.basic.label #{this}
-                            .ui.basic.segment
-                                | !{html}
+            .three.wide.center.aligned.column
+                unless parent_id
+                    +link_button link='/flow' icon='sitemap'
+            .ten.wide.center.aligned.column
+                .ui.center.aligned.segment
+                    if image_url
+                        img.ui.medium.centered.image(src=image_url)
+                    h1.ui.center.aligned.grey.header 
+                        if icon
+                            i.icon(class=icon)
+                        |#{text}
+                    each tags
+                        .ui.basic.label #{this}
+                    .ui.center.aligned.basic.segment
+                        | !{html}
+            .three.wide.center.aligned.column
+                +edit_button
         .row
             .sixteen.wide.column
                 .row
                     .ui.basic.center.aligned.segment
                         +tag_facet
-                if child_list_view
-                    .ui.list
-                        each children
-                            +flow_list_item
                 .ui.centered.cards
                     each children    
                         +flow_child
@@ -109,8 +100,8 @@ template(name='flow_child')
             .content
                 each tags
                     .ui.small.basic.label #{this}
-        if children.count
-            .content
+        .content
+            if children.count
                 // h5 Children
                 .ui.bulleted.list
                     each children

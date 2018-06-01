@@ -1,10 +1,67 @@
 template(name='ev')
     .ui.padded.stackable.grid
         .row
-            .four.wide.column
+            .three.wide.column
                 h1.ui.center.aligned.header
                     i.compass.icon
-                    | ev explorer
-                .call_ev.ui.button Call EV API
+                    | EV
+                .call_ev.ui.fluid.button Call EV API
+            .thirteen.wide.column
+                h3 Reports
+                .ui.three.cards
+                    each reports
+                        .card
+                            .content
+                                a.header(href="/view/#{_id}") #{report_title}
+                            .content
+                                h5 report id: #{report_id}
+                                h5 report_type: #{report_type}
+                                h5 report_subtitle: #{report_subtitle}
+                                
+template(name='report_edit')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .four.wide.column
+                h1.ui.center.aligned.grey.header Edit #{text}
+                +save_button
+                #delete.ui.icon.button
+                    i.trash.icon
             .twelve.wide.column
-                
+                .ui.form
+                    +edit_text_field key='text' label='Title'
+                    +edit_text_field key='image_url' label='Image URL'
+                    +edit_text_field key='icon' label='Icon'
+                    +edit_array_field key='tags' label='Relationship to parent'
+                    +edit_html
+        
+        
+template(name='report_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .one.wide.column
+                +link_button link='/ev' icon='left chevron' label='Reports'
+            .fourteen.wide.column
+                h1.ui.center.aligned.grey.header #{report_title}
+            .one.wide.column
+                +edit_button
+        .centered.row
+            .four.wide.column
+                .run_report.ui.fluid.button Run Report
+            .ten.wide.column
+                .ui.segment
+                    each tags
+                        .ui.basic.label #{this}
+                    .ui.basic.segment
+                        h5 report id: #{report_id}
+                        h5 report_type: #{report_type}
+                        h5 report_subtitle: #{report_subtitle}
+                .ui.centered.cards
+                    each children    
+                        +report_child
+                        
+                        
+                        
+template(name='report_child')
+    .ui.card
+        .content
+            
