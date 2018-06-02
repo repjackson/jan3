@@ -7,18 +7,23 @@ if Meteor.isClient
 
     Template.report_view.onCreated ->
         @autorun => Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+    Template.report_card.onCreated ->
+        @autorun => Meteor.subscribe 'child_docs', @data._id
     Template.ev.onCreated ->
-        @autorun => Meteor.subscribe 'facet', 
-            selected_tags.array()
-            selected_keywords.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_timestamp_tags.array()
-            type='report'
-            author_id=null
+        @autorun => Meteor.subscribe 'type', 'report' 
+        # @autorun => Meteor.subscribe 'facet', 
+        #     selected_tags.array()
+        #     selected_keywords.array()
+        #     selected_author_ids.array()
+        #     selected_location_tags.array()
+        #     selected_timestamp_tags.array()
+        #     type='report'
+        #     author_id=null
 
     Template.ev.helpers
-        reports: -> Docs.find {type:'report'}, limit:20
+        reports: -> Docs.find {type:'report'}, limit:100
+        
+        
     Template.report_view.helpers
         current_doc: -> JSON.stringify Docs.findOne(FlowRouter.getParam('doc_id'))
 

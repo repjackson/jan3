@@ -1,22 +1,28 @@
 template(name='ev')
     .ui.padded.stackable.grid
         .row
-            .three.wide.column
+            .sixteen.wide.column
                 h1.ui.center.aligned.header
                     i.compass.icon
-                    | EV
-                .call_ev.ui.fluid.button Call EV API
-            .thirteen.wide.column
-                h3 Reports
-                .ui.three.cards
+                    | EV Reports
+                // .call_ev.ui.fluid.button Call EV API
+        .row
+            .sixteen.wide.column
+                .ui.four.stackable.cards
                     each reports
-                        .card
-                            .content
-                                a.header(href="/view/#{_id}") #{report_title}
-                            .content
-                                h5 report id: #{report_id}
-                                h5 report_type: #{report_type}
-                                h5 report_subtitle: #{report_subtitle}
+                        +report_card
+                    
+template(name='report_card')                    
+    .card
+        .content
+            a.header(href="/view/#{_id}") #{report_title}
+            .meta #{report_subtitle}
+        .content
+            .ui.list
+                .item id: #{report_id}
+                .item type: #{report_type}
+                .item #{children.count} Results
+                
                                 
 template(name='report_edit')
     .ui.padded.stackable.centered.grid
@@ -38,24 +44,26 @@ template(name='report_edit')
 template(name='report_view')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .one.wide.column
+            .three.wide.column
                 +link_button link='/ev' icon='left chevron' label='Reports'
-            .fourteen.wide.column
-                h1.ui.center.aligned.grey.header #{report_title}
-            .one.wide.column
-                +edit_button
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header ##{report_id} #{report_title} Report
+            .three.wide.column
+                // +edit_button
+                .run_report.ui.button
+                    i.refresh.icon
+                    |Run Report
         .centered.row
-            .four.wide.column
-                .run_report.ui.fluid.button Run Report
-            .twelve.wide.column
+            .sixteen.wide.column
                 .ui.segment
                     each tags
                         .ui.basic.label #{this}
                     .ui.basic.segment
                         // |#{current_doc}
-                        h5 report id: #{report_id}
-                        h5 report_type: #{report_type}
-                        h5 report_subtitle: #{report_subtitle}
+                        .ui.list
+                            .item report id: #{report_id}
+                            .item report_type: #{report_type}
+                            .item report_subtitle: #{report_subtitle}
                 .ui.centered.cards
                     each children    
                         .card
