@@ -14,7 +14,7 @@ template(name='ev')
                     each reports
                         +report_card
                     
-template(name='report_card')                    
+template(name='ev_card')                    
     .card
         .content
             a.header(href="/view/#{_id}") #{report_title}
@@ -50,7 +50,7 @@ template(name='report_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +link_button link='/ev' icon='left chevron' label='Reports'
+                +link_button link='/ev' icon='newspaper' label='Reports'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header ##{report_id} #{report_title} Report
             .three.wide.column
@@ -73,4 +73,14 @@ template(name='report_view')
                     each children    
                         .card
                             .content
+                                with ev
+                                    if CUSTOMER
+                                        +view_customer_name_field
+                                    if TELEPHONE
+                                        +view_telephone_field
+                                    if MASTER_LICENSEE
+                                        +view_master_field
+                                    if FRANCHISEE
+                                        +view_franchisee_field
+                            
                                 +jsonView json=ev

@@ -690,6 +690,12 @@ Meteor.publish 'has_key', (key)->
     # Docs.find "ev.FRANCH_NAME": $exists: true
         
         
+Meteor.publish 'has_key_value', (key, value)->
+    console.log key, value
+    Docs.find "ev.#{key}": value
+    # Docs.find "ev.FRANCH_NAME": $exists: true
+        
+        
         
 
 

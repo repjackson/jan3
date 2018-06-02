@@ -127,15 +127,14 @@ template(name='parent_segment')
             .large130 #{text}
             // +author_info
             // |#{when}
-            |!{html}
-            +view_button
+        +view_button
 
 template(name='parent_link')
     with parent
         a.ui.button(href="/view/#{_id}") 
             i.chevron.up.icon
             if image_url
-                img.ui.small.centered.image(src=image_url)
+                img.ui.medium.centered.image(src=image_url)
             if icon
                 i.icon(class=icon)
             |#{text}
@@ -211,7 +210,7 @@ template(name='call_phone_button')
             
             
 template(name='link_button')    
-    a.ui.icon.button(href=link title=label)
+    a.ui.icon.large.button(href=link title=label)
         i.icon(class=icon)
 
 template(name='edit_author')
@@ -337,3 +336,18 @@ template(name='doc_history')
                         a.user #{author.username}
                         |#{action}
                         .date #{when}
+
+
+template(name='view_telephone_field')
+    div
+        a(href="tel:#{TELEPHONE}")
+            i.phone.link.icon
+        strong #{TELEPHONE} 
+            
+            
+// template(name='call_phone_button')
+//     a.ui.fluid.button(href="tel:#{phone_number}") 
+//         i.phone.icon
+//         | Call #{phone_number}
+            
+            

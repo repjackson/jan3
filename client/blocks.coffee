@@ -320,3 +320,11 @@ Template.toggle_key.events
                 $set: "#{@key}": true
 
         
+        
+# Template.view_telephone_field.helpers
+#     doc_history_events: ->
+#         Docs.find
+#             parent_id:FlowRouter.getParam('doc_id')
+#             type:'event'
+            
+            

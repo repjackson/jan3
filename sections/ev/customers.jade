@@ -1,0 +1,110 @@
+template(name='customers')
+    .ui.stackable.centered.padded.grid
+        .centered.row
+            .three.wide.column
+                h2.ui.header 
+                    i.handshake.icon
+                    | Customers
+                // +add_button type='customer' label='customer'
+                // +set_view_mode view='cards' icon='clone' label='Cards'
+                // +set_view_mode view='list' icon='list' label='List'
+                // +set_view_mode view='table' icon='table' label='Table'
+
+                +location_facet type='customer'
+            .thirteen.wide.column
+                .ui.centered.stackable.cards
+                    each customers
+                        +customer_card
+
+template(name='customer_card')
+    .ui.card
+        with ev
+            // iframe(src="{{location_ob.url}}" width="290" height="250" frameborder="0" style="border:0" allowfullscreen)
+            // .map-card
+            //     +googleMap(name="exampleMap" options=exampleMapOptions)
+            .content
+                .header
+                    +view_customer_name_field
+            .content
+                if TELEPHONE
+                    +view_telephone_field
+                if MASTER_LICENSEE
+                    +view_master_field
+                if FRANCHISEE
+                    +view_franchisee_field
+                .ui.list
+                    .item #{ADDR_STREET}
+                    .item #{ADDR_CITY}, #{ADDR_STATE}
+                    .item #{ADDR_POSTAL_CODE}
+                    .item #{CUST_REG_SERVICE_AMT}
+        .content
+            +jsonView json=ev    
+        .content
+            +view_button
+        
+        
+        
+template(name='customer_edit')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                #delete.ui.basic.button
+                    i.trash.icon
+                    | Delete
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Edit customer ##{jan_customer_id}
+            .three.wide.column
+                +save_button
+        .five.wide.column
+            +customer_map
+        .five.wide.column
+            .ui.form
+                +edit_text_field key='jan_customer_id' label='Jan Pro customer ID' icon='building'
+                +edit_text_field key='customer_name' label='customer Name' icon='code'
+                +edit_text_field key='phone_number' label='Phone Number' icon='phone'
+                +edit_text_field key='email_address' label='Email Address' icon='envelope'
+        .five.wide.column
+            .ui.form
+                +edit_text_field key='level_1_user_ud' label='Level 1 User Id' icon='user' 
+                +edit_text_field key='level_2_user_ud' label='Level 2 User Id' icon='user'
+                +edit_text_field key='level_3_user_ud' label='Level 3 User Id' icon='user'
+        
+        
+template(name='customer_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +link_button link='/customers' icon='handshake' label='customers'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header
+                    i.handshake.icon
+                    |#{current_customer}
+            .three.wide.column
+                +edit_button
+        .row
+            .fourteen.wide.column
+                .ui.centered.stackable.cards
+                    each customer_cards
+                        +customer_card
+                
+                
+template(name='view_customer_name_field')
+    div
+        a(href="/customer/#{CUSTOMER}")
+            i.handshake.icon(title='Customer')
+            |#{CUSTOMER}
+
+template(name='view_master_field')
+    h5
+        a(href="/master/#{MASTER_LICENSEE}" title='Master Licensee')
+            i.street.view.icon
+            |#{MASTER_LICENSEE}
+
+
+template(name='view_franchisee_field')
+    h5
+        a(href="/franchisee/#{FRANCHISEE}" title='Franchisee')
+            i.user.circle.icon
+            |#{FRANCHISEE}
+
+

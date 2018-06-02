@@ -100,6 +100,13 @@ template(name='left_sidebar')
             i.clock.icon
             // +tiny_sprite name='duster'
             | Services
+        a.toggle_left_sidebar.item(href='/franchises' class="{{isActivePath '/franchises'}}" data-position="bottom center" data-content='Franchises')
+            i.building.icon
+            | Franchises
+        a.toggle_left_sidebar.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
+            i.handshake.icon
+            | Customers
+            
         //     // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}" data-position="right center" data-content='Charts')
         //     //     i.line.chart.icon
         // a.toggle_left_sidebar.item(href='/store' data-position="bottom center" data-content='Store')

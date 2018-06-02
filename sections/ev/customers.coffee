@@ -1,12 +1,20 @@
 if Meteor.isClient
     Template.customer_view.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+        current_customer = FlowRouter.getParam('customer')
+        @autorun => Meteor.subscribe 'has_key_value', 'CUSTOMER', current_customer
+
     Template.customer_view.helpers
-    
+        current_customer: -> FlowRouter.getParam('customer')
+        customer_cards: ->  Docs.find {}
+
     
     FlowRouter.route '/customers', action: ->
         BlazeLayout.render 'layout', main: 'customers'
     
+    FlowRouter.route '/customer/:customer', action: ->
+        BlazeLayout.render 'layout', 
+            main: 'customer_view'
+
     
     @selected_customer_tags = new ReactiveArray []
     
@@ -21,6 +29,8 @@ if Meteor.isClient
         #     selected_timestamp_tags.array()
         #     type='customer'
         #     author_id=null
+        
+        
     Template.customers.helpers
         customers: ->  Docs.find {}
         # customers: ->  Docs.find 'FRANCH_NAME':$exists:true
