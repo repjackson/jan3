@@ -1,0 +1,96 @@
+template(name='franchises')
+    .ui.stackable.centered.padded.grid
+        .centered.row
+            .four.wide.column
+                h2.ui.header 
+                    i.building.icon
+                    |Franchises
+                +add_button type='franchise' label='franchise'
+                // +set_view_mode view='cards' icon='clone' label='Cards'
+                // +set_view_mode view='list' icon='list' label='List'
+                // +set_view_mode view='table' icon='table' label='Table'
+
+                +location_facet type='franchise'
+            .twelve.wide.column
+                .ui.centered.stackable.cards
+                    each franchises
+                        +franchise_card
+
+template(name='franchise_card')
+    .ui.card
+        // iframe(src="{{location_ob.url}}" width="290" height="250" frameborder="0" style="border:0" allowfullscreen)
+        // .map-card
+        //     +googleMap(name="exampleMap" options=exampleMapOptions)
+
+        .content
+            a.grey.header(href="/view/#{_id}")
+                // +mini_sprite name='organization'
+                // |##{jan_franchise_id}
+                |#{ev.FRANCH_NAME}
+        .content
+            .ui.list
+                .item #{ev.TELE_CELL}
+                .item #{ev.FRANCH_EMAIL}
+                    
+        .content
+            +view_button
+        
+        
+        
+template(name='franchise_edit')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                #delete.ui.basic.button
+                    i.trash.icon
+                    | Delete
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Edit franchise ##{jan_franchise_id}
+            .three.wide.column
+                +save_button
+        .five.wide.column
+            +franchise_map
+        .five.wide.column
+            .ui.form
+                +edit_text_field key='jan_franchise_id' label='Jan Pro franchise ID' icon='building'
+                +edit_text_field key='franchise_name' label='franchise Name' icon='code'
+                +edit_text_field key='phone_number' label='Phone Number' icon='phone'
+                +edit_text_field key='email_address' label='Email Address' icon='envelope'
+        .five.wide.column
+            .ui.form
+                +edit_text_field key='level_1_user_ud' label='Level 1 User Id' icon='user' 
+                +edit_text_field key='level_2_user_ud' label='Level 2 User Id' icon='user'
+                +edit_text_field key='level_3_user_ud' label='Level 3 User Id' icon='user'
+        
+        
+template(name='franchise_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +link_button link='/franchises' icon='left chevron' label='franchises'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header franchise ##{jan_franchise_id}
+            .three.wide.column
+                +edit_button
+        .row
+            .five.wide.column
+                +associated_users
+                +associated_incidents
+                +comments
+                // +jsonView(json=location_ob)
+            .six.wide.column
+                +franchise_map
+            .five.wide.column
+                +call_phone_button
+                .ui.large.relaxed.list
+                    +list_item key='jan_franchise_id' label='Jan Pro franchise ID' icon='building'
+                    +list_item key='franchise_name' label='franchise Name' icon='code'
+                    with geocode
+                        +list_item key='formatted_address' label='franchise Address' icon='compass'
+                    +list_item key='phone_number' label='Phone Number' icon='phone'
+                    +list_item key='email_address' label='Email Address' icon='envelope'
+                    +list_item key='level_1_user_ud' label='Level 1 User Id' icon='user'
+                    +list_item key='level_2_user_ud' label='Level 2 User Id' icon='user'
+                    +list_item key='level_3_user_ud' label='Level 3 User Id' icon='user'
+                
+                

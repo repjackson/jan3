@@ -3,8 +3,7 @@ Meteor.methods
         self = @
         
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
-            headers:
-                "User-Agent": "Meteor/1.0"
+            headers: "User-Agent": "Meteor/1.0"
             params:
                 user_id:'JPI'
                 password:'JPI'

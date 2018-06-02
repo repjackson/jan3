@@ -7,7 +7,9 @@ template(name='ev')
                     | EV Reports
                 // .call_ev.ui.fluid.button Call EV API
         .row
-            .sixteen.wide.column
+            .four.wide.column
+                +tag_facet
+            .twelve.wide.column
                 .ui.four.stackable.cards
                     each reports
                         +report_card
@@ -22,21 +24,24 @@ template(name='report_card')
                 .item id: #{report_id}
                 .item type: #{report_type}
                 .item #{children.count} Results
+        .content
+            +view_button
+            +edit_button
                 
                                 
 template(name='report_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .four.wide.column
-                h1.ui.center.aligned.grey.header Edit #{text}
+                h1.ui.center.aligned.grey.header Edit ##{report_id} #{report_title} Report
                 +save_button
                 #delete.ui.icon.button
                     i.trash.icon
             .twelve.wide.column
                 .ui.form
-                    +edit_text_field key='text' label='Title'
-                    +edit_text_field key='image_url' label='Image URL'
-                    +edit_text_field key='icon' label='Icon'
+                    // +edit_text_field key='text' label='Title'
+                    // +edit_text_field key='image_url' label='Image URL'
+                    // +edit_text_field key='icon' label='Icon'
                     +edit_array_field key='tags' label='Relationship to parent'
                     +edit_html
         
@@ -49,7 +54,7 @@ template(name='report_view')
             .ten.wide.column
                 h1.ui.center.aligned.grey.header ##{report_id} #{report_title} Report
             .three.wide.column
-                // +edit_button
+                +edit_button
                 .run_report.ui.button
                     i.refresh.icon
                     |Run Report

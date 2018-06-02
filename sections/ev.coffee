@@ -11,14 +11,14 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'child_docs', @data._id
     Template.ev.onCreated ->
         @autorun => Meteor.subscribe 'type', 'report' 
-        # @autorun => Meteor.subscribe 'facet', 
-        #     selected_tags.array()
-        #     selected_keywords.array()
-        #     selected_author_ids.array()
-        #     selected_location_tags.array()
-        #     selected_timestamp_tags.array()
-        #     type='report'
-        #     author_id=null
+        @autorun => Meteor.subscribe 'facet', 
+            selected_tags.array()
+            selected_keywords.array()
+            selected_author_ids.array()
+            selected_location_tags.array()
+            selected_timestamp_tags.array()
+            type='report'
+            author_id=null
 
     Template.ev.helpers
         reports: -> Docs.find {type:'report'}, limit:100

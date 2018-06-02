@@ -685,6 +685,12 @@ Meteor.publish 'parent_doc', (child_id)->
         
         
         
+Meteor.publish 'has_key', (key)->
+    Docs.find "ev.#{key}": $exists: true
+    # Docs.find "ev.FRANCH_NAME": $exists: true
+        
+        
+        
 
 
 publishComposite 'docs', (selected_tags, type)->
