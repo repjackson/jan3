@@ -2,7 +2,7 @@ template(name='ev')
     .ui.padded.stackable.grid
         .row
             .sixteen.wide.column
-                h1.ui.center.aligned.header
+                .ui.center.aligned.header
                     i.compass.icon
                     | EV Reports
                 // .call_ev.ui.fluid.button Call EV API
@@ -12,23 +12,41 @@ template(name='ev')
             .twelve.wide.column
                 .ui.four.stackable.cards
                     each reports
-                        +report_card
+                        +ev_card
                     
 template(name='ev_card')                    
     .card
+        if report_title
+            .content
+                a.header(href="/view/#{_id}") #{report_title}
+                .meta #{report_subtitle}
         .content
-            a.header(href="/view/#{_id}") #{report_title}
-            .meta #{report_subtitle}
-        .content
+            with ev
+                if CUSTOMER
+                    +view_customer_name_field
+                if TELEPHONE
+                    +view_telephone_field
+                if MASTER_LICENSEE
+                    +view_master_field
+                if FRANCHISEE
+                    +view_franchisee_field
             .ui.list
-                .item id: #{report_id}
-                .item type: #{report_type}
-                .item #{children.count} Results
+                if report_id
+                    .item id: #{report_id}
+                    .item type: #{report_type}
+                .item #{children.count} Child Docs
+            if ADDR_STREET
+                .ui.list
+                    .item #{ADDR_STREET}
+                    .item #{ADDR_CITY}, #{ADDR_STATE}
+                    .item #{ADDR_POSTAL_CODE}
+                    .item #{CUST_REG_SERVICE_AMT}
+        .content
+            +jsonView json=ev    
         .content
             +view_button
             +edit_button
                 
-                                
 template(name='report_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
@@ -55,9 +73,10 @@ template(name='report_view')
                 h1.ui.center.aligned.grey.header ##{report_id} #{report_title} Report
             .three.wide.column
                 +edit_button
-                .run_report.ui.button
-                    i.refresh.icon
-                    |Run Report
+                unless children.length
+                    .run_report.ui.button
+                        i.refresh.icon
+                        |Run Report
         .centered.row
             .sixteen.wide.column
                 .ui.segment

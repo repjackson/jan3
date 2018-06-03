@@ -7,7 +7,7 @@ if Meteor.isClient
 
     Template.report_view.onCreated ->
         @autorun => Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
-    Template.report_card.onCreated ->
+    Template.ev_card.onCreated ->
         @autorun => Meteor.subscribe 'child_docs', @data._id
     Template.ev.onCreated ->
         @autorun => Meteor.subscribe 'type', 'report' 

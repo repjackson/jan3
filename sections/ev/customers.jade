@@ -1,46 +1,14 @@
 template(name='customers')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .three.wide.column
-                h2.ui.header 
+            .sixteen.wide.column
+                .ui.center.aligned.header 
                     i.handshake.icon
                     | Customers
-                // +add_button type='customer' label='customer'
-                // +set_view_mode view='cards' icon='clone' label='Cards'
-                // +set_view_mode view='list' icon='list' label='List'
-                // +set_view_mode view='table' icon='table' label='Table'
-
-                +location_facet type='customer'
-            .thirteen.wide.column
                 .ui.centered.stackable.cards
                     each customers
-                        +customer_card
+                        +ev_card
 
-template(name='customer_card')
-    .ui.card
-        with ev
-            // iframe(src="{{location_ob.url}}" width="290" height="250" frameborder="0" style="border:0" allowfullscreen)
-            // .map-card
-            //     +googleMap(name="exampleMap" options=exampleMapOptions)
-            .content
-                .header
-                    +view_customer_name_field
-            .content
-                if TELEPHONE
-                    +view_telephone_field
-                if MASTER_LICENSEE
-                    +view_master_field
-                if FRANCHISEE
-                    +view_franchisee_field
-                .ui.list
-                    .item #{ADDR_STREET}
-                    .item #{ADDR_CITY}, #{ADDR_STATE}
-                    .item #{ADDR_POSTAL_CODE}
-                    .item #{CUST_REG_SERVICE_AMT}
-        .content
-            +jsonView json=ev    
-        .content
-            +view_button
         
         
         
@@ -85,7 +53,7 @@ template(name='customer_view')
             .fourteen.wide.column
                 .ui.centered.stackable.cards
                     each customer_cards
-                        +customer_card
+                        +ev_card
                 
                 
 template(name='view_customer_name_field')

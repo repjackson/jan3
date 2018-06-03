@@ -71,10 +71,10 @@ Meteor.methods
                 # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
                 # new_id = Docs.insert 
                 # console.log 'new id', new_id
-
-            for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
-                # console.log doc.CUST_NAME
-                # doc.type = 'customer'
-                Docs.insert 
-                    parent_id: parent_id
-                    ev: doc
+            if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+                    # console.log doc.CUST_NAME
+                    # doc.type = 'customer'
+                    Docs.insert 
+                        parent_id: parent_id
+                        ev: doc

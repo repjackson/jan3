@@ -16,8 +16,6 @@ if Meteor.isClient
             main: 'customer_view'
 
     
-    @selected_customer_tags = new ReactiveArray []
-    
     Template.customers.onCreated ->
         @autorun => Meteor.subscribe 'has_key', 'CUSTOMER' 
         
@@ -36,23 +34,6 @@ if Meteor.isClient
         # customers: ->  Docs.find 'FRANCH_NAME':$exists:true
 
 
-    Template.customer_card.onCreated ->
-        GoogleMaps.ready('exampleMap', (map)->
-            marker = new google.maps.Marker
-                position: map.options.center
-                map: map.instance
-        )
-
-    Template.customer_card.helpers
-        exampleMapOptions: ()->
-            # console.log @
-            if GoogleMaps.loaded()
-                return {
-                    center: new google.maps.LatLng( @location_lat, @location_lng),
-                    zoom: 8
-                }
-
-    
     Template.customer_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     
