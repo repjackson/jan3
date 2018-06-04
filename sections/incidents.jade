@@ -5,30 +5,15 @@ template(name='incidents')
                 h3.ui.header 
                     i.exclamation.circle.icon
                     | Incidents
-                +set_view_mode view='cards' icon='clone' label='Cards View'
-                // +set_view_mode view='list' icon='list' label='List View'
-                +set_view_mode view='table' icon='table' label='Table View'
-                // +set_view_mode view='charts' icon='line chart' label='Graph View'
                 div
                 +add_button type='incident' label='Incident'
                 // .ui.basic.center.aligned.segment
                 .ui.hidden.divider
-                +timestamp_facet type='incident'
+                // +timestamp_facet type='incident'
                 // +location_facet
-                +keyword_facet type='incident'
+                // +keyword_facet type='incident'
             .thirteen.wide.column
-                if viewing_list
-                    .ui.divided.items
-                        each incidents
-                            +incident_item
-                if viewing_table
-                    +table type='incident'
-                if viewing_chart
-                    +charts
-                if viewing_cards
-                    .ui.centered.stackable.cards
-                        each incidents
-                            +incident_card
+                {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable striped table"}}
 
 
 template(name='incident_item')

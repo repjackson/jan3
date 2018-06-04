@@ -19,7 +19,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'child_docs', @data._id
     
     Template.ev_reports.onCreated ->
-        @autorun => Meteor.subscribe 'type', 'report' 
+        # @autorun => Meteor.subscribe 'type', 'report' 
         @autorun => Meteor.subscribe 'facet', 
             selected_tags.array()
             selected_keywords.array()
@@ -30,8 +30,9 @@ if Meteor.isClient
             author_id=null
 
     Template.ev_reports.helpers
-        reports: -> Docs.find {type:'report'}, limit:300
-        
+        # reports: -> Docs.find {type:'report'}, limit:300
+        selector: ->  type: "report"
+
         
     Template.report_view.helpers
         current_doc: -> JSON.stringify Docs.findOne(FlowRouter.getParam('doc_id'))
@@ -55,7 +56,7 @@ if Meteor.isClient
 
 # fields
     Template.ev_fields.onCreated ->
-        @autorun => Meteor.subscribe 'type', 'field' 
+        # @autorun => Meteor.subscribe 'type', 'field' 
 
     Template.ev_fields.events
         'click .sync_ev_fields': ->
@@ -65,5 +66,6 @@ if Meteor.isClient
                     # console.log res
 
     Template.ev_fields.helpers
-        fields: -> Docs.find {type:'field'}, limit:100
-        
+        # fields: -> Docs.find {type:'field'}, limit:100
+        selector: ->  type: "field"
+

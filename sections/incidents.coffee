@@ -77,16 +77,7 @@ if Meteor.isClient
                     sort: timestamp:-1
                     limit:7
                     }
-            # if Session.equals('level','all')
-            #     Docs.find type:'incident'
-            # else
-            #     Docs.find 
-            #         type:'incident'
-            #         current_level:parseInt(Session.get('level'))
-        viewing_list: -> Session.equals 'view_mode','list'    
-        viewing_table: -> Session.equals 'view_mode','table'    
-        viewing_cards: -> Session.equals 'view_mode','cards'    
-        viewing_chart: -> Session.equals 'view_mode','charts'    
+        selector: ->  type: "incident"
     
     Template.incident_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
