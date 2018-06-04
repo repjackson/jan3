@@ -48,8 +48,8 @@ template(name='nav')
             a.mobile.hidden.icon.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
                 i.shield.alternate.large.icon
                 // | Admin
-            a.large.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
-                i.comments.large.icon
+            // a.large.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
+            //     i.comments.large.icon
             // .icon.mobile.hidden.disabled.item(data-position="bottom center" data-content='Cart')
             //     i.shopping.cart.icon
             // a.ui.simple.dropdown.icon.mobile.hidden.item(href='/alerts')
@@ -145,21 +145,9 @@ template(name='right_sidebar')
         a.icon.toggle_right_sidebar.item(href='/flow' class="{{isActivePath '/flow'}}")
             i.sitemap.icon
             | Flow
-        a.icon.toggle_right_sidebar.item(href='/questions' class="{{isActivePath '/questions'}}")
-            i.question.icon
-            | Q&A
-        // a.icon.toggle_right_sidebar.item(href='/rankings' class="{{isActivePath '/rankings'}}")
-        //     i.trophy.icon
-        //     | Leaderboard
         // a.toggle_right_sidebar.item(href='/alerts')
         //     i.bell.icon
         //     | Alerts
-        // a.toggle_right_sidebar.item(href='/charts')
-        //     i.line.chart.icon
-        //     | Chart Demo
-        // a.toggle_right_sidebar.item(href='/mail')
-        //     i.envelope.icon
-        //     | Mail
         a.toggle_right_sidebar.item(href='/dev' class="{{isActivePath '/dev'}}" data-position="bottom center" data-content='dev')
             i.terminal.icon
             | Dev

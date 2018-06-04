@@ -89,19 +89,13 @@ Meteor.methods
                 statevar: 'fields'
                 include_fields:'y'
                 # select_list:field1
-
                 
         console.dir res.content
         split_res = res.content.split '\r\n'
         
         for field_string in split_res
             split_field = field_string.split '|'
-            console.log split_field
-            # field_ob = {}
-            # field_ob.field_slug = split_field[0]
-            # field_ob.field_display_name = split_field[1]
-            # field_ob.field_display_type = split_field[2]
-            # console.log field_ob
+            # console.log split_field
             if split_field[0]
                 found_field = 
                     Docs.findOne 
@@ -117,3 +111,88 @@ Meteor.methods
                     console.log 'added field doc id:', new_field_id
                 else
                     console.log 'existing field doc:', found_field._id
+ 
+    sync_ev_users: ()->
+        self = @
+        
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers: "User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                statevar: 'get_users'
+                # disabled: [Y|N|
+                # filter: pattern 
+                # filter_type: "ID"
+
+
+        # console.dir res.content
+        split_res = res.content.split '\r\n'
+        
+        for user_string in split_res
+            split_user = user_string.split '|'
+            console.log split_user
+            if split_user[0]
+                found_user = 
+                    Docs.findOne 
+                        type:'user'
+                        user_id:split_user[0]
+                
+                unless found_user
+                    new_user_id = Docs.insert
+                        type:'user'
+                        user_id:split_user[0]
+                        user_first_name:split_user[1]
+                        user_last_name:split_user[2]
+                    console.log 'added user doc id:', new_user_id
+                else
+                    console.log 'existing user doc:', found_user._id
+
+
+
+    get_user_info: (user_doc_id) ->
+        user_doc = Docs.findOne user_doc_id
+        # console.log user_doc
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers: "User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                # statevar:'get_user_info'
+                # statevar:'get_user_field_list'
+                # statevar:'get_areas'
+                statevar:'get'
+                # login_id:user_doc.user_id
+                id:'33129271'
+        console.log res.content
+            
+
+    get_jp_id: (jp_id)->
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers: "User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                statevar:'get'
+                id:jp_id
+        # console.log res
+        includes_boolean = res.content.includes("does not exist")
+        if includes_boolean
+            throw new Meteor.Error('no user', "JP Id #{jp_id} does not exist")
+        else
+            xml2js.parseString res.content, {explicitArray:false, emptyTag:undefined, ignoreAttrs:true, trim:true}, (err, json_result)=>
+                if err then console.error('errors',err)
+                else
+                    # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+                    console.dir json_result.PROBLEM_RECORD
+                    existing_jpid = 
+                        Docs.findOne 
+                            type: 'jpid'
+                            jpid: jp_id
+                    if existing_jpid
+                        throw new Meteor.Error('existing doc', "Already imported #{jp_id}.")
+                    else                    
+                        Docs.insert 
+                            type:'jpid'
+                            jpid:jp_id
+                            ev: json_result.PROBLEM_RECORD

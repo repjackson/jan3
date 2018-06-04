@@ -9,7 +9,9 @@ template(name='ev')
             .twelve.wide.column
                 .ui.four.stackable.cards
                     +children_widget type='report' label='Reports' icon='newspaper' link='/reports'
-                    +children_widget type='fields' label='Fields' icon='cubes' link='/evfields'
+                    +children_widget type='field' label='Fields' icon='cubes' link='/ev_fields'
+                    +children_widget type='user' label='Users' icon='users' link='/ev_users'
+                    +children_widget type='jpid' label='JP Ids' icon='hashtag' link='/jpids'
 
 template(name='ev_reports')
     .ui.padded.stackable.grid
@@ -25,11 +27,6 @@ template(name='ev_reports')
             .sixteen.wide.column
                 {{> tabular table=TabularTables.Reports selector=selector class="ui sortable striped table"}}
 
-                // .ui.list
-                //     each reports
-                //         a.item(href="/view/#{_id}")
-                //             .content
-                //                 | #{report_id} | title: #{report_title} | type: #{report_type} | #{report_subtitle}
                     
                     
 template(name='ev_card')                    
@@ -91,7 +88,7 @@ template(name='report_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +link_button link='/ev' icon='newspaper' label='Reports'
+                +link_button link='/reports' icon='newspaper' label='Reports'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header ##{report_id} #{report_title} Report
             .three.wide.column
@@ -168,3 +165,80 @@ template(name='ev_fields')
         .row
             .sixteen.wide.column
                 {{> tabular table=TabularTables.Fields selector=selector class="ui sortable striped table"}}
+
+
+template(name='ev_users')
+    .ui.padded.stackable.grid
+        .row
+            .three.wide.column
+                +link_button link='/ev' icon='database' label='EV Dash'
+            .ten.wide.column
+                .ui.center.aligned.header
+                    i.users.icon
+                    | EV Users
+            .three.wide.column
+                .sync_ev_users.ui.fluid.button Sync EV Users
+        .row
+            .sixteen.wide.column
+                {{> tabular table=TabularTables.Users selector=selector class="ui sortable striped table"}}
+
+
+template(name='user_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +link_button link='/users' icon='newspaper' label='users'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header ##{user_id} #{user_title} user
+            .three.wide.column
+                +edit_button
+                unless children.length
+                    .get_user_info.ui.button
+                        i.refresh.icon
+                        | Get User Info
+        .centered.row
+            .sixteen.wide.column
+                .ui.segment
+                    each tags
+                        .ui.basic.label #{this}
+                    .ui.basic.segment
+                        // |#{current_doc}
+                        .ui.list
+                            .item user id: #{user_id}
+                            .item user_type: #{user_first_name}
+                            .item user_subtitle: #{user_last_name}
+      
+      
+template(name='jpid_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +link_button link='/jpids' icon='hashtag' label='JP Ids'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header ##{jpid} JP Id
+            .three.wide.column
+                // +edit_button
+        .centered.row
+            .sixteen.wide.column
+                +jsonView json=ev
+            
+            
+template(name='jpids')
+    .ui.padded.stackable.grid
+        .row
+            .three.wide.column
+                +link_button link='/ev' icon='database' label='EV Dash'
+            .eight.wide.column
+                .ui.center.aligned.header
+                    i.hashtag.icon
+                    | JP Id's
+            .four.wide.column
+                .ui.icon.input
+                    i.search.icon  
+                    input#jp_lookup(type='text')
+        .row
+            .sixteen.wide.column
+                {{> tabular table=TabularTables.Jpids selector=selector class="ui sortable striped table"}}
+
+                    
+                    
