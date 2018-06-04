@@ -25,9 +25,14 @@ template(name='ev_reports')
             .four.wide.column
                 +tag_facet
             .twelve.wide.column
-                .ui.four.stackable.cards
-                    each reports
-                        +ev_card
+                {{> tabular table=TabularTables.Reports class="table table-striped table-bordered table-condensed"}}
+
+                // .ui.list
+                //     each reports
+                //         a.item(href="/view/#{_id}")
+                //             .content
+                //                 | #{report_id} | title: #{report_title} | type: #{report_type} | #{report_subtitle}
+                    
                     
 template(name='ev_card')                    
     .card
@@ -165,10 +170,8 @@ template(name='ev_fields')
                 .sync_ev_fields.ui.fluid.button Sync EV Fields
                 +tag_facet
             .twelve.wide.column
-                .ui.three.stackable.cards
+                .ui.list
                     each fields
-                        .ui.card
+                        .item
                             .content
-                                h5 slug: #{field_slug}
-                                h5 display name: #{field_display_name}
-                                h5 display type: #{field_display_type}
+                                | slug: #{field_slug} | display name: #{field_display_name} | display type: #{field_display_type}

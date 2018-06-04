@@ -30,7 +30,7 @@ if Meteor.isClient
             author_id=null
 
     Template.ev_reports.helpers
-        reports: -> Docs.find {type:'report'}, limit:100
+        reports: -> Docs.find {type:'report'}, limit:300
         
         
     Template.report_view.helpers

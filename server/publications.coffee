@@ -668,8 +668,7 @@ Meteor.publish 'facet', (
 # # #                 index: i
 
 Meteor.publish 'type', (type)->
-    Docs.find 
-        {type:type}, limit:100
+    Docs.find {type:type}, limit:300
         
         
 Meteor.publish 'child_docs', (doc_id)->
