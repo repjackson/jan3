@@ -1,16 +1,10 @@
 template(name='franchisees')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .three.wide.column
-                .ui.header 
+            .sixteen.wide.column
+                .ui.center.aligned.header 
                     i.user.circle.icon
                     |Franchisees
-                // +add_button type='franchisee' label='franchisee'
-                // +set_view_mode view='cards' icon='clone' label='Cards'
-                // +set_view_mode view='list' icon='list' label='List'
-                // +set_view_mode view='table' icon='table' label='Table'
-
-            .thirteen.wide.column
                 .ui.centered.stackable.cards
                     each franchisees
                         +ev_card

@@ -4,8 +4,10 @@ template(name='flow')
             .three.wide.column
                 h1.ui.center.aligned.header 
                     i.sitemap.icon
-                    | flow
+                    | Flow
                 +add_button type='flow'
+                div
+                +tag_facet
             .thirteen.wide.column
                 .ui.centered.stackable.cards
                     each flow

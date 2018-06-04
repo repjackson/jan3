@@ -56,23 +56,3 @@ template(name='customer_view')
                         +ev_card
                 
                 
-template(name='view_customer_name_field')
-    div
-        a(href="/customer/#{CUSTOMER}")
-            i.handshake.icon(title='Customer')
-            |#{CUSTOMER}
-
-template(name='view_master_field')
-    h5
-        a(href="/master/#{MASTER_LICENSEE}" title='Master Licensee')
-            i.street.view.icon
-            |#{MASTER_LICENSEE}
-
-
-template(name='view_franchisee_field')
-    h5
-        a(href="/franchisee/#{FRANCHISEE}" title='Franchisee')
-            i.user.circle.icon
-            |#{FRANCHISEE}
-
-

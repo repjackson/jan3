@@ -669,7 +669,7 @@ Meteor.publish 'facet', (
 
 Meteor.publish 'type', (type)->
     Docs.find 
-        type:type
+        {type:type}, limit:100
         
         
 Meteor.publish 'child_docs', (doc_id)->
