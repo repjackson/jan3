@@ -109,3 +109,17 @@ if Meteor.isClient
                         else
                             Bert.alert "Added JP ID #{val}", 'success', 'growl-top-right'
                         $('#jp_lookup').val ''
+
+        'keyup #office_lookup': (e,t)->
+            e.preventDefault()
+            val = $('#office_lookup').val().trim()
+            if e.which is 13
+                unless val.length is 0
+                    Meteor.call 'search_ev', val.toString(), (err,res)=>
+                        if err
+                            Bert.alert "#{err.reason}", 'danger', 'growl-top-right'
+                        else
+                            Bert.alert "Searched #{val}", 'success', 'growl-top-right'
+                        $('#office_lookup').val ''
+
+

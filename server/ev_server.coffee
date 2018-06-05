@@ -192,7 +192,53 @@ Meteor.methods
                     if existing_jpid
                         throw new Meteor.Error('existing doc', "Already imported #{jp_id}.")
                     else                    
-                        Docs.insert 
+                        new_jpid = Docs.insert 
                             type:'jpid'
                             jpid:jp_id
                             ev: json_result.PROBLEM_RECORD
+                            
+                            
+    search_ev: (query)->
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action?AREA=Billing",
+            headers: "User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                statevar:'search'
+                page_length: 3 
+                record_start: 1 
+                # record_count: 10 
+                # username_display: 'ID' 
+                # AREA: "Billing"
+                # release:{null}
+                # "ASSIGNED_TO": "Brad57689 Wallace"
+                # ACCOUNT_STATUS: "ACTIVE"
+                # "FRANCHISEE": "Evan Cleaning LLC"
+
+
+                
+        console.log res.content
+        # includes_boolean = res.content.includes("does not exist")
+        # if includes_boolean
+        #     throw new Meteor.Error('no user', "JP Id #{jp_id} does not exist")
+        # else
+        #     xml2js.parseString res.content, {explicitArray:false, emptyTag:undefined, ignoreAttrs:true, trim:true}, (err, json_result)=>
+        #         if err then console.error('errors',err)
+        #         else
+        #             # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+        #             console.dir json_result.PROBLEM_RECORD
+        #             existing_jpid = 
+        #                 Docs.findOne 
+        #                     type: 'jpid'
+        #                     jpid: jp_id
+        #             if existing_jpid
+        #                 throw new Meteor.Error('existing doc', "Already imported #{jp_id}.")
+        #             else                    
+        #                 Docs.insert 
+        #                     type:'jpid'
+        #                     jpid:jp_id
+        #                     ev: json_result.PROBLEM_RECORD
+                            
+                            
+                            
+                            

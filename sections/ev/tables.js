@@ -26,6 +26,7 @@ new Tabular.Table({
   name: "Reports",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 50,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
   columns: [
@@ -54,6 +55,7 @@ new Tabular.Table({
   name: "Incidents",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 50,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
   columns: [
@@ -68,6 +70,7 @@ new Tabular.Table({
   name: "Fields",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 50,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
   columns: [
@@ -81,6 +84,7 @@ new Tabular.Table({
   name: "Users",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 50,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
   columns: [
@@ -97,6 +101,7 @@ new Tabular.Table({
   name: "Jpids",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 50,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
   columns: [
@@ -104,6 +109,7 @@ new Tabular.Table({
     {data: "ev.CUSTOMER", title: "Customer"},
     {data: "ev.FRANCHISEE", title: "Franchisee"},
     {data: "ev.ASSIGNED_TO", title: "Assigned To"},
+    {data: "ev.AREA", title: "Area"},
     { tmpl: Meteor.isClient && Template.view_button }
 
   ]
