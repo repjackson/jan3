@@ -59,11 +59,12 @@ template(name='reflect_button')
             +mini_sprite name='mirror' classes='ui mini inline image'
 
 template(name='vote_button')
-    .ui.basic.icon.button
+    .ui.icon.button(title='Vote Up')
         i.thumbs.up.link.icon.vote_up(class=vote_up_button_class)
-    .ui.basic.icon.button
+    .ui.icon.button(title='Vote Down')
         i.thumbs.down.link.icon.vote_down(class=vote_down_button_class)
-        |#{points}
+    if points
+        .ui.basic.label #{points}
 
 
 

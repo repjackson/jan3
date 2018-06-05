@@ -214,30 +214,6 @@ Template.toggle_follow.events
 
         # Meteor.call 'add_notification', @_id, 'unfriended', Meteor.userId()
 
-Template.vote_button.helpers
-    vote_up_button_class: ->
-        if not Meteor.userId() then 'disabled'
-        else if @upvoters and Meteor.userId() in @upvoters then 'green'
-        else 'outline'
-
-    vote_down_button_class: ->
-        if not Meteor.userId() then 'disabled'
-        else if @downvoters and Meteor.userId() in @downvoters then 'red'
-        else 'outline'
-
-Template.vote_button.events
-    'click .vote_up': (e,t)-> 
-        if Meteor.userId()
-            Meteor.call 'vote_up', @_id
-        else FlowRouter.go '/sign-in'
-
-    'click .vote_down': -> 
-        if Meteor.userId() then Meteor.call 'vote_down', @_id
-        else FlowRouter.go '/sign-in'
-            
-        
-        
-
 
 Template.edit_html.events
     'blur .froala-container': (e,t)->

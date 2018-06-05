@@ -109,6 +109,8 @@ new Tabular.Table({
     {data: "ev.CUSTOMER", title: "Customer"},
     {data: "ev.FRANCHISEE", title: "Franchisee"},
     {data: "ev.ASSIGNED_TO", title: "Assigned To"},
+    {data: "ev.MASTER_LICENSEE", title: "Master"},
+    {data: "ev.ACCOUNT_STATUS", title: "Status"},
     {data: "ev.AREA", title: "Area"},
     { tmpl: Meteor.isClient && Template.view_button }
 

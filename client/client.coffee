@@ -36,6 +36,8 @@ Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getParam('doc_id')
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 
+Template.registerHelper 'from_now', (date) -> moment(date).fromNow()
+
 Template.registerHelper 'formal_when', () -> moment(@timestamp).format('MMMM Do YYYY, h:mm:ss a')
 
 Template.registerHelper 'is_admin', () -> 

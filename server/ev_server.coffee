@@ -199,7 +199,7 @@ Meteor.methods
                             
                             
     search_ev: (query)->
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action?AREA=Billing",
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action?",
             headers: "User-Agent": "Meteor/1.0"
             params:
                 user_id:'JPI'
@@ -209,7 +209,7 @@ Meteor.methods
                 record_start: 1 
                 # record_count: 10 
                 # username_display: 'ID' 
-                # AREA: "Billing"
+                AREA: "*Bill"
                 # release:{null}
                 # "ASSIGNED_TO": "Brad57689 Wallace"
                 # ACCOUNT_STATUS: "ACTIVE"

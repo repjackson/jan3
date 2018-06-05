@@ -236,9 +236,9 @@ template(name='jpids')
                 .ui.icon.input
                     i.search.icon  
                     input#jp_lookup(type='text' placeholder='Lookup Jan-Pro Id')
-                .ui.icon.input
-                    i.search.icon  
-                    input#office_lookup(type='text' placeholder='Lookup Office Name')
+                // .ui.icon.input
+                //     i.search.icon  
+                //     input#office_lookup(type='text' placeholder='Lookup Office Name')
         .row
             .sixteen.wide.column
                 {{> tabular table=TabularTables.Jpids selector=selector class="ui sortable striped table"}}

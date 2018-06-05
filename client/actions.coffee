@@ -18,7 +18,7 @@ Template.vote_button.events
     'click .vote_up': (e,t)-> 
         if Meteor.userId()
             Meteor.call 'vote_up', @_id
-            $(e.currentTarget).closest('.vote_up').transition('pulse')
+            # $(e.currentTarget).closest('.vote_up').transition('pulse')
         else FlowRouter.go '/sign-in'
 
     'click .vote_down': -> 

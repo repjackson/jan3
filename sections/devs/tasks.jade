@@ -26,18 +26,22 @@ template(name='task_card')
                 |#{title}
             |!{html}
         .content
+            each tags
+                .ui.basic.label #{this}
+            .ui.basic.label Added #{when}
+            +author_info
+            if due_date
+                .ui.basic.label Due {{from_now due_date}}
+        .content
             if complete
                 #turn_off.ui.icon.button
                     i.large.toggle.on.green.icon
             else
                 #turn_on.ui.icon.button
                     i.large.toggle.off.icon
+            +vote_button
             +edit_button
             +view_button
-            +vote_button
-            each tags
-                .ui.basic.label #{this}
-            |#{when}
 
 
 template(name='task_table')
@@ -92,6 +96,7 @@ template(name='task_edit')
                 +edit_text_field key='title' label='Title' 
                 +edit_html
             .four.wide.column
-                +edit_array_field key='tags'
+                +edit_date_field label='Due Date' key='due_date'
+                +edit_array_field key='tags' label='Tags'
         
             
