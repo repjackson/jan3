@@ -84,7 +84,7 @@ if Meteor.isClient
                 # else
                     # console.dir res
 
-# users
+# jpids
     FlowRouter.route '/jpids', 
         action: -> BlazeLayout.render 'layout', main: 'jpids'
     
@@ -123,3 +123,9 @@ if Meteor.isClient
                         $('#office_lookup').val ''
 
 
+# areas
+    FlowRouter.route '/areas', 
+        action: -> BlazeLayout.render 'layout', main: 'areas'
+    
+    Template.areas.helpers
+        selector: ->  type: "area"

@@ -20,6 +20,8 @@ template(name='tasks')
 template(name='task_card')
     .ui.fluid.card
         .content
+            .right.floated.meta
+                +author_info
             a.header(href="/view/#{_id}") 
                 if complete
                     i.green.checkmark.icon
@@ -29,7 +31,6 @@ template(name='task_card')
             each tags
                 .ui.basic.label #{this}
             .ui.basic.label Added #{when}
-            +author_info
             if due_date
                 .ui.basic.label Due {{from_now due_date}}
         .content

@@ -1,17 +1,17 @@
 template(name='ev')
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.grid.container
         .row
-            .four.wide.column
-                .ui.center.aligned.header
-                    i.compass.icon
+            .sixteen.wide.column
+                h1.ui.center.aligned.header
+                    i.database.icon
                     | EV API
                 // +tag_facet
-            .twelve.wide.column
                 .ui.four.stackable.cards
                     +children_widget type='report' label='Reports' icon='newspaper' link='/reports'
                     +children_widget type='field' label='Fields' icon='cubes' link='/ev_fields'
                     +children_widget type='user' label='Users' icon='users' link='/ev_users'
                     +children_widget type='jpid' label='JP Ids' icon='hashtag' link='/jpids'
+                    +children_widget type='area' label='Areas' icon='clone' link='/areas'
 
 template(name='ev_reports')
     .ui.padded.stackable.grid
@@ -25,7 +25,7 @@ template(name='ev_reports')
                 // .call_ev.ui.fluid.button Call EV API
         .row
             .sixteen.wide.column
-                {{> tabular table=TabularTables.Reports selector=selector class="ui sortable striped table"}}
+                |{{> tabular table=TabularTables.Reports selector=selector class="ui sortable striped table"}}
 
                     
                     
@@ -142,10 +142,10 @@ template(name='view_franchisee_field')
 template(name='children_widget')
     .ui.card
         .content
-            a.header(href=link)
-                if icon
-                    i.icon(class=icon)
-                |#{label}
+            a.ui.icon.header(href=link)
+                i.icon(class=icon)
+                .content
+                    |#{label}
             .ui.list
                 each children
                     a.item(href="/view/#{_id}") #{name} #{title} !{html}
@@ -164,7 +164,7 @@ template(name='ev_fields')
                 .sync_ev_fields.ui.fluid.button Sync EV Fields
         .row
             .sixteen.wide.column
-                {{> tabular table=TabularTables.Fields selector=selector class="ui sortable striped table"}}
+                |{{> tabular table=TabularTables.Fields selector=selector class="ui sortable striped table"}}
 
 
 template(name='ev_users')
@@ -180,7 +180,7 @@ template(name='ev_users')
                 .sync_ev_users.ui.fluid.button Sync EV Users
         .row
             .sixteen.wide.column
-                {{> tabular table=TabularTables.Users selector=selector class="ui sortable striped table"}}
+                |{{> tabular table=TabularTables.Users selector=selector class="ui sortable striped table"}}
 
 
 template(name='user_view')
@@ -241,7 +241,26 @@ template(name='jpids')
                 //     input#office_lookup(type='text' placeholder='Lookup Office Name')
         .row
             .sixteen.wide.column
-                {{> tabular table=TabularTables.Jpids selector=selector class="ui sortable striped table"}}
+                |{{> tabular table=TabularTables.Jpids selector=selector class="ui sortable striped table"}}
+
+                    
+                    
+template(name='areas')
+    .ui.padded.stackable.grid
+        .row
+            .three.wide.column
+                +link_button link='/ev' icon='database' label='EV Dash'
+            .twelve.wide.column
+                .ui.center.aligned.header
+                    i.clone.icon
+                    | EV Areas
+                p
+                    |This key concept is used to define a structure where you may define multiple tracking systems within a single instance of ExtraView. Each of these tracking systems is termed a Business Area, and each of these Business Areas may have its own set of screens, fields, processes, rules and workflow. Business Areas may also share these objects. An administrator may have control over the entire installation or sub-administrator roles may be created, each having control over a part of the installation. With this capability, ExtraView is termed a multi-tenanted database.
+
+
+        .row
+            .sixteen.wide.column
+                |{{> tabular table=TabularTables.Areas selector=selector class="ui sortable striped table"}}
 
                     
                     

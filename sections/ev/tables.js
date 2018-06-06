@@ -57,12 +57,15 @@ new Tabular.Table({
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
   pageLength: 50,
   buttonContainer: '.col-sm-6:eq(0)',
-  buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
+  buttons: ['copy', 'csv'],
   columns: [
     {data: "incident_number", title: "Ticket Number"},
     {data: "incident_type", title: "Type"},
     {data: "when", title: "Logged"},
+    {data: "incident_details", title: "Details"},
     {data: "current_level", title: "Level"},
+    {data: "", title: "Actions Taken"},
+    { tmpl: Meteor.isClient && Template.view_button }
   ]
 });
 
@@ -114,6 +117,21 @@ new Tabular.Table({
     {data: "ev.AREA", title: "Area"},
     { tmpl: Meteor.isClient && Template.view_button }
 
+  ]
+});
+
+
+
+new Tabular.Table({
+  name: "Areas",
+  collection: Docs,
+  lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 50,
+  buttonContainer: '.col-sm-6:eq(0)',
+  buttons: ['copy', 'excel', 'pdf', 'csv'],
+  columns: [
+    {data: "number", title: "Number"},
+    {data: "title", title: "Name"},
   ]
 });
 

@@ -2,17 +2,13 @@ template(name='incidents')
     .ui.stackable.padded.centered.grid
         .centered.row
             .three.wide.column
+                +add_button type='incident' label='Incident'
+            .ten.wide.column
                 h3.ui.header 
                     i.exclamation.circle.icon
                     | Incidents
-                div
-                +add_button type='incident' label='Incident'
-                // .ui.basic.center.aligned.segment
-                .ui.hidden.divider
-                // +timestamp_facet type='incident'
-                // +location_facet
-                // +keyword_facet type='incident'
-            .thirteen.wide.column
+        .row
+            .sixteen.wide.column
                 {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable striped table"}}
 
 
@@ -62,39 +58,6 @@ template(name='incident_item')
         
 
                 
-template(name='incident_card')
-    .ui.card
-        a.image(href="/view/#{_id}")
-            img.ui.rounded.image(src="{{c.url image_id  width=300 height=300 crop='fill' }}")
-        .content
-            .right.floated.meta
-                // .ui.circular.label(title='Incident Number') #{incident_number}
-                .ui.basic.label #{office.office_name}
-                .ui.basic.label level #{current_level}
-            a.grey.header(href="/view/#{_id}") ##{incident_number}
-        .content    
-            .right.floated 
-                |logged #{when}
-            +author_info
-        // .content
-        //     .ui.accordion
-        //         .title details
-        //         .content
-        //             .description
-        //                 |#{incident_details}
-        .content
-            +doc_sentiment
-        .content
-            // +call_method name='tagify_timestamp'
-            // if date_array
-            //     each date_array
-            //         .ui.basic.label #{this}
-            .right.floated
-                +incident_type_label
-            i.comment.icon
-            | #{comment_count} comments
-                
-                
 template(name='incident_edit')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
@@ -126,11 +89,11 @@ template(name='incident_edit')
         
 template(name='incident_view')
     .ui.padded.stackable.grid
-        .centered.middle.aligned.row
+        .middle.aligned.row
             .three.wide.center.aligned.column
-                +link_button link='/incidents' label='incidents' icon='clipboard'
-            .ten.wide.center.aligned.column
-                h1.ui.header Incident ##{incident_number}
+                +link_button link='/incidents' label='incidents' icon='exclamation'
+            .ten.wide.column
+                h1.ui.center.aligned.header Incident ##{incident_number}
             .three.wide.center.aligned.column
                 +edit_button
         .row

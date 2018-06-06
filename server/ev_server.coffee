@@ -160,12 +160,30 @@ Meteor.methods
                 password:'JPI'
                 # statevar:'get_user_info'
                 # statevar:'get_user_field_list'
-                # statevar:'get_areas'
                 statevar:'get'
                 # login_id:user_doc.user_id
                 id:'33129271'
         console.log res.content
             
+
+    get_areas: () ->
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers: "User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                statevar:'get_areas'
+        console.log res.content
+        split_res = res.content.split '\r\n'
+        # console.log typeof split_res
+        for area_string in split_res
+            split_report = area_string.split '|'
+            # console.log split_report
+            Docs.insert
+                type:'area'
+                number: split_report[0]
+                title: split_report[1]
+
 
     get_jp_id: (jp_id)->
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
@@ -184,7 +202,13 @@ Meteor.methods
                 if err then console.error('errors',err)
                 else
                     # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                    console.dir json_result.PROBLEM_RECORD
+                    # console.dir json_result.PROBLEM_RECORD
+                    updatedList = JSON.stringify(json_result.PROBLEM_RECORD, (key, value) ->
+                        if value == undefined then '' else value
+                    )
+                    console.dir updatedList
+
+                    
                     existing_jpid = 
                         Docs.findOne 
                             type: 'jpid'
