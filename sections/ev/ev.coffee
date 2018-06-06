@@ -126,6 +126,11 @@ if Meteor.isClient
 # areas
     FlowRouter.route '/areas', 
         action: -> BlazeLayout.render 'layout', main: 'areas'
-    
     Template.areas.helpers
         selector: ->  type: "area"
+
+# roles
+    FlowRouter.route '/ev_roles', 
+        action: -> BlazeLayout.render 'layout', main: 'ev_roles'
+    Template.ev_roles.helpers
+        selector: ->  type: "ev_role"

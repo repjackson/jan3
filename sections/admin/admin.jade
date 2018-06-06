@@ -5,7 +5,7 @@ template(name='admin')
     .ui.centered.cards
         +user_widget
         +task_widget
-        +widget_list type='role' label='Roles'
+        +widget_list type='role' label='Roles' icon='id badge'
         +widget_list type='trigger' label='Triggers' icon='bolt'
         +widget_list type='action' label='Actions' 
         +widget_list type='condition' label='Conditions' icon='umbrella'
@@ -61,7 +61,9 @@ template(name='task_widget')
 template(name='role_widget')
     .ui.card
         .content
-            a.header(href="/roles") Roles
+            a.header(href="/roles") 
+                i.id.badge.icon
+                |Roles
             .ui.list
                 each roles
                     a.item(href="/view/#{_id}") #{name}

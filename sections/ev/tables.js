@@ -125,12 +125,27 @@ new Tabular.Table({
 new Tabular.Table({
   name: "Areas",
   collection: Docs,
-  lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
   pageLength: 50,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
     {data: "number", title: "Number"},
+    {data: "title", title: "Name"},
+  ]
+});
+
+
+
+new Tabular.Table({
+  name: "Ev_roles",
+  collection: Docs,
+  // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 50,
+  buttonContainer: '.col-sm-6:eq(0)',
+  buttons: ['copy', 'excel', 'pdf', 'csv'],
+  columns: [
+    {data: "slug", title: "Slug"},
     {data: "title", title: "Name"},
   ]
 });

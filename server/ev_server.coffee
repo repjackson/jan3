@@ -63,7 +63,7 @@ Meteor.methods
                 field2:'value2'
         # return res.content
         # console.log res.content
-        xml2js.parseString res.content, {explicitArray:false, emptyTag:undefined, ignoreAttrs:true, trim:true}, (err, json_result)=>
+        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
@@ -164,7 +164,16 @@ Meteor.methods
                 # login_id:user_doc.user_id
                 id:'33129271'
         console.log res.content
-            
+        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
+            if err then console.error('errors',err)
+            else
+                # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+                # console.dir json_result.PROBLEM_RECORD
+                # new_id = Docs.insert 
+                # console.log 'new id', new_id
+                Docs.update user_doc_id,
+                    $set: ev: json_result.PROBLEM_RECORD
+
 
     get_areas: () ->
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
@@ -185,6 +194,25 @@ Meteor.methods
                 title: split_report[1]
 
 
+    get_roles: () ->
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers: "User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                statevar:'get_roles'
+        console.log res.content
+        split_res = res.content.split '\r\n'
+        # console.log typeof split_res
+        for role_string in split_res
+            split_report = role_string.split '|'
+            # console.log split_report
+            Docs.insert
+                type:'ev_role'
+                slug: split_report[0]
+                title: split_report[1]
+
+
     get_jp_id: (jp_id)->
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
@@ -198,7 +226,7 @@ Meteor.methods
         if includes_boolean
             throw new Meteor.Error('no user', "JP Id #{jp_id} does not exist")
         else
-            xml2js.parseString res.content, {explicitArray:false, emptyTag:undefined, ignoreAttrs:true, trim:true}, (err, json_result)=>
+            xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
                 if err then console.error('errors',err)
                 else
                     # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
@@ -246,7 +274,7 @@ Meteor.methods
         # if includes_boolean
         #     throw new Meteor.Error('no user', "JP Id #{jp_id} does not exist")
         # else
-        #     xml2js.parseString res.content, {explicitArray:false, emptyTag:undefined, ignoreAttrs:true, trim:true}, (err, json_result)=>
+        #     xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
         #         if err then console.error('errors',err)
         #         else
         #             # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
