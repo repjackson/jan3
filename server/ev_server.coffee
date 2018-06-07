@@ -337,7 +337,7 @@ Meteor.methods
             if err then console.error('errors',err)
             else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+                # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
                 # new_id = Docs.insert 
                 # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
@@ -350,10 +350,11 @@ Meteor.methods
                             jpid: doc.ID
                             franchisee: doc.FRANCHISEE
                     if existing_jpid
-                        console.log "existing franchisee #{existing_jpid.franchisee}"
+                        # console.log "existing franchisee #{existing_jpid.franchisee}"
                         Docs.update existing_jpid._id,
                             $set:
-                                franchisee_email: doc.FRANCH_EMAIL
+                                # franchisee_email: doc.FRANCH_EMAIL
+                                type:'franchisee'
                     else                    
                         new_franchisee_doc = Docs.insert 
                             type:'franchisee'

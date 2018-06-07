@@ -147,3 +147,40 @@ if Meteor.isClient
                 if err then console.error err
 
 
+    Template.related_customers.onCreated ->
+        @autorun => Meteor.subscribe 'related_customers', FlowRouter.getParam('doc_id')
+    Template.related_customers.helpers
+        related_customers: ->
+            page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+            Docs.find
+                type: 'customer'
+                franchisee: page_doc.franchisee
+                
+    Template.related_franchisees.onCreated ->
+        @autorun => Meteor.subscribe 'customers_franchise', FlowRouter.getParam('doc_id')
+    Template.related_franchisees.helpers
+        related_franchisees: ->
+            page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+            Docs.find
+                type: 'franchisee'
+                customer: page_doc.customer
+                
+                
+if Meteor.isServer
+    Meteor.publish 'related_customers', (franchisee_doc_id)->
+        page_doc = Docs.findOne franchisee_doc_id
+
+        Docs.find
+            type: 'customer'
+            franchisee: page_doc.franchisee
+
+
+    Meteor.publish 'customers_franchise', (customer_doc_id)->
+        customer_doc = Docs.findOne customer_doc_id
+
+        count = Docs.find
+            # type: 'franchisee'
+            franchisee: customer_doc.franchisee
+        
+
+

@@ -369,7 +369,7 @@ template(name='customers')
         .row
             .sixteen.wide.column
                 |{{> tabular table=TabularTables.Customers selector=selector class="ui sortable striped table"}}
-                    
+
                     
                     
 template(name='customer_view')
@@ -381,7 +381,7 @@ template(name='customer_view')
                 h1.ui.center.aligned.grey.header ##{jpid} Customer View
             .three.wide.column
                 +edit_button
-        .centered.row
+        .row
             .sixteen.wide.column
                 .ui.header Name: #{cust_name}
                 .ui.header Master Licensee: #{master_licensee}
@@ -389,10 +389,16 @@ template(name='customer_view')
                 .ui.header Contact Email: #{customer_contact_email}
                 .ui.header Tel: #{telephone}
                 .ui.header Franchisee: #{franchisee}
+            +related_franchisees
                 
                 
                 
 template(name='related_customers')
     .ui.dividing.header Related Customers
         each related_customers
-            .ui.header #{cust_name}
+            a.ui.header(href="/view/#{_id}") #{cust_name}                
+                
+template(name='related_franchisees')
+    .ui.dividing.header Related Franchisees
+        each related_franchisees
+            a.ui.header(href="/view/#{_id}") #{franchisee}
