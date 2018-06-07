@@ -193,6 +193,30 @@ Meteor.methods
                 number: split_report[0]
                 title: split_report[1]
 
+    get_meta: () ->
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers: "User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                statevar:'get_valid_meta_data'
+                user_info:'Y'
+                disabled_values:'Y' 
+                all:'Y'
+
+
+        # console.log res.content
+        split_res = res.content.split '\r\n'
+        # console.log typeof split_res
+        for area_string in split_res
+            split_report = area_string.split '|'
+            # console.log split_report
+            Docs.insert
+                type:'meta'
+                area: split_report[0]
+                jpid: split_report[1]
+                value: split_report[2]
+
 
     get_roles: () ->
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
@@ -242,7 +266,9 @@ Meteor.methods
                             type: 'jpid'
                             jpid: jp_id
                     if existing_jpid
-                        throw new Meteor.Error('existing doc', "Already imported #{jp_id}.")
+                        Docs.update existing_jpid,
+                            $set:
+                                ev: json_result.PROBLEM_RECORD
                     else                    
                         new_jpid = Docs.insert 
                             type:'jpid'
@@ -292,5 +318,46 @@ Meteor.methods
         #                     ev: json_result.PROBLEM_RECORD
                             
                             
-                            
-                            
+    get_all_franchisees: () ->
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers:
+                "User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                statevar:'run_report'
+                username_display:'ID'
+                api_reverse_lookup:'NO'
+                id:'40607'
+                page_length:'3000'
+                record_start:'1'
+                record_count:'3000'
+        # return res.content
+        # console.log res.content
+        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
+            if err then console.error('errors',err)
+            else
+                # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+                # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..30]
+                # new_id = Docs.insert 
+                # console.log 'new id', new_id
+            if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                    # console.log doc.CUST_NAME
+                    # doc.type = 'customer'
+                    existing_jpid = 
+                        Docs.findOne 
+                            type: 'franchisee'
+                            jpid: doc.ID
+                            franchisee: doc.FRANCHISEE
+                    if existing_jpid
+                        console.log "existing franchisee #{existing_jpid.franchisee}"
+                        # Docs.update existing_jpid,
+                        #     $set:
+                        #         ev: json_result.PROBLEM_RECORD
+                    else                    
+                        new_franchisee_doc = Docs.insert 
+                            type:'franchisee'
+                            jpid: doc.ID
+                            franchisee: doc.FRANCHISEE
+                        console.log "added #{doc.FRANCHISEE}"

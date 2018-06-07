@@ -5,9 +5,6 @@ if Meteor.isClient
             selected_keywords.clear()
             BlazeLayout.render 'layout', main: 'incidents'
  
-    Session.setDefault 'level','all'
-    Session.setDefault 'view_mode','table'
- 
     Template.incident_view.onCreated ->
         @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
  
@@ -29,9 +26,14 @@ if Meteor.isClient
     Template.incident_level_set.events
         'click .set_level': ->
             incident = Template.parentData(1)
+            doc_id = FlowRouter.getParam('doc_id')
+
             Docs.update incident._id,
                 $set: current_level:@level
-    
+                Meteor.call 'create_event', doc_id, 'change_incident_level', 'changed incident level'
+                
+                
+                
     Template.incident_type_label.helpers
         incident_type_label: ->
             switch @incident_type
@@ -48,35 +50,8 @@ if Meteor.isClient
                 when 'other' then 'grey'
     
     
-    
-            
-        
-    
-    
-    @selected_incident_tags = new ReactiveArray []
-    
     Template.incidents.onCreated ->
-        # @autorun -> Meteor.subscribe('incidents',parseInt(Session.get('level')))
-        # @autorun -> Meteor.subscribe('docs',[],'comment')
-        # @autorun -> Meteor.subscribe('docs',[],'office')
-        @autorun => Meteor.subscribe 'facet', 
-            selected_tags.array()
-            selected_keywords.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_timestamp_tags.array()
-            type='incident'
-            author_id=null
-
-        
-        
     Template.incidents.helpers
-        incidents: ->  
-            Docs.find {type:'incident'}, 
-                {
-                    sort: timestamp:-1
-                    limit:7
-                    }
         selector: ->  type: "incident"
     
     Template.incident_edit.onCreated ->

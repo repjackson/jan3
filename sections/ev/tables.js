@@ -89,11 +89,15 @@ new Tabular.Table({
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
   pageLength: 50,
   buttonContainer: '.col-sm-6:eq(0)',
-  buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
+  buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
     {data: "user_id", title: "User Id"},
     {data: "user_first_name", title: "First Name"},
     {data: "user_last_name", title: "Last Type"},
+    {data: "ev.FRANCHISEE", title: "Franchisee"},
+    {data: "ev.ASSIGNED_TO", title: "Assigned To"},
+    {data: "ev.SHORT_NAME", title: "Short Name"},
+    {data: "ev.MASTER_LICENSEE", title: "Master"},
     { tmpl: Meteor.isClient && Template.view_button }
 
   ]
@@ -150,4 +154,32 @@ new Tabular.Table({
   ]
 });
 
+new Tabular.Table({
+  name: "Meta",
+  collection: Docs,
+  // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 50,
+  buttonContainer: '.col-sm-6:eq(0)',
+  buttons: ['copy', 'excel', 'pdf', 'csv'],
+  columns: [
+    {data: "area", title: "Field Name"},
+    {data: "jpid", title: "MetaData Name"},
+    {data: "value", title: "MetaData Title"},
+    // { tmpl: Meteor.isClient && Template.view_button }
+  ]
+});
 
+
+new Tabular.Table({
+  name: "Franchisees",
+  collection: Docs,
+  lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 50,
+  buttonContainer: '.col-sm-6:eq(0)',
+  buttons: ['copy', 'excel', 'pdf', 'csv'],
+  columns: [
+    {data: "jpid", title: "JP ID"},
+    {data: "franchisee", title: "Franchisee"},
+    // { tmpl: Meteor.isClient && Template.view_button }
+  ]
+});

@@ -10,17 +10,17 @@ template(name='nav')
             i.users.large.icon
             // | &nbsp; Users
         a.mobile.hidden.icon.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="bottom center" data-content='Incidents')
-            i.exclamation.large.icon
+            i.exclamation.circle.large.icon
             // | &nbsp; Incidents
         // a.mobile.hidden.icon.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
         //     i.building.large.icon
         //     | &nbsp; Offices
-        a.mobile.hidden.icon.item(href='/franchisees' class="{{isActivePath '/franchisees'}}" data-position="bottom center" data-content='Franchisees')
-            i.building.large.icon
-            // | &nbsp; Franchisees
-        a.mobile.hidden.icon.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
-            i.handshake.large.icon
-            // | &nbsp; customers
+        // a.mobile.hidden.icon.item(href='/franchisees' class="{{isActivePath '/franchisees'}}" data-position="bottom center" data-content='Franchisees')
+        //     i.building.large.icon
+        //     // | &nbsp; Franchisees
+        // a.mobile.hidden.icon.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
+        //     i.handshake.large.icon
+        //     // | &nbsp; customers
         a.mobile.hidden.icon.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
             i.rss.large.icon
             // | Feed
@@ -88,7 +88,7 @@ template(name='left_sidebar')
             i.users.icon
             | Users
         a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="right center" data-content='Incidents')
-            i.clipboard.icon
+            i.exclamation.circle.icon
             | Incidents
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Offices')
             i.building.icon
@@ -106,7 +106,10 @@ template(name='left_sidebar')
         a.toggle_left_sidebar.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
             i.handshake.icon
             | Customers
-            
+        a.toggle_left_sidebar.item(href='/ev' class="{{isActivePath '/ev'}}" data-position="bottom center" data-content='Explore EV')
+            i.database.icon
+            | Explore EV
+        
         //     // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}" data-position="right center" data-content='Charts')
         //     //     i.line.chart.icon
         // a.toggle_left_sidebar.item(href='/store' data-position="bottom center" data-content='Store')

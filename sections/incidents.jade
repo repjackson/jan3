@@ -1,10 +1,10 @@
 template(name='incidents')
     .ui.stackable.padded.centered.grid
-        .centered.row
+        .middle.aligned.centered.row
             .three.wide.column
                 +add_button type='incident' label='Incident'
-            .ten.wide.column
-                h3.ui.header 
+            .thirteen.wide.column
+                h2.ui.center.aligned.header 
                     i.exclamation.circle.icon
                     | Incidents
         .row
@@ -82,7 +82,8 @@ template(name='incident_edit')
                     each incident_type_docs
                         +toggle_key key='incident_type' value=slug label=name
     
-                +edit_html_field
+                // +edit_html_field
+                +edit_textarea label='Incident Details' key='incident_details'
                 +edit_image_field
                 // +edit_textarea key='incident_details' label='Details'
 
@@ -91,7 +92,7 @@ template(name='incident_view')
     .ui.padded.stackable.grid
         .middle.aligned.row
             .three.wide.center.aligned.column
-                +link_button link='/incidents' label='incidents' icon='exclamation'
+                +link_button link='/incidents' label='incidents' icon='exclamation circle'
             .ten.wide.column
                 h1.ui.center.aligned.header Incident ##{incident_number}
             .three.wide.center.aligned.column
@@ -116,15 +117,10 @@ template(name='incident_view')
             .ui.bottom.attached.active.tab.segment(data-tab='info')
                 .ui.padded.stackable.centered.grid
                     .four.wide.column
-                        .ui.header
-                            // | Logged
+                        div
+                            |Logged by
                             +author_info
-                        h2.ui.sub.header #{when}
-                        .ui.large.relaxed.list
-                            +list_item key='customer_id' label='Customer ID' icon='user'
-                            +list_item icon='hashtag' label='Number' key='incident_number'
-                            +list_item icon='calendar' label='Date' key='incident_date'
-                            // +list_item icon='file.image' label='Associated Documents'
+                            |#{when}
                         +incident_type_label
                         .ui.header #{formal_when}
                     .eight.wide.column
@@ -155,32 +151,6 @@ template(name='incident_view')
                 .ui.padded.stackable.centered.grid
                     .eight.wide.column
                         +doc_history
-            // .ui.bottom.attached.tab.segment(data-tab='analysis')
-            //     .ui.padded.stackable.centered.grid
-            //         .four.wide.column
-            //             if watson
-            //                 +doc_sentiment
-            //                 +doc_emotion
-            //                 +concepts
-            //                 +categories
-            //             else
-            //                 +call_watson
-            //         .eight.wide.column
-            //             // +semantic_roles
-            //             +tone
-            //             +keywords
-            //             .ui.hidden.divider
-            //             +relations
-            //             // .ui.styled.accordion
-            //             //     .title 
-            //             //         i.code.icon
-            //             //         |full analysis data
-            //             //         i.dropdown.icon
-            //             //     .content
-            //             //         +jsonView(json=watson)
-            //         .four.wide.column
-            //             +personality
-            //             +consumption_preferences
 
                             
 template(name='incident_level_set')
@@ -200,90 +170,7 @@ template(name='incident_status')
             .ui.header 
                 i.tasks.icon
                 |Status (current level: #{current_level})
-        .twelve.wide.column
-            .ui.fluid.segment
-                h3
-                    i.edit.icon
-                    | Submit
-            .ui.divider
-            .ui.segment
-                h4.ui.header
-                    .ui.toggle.checkbox
-                        input(type="checkbox" checked="checked")
-                        // label 2
-                    |Fields Completed
-                |Fill in required fields to submit for processing
-            .ui.divider
-            .ui.segment
-                h4.ui.header
-                    .ui.toggle.checkbox
-                        input(type="checkbox" checked="checked")
-                        // label 2
-                    |Processed
-            .ui.divider
-            .ui.segment
-                h4.ui.header
-                    .ui.toggle.checkbox
-                        input(type="checkbox" checked="checked")
-                        // label 2
-                    |Completed within SLA
             +incident_level_set level=1
-            .ui.divider
-            h3
-                i.circle.outline.icon
-                | Level 2
-                i.dropdown.icon
-            .description
-                .ui.segment
-                    h4.ui.header
-                        .ui.toggle.checkbox
-                            input(type="checkbox" checked="checked")
-                            // label 2
-                        |Processed
-                .ui.segment
-                    h4.ui.header
-                        .ui.toggle.checkbox
-                            input(type="checkbox" checked="checked")
-                            // label 2
-                        |Completed within SLA
             +incident_level_set level=2
-            .ui.divider
-            h3
-                i.dot.circle.outline.icon
-                | Level 3
-                i.dropdown.icon
-            .description
-                .ui.segment
-                    h4.ui.header
-                        .ui.toggle.checkbox
-                            input(type="checkbox" checked="checked")
-                            // label 2
-                        |Processed
-                .ui.segment
-                    h4.ui.header
-                        .ui.toggle.checkbox
-                            input(type="checkbox" checked="checked")
-                            // label 2
-                        |Completed within SLA
             +incident_level_set level=3
-            .ui.divider
-            h3
-                i.checkmark.icon
-                | Satisfaction Survey
-                i.dropdown.icon
-            .description
-                .ui.segment
-                    h4.ui.header
-                        .ui.toggle.checkbox
-                            input(type="checkbox" checked="checked")
-                            // label 2
-    
-                        |Processed
-                .ui.segment
-                    h4.ui.header
-                        .ui.toggle.checkbox
-                            input(type="checkbox" checked="checked")
-                            // label 2
-    
-                        |SLA
             +incident_level_set level=4

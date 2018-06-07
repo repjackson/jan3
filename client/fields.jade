@@ -67,9 +67,10 @@ template(name='edit_number_field')
 
 
 template(name='edit_textarea')
-    .field
-        label #{label}
-        textarea#textarea(rows='10') #{key_value}
+    .ui.form
+        .field
+            label #{label}
+            textarea#textarea(rows='10') #{key_value}
 
 
         
