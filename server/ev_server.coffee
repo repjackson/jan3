@@ -258,7 +258,7 @@ Meteor.methods
                     updatedList = JSON.stringify(json_result.PROBLEM_RECORD, (key, value) ->
                         if value == undefined then '' else value
                     )
-                    console.dir updatedList
+                    # console.dir updatedList
 
                     
                     existing_jpid = 
@@ -320,8 +320,7 @@ Meteor.methods
                             
     get_all_franchisees: () ->
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
-            headers:
-                "User-Agent": "Meteor/1.0"
+            headers:"User-Agent": "Meteor/1.0"
             params:
                 user_id:'JPI'
                 password:'JPI'
@@ -338,7 +337,7 @@ Meteor.methods
             if err then console.error('errors',err)
             else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..30]
+                console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
                 # new_id = Docs.insert 
                 # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
@@ -352,12 +351,61 @@ Meteor.methods
                             franchisee: doc.FRANCHISEE
                     if existing_jpid
                         console.log "existing franchisee #{existing_jpid.franchisee}"
-                        # Docs.update existing_jpid,
-                        #     $set:
-                        #         ev: json_result.PROBLEM_RECORD
+                        Docs.update existing_jpid._id,
+                            $set:
+                                franchisee_email: doc.FRANCH_EMAIL
                     else                    
                         new_franchisee_doc = Docs.insert 
                             type:'franchisee'
                             jpid: doc.ID
                             franchisee: doc.FRANCHISEE
                         console.log "added #{doc.FRANCHISEE}"
+    
+    
+    sync_customers: () ->
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers:"User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                statevar:'run_report'
+                username_display:'ID'
+                api_reverse_lookup:'NO'
+                id:'26955'
+                page_length:'6000'
+                record_start:'1'
+                record_count:'6000'
+        # return res.content
+        # console.log res.content
+        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
+            if err then console.error('errors',err)
+            else
+                # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+                console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+                # new_id = Docs.insert 
+                # console.log 'new id', new_id
+            # if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                    # console.log doc.CUST_NAME
+                    # doc.type = 'customer'
+                    existing_customer_doc = 
+                        Docs.findOne 
+                            type: 'customer'
+                            jpid: doc.ID
+                            cust_name: doc.CUST_NAME
+                    if existing_customer_doc
+                        console.log "existing customer #{existing_customer_doc.cust_name}"
+                        # Docs.update existing_jpid,
+                        #     $set:
+                        #         ev: json_result.PROBLEM_RECORD
+                    else                    
+                        new_customer_doc = Docs.insert 
+                            type: 'customer'
+                            jpid: doc.ID
+                            cust_name: doc.CUST_NAME
+                            master_licensee: doc.MASTER_LICENSEE
+                            customer_contact_person: doc.CUST_CONT_PERSON
+                            customer_contact_email: doc.CUST_CONTACT_EMAIL
+                            telephone: doc.TELEPHONE
+                            franchisee: doc.FRANCHISEE
+                        console.log "added #{doc.CUST_NAME}"

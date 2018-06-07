@@ -135,3 +135,15 @@ if Meteor.isClient
                 if err then console.error err
 
 
+
+# customer
+    FlowRouter.route '/customers', 
+        action: -> BlazeLayout.render 'layout', main: 'customers'
+    Template.customers.helpers
+        selector: ->  type: "customer"
+    Template.customers.events
+        'click .sync_customers': ->
+            Meteor.call 'sync_customers',(err,res)->
+                if err then console.error err
+
+

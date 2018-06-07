@@ -15,6 +15,7 @@ template(name='ev')
                     +children_widget type='role' label='Roles' icon='id badge' link='/ev_roles'
                     +children_widget type='meta' label='MetaData' icon='code' link='/meta'
                     +children_widget type='franchisee' label='Franchisees' icon='user circle' link='/franchisees'
+                    +children_widget type='customer' label='Customers' icon='handshake' link='/customers'
 
 template(name='ev_reports')
     .ui.padded.stackable.grid
@@ -347,7 +348,51 @@ template(name='franchisee_view')
                 h1.ui.center.aligned.grey.header ##{jpid} Franchisee View
             .three.wide.column
                 +edit_button
+        .row
+            .sixteen.wide.column
+                .ui.header Name: #{franchisee}
+                .ui.header Email: #{franchisee_email}
+            +related_customers
+
+template(name='customers')
+    .ui.padded.stackable.grid
+        .middle.aligned.row
+            .three.wide.column
+                +link_button link='/ev' icon='database' label='EV Dash'
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    i.handshake.icon
+                    | EV Customers
+            .three.wide.column
+                .sync_customers.ui.icon.button(title='Refresh Customers')
+                    i.refresh.icon
+        .row
+            .sixteen.wide.column
+                |{{> tabular table=TabularTables.Customers selector=selector class="ui sortable striped table"}}
+                    
+                    
+                    
+template(name='customer_view')
+    .ui.padded.stackable.centered.grid
+        .centered.middle.aligned.row
+            .three.wide.column
+                +link_button link='/customers' icon='handshake' label='Customers'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header ##{jpid} Customer View
+            .three.wide.column
+                +edit_button
         .centered.row
             .sixteen.wide.column
-                +jsonView json=ev
-            
+                .ui.header Name: #{cust_name}
+                .ui.header Master Licensee: #{master_licensee}
+                .ui.header Contact Person: #{customer_contact_person}
+                .ui.header Contact Email: #{customer_contact_email}
+                .ui.header Tel: #{telephone}
+                .ui.header Franchisee: #{franchisee}
+                
+                
+                
+template(name='related_customers')
+    .ui.dividing.header Related Customers
+        each related_customers
+            .ui.header #{cust_name}

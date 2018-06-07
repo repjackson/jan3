@@ -15,12 +15,12 @@ template(name='nav')
         // a.mobile.hidden.icon.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
         //     i.building.large.icon
         //     | &nbsp; Offices
-        // a.mobile.hidden.icon.item(href='/franchisees' class="{{isActivePath '/franchisees'}}" data-position="bottom center" data-content='Franchisees')
-        //     i.building.large.icon
-        //     // | &nbsp; Franchisees
-        // a.mobile.hidden.icon.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
-        //     i.handshake.large.icon
-        //     // | &nbsp; customers
+        a.mobile.hidden.icon.item(href='/franchisees' class="{{isActivePath '/franchisees'}}" data-position="bottom center" data-content='Franchisees')
+            i.user.circle.large.icon
+            // | &nbsp; Franchisees
+        a.mobile.hidden.icon.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
+            i.handshake.large.icon
+            // | &nbsp; customers
         a.mobile.hidden.icon.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
             i.rss.large.icon
             // | Feed

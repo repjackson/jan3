@@ -1,58 +1,58 @@
-template(name='customers')
-    .ui.stackable.centered.padded.grid
-        .centered.row
-            .sixteen.wide.column
-                .ui.center.aligned.header 
-                    i.handshake.icon
-                    | Customers
-                .ui.centered.stackable.cards
-                    each customers
-                        +ev_card
+// template(name='customers')
+//     .ui.stackable.centered.padded.grid
+//         .centered.row
+//             .sixteen.wide.column
+//                 .ui.center.aligned.header 
+//                     i.handshake.icon
+//                     | Customers
+//                 .ui.centered.stackable.cards
+//                     each customers
+//                         +ev_card
 
         
         
         
-template(name='customer_edit')
-    .ui.padded.stackable.centered.grid
-        .centered.row
-            .three.wide.column
-                #delete.ui.basic.button
-                    i.trash.icon
-                    | Delete
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit customer ##{jan_customer_id}
-            .three.wide.column
-                +save_button
-        .five.wide.column
-            +customer_map
-        .five.wide.column
-            .ui.form
-                +edit_text_field key='jan_customer_id' label='Jan Pro customer ID' icon='building'
-                +edit_text_field key='customer_name' label='customer Name' icon='code'
-                +edit_text_field key='phone_number' label='Phone Number' icon='phone'
-                +edit_text_field key='email_address' label='Email Address' icon='envelope'
-        .five.wide.column
-            .ui.form
-                +edit_text_field key='level_1_user_ud' label='Level 1 User Id' icon='user' 
-                +edit_text_field key='level_2_user_ud' label='Level 2 User Id' icon='user'
-                +edit_text_field key='level_3_user_ud' label='Level 3 User Id' icon='user'
+// template(name='customer_edit')
+//     .ui.padded.stackable.centered.grid
+//         .centered.row
+//             .three.wide.column
+//                 #delete.ui.basic.button
+//                     i.trash.icon
+//                     | Delete
+//             .ten.wide.column
+//                 h1.ui.center.aligned.grey.header Edit customer ##{jan_customer_id}
+//             .three.wide.column
+//                 +save_button
+//         .five.wide.column
+//             +customer_map
+//         .five.wide.column
+//             .ui.form
+//                 +edit_text_field key='jan_customer_id' label='Jan Pro customer ID' icon='building'
+//                 +edit_text_field key='customer_name' label='customer Name' icon='code'
+//                 +edit_text_field key='phone_number' label='Phone Number' icon='phone'
+//                 +edit_text_field key='email_address' label='Email Address' icon='envelope'
+//         .five.wide.column
+//             .ui.form
+//                 +edit_text_field key='level_1_user_ud' label='Level 1 User Id' icon='user' 
+//                 +edit_text_field key='level_2_user_ud' label='Level 2 User Id' icon='user'
+//                 +edit_text_field key='level_3_user_ud' label='Level 3 User Id' icon='user'
         
         
-template(name='customer_view')
-    .ui.padded.stackable.centered.grid
-        .centered.row
-            .three.wide.column
-                +link_button link='/customers' icon='handshake' label='customers'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header
-                    i.handshake.icon
-                    |#{current_customer}
-            .three.wide.column
-                +edit_button
-        .row
-            .fourteen.wide.column
-                .ui.centered.stackable.cards
-                    each customer_cards
-                        +ev_card
+// template(name='customer_view')
+//     .ui.padded.stackable.centered.grid
+//         .centered.row
+//             .three.wide.column
+//                 +link_button link='/customers' icon='handshake' label='customers'
+//             .ten.wide.column
+//                 h1.ui.center.aligned.grey.header
+//                     i.handshake.icon
+//                     |#{current_customer}
+//             .three.wide.column
+//                 +edit_button
+//         .row
+//             .fourteen.wide.column
+//                 .ui.centered.stackable.cards
+//                     each customer_cards
+//                         +ev_card
                 
                 
