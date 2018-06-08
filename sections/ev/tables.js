@@ -61,9 +61,32 @@ new Tabular.Table({
   columns: [
     {data: "incident_number", title: "Ticket Number"},
     {data: "incident_type", title: "Type"},
-    {data: "when", title: "Logged"},
-    {data: "incident_details", title: "Details"},
+    // {data: "when", title: "Logged"},
+    {
+      data: "timestamp",
+      title: "Logged When",
+      render: function (timestamp, type, doc) {
+        return doc.when();
+      }
+    },     
+    {
+      data: "incident_details",
+      title: "Details",
+      render: function (incident_details, type, doc) {
+        if (incident_details) {
+          var snippet = incident_details.substr(0, 186) + "..."
+          return snippet
+        } else {
+          return "";
+        }
+      }
+    },
     {data: "current_level", title: "Level"},
+    { 
+      data: "assigned_to",
+      title: "Assigned To",
+      tmpl: Meteor.isClient && Template.associated_users 
+    },
     {data: "", title: "Actions Taken"},
     { tmpl: Meteor.isClient && Template.view_button }
   ]
@@ -198,8 +221,8 @@ new Tabular.Table({
     {data: "franchisee", title: "Franchisee"},
     {data: "cust_name", title: "Customer Name"},
     {data: "master_licensee", title: "Master Licensee"},
-    {data: "customer_contact_person", title: "Contact Person"},
-    {data: "customer_contact_email", title: "Contact Email"},
+    {data: "customer_contact_person", title: "Customer Contact Person"},
+    {data: "customer_contact_email", title: "Customer Contact Email"},
     { tmpl: Meteor.isClient && Template.view_button }
   ]
 });

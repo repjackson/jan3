@@ -186,15 +186,42 @@ template(name='incidents_by_type')
         
             
             
-template(name='associated_users')
-    .ui.segment
-        .ui.header 
-            i.users.icon
-            | Users
-        .ui.list
-            each users
-                .item #{first_name} #{last_name}
             
+            
+template(name='associated_users')
+    .ui.list
+        each associated_users
+            .item
+                .image
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                .content
+                    .header
+                        |#{profile.first_name} #{profile.last_name}
+                    .description
+                        | @#{username}
+            
+            
+          
+template(name='multiple_user_select')
+    .ui.form
+        .field
+            label #{label}
+            .ui.left.icon.input
+                i.search.icon
+                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder="Select Users..."
+        .field
+            .ui.list
+                each assigned_to_users
+                    .item
+                        .image
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            .header
+                                |#{profile.first_name} #{profile.last_name}
+                            .description
+                                | @#{username}
+          
+          
             
 template(name='call_phone_button')
     a.ui.fluid.button(href="tel:#{phone_number}") 
@@ -343,5 +370,10 @@ template(name='view_telephone_field')
 //     a.ui.fluid.button(href="tel:#{phone_number}") 
 //         i.phone.icon
 //         | Call #{phone_number}
+            
+            
+template(name="user_result")
+    .item #{username}: #{profile.first_name} #{profile.last_name}
+
             
             

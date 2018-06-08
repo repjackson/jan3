@@ -386,27 +386,27 @@ Meteor.methods
                 # new_id = Docs.insert 
                 # console.log 'new id', new_id
             # if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # console.log doc.CUST_NAME
-                    # doc.type = 'customer'
-                    existing_customer_doc = 
-                        Docs.findOne 
-                            type: 'customer'
-                            jpid: doc.ID
-                            cust_name: doc.CUST_NAME
-                    if existing_customer_doc
-                        console.log "existing customer #{existing_customer_doc.cust_name}"
-                        # Docs.update existing_jpid,
-                        #     $set:
-                        #         ev: json_result.PROBLEM_RECORD
-                    else                    
-                        new_customer_doc = Docs.insert 
-                            type: 'customer'
-                            jpid: doc.ID
-                            cust_name: doc.CUST_NAME
-                            master_licensee: doc.MASTER_LICENSEE
-                            customer_contact_person: doc.CUST_CONT_PERSON
-                            customer_contact_email: doc.CUST_CONTACT_EMAIL
-                            telephone: doc.TELEPHONE
-                            franchisee: doc.FRANCHISEE
-                        console.log "added #{doc.CUST_NAME}"
+                # for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                #     # console.log doc.CUST_NAME
+                #     # doc.type = 'customer'
+                #     existing_customer_doc = 
+                #         Docs.findOne 
+                #             type: 'customer'
+                #             jpid: doc.ID
+                #             cust_name: doc.CUST_NAME
+                #     if existing_customer_doc
+                #         console.log "existing customer #{existing_customer_doc.cust_name}"
+                #         # Docs.update existing_jpid,
+                #         #     $set:
+                #         #         ev: json_result.PROBLEM_RECORD
+                #     else                    
+                #         new_customer_doc = Docs.insert 
+                #             type: 'customer'
+                #             jpid: doc.ID
+                #             cust_name: doc.CUST_NAME
+                #             master_licensee: doc.MASTER_LICENSEE
+                #             customer_contact_person: doc.CUST_CONT_PERSON
+                #             customer_contact_email: doc.CUST_CONTACT_EMAIL
+                #             telephone: doc.TELEPHONE
+                #             franchisee: doc.FRANCHISEE
+                #         console.log "added #{doc.CUST_NAME}"

@@ -74,7 +74,8 @@ template(name='incident_edit')
                 //     +edit_author
                 .ui.large.form
                     +edit_number_field key='incident_number' label='Number' icon='hashtag'
-                    +edit_date_field key='incident_date' label='Date' icon='calendar'
+                    +edit_date_field key='service_date' label='Service Date' icon='calendar'
+                    +multiple_user_select key='assigned_to' label='Assigned To' icon='users'
                     
             .twelve.wide.column
                 .ui.segment

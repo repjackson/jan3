@@ -17,9 +17,13 @@ Template.reference_type_multiple.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], @data.type
 
 Template.associated_users.onCreated ->
-    @autorun =>  Meteor.subscribe 'docs', [], 'person'
+    @autorun =>  Meteor.subscribe 'users'
 Template.associated_users.helpers
-    users: -> Docs.find type:'person'
+    associated_users: -> 
+        # console.log @
+        if @assigned_to
+            Meteor.users.find 
+                _id: $in: @assigned_to
 
 Template.associated_incidents.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], 'incident'
@@ -326,5 +330,39 @@ Template.toggle_key.events
 #         Docs.find
 #             parent_id:FlowRouter.getParam('doc_id')
 #             type:'event'
+       
+Template.multiple_user_select.onCreated ->
+    @autorun =>  Meteor.subscribe 'users'
             
             
+Template.multiple_user_select.events
+    'autocompleteselect #search': (event, template, doc) ->
+        # console.log 'selected ', doc
+        searched_value = doc["#{template.data.key}"]
+        # console.log 'template ', template
+        # console.log 'search value ', searched_value
+        Docs.update FlowRouter.getParam('doc_id'),
+            $addToSet: "#{template.data.key}": "#{doc._id}"
+        $('#search').val ''
+
+Template.multiple_user_select.helpers
+    settings: -> 
+        # console.log @
+        {
+            position: 'bottom'
+            limit: 10
+            rules: [
+                {
+                    collection: Meteor.users
+                    field: 'username'
+                    matchAll: true
+                    # filter: { type: "#{@type}" }
+                    template: Template.user_result
+                }
+            ]
+        }
+
+    assigned_to_users: ->
+        incident_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Meteor.users.find
+            _id: $in: incident_doc.assigned_to

@@ -682,7 +682,15 @@ Meteor.publish 'parent_doc', (child_id)->
         _id: child.parent_id
         
         
+Meteor.publish 'facet_doc', (tags)->
+    split_array = tags.split ','
+    Docs.find
+        tags: split_array
         
+Meteor.publish 'users', ()->
+    Meteor.users.find()
+    
+    
         
 Meteor.publish 'has_key', (key)->
     Docs.find "ev.#{key}": $exists: true

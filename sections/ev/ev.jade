@@ -332,7 +332,9 @@ template(name='franchisees')
                     i.user.circle.icon
                     | EV Franchisees
             .three.wide.column
-                .get_all_franchisees.ui.fluid.button Sync EV Franchisees
+                if is_dev
+                    .get_all_franchisees.ui.icon.button
+                        i.refresh.icon
         .row
             .sixteen.wide.column
                 |{{> tabular table=TabularTables.Franchisees selector=selector class="ui sortable striped table"}}
@@ -365,8 +367,9 @@ template(name='customers')
                     i.handshake.icon
                     | EV Customers
             .three.wide.column
-                .sync_customers.ui.icon.button(title='Refresh Customers')
-                    i.refresh.icon
+                if is_dev
+                    .sync_customers.ui.icon.button(title='Refresh Customers')
+                        i.refresh.icon
         .row
             .sixteen.wide.column
                 |{{> tabular table=TabularTables.Customers selector=selector class="ui sortable striped table"}}

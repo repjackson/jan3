@@ -95,6 +95,18 @@ Template.edit_textarea.events
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
+Template.edit_textarea.helpers
+    'key_value': () -> 
+        doc_field = Template.parentData(0)
+        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log Template.parentData(0)
+        if current_doc
+            if doc_field.key
+                current_doc["#{doc_field.key}"]
+    
+
+
+
 Template.edit_timerange_field.onRendered ->
     Meteor.setTimeout ->
         $('#time_start').calendar(
