@@ -203,3 +203,21 @@ new Tabular.Table({
     { tmpl: Meteor.isClient && Template.view_button }
   ]
 });
+
+new Tabular.Table({
+  name: "Related_customers",
+  collection: Docs,
+  // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 100,
+  buttonContainer: '.col-sm-6:eq(0)',
+  buttons: ['copy', 'excel', 'pdf', 'csv'],
+  columns: [
+    {data: "jpid", title: "JP ID"},
+    {data: "franchisee", title: "Franchisee"},
+    {data: "cust_name", title: "Customer Name"},
+    {data: "master_licensee", title: "Master Licensee"},
+    {data: "customer_contact_person", title: "Contact Person"},
+    {data: "customer_contact_email", title: "Contact Email"},
+    { tmpl: Meteor.isClient && Template.view_button }
+  ]
+});

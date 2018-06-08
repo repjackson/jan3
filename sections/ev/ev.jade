@@ -125,14 +125,14 @@ template(name='view_customer_name_field')
             |#{CUSTOMER}
 
 template(name='view_master_field')
-    h5
+    h4
         a(href="/master/#{MASTER_LICENSEE}" title='Master Licensee')
             i.street.view.icon
             |#{MASTER_LICENSEE}
 
 
 template(name='view_franchisee_field')
-    h5
+    h4
         if FRANCH_NAME
             a(href="/franchisee/#{FRANCH_NAME}" title='Franchisee')
                 i.user.circle.icon
@@ -340,7 +340,7 @@ template(name='franchisees')
                     
                     
 template(name='franchisee_view')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .three.wide.column
                 +link_button link='/franchisees' icon='user circle' label='Franchisees'
@@ -349,10 +349,11 @@ template(name='franchisee_view')
             .three.wide.column
                 +edit_button
         .row
-            .sixteen.wide.column
-                .ui.header Name: #{franchisee}
-                .ui.header Email: #{franchisee_email}
-            +related_customers
+            .fourteen.wide.column
+                .ui.secondary.segment
+                    .ui.header Name: #{franchisee}
+                    .ui.header Email: #{franchisee_email}
+                +related_customers
 
 template(name='customers')
     .ui.padded.stackable.grid
@@ -373,7 +374,7 @@ template(name='customers')
                     
                     
 template(name='customer_view')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .three.wide.column
                 +link_button link='/customers' icon='handshake' label='Customers'
@@ -382,23 +383,29 @@ template(name='customer_view')
             .three.wide.column
                 +edit_button
         .row
-            .sixteen.wide.column
-                .ui.header Name: #{cust_name}
-                .ui.header Master Licensee: #{master_licensee}
-                .ui.header Contact Person: #{customer_contact_person}
-                .ui.header Contact Email: #{customer_contact_email}
-                .ui.header Tel: #{telephone}
-                .ui.header Franchisee: #{franchisee}
-            +related_franchisees
+            .fourteen.wide.column
+                .ui.secondary.segment
+                    h4.ui.header Name: #{cust_name}
+                    h4.ui.header Master Licensee: #{master_licensee}
+                    h4.ui.header Contact Person: #{customer_contact_person}
+                    h4.ui.header Contact Email: #{customer_contact_email}
+                    h4.ui.header Tel: #{telephone}
+                    h4.ui.header Franchisee: #{franchisee}
+                +related_franchisees
                 
                 
                 
 template(name='related_customers')
-    .ui.dividing.header Related Customers
-        each related_customers
-            a.ui.header(href="/view/#{_id}") #{cust_name}                
+    .ui.secondary.segment
+        .ui.header #{franchisee}'s Customers
+        |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable striped table"}}
+        // .ui.list
+        //     each related_customers
+        //         a.item(href="/view/#{_id}") #{cust_name}                
                 
 template(name='related_franchisees')
-    .ui.dividing.header Related Franchisees
-        each related_franchisees
-            a.ui.header(href="/view/#{_id}") #{franchisee}
+    .ui.secondary.segment
+        .ui.header Related Franchisees
+        .ui.large.list
+            each related_franchisees
+                a.large.item(href="/view/#{_id}") #{franchisee}
