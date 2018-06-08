@@ -177,6 +177,29 @@ Meteor.methods
         return
         
         
+    assign_user: (doc_id, user)->
+        doc = Docs.findOne doc_id
+        Docs.update doc_id,
+            $addToSet: assigned_to: user._id
+        Docs.insert
+            type:'event'
+            parent_id: doc_id
+            event_type: 'assignment'
+            text: "#{user.username} was assigned to #{doc.type}"
+        
+    
+    unassign_user: (doc_id, user)->
+        doc = Docs.findOne doc_id
+        Docs.update doc_id,
+            $pull: assigned_to: user._id
+        Docs.insert
+            type:'event'
+            parent_id: doc_id
+            event_type: 'assignment'
+            text: "#{user.username} was unassigned from #{doc.type}"
+        
+    
+        
     create_event: (parent_id, event_type, action)->
         Docs.insert
             type:'event'

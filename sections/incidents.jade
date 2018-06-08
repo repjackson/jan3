@@ -65,7 +65,7 @@ template(name='incident_edit')
                 #delete.ui.icon.button
                     i.trash.icon
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit Incident #{incident_number}
+                h1.ui.center.aligned.grey.header Edit Incident ##{incident_number}
             .three.wide.column
                 +save_button
         .row
@@ -151,6 +151,7 @@ template(name='incident_view')
             .ui.bottom.attached.tab.segment(data-tab='activity')
                 .ui.padded.stackable.centered.grid
                     .eight.wide.column
+                        .ui.header Incident History
                         +doc_history
 
                             

@@ -74,20 +74,24 @@ new Tabular.Table({
       title: "Details",
       render: function (incident_details, type, doc) {
         if (incident_details) {
-          var snippet = incident_details.substr(0, 186) + "..."
+          var snippet = incident_details.substr(0, 100) + "..."
           return snippet
         } else {
           return "";
         }
       }
     },
-    {data: "current_level", title: "Level"},
+    { data: "current_level", title: "Level"},
     { 
       data: "assigned_to",
       title: "Assigned To",
       tmpl: Meteor.isClient && Template.associated_users 
     },
-    {data: "", title: "Actions Taken"},
+    { 
+      data: "", 
+      title: "Actions Taken",
+      tmpl: Meteor.isClient && Template.doc_history 
+    },
     { tmpl: Meteor.isClient && Template.view_button }
   ]
 });

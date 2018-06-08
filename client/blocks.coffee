@@ -273,15 +273,17 @@ Template.edit_author.helpers
 
 
 Template.doc_history.onCreated ->
-    @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+    @autorun =>  Meteor.subscribe 'child_docs', @data._id
 
 
 Template.doc_history.helpers
-    doc_history_events: ->
-        Docs.find
-            parent_id:FlowRouter.getParam('doc_id')
+    doc_history_events: (e,t) ->
+        Docs.find {
+            parent_id: Template.currentData()._id
             type:'event'
-            
+        }, 
+            limit: 1
+            sort:timestamp:-1
             
             
 Template.incidents_by_type.onCreated ->
@@ -336,14 +338,40 @@ Template.multiple_user_select.onCreated ->
             
             
 Template.multiple_user_select.events
-    'autocompleteselect #search': (event, template, doc) ->
+    'autocompleteselect #search': (event, template, selected_user) ->
         # console.log 'selected ', doc
-        searched_value = doc["#{template.data.key}"]
+        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # searched_value = doc["#{template.data.key}"]
         # console.log 'template ', template
         # console.log 'search value ', searched_value
-        Docs.update FlowRouter.getParam('doc_id'),
-            $addToSet: "#{template.data.key}": "#{doc._id}"
+        Meteor.call 'assign_user', page_doc._id, selected_user, (err,res)=>
+            if err
+                Bert.alert "Error Assigning #{selected_user.username}: #{err.reason}", 'danger', 'growl-top-right'
+            else
+                Bert.alert "Assigned #{selected_user.username}.", 'success', 'growl-top-right'
+
         $('#search').val ''
+
+    'click .unassign_user': ->
+        swal {
+            title: "Unassign #{@username}?"
+            # text: 'Confirm delete?'
+            type: 'info'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Unassign'
+            confirmButtonColor: '#da5347'
+        }, =>
+            page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+            Meteor.call 'unassign_user', page_doc._id, @, (err,res)=>
+                if err
+                    Bert.alert "Error Unassigning #{@username}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Unssigned #{@username}.", 'success', 'growl-top-right'
+    
+
 
 Template.multiple_user_select.helpers
     settings: -> 

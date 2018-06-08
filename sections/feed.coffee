@@ -15,7 +15,7 @@ if Meteor.isClient
             type='event'
             author_id=null
     Template.feed.helpers
-        feed_events: -> Docs.find type:'event'
+        feed_events: -> Docs.find {type:'event'}, sort:timestamp:-1
 
 
     Template.feed_event.onCreated ->
