@@ -82,3 +82,11 @@ if Meteor.isClient
 
 
 
+    Template.incident_tasks.helpers
+    Template.incident_tasks.events
+        'click #add_incident_task': ->
+            new_incident_task_id = 
+                Docs.insert
+                    type: 'incident_task'
+                    parent_id: FlowRouter.getParam('doc_id')
+            FlowRouter.go "/edit/#{new_incident_task_id}"

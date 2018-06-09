@@ -23,6 +23,6 @@ template(name='feed_event')
                 a(href="/view/#{parent._id}") #{parent.title}
                 .date #{when}
             .meta
-                a.mark_read Mark Read
+                +mark_read_link
                 if is_dev
                     i.remove_event.remove.link.icon

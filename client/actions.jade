@@ -154,6 +154,14 @@ template(name='mark_read_button')
                 |Unread
     +read_by_list
 
+template(name='mark_read_link')
+    if currentUser
+        if read
+            a.mark_unread Mark Unread
+        else
+            a.mark_read Mark Read
+    +read_by_list
+
 
     
     
@@ -171,7 +179,6 @@ template(name='read_by_list')
                         .header
                             |#{name}
                         .description
-                            +tiny_color_dots
                             // each five_tags
                             //     .ui.basic.label #{this}
                 

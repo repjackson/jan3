@@ -236,6 +236,16 @@ Template.mark_read_button.helpers
     read: -> @read_by and Meteor.userId() in @read_by
     # read: -> true
     
+Template.mark_read_link.events
+    'click .mark_read': (e,t)-> 
+        console.log 'hi'
+        Meteor.call 'mark_read', @
+    'click .mark_unread': (e,t)-> Meteor.call 'mark_read', @
+
+Template.mark_read_link.helpers
+    read: -> @read_by and Meteor.userId() in @read_by
+    # read: -> true
+    
     
 Template.read_by_list.onCreated ->
     @autorun => Meteor.subscribe 'read_by', Template.parentData()._id
