@@ -671,10 +671,12 @@ Meteor.publish 'type', (type)->
     Docs.find {type:type}, limit:300
         
         
-Meteor.publish 'child_docs', (doc_id)->
-    Docs.find
-        parent_id: doc_id
-        
+Meteor.publish 'child_docs', (doc_id, limit)->
+    if limit
+        Docs.find {parent_id: doc_id },
+            limit:limit
+    else
+        Docs.find parent_id: doc_id
         
 Meteor.publish 'parent_doc', (child_id)->
     child =  Docs.findOne child_id

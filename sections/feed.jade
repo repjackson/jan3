@@ -2,9 +2,10 @@ template(name='feed')
     .ui.padded.stackable.grid
         .row
             .four.wide.column
-                h1.ui.center.aligned.header
+                h1.ui.header
                     i.rss.icon
                     | Feed
+                h5.ui.header Global Events
             .twelve.wide.column
                 .ui.feed
                     each feed_events
@@ -21,6 +22,7 @@ template(name='feed_event')
                 |#{action} #{text}
                 a(href="/view/#{parent._id}") #{parent.title}
                 .date #{when}
-        .meta
-            if is_dev
-                i.remove_event.remove.link.icon
+            .meta
+                a.mark_read Mark Read
+                if is_dev
+                    i.remove_event.remove.link.icon

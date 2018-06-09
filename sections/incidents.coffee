@@ -15,9 +15,9 @@ if Meteor.isClient
             $('.ui.checkbox').checkbox()
         #     $('.ui.tabular.menu .item').tab()
         , 400
-        Meteor.setTimeout ->
-            $('.ui.tabular.menu .item').tab()
-        , 500
+        # Meteor.setTimeout ->
+        #     $('.ui.tabular.menu .item').tab()
+        # , 500
         
         # $('.step').on('click', () ->
         #     console.log 'hi'

@@ -90,7 +90,7 @@ new Tabular.Table({
     { 
       data: "", 
       title: "Actions Taken",
-      tmpl: Meteor.isClient && Template.doc_history 
+      tmpl: Meteor.isClient && Template.small_doc_history 
     },
     { tmpl: Meteor.isClient && Template.view_button }
   ]

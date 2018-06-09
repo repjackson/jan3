@@ -3,13 +3,14 @@ template(name='incidents')
         .middle.aligned.centered.row
             .three.wide.column
                 +add_button type='incident' label='Incident'
-            .thirteen.wide.column
+            .ten.wide.column
                 h2.ui.center.aligned.header 
                     i.exclamation.circle.icon
                     | Incidents
+            .three.wide.column
         .row
             .sixteen.wide.column
-                {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable striped table"}}
+                {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable selectable striped fluid table"}}
 
 
 template(name='incident_item')
@@ -99,60 +100,33 @@ template(name='incident_view')
             .three.wide.center.aligned.column
                 +edit_button
         .row
-            .ui.top.attached.tabular.large.five.item.icon.menu
-                a.active.icon.item(data-tab='info' title='Overview') 
-                    i.large.info.icon
-                    // |Info
-                a.icon.item(data-tab='talk' title='Comments') 
-                    i.large.chat.icon
-                    // |Talk
-                a.icon.item(data-tab='status' title='SLA Status') 
-                    i.large.sort.numeric.down.icon
-                    // |Status
-                // a.icon.item(data-tab='analysis' title='Analysis') 
-                //     i.large.line.chart.icon
-                //     // |Analysis
-                a.icon.item(data-tab='activity' title='Activity') 
-                    i.large.rss.icon
-                    // | Activity
-            .ui.bottom.attached.active.tab.segment(data-tab='info')
-                .ui.padded.stackable.centered.grid
-                    .four.wide.column
-                        div
-                            |Logged by
-                            +author_info
-                            |#{when}
-                        +incident_type_label
-                        .ui.header #{formal_when}
-                    .eight.wide.column
-                        .ui.basic.segment
-                            .large130 {{nl2br incident_details}}
-                        if image_id
-                            img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                            if visual
-                                each visual
-                                    .ui.basic.label(title=type_hierarchy)
-                                        | #{class} {{to_percent score }}%
-                            else
-                                +call_visual_analysis
-                    .four.wide.column
-                        with author
-                            +user_card
-                        with office
-                            +office_card
-            .ui.bottom.attached.tab.segment(data-tab='status')
+            .four.wide.column
+                div
+                    |Logged by
+                    +author_info
+                    |#{when}
+                +incident_type_label
+                h4.ui.header Service Date: #{service_date}
                 +incident_status
-            .ui.bottom.attached.tab.segment(data-tab='talk')
-                .ui.padded.stackable.centered.grid
-                    .four.wide.column
-                        // +notify_button
-                    .twelve.wide.column
-                        +comments
-            .ui.bottom.attached.tab.segment(data-tab='activity')
-                .ui.padded.stackable.centered.grid
-                    .eight.wide.column
-                        .ui.header Incident History
-                        +doc_history
+            .eight.wide.column
+                .ui.basic.segment
+                    .large130 {{nl2br incident_details}}
+                if image_id
+                    img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
+                    if visual
+                        each visual
+                            .ui.basic.label(title=type_hierarchy)
+                                | #{class} {{to_percent score }}%
+                    else
+                        +call_visual_analysis
+                +comments
+                .ui.header Incident History
+                +full_doc_history
+            .four.wide.column
+                with author
+                    +user_card
+                with office
+                    +office_card
 
                             
 template(name='incident_level_set')
@@ -167,12 +141,10 @@ template(name='incident_type_label')
 
 
 template(name='incident_status')
-    .ui.padded.grid
-        .four.wide.column
-            .ui.header 
-                i.tasks.icon
-                |Status (current level: #{current_level})
-            +incident_level_set level=1
-            +incident_level_set level=2
-            +incident_level_set level=3
-            +incident_level_set level=4
+    .ui.header 
+        i.tasks.icon
+        |Status (current level: #{current_level})
+    +incident_level_set level=1
+    +incident_level_set level=2
+    +incident_level_set level=3
+    +incident_level_set level=4

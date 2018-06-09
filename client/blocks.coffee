@@ -272,17 +272,24 @@ Template.edit_author.helpers
     }
 
 
-Template.doc_history.onCreated ->
-    @autorun =>  Meteor.subscribe 'child_docs', @data._id
-
-
-Template.doc_history.helpers
+Template.small_doc_history.onCreated ->
+    @autorun =>  Meteor.subscribe 'child_docs', @data._id, 1
+Template.small_doc_history.helpers
     doc_history_events: (e,t) ->
         Docs.find {
             parent_id: Template.currentData()._id
             type:'event'
         }, 
-            limit: 1
+            sort:timestamp:-1
+            
+Template.full_doc_history.onCreated ->
+    @autorun =>  Meteor.subscribe 'child_docs', @data._id
+Template.full_doc_history.helpers
+    doc_history_events: (e,t) ->
+        Docs.find {
+            parent_id: Template.currentData()._id
+            type:'event'
+        }, 
             sort:timestamp:-1
             
             
