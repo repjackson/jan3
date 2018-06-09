@@ -14,31 +14,11 @@ template(name='actions')
                         +action_card
                         
                         
-template(name='action_item')
-    .ui.item
-        .content
-            a.grey.header(href="/view/#{_id}") 
-                |#{title}
-            .description
-                .ui.grid
-                    .twelve.wide.column
-                        |!{html}
-                    .four.wide.column
-                        .meta #{when}
-                        .meta #{formal_when}
-                        .meta by #{author.username}
-                        if comment_count
-                            a.meta(href="/view/#{_id}")
-                                i.comments.icon
-                                |#{comment_count} comments
-                        +view_button
-        
-
-                
 template(name='action_card')
     .ui.card
         .content
             .header #{title}
+            .meta #{slug}
         .content    
             |!{html}
             .right.floated 
@@ -52,43 +32,12 @@ template(name='action_card')
             // if date_array
             //     each date_array
             //         .ui.label #{this}
-            +small_comment_count
             +edit_button
             +view_button
 
 
 
 
-template(name='action_table')
-    table.ui.celled.selectable.table
-        tbody
-            each actions
-                +action_row
-                
-                
-template(name='action_row')                
-    tr
-        // td #{_id}
-        td 
-            a(href="/view/#{_id}") #{text}
-            |#{title}
-            // if editing_this_action
-            //     .ui.fluid.input
-            //         input.action_text(type='text' value=text placeholder='action Text')
-        td #{when}
-        // td #{due_date_when}
-        td 
-            +edit_button
-            +view_full_button
-        // td
-            // if editing_this_action
-            //     .save_action.ui.icon.button
-            //         i.checkmark.icon
-            // else
-            //     .edit_action.ui.icon.button
-            //         i.edit.icon
-            
-            
 template(name='action_view')
     .ui.padded.stackable.centered.grid
         .centered.row
@@ -104,7 +53,8 @@ template(name='action_view')
                 each tags
                     .ui.label #{this}
             .thirteen.wide.column
-                .ui.heade #{title}
+                .ui.header #{title}
+                .ui.sub.header Slug: #{slug}
                 |!{html}
                 +comments
             
@@ -122,6 +72,8 @@ template(name='action_edit')
         .centered.row
             .twelve.wide.column
                 +edit_text_field key='title' label='Title'
+                +edit_text_field key='slug' label='Slug'
+                .ui.hidden.divider
                 +edit_html
             .four.wide.column
                 +edit_array_field key='tags'

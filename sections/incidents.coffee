@@ -55,11 +55,9 @@ if Meteor.isClient
         selector: ->  type: "incident"
     
     Template.incident_edit.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
         @autorun -> Meteor.subscribe 'docs', [], 'incident_type'
     
     Template.incident_edit.helpers
-        incident: -> Doc.findOne FlowRouter.getParam('doc_id')
         incident_type_docs: -> Docs.find type:'incident_type'
     Template.incident_edit.events
         'click #delete': ->
@@ -96,3 +94,13 @@ if Meteor.isClient
                     type: 'incident_task'
                     parent_id: FlowRouter.getParam('doc_id')
             FlowRouter.go "/edit/#{new_incident_task_id}"
+            
+            
+            
+    Template.incident_task_edit.onCreated ->
+        @autorun -> Meteor.subscribe 'docs', [], 'action'
+            
+    Template.incident_task_edit.helpers
+        incident: -> Doc.findOne FlowRouter.getParam('doc_id')
+        action_docs: -> Docs.find type:'action'
+        

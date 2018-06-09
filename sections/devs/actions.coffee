@@ -15,12 +15,12 @@ if Meteor.isClient
             author_id=null
     
     Template.actions.onCreated ->
-        Meteor.setTimeout ->
-            $('.progress').progress()
-        , 1000
-        Meteor.setTimeout ->
-            $('.ui.accordion').accordion()
-        , 1000
+        # Meteor.setTimeout ->
+        #     $('.progress').progress()
+        # , 1000
+        # Meteor.setTimeout ->
+        #     $('.ui.accordion').accordion()
+        # , 1000
     
     
     

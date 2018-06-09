@@ -1,5 +1,5 @@
 if Meteor.isClient
-    FlowRouter.route '/policies`', action: ->
+    FlowRouter.route '/policies', action: ->
         BlazeLayout.render 'layout', 
             sub_nav:'admin_nav'
             main: 'policies'
@@ -15,12 +15,12 @@ if Meteor.isClient
             author_id=null
     
     Template.policies.onCreated ->
-        Meteor.setTimeout ->
-            $('.progress').progress()
-        , 1000
-        Meteor.setTimeout ->
-            $('.ui.accordion').accordion()
-        , 1000
+        # Meteor.setTimeout ->
+        #     $('.progress').progress()
+        # , 1000
+        # Meteor.setTimeout ->
+        #     $('.ui.accordion').accordion()
+        # , 1000
     
     
     

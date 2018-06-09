@@ -154,12 +154,16 @@ template(name='incident_status')
 template(name='incident_tasks')
     .ui.dividing.header 
         |Incident Tasks
-    i#add_incident_task.plus.link.icon(title='Add Task')
+    #add_incident_task.ui.small.icon.button(title='Add Task')
+        i.plus.icon
     .ui.list
         each incident_tasks
             .item
                 .content
-                    a.header(href="/view/#{_id}") #{title}
+                    a.header(href="/view/#{_id}") 
+                        if complete
+                            i.green.checkmark.icon
+                        |#{title}
                     
                     
 
@@ -176,12 +180,18 @@ template(name='incident_task_edit')
         .centered.row
             .twelve.wide.column
                 +edit_text_field key='title' label='Title' 
+                .ui.hidden.divider
                 +edit_html
             .four.wide.column
                 +edit_date_field label='Due Date' key='due_date'
                 // +edit_array_field key='tags' label='Tags'
                 +multiple_user_select
-                                
+                .ui.segment
+                    .ui.header Action Type
+                    each action_docs
+                        +toggle_key key='task_type' value=slug label=title
+    
+                
                     
 
 template(name='incident_task_view')

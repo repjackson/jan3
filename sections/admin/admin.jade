@@ -10,10 +10,11 @@ template(name='admin')
         +widget_list type='action' label='Actions' 
         +widget_list type='condition' label='Conditions' icon='umbrella'
         +widget_list type='automation' label='Automations' icon='car'
+        +widget_list type='policy' label='SLA' icon='sort numeric down'
     .ui.hidden.divider
         // +task_widget
         // +role_widget
-        // +rule_widget
+        +rule_widget
     
     
 template(name='admin_nav')    
@@ -33,9 +34,9 @@ template(name='admin_nav')
         a.item(href='/automations' class="{{isActivePath '/automations'}}" data-position="bottom center" data-content='Automations')
             i.car.icon
             .mobile.hidden Automations
-        // a.item(href='/policies' class="{{isActivePath '/policies'}}" data-position="bottom center" data-content='SLA Policies')
-        //     i.sort.numeric.down.icon
-            // .mobile.hidden SLA Rules
+        a.item(href='/policies' class="{{isActivePath '/policies'}}" data-position="bottom center" data-content='SLA Policies')
+            i.sort.numeric.down.icon
+            .mobile.hidden SLA Rules
             
             
 template(name='user_widget')
