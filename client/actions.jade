@@ -145,12 +145,12 @@ template(name='notify_button')
 template(name='mark_read_button')
     if currentUser
         if read
-            .mark_unread.ui.button(data-tooltip='Mark Unread')
-                +mini_sprite name='read-message' classes='avatar'
+            .mark_unread.ui.button
+                i.envelope.open.icon
                 |Read
         else
-            .mark_read.ui.basic.button(data-tooltip='Mark Read')
-                +mini_sprite name='message' classes='ui mini inline image'
+            .mark_read.ui.button
+                i.envelope.icon
                 |Unread
     +read_by_list
 

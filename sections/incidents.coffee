@@ -81,8 +81,14 @@ if Meteor.isClient
                     FlowRouter.go "/incidents"
 
 
+    Template.full_doc_history.onCreated ->
+        @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
 
     Template.incident_tasks.helpers
+        incident_tasks: ->
+            Docs.find
+                type: 'incident_task'
+                parent_id: FlowRouter.getParam('doc_id')
     Template.incident_tasks.events
         'click #add_incident_task': ->
             new_incident_task_id = 

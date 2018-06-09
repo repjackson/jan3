@@ -159,7 +159,7 @@ template(name='incident_tasks')
         each incident_tasks
             .item
                 .content
-                    .header #{title}
+                    a.header(href="/view/#{_id}") #{title}
                     
                     
 
@@ -183,3 +183,33 @@ template(name='incident_task_edit')
                 +multiple_user_select
                                 
                     
+
+template(name='incident_task_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.center.aligned.column
+                +parent_link
+            .ten.wide.center.aligned.column
+                h1.ui.center.aligned.grey.header View Incident Task
+            .three.wide.center.aligned.column
+                +edit_button
+        .row
+            .four.wide.column
+                +author_info
+                .ui.hidden.divider
+                if complete
+                    #turn_off.ui.icon.button
+                        i.large.toggle.on.green.icon
+                    .ui.header Complete
+                else
+                    #turn_on.ui.icon.button
+                        i.large.toggle.off.icon
+                    .ui.header Incomplete
+            .eight.wide.column
+                +parent_segment
+                .ui.header #{title}
+                |!{html}
+                +comments
+                +full_doc_history
+            .four.wide.column
+                 +mark_read_button   
