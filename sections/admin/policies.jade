@@ -34,12 +34,10 @@ template(name='policy_card')
             .content
                 +doc_sentiment
         .content
-            // +call_method name='tagify_timestamp'
-            // if date_array
-            //     each date_array
-            //         .ui.label #{this}
-            | #{comment_count}
-            i.comments.icon
+            +view_multiple_user key='policy_contact_ids' label='Policy Contacts'
+            +view_multiple_user key='escalation_contact_ids' label='Escalation Contacts'
+    
+        .content
             +edit_button
             +view_button
 
