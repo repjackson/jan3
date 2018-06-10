@@ -76,10 +76,15 @@ template(name='incident_edit')
                 .ui.large.form
                     +edit_number_field key='incident_number' label='Number' icon='hashtag'
                     +edit_date_field key='service_date' label='Service Date' icon='calendar'
-                    +multiple_user_select key='assigned_to' label='Assigned To' icon='users'
-                    
+                .ui.secondary.segment
+                    h4 Priority
+                    +toggle_key key='priority' value='low' label='Low'
+                    +toggle_key key='priority' value='medium' label='Medium'
+                    +toggle_key key='priority' value='high' label='High'
+                    +toggle_key key='priority' value='emergency' label='Emergency'
+                +multiple_user_select key='assigned_to' label='Assigned To' icon='users'
             .twelve.wide.column
-                .ui.segment
+                .ui.secondary.segment
                     .ui.header Type
                     each incident_type_docs
                         +toggle_key key='incident_type' value=slug label=name
@@ -120,7 +125,7 @@ template(name='incident_view')
                     // else
                     //     +call_visual_analysis
                 +comments
-                .ui.header Incident History
+                .ui.dividing.header Incident History
                 +full_doc_history
             .four.wide.column
                 with author
@@ -186,7 +191,7 @@ template(name='incident_task_edit')
                 +edit_date_field label='Due Date' key='due_date'
                 // +edit_array_field key='tags' label='Tags'
                 +multiple_user_select
-                .ui.segment
+                .ui.secondary.segment
                     .ui.header Action Type
                     each action_docs
                         +toggle_key key='task_type' value=slug label=title

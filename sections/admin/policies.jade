@@ -17,44 +17,10 @@ template(name='policies')
                         +policy_card
                         
                         
-template(name='policy_item')
-    .ui.item
-        if image_id
-            a.image(href="/view/#{_id}")
-                img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
-                // each visual
-                //     .ui.small.label #{class}
-        .content
-            a.grey.header(href="/view/#{_id}") 
-                |##{policy_number}
-            .description
-                .ui.grid
-                    .twelve.wide.column
-                        .large130 {{nl2br policy_details}}
-                    .four.wide.column
-                        .meta #{when}
-                        .meta #{formal_when}
-                        // .ui.horizontal.list
-                        //     each date_array
-                        //         .item #{this}
-                        .meta by #{author.username}
-                        if comment_count
-                            a.meta(href="/view/#{_id}")
-                                i.comments.icon
-                                |#{comment_count} comments
-                        +view_button
-                        if watson
-                            +doc_sentiment
-                            +doc_emotion
-                        // each tone.document_tone.tones
-                        //     h4.ui.header #{tone_id} {{ to_percent score }}%
-        
-
-                
 template(name='policy_card')
     .ui.card
         .content
-            .header #{na
+            .header #{name}
             |!{html}
         .content    
             |#{start}
@@ -77,39 +43,6 @@ template(name='policy_card')
             +edit_button
             +view_button
 
-
-
-
-template(name='policy_table')
-    table.ui.celled.selectable.table
-        tbody
-            each policies
-                +policy_row
-                
-                
-template(name='policy_row')                
-    tr
-        // td #{_id}
-        td 
-            a(href="/view/#{_id}") #{text}
-            |#{title}
-            // if editing_this_policy
-            //     .ui.fluid.input
-            //         input.policy_text(type='text' value=text placeholder='policy Text')
-        td #{when}
-        // td #{due_date_when}
-        td 
-            +edit_button
-            +view_full_button
-        // td
-            // if editing_this_policy
-            //     .save_policy.ui.icon.button
-            //         i.checkmark.icon
-            // else
-            //     .edit_policy.ui.icon.button
-            //         i.edit.icon
-            
-            
 template(name='policy_view')
     .ui.padded.stackable.centered.grid
         .centered.row
@@ -125,7 +58,7 @@ template(name='policy_view')
                 each tags
                     .ui.label #{this}
             .thirteen.wide.column
-                .ui.heade #{title}
+                .ui.header #{title}
                 |!{html}
                 +comments
             
@@ -136,16 +69,19 @@ template(name='policy_edit')
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.grey.header edit work policy
+                h1.ui.center.aligned.grey.header Edit Policy
             .three.wide.column
                 #delete.ui.icon.button
                     i.trash.icon
         .centered.row
             .twelve.wide.column
                 +edit_text_field key='name' label='Name'
-                +edit_date_field key='start' label='start' icon='clock'
-                +edit_html
+                .ui.hidden.divider
+                // +edit_html
+                +multiple_user_select key='policy_contact_ids' label='Policy Contacts'
+                +multiple_user_select key='escalation_contact_ids' label='Escalation Contacts'
             .four.wide.column
-                +edit_array_field key='tags'
+                +edit_number_field key='escalation_hours' label='Escalation Hours'
+                // +edit_array_field key='tags'
         
             

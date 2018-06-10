@@ -346,12 +346,13 @@ Template.multiple_user_select.onCreated ->
             
 Template.multiple_user_select.events
     'autocompleteselect #search': (event, template, selected_user) ->
+        key = Template.parentData(0).key
         # console.log 'selected ', doc
         page_doc = Docs.findOne FlowRouter.getParam('doc_id')
         # searched_value = doc["#{template.data.key}"]
         # console.log 'template ', template
         # console.log 'search value ', searched_value
-        Meteor.call 'assign_user', page_doc._id, selected_user, (err,res)=>
+        Meteor.call 'user_array_add', page_doc._id, key, selected_user, (err,res)=>
             if err
                 Bert.alert "Error Assigning #{selected_user.username}: #{err.reason}", 'danger', 'growl-top-right'
             else
@@ -359,9 +360,11 @@ Template.multiple_user_select.events
 
         $('#search').val ''
 
-    'click .unassign_user': ->
+    'click .pull_user': ->
+        context = Template.currentData(0)
+        console.log context
         swal {
-            title: "Unassign #{@username}?"
+            title: "Remove #{@username}?"
             # text: 'Confirm delete?'
             type: 'info'
             animation: false
@@ -372,11 +375,11 @@ Template.multiple_user_select.events
             confirmButtonColor: '#da5347'
         }, =>
             page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-            Meteor.call 'unassign_user', page_doc._id, @, (err,res)=>
+            Meteor.call 'user_array_pull', page_doc._id, context.key, @, (err,res)=>
                 if err
-                    Bert.alert "Error Unassigning #{@username}: #{err.reason}", 'danger', 'growl-top-right'
+                    Bert.alert "Error removing #{@username}: #{err.reason}", 'danger', 'growl-top-right'
                 else
-                    Bert.alert "Unssigned #{@username}.", 'success', 'growl-top-right'
+                    Bert.alert "Removed #{@username}.", 'success', 'growl-top-right'
     
 
 
@@ -397,7 +400,9 @@ Template.multiple_user_select.helpers
             ]
         }
 
-    assigned_to_users: ->
-        incident_doc = Docs.findOne FlowRouter.getParam('doc_id')
+    user_array_users: ->
+        context = Template.currentData(0)
+        # console.log context.key
+        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         Meteor.users.find
-            _id: $in: incident_doc.assigned_to
+            _id: $in: parent_doc["#{context.key}"]

@@ -235,9 +235,7 @@ Template.mark_read_button.helpers
     # read: -> true
     
 Template.mark_read_link.events
-    'click .mark_read': (e,t)-> 
-        console.log 'hi'
-        Meteor.call 'mark_read', @
+    'click .mark_read': (e,t)-> Meteor.call 'mark_read', @
     'click .mark_unread': (e,t)-> Meteor.call 'mark_read', @
 
 Template.mark_read_link.helpers
