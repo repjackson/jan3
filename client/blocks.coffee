@@ -406,3 +406,14 @@ Template.multiple_user_select.helpers
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         Meteor.users.find
             _id: $in: parent_doc["#{context.key}"]
+
+Template.view_multiple_user.onCreated ->
+    @autorun =>  Meteor.subscribe 'users'
+
+Template.view_multiple_user.helpers
+    user_array_users: ->
+        context = Template.currentData(0)
+        # console.log context.key
+        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Meteor.users.find
+            _id: $in: parent_doc["#{context.key}"]

@@ -54,9 +54,8 @@ template(name='policy_view')
                 +edit_button
         .row
             .three.wide.column
-                .ui.header tags
-                each tags
-                    .ui.label #{this}
+                +view_multiple_user key='policy_contact_ids' label='Policy Contacts'
+                +view_multiple_user key='escalation_contact_ids' label='Escalation Contacts'
             .thirteen.wide.column
                 .ui.header #{title}
                 |!{html}

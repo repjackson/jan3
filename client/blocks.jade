@@ -224,6 +224,23 @@ template(name='multiple_user_select')
                                 | @#{username}
           
           
+template(name='view_multiple_user')
+    .ui.form
+        .field
+            label #{label}
+        .field
+            .ui.list
+                each user_array_users
+                    .item
+                        .image
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            .header
+                                |#{profile.first_name} #{profile.last_name}
+                            .description
+                                | @#{username}
+          
+          
             
 template(name='call_phone_button')
     a.ui.fluid.button(href="tel:#{phone_number}") 
