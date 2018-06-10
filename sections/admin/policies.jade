@@ -53,6 +53,7 @@ template(name='policy_view')
             .four.wide.column
                 +view_multiple_user key='policy_contact_ids' label='Policy Contacts'
                 +view_multiple_user key='escalation_contact_ids' label='Escalation Contacts'
+                +view_numeric_field key='escalation_hours' label='Escalation Hours'
             .twelve.wide.column
                 .ui.header #{title}
                 |!{html}

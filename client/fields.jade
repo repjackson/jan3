@@ -65,6 +65,12 @@ template(name='edit_number_field')
                 i.icon(class=icon)
             input#number_field(type='number' min='0' value=key_value)
 
+template(name='view_numeric_field')
+    .ui.form
+        .field
+            label #{label}
+            | {{key_value}}
+
 
 template(name='edit_textarea')
     .ui.form

@@ -118,12 +118,6 @@ template(name='incident_view')
                     .large130 {{nl2br incident_details}}
                 if image_id
                     img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                    // if visual
-                    //     each visual
-                    //         .ui.basic.label(title=type_hierarchy)
-                    //             | #{class} {{to_percent score }}%
-                    // else
-                    //     +call_visual_analysis
                 +comments
                 .ui.dividing.header Incident History
                 +full_doc_history

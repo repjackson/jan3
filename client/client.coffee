@@ -59,17 +59,16 @@ Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 Template.registerHelper 'key_value', (key) -> 
     doc_field = Template.parentData(2)
     current_doc = Template.parentData(5)
-    # console.log doc_field.data.slug
+    console.log @key
     # console.log Template.parentData(5)
-    if current_doc
-        if doc_field.data and doc_field.data.slug
-            current_doc["#{doc_field.data.slug}"]
+    if @key
+        current_doc["#{@key}"]
 
 Template.registerHelper 'page_key_value', (key) -> 
     # doc_field = Template.parentData(2)
     current_doc = Docs.findOne FlowRouter.getParam('doc_id')
     if current_doc
-        current_doc["#{@key}"]
+        current_doc["#{key}"]
 
 
 
@@ -87,9 +86,7 @@ Template.left_sidebar.onRendered ->
                     .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')
             , 750
             
-Template.right_sidebar.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
+    if @subscriptionsReady()
             Meteor.setTimeout ->
                 $('.context.example .ui.right.sidebar')
                     .sidebar({
