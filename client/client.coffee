@@ -59,7 +59,7 @@ Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 Template.registerHelper 'key_value', (key) -> 
     doc_field = Template.parentData(2)
     current_doc = Template.parentData(5)
-    console.log @key
+    # console.log @key
     # console.log Template.parentData(5)
     if @key
         current_doc["#{@key}"]

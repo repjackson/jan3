@@ -13,51 +13,6 @@ template(name='incidents')
                 {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable selectable striped fluid table"}}
 
 
-template(name='incident_item')
-    .ui.item
-        if image_id
-            a.image(href="/view/#{_id}")
-                img.ui.rounded.image(src="{{c.url image_id  width=175 height=175 crop='fill' gravity='face' }}")
-                // each visual
-                //     .ui.basic.small.label #{class}
-        .content
-            a.grey.header(href="/view/#{_id}") 
-                |##{incident_number}
-            .description
-                .ui.stackable.grid
-                    .twelve.wide.column
-                        .large130 {{nl2br incident_details}}
-                        .ui.hidden.divider
-                        +tone
-                        .meta 
-                            |Keywords: 
-                            |&nbsp;
-                            each watson_keywords
-                                .ui.basic.label #{this}
-                    .four.wide.column
-                        +view_button
-                        .meta #{when}
-                        .meta #{formal_when}
-                        // .ui.horizontal.list
-                        //     each date_array
-                        //         .item #{this}
-                        if office.office_name
-                            .ui.basic.label #{office.office_name}
-                        +incident_type_label
-                        if current_level
-                            .ui.basic.label Level #{current_level}
-                        +author_info
-                        if comment_count
-                            a.meta(href="/view/#{_id}")
-                                i.comments.icon
-                                |#{comment_count} comments
-                        if watson
-                            +doc_sentiment
-                            +doc_emotion
-                        // each tone.document_tone.tones
-                        //     h4.ui.header #{tone_id} {{ to_percent score }}%
-        
-
                 
 template(name='incident_edit')
     .ui.padded.stackable.centered.grid
@@ -113,6 +68,8 @@ template(name='incident_view')
                 +incident_type_label
                 h4.ui.header Service Date: #{service_date}
                 +incident_status
+                +view_numeric_field key='current_level' value=current_level label='Current Level'
+
             .eight.wide.column
                 .ui.basic.segment
                     .large130 {{nl2br incident_details}}
