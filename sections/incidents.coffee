@@ -25,13 +25,12 @@ if Meteor.isClient
         #     )
     Template.incident_level_set.events
         'click .set_level': ->
-            incident = Template.parentData(1)
             doc_id = FlowRouter.getParam('doc_id')
-
+            incident = Docs.findOne Template.parentData(1)
+            # console.log @
             Docs.update incident._id,
                 $set: current_level:@level
-                Meteor.call 'create_event', doc_id, 'change_incident_level', 'changed incident level'
-                
+            Meteor.call 'set_incident_level', doc_id, 'change_incident_level', @level
                 
                 
     Template.incident_type_label.helpers

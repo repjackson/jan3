@@ -36,7 +36,6 @@ template(name='policy_card')
         .content
             +view_multiple_user key='policy_contact_ids' label='Policy Contacts'
             +view_multiple_user key='escalation_contact_ids' label='Escalation Contacts'
-    
         .content
             +edit_button
             +view_button
@@ -51,10 +50,10 @@ template(name='policy_view')
             .three.wide.column
                 +edit_button
         .row
-            .three.wide.column
+            .four.wide.column
                 +view_multiple_user key='policy_contact_ids' label='Policy Contacts'
                 +view_multiple_user key='escalation_contact_ids' label='Escalation Contacts'
-            .thirteen.wide.column
+            .twelve.wide.column
                 .ui.header #{title}
                 |!{html}
                 +comments

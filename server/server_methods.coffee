@@ -230,6 +230,19 @@ Meteor.methods
             event_type: event_type
             action:action
 
+    set_incident_level: (target_id, event_type, level)->
+        doc = Docs.findOne target_id
+        current_user = Meteor.users.findOne @userId
+        # console.log doc
+        if doc
+            Docs.update { target_id },
+                $set: level: level
+            Docs.insert
+                type:'event'
+                parent_id: target_id
+                event_type: 'change_level'
+                text: "#{current_user.username} changed level to #{level}"
+
 
     generate_upvoted_cloud: ->
         match = {}
