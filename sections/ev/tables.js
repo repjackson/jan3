@@ -245,6 +245,7 @@ new Tabular.Table({
     {data: "master_licensee", title: "Master Licensee"},
     {data: "customer_contact_person", title: "Customer Contact Person"},
     {data: "customer_contact_email", title: "Customer Contact Email"},
+    {data: "ev.ADDR_STATE", title: "State"},
     { tmpl: Meteor.isClient && Template.view_button }
   ]
 });
@@ -265,6 +266,8 @@ new Tabular.Table({
     {data: "master_licensee", title: "Master Licensee"},
     {data: "customer_contact_person", title: "Contact Person"},
     {data: "customer_contact_email", title: "Contact Email"},
+    {data: "ev.ADDR_STATE", title: "State"},
+
     { tmpl: Meteor.isClient && Template.view_button }
   ]
 });

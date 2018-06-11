@@ -87,19 +87,18 @@ template(name='set_session_item')
         
         
 template(name='edit_image_field')
-    .ui.secondary.segment
-        if image_id
-            .ui.image
-                img(src="{{c.url image_id }}")
-                a#remove_photo.ui.top.left.attached.link.label remove
-                // .ui.bottom.right.attached.label Image Id: #{image_id}
-        else
-            .ui.header Upload Image
-            input(type='file' name='upload_picture' accept='image/*')
-        // if isInRole 'admin'
-        //     .field
-        //         label or Choose Cloudinary Image Id
-        //         input#input_image_id(type='text')
+    .ui.dividing.header Image
+    if image_id
+        .ui.image
+            img(src="{{c.url image_id }}")
+            a#remove_photo.ui.top.left.attached.link.label remove
+            // .ui.bottom.right.attached.label Image Id: #{image_id}
+    else
+        input(type='file' name='upload_picture' accept='image/*')
+    // if isInRole 'admin'
+    //     .field
+    //         label or Choose Cloudinary Image Id
+    //         input#input_image_id(type='text')
     
 
 template(name='complete')            
@@ -203,12 +202,33 @@ template(name='associated_users')
             
           
 template(name='multiple_user_select')
+    .ui.dividing.header #{label}
+    .ui.form
+        .field
+            .ui.left.icon.input
+                i.search.icon
+                +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder="Select Users..."
+        .field
+            .ui.list
+                each user_array_users
+                    .item
+                        .right.floated.content
+                            i.pull_user.remove.red.link.icon
+                        .image
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            .header
+                                |#{profile.first_name} #{profile.last_name}
+                            .description
+                                | @#{username}
+          
+template(name='many_doc_select')
     .ui.form
         .field
             label #{label}
             .ui.left.icon.input
                 i.search.icon
-                +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder="Select Users..."
+                +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder="Select #{label}..."
         .field
             .ui.list
                 each user_array_users

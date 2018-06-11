@@ -28,21 +28,18 @@ template(name='incident_edit')
             .four.wide.column
                 // if is_dev
                 //     +edit_author
-                .ui.large.form
-                    +edit_number_field key='incident_number' label='Number' icon='hashtag'
-                    +edit_date_field key='service_date' label='Service Date' icon='calendar'
-                .ui.secondary.segment
-                    h4 Priority
-                    +toggle_key key='priority' value='low' label='Low'
-                    +toggle_key key='priority' value='medium' label='Medium'
-                    +toggle_key key='priority' value='high' label='High'
-                    +toggle_key key='priority' value='emergency' label='Emergency'
+                    // +edit_number_field key='incident_number' label='Number' icon='hashtag'
+                +edit_date_field key='service_date' label='Service Date' icon='calendar'
+                // .ui.dividing.header Priority
+                // +toggle_key key='priority' value='low' label='Low'
+                // +toggle_key key='priority' value='medium' label='Medium'
+                // +toggle_key key='priority' value='high' label='High'
+                // +toggle_key key='priority' value='emergency' label='Emergency'
                 +multiple_user_select key='assigned_to' label='Assigned To' icon='users'
             .twelve.wide.column
-                .ui.secondary.segment
-                    .ui.header Type
-                    each incident_type_docs
-                        +toggle_key key='incident_type' value=slug label=name
+                .ui.dividing.header Type
+                each incident_type_docs
+                    +toggle_key key='incident_type' value=slug label=name
     
                 // +edit_html_field
                 +edit_textarea label='Incident Details' key='incident_details'
@@ -69,17 +66,16 @@ template(name='incident_view')
                 +incident_type_label
                 h4.ui.header Service Date: #{service_date}
                 +incident_status
-                +view_numeric_field key='current_level' value=current_level label='Current Level'
-                .ui.secondary.segment
-                    h4 Priority
-                    +toggle_key key='priority' value='low' label='Low'
-                    +toggle_key key='priority' value='medium' label='Medium'
-                    +toggle_key key='priority' value='high' label='High'
-                    +toggle_key key='priority' value='emergency' label='Emergency'
-                .ui.secondary.segment
-                    h4 Status
-                    +toggle_key key='status' value='closed' label='Closed'
-                    +toggle_key key='status' value='open' label='Open'
+                // +view_numeric_field key='current_level' value=current_level label='Current Level'
+                // .ui.secondary.segment
+                //     h4 Priority
+                //     +toggle_key key='priority' value='low' label='Low'
+                //     +toggle_key key='priority' value='medium' label='Medium'
+                //     +toggle_key key='priority' value='high' label='High'
+                //     +toggle_key key='priority' value='emergency' label='Emergency'
+                .ui.dividing.header Status
+                +toggle_key key='status' value='closed' label='Closed'
+                +toggle_key key='status' value='open' label='Open'
 
             .eight.wide.column
                 .ui.basic.segment

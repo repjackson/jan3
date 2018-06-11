@@ -353,8 +353,6 @@ Template.toggle_key.events
        
 Template.multiple_user_select.onCreated ->
     @autorun =>  Meteor.subscribe 'users'
-            
-            
 Template.multiple_user_select.events
     'autocompleteselect #search': (event, template, selected_user) ->
         key = Template.parentData(0).key
@@ -391,6 +389,47 @@ Template.multiple_user_select.events
                     Bert.alert "Error removing #{@username}: #{err.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert "Removed #{@username}.", 'success', 'growl-top-right'
+    
+    
+    
+Template.many_doc_select.onCreated ->
+    @autorun =>  Meteor.subscribe 'users'
+Template.many_doc_select.events
+    'autocompleteselect #search': (event, template, selected_user) ->
+        key = Template.parentData(0).key
+        # console.log 'selected ', doc
+        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # searched_value = doc["#{template.data.key}"]
+        # console.log 'template ', template
+        # console.log 'search value ', searched_value
+        Meteor.call 'user_array_add', page_doc._id, key, selected_user, (err,res)=>
+            if err
+                Bert.alert "Error Assigning #{selected_user.username}: #{err.reason}", 'danger', 'growl-top-right'
+            else
+                Bert.alert "Assigned #{selected_user.username}.", 'success', 'growl-top-right'
+
+        $('#search').val ''
+
+    'click .pull_doc': ->
+        context = Template.currentData(0)
+        console.log context
+        swal {
+            title: "Remove #{@title} #{@text}?"
+            # text: 'Confirm delete?'
+            type: 'info'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Unassign'
+            confirmButtonColor: '#da5347'
+        }, =>
+            page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+            Meteor.call 'doc_array_pull', page_doc._id, context.key, @, (err,res)=>
+                if err
+                    Bert.alert "Error removing #{@title} #{@text}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Removed #{@title} #{@text}.", 'success', 'growl-top-right'
     
 
 

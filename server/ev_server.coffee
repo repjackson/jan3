@@ -386,7 +386,7 @@ Meteor.methods
                 # new_id = Docs.insert 
                 # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                     # console.log doc.CUST_NAME
                     # doc.type = 'customer'
                     existing_customer_doc = 

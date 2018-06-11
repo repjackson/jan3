@@ -4,7 +4,7 @@ template(name='edit_text_field')
             if icon
                 i.icon(class=icon)
             |#{label}
-        input#text_field(type='text' value=page_key_value)
+        input#text_field(type='text' value=key_value )
 
         
 template(name='view_text_field')
@@ -23,9 +23,9 @@ template(name='edit_html')
         
         
 template(name='edit_date_field')            
+    .ui.dividing.header #{label}
     .field
-        label #{label}
-        .ui.left.icon.input
+        .ui.icon.fluid.input
             if icon
                 i.icon(class=icon)
             input#date_field(type='date' value=key_value)        
@@ -73,9 +73,9 @@ template(name='view_numeric_field')
 
 
 template(name='edit_textarea')
+    .ui.dividing.header #{label}
     .ui.form
         .field
-            label #{label}
             textarea#textarea(rows='10') #{key_value}
 
 
