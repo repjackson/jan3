@@ -11,10 +11,10 @@ if Meteor.isClient
 
  
     Template.incident_view.onRendered ->
-        Meteor.setTimeout ->
-            $('.ui.checkbox').checkbox()
-        #     $('.ui.tabular.menu .item').tab()
-        , 400
+        # Meteor.setTimeout ->
+        #     $('.ui.checkbox').checkbox()
+        # #     $('.ui.tabular.menu .item').tab()
+        # , 400
         # Meteor.setTimeout ->
         #     $('.ui.tabular.menu .item').tab()
         # , 500

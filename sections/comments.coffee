@@ -40,13 +40,15 @@ if Meteor.isServer
 
     Meteor.methods 
         create_alert: (type, parent_id, comment_id)->
+            doc = Docs.findOne comment_id
             if type is 'comment'
                 new_alert_id = 
                     Docs.insert
-                        type:'alert'
-                        alert_type:'comment'
+                        type:'event'
+                        event_type:'comment'
                         parent_id:parent_id
                         comment_id:comment_id
+                        text: "#{doc.author().username} commented #{doc.text}."
                 return new_alert_id
             else
               throw new Meteor.Error 'unknown_type', 'unknown alert type'
