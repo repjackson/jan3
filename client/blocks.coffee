@@ -479,7 +479,7 @@ Template.single_doc_select.events
         context = Template.currentData(0)
         console.log context
         swal {
-            title: "Remove #{@title} #{@text}?"
+            title: "Remove #{@cust_name}?"
             # text: 'Confirm delete?'
             type: 'info'
             animation: false
@@ -492,13 +492,13 @@ Template.single_doc_select.events
             page_doc = Docs.findOne FlowRouter.getParam('doc_id')
             Meteor.call 'unlink_doc', page_doc._id, context.save_key, @, (err,res)=>
                 if err
-                    Bert.alert "Error removing #{@title} #{@text}: #{err.reason}", 'danger', 'growl-top-right'
+                    Bert.alert "Error removing #{@cust_name}: #{err.reason}", 'danger', 'growl-top-right'
                 else
-                    Bert.alert "Removed #{@title} #{@text}.", 'success', 'growl-top-right'
+                    Bert.alert "Removed #{@cust_name}.", 'success', 'growl-top-right'
     
 Template.single_doc_select.helpers
     settings: -> 
-        console.log @
+        # console.log @
         {
             position: 'bottom'
             limit: 10
@@ -515,12 +515,13 @@ Template.single_doc_select.helpers
 
     selected_doc: ->
         context = Template.currentData(0)
-        console.log context.save_key
+        # console.log context.save_key
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        console.log parent_doc["#{context.save_key}"]
-        Docs.findOne
-            _id: parent_doc["#{context.save_key}"]
-
+        # console.log parent_doc["#{context.save_key}"]
+        doc = 
+            Docs.findOne _id: parent_doc["#{context.save_key}"]
+        # console.log doc
+        doc
 Template.view_multiple_user.onCreated ->
     @autorun =>  Meteor.subscribe 'users'
 
@@ -542,5 +543,5 @@ Template.doc_result.helpers
         # console.log context.key
         # parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         found = Docs.findOne context._id
-        console.log found
+        # console.log found
         found
