@@ -7,9 +7,9 @@ if Meteor.isClient
     
     
     Template.comments.onRendered ->
-        Meteor.setTimeout ->
-            $('.ui.accordion').accordion()
-        , 400
+        # Meteor.setTimeout ->
+        #     $('.ui.accordion').accordion()
+        # , 400
     
     Template.comments.events
         'keyup #new_comment': (e,t)->
@@ -26,7 +26,7 @@ if Meteor.isClient
                 Meteor.call 'create_alert', 'comment', @_id, new_comment_id, (err,res)->
                     if err then console.error err
                     else
-                        console.log res
+                        # console.log res
         'click .delete_comment': ->
             if confirm 'delete comment?'
                 Docs.remove @_id

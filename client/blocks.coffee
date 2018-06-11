@@ -320,16 +320,27 @@ Template.toggle_key.helpers
 
 Template.toggle_key.events
     'click .toggle_key': ->
+        doc_id = FlowRouter.getParam('doc_id')
         # console.log Template.parentData()
         # console.log @
         if @value
-            Docs.update FlowRouter.getParam('doc_id'), 
-                $set: "#{@key}": "#{@value}"
+            Docs.update {_id:doc_id}, 
+                { $set: "#{@key}": "#{@value}" },
+                (err,res)=>
+                    if err
+                        Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                    else
+                        Docs.insert
+                            type:'event'
+                            parent_id: doc_id
+                            text:"changed #{@key} to #{@value}."
+                        Bert.alert "Updated to #{@label}", 'success', 'growl-top-right'
+                        
         else if Template.parentData()["#{@key}"] is true
-            Docs.update FlowRouter.getParam('doc_id'), 
+            Docs.update doc_id, 
                 $set: "#{@key}": false
         else
-            Docs.update FlowRouter.getParam('doc_id'), 
+            Docs.update doc_id, 
                 $set: "#{@key}": true
 
         

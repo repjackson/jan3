@@ -69,6 +69,12 @@ template(name='incident_view')
                 h4.ui.header Service Date: #{service_date}
                 +incident_status
                 +view_numeric_field key='current_level' value=current_level label='Current Level'
+                .ui.secondary.segment
+                    h4 Priority
+                    +toggle_key key='priority' value='low' label='Low'
+                    +toggle_key key='priority' value='medium' label='Medium'
+                    +toggle_key key='priority' value='high' label='High'
+                    +toggle_key key='priority' value='emergency' label='Emergency'
 
             .eight.wide.column
                 .ui.basic.segment
@@ -84,6 +90,14 @@ template(name='incident_view')
                 with office
                     +office_card
                 +incident_tasks
+
+template(name='edit_priority_field')
+    .ui.secondary.segment
+        h4 #{label}
+        +toggle_key key='priority' value='low' label='Low'
+        +toggle_key key='priority' value='medium' label='Medium'
+        +toggle_key key='priority' value='high' label='High'
+        +toggle_key key='priority' value='emergency' label='Emergency'
 
                             
 template(name='incident_level_set')
