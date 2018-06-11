@@ -210,6 +210,32 @@ Meteor.methods
             text: "#{user.username} was removed from #{key}."
         
         
+    link_doc: (doc_id, key, doc)->
+        # doc = Docs.findOne doc_id
+        # console.log 'linking doc', key
+        # console.log 'linking doc_id', doc_id
+        # console.log 'linking doc', doc
+        Docs.update doc_id,
+            $set: "#{key}": doc._id
+        Docs.insert
+            type:'event'
+            parent_id: doc_id
+            event_key: key
+            text: "#{doc.text} was added to #{key} on #{doc.type}"
+        
+        
+    unlink_doc: (doc_id, key, doc)->
+        doc = Docs.findOne doc_id
+        # console.log 'key', key
+        Docs.update doc_id,
+            $unset: "#{key}": 1
+        Docs.insert
+            type:'event'
+            parent_id: doc_id
+            event_key: key
+            text: "#{doc.text} was removed from #{key}."
+        
+        
     
     unassign_user: (doc_id, user)->
         doc = Docs.findOne doc_id
