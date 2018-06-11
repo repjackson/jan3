@@ -28,6 +28,7 @@ template(name='policy_card')
                 // |#{when}
                 +author_info
         .content
+            |Escalation Hours: #{escalation_hours}
             each tags
                 .ui.label #{this}
         if watson

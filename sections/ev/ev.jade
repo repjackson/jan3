@@ -29,7 +29,7 @@ template(name='ev_reports')
                 // .call_ev.ui.fluid.button Call EV API
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Reports selector=selector class="ui sortable striped table"}}
+                |{{> tabular table=TabularTables.Reports selector=selector class="ui sortable fluid striped table"}}
 
                     
                     
@@ -168,7 +168,7 @@ template(name='ev_fields')
                 .sync_ev_fields.ui.fluid.button Sync EV Fields
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Fields selector=selector class="ui sortable striped table"}}
+                |{{> tabular table=TabularTables.Fields selector=selector class="ui sortable fluid striped table"}}
 
 
 template(name='ev_users')
@@ -186,7 +186,7 @@ template(name='ev_users')
                     |Sync
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Users selector=selector class="ui sortable striped table"}}
+                |{{> tabular table=TabularTables.Users selector=selector class="ui sortable fluid striped table"}}
 
 
 template(name='user_view')
@@ -248,7 +248,7 @@ template(name='jpids')
                 //     input#office_lookup(type='text' placeholder='Lookup Office Name')
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Jpids selector=selector class="ui sortable striped table"}}
+                |{{> tabular table=TabularTables.Jpids selector=selector class="ui sortable fluid striped table"}}
 
                     
                     
@@ -268,7 +268,7 @@ template(name='areas')
                         i.external.icon
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Areas selector=selector class="ui sortable striped table"}}
+                |{{> tabular table=TabularTables.Areas selector=selector class="ui sortable fluid striped table"}}
 
                     
                     
@@ -288,7 +288,7 @@ template(name='ev_roles')
                         i.external.icon
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Ev_roles selector=selector class="ui sortable striped table"}}
+                |{{> tabular table=TabularTables.Ev_roles selector=selector class="ui sortable fluid striped table"}}
 
                     
                     
@@ -351,10 +351,12 @@ template(name='franchisee_view')
             .three.wide.column
                 +edit_button
         .row
-            .fourteen.wide.column
+            .sixteen.wide.column
                 .ui.secondary.segment
-                    .ui.header Name: #{franchisee}
-                    .ui.header Email: #{franchisee_email}
+                    .ui.header Franchise Name: 
+                        strong #{franchisee}
+                    .ui.header Franchise Email: 
+                        strong #{franchisee_email}
                 +related_customers
 
 template(name='customers')
@@ -386,7 +388,7 @@ template(name='customer_view')
             .three.wide.column
                 +edit_button
         .row
-            .fourteen.wide.column
+            .sixteen.wide.column
                 .ui.secondary.segment
                     h4.ui.header Name: #{cust_name}
                     h4.ui.header Master Licensee: #{master_licensee}
@@ -401,7 +403,7 @@ template(name='customer_view')
 template(name='related_customers')
     .ui.secondary.segment
         .ui.header #{franchisee}'s Customers
-        |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable striped table"}}
+        |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
         // .ui.list
         //     each related_customers
         //         a.item(href="/view/#{_id}") #{cust_name}                
@@ -409,6 +411,7 @@ template(name='related_customers')
 template(name='related_franchisees')
     .ui.secondary.segment
         .ui.header Related Franchisees
-        .ui.large.list
-            each related_franchisees
-                a.large.item(href="/view/#{_id}") #{franchisee}
+        |{{> tabular table=TabularTables.Related_franchisees selector=selector class="ui sortable fluid striped table"}}
+        // .ui.large.list
+        //     each related_franchisees
+        //         a.large.item(href="/view/#{_id}") #{franchisee}

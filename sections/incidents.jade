@@ -76,6 +76,10 @@ template(name='incident_view')
                     +toggle_key key='priority' value='medium' label='Medium'
                     +toggle_key key='priority' value='high' label='High'
                     +toggle_key key='priority' value='emergency' label='Emergency'
+                .ui.secondary.segment
+                    h4 Status
+                    +toggle_key key='status' value='closed' label='Closed'
+                    +toggle_key key='status' value='open' label='Open'
 
             .eight.wide.column
                 .ui.basic.segment

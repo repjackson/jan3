@@ -214,6 +214,23 @@ new Tabular.Table({
 
 
 new Tabular.Table({
+  name: "Related_franchisees",
+  collection: Docs,
+  // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  // pageLength: 50,
+  paging: false,
+  // buttonContainer: '.col-sm-6:eq(0)',
+  // buttons: ['copy', 'excel', 'pdf', 'csv'],
+  columns: [
+    {data: "jpid", title: "JP ID"},
+    {data: "franchisee", title: "Franchisee"},
+    {data: "franchisee_email", title: "Email"},
+    { tmpl: Meteor.isClient && Template.view_button }
+  ]
+});
+
+
+new Tabular.Table({
   name: "Customers",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
@@ -234,10 +251,11 @@ new Tabular.Table({
 new Tabular.Table({
   name: "Related_customers",
   collection: Docs,
+  paging: false,
   // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 100,
-  buttonContainer: '.col-sm-6:eq(0)',
-  buttons: ['copy', 'excel', 'pdf', 'csv'],
+  // pageLength: 100,
+  // buttonContainer: '.col-sm-6:eq(0)',
+  // buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
     {data: "jpid", title: "JP ID"},
     {data: "franchisee", title: "Franchisee"},

@@ -148,7 +148,7 @@ if Meteor.isClient
 
 
     Template.related_customers.onCreated ->
-        @autorun => Meteor.subscribe 'related_customers', FlowRouter.getParam('doc_id')
+        # @autorun => Meteor.subscribe 'related_customers', FlowRouter.getParam('doc_id')
     Template.related_customers.helpers
         selector: ->  
             page_doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -156,21 +156,27 @@ if Meteor.isClient
                 type: "customer"
                 franchisee: page_doc.franchisee
             }
-    Template.related_customers.helpers
-        related_customers: ->
-            page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-            Docs.find
-                franchisee: page_doc.franchisee
-                type: 'customer'
+    # Template.related_customers.helpers
+    #     related_customers: ->
+    #         page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+    #         Docs.find
+    #             franchisee: page_doc.franchisee
+    #             type: 'customer'
                 
     Template.related_franchisees.onCreated ->
-        @autorun => Meteor.subscribe 'customers_franchise', FlowRouter.getParam('doc_id')
+        # @autorun => Meteor.subscribe 'customers_franchise', FlowRouter.getParam('doc_id')
     Template.related_franchisees.helpers
-        related_franchisees: ->
+        selector: ->  
             page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-            Docs.find
-                type: 'franchisee'
-                customer: page_doc.customer
+            return {
+                type: "franchisee"
+                franchisee: page_doc.franchisee
+            }
+        # related_franchisees: ->
+        #     page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        #     Docs.find
+        #         type: 'franchisee'
+                # customer: page_doc.customer
                 
                 
 if Meteor.isServer
