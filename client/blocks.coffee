@@ -392,8 +392,6 @@ Template.multiple_user_select.events
     
     
     
-Template.many_doc_select.onCreated ->
-    @autorun =>  Meteor.subscribe 'users'
 Template.many_doc_select.events
     'autocompleteselect #search': (event, template, selected_user) ->
         key = Template.parentData(0).key
@@ -446,6 +444,35 @@ Template.multiple_user_select.helpers
                     matchAll: true
                     # filter: { type: "#{@type}" }
                     template: Template.user_result
+                }
+            ]
+        }
+
+    user_array_users: ->
+        context = Template.currentData(0)
+        # console.log context.key
+        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Meteor.users.find
+            _id: $in: parent_doc["#{context.key}"]
+
+
+
+Template.many_doc_select.onCreated ->
+    @autorun =>  Meteor.subscribe 'type', 'customer'
+
+Template.many_doc_select.helpers
+    settings: -> 
+        console.log @
+        {
+            position: 'bottom'
+            limit: 10
+            rules: [
+                {
+                    collection: Docs
+                    field: "#{@key}"
+                    matchAll: true
+                    filter: { type: "#{@type}" }
+                    template: Template.doc_result
                 }
             ]
         }

@@ -36,6 +36,7 @@ template(name='incident_edit')
                 // +toggle_key key='priority' value='high' label='High'
                 // +toggle_key key='priority' value='emergency' label='Emergency'
                 +multiple_user_select key='assigned_to' label='Assigned To' icon='users'
+                +many_doc_select type='customer' key='cust_name' label='Customer'
             .twelve.wide.column
                 .ui.dividing.header Type
                 each incident_type_docs
