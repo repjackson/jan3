@@ -1,7 +1,5 @@
 template(name='comments')
-    h3
-        i.large.chat.icon
-        |#{comment_count} Comments
+    .ui.dividing.header #{comment_count} Comments
     .ui.comments
         each comments
             .comment
@@ -19,6 +17,6 @@ template(name='comments')
                     .actions
                         // a.reply Reply
                         a.delete_comment delete
-    .ui.large.fluid.left.icon.input
+    .ui.large.fluid.left.icon.transparent.input
         i.plus.icon
         input#new_comment(type='text')

@@ -328,13 +328,13 @@ Template.toggle_key.events
                 { $set: "#{@key}": "#{@value}" },
                 (err,res)=>
                     if err
-                        Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                        Bert.alert "Error changing #{@key} to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
                     else
                         Docs.insert
                             type:'event'
                             parent_id: doc_id
                             text:"changed #{@key} to #{@value}."
-                        Bert.alert "Updated to #{@label}", 'success', 'growl-top-right'
+                        Bert.alert "Changed #{@key} to #{@value}", 'success', 'growl-top-right'
                         
         else if Template.parentData()["#{@key}"] is true
             Docs.update doc_id, 

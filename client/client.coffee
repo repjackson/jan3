@@ -28,6 +28,7 @@ Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
 Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
 
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()         
+Template.registerHelper 'is_closed', () -> @status is 'closed'
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 Template.registerHelper 'reg_format', (input) -> moment(input).format('MMMM Do YYYY, h:mm:ss a')

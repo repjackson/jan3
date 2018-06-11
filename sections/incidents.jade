@@ -83,7 +83,7 @@ template(name='incident_view')
                 if image_id
                     img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
                 +comments
-                .ui.dividing.header Incident History
+                .ui.dividing.header History
                 +full_doc_history
             .four.wide.column
                 with author
@@ -113,13 +113,12 @@ template(name='incident_type_label')
 
 
 template(name='incident_status')
-    .ui.dividing.header 
-        i.tasks.icon
-        |Level: #{current_level}
-    +incident_level_set level=1
-    +incident_level_set level=2
-    +incident_level_set level=3
-    +incident_level_set level=4
+    .ui.dividing.header Level #{current_level}
+    unless is_closed
+        +incident_level_set level=1
+        +incident_level_set level=2
+        +incident_level_set level=3
+        +incident_level_set level=4
 
 
 template(name='incident_tasks')

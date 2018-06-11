@@ -56,6 +56,7 @@ new Tabular.Table({
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
   pageLength: 50,
+  order: [[ 2, 'desc' ]],
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'csv'],
   columns: [
@@ -64,7 +65,7 @@ new Tabular.Table({
     // {data: "when", title: "Logged"},
     {
       data: "timestamp",
-      title: "Logged When",
+      title: "Logged",
       render: function (timestamp, type, doc) {
         return doc.when();
       }
