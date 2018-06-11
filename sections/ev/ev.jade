@@ -384,18 +384,46 @@ template(name='customer_view')
             .three.wide.column
                 +link_button link='/customers' icon='handshake' label='Customers'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header ##{jpid} Customer View
+                h1.ui.center.aligned.grey.header ##{jpid} #{cust_name} Customer
             .three.wide.column
                 +edit_button
         .row
             .sixteen.wide.column
                 .ui.secondary.segment
-                    h4.ui.header Name: #{cust_name}
-                    h4.ui.header Master Licensee: #{master_licensee}
-                    h4.ui.header Contact Person: #{customer_contact_person}
-                    h4.ui.header Contact Email: #{customer_contact_email}
-                    h4.ui.header Tel: #{telephone}
-                    h4.ui.header Franchisee: #{franchisee}
+                    // h4.ui.header Name: #{cust_name}
+                    // h4.ui.header Master Licensee: #{master_licensee}
+                    // h4.ui.header Contact Person: #{customer_contact_person}
+                    // h4.ui.header Contact Email: #{customer_contact_email}
+                    // h4.ui.header Tel: #{telephone}
+                    // h4.ui.header Franchisee: #{franchisee}
+                    with ev
+                        div Master Licensee
+                            strong #{MASTER_LICENSEE}
+                        div JP ID
+                            strong #{ID}
+                        div Customer Name
+                            strong #{CUST_NAME}
+                        div Customer Contact Person
+                            strong #{CUST_CONT_PERSON}
+                        div Customer Contact Email
+                            strong #{CUST_CONTACT_EMAIL}
+                        div Tel
+                            strong #{TELEPHONE}
+                        div Address
+                            strong #{ADDR_STREET}
+                        div    
+                            strong #{ADDR_STREET_2}
+                        div 
+                            strong #{ADDR_CITY} #{ADDR_STATE}
+                        div Franchisee
+                            strong #{FRANCHISEE}
+                        div Number of Days of Service
+                            strong #{CUST_NUM_DAYS_SERVICE}
+                        div Days Service
+                            strong #{CUST_DAYS_SERVICE}
+                        div Regular Service Amount
+                            strong #{CUST_REG_SERVICE_AMT}
+
                 +related_franchisees
                 
                 

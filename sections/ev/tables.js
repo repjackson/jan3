@@ -219,6 +219,7 @@ new Tabular.Table({
   // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
   // pageLength: 50,
   paging: false,
+  searching: false,
   // buttonContainer: '.col-sm-6:eq(0)',
   // buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
@@ -252,6 +253,7 @@ new Tabular.Table({
   name: "Related_customers",
   collection: Docs,
   paging: false,
+  searching: false,
   // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
   // pageLength: 100,
   // buttonContainer: '.col-sm-6:eq(0)',

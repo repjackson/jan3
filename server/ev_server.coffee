@@ -382,23 +382,23 @@ Meteor.methods
             if err then console.error('errors',err)
             else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+                # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
                 # new_id = Docs.insert 
                 # console.log 'new id', new_id
-            # if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                # for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                #     # console.log doc.CUST_NAME
-                #     # doc.type = 'customer'
-                #     existing_customer_doc = 
-                #         Docs.findOne 
-                #             type: 'customer'
-                #             jpid: doc.ID
-                #             cust_name: doc.CUST_NAME
-                #     if existing_customer_doc
-                #         console.log "existing customer #{existing_customer_doc.cust_name}"
-                #         # Docs.update existing_jpid,
-                #         #     $set:
-                #         #         ev: json_result.PROBLEM_RECORD
+            if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+                    # console.log doc.CUST_NAME
+                    # doc.type = 'customer'
+                    existing_customer_doc = 
+                        Docs.findOne 
+                            type: 'customer'
+                            jpid: doc.ID
+                            cust_name: doc.CUST_NAME
+                    if existing_customer_doc
+                        console.log "existing customer #{existing_customer_doc.cust_name}"
+                        Docs.update existing_customer_doc._id,
+                            $set:
+                                ev: doc
                 #     else                    
                 #         new_customer_doc = Docs.insert 
                 #             type: 'customer'
