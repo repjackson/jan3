@@ -5,7 +5,6 @@ if Meteor.isClient
     Template.nav.onCreated ->
         @autorun -> 
             Meteor.subscribe 'me'
-            Meteor.subscribe 'users'
         
     Template.dashboard.onRendered ->
         Meteor.setTimeout ->

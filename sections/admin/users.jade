@@ -18,7 +18,7 @@ template(name='users')
         .centered.row
             .sixteen.wide.column 
                 // +user_table
-                {{> tabular table=TabularTables.Users selector=selector class="ui sortable selectable striped fluid table"}}
+                {{> tabular table=TabularTables.Users class="ui sortable selectable striped fluid table"}}
 
 
         
@@ -67,37 +67,10 @@ template(name='user_card')
         
                         
                 
-template(name='user_table')
-    .ui.padded.grid
-        .row
-            .sixteen.wide.column
-                table.ui.sortable.striped.table
-                    // thead
-                    //     tr
-                    //         th Image
-                    //         th Profile
-                    //         th Roles
-                    //         th Actions
-                    tbody
-                        each users
-                            tr
-                                td 
-                                    img.ui.tiny.image(src="{{c.url profile.image_id width=300 height=300 gravity='face' crop='fill'}}")
-                                td 
-                                    .ui.header 
-                                        |#{name}
-                                    a.ui.header(href="/profile/#{username}") #{username} 
-                                    h5 #{profile.office_name}
-                                    div
-                                        each emails
-                                            |#{address}
-                                td 
-                                    each roles
-                                        .ui.label #{this}
-                                td
-                                    a.ui.icon.disabled.button
-                                        i.large.envelope.icon                                        
-                                    a.ui.icon.button(href="/profile/edit/#{_id}")
-                                        i.large.pencil.icon                                        
-                                    a.ui.icon.button(href="/profile/#{username}")
-                                        i.large.external.icon
+                                // td
+                                //     a.ui.icon.disabled.button
+                                //         i.large.envelope.icon                                        
+                                //     a.ui.icon.button(href="/profile/edit/#{_id}")
+                                //         i.large.pencil.icon                                        
+                                //     a.ui.icon.button(href="/profile/#{username}")
+                                //         i.large.external.icon

@@ -145,9 +145,10 @@ new Tabular.Table({
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
+    {data: "username", title: "Username"},
     {data: "profile.first_name", title: "First Name"},
     {data: "profile.last_name", title: "Last Type"},
-    {data: "emails[0].address", title: "Emails"},
+    {data: "emails[0].address", title: "Email"},
     {data: "profile.office_name", title: "Office Name"},
     // { tmpl: Meteor.isClient && Template.view_button }
 

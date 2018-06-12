@@ -7,7 +7,7 @@ if Meteor.isClient
 
             
     Template.users.helpers
-        users: -> Meteor.users.find()
+        # users: -> Meteor.users.find()
                 
     Template.users.events
         # 'click #add_user': ->
@@ -17,7 +17,7 @@ if Meteor.isClient
     
     
     Template.users.onCreated ->
-        @autorun -> Meteor.subscribe('users', selected_people_tags.array())
+        # @autorun -> Meteor.subscribe('users', selected_people_tags.array())
     # Template.user.onCreated ->
     #     @autorun -> Meteor.subscribe('user', @_id)
     Template.role_selector.onCreated ->

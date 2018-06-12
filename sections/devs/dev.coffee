@@ -8,13 +8,6 @@ FlowRouter.route '/dev', action: (params) ->
  
  
 if Meteor.isClient
-    Template.user_table.onCreated ->
-        @autorun ->  Meteor.subscribe 'users'
-    
-    
-    Template.user_table.helpers
-        users: -> Meteor.users.find {}
-    
     Template.dev.events
     
     Template.dev_nav.onRendered ->

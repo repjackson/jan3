@@ -564,7 +564,7 @@ Template.user_office_card.helpers
             customer_doc = Docs.findOne
                 jpid:Meteor.user().profile.customer_jpid
                 
-            if customer_doc
-                console.log customer_doc.master_licensee
+            # if customer_doc
+                # console.log customer_doc.master_licensee
                 
                 

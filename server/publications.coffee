@@ -695,8 +695,8 @@ Meteor.publish 'facet_doc', (tags)->
     Docs.find
         tags: split_array
         
-Meteor.publish 'users', ()->
-    Meteor.users.find()
+# Meteor.publish 'users', ()->
+#     Meteor.users.find()
     
     
         

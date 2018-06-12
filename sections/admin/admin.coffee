@@ -14,17 +14,6 @@ if Meteor.isClient
         
 
 
-    Template.user_table.onCreated ->
-        @autorun ->  Meteor.subscribe 'users'
-    Template.user_table.helpers
-        users: -> Meteor.users.find {}
-    
-    Template.user_widget.onCreated ->
-        @autorun ->  Meteor.subscribe 'users'
-    Template.user_widget.helpers
-        users: -> Meteor.users.find {}
-    
-    
     
     Template.task_widget.onCreated ->
         @autorun ->  Meteor.subscribe 'docs', [], 'task'
