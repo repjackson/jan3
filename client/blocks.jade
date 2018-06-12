@@ -464,7 +464,7 @@ template(name='my_customer_account')
     with my_customer_doc
         .ui.card 
             .content
-                a.header(href="/view/#{_id}") #{CUST_NAME}
+                a.header(href="/view/#{_id}") #{ev.CUST_NAME}
                 div
                     strong ##{ev.ID}
             .content
