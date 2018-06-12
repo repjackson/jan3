@@ -256,6 +256,10 @@ Meteor.methods
             event_type: 'assignment'
             text: "#{user.username} was unassigned from #{doc.type}"
         
+    parseUpload: ( data )->
+        console.dir data
+    
+    
     
         
     create_event: (parent_id, event_type, action)->

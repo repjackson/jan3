@@ -26,7 +26,7 @@ new Tabular.Table({
   name: "Reports",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 50,
+  pageLength: 10,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
   columns: [
@@ -55,7 +55,7 @@ new Tabular.Table({
   name: "Incidents",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 50,
+  pageLength: 10,
   order: [[ 2, 'desc' ]],
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'csv'],
@@ -107,7 +107,7 @@ new Tabular.Table({
   name: "Fields",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 50,
+  pageLength: 10,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
   columns: [
@@ -121,7 +121,7 @@ new Tabular.Table({
   name: "Users",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 50,
+  pageLength: 10,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
@@ -142,7 +142,7 @@ new Tabular.Table({
   name: "Jpids",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 50,
+  pageLength: 10,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv', 'colvis'],
   columns: [
@@ -164,7 +164,7 @@ new Tabular.Table({
   name: "Areas",
   collection: Docs,
   // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 50,
+  pageLength: 10,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
@@ -179,7 +179,7 @@ new Tabular.Table({
   name: "Ev_roles",
   collection: Docs,
   // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 50,
+  pageLength: 10,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
@@ -192,7 +192,7 @@ new Tabular.Table({
   name: "Meta",
   collection: Docs,
   // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 50,
+  pageLength: 10,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
@@ -208,7 +208,7 @@ new Tabular.Table({
   name: "Franchisees",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 50,
+  pageLength: 10,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
@@ -224,7 +224,7 @@ new Tabular.Table({
   name: "Related_franchisees",
   collection: Docs,
   // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  // pageLength: 50,
+  // pageLength: 10,
   paging: false,
   searching: false,
   // buttonContainer: '.col-sm-6:eq(0)',
@@ -242,7 +242,7 @@ new Tabular.Table({
   name: "Customers",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 50,
+  pageLength: 10,
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [

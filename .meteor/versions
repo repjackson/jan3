@@ -55,6 +55,7 @@ froala:editor-reactive@2.4.2
 geojson-utils@1.0.10
 gwendall:body-events@0.1.6
 gwendall:session-json@0.1.7
+harrison:papa-parse@1.1.7
 hot-code-push@1.0.4
 html-tools@1.0.11
 htmljs@1.0.11
@@ -77,12 +78,10 @@ maazalik:highcharts@0.4.0
 manuel:reactivearray@1.0.9
 matb33:collection-hooks@0.8.4
 mdg:geolocation@1.3.0
-mdg:meteor-apm-agent@3.1.1
 meteor@1.8.6
 meteor-base@1.3.0
 meteorhacks:aggregate@1.3.0
 meteorhacks:collection-utils@1.2.0
-meteorhacks:meteorx@1.4.1
 minifier-css@1.3.1
 minifiers@1.1.7
 minimongo@1.4.4

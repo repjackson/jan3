@@ -2,18 +2,16 @@ template(name='users')
     .ui.padded.stackable.container.grid
         .centered.row
             .four.wide.column 
-                +set_view_mode view='cards' icon='clone' label='Cards'
-                +set_view_mode view='table' icon='table' label='Table'
                 a.ui.large.icon.button(href='/user/add' data-content='Add User')
                     i.plus.icon
-                +user_cloud
             .twelve.wide.column 
-                if viewing_cards
-                    .ui.centered.stackable.cards
-                        each users
-                            +user_card
-                if viewing_table
-                    +user_table
+                if is_dev
+                    .ui.header upload user list
+                    unless uploading
+                        input(type="file" name="upload_csv")
+                    else
+                        |Uploading files...
+                +user_table
 
         
         

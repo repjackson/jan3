@@ -29,7 +29,7 @@ zimme:active-route
 useraccounts:flow-routing
 lepozepo:cloudinary
 momentjs:moment
-reactive-var@1.0.11
+reactive-var
 kevohagan:sweetalert
 raix:handlebar-helpers
 matb33:collection-hooks
@@ -54,4 +54,4 @@ http
 peerlibrary:xml2js
 perak:codemirror
 aldeed:tabular
-mdg:meteor-apm-agent
+harrison:papa-parse

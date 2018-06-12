@@ -3,7 +3,7 @@ if Meteor.isClient
         BlazeLayout.render 'layout',
             nav: 'nav'
             sub_nav: 'admin_nav'
-            main: 'user_table'
+            main: 'users'
 
             
     Template.users.helpers
@@ -37,19 +37,28 @@ if Meteor.isClient
                     tag_count: 1
                 limit: 20
     
-        viewing_list: -> Session.equals 'view_mode','list'    
-        viewing_table: -> Session.equals 'view_mode','table'    
-        viewing_cards: -> Session.equals 'view_mode','cards'    
-        viewing_chart: -> Session.equals 'view_mode','charts'    
+    Template.users.onCreated () ->
+        Template.instance().uploading = new ReactiveVar false 
+    
+    Template.users.helpers
+        uploading: -> Template.instance().uploading.get()
+    
+    
+    Template.users.events
+        'change [name="upload_csv"]': (event,template)->
+            template.uploading.set true
 
-    # Template.user.events
-    #     'click .user_tag': ->
-    #         if @valueOf() in selected_people_tags.array() then selected_people_tags.remove @valueOf() else selected_people_tags.push @valueOf()
+            Papa.parse event.target.files[0],
+                header: true
+                complete: (results,file) =>
+                    Meteor.call 'parseUpload', results.data, (err,res)=>
+                        if err
+                            console.log err.reason
+                        else
+                            template.uploading.set false
+                            Bert.alert 'Upload complete!', 'success', 'growl-top-right'
     
-    # Template.user.helpers
-    #     ten_tags: -> if @tags then @tags[.6]
     
-    #     user_tag_class: -> if @valueOf() in selected_people_tags.array() then 'teal' else 'basic'
     
     
     Template.role_selector.events

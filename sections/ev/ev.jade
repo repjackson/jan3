@@ -165,7 +165,8 @@ template(name='ev_fields')
                     i.cubes.icon
                     | EV Fields
             .three.wide.column
-                .sync_ev_fields.ui.fluid.button Sync EV Fields
+                if is_dev
+                    .sync_ev_fields.ui.fluid.button Sync EV Fields
         .row
             .sixteen.wide.column
                 |{{> tabular table=TabularTables.Fields selector=selector class="ui sortable fluid striped table"}}
@@ -181,9 +182,10 @@ template(name='ev_users')
                     i.users.icon
                     | EV Users
             .three.wide.column
-                .sync_ev_users.ui.fluid.button 
-                    i.refresh.icon
-                    |Sync
+                if is_dev
+                    .sync_ev_users.ui.fluid.button 
+                        i.refresh.icon
+                        |Sync
         .row
             .sixteen.wide.column
                 |{{> tabular table=TabularTables.Users selector=selector class="ui sortable fluid striped table"}}
