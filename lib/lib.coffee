@@ -48,6 +48,7 @@ Docs.helpers
     author: -> Meteor.users.findOne @author_id
     when: -> moment(@timestamp).fromNow()
     parent: -> Docs.findOne @parent_id
+    customer: -> Docs.findOne @customer_id
     comment_count: -> Docs.find({type:'comment', parent_id:@_id}).count()
     # notified_users: -> 
     #     Meteor.users.find 

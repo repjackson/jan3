@@ -1,22 +1,23 @@
 template(name='footer')
-    #footer.ui.inverted.fluid.segment.footer
-        .ui.container
-            .ui.stackable.inverted.divided.equal.height.stackable.grid
-                .row
-                    .four.wide.column
-                        a.ui.inverted.header(href='/work') Development Log
-                            // .item Why Jan-Pro
-                        //     .item Commercial Cleaning
-                        //     .item About Us
-                    // .four.wide.column
-                    //     .ui.big.list
-                    //         .item Contact Us
-                    //         .item Legal/ Privacy Policy
-                    .seven.wide.column
-                        // .ui.inverted.grey.header Regional Office Name
-                        | demo login: demo/password
-                // .centered.row
-                //     .ui.center.aligned.inverted.grey.header
-                //         i.copyright.icon
-                //         | 2018 Jan-Pro
-            
+    #footer.ui.fluid.segment.footer
+        .ui.stackable.equal.height.centered.padded.grid
+            .row
+                .four.wide.inverted.column
+                    // a.ui.inverted.header(href='/work') Development Log
+                    .ui.big.inverted.list
+                        .item Why Jan-Pro
+                        .item Commercial Cleaning
+                        .item About Us
+                .four.wide.column
+                    .ui.big.list
+                        .item Contact Us
+                        .item Legal/ Privacy Policy
+                        .item demo login: demo/password
+                .six.wide.column
+                    .ui.dividing.inverted.header My Customer Account
+                    +my_customer_account
+            .centered.row
+                .ui.center.aligned.inverted.grey.header
+                    i.copyright.icon
+                    | 2018 Jan-Pro
+        

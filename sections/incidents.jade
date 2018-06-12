@@ -67,13 +67,7 @@ template(name='incident_view')
                 +incident_type_label
                 h4.ui.header Service Date: #{service_date}
                 +incident_status
-                // +view_numeric_field key='current_level' value=current_level label='Current Level'
-                // .ui.secondary.segment
-                //     h4 Priority
-                //     +toggle_key key='priority' value='low' label='Low'
-                //     +toggle_key key='priority' value='medium' label='Medium'
-                //     +toggle_key key='priority' value='high' label='High'
-                //     +toggle_key key='priority' value='emergency' label='Emergency'
+                +single_doc_select type='customer' save_key='customer_id' search_key='cust_name' label='Customer'
                 .ui.dividing.header Status
                 +toggle_key key='status' value='closed' label='Closed'
                 +toggle_key key='status' value='open' label='Open'

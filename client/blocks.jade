@@ -247,7 +247,7 @@ template(name='single_doc_select')
                     i.handshake.icon
                     +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder='Customer Name...'
     with selected_doc
-        .ui.card
+        .ui.fluid.card
             .content
                 .header 
                     |#{cust_name}
@@ -457,3 +457,37 @@ template(name='doc_result')
         .ui.item
             .content
                 .header #{title} #{text} #{cust_name}
+                
+                
+                
+template(name='my_customer_account')
+    with my_customer_doc
+        .ui.card 
+            .content
+                with ev
+                    div Master Licensee
+                        strong #{MASTER_LICENSEE}
+                    div JP ID
+                        strong #{ID}
+                    div Customer Name
+                        strong #{CUST_NAME}
+                    div Customer Contact Person
+                        strong #{CUST_CONT_PERSON}
+                    div Customer Contact Email
+                        strong #{CUST_CONTACT_EMAIL}
+                    div Tel
+                        strong #{TELEPHONE}
+                    div Address
+                        strong #{ADDR_STREET}
+                    div    
+                        strong #{ADDR_STREET_2}
+                    div 
+                        strong #{ADDR_CITY} #{ADDR_STATE}
+                    div Franchisee
+                        strong #{FRANCHISEE}
+                    div Number of Days of Service
+                        strong #{CUST_NUM_DAYS_SERVICE}
+                    div Days Service
+                        strong #{CUST_DAYS_SERVICE}
+                    div Regular Service Amount
+                        strong #{CUST_REG_SERVICE_AMT}

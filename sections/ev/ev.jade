@@ -348,7 +348,7 @@ template(name='franchisee_view')
                 +link_button link='/franchisees' icon='user circle' label='Franchisees'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header ##{jpid} Franchisee View
-            .three.wide.column
+            .three.wide.right.aligned.column
                 +edit_button
         .row
             .sixteen.wide.column
@@ -368,7 +368,7 @@ template(name='customers')
                 h1.ui.center.aligned.header
                     i.handshake.icon
                     | EV Customers
-            .three.wide.column
+            .three.wide.right.aligned.column
                 if is_dev
                     .sync_customers.ui.icon.button(title='Refresh Customers')
                         i.refresh.icon
@@ -385,7 +385,7 @@ template(name='customer_view')
                 +link_button link='/customers' icon='handshake' label='Customers'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header ##{jpid} #{cust_name} Customer
-            .three.wide.column
+            .three.wide.right.aligned.column
                 +edit_button
         .row
             .sixteen.wide.column

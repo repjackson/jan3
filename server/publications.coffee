@@ -671,6 +671,12 @@ Meteor.publish 'type', (type)->
     Docs.find {type:type}, limit:300
         
         
+Meteor.publish 'my_customer_account_doc', ->
+    cust_id = Meteor.user().profile.customer_jpid
+    cursor = Docs.find jpid:cust_id
+    # console.log cursor.count()
+    cursor
+        
 Meteor.publish 'child_docs', (doc_id, limit)->
     if limit
         Docs.find {parent_id: doc_id },
@@ -818,5 +824,7 @@ Meteor.publish 'doc_tags', (selected_tags)->
             index: i
 
     self.ready()
+    
+    
     
     

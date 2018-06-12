@@ -545,3 +545,12 @@ Template.doc_result.helpers
         found = Docs.findOne context._id
         # console.log found
         found
+        
+        
+Template.my_customer_account.onCreated ->
+    @autorun =>  Meteor.subscribe 'my_customer_account_doc'
+Template.my_customer_account.helpers
+    my_customer_doc: ->
+        if Meteor.user()
+            Docs.findOne
+                jpid:Meteor.user().profile.customer_jpid

@@ -31,6 +31,10 @@ template(name='view_profile')
                     //         .ui.label #{this}
                     .ui.list
                         .item
+                            if profile.office_jpid
+                                strong Office JP ID 
+                                | #{profile.office_jpid}
+                        .item
                             if profile.position
                                 strong Position 
                                 | #{profile.position}
@@ -51,12 +55,6 @@ template(name='view_profile')
                     .ui.button Send Message
                     .ui.button Tag User
                     .ui.three.centered.cards
-                        .ui.card
-                            .content
-                                .ui.header Following
-                        .ui.card
-                            .content
-                                .ui.header Followed By
                         .ui.card
                             .content
                                 .ui.header Incidents

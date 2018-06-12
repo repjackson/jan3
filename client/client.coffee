@@ -72,6 +72,15 @@ Template.registerHelper 'page_key_value', (key) ->
         current_doc["#{key}"]
 
 
+Template.registerHelper 'profile_key_value', () -> 
+    # doc_field = Template.parentData(2)
+    current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
+    if current_user
+        current_user.profile["#{@key}"]
+        
+        
+
+
 
 
 Template.left_sidebar.onRendered ->

@@ -13,61 +13,77 @@ if Meteor.isClient
         user: -> Meteor.users.findOne FlowRouter.getParam('user_id')
     
     Template.edit_profile.events
-        'blur #name': ->
-            old_name_tags = @name_tags
-            # console.log old_name_tags
-            name = $('#name').val()
-            split_name = name.match(/\S+/g)
+        # 'blur #name': ->
+        #     old_name_tags = @name_tags
+        #     # console.log old_name_tags
+        #     name = $('#name').val()
+        #     split_name = name.match(/\S+/g)
             
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $pullAll: tags: old_name_tags
+        #     Meteor.users.update FlowRouter.getParam('user_id'),
+        #         $pullAll: tags: old_name_tags
                     
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $set: 
-                    name: name
-                    name_tags: split_name
-                $addToSet: tags: $each: split_name
+        #     Meteor.users.update FlowRouter.getParam('user_id'),
+        #         $set: 
+        #             name: name
+        #             name_tags: split_name
+        #         $addToSet: tags: $each: split_name
                 
-        'blur #first_name': ->
-            first_name = $('#first_name').val().trim()
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $set: 
-                    "profile.first_name": first_name
+        # 'blur #first_name': ->
+        #     first_name = $('#first_name').val().trim()
+        #     Meteor.users.update FlowRouter.getParam('user_id'),
+        #         $set: 
+        #             "profile.first_name": first_name
 
             
-        'blur #last_name': ->
-            last_name = $('#last_name').val().trim()
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $set: 
-                    "profile.last_name": last_name
+        # 'blur #last_name': ->
+        #     last_name = $('#last_name').val().trim()
+        #     Meteor.users.update FlowRouter.getParam('user_id'),
+        #         $set: 
+        #             "profile.last_name": last_name
 
             
-        'blur #company': ->
-            company = $('#company').val().trim()
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $set: 
-                    "profile.company": company
+        # 'blur #company': ->
+        #     company = $('#company').val().trim()
+        #     Meteor.users.update FlowRouter.getParam('user_id'),
+        #         $set: 
+        #             "profile.company": company
 
             
-        'blur #position': ->
-            position = $('#position').val().trim()
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $set: 
-                    "profile.position": position
+        # 'blur #position': ->
+        #     position = $('#position').val().trim()
+        #     Meteor.users.update FlowRouter.getParam('user_id'),
+        #         $set: 
+        #             "profile.position": position
         
         
-        'blur #website': ->
-            website = $('#website').val().trim()
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $set: 
-                    "profile.website": website
+        # 'blur #website': ->
+        #     website = $('#website').val().trim()
+        #     Meteor.users.update FlowRouter.getParam('user_id'),
+        #         $set: 
+        #             "profile.website": website
 
             
-        'blur #phone': ->
-            phone = $('#phone').val().trim()
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $set: 
-                    "profile.phone": phone
+        # 'blur #office_jpid': ->
+        #     office_jpid = $('#office_jpid').val().trim()
+        #     Meteor.users.update FlowRouter.getParam('user_id'),
+        #         { $set: "profile.office_jpid": office_jpid },
+        #         (err,res)=>
+        #             if err
+        #                 Bert.alert "Error changing #{@key} to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
+        #             else
+        #                 Docs.insert
+        #                     type:'event'
+        #                     parent_id: doc_id
+        #                     text:"changed #{@key} to #{@value}."
+        #                 Bert.alert "Changed #{@key} to #{@value}", 'success', 'growl-top-right'
+
+
+            
+        # 'blur #phone': ->
+        #     phone = $('#phone').val().trim()
+        #     Meteor.users.update FlowRouter.getParam('user_id'),
+        #         $set: 
+        #             "profile.phone": phone
 
             
         'keydown #input_image_id': (e,t)->
@@ -80,22 +96,22 @@ if Meteor.isClient
                     $('#input_image_id').val('')
                 
                 
-        'keydown #add_tag': (e,t)->
-            if e.which is 13
-                tag = $('#add_tag').val().toLowerCase().trim()
-                if tag.length > 0
-                    Meteor.users.update FlowRouter.getParam('user_id'),
-                        $addToSet: tags: tag
-                    $('#add_tag').val('')
+        # 'keydown #add_tag': (e,t)->
+        #     if e.which is 13
+        #         tag = $('#add_tag').val().toLowerCase().trim()
+        #         if tag.length > 0
+        #             Meteor.users.update FlowRouter.getParam('user_id'),
+        #                 $addToSet: tags: tag
+        #             $('#add_tag').val('')
     
-        'click .person_tag': (e,t)->
-            tag = @valueOf()
-            Meteor.users.update FlowRouter.getParam('user_id'),
-                $pull: tags: tag
-            $('#add_tag').val(tag)
+        # 'click .person_tag': (e,t)->
+        #     tag = @valueOf()
+        #     Meteor.users.update FlowRouter.getParam('user_id'),
+        #         $pull: tags: tag
+        #     $('#add_tag').val(tag)
     
-        'click #save_profile': ->
-            FlowRouter.go "/profile/#{@username}"
+        # 'click #save_profile': ->
+            # FlowRouter.go "/profile/#{@username}"
     
         "change input[type='file']": (e) ->
             files = e.currentTarget.files
