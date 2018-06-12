@@ -464,6 +464,32 @@ template(name='my_customer_account')
     with my_customer_doc
         .ui.card 
             .content
+                a.header(href="/view/#{_id}") #{CUST_NAME}
+                div
+                    strong ##{ev.ID}
+            .content
+                div 
+                    strong #{ev.CUST_CONT_PERSON}
+                div 
+                    strong #{ev.CUST_CONTACT_EMAIL}
+                div
+                    strong #{ev.TELEPHONE}
+                div
+                    strong #{ev.ADDR_STREET}
+                div    
+                    strong #{ev.ADDR_STREET_2}
+                div 
+                    strong #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+            .content
+                div Franchisee
+                    strong #{ev.FRANCHISEE}
+                div Master Licensee
+                    strong #{ev.MASTER_LICENSEE}
+
+template(name='user_office_card')
+    with user_licensee_doc
+        .ui.card 
+            .content
                 with ev
                     div Master Licensee
                         strong #{MASTER_LICENSEE}

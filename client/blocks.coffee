@@ -554,3 +554,17 @@ Template.my_customer_account.helpers
         if Meteor.user()
             Docs.findOne
                 jpid:Meteor.user().profile.customer_jpid
+                
+                
+Template.user_office_card.onCreated ->
+    @autorun =>  Meteor.subscribe 'my_customer_account_doc'
+Template.user_office_card.helpers
+    user_licensee_doc: ->
+        if Meteor.user()
+            customer_doc = Docs.findOne
+                jpid:Meteor.user().profile.customer_jpid
+                
+            if customer_doc
+                console.log customer_doc.master_licensee
+                
+                

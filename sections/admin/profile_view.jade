@@ -31,9 +31,9 @@ template(name='view_profile')
                     //         .ui.label #{this}
                     .ui.list
                         .item
-                            if profile.office_jpid
-                                strong Office JP ID 
-                                | #{profile.office_jpid}
+                            if profile.customer_jpid
+                                strong Customer JPID 
+                                | #{profile.customer_jpid}
                         .item
                             if profile.position
                                 strong Position 
@@ -52,8 +52,6 @@ template(name='view_profile')
                                 a(href=profile.website target='_blank') #{profile.website}
                     .ui.hidden.divider
                 .twelve.wide.column
-                    .ui.button Send Message
-                    .ui.button Tag User
                     .ui.three.centered.cards
                         .ui.card
                             .content

@@ -3,11 +3,7 @@ template(name='dashboard')
         .ui.container
             .ui.hidden.divider
             img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            h2.ui.inverted.header Dashboard
-            // h2 Do whatever you want when you want to.
-            // .ui.huge.primary.button
-            //     | Get Started 
-            //     i.right.arrow.icon
+            h2.ui.inverted.header Customer Portal
             +customer_menu
     .ui.padded.stackable.grid
 
@@ -27,7 +23,7 @@ template(name='dashboard')
                 +my_cleaning_crew
         .row
             .sixteen.wide.column
-                // +my_cleaning_schedule
+                +incident_widget
         .row
             .sixteen.wide.column
                 +my_office_contacts
@@ -35,27 +31,25 @@ template(name='dashboard')
         .row
             .four.wide.column
                 +general_account_info
-            .eight.wide.column
-                +incident_widget
                 
             .four.wide.column
                 +local_office_information
-        .row
-            .five.wide.column
-                .ui.disabled.segment
-                    .ui.header
-                        i.building.icon
-                        | Home Office Permissions
-            .five.wide.column
-                .ui.disabled.segment
-                    .ui.header 
-                        i.dollar.icon
-                        |Billing and Payment History
-            .five.wide.column
-                .ui.disabled.segment
-                    .ui.header
-                        i.clock.icon
-                        |Scheduled Services
+        // .row
+        //     .five.wide.column
+        //         .ui.disabled.segment
+        //             .ui.header
+        //                 i.building.icon
+        //                 | Home Office Permissions
+        //     .five.wide.column
+        //         .ui.disabled.segment
+        //             .ui.header 
+        //                 i.dollar.icon
+        //                 |Billing and Payment History
+        //     .five.wide.column
+        //         .ui.disabled.segment
+        //             .ui.header
+        //                 i.clock.icon
+        //                 |Scheduled Services
 
 
     
@@ -111,28 +105,30 @@ template(name='my_office_contacts')
         
 template(name='incident_widget')
     .ui.center.aligned.header
-        i.clipboard.icon
+        i.exclamation.circle.icon
         |Incidents
-    .ui.divided.items.segment
-        each incidents
-            a.ui.item(href="/view/#{_id}")
-                .ui.tiny.rounded.image
-                    img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
-                    +small_sentiment
-                .content
-                    .header ##{incident_number}
-                        +incident_type_label
-                    .meta #{when}
-                    // .description !{incident_details}
-                    .extra
-                        if customer
-                            .ui.label 
-                                i.user.icon
-                                |#{customer.first_name} #{customer.last_name}
-                        if office
-                            .ui.label 
-                                i.building.icon
-                                |#{office.office_name}
+    |{{> tabular table=TabularTables.Incidents selector=selector class="ui sortable selectable striped fluid table"}}
+        
+    // .ui.divided.items.segment
+    //     each incidents
+    //         a.ui.item(href="/view/#{_id}")
+    //             .ui.tiny.rounded.image
+    //                 img(src="{{c.url image_id  height=100 width=100 crop='crop' gravity='face' }}")
+    //                 +small_sentiment
+    //             .content
+    //                 .header ##{incident_number}
+    //                     +incident_type_label
+    //                 .meta #{when}
+    //                 // .description !{incident_details}
+    //                 .extra
+    //                     if customer
+    //                         .ui.label 
+    //                             i.user.icon
+    //                             |#{customer.first_name} #{customer.last_name}
+    //                     if office
+    //                         .ui.label 
+    //                             i.building.icon
+    //                             |#{office.office_name}
         
         
         
@@ -171,9 +167,9 @@ template(name='crew_card')
         .content
             a(href="/profile/#{username}")
                 .ui.center.aligned.header #{profile.first_name} #{profile.last_name}
-            each five_tags
-                .ui.disabled.button.person_tag(class=tag_class) 
-                    strong #{this}
+            // each five_tags
+            //     .ui.disabled.button.person_tag(class=tag_class) 
+            //         strong #{this}
         // .content
         //   .ui.list
         //         +list_item key='email' label='Email'

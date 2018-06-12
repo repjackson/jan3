@@ -60,8 +60,12 @@ new Tabular.Table({
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'csv'],
   columns: [
-    {data: "incident_number", title: "Ticket Number"},
-    {data: "incident_type", title: "Type"},
+    // {data: "incident_number", title: "Ticket Number"},
+    {
+      data: "incident_type", 
+      title: "Type",
+      tmpl: Meteor.isClient && Template.incident_type_label 
+    },
     // {data: "when", title: "Logged"},
     {
       data: "timestamp",
@@ -87,7 +91,7 @@ new Tabular.Table({
       title: "Customer",
       render: function (customer_id, type, doc) {
         var customer_doc = Docs.findOne({_id:customer_id})
-        if (customer_id) {
+        if (customer_doc) {
           return customer_doc
         } else {
           return customer_id;

@@ -37,8 +37,10 @@ if Meteor.isClient
         incident_type_label: ->
             switch @incident_type
                 when 'missed_service' then 'Missed Service'
-                when 'poor_service' then 'Poor Service'
-                when 'employee_issue' then 'Employee Issue'
+                when 'team_member_infraction' then 'Team Member Infraction'
+                when 'change_service' then 'Request a Change of Service'
+                when 'problem' then 'Report a Problem or Service Issue'
+                when 'special_request' then 'Request a Special Service'
                 when 'other' then 'Other'
         
         type_label_class: ->
@@ -51,6 +53,11 @@ if Meteor.isClient
     
     Template.incidents.onCreated ->
     Template.incidents.helpers
+        selector: ->  type: "incident"
+    
+    
+    Template.incident_widget.onCreated ->
+    Template.incident_widget.helpers
         selector: ->  type: "incident"
     
     Template.incident_edit.onCreated ->

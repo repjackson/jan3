@@ -54,3 +54,4 @@ http
 peerlibrary:xml2js
 perak:codemirror
 aldeed:tabular
+mdg:meteor-apm-agent
