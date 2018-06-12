@@ -215,8 +215,17 @@ Meteor.methods
         # console.log 'linking doc', key
         # console.log 'linking doc_id', doc_id
         # console.log 'linking doc', doc
-        Docs.update doc_id,
-            $set: "#{key}": doc._id
+        if key is 'customer_id'
+            console.log doc.cust_name
+            console.log doc.jpid
+            Docs.update doc_id,
+                $set: 
+                    "#{key}": doc._id
+                    customer_name: doc.cust_name
+                    customer_jpid: doc.jpid
+        else            
+            Docs.update doc_id,
+                $set: "#{key}": doc._id
         Docs.insert
             type:'event'
             parent_id: doc_id

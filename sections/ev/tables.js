@@ -86,18 +86,8 @@ new Tabular.Table({
         }
       }
     },
-    {
-      data: "customer_id",
-      title: "Customer",
-      render: function (customer_id, type, doc) {
-        var customer_doc = Docs.findOne({_id:customer_id})
-        if (customer_doc) {
-          return customer_doc
-        } else {
-          return customer_id;
-        }
-      }
-    },
+    { data: "customer_name", title: "Customer Name" },
+    // { data: "customer_name", title: "Customer Name" },
     { data: "current_level", title: "Level"},
     { 
       data: "assigned_to",
