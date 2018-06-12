@@ -1,17 +1,25 @@
 template(name='users') 
-    .ui.padded.stackable.container.grid
+    .ui.padded.stackable.grid
         .centered.row
-            .four.wide.column 
+            .three.wide.column 
                 a.ui.large.icon.button(href='/user/add' data-content='Add User')
                     i.plus.icon
-            .twelve.wide.column 
                 if is_dev
                     .ui.header upload user list
                     unless uploading
                         input(type="file" name="upload_csv")
                     else
                         |Uploading files...
-                +user_table
+            .ten.wide.column 
+                h1.ui.center.aligned.header 
+                    i.users.icon
+                    |Users/Master Licensees
+            .three.wide.column 
+        .centered.row
+            .sixteen.wide.column 
+                // +user_table
+                {{> tabular table=TabularTables.Users selector=selector class="ui sortable selectable striped fluid table"}}
+
 
         
         
@@ -78,7 +86,8 @@ template(name='user_table')
                                 td 
                                     .ui.header 
                                         |#{name}
-                                    a.ui.header(href="/profile/#{username}") #{username}
+                                    a.ui.header(href="/profile/#{username}") #{username} 
+                                    h5 #{profile.office_name}
                                     div
                                         each emails
                                             |#{address}

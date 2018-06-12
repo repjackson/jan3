@@ -118,7 +118,7 @@ new Tabular.Table({
 });
 
 new Tabular.Table({
-  name: "Users",
+  name: "EV_users",
   collection: Docs,
   lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
   pageLength: 10,
@@ -133,6 +133,23 @@ new Tabular.Table({
     {data: "ev.SHORT_NAME", title: "Short Name"},
     {data: "ev.MASTER_LICENSEE", title: "Master"},
     { tmpl: Meteor.isClient && Template.view_button }
+
+  ]
+});
+
+new Tabular.Table({
+  name: "Users",
+  collection: Meteor.users,
+  lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 10,
+  buttonContainer: '.col-sm-6:eq(0)',
+  buttons: ['copy', 'excel', 'pdf', 'csv'],
+  columns: [
+    {data: "profile.first_name", title: "First Name"},
+    {data: "profile.last_name", title: "Last Type"},
+    {data: "emails[0].address", title: "Emails"},
+    {data: "profile.office_name", title: "Office Name"},
+    // { tmpl: Meteor.isClient && Template.view_button }
 
   ]
 });

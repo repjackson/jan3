@@ -257,8 +257,21 @@ Meteor.methods
             text: "#{user.username} was unassigned from #{doc.type}"
         
     parseUpload: ( data )->
-        console.dir data
-    
+        for doc in data
+            # console.log 'doc', doc
+            options = {
+                username: doc.USERNAME
+                email: doc.EMAIL
+                profile:
+                    first_name: doc.FIRST
+                    last_name: doc.LAST
+                    office_name: doc.OFFICE
+            }
+            
+            Meteor.call 'create_user', options, (err,res)->
+                if err then console.log 'err', err
+                else
+                    console.log res
     
     
         

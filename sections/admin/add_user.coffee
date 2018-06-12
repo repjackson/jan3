@@ -31,17 +31,12 @@ if Meteor.isClient
             last_name = $('#last_name').val().trim()
             email = $('#email').val().trim()
             Meteor.call 'create_user', username, first_name, last_name, email, (err,new_id)->
-                console.log new_id
+                # console.log new_id
                 FlowRouter.go "/profile/#{username}"
             
             
 if Meteor.isServer
     Meteor.methods
-        create_user: (username, first_name, last_name, email)->
-            new_id = Accounts.createUser
-                username: username
-                profile:
-                    first_name: first_name
-                    last_name: last_name
-                email: email
+        create_user: (options)->
+            new_id = Accounts.createUser options
             return new_id
