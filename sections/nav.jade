@@ -24,8 +24,8 @@ template(name='nav')
         a.mobile.hidden.icon.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
             i.rss.large.icon
             // | Feed
-        a.mobile.hidden.icon.item(href='/view/P6GMxCjCFcQjuC63E' class="{{isActivePath '/view/P6GMxCjCFcQjuC63E'}}" data-position="bottom center" data-content='FlowChart')
-            i.sitemap.large.icon
+        // a.mobile.hidden.icon.item(href='/view/P6GMxCjCFcQjuC63E' class="{{isActivePath '/view/P6GMxCjCFcQjuC63E'}}" data-position="bottom center" data-content='FlowChart')
+        //     i.sitemap.large.icon
             // | &nbsp; Flow
         a.mobile.hidden.icon.item(href='/ev' class="{{isActivePath '/ev'}}" data-position="bottom center" data-content='EV Explorer')
             i.database.large.icon
@@ -34,8 +34,8 @@ template(name='nav')
         // a.mobile.hidden.large.icon.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
         //     i.shipping.fast.large.icon
         //     | &nbsp; Services
-        a.mobile.hidden.large.icon.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="bottom center" data-content='Tasks')
-            i.tasks.large.icon
+        // a.mobile.hidden.large.icon.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="bottom center" data-content='Tasks')
+        //     i.tasks.large.icon
         // a.mobile.hidden.large.icon.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')
         //     i.calendar.large.icon
         //     | &nbsp; Schedule
@@ -80,12 +80,17 @@ template(name='nav')
 
 template(name='left_sidebar')
     #nav.ui.left.vertical.sidebar.inverted.menu
+        if currentUser
+            a.toggle_left_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
+                img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                |#{currentUser.username}
+    
         // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
         //     i.home.icon
         //     |Jan-Pro
-        a.toggle_left_sidebar.item(href='/front' class="{{isActivePath '/front'}}" data-position="bottom center" data-content='Sales Page')
-            i.globe.icon
-            | Sales Page
+        // a.toggle_left_sidebar.item(href='/front' class="{{isActivePath '/front'}}" data-position="bottom center" data-content='Sales Page')
+        //     i.globe.icon
+        //     | Sales Page
         a.toggle_left_sidebar.item(href='/users' class="{{isActivePath '/users'}}" data-position="right center" data-content='Users')
             i.users.icon
             | Users
@@ -98,10 +103,10 @@ template(name='left_sidebar')
         a.toggle_left_sidebar.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="right center" data-content='Schedule')
             i.calendar.icon
             | Schedule
-        a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
-            i.clock.icon
-            // +tiny_sprite name='duster'
-            | Services
+        // a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
+        //     i.clock.icon
+        //     // +tiny_sprite name='duster'
+        //     | Services
         a.toggle_left_sidebar.item(href='/franchisees' class="{{isActivePath '/franchisees'}}" data-position="bottom center" data-content='Franchisees')
             i.building.icon
             | Franchisees

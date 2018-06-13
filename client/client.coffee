@@ -7,11 +7,11 @@ FlowRouter.notFound =
     action: ->
         BlazeLayout.render 'layout', 
             main: 'not_found'
-Meteor.startup( () =>
-    GoogleMaps.load
-        key: 'AIzaSyAK_vkvxDH5vsqGkd0Qn-dDmq-rShTA7UA',
-        libraries: 'places'
-)
+# Meteor.startup( () =>
+#     GoogleMaps.load
+#         key: 'AIzaSyAK_vkvxDH5vsqGkd0Qn-dDmq-rShTA7UA',
+#         libraries: 'places'
+# )
 
 
 
@@ -42,7 +42,7 @@ Template.registerHelper 'from_now', (date) -> moment(date).fromNow()
 Template.registerHelper 'formal_when', () -> moment(@timestamp).format('MMMM Do YYYY, h:mm:ss a')
 
 Template.registerHelper 'is_admin', () -> 
-    if Meteor.user()
+    if Meteor.user() and Meteor.user().roles
         'admin' in Meteor.user().roles
 Template.registerHelper 'is_dev', () -> 
     if Meteor.user() and Meteor.user().roles

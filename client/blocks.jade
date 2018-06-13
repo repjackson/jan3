@@ -461,59 +461,65 @@ template(name='doc_result')
                 
                 
 template(name='my_customer_account')
-    with my_customer_doc
-        .ui.card 
-            .content
-                a.header(href="/view/#{_id}") #{ev.CUST_NAME}
-                div
-                    strong ##{ev.ID}
-            .content
-                div 
-                    strong #{ev.CUST_CONT_PERSON}
-                div 
-                    strong #{ev.CUST_CONTACT_EMAIL}
-                div
-                    strong #{ev.TELEPHONE}
-                div
-                    strong #{ev.ADDR_STREET}
-                div    
-                    strong #{ev.ADDR_STREET_2}
-                div 
-                    strong #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-            .content
-                div Franchisee
-                    strong #{ev.FRANCHISEE}
-                div Master Licensee
-                    strong #{ev.MASTER_LICENSEE}
+    if my_customer_doc
+        with my_customer_doc
+            .ui.card 
+                .content
+                    a.header(href="/view/#{_id}") #{ev.CUST_NAME}
+                    div
+                        strong ##{ev.ID}
+                .content
+                    div 
+                        strong #{ev.CUST_CONT_PERSON}
+                    div 
+                        strong #{ev.CUST_CONTACT_EMAIL}
+                    div
+                        strong #{ev.TELEPHONE}
+                    div
+                        strong #{ev.ADDR_STREET}
+                    div    
+                        strong #{ev.ADDR_STREET_2}
+                    div 
+                        strong #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                .content
+                    div Franchisee
+                        strong #{ev.FRANCHISEE}
+                    div Master Licensee
+                        strong #{ev.MASTER_LICENSEE}
+    else
+        |No customer doc
 
 template(name='user_office_card')
-    with user_licensee_doc
-        .ui.card 
-            .content
-                with ev
-                    div Master Licensee
-                        strong #{MASTER_LICENSEE}
-                    div JP ID
-                        strong #{ID}
-                    div Customer Name
-                        strong #{CUST_NAME}
-                    div Customer Contact Person
-                        strong #{CUST_CONT_PERSON}
-                    div Customer Contact Email
-                        strong #{CUST_CONTACT_EMAIL}
-                    div Tel
-                        strong #{TELEPHONE}
-                    div Address
-                        strong #{ADDR_STREET}
-                    div    
-                        strong #{ADDR_STREET_2}
-                    div 
-                        strong #{ADDR_CITY} #{ADDR_STATE}
-                    div Franchisee
-                        strong #{FRANCHISEE}
-                    div Number of Days of Service
-                        strong #{CUST_NUM_DAYS_SERVICE}
-                    div Days Service
-                        strong #{CUST_DAYS_SERVICE}
-                    div Regular Service Amount
-                        strong #{CUST_REG_SERVICE_AMT}
+    if user_licensee_doc
+        with user_licensee_doc
+            .ui.card 
+                .content
+                    with ev
+                        div Master Licensee
+                            strong #{MASTER_LICENSEE}
+                        div JP ID
+                            strong #{ID}
+                        div Customer Name
+                            strong #{CUST_NAME}
+                        div Customer Contact Person
+                            strong #{CUST_CONT_PERSON}
+                        div Customer Contact Email
+                            strong #{CUST_CONTACT_EMAIL}
+                        div Tel
+                            strong #{TELEPHONE}
+                        div Address
+                            strong #{ADDR_STREET}
+                        div    
+                            strong #{ADDR_STREET_2}
+                        div 
+                            strong #{ADDR_CITY} #{ADDR_STATE}
+                        div Franchisee
+                            strong #{FRANCHISEE}
+                        div Number of Days of Service
+                            strong #{CUST_NUM_DAYS_SERVICE}
+                        div Days Service
+                            strong #{CUST_DAYS_SERVICE}
+                        div Regular Service Amount
+                            strong #{CUST_REG_SERVICE_AMT}
+    else
+        |No Linked Office
