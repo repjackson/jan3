@@ -77,7 +77,7 @@ template(name='incident_view')
                     .large130 #{incident_details}
                 if image_id
                     img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                +comments
+                // +comments
                 .ui.dividing.header History
                 +full_doc_history
             .four.wide.column
@@ -181,7 +181,7 @@ template(name='incident_task_view')
                 +parent_segment
                 .ui.header #{title}
                 |!{html}
-                +comments
+                // +comments
                 +full_doc_history
             .four.wide.column
                  +mark_read_button   

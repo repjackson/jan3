@@ -5,13 +5,15 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 
 if (Meteor.isClient){
-  // import 'datatables.net-bs/css/dataTables.bootstrap.css';
+  // import 'https://cdn.datatables.net/1.10.16/css/dataTables.semanticui.min.css';
   // import dataTablesBootstrap from 'datatables.net-bs';
   import dataTableButtons from 'datatables.net-buttons-se';
   // import columnVisibilityButton from 'datatables.net-buttons/js/buttons.colVis.js';
   // import html5ExportButtons from 'datatables.net-buttons/js/buttons.html5.js';
   // import flashExportButtons from 'datatables.net-buttons/js/buttons.flash.js';
   // import printButton from 'datatables.net-buttons/js/buttons.print.js';
+  // import "https://cdn.datatables.net/1.10.16/js/dataTables.semanticui.min.js";
+
 
   // dataTablesBootstrap(window, $);
   dataTableButtons(window, $);
