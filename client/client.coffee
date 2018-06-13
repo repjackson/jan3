@@ -45,7 +45,7 @@ Template.registerHelper 'is_admin', () ->
     if Meteor.user()
         'admin' in Meteor.user().roles
 Template.registerHelper 'is_dev', () -> 
-    if Meteor.user()
+    if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles
 
 Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment

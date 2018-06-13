@@ -55,3 +55,5 @@ peerlibrary:xml2js
 perak:codemirror
 aldeed:tabular
 harrison:papa-parse
+mdg:meteor-apm-agent
+meteorhacks:zones

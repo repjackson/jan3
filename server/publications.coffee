@@ -672,10 +672,11 @@ Meteor.publish 'type', (type)->
         
         
 Meteor.publish 'my_customer_account_doc', ->
-    cust_id = Meteor.user().profile.customer_jpid
-    cursor = Docs.find jpid:cust_id
-    # console.log cursor.count()
-    cursor
+    if Meteor.user()
+        cust_id = Meteor.user().profile.customer_jpid
+        cursor = Docs.find jpid:cust_id
+        # console.log cursor.count()
+        cursor
         
 Meteor.publish 'child_docs', (doc_id, limit)->
     if limit
