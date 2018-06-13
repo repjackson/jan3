@@ -24,8 +24,10 @@ template(name='view_profile')
 
             .row
                 .four.wide.column
-                    img.ui.medium.image.item(src="{{c.url profile.image_id width=500 height=500 gravity='face' crop='fill'}}")
-        
+                    if profile.image_id
+                        img.ui.medium.image.item(src="{{c.url profile.image_id width=500 height=500 gravity='face' crop='fill'}}")
+                    else
+                        i.huge.user.icon
                     // if tags
                     //     each tags
                     //         .ui.label #{this}

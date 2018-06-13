@@ -45,9 +45,8 @@ reywood:publish-composite
 froala:editor-reactive@=2.4.2
 tomwasd:flow-router-autoscroll
 http@1.4.1
-peerlibrary:xml2js
 perak:codemirror
 aldeed:tabular
-harrison:papa-parse
 underscore
 yasinuslu:json-view
+peerlibrary:xml2js

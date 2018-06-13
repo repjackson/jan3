@@ -8,16 +8,16 @@ if (Meteor.isClient){
   import 'datatables.net-bs/css/dataTables.bootstrap.css';
   import dataTablesBootstrap from 'datatables.net-bs';
   import dataTableButtons from 'datatables.net-buttons-bs';
-  import columnVisibilityButton from 'datatables.net-buttons/js/buttons.colVis.js';
-  import html5ExportButtons from 'datatables.net-buttons/js/buttons.html5.js';
-  import flashExportButtons from 'datatables.net-buttons/js/buttons.flash.js';
+  // import columnVisibilityButton from 'datatables.net-buttons/js/buttons.colVis.js';
+  // import html5ExportButtons from 'datatables.net-buttons/js/buttons.html5.js';
+  // import flashExportButtons from 'datatables.net-buttons/js/buttons.flash.js';
   import printButton from 'datatables.net-buttons/js/buttons.print.js';
 
   dataTablesBootstrap(window, $);
   dataTableButtons(window, $);
-  columnVisibilityButton(window, $);
-  html5ExportButtons(window, $);
-  flashExportButtons(window, $);
+  // columnVisibilityButton(window, $);
+  // html5ExportButtons(window, $);
+  // flashExportButtons(window, $);
   printButton(window, $);
 }
 

@@ -3,7 +3,6 @@ template(name='ev')
         .row
             .sixteen.wide.column
                 h1.ui.center.aligned.header
-                    i.database.icon
                     | EV API
                 // +tag_facet
                 .ui.four.stackable.cards
@@ -24,7 +23,6 @@ template(name='ev_reports')
                 +link_button link='/ev' icon='database' label='EV Dash'
             .ten.wide.column
                 .ui.center.aligned.header
-                    i.compass.icon
                     | EV Reports
                 // .call_ev.ui.fluid.button Call EV API
         .row
@@ -146,8 +144,8 @@ template(name='view_franchisee_field')
 template(name='children_widget')
     .ui.card
         .content
-            a.ui.icon.header(href=link)
-                i.icon(class=icon)
+            a.ui.center.aligned.header(href=link)
+                // i.icon(class=icon)
                 .content
                     |#{label}
             .ui.list
@@ -331,7 +329,6 @@ template(name='franchisees')
                 +link_button link='/ev' icon='database' label='EV Dash'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    i.user.circle.icon
                     | EV Franchisees
             .three.wide.column
                 if is_dev
@@ -371,7 +368,6 @@ template(name='customers')
                 +link_button link='/ev' icon='database' label='EV Dash'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    i.handshake.icon
                     | EV Customers
             .three.wide.right.aligned.column
                 if is_dev
@@ -436,13 +432,11 @@ template(name='customer_view')
                 
 template(name='related_customers')
     .ui.horizontal.divider.header 
-        i.handshake.icon
         |#{franchisee}'s Customers
     |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
                 
 template(name='franchise_by_customer')
     .ui.dividing.header 
-        i.user.circle.icon
         |#{ev.CUST_NAME}'s Franchisee
     |{{> tabular table=TabularTables.Related_franchisees selector=selector class="ui sortable fluid striped table"}}
     
@@ -450,7 +444,6 @@ template(name='franchise_by_customer')
 template(name='office_by_franchisee')
     .ui.secondary.segment
         .ui.dividing.header 
-            i.building.icon
             |#{ev.FRANCHISEE}'s Office
         with parent_office
             a.ui.header(href="/view/#{_id}") #{office_name}

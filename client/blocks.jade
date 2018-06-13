@@ -288,8 +288,9 @@ template(name='call_phone_button')
             
             
 template(name='link_button')    
-    a.ui.icon.large.button(href=link title=label)
-        i.large.icon(class=icon)
+    a.ui.large.button(href=link)
+        // i.large.icon(class=icon)
+        strong #{label}
 
 template(name='edit_author')
     .ui.header Edit Author

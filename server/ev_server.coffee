@@ -158,21 +158,23 @@ Meteor.methods
             params:
                 user_id:'JPI'
                 password:'JPI'
-                # statevar:'get_user_info'
+                statevar:'get_user_info'
                 # statevar:'get_user_field_list'
-                statevar:'get'
-                # login_id:user_doc.user_id
-                id:'33129271'
+                # statevar:'get'
+                login_id:user_doc.user_id
+                # login_id: 'BWALLACE'
+                # login_id: 'DRENTZ'
+                # id:'33129271'
         console.log res.content
-        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
-            if err then console.error('errors',err)
-            else
-                # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                # console.dir json_result.PROBLEM_RECORD
-                # new_id = Docs.insert 
                 # console.log 'new id', new_id
-                Docs.update user_doc_id,
-                    $set: ev: json_result.PROBLEM_RECORD
+        split_res = res.content.split '\r\n'
+        # console.log typeof split_res
+        for area_string in split_res
+            split_report = area_string.split '|'
+            console.log split_report
+            # Docs.update user_doc_id,
+            #     $set: ev: json_result.PROBLEM_RECORD
+
 
 
     get_areas: () ->
