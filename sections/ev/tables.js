@@ -239,6 +239,22 @@ new Tabular.Table({
   ]
 });
 
+new Tabular.Table({
+  name: "Offices",
+  collection: Docs,
+  lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+  pageLength: 10,
+  buttonContainer: '.col-sm-6:eq(0)',
+  buttons: ['copy', 'excel', 'pdf', 'csv'],
+  columns: [
+    {data: "office_name", title: "Name"},
+    // {data: "display_name", title: "Display Name"},
+    {data: "telephone", title: "Cell"},
+    {data: "address", title: "Address"},
+    { tmpl: Meteor.isClient && Template.view_button }
+  ]
+});
+
 
 new Tabular.Table({
   name: "Related_franchisees",

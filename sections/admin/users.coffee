@@ -28,14 +28,14 @@ if Meteor.isClient
     
     
     Template.users.helpers
-        people: -> 
-            Meteor.users.find { 
-                _id: $ne: Meteor.userId()
-                # tags: $in: selected_people_tags.array()
-                }, 
-                sort:
-                    tag_count: 1
-                limit: 20
+        # people: -> 
+        #     Meteor.users.find { 
+        #         _id: $ne: Meteor.userId()
+        #         # tags: $in: selected_people_tags.array()
+        #         }, 
+        #         sort:
+        #             tag_count: 1
+        #         limit: 20
     
     Template.users.onCreated () ->
         Template.instance().uploading = new ReactiveVar false 

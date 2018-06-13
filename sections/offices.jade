@@ -1,55 +1,48 @@
 template(name='offices')
     .ui.stackable.centered.padded.grid
-        .centered.row
-            .four.wide.column
-                h2.ui.header 
+        .middle.aligned.row
+            .three.wide.column
+            .ten.wide.column
+                h1.ui.center.aligned.header
                     i.building.icon
                     |Offices
-                +add_button type='office' label='Office'
-                // +set_view_mode view='cards' icon='clone' label='Cards'
-                // +set_view_mode view='list' icon='list' label='List'
-                // +set_view_mode view='table' icon='table' label='Table'
+            .three.wide.column
+                // if is_dev
+                //     .ui.header upload office list
+                //     unless uploading
+                //         input(type="file" name="upload_csv")
+                //     else
+                //         |Uploading files...
+        .row
+            .sixteen.wide.column
+                |{{> tabular table=TabularTables.Offices selector=selector class="ui sortable striped table"}}
 
-                +location_facet type='office'
-            .twelve.wide.column
-                .ui.centered.stackable.cards
-                    each offices
-                        +office_card
+                    
+                    
+template(name='office_view')
+    .ui.padded.stackable.grid
+        .centered.middle.aligned.row
+            .three.wide.column
+                +link_button link='/offices' icon='building' label='Offices'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Office View
+            .three.wide.right.aligned.column
+                +edit_button
+        .row
+            .sixteen.wide.column
+                .ui.secondary.segment
+                    .ui.header ##{ev.ID}
+                    .ui.header Name: #{ev.FRANCHISEE}
+                    .ui.header Email: #{ev.FRANCH_EMAIL}
+                    .ui.header Cell: #{ev.TELE_CELL}
+                    .ui.header Master Licensee: #{ev.MASTER_LICENSEE}
+                // +related_customers
 
-template(name='office_card')
-    .ui.card
-        // iframe(src="{{location_ob.url}}" width="290" height="250" frameborder="0" style="border:0" allowfullscreen)
-        .map-card
-            +googleMap(name="exampleMap" options=exampleMapOptions)
 
-        .content
-            a.grey.header(href="/view/#{_id}")
-                // +mini_sprite name='organization'
-                // |##{jan_office_id}
-                |#{office_name} 
-        // .content
-        //     .ui.list
-        //         +list_item key='jan_office_id' icon='building'
-        //         with geocode
-        //             +list_item key='formatted_address' icon='compass'
-        //         +list_item key='phone_number' icon='phone'
-        //         if email_address
-        //             +list_item key='email_address' icon='envelope'
-        //         // +list_item key='level_1_user_ud' icon='user'
-        //         // +list_item key='level_2_user_ud' icon='user'
-        //         // +list_item key='level_3_user_ud' icon='user'
-        //         // +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
-        //         // +list_item key='office_address' label='Office Address' icon='compass'
-        //         // +list_item key='phone_number' label='Phone Number' icon='phone'
-        //         // +list_item key='email_address' label='Email Address' icon='envelope'
-        //         // +list_item key='level_1_user_ud' label='Level 1 User Id' icon='user'
-        //         // +list_item key='level_2_user_ud' label='Level 2 User Id' icon='user'
-        //         // +list_item key='level_3_user_ud' label='Level 3 User Id' icon='user'
-        .content
-            +view_button
-        
-        
-        
+
+
+
+
 template(name='office_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
@@ -76,34 +69,34 @@ template(name='office_edit')
                 +edit_text_field key='level_3_user_ud' label='Level 3 User Id' icon='user'
         
         
-template(name='office_view')
-    .ui.padded.stackable.centered.grid
-        .centered.row
-            .three.wide.column
-                +link_button link='/offices' icon='left chevron' label='Offices'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header Office ##{jan_office_id}
-            .three.wide.column
-                +edit_button
-        .row
-            .five.wide.column
-                +associated_users
-                +associated_incidents
-                +comments
-                // +jsonView(json=location_ob)
-            .six.wide.column
-                +office_map
-            .five.wide.column
-                +call_phone_button
-                .ui.large.relaxed.list
-                    +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
-                    +list_item key='office_name' label='Office Name' icon='code'
-                    with geocode
-                        +list_item key='formatted_address' label='Office Address' icon='compass'
-                    +list_item key='phone_number' label='Phone Number' icon='phone'
-                    +list_item key='email_address' label='Email Address' icon='envelope'
-                    +list_item key='level_1_user_ud' label='Level 1 User Id' icon='user'
-                    +list_item key='level_2_user_ud' label='Level 2 User Id' icon='user'
-                    +list_item key='level_3_user_ud' label='Level 3 User Id' icon='user'
+// template(name='office_view')
+//     .ui.padded.stackable.centered.grid
+//         .centered.row
+//             .three.wide.column
+//                 +link_button link='/offices' icon='left chevron' label='Offices'
+//             .ten.wide.column
+//                 h1.ui.center.aligned.grey.header Office ##{jan_office_id}
+//             .three.wide.column
+//                 +edit_button
+//         .row
+//             .five.wide.column
+//                 +associated_users
+//                 +associated_incidents
+//                 +comments
+//                 // +jsonView(json=location_ob)
+//             .six.wide.column
+//                 +office_map
+//             .five.wide.column
+//                 +call_phone_button
+//                 .ui.large.relaxed.list
+//                     +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
+//                     +list_item key='office_name' label='Office Name' icon='code'
+//                     with geocode
+//                         +list_item key='formatted_address' label='Office Address' icon='compass'
+//                     +list_item key='phone_number' label='Phone Number' icon='phone'
+//                     +list_item key='email_address' label='Email Address' icon='envelope'
+//                     +list_item key='level_1_user_ud' label='Level 1 User Id' icon='user'
+//                     +list_item key='level_2_user_ud' label='Level 2 User Id' icon='user'
+//                     +list_item key='level_3_user_ud' label='Level 3 User Id' icon='user'
                 
                 

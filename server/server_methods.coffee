@@ -256,24 +256,42 @@ Meteor.methods
             event_type: 'assignment'
             text: "#{user.username} was unassigned from #{doc.type}"
         
-    parseUpload: ( data )->
+    parse_user_upload: ( data )->
         for doc in data
-            # console.log 'doc', doc
-            options = {
-                username: doc.USERNAME
-                email: doc.EMAIL
-                profile:
-                    first_name: doc.FIRST
-                    last_name: doc.LAST
-                    office_name: doc.OFFICE
-            }
+            console.log 'doc', doc
+            # options = {
+            #     username: doc.USERNAME
+            #     email: doc.EMAIL
+            #     profile:
+            #         first_name: doc.FIRST
+            #         last_name: doc.LAST
+            #         office_name: doc.OFFICE
+            # }
             
-            Meteor.call 'create_user', options, (err,res)->
-                if err then console.log 'err', err
-                else
-                    console.log res
+            # Meteor.call 'create_user', options, (err,res)->
+            #     if err then console.log 'err', err
+            #     else
+            #         console.log res
     
-    
+    parse_office_upload: ( data )->
+        for doc in data
+            # console.log doc
+            
+            found_office_doc = 
+                Docs.findOne
+                    type:'office'
+                    office_name: doc.office_name
+            if found_office_doc
+                console.log 'existing office doc', doc.office_name
+                # Docs.update doc_id,
+                #     $set: "#{key}": doc._id
+            else
+                Docs.insert
+                    type:'office'
+                    office_name: doc.office_name
+                    display_name: doc.display_name
+                    address: doc.address
+                    telephone: doc.telephone
         
     create_event: (parent_id, event_type, action)->
         Docs.insert

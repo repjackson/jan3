@@ -1,6 +1,6 @@
 if Meteor.isClient
     Template.office_view.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+        # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     Template.office_view.helpers
     
     
@@ -8,43 +8,42 @@ if Meteor.isClient
         BlazeLayout.render 'layout', main: 'offices'
     
     
-    @selected_office_tags = new ReactiveArray []
+    # @selected_office_tags = new ReactiveArray []
     
-    Template.offices.onCreated ->
-        @autorun => Meteor.subscribe 'facet', 
-            selected_tags.array()
-            selected_keywords.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_timestamp_tags.array()
-            type='office'
-            author_id=null
+    # Template.offices.onCreated ->
+        # @autorun => Meteor.subscribe 'facet', 
+        #     selected_tags.array()
+        #     selected_keywords.array()
+        #     selected_author_ids.array()
+        #     selected_location_tags.array()
+        #     selected_timestamp_tags.array()
+        #     type='office'
+        #     author_id=null
+        
     Template.offices.helpers
-        offices: ->  Docs.find {type:'office'}, limit:6
-
-
-    Template.office_card.onCreated ->
-        GoogleMaps.ready('exampleMap', (map)->
-            marker = new google.maps.Marker
-                position: map.options.center
-                map: map.instance
-        )
-
-    Template.office_card.helpers
-        exampleMapOptions: ()->
-            # console.log @
-            if GoogleMaps.loaded()
-                return {
-                    center: new google.maps.LatLng( @location_lat, @location_lng),
-                    zoom: 8
-                }
-
+        selector: ->  type: "office"
+        
+        
+    Template.offices.onCreated () ->
+        Template.instance().uploading = new ReactiveVar false 
     
-    Template.office_edit.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    
-    Template.office_edit.helpers
-        office: -> Doc.findOne FlowRouter.getParam('doc_id')
+    Template.offices.helpers
+        uploading: -> Template.instance().uploading.get()
+        
+    Template.offices.events
+        'change [name="upload_csv"]': (event,template)->
+            template.uploading.set true
+
+            Papa.parse event.target.files[0],
+                header: true
+                complete: (results,file) =>
+                    Meteor.call 'parse_office_upload', results.data, (err,res)=>
+                        if err
+                            console.log err.reason
+                        else
+                            template.uploading.set false
+                            Bert.alert 'Upload complete!', 'success', 'growl-top-right'
+        
         
     Template.office_edit.events
         'click #delete': ->
