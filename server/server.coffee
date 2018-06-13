@@ -6,10 +6,10 @@ Meteor.users.allow
         #     # console.log 'user allowed to modify own account'
         #     true
 
-Cloudinary.config
-    cloud_name: 'facet'
-    api_key: Meteor.settings.cloudinary_key
-    api_secret: Meteor.settings.cloudinary_secret
+# Cloudinary.config
+#     cloud_name: 'facet'
+#     api_key: Meteor.settings.cloudinary_key
+#     api_secret: Meteor.settings.cloudinary_secret
 
 
         
