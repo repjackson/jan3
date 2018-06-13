@@ -1,8 +1,6 @@
 if Meteor.isClient
     FlowRouter.route '/incidents', 
         action: ->
-            selected_timestamp_tags.clear()
-            selected_keywords.clear()
             BlazeLayout.render 'layout', main: 'incidents'
  
     Template.incident_view.onCreated ->
