@@ -113,25 +113,25 @@ if Meteor.isClient
         # 'click #save_profile': ->
             # FlowRouter.go "/profile/#{@username}"
     
-        "change input[type='file']": (e) ->
-            files = e.currentTarget.files
-            Cloudinary.upload files[0],
-                # folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
-                # type:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
-                (err,res) -> #optional callback, you can catch with the Cloudinary collection as well
-                    # console.log "Upload Error: #{err}"
-                    # console.dir res
-                    if err
-                        console.error 'Error uploading', err
-                    else
-                        Meteor.users.update FlowRouter.getParam('user_id'),
-                            $set: "profile.image_id": res.public_id
-                    return
+        # "change input[type='file']": (e) ->
+        #     files = e.currentTarget.files
+        #     Cloudinary.upload files[0],
+        #         # folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
+        #         # type:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
+        #         (err,res) -> #optional callback, you can catch with the Cloudinary collection as well
+        #             # console.log "Upload Error: #{err}"
+        #             # console.dir res
+        #             if err
+        #                 console.error 'Error uploading', err
+        #             else
+        #                 Meteor.users.update FlowRouter.getParam('user_id'),
+        #                     $set: "profile.image_id": res.public_id
+        #             return
     
-        'click #remove_photo': ->
-            if confirm 'Remove Profile Photo?'
-                Meteor.users.update FlowRouter.getParam('user_id'),
-                    $unset: "profile.image_id": 1
+        # 'click #remove_photo': ->
+        #     if confirm 'Remove Profile Photo?'
+        #         Meteor.users.update FlowRouter.getParam('user_id'),
+        #             $unset: "profile.image_id": 1
                 
                 
 if Meteor.isServer

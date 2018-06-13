@@ -70,7 +70,7 @@ Docs.helpers
             office_name: @ev.MASTER_LICENSEE
 
 
-Meteor.methods
+# Meteor.methods
     # vote_up: (id)->
     #     doc = Docs.findOne id
     #     if not doc.upvoters

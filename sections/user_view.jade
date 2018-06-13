@@ -1,0 +1,38 @@
+template(name='user_nav')
+    // with person
+    //     .ui.menu
+    //         .item
+    //             i.info.icon
+    //             | About
+    //         .item
+    //             | Docs
+    //         .item
+    //             | Social
+
+
+template(name='view_profile')
+    with person
+        .ui.padded.stackable.grid
+            .middle.aligned.row
+                .four.wide.center.aligned.column
+                    +link_button link='/users' icon='users' label='Users'
+                .eight.wide.center.aligned.column
+                    h1.header.item #{profile.first_name} #{profile.last_name}
+                .four.wide.center.aligned.column
+                    a.ui.icon.button(href="/profile/edit/#{_id}")
+                        i.pencil.icon
+
+            .row
+                .four.wide.column
+                    if profile.image_id
+                        img.ui.medium.image.item(src="{{c.url profile.image_id width=500 height=500 gravity='face' crop='fill'}}")
+                    else
+                        i.huge.user.icon
+                    // if tags
+                    //     each tags
+                    //         .ui.label #{this}
+                    .ui.list
+                        .item
+                            if profile.customer_jpid
+                                strong Customer JPID 
+                                | #{profile.customer_jpid}
