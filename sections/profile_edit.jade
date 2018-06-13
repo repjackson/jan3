@@ -1,0 +1,52 @@
+template(name='edit_profile')
+    with user
+        .ui.grid.padded.stackable.centered.grid
+            .row
+                .three.wide.column    
+                .ten.wide.column    
+                    h1.ui.center.aligned.grey.header Edit #{profile.first_name} 
+                .three.wide.column    
+                    a.ui.big.icon.button(href="/profile/#{currentUser.username}")
+                        i.checkmark.large.green.icon
+            .row
+                // .four.wide.column    
+                //     .ui.large.form
+                //         .field
+                //             // .field
+                //             //     label Current image_id: #{image_id}
+                //             //     input#input_image_id(type='text' placeholder='Change')
+                //             if profile.image_id
+                //                 // label image
+                //                 .ui.centered.image
+                //                     img.ui.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                //                     a#remove_photo.ui.right.corner.link.label
+                //                         i.remove.red.link.icon
+                //             else
+                //                 label Upload Image
+                //                 input(type='file' name='upload_picture' accept='image/*')
+                .twelve.wide.column    
+                    .ui.transparent.form
+                        +edit_profile_text_field key='first_name' label='First Name'
+                        +edit_profile_text_field key='last_name' label='Last Name'
+                        // .field
+                        //     label First Name 
+                        //     .ui.input
+                        //         input#first_name(type='text' value=profile.first_name)
+                        // .field
+                        //     label Last Name 
+                        //     .ui.input
+                        //         input#last_name(type='text' value=profile.last_name)
+                        .field
+                            label Email
+                            each emails
+                                .ui.basic.label #{address}
+                                
+                        .field
+                            // label Office JPID
+                            // .ui.input
+                            //     input#office_jpid(type='text' value=profile.office_jpid)
+                            // +single_doc_select type='customer' save_key='customer_id' search_key='cust_name' label='Customer'
+                        +edit_profile_text_field key='customer_jpid' label='Connected Customer Account'
+                        +edit_profile_text_field key='phone' label='Phone'
+                        +my_customer_account
+                                    

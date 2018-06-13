@@ -160,7 +160,6 @@ template(name='ev_fields')
                 +link_button link='/ev' icon='database' label='EV Dash'
             .ten.wide.column
                 .ui.center.aligned.header
-                    i.cubes.icon
                     | EV Fields
             .three.wide.column
                 if is_dev
@@ -260,7 +259,7 @@ template(name='areas')
             .fourteen.wide.column
                 .ui.center.aligned.header
                     i.clone.icon
-                    | EV Areas
+                    | Areas
                 p
                     |This key concept is used to define a structure where you may define multiple tracking systems within a single instance of ExtraView. Each of these tracking systems is termed a Business Area, and each of these Business Areas may have its own set of screens, fields, processes, rules and workflow. Business Areas may also share these objects. An administrator may have control over the entire installation or sub-administrator roles may be created, each having control over a part of the installation. With this capability, ExtraView is termed a multi-tenanted database.
                     a(href='https://docs.extraview.com/site/extraview-111/administration-guide/key-concepts/business-areas' target='_window') 
@@ -329,7 +328,7 @@ template(name='franchisees')
                 +link_button link='/ev' icon='database' label='EV Dash'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    | EV Franchisees
+                    | Franchisees
             .three.wide.column
                 if is_dev
                     .get_all_franchisees.ui.icon.button
@@ -368,7 +367,7 @@ template(name='customers')
                 +link_button link='/ev' icon='database' label='EV Dash'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    | EV Customers
+                    | Customers
             .three.wide.right.aligned.column
                 if is_dev
                     .sync_customers.ui.icon.button(title='Refresh Customers')

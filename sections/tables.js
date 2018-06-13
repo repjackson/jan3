@@ -282,9 +282,9 @@ new Tabular.Table({
   buttonContainer: '.col-sm-6:eq(0)',
   buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
+    {data: "cust_name", title: "Customer Name"},
     {data: "jpid", title: "JP ID"},
     {data: "franchisee", title: "Franchisee"},
-    {data: "cust_name", title: "Customer Name"},
     {data: "master_licensee", title: "Master Licensee"},
     {data: "customer_contact_person", title: "Customer Contact Person"},
     {data: "customer_contact_email", title: "Customer Contact Email"},

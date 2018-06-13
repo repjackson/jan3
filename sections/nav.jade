@@ -2,7 +2,7 @@ template(name='nav')
     #nav.ui.inverted.top.attached.large.menu
         a.toggle_left_sidebar.icon.item 
             i.bars.icon
-        a.header.item(href='/' class="{{isActivePath '/'}}" data-position="bottom center" data-content='Dashboard')
+        a.item(href='/' class="{{isActivePath '/'}}" data-position="bottom center" data-content='Dashboard')
             // i.home.icon
             // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             | Dashboard
@@ -87,7 +87,7 @@ template(name='left_sidebar')
     #nav.ui.left.vertical.sidebar.inverted.menu
         if currentUser
             a.toggle_left_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
-                img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                // img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 |#{currentUser.username}
     
         // a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
