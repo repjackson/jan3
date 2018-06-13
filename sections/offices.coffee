@@ -44,6 +44,16 @@ if Meteor.isClient
                             template.uploading.set false
                             Bert.alert 'Upload complete!', 'success', 'growl-top-right'
         
+    Template.customers_by_office.helpers
+        selector: ->  
+            page_office = Docs.findOne FlowRouter.getParam('doc_id')
+            return {
+                type: "customer"
+                master_licensee: page_office.office_name
+                }
+        
+        
+        
         
     Template.office_edit.events
         'click #delete': ->

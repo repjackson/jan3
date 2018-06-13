@@ -25,19 +25,22 @@ template(name='office_view')
             .three.wide.column
                 +link_button link='/offices' icon='building' label='Offices'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Office View
+                h1.ui.center.aligned.grey.header #{office_name} Office
             .three.wide.right.aligned.column
                 +edit_button
         .row
             .sixteen.wide.column
                 .ui.secondary.segment
-                    .ui.header ##{ev.ID}
-                    .ui.header Name: #{ev.FRANCHISEE}
-                    .ui.header Email: #{ev.FRANCH_EMAIL}
-                    .ui.header Cell: #{ev.TELE_CELL}
-                    .ui.header Master Licensee: #{ev.MASTER_LICENSEE}
-                // +related_customers
+                    .ui.header Name: #{office_name}
+                    // .ui.header Display Name: #{display_name}
+                    .ui.header Cell: #{telephone}
+                    .ui.header Address: #{address}
+                +customers_by_office
 
+
+template(name='customers_by_office')
+    .ui.dividing.header #{office_name}'s Customers
+    |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
 
 
 

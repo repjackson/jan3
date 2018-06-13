@@ -62,6 +62,11 @@ Docs.helpers
         Docs.find
             type: 'franchisee'
             franchisee: @franchisee
+    
+    parent_office: ->
+        Docs.findOne
+            type:'office'
+            office_name: @ev.MASTER_LICENSEE
 
 
 Meteor.methods

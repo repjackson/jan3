@@ -60,16 +60,12 @@ if Meteor.isClient
 # jpids
     FlowRouter.route '/jpids', 
         action: -> BlazeLayout.render 'layout', main: 'jpids'
-    
+    Template.jpids.helpers
+        selector: ->  type: "jpid"
     Template.jpids.events
         'click .get_jp_id': ->
             Meteor.call 'get_jp_id',(err,res)->
                 if err then console.error err
-
-    Template.jpids.helpers
-        selector: ->  type: "jpid"
-
-    Template.jpids.events
         'keyup #jp_lookup': (e,t)->
             e.preventDefault()
             val = $('#jp_lookup').val().trim()
@@ -133,6 +129,8 @@ if Meteor.isClient
         'click .get_all_franchisees': ->
             Meteor.call 'get_all_franchisees',(err,res)->
                 if err then console.error err
+    Template.franchisee_view.onCreated ->
+        @autorun => Meteor.subscribe 'office_by_franchisee', FlowRouter.getParam('doc_id')
 
 
 
@@ -147,8 +145,6 @@ if Meteor.isClient
                 if err then console.error err
 
 
-    Template.related_customers.onCreated ->
-        # @autorun => Meteor.subscribe 'related_customers', FlowRouter.getParam('doc_id')
     Template.related_customers.helpers
         selector: ->  
             page_doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -156,44 +152,23 @@ if Meteor.isClient
                 type: "customer"
                 franchisee: page_doc.franchisee
             }
-    # Template.related_customers.helpers
-    #     related_customers: ->
-    #         page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-    #         Docs.find
-    #             franchisee: page_doc.franchisee
-    #             type: 'customer'
                 
-    Template.related_franchisees.onCreated ->
-        # @autorun => Meteor.subscribe 'customers_franchise', FlowRouter.getParam('doc_id')
-    Template.related_franchisees.helpers
+    Template.franchise_by_customer.helpers
         selector: ->  
             page_doc = Docs.findOne FlowRouter.getParam('doc_id')
             return {
                 type: "franchisee"
                 franchisee: page_doc.franchisee
             }
-        # related_franchisees: ->
-        #     page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        #     Docs.find
-        #         type: 'franchisee'
-                # customer: page_doc.customer
                 
                 
 if Meteor.isServer
-    Meteor.publish 'related_customers', (franchisee_doc_id)->
-        page_doc = Docs.findOne franchisee_doc_id
-
-        Docs.find
-            type: 'customer'
-            franchisee: page_doc.franchisee
-
-
-    Meteor.publish 'customers_franchise', (customer_doc_id)->
-        customer_doc = Docs.findOne customer_doc_id
-
-        Docs.find
-            type: 'franchisee'
-            franchisee: customer_doc.franchisee
-        
-
-
+    Meteor.publish 'office_by_franchisee', (franch_id)->
+        franch_doc = Docs.findOne franch_id
+        # console.log 'franch_doc', franch_doc
+        if franch_doc.ev
+            found = Docs.find
+                type:'office'
+                office_name:franch_doc.ev.MASTER_LICENSEE
+            # console.log found.count()
+            return found
