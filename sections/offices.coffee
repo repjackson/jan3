@@ -53,6 +53,14 @@ if Meteor.isClient
                 }
         
         
+    Template.users_by_office.helpers
+        selector: ->  
+            page_office = Docs.findOne FlowRouter.getParam('doc_id')
+            return {
+                "profile.office_name": page_office.office_name
+                }
+        
+        
         
         
     Template.office_edit.events

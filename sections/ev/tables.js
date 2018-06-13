@@ -299,7 +299,7 @@ new Tabular.Table({
   paging: true,
   searching: false,
   // lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-  pageLength: 25,
+  pageLength: 10,
   // buttonContainer: '.col-sm-6:eq(0)',
   // buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
