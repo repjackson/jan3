@@ -13,14 +13,7 @@ if Meteor.isClient
     @selected_incident_type_tags = new ReactiveArray []
     
     Template.incident_types.onCreated ->
-        @autorun => Meteor.subscribe 'facet', 
-            selected_tags.array()
-            selected_keywords.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_timestamp_tags.array()
-            type='incident_type'
-            author_id=null
+        @autorun => Meteor.subscribe 'docs', [], 'incident_type'
     Template.incident_types.helpers
         incident_types: ->  Docs.find { type:'incident_type'}
 

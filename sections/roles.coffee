@@ -13,14 +13,7 @@ if Meteor.isClient
     @selected_role_tags = new ReactiveArray []
     
     Template.roles.onCreated ->
-        @autorun => Meteor.subscribe 'facet', 
-            selected_tags.array()
-            selected_keywords.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_timestamp_tags.array()
-            type='role'
-            author_id=null
+        @autorun => Meteor.subscribe 'docs', [], 'role'
     Template.roles.helpers
         roles: ->  Docs.find { type:'role'}
 

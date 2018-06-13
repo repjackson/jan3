@@ -39,7 +39,7 @@ if Meteor.isClient
     Template.ev_fields.helpers
         selector: ->  type: "field"
 
-# users
+# ev users
     FlowRouter.route '/ev_users', 
         action: -> BlazeLayout.render 'layout', main: 'ev_users'
     Template.ev_users.events

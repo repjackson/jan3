@@ -4,12 +4,12 @@ template(name='users')
             .three.wide.column 
                 a.ui.large.icon.button(href='/user/add' data-content='Add User')
                     i.plus.icon
-                if is_dev
-                    .ui.header upload user list
-                    unless uploading
-                        input(type="file" name="upload_csv")
-                    else
-                        |Uploading files...
+                // if is_dev
+                //     .ui.header upload user list
+                //     unless uploading
+                //         input(type="file" name="upload_csv")
+                //     else
+                //         |Uploading files...
             .ten.wide.column 
                 h1.ui.center.aligned.header 
                     i.users.icon

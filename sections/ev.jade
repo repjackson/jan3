@@ -65,8 +65,8 @@ template(name='ev_card')
                     .item #{ADDR_CITY}, #{ADDR_STATE}
                     .item #{ADDR_POSTAL_CODE}
                     .item #{CUST_REG_SERVICE_AMT}
-        .content
-            +jsonView json=ev    
+        // .content
+        //     +jsonView json=ev    
         .content
             +view_button
             +edit_button
@@ -188,7 +188,7 @@ template(name='ev_users')
                         |Sync
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Users selector=selector class="ui sortable fluid striped table"}}
+                |{{> tabular table=TabularTables.EV_users selector=selector class="ui sortable fluid striped table"}}
 
 
 template(name='user_view')

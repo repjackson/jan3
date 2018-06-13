@@ -1,25 +1,7 @@
 if Meteor.isClient
-    Template.office_view.onCreated ->
-        # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    Template.office_view.helpers
-    
-    
     FlowRouter.route '/offices', action: ->
         BlazeLayout.render 'layout', main: 'offices'
     
-    
-    # @selected_office_tags = new ReactiveArray []
-    
-    # Template.offices.onCreated ->
-        # @autorun => Meteor.subscribe 'facet', 
-        #     selected_tags.array()
-        #     selected_keywords.array()
-        #     selected_author_ids.array()
-        #     selected_location_tags.array()
-        #     selected_timestamp_tags.array()
-        #     type='office'
-        #     author_id=null
-        
     Template.offices.helpers
         selector: ->  type: "office"
         
