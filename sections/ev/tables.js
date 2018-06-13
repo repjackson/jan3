@@ -231,8 +231,10 @@ new Tabular.Table({
   buttons: ['copy', 'excel', 'pdf', 'csv'],
   columns: [
     {data: "jpid", title: "JP ID"},
-    {data: "franchisee", title: "Franchisee"},
-    {data: "franchisee_email", title: "Email"},
+    {data: "franchisee", title: "Name"},
+    {data: "ev.FRANCH_EMAIL", title: "Email"},
+    {data: "ev.TELE_CELL", title: "Cell"},
+    {data: "ev.MASTER_LICENSEE", title: "Office"},
     { tmpl: Meteor.isClient && Template.view_button }
   ]
 });

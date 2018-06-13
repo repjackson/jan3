@@ -355,10 +355,11 @@ template(name='franchisee_view')
         .row
             .sixteen.wide.column
                 .ui.secondary.segment
-                    .ui.header Franchise Name: 
-                        strong #{franchisee}
-                    .ui.header Franchise Email: 
-                        strong #{franchisee_email}
+                    .ui.header ##{ev.ID}
+                    .ui.header Name: #{ev.FRANCHISEE}
+                    .ui.header Email: #{ev.FRANCH_EMAIL}
+                    .ui.header Cell: #{ev.TELE_CELL}
+                    .ui.header Master Licensee: #{ev.MASTER_LICENSEE}
                 +related_customers
 
 template(name='customers')
@@ -431,17 +432,15 @@ template(name='customer_view')
                 
                 
 template(name='related_customers')
-    .ui.secondary.segment
-        .ui.header #{franchisee}'s Customers
-        |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
-        // .ui.list
-        //     each related_customers
-        //         a.item(href="/view/#{_id}") #{cust_name}                
+    .ui.dividing.header #{franchisee}'s Customers
+    |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
+    // .ui.list
+    //     each related_customers
+    //         a.item(href="/view/#{_id}") #{cust_name}                
                 
 template(name='related_franchisees')
-    .ui.secondary.segment
-        .ui.header Related Franchisees
-        |{{> tabular table=TabularTables.Related_franchisees selector=selector class="ui sortable fluid striped table"}}
-        // .ui.large.list
-        //     each related_franchisees
-        //         a.large.item(href="/view/#{_id}") #{franchisee}
+    .ui.dividing.header Related Franchisees
+    |{{> tabular table=TabularTables.Related_franchisees selector=selector class="ui sortable fluid striped table"}}
+    // .ui.large.list
+    //     each related_franchisees
+    //         a.large.item(href="/view/#{_id}") #{franchisee}

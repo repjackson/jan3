@@ -29,4 +29,4 @@ if Meteor.isServer
     Meteor.publish 'me', ->
         Meteor.users.find @userId,
             fields: 
-                courses: 1
+                roles: 1

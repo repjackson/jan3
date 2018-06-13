@@ -350,16 +350,17 @@ Meteor.methods
                             jpid: doc.ID
                             franchisee: doc.FRANCHISEE
                     if existing_jpid
-                        # console.log "existing franchisee #{existing_jpid.franchisee}"
+                        console.log "existing franchisee #{existing_jpid.franchisee}"
+                        console.log doc
                         Docs.update existing_jpid._id,
                             $set:
-                                # franchisee_email: doc.FRANCH_EMAIL
-                                type:'franchisee'
+                                ev: doc
                     else                    
                         new_franchisee_doc = Docs.insert 
                             type:'franchisee'
                             jpid: doc.ID
                             franchisee: doc.FRANCHISEE
+                            ev: doc
                         console.log "added #{doc.FRANCHISEE}"
     
     
