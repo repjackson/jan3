@@ -22,11 +22,7 @@ Meteor.publish 'parent_doc', (child_id)->
         _id: child.parent_id
         
         
-Meteor.publish 'facet_doc', (tags)->
-    split_array = tags.split ','
-    Docs.find
-        tags: split_array
-        
+
 # Meteor.publish 'users', ()->
 #     Meteor.users.find()
     
@@ -139,43 +135,41 @@ publishComposite 'doc', (id)->
 publishComposite 'me', ()->
     {
         find: -> 
-            # console.log @userId
+            console.log @userId
             Meteor.users.find @userId
         children: [
             {
-                find: (current_user)-> 
+                find: (user)-> 
                     # users customer account
-                    # console.log 'current user?', current_user
+                    console.log 'current user?', user.profile
                     Docs.find
-                        type:'customer'
-                        jpid: current_user.profile.customer_jpid
+                        jpid: user.profile.customer_jpid
                 children: [
                     {
-                        find: (customer_doc)-> 
+                        find: (customer)-> 
+                            console.log 'finding franchisees for', customer
                             # customers franchisee
                             Docs.find
-                                type: 'franchisee'
-                                franchisee: customer_doc.franchisee
+                                franchisee: customer.franchisee
+                                type:'franchisee'
+                    }
+                    {
+                        find: (customer)-> 
+                            # customers office
+                            Docs.find
+                                office_name: customer.master_licensee
+                                type:'office'
                         children: [
                             {
-                                find: (franchisee_doc)-> 
-                                    # franchisees office
-                                    Docs.find
-                                        type:'office'
-                                        office_name: franchisee_doc.office_name
-                                children: [
-                                    {
-                                        find: (office_doc)-> 
-                                            # offices users
-                                            Meteor.users.find
-                                                "profile.office_name": office_doc.office_name
-                                    }
-                                ]
+                                find: (office)-> 
+                                    # offices users
+                                    console.log 'query users from office doc', office
+                                    Meteor.users.find
+                                        "profile.office_name": office.office_name
                             }
                         ]
                     }
                 ]    
-            
             }
         ]
     }

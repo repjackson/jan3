@@ -3,15 +3,14 @@ FlowRouter.route '/', action: ->
         main: 'dashboard'
 
 Template.dashboard.onCreated ->
-    @autorun -> Meteor.subscribe('docs', [], 'office')
-    @autorun -> Meteor.subscribe('docs', [], 'incident')
+    # @autorun -> Meteor.subscribe('docs', [], 'office')
+    # @autorun -> Meteor.subscribe('docs', [], 'incident')
 Template.my_cleaning_crew.onCreated ->
-    @autorun -> Meteor.subscribe('users')
 
 Template.dashboard.onRendered ->
-    Meteor.setTimeout ->
-        $('.ui.accordion').accordion()
-    , 400
+    # Meteor.setTimeout ->
+    #     $('.ui.accordion').accordion()
+    # , 400
 
 
 
@@ -42,12 +41,11 @@ Template.my_cleaning_schedule.helpers
 
 
 
-
-Template.local_office_information.helpers
-    office: -> Docs.findOne type:'office'
-Template.general_account_info.helpers
-    person: -> Docs.findOne type:'person'
 Template.my_cleaning_crew.helpers
     crew: -> Meteor.users.find {}, limit:5
 Template.incident_widget.helpers
-    incidents: -> Docs.find {type:'incident'}, limit:5
+    # incidents: -> Docs.find {type:'incident'}, limit:5
+
+Template.dashboard.helpers
+    office_contacts: ->  
+        Meteor.users.find()

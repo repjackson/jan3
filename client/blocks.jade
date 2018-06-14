@@ -471,22 +471,16 @@ template(name='my_customer_account')
                     div
                         strong ##{ev.ID}
                 .content
-                    div 
-                        strong #{ev.CUST_CONT_PERSON}
-                    div 
-                        strong #{ev.CUST_CONTACT_EMAIL}
-                    div
-                        strong #{ev.TELEPHONE}
-                    div
-                        strong #{ev.ADDR_STREET}
-                    div    
-                        strong #{ev.ADDR_STREET_2}
-                    div 
-                        strong #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                    div #{ev.CUST_CONT_PERSON}
+                    div #{ev.CUST_CONTACT_EMAIL}
+                    div #{ev.TELEPHONE}
+                    div #{ev.ADDR_STREET}
+                    div #{ev.ADDR_STREET_2}
+                    div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
                 .content
                     div Franchisee
                         strong #{ev.FRANCHISEE}
-                    div Master Licensee
+                    div Office
                         strong #{ev.MASTER_LICENSEE}
     else
         |No customer doc
@@ -503,3 +497,17 @@ template(name='user_office_card')
                     a(href="tel:#{telephone}") #{telephone}
     else
         |No Linked Office
+        
+template(name='user_franchise_card')
+    if currentUser.users_customer.parent_franchisee
+        with currentUser.users_customer.parent_franchisee
+            .ui.card 
+                .content
+                    a.header(href="/view/#{_id}") #{franchisee}
+                .content
+                    | #{franchisee_email}
+                .content
+                    a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
+    else
+        |No Linked Franchise
+        

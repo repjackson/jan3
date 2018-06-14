@@ -35,7 +35,7 @@ themeteorchef:bert
 mizzao:autocomplete
 mquandalle:jade
 useraccounts:semantic-ui
-ecmascript@0.11.0
+ecmascript@0.11.1
 coffeescript
 juliancwirko:postcss
 less@2.7.12
@@ -45,6 +45,6 @@ tomwasd:flow-router-autoscroll
 http@1.4.1
 perak:codemirror
 aldeed:tabular
-underscore
+underscore@1.0.10
 yasinuslu:json-view
 peerlibrary:xml2js

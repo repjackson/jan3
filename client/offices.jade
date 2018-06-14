@@ -40,7 +40,6 @@ template(name='office_view')
 
 template(name='customers_by_office')
     .ui.horizontal.divider.header 
-        i.handshake.icon
         |#{office_name}'s Customers
     |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
 
