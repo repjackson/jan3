@@ -3,7 +3,7 @@ FlowRouter.route '/incidents',
         BlazeLayout.render 'layout', main: 'incidents'
 
 Template.incident_view.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
 
 
@@ -53,9 +53,6 @@ Template.incidents.helpers
     selector: ->  type: "incident"
 
 
-Template.incident_widget.onCreated ->
-Template.incident_widget.helpers
-    selector: ->  type: "incident"
 
 Template.incident_edit.onCreated ->
     @autorun -> Meteor.subscribe 'docs', [], 'incident_type'

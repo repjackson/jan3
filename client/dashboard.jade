@@ -23,23 +23,52 @@ template(name='dashboard')
                 +my_cleaning_crew
         .row
             .sixteen.wide.column
-                +incident_widget
+                .ui.center.aligned.header
+                    |Incidents
+            table.ui.sortable.striped.table
+                tbody
+                    each customer_incidents
+                        tr
+                            td Type: #{incident_type}
+                            td Logged #{when}
+                            td Details: #{incident_details}
+                            td Customer: #{customer_name}
+                            td History:
+                                +small_doc_history
+                            td 
+                                +view_button
+                            
+        .row
+            .sixteen.wide.column
+                h2.ui.center.aligned.header 
+                    |My Franchisee Contact
+            table.ui.sortable.striped.table
+                tbody
+                    with currentUser.users_customer.parent_franchisee
+                        tr
+                            td #{franchisee}
+                            td #{ev.FRANCH_EMAIL}
+                            td #{ev.TELE_CELL}
+                            td
+                                i.mail.icon
         .row
             .sixteen.wide.column
                 h2.ui.center.aligned.header 
                     |My Office Contacts
-                // |{{> tabular table=TabularTables.Users selector=selector class="ui sortable selectable striped fluid very basic table"}}        
             table.ui.sortable.striped.table
                 tbody
                     each office_contacts
                         tr
-                            td.header Title: #{title}
-                            td Name: #{profile.first_name} #{profile.last_name}
-                            td Tel: #{profile.telphone}
-                            td Email: #{emails.address}
+                            td #{title}
+                            td #{profile.first_name} #{profile.last_name}
+                            td #{profile.telphone}
+                            td #{email}
                             td
                                 i.mail.icon
-        .row
+        .centered.row
+            .four.wide.column
+                .ui.header Customer Account
+                +my_customer_account
             .four.wide.column
                 .ui.header My Franchisee
                 +user_franchise_card
@@ -47,28 +76,17 @@ template(name='dashboard')
             .four.wide.column
                 .ui.header Office
                 +user_office_card
-    
-            .four.wide.column
-                .ui.header Customer Account
-                +my_customer_account
-    
-        // .row
-        //     .five.wide.column
-        //         .ui.disabled.segment
-        //             .ui.header
-        //                 i.building.icon
-        //                 | Home Office Permissions
-        //     .five.wide.column
-        //         .ui.disabled.segment
-        //             .ui.header 
-        //                 i.dollar.icon
-        //                 |Billing and Payment History
-        //     .five.wide.column
-        //         .ui.disabled.segment
-        //             .ui.header
-        //                 i.clock.icon
-        //                 |Scheduled Services
-
+        .centered.row
+            .twelve.wide.column
+                .ui.segment
+                    .ui.header Services Overview with #{currentUser.users_customer.franchisee}
+                    with currentUser.users_customer
+                        .ui.list
+                            .item #{customer_contact_person}
+                            .item #{customer_contact_email}
+                            .item #{ev.CUST_NUM_DAYS_SERVICE}
+                            .item #{ev.CUST_DAYS_SERVICE}
+                            .item #{ev.CUST_REG_SERVICE_AMT}
 
     
 template(name='customer_menu')
@@ -91,10 +109,6 @@ template(name='my_cleaning_schedule')
             #cleaning_schedule
                 +fullcalendar cal_options
             
-template(name='incident_widget')
-    .ui.center.aligned.header
-        |Incidents
-    // |{{> tabular table=TabularTables.Incidents selector=selector class="ui sortable basic selectable striped fluid table"}}
         
 template(name='my_cleaning_crew')
     .ui.segment
@@ -109,13 +123,14 @@ template(name='crew_card')
     .ui.card
         .image
             a(href="/profile/#{username}")
-                img.ui.fluid.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
+                img.ui.fluid.image(src="{{c.url 'fnvoy2ncuib5pdnan6co' height=200 width=200 crop='fill' gravity='face'}}")
         .content
             a(href="/profile/#{username}")
                 .ui.header #{profile.first_name} #{profile.last_name}
+                .meta #{username}
         .content
-            .ui.list
-                +list_item key='profile.emails.address' label='Email'
-                +list_item key='profile.telephone' label='Phone'
-                +list_item key='profile.office_name'
+            .ui.small.list
+                .item #{email}
+                // .item #{profile.office_name}
+                
         // +view_button

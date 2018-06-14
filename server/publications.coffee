@@ -135,7 +135,7 @@ publishComposite 'doc', (id)->
 publishComposite 'me', ()->
     {
         find: -> 
-            console.log @userId
+            # console.log @userId
             Meteor.users.find @userId
         children: [
             {
@@ -147,15 +147,23 @@ publishComposite 'me', ()->
                 children: [
                     {
                         find: (customer)-> 
-                            console.log 'finding franchisees for', customer
-                            # customers franchisee
+                            # console.log 'finding franchisees for', customer
+                            # parent incidents
+                            Docs.find
+                                customer_jpid: customer.jpid
+                                type:'incident'
+                    }
+                    {
+                        find: (customer)-> 
+                            # console.log 'finding franchisees for', customer
+                            # parent franchisee
                             Docs.find
                                 franchisee: customer.franchisee
                                 type:'franchisee'
                     }
                     {
                         find: (customer)-> 
-                            # customers office
+                            # grandparent office
                             Docs.find
                                 office_name: customer.master_licensee
                                 type:'office'
@@ -163,7 +171,7 @@ publishComposite 'me', ()->
                             {
                                 find: (office)-> 
                                     # offices users
-                                    console.log 'query users from office doc', office
+                                    # console.log 'query users from office doc', office
                                     Meteor.users.find
                                         "profile.office_name": office.office_name
                             }

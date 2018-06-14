@@ -2,18 +2,6 @@ FlowRouter.route '/', action: ->
     BlazeLayout.render 'layout', 
         main: 'dashboard'
 
-Template.dashboard.onCreated ->
-    # @autorun -> Meteor.subscribe('docs', [], 'office')
-    # @autorun -> Meteor.subscribe('docs', [], 'incident')
-Template.my_cleaning_crew.onCreated ->
-
-Template.dashboard.onRendered ->
-    # Meteor.setTimeout ->
-    #     $('.ui.accordion').accordion()
-    # , 400
-
-
-
 Template.my_cleaning_schedule.helpers
     cal_options: -> {
         # defaultView: 'agendaWeek'
@@ -39,13 +27,9 @@ Template.my_cleaning_schedule.helpers
         showWeekNumbers: true
     }
 
-
-
 Template.my_cleaning_crew.helpers
     crew: -> Meteor.users.find {}, limit:5
-Template.incident_widget.helpers
-    # incidents: -> Docs.find {type:'incident'}, limit:5
 
 Template.dashboard.helpers
-    office_contacts: ->  
-        Meteor.users.find()
+    office_contacts: -> Meteor.users.find()
+    customer_incidents: -> Docs.find type:'incident'

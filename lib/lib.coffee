@@ -46,6 +46,10 @@ Meteor.users.helpers
         Docs.findOne
             type:'customer'
             jpid: @profile.customer_jpid
+            
+    email: -> 
+        if @emails
+            @emails[0].address
     
 
 Docs.helpers
