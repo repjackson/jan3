@@ -29,10 +29,11 @@ template(name='dashboard')
                 +my_office_contacts
 
         .row
-            .four.wide.column
-                +general_account_info
+            // .four.wide.column
+            //     +general_account_info
                 
             .four.wide.column
+                |users customers: #{currentUser.users_customer.cust_name}
                 +local_office_information
         // .row
         //     .five.wide.column
@@ -107,7 +108,7 @@ template(name='incident_widget')
     .ui.center.aligned.header
         i.exclamation.circle.icon
         |Incidents
-    |{{> tabular table=TabularTables.Incidents selector=selector class="ui sortable selectable striped fluid table"}}
+    |{{> tabular table=TabularTables.Incidents selector=selector class="ui sortable basic selectable striped fluid table"}}
         
     // .ui.divided.items.segment
     //     each incidents
@@ -137,7 +138,7 @@ template(name='general_account_info')
         i.user.icon
         | Account
     with currentUser
-        +user_card
+        // +user_card
         
         
         

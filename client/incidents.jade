@@ -10,7 +10,7 @@ template(name='incidents')
             .three.wide.column
         .row
             .sixteen.wide.column
-                {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable selectable striped fluid table"}}
+                {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable striped fluid very basic table"}}
 
 
                 
@@ -81,8 +81,8 @@ template(name='incident_view')
                 .ui.dividing.header History
                 +full_doc_history
             .four.wide.column
-                with author
-                    +user_card
+                // with author
+                //     +user_card
                 // with office
                 //     +office_card
                 +incident_tasks

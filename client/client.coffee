@@ -1,5 +1,3 @@
-@selected_tags = new ReactiveArray []
-
 $.cloudinary.config
     cloud_name:"facet"
 
@@ -13,6 +11,11 @@ FlowRouter.notFound =
 #         libraries: 'places'
 # )
 
+FlowRouter.route '/users', action: (params) ->
+    BlazeLayout.render 'layout',
+        nav: 'nav'
+        # sub_nav: 'admin_nav'
+        main: 'users'
 
 
 

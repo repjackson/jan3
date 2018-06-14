@@ -27,14 +27,14 @@ template(name='toggle_boolean')
                 i.toggle.off.icon
 
 template(name='save_button')
-    a.ui.big.icon.button(href="/view/#{_id}") 
-        i.checkmark.icon
-        // strong save
+    a.ui.button(href="/view/#{_id}") 
+        // i.checkmark.icon
+        | Save
         
 template(name='edit_button')
-    a.ui.icon.button(href="/edit/#{_id}" title='Edit') 
-        i.pencil.icon
-        // strong edit
+    a.ui.button(href="/edit/#{_id}" title='Edit') 
+        // i.pencil.icon
+        | Edit
 
 template(name='view_button')
     a.ui.icon.button(href="/view/#{_id}" title='View Details') 
@@ -42,9 +42,9 @@ template(name='view_button')
         i.right.chevron.icon
         
 template(name='add_button')
-    #add.ui.icon.button(title='add')
-        i.plus.icon
-        // +mini_inline_sprite name='plus'
+    #add.ui.button(title='add')
+        // i.plus.icon
+        | Add
 
 template(name='reference_type_single')
     .ui.form
@@ -137,7 +137,8 @@ template(name='parent_link')
 
 template(name='view_full_button')
     a.floated.right(href="/view/#{_id}")
-        i.right.chevron.link.icon
+        // i.right.chevron.link.icon
+        | View
                         
 template(name='toggle_follow')
     if currentUser
@@ -462,8 +463,8 @@ template(name='doc_result')
                 
                 
 template(name='my_customer_account')
-    if my_customer_doc
-        with my_customer_doc
+    if currentUser.users_customer
+        with currentUser.users_customer
             .ui.card 
                 .content
                     a.header(href="/view/#{_id}") #{ev.CUST_NAME}
@@ -491,36 +492,14 @@ template(name='my_customer_account')
         |No customer doc
 
 template(name='user_office_card')
-    if user_licensee_doc
-        with user_licensee_doc
+    if currentUser.users_customer.parent_franchisee.parent_office
+        with currentUser.users_customer.parent_franchisee.parent_office
             .ui.card 
                 .content
-                    with ev
-                        div Master Licensee
-                            strong #{MASTER_LICENSEE}
-                        div JP ID
-                            strong #{ID}
-                        div Customer Name
-                            strong #{CUST_NAME}
-                        div Customer Contact Person
-                            strong #{CUST_CONT_PERSON}
-                        div Customer Contact Email
-                            strong #{CUST_CONTACT_EMAIL}
-                        div Tel
-                            strong #{TELEPHONE}
-                        div Address
-                            strong #{ADDR_STREET}
-                        div    
-                            strong #{ADDR_STREET_2}
-                        div 
-                            strong #{ADDR_CITY} #{ADDR_STATE}
-                        div Franchisee
-                            strong #{FRANCHISEE}
-                        div Number of Days of Service
-                            strong #{CUST_NUM_DAYS_SERVICE}
-                        div Days Service
-                            strong #{CUST_DAYS_SERVICE}
-                        div Regular Service Amount
-                            strong #{CUST_REG_SERVICE_AMT}
+                    a.header(href="/view/#{_id}") #{office_name}
+                .content
+                    | #{address}
+                .content
+                    a(href="tel:#{telephone}") #{telephone}
     else
         |No Linked Office

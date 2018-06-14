@@ -42,7 +42,10 @@ Meteor.users.helpers
             "#{@username}"
     last_login: -> moment(@status?.lastLogin.date).fromNow()
 
-    five_tags: -> if @tags then @tags[0..3]
+    users_customer: ->
+        Docs.findOne
+            type:'customer'
+            jpid: @profile.customer_jpid
     
 
 Docs.helpers
@@ -54,17 +57,23 @@ Docs.helpers
     # notified_users: -> 
     #     Meteor.users.find 
     children: -> Docs.find parent_id:@_id
-    customers: ->
+    franchisee_customers: ->
         Docs.find
             type: 'customer'
             franchisee: @franchisee
 
-    franchisee: ->
-        Docs.find
+    parent_franchisee: ->
+        Docs.findOne
             type: 'franchisee'
             franchisee: @franchisee
     
+    users_customer: ->
+        Docs.findOne
+            type:'customer'
+            jpid: @profile.customer_jpid
+    
     parent_office: ->
+        # attached to franchisee
         Docs.findOne
             type:'office'
             office_name: @ev.MASTER_LICENSEE
