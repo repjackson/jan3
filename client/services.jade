@@ -4,12 +4,11 @@ template(name='services')
             .three.wide.column
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    +officeicon name='building'
+                    +officeiconlarge name='broom'
                     | Services
             .three.wide.column
-                .sync_services.ui.button 
-                    i.refresh.button
-                    | Sync Services
+                .sync_services.ui.icon.button 
+                    i.refresh.icon
         .row
             .sixteen.wide.column
                 |{{> tabular table=TabularTables.Special_services selector=selector class="ui sortable striped fluid very basic table"}}

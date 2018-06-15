@@ -24,7 +24,8 @@ template(name='dashboard')
         .row
             .sixteen.wide.column
                 h2.ui.header
-                    i.exclamation.circle.icon
+                    // i.exclamation.circle.icon
+                    +officeiconlarge name='error'
                     |Incidents
                 table.ui.basic.striped.table
                     thead
@@ -49,7 +50,9 @@ template(name='dashboard')
             with currentUser.users_customer.parent_franchisee
                 .sixteen.wide.column
                     h2.ui.header 
-                        i.car.icon
+                        // i.car.icon
+                        +officeiconlarge name='collaborator-female'
+
                         |My #{franchisee} Franchisee Contact
                     table.ui.sortable.striped.table
                         tbody
@@ -58,11 +61,13 @@ template(name='dashboard')
                                 td #{ev.FRANCH_EMAIL}
                                 td #{ev.TELE_CELL}
                                 td
-                                    i.mail.icon
+                                    a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
+                                        // i.mail.icon
+                                        +officeicon name='send'
         .row
             .sixteen.wide.column
                 h2.ui.header 
-                    i.building.icon
+                    +officeiconlarge name='organization'
                     |My #{currentUser.users_customer.parent_franchisee.parent_office.office_name} Contacts
                 table.ui.sortable.striped.table
                     tbody
@@ -73,11 +78,14 @@ template(name='dashboard')
                                 td #{profile.telphone}
                                 td #{email}
                                 td
-                                    i.mail.icon
+                                    a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{name}")
+                                        // i.mail.icon
+                                        +officeicon name='send'
         .centered.row
             .sixteen.wide.column
                 .ui.header 
-                    i.paint.brush.icon
+                    // i.paint.brush.icon
+                    +officeicon name='broom'
                     |Services Overview
                 .ui.segment
                     with currentUser.users_customer
@@ -88,9 +96,25 @@ template(name='dashboard')
                             .item Days of Service: #{ev.CUST_DAYS_SERVICE}
                             .item Regular Service Amount: #{ev.CUST_REG_SERVICE_AMT}
                     .ui.header Special Services
-                    .ui.list
-                        each my_special_services
-                            .item #{this}
+                    table.ui.sortable.striped.table
+                        thead
+                            tr
+                                th JPID
+                                th Customer
+                                th Service Type
+                                th Description
+                                th Date Created
+                                th Extra Price
+                                
+                        tbody
+                            each my_special_services
+                                tr
+                                    td #{ev.ID}
+                                    td #{ev.CUSTOMER}
+                                    td #{ev.SERV_TYPE}
+                                    td #{ev.EXTRA_SERV_DESC}
+                                    td #{ev.DATE_CREATED}
+                                    td #{ev.EXTRA_PRICE}
                         
         .centered.row
             .five.wide.column
@@ -134,9 +158,10 @@ template(name='my_cleaning_schedule')
         
 template(name='my_cleaning_crew')
     h2.ui.header 
-        i.large.icons
-            i.users.icon
-            i.corner.building.icon
+        +officeiconlarge name='add-contact-to-company'
+        // i.large.icons
+        //     i.users.icon
+        //     i.corner.building.icon
         |My Office Contacts
     .ui.five.stackable.centered.cards
         each crew

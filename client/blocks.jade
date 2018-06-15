@@ -32,18 +32,21 @@ template(name='save_button')
         // | Save
         
 template(name='edit_button')
-    a.ui.large.icon.button(href="/edit/#{_id}" title='Edit') 
-        i.pencil.icon
+    a(href="/edit/#{_id}" title='Edit') 
+        +officeicon name='pencil'
+        // i.pencil.icon
         // | Edit
 
 template(name='view_button')
-    a.ui.icon.button(href="/view/#{_id}" title='View Details') 
+    a(href="/view/#{_id}" title='View Details') 
         // +avatar_sprite name='chevron-right'
-        i.right.chevron.icon
+        +officeicon name='circled-chevron-right'
+        // i.right.chevron.icon
         
 template(name='add_button')
-    #add.ui.large.icon.button(title='add')
-        i.plus.icon
+    #add(title='Add')
+        // i.plus.icon
+        +officeicon name='plus'
 
 template(name='reference_type_single')
     .ui.form
@@ -304,9 +307,10 @@ template(name='call_phone_button')
             
             
 template(name='link_button')    
-    a.ui.large.button(href=link)
-        i.icon(class=icon)
-        strong #{label}
+    a(href=link title=label)
+        // i.icon(class=icon)
+        +officeicon name=icon
+        // strong #{label}
 
 template(name='edit_author')
     .ui.header Edit Author
@@ -411,7 +415,11 @@ template(name='dusk_icon')
     img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
 template(name='officeicon')
-    img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
+    img.ui.mini.image(src="https://png.icons8.com/office/40/000000/#{name}.png")
+template(name='officeiconlarge')
+    img.ui.image(src="https://png.icons8.com/office/100/000000/#{name}.png")
+template(name='officeiconsmall')
+    img.ui.image(src="https://png.icons8.com/office/30/000000/#{name}.png")
 
 template(name='user_pill')
     .item
@@ -523,13 +531,14 @@ template(name='user_franchise_card')
         with currentUser.users_customer.parent_franchisee
             .ui.card 
                 .content
-                    a.header(href="/view/#{_id}") #{franchisee}
+                    a.header(href="/view/#{_id}" title='View Franchisee') #{franchisee}
                 .content
-                    i.spaced.telephone.icon
-                    a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
-                .content
-                    i.spaced.mail.icon
-                    | #{franchisee_email}
+                    .ui.list
+                        .item(title='Short Name') #{ev.FRANCH_NAME}
+                        .item(title='Call Number')
+                            a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
+                        .item #{franchisee_email}
+                    
     else
         |No Linked Franchise
         

@@ -298,13 +298,15 @@ template(name='franchisees')
     .ui.padded.stackable.grid
         .middle.aligned.row
             .four.wide.column
-                +link_button link='/ev' icon='database' label='EV Dash'
+                // +link_button link='/ev' icon='database' label='EV'
             .eight.wide.column
                 h1.ui.center.aligned.header
+                    +officeiconlarge name='collaborator-female'
                     | Franchisees
             .four.wide.column
                 if is_dev
-                    .get_all_franchisees.ui.button refresh
+                    .get_all_franchisees.ui.icon.button
+                        i.refresh.icon
         .row
             .sixteen.wide.column
                 |{{> tabular table=TabularTables.Franchisees selector=selector class="ui sortable striped very basic fluid table"}}
