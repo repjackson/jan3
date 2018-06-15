@@ -1,9 +1,9 @@
 template(name='account_settings')
-    .ui.padded.centered.grid.container
+    .ui.padded.centered.grid
         .centered.row
             .twelve.wide.column
                 h1.ui.center.aligned.grey.header 
-                    i.cog.icon
+                    +officeicon name='account-settings'
                     | Account
                 |{{> atForm state='changePwd'}}
                 h2.ui.center.aligned.header 

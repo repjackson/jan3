@@ -2,8 +2,8 @@ template(name='users')
     .ui.padded.stackable.grid
         .centered.row
             .three.wide.column 
-                a.ui.large.icon.button(href='/user/add' data-content='Add User')
-                    i.plus.icon
+                a.ui.icon.button(href='/user/add' data-content='Add User')
+                    i.large.plus.icon
                 // if is_dev
                 //     .ui.header upload user list
                 //     unless uploading
@@ -12,6 +12,7 @@ template(name='users')
                 //         |Uploading files...
             .ten.wide.column 
                 h1.ui.center.aligned.header 
+                    +officeiconlarge name='groups'
                     |Users
             .three.wide.column 
         .centered.row

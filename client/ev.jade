@@ -305,8 +305,9 @@ template(name='franchisees')
                     | Franchisees
             .four.wide.column
                 if is_dev
-                    .get_all_franchisees.ui.icon.button
-                        i.refresh.icon
+                    .get_all_franchisees.ui.button
+                        // i.refresh.icon
+                        +officeicon name='refresh'
         .row
             .sixteen.wide.column
                 |{{> tabular table=TabularTables.Franchisees selector=selector class="ui sortable striped very basic fluid table"}}

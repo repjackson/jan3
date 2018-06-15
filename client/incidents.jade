@@ -3,8 +3,8 @@ template(name='incidents')
         .middle.aligned.centered.row
             .three.wide.column
                 if has_user_customer_jpid
-                    #add_incident.ui.icon.button
-                        i.plus.icon
+                    #add_incident
+                        +officeiconlarge name='plus'
                 else
                     .ui.secondary.segment Add Office to Profile to Add Incident
             .ten.wide.column

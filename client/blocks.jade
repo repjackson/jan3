@@ -415,7 +415,7 @@ template(name='dusk_icon')
     img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
 template(name='officeicon')
-    img.ui.mini.image(src="https://png.icons8.com/office/40/000000/#{name}.png")
+    img.ui.image(src="https://png.icons8.com/office/40/000000/#{name}.png")
 template(name='officeiconlarge')
     img.ui.image(src="https://png.icons8.com/office/100/000000/#{name}.png")
 template(name='officeiconsmall')
@@ -491,53 +491,53 @@ template(name='doc_result')
                 
                 
 template(name='my_customer_account')
+    .ui.header Customer Account
     if currentUser.users_customer
         with currentUser.users_customer
-            .ui.card 
-                .content
-                    a.header(href="/view/#{_id}") #{ev.CUST_NAME}
-                .content
-                    .ui.list
-                        .item ##{ev.ID}
-                        .item #{ev.CUST_CONT_PERSON}
-                        .item #{ev.CUST_CONTACT_EMAIL}
-                        .item #{ev.TELEPHONE}
-                        .item #{ev.ADDR_STREET}
-                        .item #{ev.ADDR_STREET_2}
-                        .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                // .content
-                //     div Franchisee
-                //         strong #{ev.FRANCHISEE}
-                //     div Office
-                //         strong #{ev.MASTER_LICENSEE}
+            .content
+                a.ui.header(href="/view/#{_id}") #{ev.CUST_NAME}
+            .content
+                .ui.list
+                    .item ##{ev.ID}
+                    .item #{ev.CUST_CONT_PERSON}
+                    .item #{ev.CUST_CONTACT_EMAIL}
+                    .item #{ev.TELEPHONE}
+                    .item #{ev.ADDR_STREET}
+                    .item #{ev.ADDR_STREET_2}
+                    .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+            // .content
+            //     div Franchisee
+            //         strong #{ev.FRANCHISEE}
+            //     div Office
+            //         strong #{ev.MASTER_LICENSEE}
     else
         |No customer doc
 
 template(name='user_office_card')
+    .ui.header Office
     if currentUser.users_customer.parent_franchisee.parent_office
         with currentUser.users_customer.parent_franchisee.parent_office
-            .ui.card 
-                .content
-                    a.header(href="/view/#{_id}") #{office_name}
-                .content
-                    | #{address}
-                .content
-                    a(href="tel:#{telephone}") #{telephone}
+            .content
+                a.header(href="/view/#{_id}") #{office_name}
+            .content
+                | #{address}
+            .content
+                a(href="tel:#{telephone}") #{telephone}
     else
         |No Linked Office
         
 template(name='user_franchise_card')
+    .ui.header Franchisee
     if currentUser.users_customer.parent_franchisee
         with currentUser.users_customer.parent_franchisee
-            .ui.card 
-                .content
-                    a.header(href="/view/#{_id}" title='View Franchisee') #{franchisee}
-                .content
-                    .ui.list
-                        .item(title='Short Name') #{ev.FRANCH_NAME}
-                        .item(title='Call Number')
-                            a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
-                        .item #{franchisee_email}
+            .content
+                a.header(href="/view/#{_id}" title='View Franchisee') #{franchisee}
+            .content
+                .ui.list
+                    .item(title='Short Name') #{ev.FRANCH_NAME}
+                    .item(title='Call Number')
+                        a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
+                    .item #{franchisee_email}
                     
     else
         |No Linked Franchise

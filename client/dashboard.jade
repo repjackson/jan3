@@ -52,7 +52,6 @@ template(name='dashboard')
                     h2.ui.header 
                         // i.car.icon
                         +officeiconlarge name='collaborator-female'
-
                         |My #{franchisee} Franchisee Contact
                     table.ui.sortable.striped.table
                         tbody
@@ -118,20 +117,11 @@ template(name='dashboard')
                         
         .centered.row
             .five.wide.column
-                .ui.header 
-                    i.handshake.icon
-                    |Customer Account
                 +my_customer_account
             .five.wide.column
-                .ui.header 
-                    i.car.icon
-                    |My Franchisee
                 +user_franchise_card
                 
             .five.wide.column
-                .ui.header 
-                    i.building.icon
-                    |Office
                 +user_office_card
 
     
