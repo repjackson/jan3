@@ -141,7 +141,7 @@ publishComposite 'me', ()->
             {
                 find: (user)-> 
                     # users customer account
-                    console.log 'current user?', user.profile
+                    # console.log 'current user?', user.profile
                     Docs.find
                         jpid: user.profile.customer_jpid
                 children: [

@@ -10,10 +10,7 @@ template(name='ev')
                     +children_widget type='user' label='Users' icon='users' link='/ev_users'
                     +children_widget type='jpid' label='JP Ids' icon='hashtag' link='/jpids'
                     +children_widget type='area' label='Areas' icon='clone' link='/areas'
-                    +children_widget type='role' label='Roles' icon='id badge' link='/ev_roles'
                     +children_widget type='meta' label='MetaData' icon='code' link='/meta'
-                    +children_widget type='franchisee' label='Franchisees' icon='user circle' link='/franchisees'
-                    +children_widget type='customer' label='Customers' icon='handshake' link='/customers'
 
 template(name='ev_reports')
     .ui.padded.stackable.grid
@@ -84,7 +81,6 @@ template(name='report_edit')
                     +edit_array_field key='tags' label='Relationship to parent'
                     +edit_html
         
-        
 template(name='report_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
@@ -112,8 +108,6 @@ template(name='report_view')
                 .ui.centered.cards
                     each children
                         +ev_card
-                        
-                        
                         
 template(name='view_customer_name_field')
     div
@@ -270,27 +264,6 @@ template(name='areas')
 
                     
                     
-                    
-template(name='ev_roles')
-    .ui.padded.stackable.grid
-        .middle.aligned.row
-            .two.wide.column
-                +link_button link='/ev' icon='database' label='EV Dash'
-            .fourteen.wide.column
-                h1.ui.center.aligned.header
-                    i.id.badge.icon
-                    | EV Roles
-                p Individual users belong to one or more user roles and share the same characteristics and permissions. For example, one user role may have read and write access to a particular field, while another role may only be able to view the same field. Another user role may not even be able to see the field.
-                    a(href='https://docs.extraview.com/site/extraview-111/administration-guide/key-concepts/user-roles-and-security' target='_window') 
-                        |Documentation
-                        i.external.icon
-        .row
-            .sixteen.wide.column
-                |{{> tabular table=TabularTables.Ev_roles selector=selector class="ui sortable fluid striped table"}}
-
-                    
-                    
-     
 template(name='meta')
     .ui.padded.stackable.grid
         .middle.aligned.row
@@ -349,7 +322,7 @@ template(name='franchisee_view')
         .centered.row
             +office_by_franchisee
         .centered.row
-            .sixteen.wide.column
+            .twelve.wide.column
                 .ui.secondary.segment
                     .ui.header Franchisee Name: #{ev.FRANCHISEE}
                     .ui.header JPID ##{ev.ID}
@@ -388,8 +361,8 @@ template(name='customer_view')
         .centered.row
             .twelve.wide.column
                 +franchise_by_customer
-        .row
-            .sixteen.wide.column
+        .centered.row
+            .twelve.wide.column
                 .ui.secondary.segment
                     // h4.ui.header Name: #{cust_name}
                     // h4.ui.header Master Licensee: #{master_licensee}
@@ -429,11 +402,13 @@ template(name='customer_view')
                 
 template(name='related_customers')
     .ui.horizontal.divider.header 
+        i.handshake.icon
         |#{franchisee}'s Customers
     |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
                 
 template(name='franchise_by_customer')
     .ui.dividing.header 
+        i.user.circle.icon
         |#{ev.CUST_NAME}'s Franchisee
     |{{> tabular table=TabularTables.Related_franchisees selector=selector class="ui sortable fluid striped table"}}
     
@@ -441,6 +416,7 @@ template(name='franchise_by_customer')
 template(name='office_by_franchisee')
     .ui.secondary.segment
         .ui.dividing.header 
+            i.building.icon
             |#{ev.FRANCHISEE}'s Office
         with parent_office
             a.ui.header(href="/view/#{_id}") #{office_name}

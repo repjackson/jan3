@@ -50,6 +50,8 @@ Template.registerHelper 'is_admin', () ->
 Template.registerHelper 'is_dev', () -> 
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles
+Template.registerHelper 'has_user_customer_jpid', () -> 
+    Meteor.user() and Meteor.user().profile and Meteor.user().profile.customer_jpid
 
 Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 

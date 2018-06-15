@@ -5,7 +5,8 @@
 #nav.ui.inverted.menu {
   /*border: 0px solid transparent; */
   border: none !important; 
-  background: #01336C;
+  /*background: #01336C; //dark blue*/
+  background: rgb(31, 112, 158);
   box-shadow: none
 }
 #sub_nav.ui.inverted.menu {
@@ -41,9 +42,9 @@ body {
   bottom: 0;
   width: 100%;
   margin: 0 !important;
-  background: #01336C !important;
+  background: rgb(31, 112, 158);
 }
-#footer .item{
+#footer .sitemap_list{
   color:white !important;
 }
 
@@ -190,9 +191,9 @@ body {
   padding-top: 5em;
   padding-bottom: 5em;
 }
-.footer.segment {
-  padding: 5em 0em;
-}
+/*.footer.segment {*/
+/*  padding: 5em 0em;*/
+/*}*/
 .secondary.pointing.menu .toc.item {
   display: none;
 }

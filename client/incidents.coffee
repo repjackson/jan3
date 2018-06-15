@@ -5,6 +5,13 @@ FlowRouter.route '/incidents',
 Template.incident_view.onCreated ->
     # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
+Template.incidents.events
+    'click #add_incident': ->
+        new_incident_id = 
+            Docs.insert
+                type: 'incident'
+                customer_jpid: Meteor.user().profile.customer_jpid
+        FlowRouter.go "/edit/#{new_incident_id}"
 
 
 Template.incident_view.onRendered ->

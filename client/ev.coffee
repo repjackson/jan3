@@ -105,13 +105,7 @@ FlowRouter.route '/areas',
 Template.areas.helpers
     selector: ->  type: "area"
 
-# roles
-FlowRouter.route '/ev_roles', 
-    action: -> BlazeLayout.render 'layout', main: 'ev_roles'
-Template.ev_roles.helpers
-    selector: ->  type: "ev_role"
-    
-    
+
 # meta
 FlowRouter.route '/meta', 
     action: -> BlazeLayout.render 'layout', main: 'meta'

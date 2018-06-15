@@ -27,14 +27,14 @@ template(name='toggle_boolean')
                 i.toggle.off.icon
 
 template(name='save_button')
-    a.ui.button(href="/view/#{_id}") 
-        // i.checkmark.icon
-        | Save
+    a.ui.large.icon.button(href="/view/#{_id}") 
+        i.checkmark.icon
+        // | Save
         
 template(name='edit_button')
-    a.ui.button(href="/edit/#{_id}" title='Edit') 
-        // i.pencil.icon
-        | Edit
+    a.ui.large.icon.button(href="/edit/#{_id}" title='Edit') 
+        i.pencil.icon
+        // | Edit
 
 template(name='view_button')
     a.ui.icon.button(href="/view/#{_id}" title='View Details') 
@@ -42,9 +42,8 @@ template(name='view_button')
         i.right.chevron.icon
         
 template(name='add_button')
-    #add.ui.button(title='add')
-        // i.plus.icon
-        | Add
+    #add.ui.large.icon.button(title='add')
+        i.plus.icon
 
 template(name='reference_type_single')
     .ui.form
@@ -263,6 +262,22 @@ template(name='single_doc_select')
                     .item Franchisee: #{franchisee}
                     .item Master Licensee: #{master_licensee}
           
+template(name='single_doc_view')
+    .ui.dividing.header #{label}
+    with selected_doc
+        .ui.fluid.card
+            .content
+                .header 
+                    |#{cust_name}
+            .content
+                .ui.list
+                    .item JPID: #{jpid}
+                    .item Tel: #{telephone}
+                    .item Contact Person: #{customer_contact_person}
+                    .item Contact Email: #{customer_contact_email}
+                    .item Franchisee: #{franchisee}
+                    .item Master Licensee: #{master_licensee}
+          
 template(name='view_multiple_user')
     .ui.form
         .field
@@ -290,7 +305,7 @@ template(name='call_phone_button')
             
 template(name='link_button')    
     a.ui.large.button(href=link)
-        // i.large.icon(class=icon)
+        i.large.icon(class=icon)
         strong #{label}
 
 template(name='edit_author')
@@ -375,23 +390,28 @@ template(name='google_places_input')
         
         
         
-// template(name='mini_inline_sprite')
-//     img.ui.mini.inline.spaced.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-// template(name='mini_sprite')
-//     img.ui.mini.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-// template(name='tiny_sprite')
-//     img.ui.tiny.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-// template(name='avatar_sprite')
-//     img.ui.avatar.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-// template(name='small_sprite')
-//     img.ui.small.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-// template(name='medium_sprite')
-//     img.ui.medium.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-// template(name='dots')
-//     img(src="https://png.icons8.com/hide/#{name}/100/000000" class=classes title=tooltip)
-// template(name='icon')
-//     img.ui.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='mini_inline_sprite')
+    img.ui.mini.inline.spaced.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='mini_sprite')
+    img.ui.mini.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='tiny_sprite')
+    img.ui.tiny.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='avatar_sprite')
+    img.ui.avatar.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='small_sprite')
+    img.ui.small.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='medium_sprite')
+    img.ui.medium.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
+template(name='dots')
+    img(src="https://png.icons8.com/hide/#{name}/100/000000" class=classes title=tooltip)
+template(name='icon')
+    img.ui.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
 
+template(name='dusk_icon')
+    img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
+
+template(name='officeicon')
+    img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
 template(name='user_pill')
     .item
@@ -422,8 +442,8 @@ template(name='small_doc_history')
     .ui.feed
         each doc_history_events
             .event
-                // .label
-                //     img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                .label
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                 .content
                     .summary
                         a.user #{author.username}
@@ -468,20 +488,20 @@ template(name='my_customer_account')
             .ui.card 
                 .content
                     a.header(href="/view/#{_id}") #{ev.CUST_NAME}
-                    div
-                        strong ##{ev.ID}
                 .content
-                    div #{ev.CUST_CONT_PERSON}
-                    div #{ev.CUST_CONTACT_EMAIL}
-                    div #{ev.TELEPHONE}
-                    div #{ev.ADDR_STREET}
-                    div #{ev.ADDR_STREET_2}
-                    div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                .content
-                    div Franchisee
-                        strong #{ev.FRANCHISEE}
-                    div Office
-                        strong #{ev.MASTER_LICENSEE}
+                    .ui.list
+                        .item ##{ev.ID}
+                        .item #{ev.CUST_CONT_PERSON}
+                        .item #{ev.CUST_CONTACT_EMAIL}
+                        .item #{ev.TELEPHONE}
+                        .item #{ev.ADDR_STREET}
+                        .item #{ev.ADDR_STREET_2}
+                        .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                // .content
+                //     div Franchisee
+                //         strong #{ev.FRANCHISEE}
+                //     div Office
+                //         strong #{ev.MASTER_LICENSEE}
     else
         |No customer doc
 
@@ -505,9 +525,11 @@ template(name='user_franchise_card')
                 .content
                     a.header(href="/view/#{_id}") #{franchisee}
                 .content
-                    | #{franchisee_email}
-                .content
+                    i.spaced.telephone.icon
                     a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
+                .content
+                    i.spaced.mail.icon
+                    | #{franchisee_email}
     else
         |No Linked Franchise
         

@@ -2,10 +2,14 @@ template(name='incidents')
     .ui.stackable.padded.centered.grid
         .middle.aligned.centered.row
             .three.wide.column
-                +add_button type='incident' label='Incident'
+                if has_user_customer_jpid
+                    #add_incident.ui.icon.button
+                        i.plus.icon
+                else
+                    .ui.secondary.segment Add Office to Profile to Add Incident
             .ten.wide.column
                 h2.ui.center.aligned.header 
-                    // i.exclamation.circle.icon
+                    +officeicon name='error'
                     | Incidents
             .three.wide.column
         .row
@@ -36,7 +40,9 @@ template(name='incident_edit')
                 // +toggle_key key='priority' value='high' label='High'
                 // +toggle_key key='priority' value='emergency' label='Emergency'
                 +multiple_user_select key='assigned_to' label='Assigned To' icon='users'
-                +single_doc_select type='customer' save_key='customer_id' search_key='cust_name' label='Customer'
+                // +single_doc_select type='customer' save_key='customer_id' search_key='cust_name' label='Customer'
+                +single_doc_view type='customer' key='customer_jpid' label='Customer'
+                                    
             .twelve.wide.column
                 .ui.dividing.header Type
                 each incident_type_docs
@@ -67,7 +73,7 @@ template(name='incident_view')
                 +incident_type_label
                 h4.ui.header Service Date: #{service_date}
                 +incident_status
-                +single_doc_select type='customer' save_key='customer_id' search_key='cust_name' label='Customer'
+                +single_doc_view type='customer' key='customer_jpid' label='Customer'
                 .ui.dividing.header Status
                 +toggle_key key='status' value='closed' label='Closed'
                 +toggle_key key='status' value='open' label='Open'

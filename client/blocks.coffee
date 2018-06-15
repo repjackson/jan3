@@ -522,6 +522,17 @@ Template.single_doc_select.helpers
             Docs.findOne _id: parent_doc["#{context.save_key}"]
         # console.log doc
         doc
+Template.single_doc_view.helpers
+    selected_doc: ->
+        context = Template.currentData(0)
+        # console.log context.save_key
+        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log parent_doc["#{context.key}"]
+        doc = 
+            Docs.findOne 
+                jpid: parent_doc["#{context.key}"]
+        # console.log doc
+        doc
 Template.view_multiple_user.onCreated ->
     @autorun =>  Meteor.subscribe 'users'
 
