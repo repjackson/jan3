@@ -5,105 +5,110 @@ template(name='dashboard')
             img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             h2.ui.inverted.header Customer Portal
             +customer_menu
-    .ui.container
-        .ui.padded.stackable.centered.grid
-    
-            // .centered.row
-            //     .sixteen.wide.center.aligned.column
-            //         img.ui.large.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
-            //         h1.ui.center.aligned.grey.header 
-            //             // i.line.chart.icon
-            //             |Customer Portal
-            .row
-                // .two.wide.column
-                //     .ui.center.aligned.fluid.segment
-                //         h3.ui.center.aligned.header Welcome
-                //         .ui.button Sign In
-                //         .ui.button Register
-                .sixteen.wide.column
-                    +my_cleaning_crew
-            .row
-                .sixteen.wide.column
-                    h2.ui.header
-                        i.exclamation.circle.icon
-                        |Incidents
-                    table.ui.basic.striped.table
-                        thead
+    .ui.padded.stackable.centered.grid
+
+        // .centered.row
+        //     .sixteen.wide.center.aligned.column
+        //         img.ui.large.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
+        //         h1.ui.center.aligned.grey.header 
+        //             // i.line.chart.icon
+        //             |Customer Portal
+        .row
+            // .two.wide.column
+            //     .ui.center.aligned.fluid.segment
+            //         h3.ui.center.aligned.header Welcome
+            //         .ui.button Sign In
+            //         .ui.button Register
+            .sixteen.wide.column
+                +my_cleaning_crew
+        .row
+            .sixteen.wide.column
+                h2.ui.header
+                    i.exclamation.circle.icon
+                    |Incidents
+                table.ui.basic.striped.table
+                    thead
+                        tr
+                            th Type
+                            th When
+                            th Details
+                            th History
+                            th Actions
+                    tbody
+                        each customer_incidents
                             tr
-                                th Type
-                                th When
-                                th Details
-                                th History
-                                th Actions
-                        tbody
-                            each customer_incidents
-                                tr
-                                    td
-                                        +incident_type_label
-                                    td #{when}
-                                    td #{incident_details}
-                                    td
-                                        +small_doc_history
-                                    td 
-                                        +view_button
-            .row
-                with currentUser.users_customer.parent_franchisee
-                    .sixteen.wide.column
-                        h2.ui.header 
-                            i.car.icon
-                            |My #{franchisee} Franchisee Contact
-                        table.ui.sortable.striped.table
-                            tbody
-                                tr
-                                    td #{franchisee}
-                                    td #{ev.FRANCH_EMAIL}
-                                    td #{ev.TELE_CELL}
-                                    td
-                                        i.mail.icon
-            .row
+                                td
+                                    +incident_type_label
+                                td #{when}
+                                td #{incident_details}
+                                td
+                                    +small_doc_history
+                                td 
+                                    +view_button
+        .row
+            with currentUser.users_customer.parent_franchisee
                 .sixteen.wide.column
                     h2.ui.header 
-                        i.building.icon
-                        |My #{currentUser.users_customer.parent_franchisee.parent_office.office_name} Contacts
+                        i.car.icon
+                        |My #{franchisee} Franchisee Contact
                     table.ui.sortable.striped.table
                         tbody
-                            each office_contacts
-                                tr
-                                    td #{title}
-                                    td #{profile.first_name} #{profile.last_name}
-                                    td #{profile.telphone}
-                                    td #{email}
-                                    td
-                                        i.mail.icon
-            .centered.row
-                .four.wide.column
-                    .ui.header 
-                        i.paint.brush.icon
-                        |Services Overview
-                    .ui.segment
-                        with currentUser.users_customer
-                            .ui.list
-                                .item #{customer_contact_person}
-                                .item #{customer_contact_email}
-                                .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
-                                .item Days of Service: #{ev.CUST_DAYS_SERVICE}
-                                .item Regular Service Amount: #{ev.CUST_REG_SERVICE_AMT}
-                .four.wide.column
-                    .ui.header 
-                        i.handshake.icon
-                        |Customer Account
-                    +my_customer_account
-                .four.wide.column
-                    .ui.header 
-                        i.car.icon
-                        |My Franchisee
-                    +user_franchise_card
-                    
-                .four.wide.column
-                    .ui.header 
-                        i.building.icon
-                        |Office
-                    +user_office_card
+                            tr
+                                td #{franchisee}
+                                td #{ev.FRANCH_EMAIL}
+                                td #{ev.TELE_CELL}
+                                td
+                                    i.mail.icon
+        .row
+            .sixteen.wide.column
+                h2.ui.header 
+                    i.building.icon
+                    |My #{currentUser.users_customer.parent_franchisee.parent_office.office_name} Contacts
+                table.ui.sortable.striped.table
+                    tbody
+                        each office_contacts
+                            tr
+                                td #{title}
+                                td #{profile.first_name} #{profile.last_name}
+                                td #{profile.telphone}
+                                td #{email}
+                                td
+                                    i.mail.icon
+        .centered.row
+            .sixteen.wide.column
+                .ui.header 
+                    i.paint.brush.icon
+                    |Services Overview
+                .ui.segment
+                    with currentUser.users_customer
+                        .ui.list
+                            .item #{customer_contact_person}
+                            .item #{customer_contact_email}
+                            .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
+                            .item Days of Service: #{ev.CUST_DAYS_SERVICE}
+                            .item Regular Service Amount: #{ev.CUST_REG_SERVICE_AMT}
+                    .ui.header Special Services
+                    .ui.list
+                        each my_special_services
+                            .item #{this}
+                        
+        .centered.row
+            .five.wide.column
+                .ui.header 
+                    i.handshake.icon
+                    |Customer Account
+                +my_customer_account
+            .five.wide.column
+                .ui.header 
+                    i.car.icon
+                    |My Franchisee
+                +user_franchise_card
+                
+            .five.wide.column
+                .ui.header 
+                    i.building.icon
+                    |Office
+                +user_office_card
 
     
 template(name='customer_menu')

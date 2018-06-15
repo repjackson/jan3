@@ -194,6 +194,7 @@ Meteor.methods
                 type:'area'
                 number: split_report[0]
                 title: split_report[1]
+    
 
     get_meta: () ->
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
@@ -344,26 +345,69 @@ Meteor.methods
                 # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # console.log doc.CUST_NAME
+                    # console.log doc
                     # doc.type = 'customer'
-                    existing_jpid = 
+                    existing_franchisee = 
                         Docs.findOne 
                             type: 'franchisee'
                             jpid: doc.ID
                             franchisee: doc.FRANCHISEE
-                    if existing_jpid
-                        console.log "existing franchisee #{existing_jpid.franchisee}"
+                    if existing_franchisee
+                        console.log "existing franchisee #{existing_franchisee.franchisee}"
                         # console.log doc
-                        # Docs.update existing_jpid._id,
-                        #     $set:
-                        #         ev: doc
-                    else                    
-                        new_franchisee_doc = Docs.insert 
-                            type:'franchisee'
+                        Docs.update existing_franchisee._id,
+                            $set:
+                                ev: doc
+                    # else                    
+                    #     new_franchisee_doc = Docs.insert 
+                    #         type:'franchisee'
+                    #         jpid: doc.ID
+                    #         franchisee: doc.FRANCHISEE
+                    #         ev: doc
+                    #     console.log "added #{doc.FRANCHISEE}"
+    
+    sync_services: () ->
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers:"User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                statevar:'run_report'
+                username_display:'ID'
+                api_reverse_lookup:'NO'
+                id:'47857'
+                page_length:'7500'
+                record_start:'1'
+                record_count:'7500'
+        # return res.content
+        # console.log res.content
+        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
+            if err then console.error('errors',err)
+            else
+        #         # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+        #         # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+        #         # new_id = Docs.insert 
+        #         # console.log 'new id', new_id
+            if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                    console.log doc
+                    # doc.type = 'customer'
+                    existing_service_doc = 
+                        Docs.findOne 
+                            type: 'special_service'
                             jpid: doc.ID
-                            franchisee: doc.FRANCHISEE
+                    if existing_service_doc
+                        console.log "existing special_service #{existing_service_doc.ev.FRANCHISEE}"
+                        # console.log doc
+                        Docs.update existing_service_doc._id,
+                            $set:
+                                ev: doc
+                    else                    
+                        new_special_service_doc = Docs.insert 
+                            type:'special_service'
+                            jpid: doc.ID
                             ev: doc
-                        console.log "added #{doc.FRANCHISEE}"
+                        console.log "added #{doc.ID}"
     
     
     sync_customers: () ->

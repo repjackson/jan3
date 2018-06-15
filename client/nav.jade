@@ -3,23 +3,23 @@ template(name='nav')
         a.toggle_left_sidebar.icon.item 
             i.bars.icon
         a.item(href='/' class="{{isActivePath '/'}}" data-position="bottom center" data-content='Dashboard')
-            i.area.chart.icon
+            // i.area.chart.icon
             // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             | Dashboard
         a.mobile.hidden.item(href='/users' class="{{isActivePath '/users'}}" data-position="bottom center" data-content='Users')
-            i.users.icon
+            // i.users.icon
             | Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="bottom center" data-content='Incidents')
-            i.exclamation.circle.icon
+            // i.exclamation.circle.icon
             | Incidents
         a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
-            i.building.icon
+            // i.building.icon
             | Offices
         a.mobile.hidden.item(href='/franchisees' class="{{isActivePath '/franchisees'}}" data-position="bottom center" data-content='Franchisees')
-            i.user.circle.icon
+            // i.user.circle.icon
             | Franchisees
         a.mobile.hidden.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
-            i.handshake.icon
+            // i.handshake.icon
             | Customers
         // a.mobile.hidden.icon.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
         //     i.rss.large.icon
@@ -28,12 +28,12 @@ template(name='nav')
         //     i.sitemap.large.icon
             // | Flow
         a.mobile.hidden.item(href='/ev' class="{{isActivePath '/ev'}}" data-position="bottom center" data-content='EV Explorer')
-            i.database.icon
+            // i.database.icon
             | EV
             
-        // a.mobile.hidden.large.icon.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
-        //     i.shipping.fast.large.icon
-        //     | Services
+        a.mobile.hidden.large.icon.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Services/Ecommerce')
+            // i.shipping.fast.large.icon
+            | Services
         // a.mobile.hidden.large.icon.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="bottom center" data-content='Tasks')
         //     i.tasks.large.icon
         // a.mobile.hidden.large.icon.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')

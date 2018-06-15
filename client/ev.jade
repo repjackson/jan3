@@ -292,16 +292,17 @@ template(name='meta_view')
             .sixteen.wide.column
                 +jsonView json=ev
             
+            
 
 template(name='franchisees')
     .ui.padded.stackable.grid
         .middle.aligned.row
-            .three.wide.column
+            .four.wide.column
                 +link_button link='/ev' icon='database' label='EV Dash'
-            .ten.wide.column
+            .eight.wide.column
                 h1.ui.center.aligned.header
                     | Franchisees
-            .three.wide.column
+            .four.wide.column
                 if is_dev
                     .get_all_franchisees.ui.button refresh
         .row
@@ -327,6 +328,7 @@ template(name='franchisee_view')
                     .ui.header Franchisee Name: #{ev.FRANCHISEE}
                     .ui.header JPID ##{ev.ID}
                     .ui.header Email: #{ev.FRANCH_EMAIL}
+                    .ui.header Short Name: #{ev.FRANCH_NAME}
                     .ui.header Cell: #{ev.TELE_CELL}
                     .ui.header Master Licensee: #{ev.MASTER_LICENSEE}
                 +related_customers

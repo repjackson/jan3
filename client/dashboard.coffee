@@ -33,3 +33,7 @@ Template.my_cleaning_crew.helpers
 Template.dashboard.helpers
     office_contacts: -> Meteor.users.find( _id:$ne:Meteor.userId() )
     customer_incidents: -> Docs.find type:'incident'
+    my_special_services: ->
+        Docs.find
+            type:'special_service'
+            

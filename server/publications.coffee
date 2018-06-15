@@ -163,6 +163,14 @@ publishComposite 'me', ()->
                     }
                     {
                         find: (customer)-> 
+                            # console.log 'finding special services for', customer
+                            # special services
+                            Docs.find
+                                "ev.CUSTOMER": customer.cust_name
+                                type:'special_service'
+                    }
+                    {
+                        find: (customer)-> 
                             # grandparent office
                             Docs.find
                                 office_name: customer.master_licensee
