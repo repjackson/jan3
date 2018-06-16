@@ -66,6 +66,8 @@ Template.incident_edit.onCreated ->
 
 Template.incident_edit.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
+    can_submit: ->
+        @service_date and @incident_details and @incident_type
 Template.incident_edit.events
     'click #delete': ->
         template = Template.currentData()

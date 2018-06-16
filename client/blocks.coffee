@@ -1,9 +1,15 @@
 Template.toggle_boolean.events
     'click #turn_on': ->
-        Docs.update Template.parentData()._id, $set: complete: true
+        Docs.update FlowRouter.getParam('doc_id'), $set: "#{@key}": true
 
     'click #turn_off': ->
-        Docs.update Template.parentData()._id, $set: complete: false
+        Docs.update FlowRouter.getParam('doc_id'), $set: "#{@key}": false
+
+Template.toggle_boolean.helpers
+    is_on: -> 
+        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        page_doc["#{@key}"]
+
 
 Template.add_button.events
     'click #add': -> 
@@ -16,8 +22,8 @@ Template.reference_type_single.onCreated ->
 Template.reference_type_multiple.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], @data.type
 
-Template.associated_users.onCreated ->
-    @autorun =>  Meteor.subscribe 'users'
+# Template.associated_users.onCreated ->
+#     @autorun =>  Meteor.subscribe 'users'
 Template.associated_users.helpers
     associated_users: -> 
         # console.log @

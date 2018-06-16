@@ -34,25 +34,35 @@ template(name='incident_edit')
                 // if is_dev
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
-                +edit_date_field key='service_date' label='Service Date' icon='calendar'
-                // .ui.dividing.header Priority
-                // +toggle_key key='priority' value='low' label='Low'
-                // +toggle_key key='priority' value='medium' label='Medium'
-                // +toggle_key key='priority' value='high' label='High'
-                // +toggle_key key='priority' value='emergency' label='Emergency'
+                unless submitted
+                    +edit_date_field key='service_date' label='Service Date' icon='calendar'
+                else
+                    .ui.header Date: #{service_date}
                 +multiple_user_select key='assigned_to' label='Assigned To' icon='users'
-                // +single_doc_select type='customer' save_key='customer_id' search_key='cust_name' label='Customer'
                 +single_doc_view type='customer' key='customer_jpid' label='Customer'
-                                    
-            .twelve.wide.column
-                .ui.dividing.header Type
-                each incident_type_docs
-                    +toggle_key key='incident_type' value=slug label=name
-    
-                // +edit_html_field
-                +edit_textarea label='Incident Details' key='incident_details'
-                +edit_image_field
-                // +edit_textarea key='incident_details' label='Details'
+                if submitted
+                    +incident_status
+                    .ui.dividing.header Status
+                    +toggle_key key='status' value='closed' label='Closed'
+                    +toggle_key key='status' value='open' label='Open'
+
+            .eight.wide.column
+                unless submitted
+                    +edit_textarea label='Incident Details' key='incident_details'
+                    +edit_image_field
+                else
+                    p #{incident_details}
+                    if image_id
+                        img(src=image_id)
+            .four.wide.column
+                if can_submit
+                    +toggle_boolean key='submitted' yes_label='Submitted' no_label='Submit'
+                else
+                    .ui.secondary.segment Fill Fields to Submit
+                unless submitted
+                    .ui.dividing.header Type
+                    each incident_type_docs
+                        +toggle_key key='incident_type' value=slug label=name
 
         
 template(name='incident_view')
@@ -73,12 +83,9 @@ template(name='incident_view')
                 .ui.hidden.divider
                 +incident_type_label
                 h4.ui.header Service Date: #{service_date}
-                +incident_status
+                .ui.dividing.header Level: #{level}
                 +single_doc_view type='customer' key='customer_jpid' label='Customer'
-                .ui.dividing.header Status
-                +toggle_key key='status' value='closed' label='Closed'
-                +toggle_key key='status' value='open' label='Open'
-
+                .ui.dividing.header Status: #{status}
             .eight.wide.column
                 .ui.basic.segment
                     .large130 #{incident_details}

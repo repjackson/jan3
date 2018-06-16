@@ -19,12 +19,10 @@ template(name='list_item')
 
 template(name='toggle_boolean')
     .field
-        if ../complete
-            #turn_on.ui.icon.button
-                i.toggle.on.icon
+        if is_on
+            #turn_off.ui.button #{yes_label}
         else
-            #turn_off.ui.icon.button
-                i.toggle.off.icon
+            #turn_on.ui.button #{no_label}
 
 template(name='save_button')
     a.ui.large.icon.button(href="/view/#{_id}") 
@@ -498,7 +496,9 @@ template(name='doc_result')
                 
 template(name='my_customer_account')
     .ui.secondary.segment
-        .ui.header My Customer Account
+        .ui.header 
+            +officeicon name='customer-support'
+            |My Customer Account
         if currentUser.users_customer
             with currentUser.users_customer
                 .content
@@ -520,7 +520,9 @@ template(name='my_customer_account')
 
 template(name='user_office_card')
     .ui.secondary.segment
-        .ui.header My Office
+        .ui.header 
+            +officeicon name='link-company-parent'
+            |My Office
         if currentUser.users_customer.parent_franchisee.parent_office
             with currentUser.users_customer.parent_franchisee.parent_office
                 .content
@@ -532,7 +534,9 @@ template(name='user_office_card')
         
 template(name='user_franchise_card')
     .ui.secondary.segment
-        .ui.header My Franchisee
+        .ui.header 
+            +officeicon name='collaborator-female'
+            |My Franchisee
         if currentUser.users_customer.parent_franchisee
             with currentUser.users_customer.parent_franchisee
                 .content
