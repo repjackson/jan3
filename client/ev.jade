@@ -7,7 +7,6 @@ template(name='ev')
                 .ui.four.stackable.cards
                     +children_widget type='report' label='Reports' icon='newspaper' link='/reports'
                     +children_widget type='field' label='Fields' icon='cubes' link='/ev_fields'
-                    +children_widget type='user' label='Users' icon='users' link='/ev_users'
                     +children_widget type='jpid' label='JP Ids' icon='hashtag' link='/jpids'
                     +children_widget type='area' label='Areas' icon='clone' link='/areas'
                     +children_widget type='meta' label='MetaData' icon='code' link='/meta'
@@ -138,7 +137,7 @@ template(name='children_widget')
     .ui.card
         .content
             a.ui.center.aligned.header(href=link)
-                // i.icon(class=icon)
+                i.icon(class=icon)
                 .content
                     |#{label}
             .ui.list
@@ -162,49 +161,6 @@ template(name='ev_fields')
                 |{{> tabular table=TabularTables.Fields selector=selector class="ui sortable fluid striped table"}}
 
 
-template(name='ev_users')
-    .ui.padded.stackable.grid
-        .middle.aligned.row
-            .three.wide.column
-                +link_button link='/ev' icon='database' label='EV Dash'
-            .ten.wide.column
-                h1.ui.center.aligned.header
-                    i.users.icon
-                    | EV Users
-            .three.wide.column
-                if is_dev
-                    .sync_ev_users.ui.fluid.button 
-                        i.refresh.icon
-                        |Sync
-        .row
-            .sixteen.wide.column
-                |{{> tabular table=TabularTables.EV_users selector=selector class="ui sortable fluid striped table"}}
-
-
-template(name='user_view')
-    .ui.padded.stackable.centered.grid
-        .centered.middle.aligned.row
-            .three.wide.column
-                +link_button link='/ev_users' icon='newspaper' label='users'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header ##{user_id} #{user_title} user
-            .three.wide.column
-                unless children.length
-                    .get_user_info.ui.button
-                        i.refresh.icon
-                        | Get User Info
-        .centered.row
-            .sixteen.wide.column
-                .ui.segment
-                    each tags
-                        .ui.basic.label #{this}
-                    .ui.basic.segment
-                        // |#{current_doc}
-                        .ui.list
-                            .item user id: #{user_id}
-                            .item user_type: #{user_first_name}
-                            .item user_subtitle: #{user_last_name}
-                    +jsonView json=ev
       
       
 template(name='jpid_view')
@@ -305,9 +261,10 @@ template(name='franchisees')
                     | Franchisees
             .four.wide.column
                 if is_dev
-                    .get_all_franchisees.ui.button
+                    .get_all_franchisees.ui.icon.button
                         // i.refresh.icon
-                        +officeicon name='refresh'
+                        // +officeicon name='refresh'
+                        i.large.refresh.icon
         .row
             .sixteen.wide.column
                 |{{> tabular table=TabularTables.Franchisees selector=selector class="ui sortable striped very basic fluid table"}}

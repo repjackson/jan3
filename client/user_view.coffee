@@ -1,18 +1,30 @@
-FlowRouter.route '/profile/:username', action: (params) ->
+FlowRouter.route '/user/:username', action: (params) ->
     BlazeLayout.render 'layout',
-        sub_nav: 'user_nav'
-        main: 'view_profile'
+        main: 'user_view'
 
 
-Template.view_profile.onCreated ->
-    @autorun -> Meteor.subscribe('user_profile', FlowRouter.getParam('username'))
+Template.user_view.onCreated ->
+    @autorun -> Meteor.subscribe('user', FlowRouter.getParam('username'))
     
 
-Template.user_nav.helpers
-    person: -> Meteor.users.findOne username:FlowRouter.getParam('username') 
-Template.view_profile.helpers
-    person: -> Meteor.users.findOne username:FlowRouter.getParam('username') 
+Template.user_view.helpers
+    user: -> Meteor.users.findOne username:FlowRouter.getParam('username') 
     
-    can_edit_profile: -> Meteor.userId() is FlowRouter.getParam('username') or Roles.userIsInRole(Meteor.userId(),'dev')
 
-Template.view_profile.events
+Template.user_view.events
+
+
+# ev users
+Template.users.events
+    'click .sync_ev_users': ->
+        Meteor.call 'sync_ev_users',(err,res)->
+            if err then console.error err
+Template.users.helpers
+    selector: ->  type: "user"
+
+Template.user_view.events
+    'click .get_user_info': ->
+        Meteor.call 'get_user_info', FlowRouter.getParam('username'), (err,res)->
+            if err then console.error err
+            # else
+                # console.dir res

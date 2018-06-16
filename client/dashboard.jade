@@ -74,7 +74,8 @@ template(name='dashboard')
                             tr
                                 td #{title}
                                 td #{profile.first_name} #{profile.last_name}
-                                td #{profile.telphone}
+                                td #{ev.WORK_TELEPHONE}
+                                td #{ev.JOB_TITLE}
                                 td #{email}
                                 td
                                     a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{name}")
@@ -82,11 +83,11 @@ template(name='dashboard')
                                         +officeicon name='send'
         .centered.row
             .sixteen.wide.column
-                .ui.header 
-                    // i.paint.brush.icon
-                    +officeicon name='broom'
-                    |Services Overview
-                .ui.segment
+                .ui.secondary.segment
+                    h2.ui.header 
+                        // i.paint.brush.icon
+                        +officeiconlarge name='broom'
+                        |Services Overview
                     with currentUser.users_customer
                         .ui.list
                             .item #{customer_contact_person}
@@ -114,13 +115,11 @@ template(name='dashboard')
                                     td #{ev.EXTRA_SERV_DESC}
                                     td #{ev.DATE_CREATED}
                                     td #{ev.EXTRA_PRICE}
-                        
         .centered.row
             .five.wide.column
                 +my_customer_account
             .five.wide.column
                 +user_franchise_card
-                
             .five.wide.column
                 +user_office_card
 
@@ -161,15 +160,15 @@ template(name='my_cleaning_crew')
 template(name='crew_card')
     .ui.card
         .image
-            a(href="/profile/#{username}")
+            a(href="/user/#{username}")
                 img.ui.fluid.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
         .content
-            a(href="/profile/#{username}")
+            a(href="/user/#{username}")
                 .ui.header #{profile.first_name} #{profile.last_name}
                 .meta #{username}
         .content
             .ui.small.list
                 .item #{email}
-                // .item #{profile.office_name}
+                .item #{ev.JOB_TITLE}
                 
         // +view_button

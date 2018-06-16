@@ -38,23 +38,6 @@ Template.ev_fields.events
 Template.ev_fields.helpers
     selector: ->  type: "field"
 
-# ev users
-FlowRouter.route '/ev_users', 
-    action: -> BlazeLayout.render 'layout', main: 'ev_users'
-Template.ev_users.events
-    'click .sync_ev_users': ->
-        Meteor.call 'sync_ev_users',(err,res)->
-            if err then console.error err
-Template.ev_users.helpers
-    selector: ->  type: "user"
-
-Template.user_view.events
-    'click .get_user_info': ->
-        user = Docs.findOne FlowRouter.getParam('doc_id')
-        Meteor.call 'get_user_info', FlowRouter.getParam('doc_id'), (err,res)->
-            if err then console.error err
-            # else
-                # console.dir res
 
 # jpids
 FlowRouter.route '/jpids', 

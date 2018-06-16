@@ -29,5 +29,5 @@ Template.add_user.events
         email = $('#email').val().trim()
         Meteor.call 'create_user', username, first_name, last_name, email, (err,new_id)->
             # console.log new_id
-            FlowRouter.go "/profile/#{username}"
+            FlowRouter.go "/user/#{username}"
         

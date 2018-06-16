@@ -92,15 +92,12 @@ Meteor.publish 'my_profile', ->
             image_id: 1
 
 
-Meteor.publish 'user_profile', (id)->
-    Meteor.users.find id,
+Meteor.publish 'user', (username)->
+    Meteor.users.find username:username,
         fields:
-            tags: 1
             profile: 1
             username: 1
-            published: 1
-            image_id: 1
-
+            ev:1
 
 Meteor.publish 'office_by_franchisee', (franch_id)->
     franch_doc = Docs.findOne franch_id

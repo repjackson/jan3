@@ -32,13 +32,19 @@ template(name='save_button')
         // | Save
         
 template(name='edit_button')
-    a(href="/edit/#{_id}" title='Edit') 
-        +officeicon name='pencil'
-        // i.pencil.icon
+    a.ui.icon.button(href="/edit/#{_id}" title='Edit') 
+        // +officeicon name='pencil'
+        i.pencil.icon
         // | Edit
 
 template(name='view_button')
     a(href="/view/#{_id}" title='View Details') 
+        // +avatar_sprite name='chevron-right'
+        +officeicon name='circled-chevron-right'
+        // i.right.chevron.icon
+        
+template(name='view_user_button')
+    a(href="/user/#{username}" title="View #{username}") 
         // +avatar_sprite name='chevron-right'
         +officeicon name='circled-chevron-right'
         // i.right.chevron.icon
@@ -491,54 +497,51 @@ template(name='doc_result')
                 
                 
 template(name='my_customer_account')
-    .ui.header Customer Account
-    if currentUser.users_customer
-        with currentUser.users_customer
-            .content
-                a.ui.header(href="/view/#{_id}") #{ev.CUST_NAME}
-            .content
-                .ui.list
-                    .item ##{ev.ID}
-                    .item #{ev.CUST_CONT_PERSON}
-                    .item #{ev.CUST_CONTACT_EMAIL}
-                    .item #{ev.TELEPHONE}
-                    .item #{ev.ADDR_STREET}
-                    .item #{ev.ADDR_STREET_2}
-                    .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-            // .content
-            //     div Franchisee
-            //         strong #{ev.FRANCHISEE}
-            //     div Office
-            //         strong #{ev.MASTER_LICENSEE}
-    else
-        |No customer doc
+    .ui.secondary.segment
+        .ui.header My Customer Account
+        if currentUser.users_customer
+            with currentUser.users_customer
+                .content
+                    a.ui.header(href="/view/#{_id}") #{ev.CUST_NAME}
+                .content
+                    .ui.list
+                        .item ##{ev.ID}
+                        .item #{ev.CUST_CONT_PERSON}
+                        .item #{ev.CUST_CONTACT_EMAIL}
+                        .item #{ev.TELEPHONE}
+                        .item #{ev.ADDR_STREET}
+                        .item #{ev.ADDR_STREET_2}
+                        .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                // .content
+                //     div Franchisee
+                //         strong #{ev.FRANCHISEE}
+                //     div Office
+                //         strong #{ev.MASTER_LICENSEE}
 
 template(name='user_office_card')
-    .ui.header Office
-    if currentUser.users_customer.parent_franchisee.parent_office
-        with currentUser.users_customer.parent_franchisee.parent_office
-            .content
-                a.header(href="/view/#{_id}") #{office_name}
-            .content
-                | #{address}
-            .content
-                a(href="tel:#{telephone}") #{telephone}
-    else
-        |No Linked Office
+    .ui.secondary.segment
+        .ui.header My Office
+        if currentUser.users_customer.parent_franchisee.parent_office
+            with currentUser.users_customer.parent_franchisee.parent_office
+                .content
+                    a.header(href="/view/#{_id}") #{office_name}
+                .content
+                    | #{address}
+                .content
+                    a(href="tel:#{telephone}") #{telephone}
         
 template(name='user_franchise_card')
-    .ui.header Franchisee
-    if currentUser.users_customer.parent_franchisee
-        with currentUser.users_customer.parent_franchisee
-            .content
-                a.header(href="/view/#{_id}" title='View Franchisee') #{franchisee}
-            .content
-                .ui.list
-                    .item(title='Short Name') #{ev.FRANCH_NAME}
-                    .item(title='Call Number')
-                        a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
-                    .item #{franchisee_email}
+    .ui.secondary.segment
+        .ui.header My Franchisee
+        if currentUser.users_customer.parent_franchisee
+            with currentUser.users_customer.parent_franchisee
+                .content
+                    a.header(href="/view/#{_id}" title='View Franchisee') #{franchisee}
+                .content
+                    .ui.list
+                        .item(title='Short Name') #{ev.FRANCH_NAME}
+                        .item(title='Call Number')
+                            a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
+                        .item #{franchisee_email}
                     
-    else
-        |No Linked Franchise
         

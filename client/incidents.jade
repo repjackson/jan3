@@ -4,7 +4,8 @@ template(name='incidents')
             .three.wide.column
                 if has_user_customer_jpid
                     #add_incident
-                        +officeiconlarge name='plus'
+                        // +officeiconlarge name='plus'
+                        i.large.plus.icon
                 else
                     .ui.secondary.segment Add Office to Profile to Add Incident
             .ten.wide.column
@@ -58,7 +59,7 @@ template(name='incident_view')
     .ui.padded.stackable.grid
         .middle.aligned.row
             .three.wide.center.aligned.column
-                +link_button link='/incidents' label='incidents' icon='exclamation circle'
+                // +link_button link='/incidents' label='incidents' icon=''
             .ten.wide.column
                 h1.ui.center.aligned.header Incident ##{incident_number}
             .three.wide.center.aligned.column

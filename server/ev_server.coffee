@@ -150,32 +150,35 @@ Meteor.methods
 
 
 
-    get_user_info: (user_doc_id) ->
-        user_doc = Docs.findOne user_doc_id
-        # console.log user_doc
+    get_user_info: (username)->
+        # users_cursor = Meteor.users.find({}).fetch()
+        # for each_user in users_cursor
+
+        user_doc = Meteor.users.findOne username:username
+        # console.log each_user
+        # if each_user.ev.LAST_NAME
+        #     console.log 'skipping existing ev', each_user.username
+        # else 
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
             params:
                 user_id:'JPI'
                 password:'JPI'
                 statevar:'get_user_info'
-                # statevar:'get_user_field_list'
-                # statevar:'get'
-                login_id:user_doc.user_id
-                # login_id: 'BWALLACE'
-                # login_id: 'DRENTZ'
-                # id:'33129271'
-        console.log res.content
+                login_id: username
                 # console.log 'new id', new_id
+        console.log res
         split_res = res.content.split '\r\n'
         # console.log typeof split_res
-        for area_string in split_res
-            split_report = area_string.split '|'
-            console.log split_report
-            # Docs.update user_doc_id,
-            #     $set: ev: json_result.PROBLEM_RECORD
-
-
+        save_json = {}
+        for key_value_string in split_res
+            split_key_value = key_value_string.split '|'
+            # console.log split_key_value
+            save_json["#{split_key_value[0]}"] = split_key_value[1]
+        # console.log save_json
+        Meteor.users.update user_doc._id,
+            $set: ev: save_json
+        console.log 'updated', user_doc.username 
 
     get_areas: () ->
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",

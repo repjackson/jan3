@@ -1,38 +1,105 @@
-template(name='user_nav')
-    // with person
-    //     .ui.menu
-    //         .item
-    //             i.info.icon
-    //             | About
-    //         .item
-    //             | Docs
-    //         .item
-    //             | Social
-
-
-template(name='view_profile')
-    with person
+template(name='user_view')
+    with user
         .ui.padded.stackable.grid
             .middle.aligned.row
                 .four.wide.center.aligned.column
-                    +link_button link='/users' icon='users' label='Users'
+                    +link_button link='/users' icon='groups' label='Users'
                 .eight.wide.center.aligned.column
                     h1.header.item #{profile.first_name} #{profile.last_name}
                 .four.wide.center.aligned.column
-                    a.ui.icon.button(href="/profile/edit/#{_id}")
-                        i.pencil.icon
-
+                    .get_user_info.ui.button
+                        i.refresh.icon
+                        | Get User Info
             .row
                 .four.wide.column
                     if profile.image_id
                         img.ui.medium.image.item(src="{{c.url profile.image_id width=500 height=500 gravity='face' crop='fill'}}")
                     else
                         i.huge.user.icon
-                    // if tags
-                    //     each tags
-                    //         .ui.label #{this}
+                .twelve.wide.column
+                    .ui.list
+                        .item user id: #{user_id}
+                        .item user_type: #{user_first_name}
+                        .item user_subtitle: #{user_last_name}
+                        with ev
+                            .item LOGIN_ID: #{LOGIN_ID}
+                            .item LAST_NAME: #{LAST_NAME}
+                            .item FIRST_NAME: #{FIRST_NAME}
+                            .item JOB_TITLE: #{JOB_TITLE}
+                            .item WORK_TELEPHONE: #{WORK_TELEPHONE}
+                            .item HOME_TELEPHONE: #{HOME_TELEPHONE}
+                            .item CELL_PHONE: #{CELL_PHONE}
+                            .item FAX: #{FAX}
+                            .item PAGER: #{PAGER}
+                            .item COMPANY_NAME: #{COMPANY_NAME}
+                            .item ADDRESS_LINE1: #{ADDRESS_LINE1}
+                            .item ADDRESS_LINE2: #{ADDRESS_LINE2}
+                            .item CITY: #{CITY}
+                            .item STATE: #{STATE}
+                            .item POSTAL_CODE: #{POSTAL_CODE}
+                            .item COUNTRY: #{COUNTRY}
+                            .item ENABLED_USER: #{ENABLED_USER}
+                            .item EMAIL: #{EMAIL}
+                            .item EMAIL_FORMAT: #{EMAIL_FORMAT}
+                            .item DATE_FORMAT: #{DATE_FORMAT}
+                            .item TIMEZONE: #{TIMEZONE}
+                            .item NOTIFY_ON_OWN_UPDATES: #{NOTIFY_ON_OWN_UPDATES}
+                            .item DRILLDOWN_REPORT: #{DRILLDOWN_REPORT}
+                            .item ALPHA_TIMEZONE: #{ALPHA_TIMEZONE}
+                            .item TWENTY_FOUR_HOUR_TIME: #{TWENTY_FOUR_HOUR_TIME}
+                            .item REPORT_1_ID: #{REPORT_1_ID}
+                            .item REPORT_2_ID: #{REPORT_2_ID}
+                            .item REPORT_3_ID: #{REPORT_3_ID}
+                            .item HTTP_CHARSET: #{HTTP_CHARSET}
+                            .item CHART_FONT: #{CHART_FONT}
+                            .item STYLESHEET: #{STYLESHEET}
+                            .item MS_OFFICE_CHARSET: #{MS_OFFICE_CHARSET}
+                            .item ADDITIONAL_EMAIL: #{ADDITIONAL_EMAIL}
+                            .item ADDITIONAL_EMAIL_ON: #{ADDITIONAL_EMAIL_ON}
+                            .item REGION: #{REGION}
+                            .item VARIANT: #{VARIANT}
+                            .item AREA_ID: #{AREA_ID}
+                            .item EMAIL_ON: #{EMAIL_ON}
+                            .item LANGUAGE: #{LANGUAGE}
+                            .item LAST_ACCESS_DATE: #{LAST_ACCESS_DATE}
+                            .item LOGIN_MSG_DT: #{LOGIN_MSG_DT}
+                            .item PASSWORD_EXPIRY_DATE: #{PASSWORD_EXPIRY_DATE}
+                            .item PASSWORD_INTERVAL: #{PASSWORD_INTERVAL}
+                            .item PROJECT_ID: #{PROJECT_ID}
+                            .item USER_DEFINED_1: #{USER_DEFINED_1}
+                            .item USER_DEFINED_2: #{USER_DEFINED_2}
+                            .item USER_DEFINED_3: #{USER_DEFINED_3}
+                            .item USER_DEFINED_4: #{USER_DEFINED_4}
+                            .item USER_DEFINED_5: #{USER_DEFINED_5}
+                            .item USER_DEFINED_6: #{USER_DEFINED_6}
+                            .item USER_DEFINED_7: #{USER_DEFINED_7}
+                            .item USER_DEFINED_8: #{USER_DEFINED_8}
+                            .item USER_DEFINED_9: #{USER_DEFINED_9}
+                            .item USER_DEFINED_10: #{USER_DEFINED_10}
+
+        
+                    // +jsonView json=ev
                     .ui.list
                         .item
                             if profile.customer_jpid
                                 strong Customer JPID 
                                 | #{profile.customer_jpid}
+                                
+                                
+template(name='ev_users')
+    .ui.padded.stackable.grid
+        .middle.aligned.row
+            .three.wide.column
+                +link_button link='/ev' icon='database' label='EV Dash'
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    i.users.icon
+                    | EV Users
+            .three.wide.column
+                if is_dev
+                    .sync_ev_users.ui.fluid.button 
+                        i.refresh.icon
+                        |Sync
+        .row
+            .sixteen.wide.column
+                |{{> tabular table=TabularTables.EV_users selector=selector class="ui sortable fluid striped table"}}
