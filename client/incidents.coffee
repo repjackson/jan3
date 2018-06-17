@@ -67,28 +67,67 @@ Template.incident_view.events
     'click .set_level_one': ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-        # console.log @
-        Docs.update doc_id,
-            $set: current_level:1
-        Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 1"
+        office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
+        primary_contact_type =  office_doc.escalation_one_primary_contact
+        secondary_contact_type =  office_doc.escalation_one_secondary_contact
+        # console.log parent_doc["#{context.key}"]
+        # console.log parent_doc[parent_doc["#{context.key}"]]
+        if primary_contact_type
+            primary_contact_target =
+                Meteor.users.findOne
+                    username: office_doc["#{primary_contact_type}"]
+            primary_username = if primary_contact_target and primary_contact_target.username then primary_contact_target.username else ''
+        if secondary_contact_type
+            secondary_contact_target =
+                Meteor.users.findOne( username: office_doc["#{secondary_contact_type}"] )
+            secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
+        swal {
+            title: 'De-escalate Incident to 1?'
+            text: "This will alert the office primary contact #{primary_contact_type} #{primary_username} and secondary contact #{secondary_contact_type} #{secondary_username}."
+            type: 'info'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'De-escalate'
+            confirmButtonColor: '#da5347'
+        }, =>
+            Docs.update doc_id,
+                $set: current_level:1
+            Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 1"
             
     'click .set_level_two': ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-        # console.log @
-        Docs.update doc_id,
-            $set: current_level:2
-        office_doc = Meteor.user().users_customer.parent_franchisee.parent_office
-        console.log office_doc
+        office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
+        primary_contact_type =  office_doc.escalation_two_primary_contact
+        secondary_contact_type =  office_doc.escalation_two_secondary_contact
         # console.log parent_doc["#{context.key}"]
         # console.log parent_doc[parent_doc["#{context.key}"]]
-        if office_doc.escalation_one_primary_contact
-            contact_target =
+        if primary_contact_type
+            primary_contact_target =
                 Meteor.users.findOne
-                    username: office_doc[office_doc.escalation_one_primary_contact]
-            console.log contact_target
-        
-        Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 2"
+                    username: office_doc["#{primary_contact_type}"]
+            primary_username = if primary_contact_target and primary_contact_target.username then primary_contact_target.username else ''
+        if secondary_contact_type
+            secondary_contact_target =
+                Meteor.users.findOne( username: office_doc["#{secondary_contact_type}"] )
+            secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
+        swal {
+            title: 'Escalate Incident to 2?'
+            text: "This will alert the office primary contact #{primary_contact_type} #{primary_username} and secondary contact #{secondary_contact_type} #{secondary_username}."
+            type: 'info'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Escalate'
+            confirmButtonColor: '#da5347'
+        }, =>
+            Docs.update doc_id,
+                $set: current_level:2
+            Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 2"
+
 
     'click #delete': ->
         template = Template.currentData()
