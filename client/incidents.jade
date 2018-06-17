@@ -19,16 +19,17 @@ template(name='incidents')
 
 
                 
-template(name='incident_edit')
+template(name='incident_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
-                #delete.ui.icon.button
-                    i.trash.icon
+                unless submitted
+                    #delete.ui.icon.button
+                        i.trash.icon
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit Incident ##{incident_number}
             .three.wide.column
-                +save_button
+                // +save_button
         .row
             .four.wide.column
                 // if is_dev
@@ -51,51 +52,28 @@ template(name='incident_edit')
                     +edit_textarea label='Incident Details' key='incident_details'
                     +edit_image_field
                 else
-                    p #{incident_details}
+                    .ui.basic.segment
+                        .large130 #{incident_details}
                     if image_id
-                        img(src=image_id)
+                        img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
+                    +comments
+                    .ui.dividing.header History
+                    +full_doc_history
             .four.wide.column
                 if can_submit
                     +toggle_boolean key='submitted' yes_label='Submitted' no_label='Submit'
                 else
-                    .ui.secondary.segment Fill Fields to Submit
-                unless submitted
+                    .ui.secondary.segment Fill Date, Details, and Type to Submit
+                if submitted
+                    +incident_type_label
+                else
                     .ui.dividing.header Type
                     each incident_type_docs
                         +toggle_key key='incident_type' value=slug label=name
+                if submitted
+                    +incident_tasks
 
         
-template(name='incident_view')
-    .ui.padded.stackable.grid
-        .middle.aligned.row
-            .three.wide.center.aligned.column
-                // +link_button link='/incidents' label='incidents' icon=''
-            .ten.wide.column
-                h1.ui.center.aligned.header Incident ##{incident_number}
-            .three.wide.center.aligned.column
-                +edit_button
-        .row
-            .four.wide.column
-                div
-                    |Logged by
-                    +author_info
-                    |#{when}
-                .ui.hidden.divider
-                +incident_type_label
-                h4.ui.header Service Date: #{service_date}
-                .ui.dividing.header Level: #{level}
-                +single_doc_view type='customer' key='customer_jpid' label='Customer'
-                .ui.dividing.header Status: #{status}
-            .eight.wide.column
-                .ui.basic.segment
-                    .large130 #{incident_details}
-                if image_id
-                    img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                // +comments
-                .ui.dividing.header History
-                +full_doc_history
-            .four.wide.column
-                +incident_tasks
 
 template(name='edit_priority_field')
     .ui.secondary.segment

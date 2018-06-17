@@ -228,6 +228,33 @@ template(name='multiple_user_select')
                                 |#{profile.first_name} #{profile.last_name}
                             .description
                                 | @#{username}
+
+template(name='view_sla_contact')
+    .ui.header SLA Contact #{key}
+    with selected_contact
+        .ui.secondary.segment
+            .ui.header
+                |#{profile.first_name} #{profile.last_name}
+            .description
+                | @#{username}
+                div #{ev.EMAIL}
+
+
+template(name='single_user_select')
+    .ui.dividing.header #{label}
+    unless selected_user
+        .ui.form
+            .field
+                .ui.icon.transparent.input
+                    i.search.icon
+                    +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder="Select Users..."
+    with selected_user
+        .ui.secondary.segment
+            .ui.header
+                |#{profile.first_name} #{profile.last_name}
+            .description
+                | @#{username}
+                i.pull_user.remove.red.link.icon
           
 template(name='many_doc_select')
     .ui.dividing.header #{label}

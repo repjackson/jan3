@@ -2,8 +2,6 @@ FlowRouter.route '/incidents',
     action: ->
         BlazeLayout.render 'layout', main: 'incidents'
 
-Template.incident_view.onCreated ->
-    # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
 Template.incidents.events
     'click #add_incident': ->
@@ -61,14 +59,14 @@ Template.incidents.helpers
 
 
 
-Template.incident_edit.onCreated ->
+Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'docs', [], 'incident_type'
 
-Template.incident_edit.helpers
+Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
     can_submit: ->
         @service_date and @incident_details and @incident_type
-Template.incident_edit.events
+Template.incident_view.events
     'click #delete': ->
         template = Template.currentData()
         swal {

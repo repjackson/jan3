@@ -357,8 +357,6 @@ Template.toggle_key.events
 #             parent_id:FlowRouter.getParam('doc_id')
 #             type:'event'
        
-Template.multiple_user_select.onCreated ->
-    @autorun =>  Meteor.subscribe 'users'
 Template.multiple_user_select.events
     'autocompleteselect #search': (event, template, selected_user) ->
         key = Template.parentData(0).key
@@ -397,6 +395,37 @@ Template.multiple_user_select.events
                     Bert.alert "Removed #{@username}.", 'success', 'growl-top-right'
     
     
+Template.single_user_select.events
+    'autocompleteselect #search': (event, template, selected_user) ->
+        key = Template.parentData(0).key
+        # console.log 'selected ', doc
+        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # searched_value = doc["#{template.data.key}"]
+        # console.log 'template ', template
+        # console.log 'search value ', searched_value
+        Docs.update page_doc._id,
+            $set: "#{key}": selected_user.username
+        $('#search').val ''
+
+    'click .pull_user': ->
+        context = Template.currentData(0)
+        console.log context
+        swal {
+            title: "Remove #{@username}?"
+            # text: 'Confirm delete?'
+            type: 'info'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Unassign'
+            confirmButtonColor: '#da5347'
+        }, =>
+            page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+            Docs.update page_doc._id,
+                $unset: "#{context.key}": 1
+
+    
     
 
 
@@ -423,6 +452,50 @@ Template.multiple_user_select.helpers
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         Meteor.users.find
             _id: $in: parent_doc["#{context.key}"]
+
+
+Template.single_user_select.helpers
+    settings: -> 
+        # console.log @
+        {
+            position: 'bottom'
+            limit: 10
+            rules: [
+                {
+                    collection: Meteor.users
+                    field: 'username'
+                    matchAll: true
+                    # filter: { type: "#{@type}" }
+                    template: Template.user_result
+                }
+            ]
+        }
+
+    selected_user: ->
+        context = Template.currentData(0)
+        # console.log context.key
+        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log parent_doc["#{context.key}"]
+        if parent_doc["#{context.key}"]
+            Meteor.users.findOne
+                username: parent_doc["#{context.key}"]
+        else
+            false
+
+
+Template.view_sla_contact.helpers
+    selected_contact: ->
+        context = Template.currentData(0)
+        # console.log context.key
+        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log parent_doc["#{context.key}"]
+        # console.log parent_doc[parent_doc["#{context.key}"]]
+        if parent_doc["#{context.key}"]
+            Meteor.users.findOne
+                username: parent_doc[parent_doc["#{context.key}"]]
+        else
+            false
+
 
 
 
