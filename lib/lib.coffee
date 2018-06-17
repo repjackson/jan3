@@ -83,7 +83,7 @@ Docs.helpers
             office_name: @ev.MASTER_LICENSEE
 
 
-# Meteor.methods
+Meteor.methods
     # vote_up: (id)->
     #     doc = Docs.findOne id
     #     if not doc.upvoters
@@ -162,15 +162,15 @@ Docs.helpers
     #             $addToSet: completed_ids: Meteor.userId()
     #             $inc: completed_count: 1
     
-    # mark_read: (doc)->
-    #     if doc.read_by and Meteor.userId() in doc.read_by
-    #         Docs.update doc._id,
-    #             $pull: read_by: Meteor.userId()
-    #             $inc: read_count: -1
-    #     else
-    #         Docs.update doc._id,
-    #             $addToSet: read_by: Meteor.userId()
-    #             $inc: read_count: 1
+    mark_read: (doc)->
+        if doc.read_by and Meteor.userId() in doc.read_by
+            Docs.update doc._id,
+                $pull: read_by: Meteor.userId()
+                $inc: read_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: read_by: Meteor.userId()
+                $inc: read_count: 1
     
     # bookmark: (doc)->
     #     if doc.bookmarked_ids and Meteor.userId() in doc.bookmarked_ids

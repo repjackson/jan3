@@ -32,7 +32,9 @@ template(name='edit_html')
         
         
 template(name='edit_date_field')            
-    .ui.dividing.header #{label}
+    .ui.dividing.header 
+        +officeicon name=icon
+        |#{label}
     .field
         .ui.icon.fluid.transparent.input
             if icon
@@ -67,12 +69,13 @@ template(name='edit_timerange_field')
 
 
 template(name='edit_number_field')
-    .field
-        label #{label}
-        .ui.left.icon.input
-            if icon
-                i.icon(class=icon)
-            input#number_field(type='number' min='0' value=key_value)
+    .ui.form
+        .inline.field
+            label #{label}
+            .ui.input
+                // if icon
+                //     +officeicon name=icon
+                input#number_field(type='number' min='0' value=key_value)
 
 template(name='view_numeric_field')
     .ui.form
@@ -82,7 +85,9 @@ template(name='view_numeric_field')
 
 
 template(name='edit_textarea')
-    .ui.dividing.header #{label}
+    .ui.dividing.header 
+        +officeicon name=icon
+        |#{label}
     .ui.form
         .field
             textarea#textarea(rows='10') #{key_value}

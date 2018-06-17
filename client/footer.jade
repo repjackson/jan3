@@ -2,7 +2,7 @@ template(name='footer')
     #footer.ui.fluid.segment.footer
         .ui.stackable.equal.height.centered.padded.grid
             .row
-                .three.wide.inverted.column
+                .four.wide.inverted.column
                     // a.ui.inverted.header(href='/work') Development Log
                     .ui.large.list
                         .sitemap_list.item Why Jan-Pro
@@ -20,6 +20,6 @@ template(name='footer')
                     +user_office_card
             .centered.row
                 .ui.center.aligned.inverted.grey.header
-                    i.copyright.icon
+                    +officeicon name='copyright'
                     | 2018 Jan-Pro
         

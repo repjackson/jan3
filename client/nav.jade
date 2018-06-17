@@ -28,13 +28,10 @@ template(name='nav')
             // i.handshake.icon
             +officeicon name='customer-support'
             // | Customers
-        // a.mobile.hidden.icon.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
-        //     i.rss.large.icon
-            // | Feed
         // a.mobile.hidden.icon.item(href='/view/P6GMxCjCFcQjuC63E' class="{{isActivePath '/view/P6GMxCjCFcQjuC63E'}}" data-position="bottom center" data-content='FlowChart')
         //     i.sitemap.large.icon
             // | Flow
-        a.mobile.hidden.large.icon.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Special Services')
+        a.mobile.hidden.large.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Special Services')
             +officeicon name='broom'
             // i.shipping.fast.large.icon
             // | Services
@@ -42,6 +39,9 @@ template(name='nav')
             // i.database.icon
             +officeicon name='database'
             // | EV
+        a.mobile.hidden.icon.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
+            +officeicon name='rss'
+            // | Feed
         // a.mobile.hidden.large.icon.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="bottom center" data-content='Tasks')
         //     i.tasks.large.icon
         // a.mobile.hidden.large.icon.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')

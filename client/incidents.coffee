@@ -9,7 +9,10 @@ Template.incidents.events
             Docs.insert
                 type: 'incident'
                 customer_jpid: Meteor.user().profile.customer_jpid
-        FlowRouter.go "/edit/#{new_incident_id}"
+                level: 1
+                open: true
+                submitted: false
+        FlowRouter.go "/view/#{new_incident_id}"
 
 
 Template.incident_view.onRendered ->
@@ -25,15 +28,6 @@ Template.incident_view.onRendered ->
     #     console.log 'hi'
     #     $.tab('change tab', 'two')
     #     )
-Template.incident_level_set.events
-    'click .set_level': ->
-        doc_id = FlowRouter.getParam('doc_id')
-        incident = Docs.findOne Template.parentData(1)
-        # console.log @
-        Docs.update incident._id,
-            $set: current_level:@level
-        Meteor.call 'set_incident_level', doc_id, 'change_incident_level', @level
-            
             
 Template.incident_type_label.helpers
     incident_type_label: ->
@@ -64,9 +58,38 @@ Template.incident_view.onCreated ->
 
 Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
-    can_submit: ->
-        @service_date and @incident_details and @incident_type
+    can_submit: -> @service_date and @incident_details and @incident_type
+    can_set_to_one: -> @current_level is 2
+    can_set_to_two: -> @current_level is 1
+    
+    
 Template.incident_view.events
+    'click .set_level_one': ->
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        # console.log @
+        Docs.update doc_id,
+            $set: current_level:1
+        Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 1"
+            
+    'click .set_level_two': ->
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        # console.log @
+        Docs.update doc_id,
+            $set: current_level:2
+        office_doc = Meteor.user().users_customer.parent_franchisee.parent_office
+        console.log office_doc
+        # console.log parent_doc["#{context.key}"]
+        # console.log parent_doc[parent_doc["#{context.key}"]]
+        if office_doc.escalation_one_primary_contact
+            contact_target =
+                Meteor.users.findOne
+                    username: office_doc[office_doc.escalation_one_primary_contact]
+            console.log contact_target
+        
+        Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 2"
+
     'click #delete': ->
         template = Template.currentData()
         swal {

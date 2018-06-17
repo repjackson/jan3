@@ -3,14 +3,13 @@ template(name='incidents')
         .middle.aligned.centered.row
             .three.wide.column
                 if has_user_customer_jpid
-                    #add_incident
-                        // +officeiconlarge name='plus'
-                        i.large.plus.icon
+                    a#add_incident(href='#')
+                        +officeicon name='plus'
                 else
                     .ui.secondary.segment Add Office to Profile to Add Incident
             .ten.wide.column
                 h2.ui.center.aligned.header 
-                    +officeiconlarge name='error'
+                    +officeicon name='error'
                     | Incidents
             .three.wide.column
         .row
@@ -24,10 +23,10 @@ template(name='incident_view')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 unless submitted
-                    #delete.ui.icon.button
-                        i.trash.icon
+                    a#delete(href='#' title='Delete Incident')
+                        +officeicon name='cancel'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit Incident ##{incident_number}
+                h1.ui.center.aligned.grey.header Incident #{incident_number}
             .three.wide.column
                 // +save_button
         .row
@@ -36,28 +35,51 @@ template(name='incident_view')
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
                 unless submitted
-                    +edit_date_field key='service_date' label='Service Date' icon='calendar'
+                    +edit_date_field key='service_date' label='Service Date' icon='leave'
                 else
-                    .ui.header Date: #{service_date}
-                +multiple_user_select key='assigned_to' label='Assigned To' icon='users'
-                +single_doc_view type='customer' key='customer_jpid' label='Customer'
+                    .ui.dividing.header 
+                        +officeicon name='leave'
+                        |Date
+                    |#{service_date}
+                        
+                +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
+                +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
                 if submitted
-                    +incident_status
+                    .ui.dividing.header Level #{current_level}
+                    unless is_closed
+                        if can_set_to_one
+                            .set_level_one.ui.button Set 1
+                        else
+                            .ui.disabled.button Set 1
+                        if can_set_to_two
+                            .set_level_two.ui.button Set 2
+                        else
+                            .ui.disabled.button Set 2
                     .ui.dividing.header Status
                     +toggle_key key='status' value='closed' label='Closed'
                     +toggle_key key='status' value='open' label='Open'
+                    if is_closed
+                        .ui.button 
+                            i.reply.icon
+                            |Create Related Ticket
 
             .eight.wide.column
                 unless submitted
-                    +edit_textarea label='Incident Details' key='incident_details'
-                    +edit_image_field
+                    +edit_textarea label='Incident Details' key='incident_details' icon='view-details'
                 else
                     .ui.basic.segment
+                        // +officeicon name='view-details'
                         .large130 #{incident_details}
+                unless submitted
+                    +edit_image_field
+                else
                     if image_id
                         img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
+                if submitted
                     +comments
-                    .ui.dividing.header History
+                    .ui.dividing.header 
+                        +officeicon name='order-history'
+                        |History
                     +full_doc_history
             .four.wide.column
                 if can_submit
@@ -67,12 +89,14 @@ template(name='incident_view')
                 if submitted
                     +incident_type_label
                 else
-                    .ui.dividing.header Type
+                    .ui.dividing.header 
+                        +officeicon name='category'
+                        |Type
                     each incident_type_docs
                         +toggle_key key='incident_type' value=slug label=name
                 if submitted
                     +incident_tasks
-
+                +notify_button
         
 
 template(name='edit_priority_field')
@@ -96,19 +120,14 @@ template(name='incident_type_label')
 
 
 template(name='incident_status')
-    .ui.dividing.header Level #{current_level}
-    unless is_closed
-        +incident_level_set level=1
-        +incident_level_set level=2
-        +incident_level_set level=3
-        +incident_level_set level=4
 
 
 template(name='incident_tasks')
-    .ui.dividing.header 
+    .ui.dividing.header
+        +officeicon name='to-do'
         |Incident Tasks
-    #add_incident_task.ui.small.icon.button(title='Add Task')
-        i.plus.icon
+    a#add_incident_task(title='Add Task' href='#')
+        +officeicon name='plus'
     .ui.list
         each incident_tasks
             .item

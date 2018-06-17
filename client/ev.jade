@@ -275,7 +275,7 @@ template(name='franchisee_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .three.wide.column
-                +link_button link='/franchisees' icon='user circle' label='Franchisees'
+                +link_button link='/franchisees' icon='collaborator-female' label='Franchisees'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header #{ev.FRANCHISEE} Franchisee View
             .three.wide.right.aligned.column
@@ -297,9 +297,10 @@ template(name='customers')
     .ui.padded.stackable.grid
         .middle.aligned.row
             .three.wide.column
-                +link_button link='/ev' icon='database' label='EV Dash'
+                // +link_button link='/ev' icon='database' label='EV Dash'
             .ten.wide.column
                 h1.ui.center.aligned.header
+                    +officeicon name='customer-support'
                     | Customers
             .three.wide.right.aligned.column
                 if is_dev
@@ -315,7 +316,7 @@ template(name='customer_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .three.wide.column
-                +link_button link='/customers' icon='handshake' label='Customers'
+                +link_button link='/customers' icon='customer-support' label='Customers'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header ##{jpid} #{cust_name} Customer
             .three.wide.right.aligned.column
@@ -363,14 +364,14 @@ template(name='customer_view')
                 
                 
 template(name='related_customers')
-    .ui.horizontal.divider.header 
-        i.handshake.icon
+    .ui.dividing.header 
+        +officeicon name='customer-support'
         |#{franchisee}'s Customers
     |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
                 
 template(name='franchise_by_customer')
     .ui.dividing.header 
-        i.user.circle.icon
+        +officeicon name='collaborator-female'
         |#{ev.CUST_NAME}'s Franchisee
     |{{> tabular table=TabularTables.Related_franchisees selector=selector class="ui sortable fluid striped table"}}
     
@@ -378,7 +379,7 @@ template(name='franchise_by_customer')
 template(name='office_by_franchisee')
     .ui.secondary.segment
         .ui.dividing.header 
-            i.building.icon
+            +officeicon name='link-company-parent'
             |#{ev.FRANCHISEE}'s Office
         with parent_office
             a.ui.header(href="/view/#{_id}") #{office_name}

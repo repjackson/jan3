@@ -30,9 +30,9 @@ template(name='save_button')
         // | Save
         
 template(name='edit_button')
-    a.ui.icon.button(href="/edit/#{_id}" title='Edit') 
-        // +officeicon name='pencil'
-        i.pencil.icon
+    a(href="/edit/#{_id}" title='Edit') 
+        +officeicon name='pencil'
+        // i.pencil.icon
         // | Edit
 
 template(name='view_button')
@@ -93,7 +93,9 @@ template(name='set_session_item')
         
         
 template(name='edit_image_field')
-    .ui.dividing.header Image
+    .ui.dividing.header 
+        +officeicon name='picture'
+        |Image
     if image_id
         .ui.image
             img(src="{{c.url image_id }}")
@@ -115,7 +117,7 @@ template(name='complete')
 
 
 template(name='toggle_key')
-    .toggle_key.ui.button(class=toggle_key_button_class) #{label}
+    .toggle_key.ui.compact.button(class=toggle_key_button_class) #{label}
 
 
 template(name='parent_segment')
@@ -209,7 +211,9 @@ template(name='associated_users')
             
           
 template(name='multiple_user_select')
-    .ui.dividing.header #{label}
+    .ui.dividing.header 
+        +officeicon name=icon
+        |#{label}
     .ui.form
         .field
             .ui.icon.transparent.input
@@ -230,14 +234,13 @@ template(name='multiple_user_select')
                                 | @#{username}
 
 template(name='view_sla_contact')
-    .ui.header SLA Contact #{key}
+    // .ui.header SLA Contact #{key}
     with selected_contact
-        .ui.secondary.segment
-            .ui.header
-                |#{profile.first_name} #{profile.last_name}
-            .description
-                | @#{username}
-                div #{ev.EMAIL}
+        .ui.header
+            |#{profile.first_name} #{profile.last_name}
+        .description
+            | @#{username}
+            div #{ev.EMAIL}
 
 
 template(name='single_user_select')
@@ -297,7 +300,9 @@ template(name='single_doc_select')
                     .item Master Licensee: #{master_licensee}
           
 template(name='single_doc_view')
-    .ui.dividing.header #{label}
+    .ui.dividing.header
+        +officeicon name=icon
+        |#{label}
     with selected_doc
         .ui.fluid.card
             .content
