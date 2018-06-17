@@ -78,9 +78,11 @@ template(name='dashboard')
                                 td #{ev.JOB_TITLE}
                                 td #{email}
                                 td
-                                    a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{name}")
+                                    a(href="mailto:#{email}" target='_window' title="Email #{name}")
                                         // i.mail.icon
                                         +officeicon name='send'
+                                td 
+                                    +view_user_button
         .centered.row
             .sixteen.wide.column
                 .ui.secondary.segment
