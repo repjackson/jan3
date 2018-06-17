@@ -41,62 +41,72 @@ template(name='office_view')
                     +single_user_select key='operations_manager' label='Operations Manager' icon='users'
                 .ui.secondary.segment
                     h2.ui.header SLA Settings
-                    h3.ui.dividing.header Initial
-                    h3.ui.dividing.header Escalation 1
-                    h4.ui.header Hours
-                    +edit_number_field key='escalation_one_hours'
-                    h4.ui.header Primary Contact
-                    +toggle_key key='escalation_one_primary_contact' value='office_owner' label='Office Owner'
-                    +toggle_key key='escalation_one_primary_contact' value='operations_manager' label='Operations Manager'
-                    +toggle_key key='escalation_one_primary_contact' value='franchisee' label='Franchisee'
-                    +view_sla_contact key='escalation_one_primary_contact'
-                    h4.ui.header Secondary Contact
-                    +toggle_key key='escalation_one_secondary_contact' value='office_owner' label='Office Owner'
-                    +toggle_key key='escalation_one_secondary_contact' value='operations_manager' label='Operations Manager'
-                    +toggle_key key='escalation_one_secondary_contact' value='franchisee' label='Franchisee'
-                    +view_sla_contact key='escalation_one_secondary_contact'
-                    h3.ui.dividing.header Escalation 2
-                    h4.ui.header Hours
-                    +edit_number_field key='escalation_two_hours'
-                    h4.ui.header Primary Contact
-                    +toggle_key key='escalation_two_primary_contact' value='office_owner' label='Office Owner'
-                    +toggle_key key='escalation_two_primary_contact' value='operations_manager' label='Operations Manager'
-                    +toggle_key key='escalation_two_primary_contact' value='franchisee' label='Franchisee'
-                    +view_sla_contact key='escalation_two_primary_contact'
-                    h4.ui.header Secondary Contact
-                    +toggle_key key='escalation_two_secondary_contact' value='office_owner' label='Office Owner'
-                    +toggle_key key='escalation_two_secondary_contact' value='operations_manager' label='Operations Manager'
-                    +toggle_key key='escalation_two_secondary_contact' value='franchisee' label='Franchisee'
-                    +view_sla_contact key='escalation_two_secondary_contact'
-                    h3.ui.dividing.header Escalation 3
-                    h4.ui.header Hours
-                    +edit_number_field key='escalation_three_hours'
-                    h4.ui.header Primary Contact
-                    +toggle_key key='escalation_three_primary_contact' value='office_owner' label='Office Owner'
-                    +toggle_key key='escalation_three_primary_contact' value='operations_manager' label='Operations Manager'
-                    +toggle_key key='escalation_three_primary_contact' value='franchisee' label='Franchisee'
-                    +view_sla_contact key='escalation_three_primary_contact'
-                    h4.ui.header Secondary Contact
-                    +toggle_key key='escalation_three_secondary_contact' value='office_owner' label='Office Owner'
-                    +toggle_key key='escalation_three_secondary_contact' value='operations_manager' label='Operations Manager'
-                    +toggle_key key='escalation_three_secondary_contact' value='franchisee' label='Franchisee'
-                    +view_sla_contact key='escalation_three_secondary_contact'
-                    
-                    
+                    .ui.secondary.segment
+                        h3.ui.dividing.header Initial
+                        h3.ui.dividing.header Escalation 1
+                        h4.ui.header Hours
+                        +edit_number_field key='escalation_one_hours'
+                        h4.ui.header Primary Contact
+                        +toggle_key key='escalation_one_primary_contact' value='office_owner' label='Office Owner'
+                        +toggle_key key='escalation_one_primary_contact' value='operations_manager' label='Operations Manager'
+                        +toggle_key key='escalation_one_primary_contact' value='franchisee' label='Franchisee'
+                        +view_sla_contact key='escalation_one_primary_contact'
+                        h4.ui.header Secondary Contact
+                        +toggle_key key='escalation_one_secondary_contact' value='office_owner' label='Office Owner'
+                        +toggle_key key='escalation_one_secondary_contact' value='operations_manager' label='Operations Manager'
+                        +toggle_key key='escalation_one_secondary_contact' value='franchisee' label='Franchisee'
+                        +view_sla_contact key='escalation_one_secondary_contact'
+                    .ui.secondary.segment
+                        h3.ui.dividing.header Escalation 2
+                        h4.ui.header Hours
+                        +edit_number_field key='escalation_two_hours'
+                        h4.ui.header Primary Contact
+                        +toggle_key key='escalation_two_primary_contact' value='office_owner' label='Office Owner'
+                        +toggle_key key='escalation_two_primary_contact' value='operations_manager' label='Operations Manager'
+                        +toggle_key key='escalation_two_primary_contact' value='franchisee' label='Franchisee'
+                        +view_sla_contact key='escalation_two_primary_contact'
+                        h4.ui.header Secondary Contact
+                        +toggle_key key='escalation_two_secondary_contact' value='office_owner' label='Office Owner'
+                        +toggle_key key='escalation_two_secondary_contact' value='operations_manager' label='Operations Manager'
+                        +toggle_key key='escalation_two_secondary_contact' value='franchisee' label='Franchisee'
+                        +view_sla_contact key='escalation_two_secondary_contact'
+                    .ui.secondary.segment
+                        h3.ui.dividing.header Escalation 3
+                        h4.ui.header Hours
+                        +edit_number_field key='escalation_three_hours'
+                        h4.ui.header Primary Contact
+                        +toggle_key key='escalation_three_primary_contact' value='office_owner' label='Office Owner'
+                        +toggle_key key='escalation_three_primary_contact' value='operations_manager' label='Operations Manager'
+                        +toggle_key key='escalation_three_primary_contact' value='franchisee' label='Franchisee'
+                        +view_sla_contact key='escalation_three_primary_contact'
+                        h4.ui.header Secondary Contact
+                        +toggle_key key='escalation_three_secondary_contact' value='office_owner' label='Office Owner'
+                        +toggle_key key='escalation_three_secondary_contact' value='operations_manager' label='Operations Manager'
+                        +toggle_key key='escalation_three_secondary_contact' value='franchisee' label='Franchisee'
+                        +view_sla_contact key='escalation_three_secondary_contact'
+                        
+                +franchisees_by_office
                 +users_by_office
                 +customers_by_office
 
 
 template(name='customers_by_office')
-    .ui.horizontal.divider.header 
+    .ui.dividing.header 
+        +officeicon name='customer-support'
         |#{office_name}'s Customers
     |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
 
 template(name='users_by_office')
-    .ui.horizontal.divider.header 
-        i.users.icon
+    .ui.dividing.header 
+        +officeicon name='groups'
         |#{office_name}'s Users
     |{{> tabular table=TabularTables.Users selector=selector class="ui sortable fluid striped table"}}
+
+template(name='franchisees_by_office')
+    .ui.dividing.header 
+        +officeicon name='collaborator-female'
+        |#{office_name}'s Franchisees
+    |{{> tabular table=TabularTables.Franchisees selector=selector class="ui sortable fluid striped table"}}
 
 
 

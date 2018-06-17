@@ -12,18 +12,18 @@ Template.offices.helpers
     uploading: -> Template.instance().uploading.get()
     
 Template.offices.events
-    'change [name="upload_csv"]': (event,template)->
-        template.uploading.set true
+    # 'change [name="upload_csv"]': (event,template)->
+    #     template.uploading.set true
 
-        Papa.parse event.target.files[0],
-            header: true
-            complete: (results,file) =>
-                Meteor.call 'parse_office_upload', results.data, (err,res)=>
-                    if err
-                        console.log err.reason
-                    else
-                        template.uploading.set false
-                        Bert.alert 'Upload complete!', 'success', 'growl-top-right'
+    #     Papa.parse event.target.files[0],
+    #         header: true
+    #         complete: (results,file) =>
+    #             Meteor.call 'parse_office_upload', results.data, (err,res)=>
+    #                 if err
+    #                     console.log err.reason
+    #                 else
+    #                     template.uploading.set false
+    #                     Bert.alert 'Upload complete!', 'success', 'growl-top-right'
     
 Template.customers_by_office.helpers
     selector: ->  
@@ -31,6 +31,14 @@ Template.customers_by_office.helpers
         return {
             type: "customer"
             master_licensee: page_office.office_name
+            }
+    
+Template.franchisees_by_office.helpers
+    selector: ->  
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        return {
+            type: "franchisee"
+            "ev.MASTER_LICENSEE": page_office.office_name
             }
     
     
