@@ -35,46 +35,53 @@ template(name='office_view')
                     // .ui.header Display Name: #{display_name}
                     .ui.header Cell: #{telephone}
                     .ui.header Address: #{address}
-                h2.ui.dividing.header 
-                    +officeiconlarge name='checked-user-male'
-                    |Office Roles
-                +single_user_select key='office_owner' label='Office Owner' icon='users'
-                +single_user_select key='operations_manager' label='Operations Manager' icon='users'
-                h2.ui.dividing.header 
-                    +officeiconlarge name='administrative-tools'
-                    |SLA Settings
-                .ui.secondary.segment
-                    h3.ui.dividing.header Initial
-                    h3.ui.dividing.header Escalation 1
-                    +edit_number_field key='escalation_one_hours' label='Escalation 1 Hours' icon='expired'
+                .ui.top.attached.tabular.menu
+                    .active.item(data-tab='sla') SLA
+                    .item(data-tab='incidents') Incidents
+                    .item(data-tab='users') Users
+                    .item(data-tab='franchisees') Franchisees
+                    .item(data-tab='customers') Customers
+                .ui.bottom.attached.active.tab.segment(data-tab='sla')
+                    h2.ui.dividing.header 
+                        +officeiconlarge name='checked-user-male'
+                        |Office Roles
+                    +single_user_select key='office_owner' label='Office Owner' icon='users'
+                    +single_user_select key='operations_manager' label='Operations Manager' icon='users'
+                    h2.ui.dividing.header 
+                        +officeiconlarge name='administrative-tools'
+                        |SLA Settings
                     .ui.secondary.segment
-                        h4.ui.header Primary Contact
-                        +toggle_key key='escalation_one_primary_contact' value='office_owner' label='Office Owner'
-                        +toggle_key key='escalation_one_primary_contact' value='operations_manager' label='Operations Manager'
-                        +toggle_key key='escalation_one_primary_contact' value='franchisee' label='Franchisee'
-                        +view_sla_contact key='escalation_one_primary_contact'
+                        h3.ui.dividing.header Initial
+                        h3.ui.dividing.header Escalation 1
+                        +edit_number_field key='escalation_one_hours' label='Escalation 1 Hours' icon='expired'
+                        .ui.secondary.segment
+                            h4.ui.header Primary Contact
+                            +toggle_key key='escalation_one_primary_contact' value='office_owner' label='Office Owner'
+                            +toggle_key key='escalation_one_primary_contact' value='operations_manager' label='Operations Manager'
+                            +toggle_key key='escalation_one_primary_contact' value='franchisee' label='Franchisee'
+                            +view_sla_contact key='escalation_one_primary_contact'
+                        .ui.secondary.segment
+                            h4.ui.header Secondary Contact
+                            +toggle_key key='escalation_one_secondary_contact' value='office_owner' label='Office Owner'
+                            +toggle_key key='escalation_one_secondary_contact' value='operations_manager' label='Operations Manager'
+                            +toggle_key key='escalation_one_secondary_contact' value='franchisee' label='Franchisee'
+                            +view_sla_contact key='escalation_one_secondary_contact'
                     .ui.secondary.segment
-                        h4.ui.header Secondary Contact
-                        +toggle_key key='escalation_one_secondary_contact' value='office_owner' label='Office Owner'
-                        +toggle_key key='escalation_one_secondary_contact' value='operations_manager' label='Operations Manager'
-                        +toggle_key key='escalation_one_secondary_contact' value='franchisee' label='Franchisee'
-                        +view_sla_contact key='escalation_one_secondary_contact'
-                .ui.secondary.segment
-                    h3.ui.dividing.header Escalation 2
-                    +edit_number_field key='escalation_two_hours' label='Escalation 2 Hours' icon='expired'
+                        h3.ui.dividing.header Escalation 2
+                        +edit_number_field key='escalation_two_hours' label='Escalation 2 Hours' icon='expired'
+                        .ui.secondary.segment
+                            h4.ui.header Primary Contact
+                            +toggle_key key='escalation_two_primary_contact' value='office_owner' label='Office Owner'
+                            +toggle_key key='escalation_two_primary_contact' value='operations_manager' label='Operations Manager'
+                            +toggle_key key='escalation_two_primary_contact' value='franchisee' label='Franchisee'
+                            +view_sla_contact key='escalation_two_primary_contact'
+                        .ui.secondary.segment
+                            h4.ui.header Secondary Contact
+                            +toggle_key key='escalation_two_secondary_contact' value='office_owner' label='Office Owner'
+                            +toggle_key key='escalation_two_secondary_contact' value='operations_manager' label='Operations Manager'
+                            +toggle_key key='escalation_two_secondary_contact' value='franchisee' label='Franchisee'
+                            +view_sla_contact key='escalation_two_secondary_contact' label=''
                     .ui.secondary.segment
-                        h4.ui.header Primary Contact
-                        +toggle_key key='escalation_two_primary_contact' value='office_owner' label='Office Owner'
-                        +toggle_key key='escalation_two_primary_contact' value='operations_manager' label='Operations Manager'
-                        +toggle_key key='escalation_two_primary_contact' value='franchisee' label='Franchisee'
-                        +view_sla_contact key='escalation_two_primary_contact'
-                    .ui.secondary.segment
-                        h4.ui.header Secondary Contact
-                        +toggle_key key='escalation_two_secondary_contact' value='office_owner' label='Office Owner'
-                        +toggle_key key='escalation_two_secondary_contact' value='operations_manager' label='Operations Manager'
-                        +toggle_key key='escalation_two_secondary_contact' value='franchisee' label='Franchisee'
-                        +view_sla_contact key='escalation_two_secondary_contact' label=''
-                .ui.secondary.segment
                         h3.ui.dividing.header Escalation 3
                         +edit_number_field key='escalation_three_hours' label='Escalation 3 Hours' icon='expired'
                         .ui.secondary.segment
@@ -89,10 +96,14 @@ template(name='office_view')
                             +toggle_key key='escalation_three_secondary_contact' value='operations_manager' label='Operations Manager'
                             +toggle_key key='escalation_three_secondary_contact' value='franchisee' label='Franchisee'
                             +view_sla_contact key='escalation_three_secondary_contact'
+                .ui.bottom.attached.tab.segment(data-tab='franchisees')
+                    +franchisees_by_office
+                .ui.bottom.attached.tab.segment(data-tab='users')
+                    +users_by_office
+                .ui.bottom.attached.tab.segment(data-tab='customers')
+                    +customers_by_office
+
                         
-                +franchisees_by_office
-                +users_by_office
-                +customers_by_office
 
 
 template(name='customers_by_office')

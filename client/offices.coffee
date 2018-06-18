@@ -7,6 +7,10 @@ Template.offices.helpers
     
 Template.offices.onCreated () ->
     Template.instance().uploading = new ReactiveVar false 
+Template.office_view.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.tabular.menu .item').tab()
+    , 500
 
 Template.offices.helpers
     uploading: -> Template.instance().uploading.get()
