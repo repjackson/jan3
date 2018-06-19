@@ -27,6 +27,7 @@ constellation:position@0.4.7
 constellation:session@0.4.7
 constellation:subscriptions@0.4.7
 constellation:tiny@0.4.7
+cunneen:mailgun@1.0.0
 dandv:caret-position@2.1.1
 dburles:collection-helpers@1.1.0
 dburles:mongo-collection-instances@0.3.5

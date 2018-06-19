@@ -231,7 +231,7 @@ Meteor.methods
                 user_id:'JPI'
                 password:'JPI'
                 statevar:'history'
-                cutoff:  moment().subtract(10, 'days').calendar()
+                cutoff:  moment().subtract(100, 'days').calendar()
                 # cutoff_end:  moment(Date.now()+10000).format()
                 # evhist_sellist=selectionList 
                 # hist_range_end=timestamp 
@@ -257,7 +257,7 @@ Meteor.methods
                             "ev.TIMESTAMP": doc.TIMESTAMP
                     if existing_history_doc
                         console.log "existing history #{existing_history_doc.ev.TIMESTAMP}"
-                        Docs.update existing_customer_doc._id,
+                        Docs.update existing_history_doc._id,
                             $set: ev: doc
                     else
                         Docs.insert

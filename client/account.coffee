@@ -35,6 +35,17 @@ Template.account_settings.events
                         Bert.alert result, 'success', 'growl-top-right'
                     return
     
+    'click #test_email': ->
+        Meteor.call('sendEmail',{
+            to: 'repjackson@gmail.com',
+            from: 'no-reply@where-ever.com',
+            subject: 'I really like sending emails with Mailgun!',
+            text: 'Mailgun is totally awesome for sending emails!',
+            html: 'With meteor it&apos;s easy to set up <strong>HTML</strong> <span style="color:red">emails</span> too.'
+          });
+
+    
+    
     
     'click #add_email': ->
         new_email = $('#new_email').val().trim()
