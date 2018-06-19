@@ -224,6 +224,59 @@ Meteor.methods
                 value: split_report[2]
 
 
+    get_history: () ->
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers: "User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JPI'
+                password:'JPI'
+                statevar:'history'
+                cutoff:  moment().subtract(10, 'days').calendar()
+                # cutoff_end:  moment(Date.now()+10000).format()
+                # evhist_sellist=selectionList 
+                # hist_range_end=timestamp 
+                # hist_range_start=timestamp 
+                # username_display=ID | LAST | FIRST 
+                # dd_name_n=value 
+                # show_attributes=YES | NO
+
+        # console.log res
+        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
+            if err then console.error('errors',err)
+            else
+                # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+                console.dir json_result.HISTORY.PROBLEM_RECORD
+                # new_id = Docs.insert 
+                # console.log 'new id', new_id
+            if json_result.HISTORY.PROBLEM_RECORD
+                for doc in json_result.HISTORY.PROBLEM_RECORD
+                    console.log doc
+                    existing_history_doc = 
+                        Docs.findOne 
+                            type: 'history'
+                            "ev.TIMESTAMP": doc.TIMESTAMP
+                    if existing_history_doc
+                        console.log "existing history #{existing_history_doc.ev.TIMESTAMP}"
+                        Docs.update existing_customer_doc._id,
+                            $set: ev: doc
+                    else
+                        Docs.insert
+                            type:'history'
+                            ev: doc
+        
+        
+        # split_res = res.content.split '\r\n'
+        # console.log typeof split_res
+        # for area_string in split_res
+        #     split_report = area_string.split '|'
+        #     console.log split_report
+            # Docs.insert
+            #     type:'meta'
+            #     area: split_report[0]
+            #     jpid: split_report[1]
+            #     value: split_report[2]
+
+
     get_roles: () ->
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"

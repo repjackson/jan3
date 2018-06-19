@@ -2,8 +2,8 @@ template(name='users')
     .ui.padded.stackable.grid
         .centered.row
             .three.wide.column 
-                a.ui.icon.button(href='/user/add' data-content='Add User')
-                    i.large.plus.icon
+                a(href='/user/add' data-content='Add User')
+                    +officeicon name='plus'
                 // if is_dev
                 //     .ui.header upload user list
                 //     unless uploading
@@ -18,4 +18,4 @@ template(name='users')
         .centered.row
             .sixteen.wide.column 
                 // +user_table
-                |{{> tabular table=TabularTables.Users class="ui sortable selectable striped fluid very basic table"}}
+                +tabular table=TabularTables.Users class="ui sortable selectable striped fluid very basic table"

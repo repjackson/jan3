@@ -38,6 +38,17 @@ Template.ev_fields.events
 Template.ev_fields.helpers
     selector: ->  type: "field"
 
+# history
+FlowRouter.route '/history', 
+    action: -> BlazeLayout.render 'layout', main: 'history'
+
+Template.history.events
+    'click .refresh_history': ->
+        Meteor.call 'get_history',(err,res)->
+            if err then console.error err
+Template.history.helpers
+    selector: ->  type: "history"
+
 
 # jpids
 FlowRouter.route '/jpids', 

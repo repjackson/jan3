@@ -10,6 +10,7 @@ template(name='ev')
                     +children_widget type='jpid' label='JP Ids' icon='hashtag' link='/jpids'
                     +children_widget type='area' label='Areas' icon='clone' link='/areas'
                     +children_widget type='meta' label='MetaData' icon='code' link='/meta'
+                    +children_widget type='history' label='History' icon='time' link='/history'
 
 template(name='ev_reports')
     .ui.padded.stackable.grid
@@ -22,7 +23,7 @@ template(name='ev_reports')
                 // .call_ev.ui.fluid.button Call EV API
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Reports selector=selector class="ui sortable fluid striped table"}}
+                +tabular table=TabularTables.Reports selector=selector class="ui sortable fluid striped table"
 
                     
                     
@@ -158,7 +159,7 @@ template(name='ev_fields')
                     .sync_ev_fields.ui.fluid.button Sync EV Fields
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Fields selector=selector class="ui sortable fluid striped table"}}
+                +tabular table=TabularTables.Fields selector=selector class="ui sortable fluid striped table"
 
 
       
@@ -196,7 +197,61 @@ template(name='jpids')
                 //     input#office_lookup(type='text' placeholder='Lookup Office Name')
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Jpids selector=selector class="ui sortable fluid striped table"}}
+                +tabular table=TabularTables.Jpids selector=selector class="ui sortable fluid striped table"
+
+                    
+template(name='history')
+    .ui.padded.stackable.grid
+        .row
+            .three.wide.column
+                +link_button link='/ev' icon='database' label='EV Dash'
+            .eight.wide.column
+                .ui.center.aligned.header
+                    i.hashtag.icon
+                    | EV History
+            .four.wide.column
+                .refresh_history.ui.icon.button(title='Refresh History')
+                    i.refresh.icon
+            
+        .row
+            .sixteen.wide.column
+                +tabular table=TabularTables.History selector=selector class="ui sortable fluid striped table"
+
+                    
+template(name='history_view')
+    .ui.padded.stackable.grid
+        .row
+            .three.wide.column
+                +link_button link='/ev' icon='database' label='EV Dash'
+            .eight.wide.column
+                .ui.center.aligned.header
+                    i.hashtag.icon
+                    | EV History
+            .four.wide.column
+                .refresh_history.ui.icon.button(title='Refresh History')
+                    i.refresh.icon
+            
+        .row
+            .sixteen.wide.column
+                .ui.list
+                    with ev
+                        .item ID: #{ID}
+                        .item AREA: #{AREA}
+                        .item PROJECT: #{PROJECT}
+                        .item TIMESTAMP: #{TIMESTAMP}
+                        .item LAST_CHANGE_USER: #{LAST_CHANGE_USER}
+                        .item DATE_CREATED: #{DATE_CREATED}
+                        .item ORIGINATOR: #{ORIGINATOR}
+                        .item MASTER_LICENSEE: #{MASTER_LICENSEE}
+                        .item MASTER_COUNTRY: #{MASTER_COUNTRY}
+                        .item CUSTOMER: #{CUSTOMER}
+                        .item FRANCHISEE: #{FRANCHISEE}
+                        .item SUBCONTRACTOR: #{SUBCONTRACTOR}
+                        .item SERV_TYPE: #{SERV_TYPE}
+                        .item EXTRA_PRICE: #{EXTRA_PRICE}
+                        .item EXTRA_TAX: #{EXTRA_TAX}
+                        .item EXTRA_SERV_DESC: #{EXTRA_SERV_DESC}
+                        .item FULL_TIMESTAMP: #{FULL_TIMESTAMP}
 
                     
                     
@@ -216,7 +271,7 @@ template(name='areas')
                         i.external.icon
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Areas selector=selector class="ui sortable fluid striped table"}}
+                +tabular table=TabularTables.Areas selector=selector class="ui sortable fluid striped table"
 
                     
                     
@@ -231,7 +286,7 @@ template(name='meta')
                     | EV MetaData
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Meta selector=selector class="ui sortable striped table"}}
+                +tabular table=TabularTables.Meta selector=selector class="ui sortable striped table"
 
                     
                     
@@ -267,7 +322,7 @@ template(name='franchisees')
                         i.large.refresh.icon
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Franchisees selector=selector class="ui sortable striped very basic fluid table"}}
+                +tabular table=TabularTables.Franchisees selector=selector class="ui sortable striped very basic fluid table"
 
                     
                     
@@ -305,10 +360,11 @@ template(name='customers')
             .three.wide.right.aligned.column
                 if is_dev
                     .sync_customers.ui.icon.button(title='Refresh Customers')
-                        i.refresh.icon
+                        +officeicon name='refresh'
+
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Customers selector=selector class="ui sortable striped very basic fluid table"}}
+                +tabular table=TabularTables.Customers selector=selector class="ui sortable striped very basic fluid table"
 
                     
                     
@@ -367,13 +423,13 @@ template(name='related_customers')
     .ui.dividing.header 
         +officeicon name='customer-support'
         |#{franchisee}'s Customers
-    |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
+    +tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"
                 
 template(name='franchise_by_customer')
     .ui.dividing.header 
         +officeicon name='collaborator-female'
         |#{ev.CUST_NAME}'s Franchisee
-    |{{> tabular table=TabularTables.Related_franchisees selector=selector class="ui sortable fluid striped table"}}
+    +tabular table=TabularTables.Related_franchisees selector=selector class="ui sortable fluid striped table"
     
     
 template(name='office_by_franchisee')

@@ -27,7 +27,7 @@ template(name='office_view')
             .ten.wide.column
                 h1.ui.center.aligned.grey.header #{office_name} Office
             .three.wide.right.aligned.column
-                +edit_button
+                // +edit_button
         .row
             .sixteen.wide.column
                 .ui.secondary.segment
@@ -35,15 +35,24 @@ template(name='office_view')
                     // .ui.header Display Name: #{display_name}
                     .ui.header Cell: #{telephone}
                     .ui.header Address: #{address}
-                .ui.top.attached.tabular.menu
-                    .active.item(data-tab='sla') SLA
-                    .item(data-tab='incidents') Incidents
-                    .item(data-tab='users') Users
-                    .item(data-tab='franchisees') Franchisees
-                    .item(data-tab='customers') Customers
+                .ui.top.attached.tabular.five.item.stackable.menu
+                    a.active.item(data-tab='sla') 
+                        +officeicon name='checked-user-male'
+                        | &nbsp; SLA
+                    a.item(data-tab='incidents') 
+                        +officeicon name='error'
+                        | &nbsp; Incidents
+                    a.item(data-tab='users') 
+                        +officeicon name='groups'
+                        | &nbsp; Users
+                    a.item(data-tab='franchisees') 
+                        +officeicon name='collaborator-female'
+                        | &nbsp; Franchisees
+                    a.item(data-tab='customers') 
+                        +officeicon name='customer-support'
+                        | &nbsp; Customers
                 .ui.bottom.attached.active.tab.segment(data-tab='sla')
                     h2.ui.dividing.header 
-                        +officeiconlarge name='checked-user-male'
                         |Office Roles
                     +single_user_select key='office_owner' label='Office Owner' icon='users'
                     +single_user_select key='operations_manager' label='Operations Manager' icon='users'
@@ -97,91 +106,15 @@ template(name='office_view')
                             +toggle_key key='escalation_three_secondary_contact' value='franchisee' label='Franchisee'
                             +view_sla_contact key='escalation_three_secondary_contact'
                 .ui.bottom.attached.tab.segment(data-tab='franchisees')
-                    +franchisees_by_office
+                    .ui.center.aligned.header #{office_name}'s Franchisees
+                    +tabular table=TabularTables.Related_franchisees selector=office_franchisees_selector class="ui sortable fluid striped table"
+                .ui.bottom.attached.tab.segment(data-tab='incidents')
+                    .ui.center.aligned.header #{office_name}'s Incidents
+                    +tabular table=TabularTables.Incidents selector=office_incidents_selector class="ui sortable fluid striped table"
                 .ui.bottom.attached.tab.segment(data-tab='users')
-                    +users_by_office
+                    .ui.center.aligned.header #{office_name}'s Users
+                    +tabular table=TabularTables.Users selector=office_users_selector class="ui sortable fluid striped table"
                 .ui.bottom.attached.tab.segment(data-tab='customers')
-                    +customers_by_office
-
-                        
-
-
-template(name='customers_by_office')
-    .ui.dividing.header 
-        +officeicon name='customer-support'
-        |#{office_name}'s Customers
-    |{{> tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"}}
-
-template(name='users_by_office')
-    .ui.dividing.header 
-        +officeicon name='groups'
-        |#{office_name}'s Users
-    |{{> tabular table=TabularTables.Users selector=selector class="ui sortable fluid striped table"}}
-
-template(name='franchisees_by_office')
-    .ui.dividing.header 
-        +officeicon name='collaborator-female'
-        |#{office_name}'s Franchisees
-    |{{> tabular table=TabularTables.Franchisees selector=selector class="ui sortable fluid striped table"}}
-
-
-
-
-
-template(name='office_edit')
-    .ui.padded.stackable.centered.grid
-        .centered.row
-            .three.wide.column
-                #delete.ui.basic.button
-                    i.trash.icon
-                    | Delete
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit Office ##{jan_office_id}
-            .three.wide.column
-                +save_button
-        .five.wide.column
-            +office_map
-        .five.wide.column
-            .ui.form
-                +edit_text_field key='jan_office_id' label='Jan Pro Office ID' icon='building'
-                +edit_text_field key='office_name' label='Office Name' icon='code'
-                +edit_text_field key='phone_number' label='Phone Number' icon='phone'
-                +edit_text_field key='email_address' label='Email Address' icon='envelope'
-        .five.wide.column
-            .ui.form
-                +edit_text_field key='level_1_user_ud' label='Level 1 User Id' icon='user' 
-                +edit_text_field key='level_2_user_ud' label='Level 2 User Id' icon='user'
-                +edit_text_field key='level_3_user_ud' label='Level 3 User Id' icon='user'
-        
-        
-// template(name='office_view')
-//     .ui.padded.stackable.centered.grid
-//         .centered.row
-//             .three.wide.column
-//                 +link_button link='/offices' icon='left chevron' label='Offices'
-//             .ten.wide.column
-//                 h1.ui.center.aligned.grey.header Office ##{jan_office_id}
-//             .three.wide.column
-//                 +edit_button
-//         .row
-//             .five.wide.column
-//                 +associated_users
-//                 +associated_incidents
-//                 +comments
-//                 // +jsonView(json=location_ob)
-//             .six.wide.column
-//                 +office_map
-//             .five.wide.column
-//                 +call_phone_button
-//                 .ui.large.relaxed.list
-//                     +list_item key='jan_office_id' label='Jan Pro Office ID' icon='building'
-//                     +list_item key='office_name' label='Office Name' icon='code'
-//                     with geocode
-//                         +list_item key='formatted_address' label='Office Address' icon='compass'
-//                     +list_item key='phone_number' label='Phone Number' icon='phone'
-//                     +list_item key='email_address' label='Email Address' icon='envelope'
-//                     +list_item key='level_1_user_ud' label='Level 1 User Id' icon='user'
-//                     +list_item key='level_2_user_ud' label='Level 2 User Id' icon='user'
-//                     +list_item key='level_3_user_ud' label='Level 3 User Id' icon='user'
-                
+                    .ui.center.aligned.header #{office_name}'s Customers
+                    +tabular table=TabularTables.Related_customers selector=office_customers_selector class="ui sortable fluid striped table"
                 
