@@ -336,47 +336,42 @@ Meteor.methods
                             
                             
     search_ev: (query)->
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action?",
-            headers: "User-Agent": "Meteor/1.0"
+        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+            headers:"User-Agent": "Meteor/1.0"
             params:
-                user_id:'JPI'
-                password:'JPI'
-                statevar:'search'
-                page_length: 3 
-                record_start: 1 
-                # record_count: 10 
-                # username_display: 'ID' 
-                AREA: "*Bill"
-                # release:{null}
-                # "ASSIGNED_TO": "Brad57689 Wallace"
-                # ACCOUNT_STATUS: "ACTIVE"
-                # "FRANCHISEE": "Evan Cleaning LLC"
+                user_id: 'JPI'
+                password: 'JPI'
+                statevar: 'search'
+                page_length: 100
+                record_start: 1
+                record_count: 100
+                username_display: 'ID'
+                timestamp: "'2018-05-20'-'2018-06-20'"
+        # console.log res
+        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
+            if err then console.error('errors',err)
+            else
+                result = json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                # console.dir result
+                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                    # console.log doc
+                    # doc.type = 'customer'
+                    existing_search_history_doc = 
+                        Docs.findOne 
+                            type: 'search_history_doc'
+                            "ev.ID": doc.ID
+                    if existing_search_history_doc
+                        console.log "existing search history doc #{existing_search_history_doc.ev.ID}"
+                        # console.log doc
+                        # Docs.update existing_search_history_doc._id,
+                        #     $set: ev: doc
+                    else                    
+                        new_search_history_doc = Docs.insert 
+                            type:'search_history_doc'
+                            ev: doc
+                        console.log "added #{doc.ID}"
+        
 
-
-                
-        console.log res.content
-        # includes_boolean = res.content.includes("does not exist")
-        # if includes_boolean
-        #     throw new Meteor.Error('no user', "JP Id #{jp_id} does not exist")
-        # else
-        #     xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
-        #         if err then console.error('errors',err)
-        #         else
-        #             # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-        #             console.dir json_result.PROBLEM_RECORD
-        #             existing_jpid = 
-        #                 Docs.findOne 
-        #                     type: 'jpid'
-        #                     jpid: jp_id
-        #             if existing_jpid
-        #                 throw new Meteor.Error('existing doc', "Already imported #{jp_id}.")
-        #             else                    
-        #                 Docs.insert 
-        #                     type:'jpid'
-        #                     jpid:jp_id
-        #                     ev: json_result.PROBLEM_RECORD
-                            
-                            
     get_all_franchisees: () ->
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"

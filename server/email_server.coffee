@@ -2,8 +2,7 @@ Accounts.emailTemplates.siteName = "Jan-Pro, LLC"
 Accounts.emailTemplates.from     = "JP Admin <no-reply@jan-pro.com>"
 
 Accounts.emailTemplates.verifyEmail =
-    subject: () ->
-        return "Jan-Pro Customer Portal Email Verification"
+    subject: () -> "Jan-Pro Customer Portal Email Verification"
  
     text: ( user, url )->
         emailAddress   = user.emails[0].address
@@ -31,22 +30,26 @@ Accounts.emailTemplates.verifyEmail =
 
     #     message_link = "https://www.toriwebster.com/view/#{new_transaction_id}"
         
-        
-    #     Email.send
-    #         to: " #{service_author.profile.first_name} #{service_author.profile.last_name} <#{service_author.emails[0].address}>",
-    #         from: "Tori Webster Inspires <admin@toriwebster.com>",
-    #         subject: "New #{service.title} request from #{requester.profile.first_name} #{requester.profile.last_name}",
-    #         html: 
-    #             "<h4>#{requester.profile.first_name} requested #{service.title} for their document: </h4>
-    #             #{recipient_doc.content} <br><br>
-                
-    #             <h4> Document type: #{recipient_doc.type}</h4>
-    #             <h4> Document tags: #{recipient_doc.tags}</h4>
-                
-                
-    #             Click <a href=#{message_link}> here to view the transaction.</a><br><br>
-    #             "
-            
+Meteor.methods
+    email_about_escalation_two: (incident_id)->
+        incident = Docs.findOne incident_id
+        console.log incident
+        mailFields = {
+            to: "repjackson@gmail.com <repjackson@gmail.com>"
+            from: "Jan-Pro <support@jan-pro.com>"
+            subject: "Incident has been escalated to 2"
+            text: ''
+            html: "<h4>Incident from #{incident.customer_name} escalated to two.</h4>
+                <h5>incident_type: #{incident.incident_type}</h5>
+                <h5>incident_details: #{incident.incident_details}</h5>
+                <h5>assigned_to: [ 'XJgKeF5ddXFLCxSQz', 'PnDtwXLPwzrBigrgq' ]</h5>
+                <h5>current_level: #{incident.current_level}</h5>
+                <h5>status: #{incident.status}</h5>
+                <h5>customer_id: 'NiQf4Pz76TXcxM3L2'</h5>
+                <h5>service_date: #{incident.service_date}</h5>
+            "
+        }
+        Meteor.call 'sendEmail', mailFields
     #         # html: 
     #         #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
     #         #     #{text} <br>

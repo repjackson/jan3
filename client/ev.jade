@@ -194,7 +194,7 @@ template(name='jpids')
                     input#jp_lookup(type='text' placeholder='Lookup Jan-Pro Id')
                 // .ui.icon.input
                 //     i.search.icon  
-                //     input#office_lookup(type='text' placeholder='Lookup Office Name')
+                //     input#ev_search(type='text' placeholder='Search EV')
         .row
             .sixteen.wide.column
                 +tabular table=TabularTables.Jpids selector=selector class="ui sortable fluid striped table"
@@ -212,9 +212,14 @@ template(name='history')
             .four.wide.column
                 .refresh_history.ui.icon.button(title='Refresh History')
                     i.refresh.icon
+                .run_timestamp_search(title='Search Update')
+                    i.calendar.large.link.icon
             
         .row
             .sixteen.wide.column
+                .ui.header Search API Results
+                +tabular table=TabularTables.Search_history selector=search_history_selector class="ui sortable fluid striped table"
+                .ui.header History API Results
                 +tabular table=TabularTables.History selector=selector class="ui sortable fluid striped table"
 
                     

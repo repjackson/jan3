@@ -10,11 +10,11 @@ Meteor.publish 'type', (type)->
 #         cursor
         
 Meteor.publish 'child_docs', (doc_id, limit)->
-    if limit
-        Docs.find {parent_id: doc_id },
-            limit:limit
-    else
-        Docs.find parent_id: doc_id
+    # if limit
+    #     Docs.find {parent_id: doc_id },
+    #         limit:limit
+    # else
+    Docs.find parent_id: doc_id
         
 Meteor.publish 'parent_doc', (child_id)->
     child =  Docs.findOne child_id

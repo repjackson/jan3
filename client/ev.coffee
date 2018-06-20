@@ -46,8 +46,12 @@ Template.history.events
     'click .refresh_history': ->
         Meteor.call 'get_history',(err,res)->
             if err then console.error err
+    'click .run_timestamp_search': ->
+        Meteor.call 'search_ev',(err,res)->
+            if err then console.error err
 Template.history.helpers
     selector: ->  type: "history"
+    search_history_selector: ->  type: "search_history_doc"
 
 
 # jpids
@@ -80,17 +84,18 @@ Template.jpid_view.events
             else
                 Bert.alert "Updated JP ID #{doc.jpid}", 'success', 'growl-top-right'
 
-    # 'keyup #office_lookup': (e,t)->
-    #     e.preventDefault()
-    #     val = $('#office_lookup').val().trim()
-    #     if e.which is 13
-    #         unless val.length is 0
-    #             Meteor.call 'search_ev', val.toString(), (err,res)=>
-    #                 if err
-    #                     Bert.alert "#{err.reason}", 'danger', 'growl-top-right'
-    #                 else
-    #                     Bert.alert "Searched #{val}", 'success', 'growl-top-right'
-    #                 $('#office_lookup').val ''
+Template.jpids.events
+    'keyup #ev_search': (e,t)->
+        e.preventDefault()
+        val = $('#ev_search').val().trim()
+        if e.which is 13
+            unless val.length is 0
+                Meteor.call 'search_ev', val.toString(), (err,res)=>
+                    if err
+                        Bert.alert "#{err.reason}", 'danger', 'growl-top-right'
+                    else
+                        Bert.alert "Searched #{val}", 'success', 'growl-top-right'
+                    $('#ev_search').val ''
 
 
 # areas

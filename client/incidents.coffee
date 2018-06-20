@@ -126,6 +126,7 @@ Template.incident_view.events
         }, =>
             Docs.update doc_id,
                 $set: current_level:2
+            Meteor.call 'email_about_escalation_two', doc_id
             Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 2"
 
 

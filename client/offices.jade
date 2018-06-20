@@ -62,7 +62,7 @@ template(name='office_view')
                     .ui.secondary.segment
                         h3.ui.dividing.header Initial
                         h3.ui.dividing.header Escalation 1
-                        +edit_number_field key='escalation_one_hours' label='Escalation 1 Hours' icon='expired'
+                        +edit_number_field key='escalation_one_hours' label='Escalation Hours' icon='expired'
                         .ui.secondary.segment
                             h4.ui.header Primary Contact
                             +toggle_key key='escalation_one_primary_contact' value='office_owner' label='Office Owner'
@@ -77,7 +77,7 @@ template(name='office_view')
                             +view_sla_contact key='escalation_one_secondary_contact'
                     .ui.secondary.segment
                         h3.ui.dividing.header Escalation 2
-                        +edit_number_field key='escalation_two_hours' label='Escalation 2 Hours' icon='expired'
+                        +edit_number_field key='escalation_two_hours' label='Escalation Hours' icon='expired'
                         .ui.secondary.segment
                             h4.ui.header Primary Contact
                             +toggle_key key='escalation_two_primary_contact' value='office_owner' label='Office Owner'
@@ -92,7 +92,7 @@ template(name='office_view')
                             +view_sla_contact key='escalation_two_secondary_contact' label=''
                     .ui.secondary.segment
                         h3.ui.dividing.header Escalation 3
-                        +edit_number_field key='escalation_three_hours' label='Escalation 3 Hours' icon='expired'
+                        +edit_number_field key='escalation_three_hours' label='Escalation Hours' icon='expired'
                         .ui.secondary.segment
                             h4.ui.header Primary Contact
                             +toggle_key key='escalation_three_primary_contact' value='office_owner' label='Office Owner'
