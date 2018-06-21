@@ -11,6 +11,10 @@ Template.office_view.onRendered ->
     , 500
 
     
+Template.office_view.onCreated ->
+    @autorun -> Meteor.subscribe 'office', FlowRouter.getParam('doc_id')
+
+    
 Template.office_view.helpers
     office_customers_selector: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
@@ -33,6 +37,9 @@ Template.office_view.helpers
             "ev.MASTER_LICENSEE": page_office.office_name
             }
     
+    office_incidents: ->  
+        Docs.find
+            type: 'incident'
     
     office_users_selector: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')

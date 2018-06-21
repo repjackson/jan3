@@ -210,10 +210,10 @@ template(name='history')
                     i.hashtag.icon
                     | EV History
             .four.wide.column
-                .refresh_history.ui.icon.button(title='Refresh History')
+                .refresh_history.ui.icon.button(title='Run History API Call')
                     i.refresh.icon
-                .run_timestamp_search(title='Search Update')
-                    i.calendar.large.link.icon
+                .run_timestamp_search.ui.icon.button(title='Run Search Update')
+                    i.calendar.icon
             
         .row
             .sixteen.wide.column
@@ -302,6 +302,20 @@ template(name='meta_view')
                 +link_button link='/meta' icon='code' label='meta'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header ##{jpid} meta view
+            .three.wide.column
+                // +edit_button
+        .centered.row
+            .sixteen.wide.column
+                +jsonView json=ev
+            
+            
+template(name='search_history_doc_view')
+    .ui.padded.stackable.centered.grid
+        .centered.middle.aligned.row
+            .three.wide.column
+                +link_button link='/history' icon='calendar' label='history'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Search History Doc View #{ev.ID}
             .three.wide.column
                 // +edit_button
         .centered.row

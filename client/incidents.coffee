@@ -5,10 +5,12 @@ FlowRouter.route '/incidents',
 
 Template.incidents.events
     'click #add_incident': ->
+        my_customer_ob = Meteor.user().users_customer()
         new_incident_id = 
             Docs.insert
                 type: 'incident'
-                customer_jpid: Meteor.user().profile.customer_jpid
+                customer_jpid: my_customer_ob.ev.ID
+                incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
                 level: 1
                 open: true
                 submitted: false

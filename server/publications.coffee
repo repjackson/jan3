@@ -26,7 +26,44 @@ Meteor.publish 'parent_doc', (child_id)->
 # Meteor.publish 'users', ()->
 #     Meteor.users.find()
     
-    
+publishComposite 'office', (office_id)->
+    {
+        find: -> Docs.find office_id
+        children: [
+            # {
+            #     # offices customers
+            #     find: (office)-> 
+            #         cursor = 
+            #             Docs.find 
+            #                 "ev.MASTER_LICENSEE":office.office_name
+            #                 type:'customer'
+            #         # console.log "found #{cursor.count()} customers"
+            #         cursor
+            #     children: [
+            #         {
+            #             find: (customer)-> 
+            #                 # console.log "finding incidents for customer #{customer.cust_name}"
+            #                 cursor = 
+            #                     Docs.find 
+            #                         customer_jpid:customer.ev.ID
+            #                         type:'incident'
+            #                 # console.log "found #{cursor.count()} incidents"
+            #                 cursor
+            
+            #         }
+            #     ]
+            # }
+            {
+                find: (office)-> 
+                    Docs.find 
+                        incident_office_name:office.office_name
+                        type:'incident'
+            }
+            # {
+            #     find: (doc)-> Docs.find _id:doc.parent_id
+            # }
+        ]
+    }
         
 Meteor.publish 'has_key', (key)->
     Docs.find "ev.#{key}": $exists: true

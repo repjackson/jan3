@@ -39,6 +39,14 @@ AccountsTemplates.addFields [
         minLength: 3
     }
     {
+        _id: 'customer_jpid'
+        type: 'text'
+        required: false
+        displayName: 'Customer ID'
+        # re: /.+@(.+){2,}\.(.+){2,}/
+        # errStr: 'Invalid email'
+    }
+    {
         _id: 'email'
         type: 'email'
         required: false

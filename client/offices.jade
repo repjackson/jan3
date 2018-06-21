@@ -111,6 +111,28 @@ template(name='office_view')
                 .ui.bottom.attached.tab.segment(data-tab='incidents')
                     .ui.center.aligned.header #{office_name}'s Incidents
                     +tabular table=TabularTables.Incidents selector=office_incidents_selector class="ui sortable fluid striped table"
+                    table.ui.basic.striped.table
+                        thead
+                            tr
+                                th Type
+                                th When
+                                th Details
+                                th Level
+                                th History
+                                th Actions
+                        tbody
+                            each office_incidents
+                                tr
+                                    td
+                                        +incident_type_label
+                                    td #{when}
+                                    td #{incident_details}
+                                    td #{current_level}
+                                    td
+                                        +small_doc_history
+                                    td 
+                                        +view_button
+
                 .ui.bottom.attached.tab.segment(data-tab='users')
                     .ui.center.aligned.header #{office_name}'s Users
                     +tabular table=TabularTables.Users selector=office_users_selector class="ui sortable fluid striped table"

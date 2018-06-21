@@ -250,15 +250,15 @@ Meteor.methods
                 # console.log 'new id', new_id
             if json_result.HISTORY.PROBLEM_RECORD
                 for doc in json_result.HISTORY.PROBLEM_RECORD
-                    console.log doc
+                    # console.log doc
                     existing_history_doc = 
                         Docs.findOne 
                             type: 'history'
                             "ev.TIMESTAMP": doc.TIMESTAMP
                     if existing_history_doc
                         console.log "existing history #{existing_history_doc.ev.TIMESTAMP}"
-                        Docs.update existing_history_doc._id,
-                            $set: ev: doc
+                        # Docs.update existing_history_doc._id,
+                        #     $set: ev: doc
                     else
                         Docs.insert
                             type:'history'
@@ -346,7 +346,7 @@ Meteor.methods
                 record_start: 1
                 record_count: 100
                 username_display: 'ID'
-                timestamp: "'2018-05-20'-'2018-06-20'"
+                timestamp: "'2018-06-01'-'2018-06-23'"
         # console.log res
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
@@ -494,17 +494,18 @@ Meteor.methods
                             cust_name: doc.CUST_NAME
                     if existing_customer_doc
                         console.log "existing customer #{existing_customer_doc.cust_name}"
-                        Docs.update existing_customer_doc._id,
-                            $set:
-                                ev: doc
-                #     else                    
-                #         new_customer_doc = Docs.insert 
-                #             type: 'customer'
-                #             jpid: doc.ID
-                #             cust_name: doc.CUST_NAME
-                #             master_licensee: doc.MASTER_LICENSEE
-                #             customer_contact_person: doc.CUST_CONT_PERSON
-                #             customer_contact_email: doc.CUST_CONTACT_EMAIL
-                #             telephone: doc.TELEPHONE
-                #             franchisee: doc.FRANCHISEE
-                #         console.log "added #{doc.CUST_NAME}"
+                        # Docs.update existing_customer_doc._id,
+                        #     $set:
+                        #         ev: doc
+                    else                    
+                        new_customer_doc = Docs.insert 
+                            type: 'customer'
+                            jpid: doc.ID
+                            cust_name: doc.CUST_NAME
+                            master_licensee: doc.MASTER_LICENSEE
+                            customer_contact_person: doc.CUST_CONT_PERSON
+                            customer_contact_email: doc.CUST_CONTACT_EMAIL
+                            telephone: doc.TELEPHONE
+                            franchisee: doc.FRANCHISEE
+                            ev: doc
+                        console.log "added #{doc.CUST_NAME}"
