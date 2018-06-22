@@ -334,11 +334,9 @@ template(name='franchisees')
                     +officeiconlarge name='collaborator-female'
                     | Franchisees
             .four.wide.column
-                if is_dev
-                    .get_all_franchisees.ui.icon.button
-                        // i.refresh.icon
-                        // +officeicon name='refresh'
-                        i.large.refresh.icon
+                // if is_dev
+                //     .get_all_franchisees
+                //         +officeicon name='refresh'
         .row
             .sixteen.wide.column
                 +tabular table=TabularTables.Franchisees selector=selector class="ui sortable striped very basic fluid table"
@@ -390,7 +388,7 @@ template(name='customers')
 template(name='customer_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/customers' icon='customer-support' label='Customers'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header ##{jpid} #{cust_name} Customer

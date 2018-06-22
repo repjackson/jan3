@@ -300,7 +300,17 @@ Template.full_doc_history.helpers
             parent_id: Template.currentData()._id
             type:'event'
         }, sort:timestamp:-1
-            
+Template.full_doc_history.events
+    'click #clear_events': ->
+        doc_id = FlowRouter.getParam('doc_id')
+        # console.log Template.parentData()
+        # console.log @
+        if confirm 'Clear all events? Irriversible.'
+            cursor = Docs.find
+                parent_id: doc_id
+                type:'event'
+            for event_doc in cursor.fetch()
+                Docs.remove event_doc._id
             
 Template.incidents_by_type.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], 'incident'

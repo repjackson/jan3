@@ -36,22 +36,27 @@ template(name='office_view')
                     .ui.header Cell: #{telephone}
                     .ui.header Address: #{address}
                 .ui.top.attached.tabular.five.item.stackable.menu
-                    a.active.item(data-tab='sla') 
-                        +officeicon name='checked-user-male'
-                        | &nbsp; SLA
+                    a.active.item(data-tab='office_settings') 
+                        +officeicon name='administrative-tools'
+                        | &nbsp; Settings
                     a.item(data-tab='incidents') 
                         +officeicon name='error'
                         | &nbsp; Incidents
-                    a.item(data-tab='users') 
+                    a.item(data-tab='employees') 
                         +officeicon name='groups'
-                        | &nbsp; Users
+                        | &nbsp; Employees
                     a.item(data-tab='franchisees') 
                         +officeicon name='collaborator-female'
                         | &nbsp; Franchisees
                     a.item(data-tab='customers') 
                         +officeicon name='customer-support'
                         | &nbsp; Customers
-                .ui.bottom.attached.active.tab.segment(data-tab='sla')
+                .ui.bottom.attached.active.tab.segment(data-tab='office_settings')
+                    h2.ui.dividing.header 
+                        | Customer Message
+                        .ui.input
+                            input(type='text' placeholder='Add Message...')
+                
                     h2.ui.dividing.header 
                         |Office Roles
                     +single_user_select key='office_owner' label='Office Owner' icon='users'
@@ -110,7 +115,7 @@ template(name='office_view')
                     +tabular table=TabularTables.Related_franchisees selector=office_franchisees_selector class="ui sortable fluid striped table"
                 .ui.bottom.attached.tab.segment(data-tab='incidents')
                     .ui.center.aligned.header #{office_name}'s Incidents
-                    +tabular table=TabularTables.Incidents selector=office_incidents_selector class="ui sortable fluid striped table"
+                    // +tabular table=TabularTables.Incidents selector=office_incidents_selector class="ui sortable fluid striped table"
                     table.ui.basic.striped.table
                         thead
                             tr
@@ -133,8 +138,8 @@ template(name='office_view')
                                     td 
                                         +view_button
 
-                .ui.bottom.attached.tab.segment(data-tab='users')
-                    .ui.center.aligned.header #{office_name}'s Users
+                .ui.bottom.attached.tab.segment(data-tab='employees')
+                    .ui.center.aligned.header #{office_name}'s Employees
                     +tabular table=TabularTables.Users selector=office_users_selector class="ui sortable fluid striped table"
                 .ui.bottom.attached.tab.segment(data-tab='customers')
                     .ui.center.aligned.header #{office_name}'s Customers

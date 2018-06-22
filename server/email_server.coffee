@@ -42,10 +42,8 @@ Meteor.methods
             html: "<h4>Incident from #{incident.customer_name} escalated to two.</h4>
                 <h5>incident_type: #{incident.incident_type}</h5>
                 <h5>incident_details: #{incident.incident_details}</h5>
-                <h5>assigned_to: [ 'XJgKeF5ddXFLCxSQz', 'PnDtwXLPwzrBigrgq' ]</h5>
                 <h5>current_level: #{incident.current_level}</h5>
                 <h5>status: #{incident.status}</h5>
-                <h5>customer_id: 'NiQf4Pz76TXcxM3L2'</h5>
                 <h5>service_date: #{incident.service_date}</h5>
             "
         }
@@ -58,3 +56,63 @@ Meteor.methods
     #         #     \n
     #         #     Click <a href="/view/#{_id}"
     #         # "
+    
+    
+    
+    email_about_escalation_three: (incident_id)->
+        incident = Docs.findOne incident_id
+        console.log incident
+        mailFields = {
+            to: "repjackson@gmail.com <repjackson@gmail.com>"
+            from: "Jan-Pro <support@jan-pro.com>"
+            subject: "Incident has been escalated to 3"
+            text: ''
+            html: "<h4>Incident from #{incident.customer_name} escalated to two.</h4>
+                <h5>incident_type: #{incident.incident_type}</h5>
+                <h5>incident_details: #{incident.incident_details}</h5>
+                <h5>current_level: #{incident.current_level}</h5>
+                <h5>status: #{incident.status}</h5>
+                <h5>service_date: #{incident.service_date}</h5>
+            "
+        }
+        Meteor.call 'sendEmail', mailFields
+    #         # html: 
+    #         #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
+    #         #     #{text} <br>
+    #         #     In conversation with tags: #{conversation_doc.tags}. \n
+    #         #     In conversation with description: #{conversation_doc.description}. \n
+    #         #     \n
+    #         #     Click <a href="/view/#{_id}"
+    #         # "
+    
+    
+    
+        email_about_escalation_four: (incident_id)->
+        incident = Docs.findOne incident_id
+        console.log incident
+        mailFields = {
+            to: "repjackson@gmail.com <repjackson@gmail.com>"
+            from: "Jan-Pro <support@jan-pro.com>"
+            subject: "Incident has been escalated to 4"
+            text: ''
+            html: "<h4>Incident from #{incident.customer_name} escalated to two.</h4>
+                <h5>incident_type: #{incident.incident_type}</h5>
+                <h5>incident_details: #{incident.incident_details}</h5>
+                <h5>current_level: #{incident.current_level}</h5>
+                <h5>status: #{incident.status}</h5>
+                <h5>service_date: #{incident.service_date}</h5>
+            "
+        }
+        Meteor.call 'sendEmail', mailFields
+    #         # html: 
+    #         #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
+    #         #     #{text} <br>
+    #         #     In conversation with tags: #{conversation_doc.tags}. \n
+    #         #     In conversation with description: #{conversation_doc.description}. \n
+    #         #     \n
+    #         #     Click <a href="/view/#{_id}"
+    #         # "
+    
+    
+    
+    

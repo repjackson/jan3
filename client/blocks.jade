@@ -453,9 +453,9 @@ template(name='dusk_icon')
 template(name='officeicon')
     img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png")
 template(name='officeiconlarge')
-    img.ui.image(src="https://png.icons8.com/office/80/000000/#{name}.png")
+    img.ui.image(src="https://png.icons8.com/ultraviolet/100/000000/#{name}.png")
 template(name='officeiconsmall')
-    img.ui.image(src="https://png.icons8.com/office/30/000000/#{name}.png")
+    img.ui.image(src="https://png.icons8.com/ultraviolet/30/000000/#{name}.png")
 
 template(name='user_pill')
     .item
@@ -470,6 +470,8 @@ template(name='user_pill')
 
 template(name='full_doc_history')
     // .ui.header History
+    #clear_events.ui.small.compact.icon.button(title='Clear')
+        i.remove.icon
     .ui.feed
         each doc_history_events
             .event
