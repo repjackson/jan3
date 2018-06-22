@@ -53,8 +53,6 @@ Template.incidents.onCreated ->
 Template.incidents.helpers
     selector: ->  type: "incident"
 
-
-
 Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'docs', [], 'incident_type'
 

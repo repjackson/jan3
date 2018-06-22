@@ -6,21 +6,12 @@ template(name='dashboard')
             h2.ui.inverted.header Customer Portal
             +customer_menu
     .ui.padded.stackable.centered.grid
-
-        // .centered.row
-        //     .sixteen.wide.center.aligned.column
-        //         img.ui.large.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
-        //         h1.ui.center.aligned.grey.header 
-        //             // i.line.chart.icon
-        //             |Customer Portal
+        .ui.message
+            .header Office Message
+            p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
         .row
-            // .two.wide.column
-            //     .ui.center.aligned.fluid.segment
-            //         h3.ui.center.aligned.header Welcome
-            //         .ui.button Sign In
-            //         .ui.button Register
             .sixteen.wide.column
-                +my_cleaning_crew
+                +my_office_contacts
         .row
             .sixteen.wide.column
                 h2.ui.header
@@ -150,7 +141,7 @@ template(name='my_cleaning_schedule')
                 +fullcalendar cal_options
             
         
-template(name='my_cleaning_crew')
+template(name='my_office_contacts')
     h2.ui.header 
         +officeiconlarge name='add-contact-to-company'
         // i.large.icons

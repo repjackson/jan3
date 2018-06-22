@@ -27,7 +27,7 @@ Template.my_cleaning_schedule.helpers
         showWeekNumbers: true
     }
 
-Template.my_cleaning_crew.helpers
+Template.my_office_contacts.helpers
     crew: -> Meteor.users.find {_id:$ne:Meteor.userId()}, limit:5
 
 Template.dashboard.helpers
@@ -36,4 +36,3 @@ Template.dashboard.helpers
     my_special_services: ->
         Docs.find
             type:'special_service'
-            

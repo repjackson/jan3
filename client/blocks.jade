@@ -244,7 +244,9 @@ template(name='view_sla_contact')
 
 
 template(name='single_user_select')
-    .ui.dividing.header #{label}
+    .ui.dividing.header 
+        +officeicon name=icon
+        |#{label}
     unless selected_user
         .ui.form
             .field
