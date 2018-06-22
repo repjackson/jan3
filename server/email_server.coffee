@@ -33,7 +33,7 @@ Accounts.emailTemplates.verifyEmail =
 Meteor.methods
     email_about_escalation_two: (incident_id)->
         incident = Docs.findOne incident_id
-        console.log incident
+        # console.log incident
         mailFields = {
             to: "repjackson@gmail.com <repjackson@gmail.com>"
             from: "Jan-Pro <support@jan-pro.com>"
@@ -61,7 +61,7 @@ Meteor.methods
     
     email_about_escalation_three: (incident_id)->
         incident = Docs.findOne incident_id
-        console.log incident
+        # console.log incident
         mailFields = {
             to: "repjackson@gmail.com <repjackson@gmail.com>"
             from: "Jan-Pro <support@jan-pro.com>"
@@ -87,9 +87,9 @@ Meteor.methods
     
     
     
-        email_about_escalation_four: (incident_id)->
+    email_about_escalation_four: (incident_id)->
         incident = Docs.findOne incident_id
-        console.log incident
+        # console.log incident
         mailFields = {
             to: "repjackson@gmail.com <repjackson@gmail.com>"
             from: "Jan-Pro <support@jan-pro.com>"

@@ -5,8 +5,9 @@ template(name='dashboard')
             img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             h2.ui.inverted.header Customer Portal
             +customer_menu
-    .ui.padded.stackable.centered.grid
-        .ui.message
+    .ui.padded.stackable.grid
+        .ui.hidden.divider
+        .ui.info.fluid.message
             .header Office Message
             p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
         .row
@@ -148,12 +149,12 @@ template(name='my_office_contacts')
         //     i.users.icon
         //     i.corner.building.icon
         |My Office Contacts
-    .ui.five.stackable.centered.cards
+    .ui.four.stackable.centered.cards
         each crew
             .ui.card
-                +crew_card
+                +office_contact_card
 
-template(name='crew_card')
+template(name='office_contact_card')
     .ui.card
         .image
             a(href="/user/#{username}")

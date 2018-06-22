@@ -28,7 +28,7 @@ Template.my_cleaning_schedule.helpers
     }
 
 Template.my_office_contacts.helpers
-    crew: -> Meteor.users.find {_id:$ne:Meteor.userId()}, limit:5
+    crew: -> Meteor.users.find {_id:$ne:Meteor.userId()}, limit:4
 
 Template.dashboard.helpers
     office_contacts: -> Meteor.users.find( _id:$ne:Meteor.userId() )

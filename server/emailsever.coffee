@@ -11,11 +11,15 @@ Meteor.methods
         # Let other method calls from the same client start running,
         # without waiting for the email sending to complete.
         @unblock()
-        Meteor.Mailgun.send
-            to: mailFields.to
-            from: mailFields.from
-            subject: mailFields.subject
-            text: mailFields.text
-            html: mailFields.html
-        console.log 'email sent!'
+        if Meteor.isProduction
+            Meteor.Mailgun.send
+                to: mailFields.to
+                from: mailFields.from
+                subject: mailFields.subject
+                text: mailFields.text
+                html: mailFields.html
+            console.log 'email sent!'
+        else
+            console.log 'not prod'
+            
         return

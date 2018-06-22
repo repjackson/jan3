@@ -72,6 +72,8 @@ template(name='edit_number_field')
     .ui.form
         .inline.field
             label #{label}
+            if icon
+                i.icon(class=icon)
             .ui.input
                 // if icon
                 //     +officeicon name=icon
