@@ -55,6 +55,14 @@ template(name='incident_view')
                             .set_level_two.ui.button Set 2
                         else
                             .ui.disabled.button Set 2
+                        if can_set_to_three
+                            .set_level_two.ui.button Set 3
+                        else
+                            .ui.disabled.button Set 3
+                        if can_set_to_four
+                            .set_level_four.ui.button Set 4
+                        else
+                            .ui.disabled.button Set 4
                     .ui.dividing.header Status
                     +toggle_key key='status' value='closed' label='Closed'
                     +toggle_key key='status' value='open' label='Open'

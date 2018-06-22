@@ -378,7 +378,7 @@ template(name='customers')
                     | Customers
             .three.wide.right.aligned.column
                 if is_dev
-                    .sync_customers.ui.icon.button(title='Refresh Customers')
+                    .sync_customers(title='Refresh Customers')
                         +officeicon name='refresh'
 
         .row

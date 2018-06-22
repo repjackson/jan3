@@ -1,44 +1,45 @@
 template(name='nav')
-    #nav.ui.inverted.top.attached.borderless.menu
-        a.toggle_left_sidebar.icon.item 
-            // i.bars.icon
-            +officeicon name='menu'
+    #nav.ui.inverted.top.attached.menu
+        a.toggle_left_sidebar.item 
+            i.large.icon
+                +officeicon name='menu'
         a.item(href='/' class="{{isActivePath '/'}}" data-position="bottom center" data-content='Dashboard')
-            // i.area.chart.icon
             // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            +officeicon name='dashboard'
+            i.large.icon
+                +officeicon name='dashboard'
             // | Dashboard
         a.mobile.hidden.item(href='/users' class="{{isActivePath '/users'}}" data-position="bottom center" data-content='Users')
-            +officeicon name='groups'
-            // i.users.icon
-            | &nbsp; Users
+            i.large.icon
+                +officeicon name='groups'
+            | Users
         a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="bottom center" data-content='Incidents')
-            // i.exclamation.circle.icon
-            +officeicon name='error'
-            | &nbsp; Incidents
+            i.large.icon
+                +officeicon name='error'
+            | Incidents
         a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
-            +officeicon name='link-company-parent'
-            // i.building.icon
-            | &nbsp; Offices
+            i.large.icon
+                +officeicon name='link-company-parent'
+            | Offices
         a.mobile.hidden.item(href='/franchisees' class="{{isActivePath '/franchisees'}}" data-position="bottom center" data-content='Franchisees')
-            // i.user.circle.icon
-            +officeicon name='collaborator-female'
-            | &nbsp; Franchisees
+            i.large.icon
+                +officeicon name='collaborator-female'
+            | Franchisees
         a.mobile.hidden.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
-            // i.handshake.icon
-            +officeicon name='customer-support'
-            | &nbsp; Customers
-        a.mobile.hidden.large.icon.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Special Services')
-            +officeicon name='broom'
-            | &nbsp; Services
+            i.large.icon
+                +officeicon name='customer-support'
+            | Customers
+        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Special Services')
+            i.large.icon
+                +officeicon name='broom'
+            | Services
         a.mobile.hidden.item(href='/ev' class="{{isActivePath '/ev'}}" data-position="bottom center" data-content='EV Explorer')
-            +officeicon name='database'
-            | &nbsp; EV
-        a.mobile.hidden.icon.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
-            +officeicon name='rss'
-            | &nbsp; Feed
-        // a.mobile.hidden.large.icon.item(href='/tasks' class="{{isActivePath '/tasks'}}" data-position="bottom center" data-content='Tasks')
-        //     i.tasks.large.icon
+            i.large.icon
+                +officeicon name='database'
+            | EV
+        a.mobile.hidden.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
+            i.large.icon
+                +officeicon name='rss'
+            | Feed
         // a.mobile.hidden.large.icon.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')
         //     i.calendar.large.icon
         //     | Schedule
@@ -79,42 +80,34 @@ template(name='nav')
 
 
 template(name='left_sidebar')
-    #nav.ui.left.vertical.sidebar.inverted.menu
+    #nav.ui.left.vertical.sidebar.inverted.thin.menu
         if currentUser
             a.toggle_left_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
                 img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 |#{currentUser.username}
     
         a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
-            i.home.icon
             |Jan-Pro Customer Portal
         // a.toggle_left_sidebar.item(href='/front' class="{{isActivePath '/front'}}" data-position="bottom center" data-content='Sales Page')
         //     i.globe.icon
         //     | Sales Page
         a.toggle_left_sidebar.item(href='/users' class="{{isActivePath '/users'}}" data-position="right center" data-content='Users')
-            i.users.icon
             | Users
         a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="right center" data-content='Incidents')
-            i.exclamation.circle.icon
             | Incidents
         a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Offices')
-            i.building.icon
             | Offices
         // a.toggle_left_sidebar.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="right center" data-content='Schedule')
-        //     i.calendar.icon
         //     | Schedule
         // a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
         //     i.clock.icon
         //     // +tiny_sprite name='duster'
         //     | Services
         a.toggle_left_sidebar.item(href='/franchisees' class="{{isActivePath '/franchisees'}}" data-position="bottom center" data-content='Franchisees')
-            i.building.icon
             | Franchisees
         a.toggle_left_sidebar.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
-            i.handshake.icon
             | Customers
         a.toggle_left_sidebar.item(href='/ev' class="{{isActivePath '/ev'}}" data-position="bottom center" data-content='Explore EV')
-            i.database.icon
             | Explore EV
         
         //     // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}" data-position="right center" data-content='Charts')
