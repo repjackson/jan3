@@ -245,7 +245,8 @@ template(name='view_sla_contact')
 
 template(name='single_user_select')
     .ui.dividing.header 
-        +officeicon name=icon
+        if icon
+            +officeicon name=icon
         |#{label}
     unless selected_user
         .ui.form
@@ -584,4 +585,15 @@ template(name='user_franchise_card')
                             a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
                         .item #{franchisee_email}
                     
-        
+template(name='toggle_boolean_checkbox')      
+    .ui.form
+        .field
+            .ui.slider.checkbox
+                input(type='checkbox' name=key checked=key_value)
+                label #{label}
+
+template(name='radio_item')      
+    .field
+        .ui.slider.checkbox
+            input(type="radio" name=key value=value checked=key_value)
+            label #{label}

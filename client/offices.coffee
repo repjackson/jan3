@@ -9,6 +9,9 @@ Template.office_view.onRendered ->
     Meteor.setTimeout ->
         $('.ui.tabular.menu .item').tab()
     , 500
+    # Meteor.setTimeout ->
+    #     $('.checkbox').checkbox()
+    # , 500
 
     
 Template.office_view.onCreated ->

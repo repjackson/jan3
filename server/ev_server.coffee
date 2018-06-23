@@ -167,7 +167,7 @@ Meteor.methods
                 statevar:'get_user_info'
                 login_id: username
                 # console.log 'new id', new_id
-        console.log res
+        # console.log res
         split_res = res.content.split '\r\n'
         # console.log typeof split_res
         save_json = {}

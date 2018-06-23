@@ -362,6 +362,80 @@ Template.toggle_key.events
             Docs.update doc_id, 
                 $set: "#{@key}": true
 
+
+Template.toggle_boolean_checkbox.onRendered ->
+    Meteor.setTimeout ->
+        $('.checkbox').checkbox(
+            # onChecked: -> 
+            # onUnchecked: ->
+        )
+    , 500
+
+        
+# Template.toggle_boolean_checkbox.helpers
+#     toggle_key_button_class: -> 
+#         current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         # console.log current_doc["#{@key}"]
+#         # console.log @key
+#         # console.log Template.parentData()
+#         # console.log Template.parentData()["#{@key}"]
+        
+#         if @value
+#             if current_doc["#{@key}"] is @value then 'primary'
+#         # else if current_doc["#{@key}"] is true then 'active' else 'basic'
+#         else ''
+
+Template.toggle_boolean_checkbox.events
+    'click .ui.slider.checkbox': (e,t)->
+        # console.log t.find('.ui.slider.checkbox')
+        doc_id = FlowRouter.getParam('doc_id')
+        # console.log Template.parentData()
+        # console.log @
+        checkbox_value = $("input[name=#{@key}]").is(":checked")
+
+        # if @value
+        #     Docs.update {_id:doc_id}, 
+        #         { $set: "#{@key}": "#{@value}" },
+        #         (err,res)=>
+        #             if err
+        #                 Bert.alert "Error changing #{@key} to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
+        #             else
+        #                 Docs.insert
+        #                     type:'event'
+        #                     parent_id: doc_id
+        #                     text:"changed #{@key} to #{@value}."
+        #                 Bert.alert "Changed #{@key} to #{@value}", 'success', 'growl-top-right'
+        Docs.update doc_id, 
+            $set: "#{@key}": checkbox_value
+                        
+
+        
+Template.radio_item.events
+    'click .ui.slider.checkbox': (e,t)->
+        # console.log t.find('.ui.slider.checkbox')
+        doc_id = FlowRouter.getParam('doc_id')
+        # console.log Template.parentData()
+        # console.log @
+        # checkbox_value = $("input[name=#{@key}]").is(":checked")
+        element = t.find("input:radio[name=#{@key}]:checked");
+        radio_item_value = ($(element).val());
+
+        # if @value
+        #     Docs.update {_id:doc_id}, 
+        #         { $set: "#{@key}": "#{@value}" },
+        #         (err,res)=>
+        #             if err
+        #                 Bert.alert "Error changing #{@key} to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
+        #             else
+        #                 Docs.insert
+        #                     type:'event'
+        #                     parent_id: doc_id
+        #                     text:"changed #{@key} to #{@value}."
+        #                 Bert.alert "Changed #{@key} to #{@value}", 'success', 'growl-top-right'
+        Docs.update doc_id, 
+            $set: "#{@key}": radio_item_value
+                        
+
         
         
 # Template.view_telephone_field.helpers
