@@ -1,31 +1,6 @@
 FlowRouter.route '/ev', 
     action: -> BlazeLayout.render 'layout', main: 'ev'
             
-FlowRouter.route '/reports', 
-    action: -> BlazeLayout.render 'layout', main: 'ev_reports'
-
-Template.report_view.onCreated ->
-    @autorun => Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
-Template.ev_card.onCreated ->
-    @autorun => Meteor.subscribe 'child_docs', @data._id
-
-Template.ev_reports.helpers
-    selector: ->  type: "report"
-    
-Template.report_view.helpers
-    current_doc: -> JSON.stringify Docs.findOne(FlowRouter.getParam('doc_id'))
-
-Template.ev_reports.events
-    'click .sync_reports': ->
-        Meteor.call 'sync_ev_reports', (err,res)->
-            if err then console.error err
-                
-Template.report_view.events
-    'click .run_report': ->
-        report = Docs.findOne FlowRouter.getParam('doc_id')
-        Meteor.call 'run_report', report.report_id, FlowRouter.getParam('doc_id'), (err,res)->
-            if err then console.error err
-
 
 # fields
 FlowRouter.route '/ev_fields', 
@@ -98,18 +73,6 @@ Template.jpids.events
                     $('#ev_search').val ''
 
 
-# areas
-FlowRouter.route '/areas', 
-    action: -> BlazeLayout.render 'layout', main: 'areas'
-Template.areas.helpers
-    selector: ->  type: "area"
-
-
-# meta
-FlowRouter.route '/meta', 
-    action: -> BlazeLayout.render 'layout', main: 'meta'
-Template.meta.helpers
-    selector: ->  type: "meta"
 
 
 # franchisee

@@ -161,7 +161,7 @@ template(name='incident_task_edit')
             .twelve.wide.column
                 +edit_text_field key='title' label='Title' 
                 .ui.hidden.divider
-                +edit_html
+                +edit_textarea label='Task Details' key='text' icon='view-details'
             .four.wide.column
                 +edit_date_field label='Due Date' key='due_date'
                 // +edit_array_field key='tags' label='Tags'
@@ -195,8 +195,8 @@ template(name='incident_task_view')
             .eight.wide.column
                 +parent_segment
                 .ui.header #{title}
-                |!{html}
-                // +comments
+                |#{text}
+                +comments
                 +full_doc_history
             // .four.wide.column
             //      +mark_read_button   

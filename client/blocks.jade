@@ -255,12 +255,9 @@ template(name='single_user_select')
                     i.search.icon
                     +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder="Select Users..."
     with selected_user
-        .ui.secondary.segment
-            .ui.header
-                |#{profile.first_name} #{profile.last_name}
-            .description
-                | @#{username}
-                i.pull_user.remove.red.link.icon
+        h5
+            |#{profile.first_name} #{profile.last_name} @#{username}
+            i.pull_user.remove.red.link.icon
           
 template(name='many_doc_select')
     .ui.dividing.header #{label}
