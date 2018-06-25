@@ -1,38 +1,4 @@
 Meteor.methods
-    sync_ev_fields: ()->
-        self = @
-        
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
-            headers: "User-Agent": "Meteor/1.0"
-            params:
-                user_id:'JPI'
-                password:'JPI'
-                statevar: 'fields'
-                include_fields:'y'
-                # select_list:field1
-                
-        console.dir res.content
-        split_res = res.content.split '\r\n'
-        
-        for field_string in split_res
-            split_field = field_string.split '|'
-            # console.log split_field
-            if split_field[0]
-                found_field = 
-                    Docs.findOne 
-                        type:'field'
-                        field_slug:split_field[0]
-                
-                unless found_field
-                    new_field_id = Docs.insert
-                        type:'field'
-                        field_slug:split_field[0]
-                        field_display_name:split_field[1]
-                        field_display_type:split_field[2]
-                    console.log 'added field doc id:', new_field_id
-                else
-                    console.log 'existing field doc:', found_field._id
- 
     sync_ev_users: ()->
         self = @
         

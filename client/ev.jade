@@ -27,22 +27,6 @@ template(name='children_widget')
                     a.item(href="/view/#{_id}") #{name} #{title} !{html}
     
     
-template(name='ev_fields')
-    .ui.padded.stackable.grid
-        .row
-            .three.wide.column
-                +link_button link='/ev' icon='database' label='EV Dash'
-            .ten.wide.column
-                .ui.center.aligned.header
-                    | EV Fields
-            .three.wide.column
-                if is_dev
-                    .sync_ev_fields.ui.fluid.button Sync EV Fields
-        .row
-            .sixteen.wide.column
-                +tabular table=TabularTables.Fields selector=selector class="ui sortable fluid striped table"
-
-
       
       
 template(name='jpid_view')
