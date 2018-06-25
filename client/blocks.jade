@@ -532,7 +532,7 @@ template(name='my_customer_account')
     .ui.secondary.segment
         .ui.header 
             +officeicon name='customer-support'
-            |My Customer Account
+            |Customer Account
         if currentUser.users_customer
             with currentUser.users_customer
                 .content
@@ -556,7 +556,7 @@ template(name='user_office_card')
     .ui.secondary.segment
         .ui.header 
             +officeicon name='link-company-parent'
-            |My Office
+            |Office
         if currentUser.users_customer.parent_franchisee.parent_office
             with currentUser.users_customer.parent_franchisee.parent_office
                 .content
@@ -570,7 +570,7 @@ template(name='user_franchise_card')
     .ui.secondary.segment
         .ui.header 
             +officeicon name='collaborator-female'
-            |My Franchisee
+            |Franchisee
         if currentUser.users_customer.parent_franchisee
             with currentUser.users_customer.parent_franchisee
                 .content

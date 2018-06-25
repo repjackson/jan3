@@ -1,0 +1,94 @@
+template(name='login')
+    .ui.middle.aligned.centered.padded.grid
+        .six.wide.column
+            // h1.ui.center.aligned.header 
+                // +officeicon name='password'
+                // |Login
+            .ui.segment
+                .ui.form
+                    .field
+                        label Username/Email
+                        input.username(type='text')
+                    .field
+                        label Password
+                        input.password(type='password')
+                    .field
+                        .login.ui.fluid.button
+                            // +officeicon name='lock-2'
+                            | Login
+            .ui.message
+                .ui.header
+                    +officeicon name='forgot-password'
+                    a(href='/password_reset') &nbsp; Forgot Password
+            .ui.message
+                .ui.header
+                    +officeicon name='add-user-male'
+                    a(href='/new_officer') &nbsp; New Officer
+            .ui.message
+                .ui.header
+                    +officeicon name='customer-support'
+                    a(href='/new_customer') &nbsp; New Customer
+
+                
+                
+template(name='new_officer')
+    .ui.middle.aligned.centered.padded.grid
+        .eight.wide.column
+            h1.ui.center.aligned.header 
+                +officeicon name='add-user-male'
+                |New Officer
+            .ui.segment
+                .ui.form
+                    .required.field
+                        label Username
+                        input(type='text')
+                    .required.field
+                        label Email
+                        input(type='email')
+                    .required.field
+                        label Password
+                        input(type='text')
+                    .required.field
+                        label Repeat Password
+                        input(type='text')
+            .ui.message
+                .ui.header
+                    +officeicon name='password'
+                    a(href='/login') Login
+            .ui.fluid.button
+                // +officeicon name='customer-support'
+                a(href='/new_customer') &nbsp; New Customer
+    
+                
+                
+template(name='new_customer')
+    .ui.middle.aligned.centered.padded.grid
+        .eight.wide.column
+            h1.ui.center.aligned.header 
+                +officeicon name='customer-support'
+                |New Customer
+            .ui.segment
+                .ui.form
+                    .required.field
+                        label Username
+                        input(type='text')
+                    .required.field
+                        label Email
+                        input(type='email')
+                    .required.field
+                        label Customer ID
+                        input(type='text')
+                    .required.field
+                        label Password
+                        input(type='text')
+                    .required.field
+                        label Repeat Password
+                        input(type='text')
+            .ui.icon.message
+                .ui.header
+                    +officeicon name='lock-2'
+                    a(href='/login') Login
+                
+                
+                
+                

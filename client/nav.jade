@@ -3,44 +3,44 @@ template(name='nav')
         a.toggle_left_sidebar.item 
             i.large.icon
                 +officeicon name='menu'
-        a.item(href='/' class="{{isActivePath '/'}}" data-position="bottom center" data-content='Dashboard')
+        a.item(href='/')
             // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             i.large.icon
                 +officeicon name='dashboard'
             // | Dashboard
-        a.mobile.hidden.item(href='/users' class="{{isActivePath '/users'}}" data-position="bottom center" data-content='Users')
+        a.mobile.hidden.item(href='/users')
             i.large.icon
                 +officeicon name='groups'
             | Users
-        a.mobile.hidden.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="bottom center" data-content='Incidents')
+        a.mobile.hidden.item(href='/incidents')
             i.large.icon
                 +officeicon name='error'
             | Incidents
-        a.mobile.hidden.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="bottom center" data-content='Offices')
+        a.mobile.hidden.item(href='/offices')
             i.large.icon
                 +officeicon name='link-company-parent'
             | Offices
-        a.mobile.hidden.item(href='/franchisees' class="{{isActivePath '/franchisees'}}" data-position="bottom center" data-content='Franchisees')
+        a.mobile.hidden.item(href='/franchisees')
             i.large.icon
                 +officeicon name='collaborator-female'
             | Franchisees
-        a.mobile.hidden.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
+        a.mobile.hidden.item(href='/customers')
             i.large.icon
                 +officeicon name='customer-support'
             | Customers
-        a.mobile.hidden.item(href='/services' class="{{isActivePath '/services'}}" data-position="bottom center" data-content='Special Services')
+        a.mobile.hidden.item(href='/services')
             i.large.icon
                 +officeicon name='broom'
             | Services
-        a.mobile.hidden.item(href='/ev' class="{{isActivePath '/ev'}}" data-position="bottom center" data-content='EV Explorer')
+        a.mobile.hidden.item(href='/ev')
             i.large.icon
                 +officeicon name='database'
             | EV
-        a.mobile.hidden.item(href='/feed' class="{{isActivePath '/feed'}}" data-position="bottom center" data-content='Feed')
+        a.mobile.hidden.item(href='/feed')
             i.large.icon
                 +officeicon name='rss'
             | Feed
-        // a.mobile.hidden.large.icon.icon.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="bottom center" data-content='Schedule')
+        // a.mobile.hidden.large.icon.icon.item(href='/schedule' data-position="bottom center" data-content='Schedule')
         //     i.calendar.large.icon
         //     | Schedule
         // .mobile.hidden.icon.item
@@ -48,13 +48,13 @@ template(name='nav')
         //         input(type='text' placeholder='Search...')
         //         i.search.large.icon
         .right.menu
-            // a.mobile.hidden.icon.item(href='/dev' class="{{isActivePath '/dev'}}" data-position="bottom center" data-content='Dev')
+            // a.mobile.hidden.icon.item(href='/dev' data-position="bottom center" data-content='Dev')
             //     i.terminal.large.icon
                 // | Dev
-            // a.mobile.hidden.icon.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="bottom center" data-content='Admin')
+            // a.mobile.hidden.icon.item(href='/admin' data-position="bottom center" data-content='Admin')
             //     i.shield.alternate.large.icon
                 // | Admin
-            // a.large.icon.mobile.hidden.item(href='/chat' class="{{isActivePath '/chat'}}" data-position="bottom center" data-content='Chat')
+            // a.large.icon.mobile.hidden.item(href='/chat' data-position="bottom center" data-content='Chat')
             //     i.comments.large.icon
             // .icon.mobile.hidden.disabled.item(data-position="bottom center" data-content='Cart')
             //     i.shopping.cart.icon
@@ -63,7 +63,7 @@ template(name='nav')
             //     .menu
             //         .item No alerts
             if currentUser
-                a.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
+                a.item(href="/profile/edit/#{currentUser._id}")
                     if currentUser.profile.image_id
                         img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
@@ -73,8 +73,8 @@ template(name='nav')
                 //      #{currentUser.name}
                 // else
             else
-                a.ui.item(href='/sign-in') 
-                    | Sign In
+                a.ui.item(href='/login') 
+                    | Log In
                     i.right.chevron.icon
 
 
@@ -82,44 +82,43 @@ template(name='nav')
 template(name='left_sidebar')
     #nav.ui.left.vertical.sidebar.inverted.thin.menu
         if currentUser
-            a.toggle_left_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
+            a.toggle_left_sidebar.header.item(href="/profile/edit/#{currentUser._id}")
                 img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 |#{currentUser.username}
     
-        a.header.toggle_left_sidebar.item(href='/' class="{{isActivePath '/'}}") 
-            |Jan-Pro Customer Portal
-        // a.toggle_left_sidebar.item(href='/front' class="{{isActivePath '/front'}}" data-position="bottom center" data-content='Sales Page')
+        a.header.toggle_left_sidebar.item(href='/') Dashboard
+        // a.toggle_left_sidebar.item(href='/front')
         //     i.globe.icon
         //     | Sales Page
-        a.toggle_left_sidebar.item(href='/users' class="{{isActivePath '/users'}}" data-position="right center" data-content='Users')
+        a.toggle_left_sidebar.item(href='/users')
             | Users
-        a.toggle_left_sidebar.item(href='/incidents' class="{{isActivePath '/incidents'}}" data-position="right center" data-content='Incidents')
+        a.toggle_left_sidebar.item(href='/incidents')
             | Incidents
-        a.toggle_left_sidebar.item(href='/offices' class="{{isActivePath '/offices'}}" data-position="right center" data-content='Offices')
+        a.toggle_left_sidebar.item(href='/offices')
             | Offices
-        // a.toggle_left_sidebar.item(href='/schedule' class="{{isActivePath '/schedule'}}" data-position="right center" data-content='Schedule')
+        // a.toggle_left_sidebar.item(href='/schedule')
         //     | Schedule
-        // a.toggle_left_sidebar.item(href='/services' class="{{isActivePath '/services'}}" data-position="right center" data-content='Services')
+        // a.toggle_left_sidebar.item(href='/services')
         //     i.clock.icon
         //     // +tiny_sprite name='duster'
         //     | Services
-        a.toggle_left_sidebar.item(href='/franchisees' class="{{isActivePath '/franchisees'}}" data-position="bottom center" data-content='Franchisees')
+        a.toggle_left_sidebar.item(href='/franchisees')
             | Franchisees
-        a.toggle_left_sidebar.item(href='/customers' class="{{isActivePath '/customers'}}" data-position="bottom center" data-content='Customers')
+        a.toggle_left_sidebar.item(href='/customers')
             | Customers
-        a.toggle_left_sidebar.item(href='/ev' class="{{isActivePath '/ev'}}" data-position="bottom center" data-content='Explore EV')
+        a.toggle_left_sidebar.item(href='/ev')
             | Explore EV
         
-        //     // a.icon.item(href='/dashboard' class="{{isActivePath '/dashboard'}}" data-position="right center" data-content='Charts')
+        //     // a.icon.item(href='/dashboard' data-position="right center" data-content='Charts')
         //     //     i.line.chart.icon
         // a.toggle_left_sidebar.item(href='/store' data-position="bottom center" data-content='Store')
         //     i.shopping.cart.icon
         //     | Store
             
-        // a.icon.toggle_left_sidebar.item(href='/admin' class="{{isActivePath '/admin'}}" data-position="right center" data-content='Admin')
+        // a.icon.toggle_left_sidebar.item(href='/admin' data-position="right center" data-content='Admin')
         //     i.shield.icon
         //     | Admin
-            // a.toggle_sidebar.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}" data-position="right center" data-content='Charts')
+            // a.toggle_sidebar.item(href="/profile/edit/#{currentUser._id}" data-position="right center" data-content='Charts')
             //     if currentUser.profile.first_name
             //         | #{currentUser.profile.first_name}
             //     else
@@ -137,34 +136,7 @@ template(name='left_sidebar')
                 | Sign Out
                 i.right.chevron.icon
         else
-            a.ui.toggle_sidebar.item(href='/sign-in') 
+            a.ui.toggle_sidebar.item(href='/login') 
                 // i.icon
                 //     +mini_sprite name='enter'
-                | Sign In
-
-
-// template(name='right_sidebar')
-//     #nav.ui.right.inline.vertical.sidebar.inverted.menu
-//         if currentUser
-//             a.toggle_right_sidebar.header.item(href="/profile/edit/#{currentUser._id}" class="{{isActivePath '/profile/edit/#{currentUser._id}'}}")
-//                 img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-//                 |#{currentUser.username}
-//         a.toggle_right_sidebar.item(href='/dev' class="{{isActivePath '/dev'}}" data-position="bottom center" data-content='dev')
-//             i.terminal.icon
-//             | Dev
-//         a.toggle_right_sidebar.item(href='/feed')
-//             i.rss.icon
-//             | Feed
-//         // a.toggle_right_sidebar.item(href='/chat')
-//         //     i.chat.icon
-//         //     | Chat
-//         a.toggle_right_sidebar.item(href='/account/settings' class="{{isActivePath '/account/settings'}}") 
-//             i.cog.icon
-//             | Settings
-//         .divider
-//         a.toggle_right_sidebar.item(href='/admin' class="{{isActivePath '/admin'}}")
-//             i.shield.icon
-//             | Admin
-//         a#logout.ui.item(href='#') 
-//             i.right.chevron.icon
-//             | Sign Out
+                | Log In

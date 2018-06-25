@@ -23,8 +23,6 @@ shell-server@0.3.1
 kadira:flow-router
 kadira:blaze-layout
 accounts-base@1.4.2
-zimme:active-route
-useraccounts:flow-routing
 lepozepo:cloudinary
 momentjs:moment
 reactive-var@1.0.11
@@ -33,8 +31,6 @@ raix:handlebar-helpers
 matb33:collection-hooks
 themeteorchef:bert
 mizzao:autocomplete
-mquandalle:jade
-useraccounts:semantic-ui
 juliancwirko:postcss
 less@2.7.12
 reywood:publish-composite
@@ -48,3 +44,5 @@ cunneen:mailgun
 email
 coffeescript
 ecmascript
+pacreach:jade
+standard-minifier-js
