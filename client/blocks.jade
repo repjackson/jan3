@@ -345,7 +345,7 @@ template(name='call_phone_button')
 template(name='link_button')    
     a(href=link title=label)
         // i.icon(class=icon)
-        +officeicon name=icon
+        +officeicon name=icon classes='centered'
         // strong #{label}
 
 template(name='edit_author')
@@ -451,7 +451,7 @@ template(name='dusk_icon')
     img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
 template(name='officeicon')
-    img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png")
+    img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes)
 template(name='officeiconlarge')
     img.ui.image(src="https://png.icons8.com/ultraviolet/100/000000/#{name}.png")
 template(name='officeiconsmall')

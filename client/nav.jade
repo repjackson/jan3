@@ -16,30 +16,22 @@ template(name='nav')
             i.large.icon
                 +officeicon name='error'
             | Incidents
-        a.mobile.hidden.item(href='/offices')
-            i.large.icon
-                +officeicon name='link-company-parent'
-            | Offices
-        a.mobile.hidden.item(href='/franchisees')
-            i.large.icon
-                +officeicon name='collaborator-female'
-            | Franchisees
-        a.mobile.hidden.item(href='/customers')
-            i.large.icon
-                +officeicon name='customer-support'
-            | Customers
-        a.mobile.hidden.item(href='/services')
-            i.large.icon
-                +officeicon name='broom'
-            | Services
-        a.mobile.hidden.item(href='/ev')
-            i.large.icon
-                +officeicon name='database'
-            | EV
-        a.mobile.hidden.item(href='/feed')
-            i.large.icon
-                +officeicon name='rss'
-            | Feed
+        // a.mobile.hidden.item(href='/offices')
+        //     i.large.icon
+        //         +officeicon name='link-company-parent'
+        //     | Offices
+        // a.mobile.hidden.item(href='/franchisees')
+        //     i.large.icon
+        //         +officeicon name='collaborator-female'
+        //     | Franchisees
+        // a.mobile.hidden.item(href='/customers')
+        //     i.large.icon
+        //         +officeicon name='customer-support'
+        //     | Customers
+        // a.mobile.hidden.item(href='/services')
+        //     i.large.icon
+        //         +officeicon name='broom'
+        //     | Services
         // a.mobile.hidden.large.icon.icon.item(href='/schedule' data-position="bottom center" data-content='Schedule')
         //     i.calendar.large.icon
         //     | Schedule
@@ -48,6 +40,8 @@ template(name='nav')
         //         input(type='text' placeholder='Search...')
         //         i.search.large.icon
         .right.menu
+            a.icon.item(href='/admin')
+                i.large.shield.icon
             // a.mobile.hidden.icon.item(href='/dev' data-position="bottom center" data-content='Dev')
             //     i.terminal.large.icon
                 // | Dev
@@ -90,25 +84,22 @@ template(name='left_sidebar')
         // a.toggle_left_sidebar.item(href='/front')
         //     i.globe.icon
         //     | Sales Page
-        a.toggle_left_sidebar.item(href='/users')
-            | Users
-        a.toggle_left_sidebar.item(href='/incidents')
-            | Incidents
-        a.toggle_left_sidebar.item(href='/offices')
-            | Offices
+        a.toggle_left_sidebar.item(href='/users') Users
+        a.toggle_left_sidebar.item(href='/incidents') Incidents
+        a.toggle_left_sidebar.item(href='/offices') Offices
         // a.toggle_left_sidebar.item(href='/schedule')
         //     | Schedule
         // a.toggle_left_sidebar.item(href='/services')
         //     i.clock.icon
         //     // +tiny_sprite name='duster'
         //     | Services
-        a.toggle_left_sidebar.item(href='/franchisees')
-            | Franchisees
-        a.toggle_left_sidebar.item(href='/customers')
-            | Customers
-        a.toggle_left_sidebar.item(href='/ev')
-            | Explore EV
-        
+        a.toggle_left_sidebar.item(href='/franchisees') Franchisees
+        a.toggle_left_sidebar.item(href='/customers') Customers
+        a.toggle_left_sidebar.item(href='/ev') ExtraView
+        .ui.divider
+        a.toggle_left_sidebar.item(href='/roles') Roles
+        a.toggle_left_sidebar.item(href='/feed') Feed
+
         //     // a.icon.item(href='/dashboard' data-position="right center" data-content='Charts')
         //     //     i.line.chart.icon
         // a.toggle_left_sidebar.item(href='/store' data-position="bottom center" data-content='Store')

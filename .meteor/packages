@@ -31,7 +31,6 @@ raix:handlebar-helpers
 matb33:collection-hooks
 themeteorchef:bert
 mizzao:autocomplete
-juliancwirko:postcss@2.0.3
 less@2.7.12
 reywood:publish-composite
 tomwasd:flow-router-autoscroll
@@ -46,3 +45,4 @@ ecmascript
 pacreach:jade
 standard-minifier-js
 coffeescript
+juliancwirko:postcss

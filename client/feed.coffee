@@ -18,7 +18,10 @@ if Meteor.isClient
                 Docs.remove @_id
 
                 
+    Template.users_feed.onCreated ->
+        @autorun => Meteor.subscribe 'docs', [], 'event' 
+    Template.users_feed.helpers
+        feed_events: -> Docs.find {type:'event'}, sort:timestamp:-1
+
                 
-                
-                
-                
+        

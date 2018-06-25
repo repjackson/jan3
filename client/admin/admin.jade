@@ -1,0 +1,51 @@
+template(name='admin')
+    .ui.padded.stackable.four.column.grid
+        .row
+            .sixteen.wide.column
+                h1.ui.center.aligned.header
+                    | Admin
+        .column
+            .ui.secondary.segment
+                +admin_widget type='field' label='Fields' icon='cubes' link='/ev_fields'
+        .column
+            .ui.secondary.segment
+                +admin_widget type='jpid' label='JP Ids' icon='hashtag' link='/jpids'
+        .column
+            .ui.secondary.segment
+                +admin_widget type='history' label='History' icon='time' link='/history'
+        .column
+            .ui.secondary.segment
+                a.ui.header(href='/offices')
+                    +officeicon name='link-company-parent'
+                    | Offices
+        .column
+            .ui.secondary.segment
+                a.ui.header(href='/franchisees')
+                    +officeicon name='collaborator-female'
+                    | Franchisees
+        .column
+            .ui.secondary.segment
+                a.ui.header(href='/customers')
+                    +officeicon name='customer-support'
+                    | Customers
+        .column
+            .ui.secondary.segment
+                a.ui.header(href='/services')
+                    +officeicon name='broom'
+                    | Services
+                    
+
+                        
+
+
+
+template(name='admin_widget')
+    .ui.card
+        .content
+            a.ui.center.aligned.icon.header(href=link)
+                i.icon(class=icon)
+                .content
+                    |#{label}
+            .ui.list
+                each children
+                    a.item(href="/view/#{_id}") #{name} #{title} !{html}
