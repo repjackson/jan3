@@ -1,9 +1,9 @@
 template(name='login')
     .ui.middle.aligned.centered.padded.grid
-        .six.wide.column
-            // h1.ui.center.aligned.header 
-                // +officeicon name='password'
-                // |Login
+        .eight.wide.column
+            h1.ui.center.aligned.header 
+                +officeicon name='password'
+                |Login
             .ui.segment
                 .ui.form
                     .field
@@ -16,18 +16,9 @@ template(name='login')
                         .login.ui.fluid.button
                             // +officeicon name='lock-2'
                             | Login
-            .ui.message
-                .ui.header
-                    +officeicon name='forgot-password'
-                    a(href='/password_reset') &nbsp; Forgot Password
-            .ui.message
-                .ui.header
-                    +officeicon name='add-user-male'
-                    a(href='/new_officer') &nbsp; New Officer
-            .ui.message
-                .ui.header
-                    +officeicon name='customer-support'
-                    a(href='/new_customer') &nbsp; New Customer
+            +message_button link='/password_reset' label='Forgot Password' icon='forgot-password'
+            +message_button link='/new_customer' label='New Customer' icon='add-user-female'
+            +message_button link='/new_officer' label='New Officer' icon='add-user-male'
 
                 
                 
@@ -51,14 +42,8 @@ template(name='new_officer')
                     .required.field
                         label Repeat Password
                         input(type='text')
-            .ui.message
-                .ui.header
-                    +officeicon name='password'
-                    a(href='/login') Login
-            .ui.fluid.button
-                // +officeicon name='customer-support'
-                a(href='/new_customer') &nbsp; New Customer
-    
+            +message_button link='/login' label='Login' icon='password'
+            +message_button link='/new_customer' label='New Customer' icon='add-user-female'
                 
                 
 template(name='new_customer')
@@ -84,11 +69,8 @@ template(name='new_customer')
                     .required.field
                         label Repeat Password
                         input(type='text')
-            .ui.icon.message
-                .ui.header
-                    +officeicon name='lock-2'
-                    a(href='/login') Login
-                
+            +message_button link='/login' label='Login' icon='lock-2'
+
                 
                 
                 

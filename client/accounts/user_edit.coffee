@@ -1,17 +1,17 @@
-FlowRouter.route '/profile/edit/:user_id', action: (params) ->
+FlowRouter.route '/user/edit/:user_id', action: (params) ->
     BlazeLayout.render 'layout',
-        main: 'edit_profile'
+        main: 'user_edit'
 
-Template.edit_profile.onCreated ->
+Template.user_edit.onCreated ->
     @autorun -> Meteor.subscribe 'user_profile', FlowRouter.getParam('user_id') 
 
-# Template.edit_profile.onRendered ->
+# Template.user_edit.onRendered ->
 #     console.log Meteor.users.findOne(FlowRouter.getParam('user_id'))
 
-Template.edit_profile.helpers
+Template.user_edit.helpers
     user: -> Meteor.users.findOne FlowRouter.getParam('user_id')
 
-Template.edit_profile.events
+Template.user_edit.events
     'keydown #input_image_id': (e,t)->
         if e.which is 13
             user_id = FlowRouter.getParam('user_id')
@@ -38,7 +38,18 @@ Template.edit_profile.events
                 return
 
     'click #remove_photo': ->
-        if confirm 'Remove Profile Photo?'
+        # if confirm 'Remove Profile Photo?'
+        swal {
+            title: "Remove Profile Photo?"
+            # text: 'Confirm delete?'
+            type: 'info'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Remove'
+            confirmButtonColor: '#da5347'
+        }, =>
             Meteor.users.update FlowRouter.getParam('user_id'),
                 $unset: "profile.image_id": 1
             

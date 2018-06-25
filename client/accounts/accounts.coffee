@@ -17,6 +17,9 @@ Template.login.events
             if err
                 console.log err
             else
-                console.log res
+                Bert.alert "Redirecting to Dashboard.", 'info', 'growl-top-right'
+                Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                
+                FlowRouter.go '/'                
         # if e.which is 13 #enter
         #     # console.log comment

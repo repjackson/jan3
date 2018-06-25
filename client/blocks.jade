@@ -526,7 +526,12 @@ template(name='doc_result')
             .content
                 .header #{title} #{text} #{cust_name}
                 
-                
+template(name='message_button')                
+    .ui.message
+        .ui.header
+            +officeicon name=icon
+            a(href=link) #{label}
+
                 
 template(name='my_customer_account')
     .ui.secondary.segment

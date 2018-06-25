@@ -63,7 +63,7 @@ template(name='nav')
             //     .menu
             //         .item No alerts
             if currentUser
-                a.item(href="/profile/edit/#{currentUser._id}")
+                a.item(href="/user/edit/#{currentUser._id}")
                     if currentUser.profile.image_id
                         img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
@@ -82,7 +82,7 @@ template(name='nav')
 template(name='left_sidebar')
     #nav.ui.left.vertical.sidebar.inverted.thin.menu
         if currentUser
-            a.toggle_left_sidebar.header.item(href="/profile/edit/#{currentUser._id}")
+            a.toggle_left_sidebar.header.item(href="/user/edit/#{currentUser._id}")
                 img.ui.avatar.spaced.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 |#{currentUser.username}
     

@@ -23,7 +23,7 @@ shell-server@0.3.1
 kadira:flow-router
 kadira:blaze-layout
 accounts-base@1.4.2
-lepozepo:cloudinary
+lepozepo:cloudinary@4.2.6
 momentjs:moment
 reactive-var@1.0.11
 kevohagan:sweetalert
@@ -31,7 +31,7 @@ raix:handlebar-helpers
 matb33:collection-hooks
 themeteorchef:bert
 mizzao:autocomplete
-juliancwirko:postcss
+juliancwirko:postcss@2.0.3
 less@2.7.12
 reywood:publish-composite
 tomwasd:flow-router-autoscroll
@@ -42,7 +42,7 @@ yasinuslu:json-view
 peerlibrary:xml2js
 cunneen:mailgun
 email
-coffeescript
 ecmascript
 pacreach:jade
 standard-minifier-js
+coffeescript
