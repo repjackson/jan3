@@ -1,8 +1,3 @@
-FlowRouter.route '/ev', 
-    action: -> BlazeLayout.render 'layout', main: 'ev'
-            
-
-
 # history
 FlowRouter.route '/history', 
     action: -> BlazeLayout.render 'layout', main: 'history'

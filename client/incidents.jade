@@ -4,12 +4,12 @@ template(name='incidents')
             .three.wide.column
                 if has_user_customer_jpid
                     a#add_incident(href='#')
-                        +officeicon name='plus'
+                        +icon name='plus'
                 else
                     .ui.secondary.segment Add Office to Profile to Add Incident
             .ten.wide.column
                 h2.ui.center.aligned.header 
-                    +officeiconlarge name='error'
+                    // +iconlarge name='error'
                     | Incidents
             .three.wide.column
         .row
@@ -24,7 +24,7 @@ template(name='incident_view')
             .three.wide.center.aligned.column
                 unless submitted
                     a#delete(href='#' title='Delete Incident')
-                        +officeicon name='cancel'
+                        +icon name='cancel'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Incident #{incident_number}
             .three.wide.column
@@ -38,7 +38,7 @@ template(name='incident_view')
                     +edit_date_field key='service_date' label='Service Date' icon='leave'
                 else
                     .ui.dividing.header 
-                        +officeicon name='leave'
+                        +icon name='leave'
                         |Date
                     |#{service_date}
                         
@@ -76,7 +76,7 @@ template(name='incident_view')
                     +edit_textarea label='Incident Details' key='incident_details' icon='view-details'
                 else
                     .ui.basic.segment
-                        // +officeicon name='view-details'
+                        // +icon name='view-details'
                         .large130 #{incident_details}
                 unless submitted
                     +edit_image_field
@@ -86,7 +86,7 @@ template(name='incident_view')
                 if submitted
                     +comments
                     .ui.dividing.header 
-                        +officeicon name='order-history'
+                        +icon name='order-history'
                         |History
                     +full_doc_history
             .four.wide.column
@@ -98,7 +98,7 @@ template(name='incident_view')
                     +incident_type_label
                 else
                     .ui.dividing.header 
-                        +officeicon name='category'
+                        +icon name='category'
                         |Type
                     each incident_type_docs
                         +toggle_key key='incident_type' value=slug label=name
@@ -132,10 +132,10 @@ template(name='incident_status')
 
 template(name='incident_tasks')
     .ui.dividing.header
-        +officeicon name='to-do'
+        +icon name='to-do'
         |Incident Tasks
     a#add_incident_task(title='Add Task' href='#')
-        +officeicon name='plus'
+        +icon name='plus'
     .ui.list
         each incident_tasks
             .item

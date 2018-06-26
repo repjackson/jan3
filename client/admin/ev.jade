@@ -1,20 +1,3 @@
-template(name='ev')
-    .ui.padded.stackable.grid
-        .row
-            .sixteen.wide.column
-                h1.ui.center.aligned.header
-                    | EV API
-                .ui.four.stackable.cards
-                    +children_widget type='field' label='Fields' icon='cubes' link='/ev_fields'
-                    +children_widget type='jpid' label='JP Ids' icon='hashtag' link='/jpids'
-                    +children_widget type='history' label='History' icon='time' link='/history'
-
-                    
-                    
-                        
-
-
-
 template(name='children_widget')
     .ui.card
         .content
@@ -48,7 +31,7 @@ template(name='jpids')
     .ui.padded.stackable.grid
         .row
             .three.wide.column
-                +link_button link='/ev' icon='database' label='EV Dash'
+                +link_button link='/admin' icon='user-shield' label='Admin'
             .eight.wide.column
                 .ui.center.aligned.header
                     i.hashtag.icon
@@ -69,7 +52,7 @@ template(name='history')
     .ui.padded.stackable.grid
         .row
             .three.wide.column
-                +link_button link='/ev' icon='database' label='EV Dash'
+                +link_button link='/admin' icon='user-shield' label='Admin'
             .eight.wide.column
                 .ui.center.aligned.header
                     i.hashtag.icon
@@ -148,18 +131,47 @@ template(name='franchisees')
     .ui.padded.stackable.grid
         .middle.aligned.row
             .four.wide.column
-                // +link_button link='/ev' icon='database' label='EV'
+                +link_button link='/admin' label='Admin'
             .eight.wide.column
                 h1.ui.center.aligned.header
-                    +officeiconlarge name='collaborator-female'
+                    // +iconlarge name='collaborator-female'
                     | Franchisees
             .four.wide.column
                 // if is_dev
                 //     .get_all_franchisees
-                //         +officeicon name='refresh'
+                //         +icon name='refresh'
         .row
             .sixteen.wide.column
-                +tabular table=TabularTables.Franchisees selector=selector class="ui sortable striped very basic fluid table"
+                // +tabular table=TabularTables.Franchisees selector=selector class="ui sortable striped very basic fluid table"
+                table.ui.celled.table
+                    thead
+                        tr
+                            th Username
+                            th First Name
+                            th Last Name
+                            // th Job Title
+                            // th Work Tel
+                            th Email
+                            th Office Name
+                            th
+                    tbody
+                        each all_franchisees
+                            tr
+                                td #{username}
+                                td #{profile.first_name}
+                                td #{profile.last_name}
+                                // td #{ev.JOB_TITLE}
+                                // td #{ev.WORK_TELEPHONE}
+                                td #{email}
+                                td #{profile.office_name}
+                                td 
+                                    +view_user_button
+                        // {data: "jpid", title: "JP ID"},
+                        // {data: "franchisee", title: "Name"},
+                        // {data: "ev.FRANCH_EMAIL", title: "Email"},
+                        // {data: "ev.FRANCH_NAME", title: "Short Name"},
+                        // {data: "ev.TELE_CELL", title: "Cell"},
+                        // {data: "ev.MASTER_LICENSEE", title: "Office"},
 
                     
                     
@@ -189,15 +201,15 @@ template(name='customers')
     .ui.padded.stackable.grid
         .middle.aligned.row
             .three.wide.column
-                // +link_button link='/ev' icon='database' label='EV Dash'
+                +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    +officeiconlarge name='customer-support'
+                    +iconlarge name='customer-support'
                     | Customers
             .three.wide.right.aligned.column
                 if is_dev
                     .sync_customers(title='Refresh Customers')
-                        +officeicon name='refresh'
+                        +icon name='refresh'
 
         .row
             .sixteen.wide.column
@@ -258,13 +270,13 @@ template(name='customer_view')
                 
 template(name='related_customers')
     .ui.dividing.header 
-        +officeicon name='customer-support'
+        +icon name='customer-support'
         |#{franchisee}'s Customers
     +tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"
                 
 template(name='franchise_by_customer')
     .ui.dividing.header 
-        +officeicon name='collaborator-female'
+        +icon name='collaborator-female'
         |#{ev.CUST_NAME}'s Franchisee
     +tabular table=TabularTables.Related_franchisees selector=selector class="ui sortable fluid striped table"
     
@@ -272,7 +284,7 @@ template(name='franchise_by_customer')
 template(name='office_by_franchisee')
     .ui.secondary.segment
         .ui.dividing.header 
-            +officeicon name='link-company-parent'
+            +icon name='link-company-parent'
             |#{ev.FRANCHISEE}'s Office
         with parent_office
             a.ui.header(href="/view/#{_id}") #{office_name}

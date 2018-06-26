@@ -9,6 +9,18 @@ Meteor.publish 'type', (type)->
 #         # console.log cursor.count()
 #         cursor
         
+Meteor.publish 'users_feed', (username)->
+    user = Meteor.users.findOne username:username
+    Docs.find {
+        type: 'event'
+        author_id: user._id
+    }, limit:20
+    
+Meteor.publish 'all_users', (username)->
+    Meteor.users.find {},
+        limit: 20
+    
+    
 Meteor.publish 'child_docs', (doc_id, limit)->
     # if limit
     #     Docs.find {parent_id: doc_id },

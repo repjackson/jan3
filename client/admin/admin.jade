@@ -3,36 +3,37 @@ template(name='admin')
         .row
             .sixteen.wide.column
                 h1.ui.center.aligned.header
+                    +icon name='user-shield'
                     | Admin
         .column
-            .ui.secondary.segment
-                +admin_widget type='field' label='Fields' icon='cubes' link='/ev_fields'
+            +admin_widget type='jpid' label='JP Ids' link='/jpids'
         .column
-            .ui.secondary.segment
-                +admin_widget type='jpid' label='JP Ids' icon='hashtag' link='/jpids'
-        .column
-            .ui.secondary.segment
-                +admin_widget type='history' label='History' icon='time' link='/history'
+            +admin_widget type='history' label='History' link='/history'
         .column
             .ui.secondary.segment
                 a.ui.header(href='/offices')
-                    +officeicon name='link-company-parent'
+                    // +iconlarge name='link-company-parent'
                     | Offices
         .column
             .ui.secondary.segment
                 a.ui.header(href='/franchisees')
-                    +officeicon name='collaborator-female'
+                    // +iconlarge name='collaborator-female'
                     | Franchisees
         .column
             .ui.secondary.segment
                 a.ui.header(href='/customers')
-                    +officeicon name='customer-support'
+                    // +iconlarge name='customer-support'
                     | Customers
         .column
             .ui.secondary.segment
                 a.ui.header(href='/services')
-                    +officeicon name='broom'
+                    // +iconlarge name='broom'
                     | Services
+        .column
+            .ui.secondary.segment
+                a.ui.header(href='/feed')
+                    // +iconlarge name='rss'
+                    | Global Feed
                     
 
                         
@@ -49,3 +50,5 @@ template(name='admin_widget')
             .ui.list
                 each children
                     a.item(href="/view/#{_id}") #{name} #{title} !{html}
+
+

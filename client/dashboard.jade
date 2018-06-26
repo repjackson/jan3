@@ -17,7 +17,7 @@ template(name='dashboard')
             .sixteen.wide.column
                 h2.ui.header
                     // i.exclamation.circle.icon
-                    +officeiconlarge name='error'
+                    +iconlarge name='error'
                     | My #{currentUser.users_customer.cust_name}'s Incidents
                 table.ui.basic.striped.table
                     thead
@@ -45,7 +45,7 @@ template(name='dashboard')
                 .sixteen.wide.column
                     h2.ui.header 
                         // i.car.icon
-                        +officeiconlarge name='collaborator-female'
+                        +iconlarge name='collaborator-female'
                         |My #{franchisee} Franchisee Contact
                     table.ui.sortable.striped.table
                         tbody
@@ -57,11 +57,11 @@ template(name='dashboard')
                                 td
                                     a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
                                         // i.mail.icon
-                                        +officeicon name='send'
+                                        +icon name='send'
         .row
             .sixteen.wide.column
                 h2.ui.header 
-                    +officeiconlarge name='organization'
+                    +iconlarge name='organization'
                     |My #{currentUser.users_customer.parent_franchisee.parent_office.office_name} Contacts
                 table.ui.sortable.striped.table
                     tbody
@@ -75,7 +75,7 @@ template(name='dashboard')
                                 td
                                     a(href="mailto:#{email}" target='_window' title="Email #{name}")
                                         // i.mail.icon
-                                        +officeicon name='send'
+                                        +icon name='send'
                                 td 
                                     +view_user_button
         .centered.row
@@ -83,7 +83,7 @@ template(name='dashboard')
                 .ui.secondary.segment
                     h2.ui.header 
                         // i.paint.brush.icon
-                        +officeiconlarge name='broom'
+                        +iconlarge name='broom'
                         |Services Overview
                     with currentUser.users_customer
                         .ui.list
@@ -144,7 +144,7 @@ template(name='my_cleaning_schedule')
         
 template(name='my_office_contacts')
     h2.ui.header 
-        +officeiconlarge name='add-contact-to-company'
+        +iconlarge name='add-contact-to-company'
         // i.large.icons
         //     i.users.icon
         //     i.corner.building.icon

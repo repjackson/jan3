@@ -31,26 +31,26 @@ template(name='save_button')
         
 template(name='edit_button')
     a(href="/edit/#{_id}" title='Edit') 
-        +officeicon name='pencil'
+        +icon name='pencil'
         // i.pencil.icon
         // | Edit
 
 template(name='view_button')
     a(href="/view/#{_id}" title='View Details') 
         // +avatar_sprite name='chevron-right'
-        +officeicon name='circled-chevron-right'
+        +icon name='circled-chevron-right'
         // i.right.chevron.icon
         
 template(name='view_user_button')
     a(href="/user/#{username}" title="View #{username}") 
         // +avatar_sprite name='chevron-right'
-        +officeicon name='circled-chevron-right'
+        +icon name='circled-chevron-right'
         // i.right.chevron.icon
         
 template(name='add_button')
     #add(title='Add')
         // i.plus.icon
-        +officeicon name='plus'
+        +icon name='plus-math'
 
 template(name='reference_type_single')
     .ui.form
@@ -94,7 +94,7 @@ template(name='set_session_item')
         
 template(name='edit_image_field')
     .ui.dividing.header 
-        +officeicon name='picture'
+        +icon name='picture'
         |Image
     if image_id
         .ui.image
@@ -212,7 +212,7 @@ template(name='associated_users')
           
 template(name='multiple_user_select')
     .ui.dividing.header 
-        +officeicon name=icon
+        +icon name=icon
         |#{label}
     .ui.form
         .field
@@ -246,7 +246,7 @@ template(name='view_sla_contact')
 template(name='single_user_select')
     .ui.dividing.header 
         if icon
-            +officeicon name=icon
+            +icon name=icon
         |#{label}
     unless selected_user
         .ui.form
@@ -301,7 +301,7 @@ template(name='single_doc_select')
           
 template(name='single_doc_view')
     .ui.dividing.header
-        +officeicon name=icon
+        +icon name=icon
         |#{label}
     with selected_doc
         .ui.fluid.card
@@ -345,8 +345,9 @@ template(name='call_phone_button')
 template(name='link_button')    
     a(href=link title=label)
         // i.icon(class=icon)
-        +officeicon name=icon classes='centered'
-        // strong #{label}
+        if icon
+            +iconlarge name=icon classes='centered'
+        strong #{label}
 
 template(name='edit_author')
     .ui.header Edit Author
@@ -444,17 +445,15 @@ template(name='medium_sprite')
     img.ui.medium.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
 template(name='dots')
     img(src="https://png.icons8.com/hide/#{name}/100/000000" class=classes title=tooltip)
-template(name='icon')
-    img.ui.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
 
 template(name='dusk_icon')
     img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
-template(name='officeicon')
+template(name='icon')
     img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes)
-template(name='officeiconlarge')
-    img.ui.image(src="https://png.icons8.com/ultraviolet/100/000000/#{name}.png")
-template(name='officeiconsmall')
+template(name='iconlarge')
+    img.ui.image(src="https://png.icons8.com/ultraviolet/60/000000/#{name}.png")
+template(name='iconsmall')
     img.ui.image(src="https://png.icons8.com/ultraviolet/30/000000/#{name}.png")
 
 template(name='user_pill')
@@ -529,19 +528,20 @@ template(name='doc_result')
 template(name='message_button')                
     .ui.message
         .ui.header
-            +officeicon name=icon
+            +icon name=icon
             a(href=link) #{label}
 
                 
 template(name='my_customer_account')
     .ui.secondary.segment
         .ui.header 
-            +officeicon name='customer-support'
+            // +icon name='customer-support'
             |Customer Account
         if currentUser.users_customer
             with currentUser.users_customer
                 .content
-                    a.ui.header(href="/view/#{_id}") #{ev.CUST_NAME}
+                    a(href="/view/#{_id}")
+                        h4.ui.header #{ev.CUST_NAME}
                 .content
                     .ui.list
                         .item ##{ev.ID}
@@ -560,12 +560,13 @@ template(name='my_customer_account')
 template(name='user_office_card')
     .ui.secondary.segment
         .ui.header 
-            +officeicon name='link-company-parent'
+            // +icon name='link-company-parent'
             |Office
         if currentUser.users_customer.parent_franchisee.parent_office
             with currentUser.users_customer.parent_franchisee.parent_office
                 .content
-                    a.header(href="/view/#{_id}") #{office_name}
+                    a(href="/view/#{_id}")
+                        h4.ui.header #{office_name}
                 .content
                     | #{address}
                 .content
@@ -574,12 +575,13 @@ template(name='user_office_card')
 template(name='user_franchise_card')
     .ui.secondary.segment
         .ui.header 
-            +officeicon name='collaborator-female'
+            // +icon name='collaborator-female'
             |Franchisee
         if currentUser.users_customer.parent_franchisee
             with currentUser.users_customer.parent_franchisee
                 .content
-                    a.header(href="/view/#{_id}" title='View Franchisee') #{franchisee}
+                    a(href="/view/#{_id}")
+                        h4.ui.header #{franchisee}
                 .content
                     .ui.list
                         .item(title='Short Name') #{ev.FRANCH_NAME}

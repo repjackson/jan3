@@ -36,7 +36,7 @@ template(name='view_text_field')
         
 template(name='edit_date_field')            
     .ui.dividing.header 
-        +officeicon name=icon
+        +icon name=icon
         |#{label}
     .field
         .ui.icon.fluid.transparent.input
@@ -77,7 +77,7 @@ template(name='edit_number_field')
             label 
                 if icon
                     i.icon
-                        +officeicon name=icon 
+                        +icon name=icon 
                 |#{label}
             .ui.input
                 input#number_field(type='number' min=min max=max value=key_value)
@@ -91,7 +91,7 @@ template(name='view_numeric_field')
 
 template(name='edit_textarea')
     .ui.dividing.header 
-        +officeicon name=icon
+        +icon name=icon
         |#{label}
     .ui.form
         .field

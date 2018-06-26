@@ -19,9 +19,14 @@ if Meteor.isClient
 
                 
     Template.users_feed.onCreated ->
-        @autorun => Meteor.subscribe 'docs', [], 'event' 
+        @autorun => Meteor.subscribe 'users_feed', FlowRouter.getParam('username')
+
     Template.users_feed.helpers
         feed_events: -> Docs.find {type:'event'}, sort:timestamp:-1
+    Template.users_feed_event.events
+        'click .remove_event': -> 
+            if confirm 'Delete User Event?'
+                Docs.remove @_id
 
                 
         

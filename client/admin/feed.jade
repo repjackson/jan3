@@ -3,7 +3,7 @@ template(name='feed')
         .row
             .four.wide.column
                 h1.ui.header
-                    +officeiconlarge name='rss'
+                    +iconlarge name='rss'
                     | Feed
                 h5.ui.header Global Events
             .twelve.wide.column
@@ -29,17 +29,12 @@ template(name='feed_event')
                     
                     
 template(name='users_feed')
-    .ui.padded.stackable.grid
-        .row
-            .four.wide.column
-                h1.ui.header
-                    +officeiconlarge name='rss'
-                    | Feed
-                h5.ui.header Global Events
-            .twelve.wide.column
-                .ui.feed
-                    each feed_events
-                        +users_feed_event
+    h1.ui.header
+        +icon name='rss'
+        | Users Feed
+    .ui.feed
+        each feed_events
+            +users_feed_event
                         
                         
 template(name='users_feed_event')

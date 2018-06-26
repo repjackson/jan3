@@ -13,3 +13,9 @@ FlowRouter.route '/admin',
 # Template.ev_fields.helpers
 #     selector: ->  type: "field"
 # # 
+Template.franchisees.onCreated ->
+    @autorun -> Meteor.subscribe 'all_users'
+
+
+Template.franchisees.helpers
+    all_franchisees: -> Meteor.users.find()

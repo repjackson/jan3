@@ -2,7 +2,7 @@ template(name='login')
     .ui.middle.aligned.centered.padded.grid
         .eight.wide.column
             h1.ui.center.aligned.header 
-                +officeicon name='password'
+                +icon name='password'
                 |Login
             .ui.segment
                 .ui.form
@@ -14,7 +14,7 @@ template(name='login')
                         input.password(type='password')
                     .field
                         .login.ui.fluid.button
-                            // +officeicon name='lock-2'
+                            // +icon name='lock-2'
                             | Login
             +message_button link='/password_reset' label='Forgot Password' icon='forgot-password'
             +message_button link='/new_customer' label='New Customer' icon='add-user-female'
@@ -26,7 +26,7 @@ template(name='new_officer')
     .ui.middle.aligned.centered.padded.grid
         .eight.wide.column
             h1.ui.center.aligned.header 
-                +officeicon name='add-user-male'
+                +icon name='add-user-male'
                 |New Officer
             .ui.segment
                 .ui.form
@@ -50,7 +50,7 @@ template(name='new_customer')
     .ui.middle.aligned.centered.padded.grid
         .eight.wide.column
             h1.ui.center.aligned.header 
-                +officeicon name='customer-support'
+                +icon name='customer-support'
                 |New Customer
             .ui.segment
                 .ui.form

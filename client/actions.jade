@@ -129,7 +129,7 @@ template(name='resonate_button')
 template(name='notify_button')
     if currentUser
         .ui.header
-            +officeicon name='appointment-reminders'
+            +icon name='appointment-reminders'
             |Notify Someone
         .ui.fluid.input
             +inputAutocomplete settings=recipient_select_settings id="recipient_select" class="" autocomplete="off" placeholder='Lookup...'

@@ -11,13 +11,6 @@ FlowRouter.notFound =
 #         libraries: 'places'
 # )
 
-FlowRouter.route '/users', action: (params) ->
-    BlazeLayout.render 'layout',
-        nav: 'nav'
-        # sub_nav: 'admin_nav'
-        main: 'users'
-
-
 
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
