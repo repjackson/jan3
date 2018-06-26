@@ -12,7 +12,32 @@ template(name='services')
                 //     i.refresh.icon
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Special_services selector=selector class="ui sortable striped fluid very basic table"}}
+                // |{{> tabular table=TabularTables.Special_services selector=selector class="ui sortable striped fluid very basic table"}}
+                table.ui.celled.very.basic.table
+                    thead
+                        tr
+                            th jpid
+                            th Customer
+                            th Operations Manager
+                            th Franchisee
+                            th Service Type
+                            th Extra Service Description
+                            th Date Created
+                            th Extra Price
+                            th
+                    tbody
+                        each service_docs
+                            tr
+                                td #{ev.ID}
+                                td #{ev.CUSTOMER}
+                                td #{ev.CUST_OPS_MANAGER}
+                                td #{ev.FRANCHISEE}
+                                td #{ev.SERV_TYPE}
+                                td #{ev.EXTRA_SERV_DESC}
+                                td #{ev.DATE_CREATED}
+                                td #{ev.EXTRA_PRICE}
+                                td 
+                                    +view_button
 
                     
                     

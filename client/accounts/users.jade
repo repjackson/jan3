@@ -25,8 +25,8 @@ template(name='users')
                             th Username
                             th First Name
                             th Last Name
-                            // th Job Title
-                            // th Work Tel
+                            th Job Title
+                            th Work Tel
                             th Email
                             th Office Name
                             th
@@ -36,8 +36,8 @@ template(name='users')
                                 td #{username}
                                 td #{profile.first_name}
                                 td #{profile.last_name}
-                                // td #{ev.JOB_TITLE}
-                                // td #{ev.WORK_TELEPHONE}
+                                td #{ev.JOB_TITLE}
+                                td #{ev.WORK_TELEPHONE}
                                 td #{email}
                                 td #{profile.office_name}
                                 td 
@@ -72,15 +72,17 @@ template(name='franchise_by_customer')
                 th Office Name
                 th
         tbody
-    
-                        each all_user_objects
-                            tr
-                                td #{username}
-                                td #{profile.first_name}
-                                td #{profile.last_name}
-                                // td #{ev.JOB_TITLE}
-                                // td #{ev.WORK_TELEPHONE}
-                                td #{email}
-                                td #{profile.office_name}
-                                td 
-                                    +view_user_button
+            each all_user_objects
+                tr
+                    td #{jpid}
+                    td #{username}
+                    td #{profile.first_name}
+                    td #{profile.last_name}
+                    // td #{ev.JOB_TITLE}
+
+                    // td #{ev.JOB_TITLE}
+                    // td #{ev.WORK_TELEPHONE}
+                    td #{email}
+                    td #{profile.office_name}
+                    td 
+                        +view_user_button

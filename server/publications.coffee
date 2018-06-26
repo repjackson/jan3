@@ -1,5 +1,5 @@
 Meteor.publish 'type', (type)->
-    Docs.find {type:type}, limit:300
+    Docs.find {type:type}, limit:100
         
         
 # Meteor.publish 'my_customer_account_doc', ->

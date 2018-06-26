@@ -17,8 +17,12 @@ Template.history.helpers
 # jpids
 FlowRouter.route '/jpids', 
     action: -> BlazeLayout.render 'layout', main: 'jpids'
+Template.jpids.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'jpid'
 Template.jpids.helpers
-    selector: ->  type: "jpid"
+    jpid_docs: ->  
+        Docs.find 
+            type: "jpid"
 Template.jpids.events
     'click .get_jp_id': ->
         Meteor.call 'get_jp_id',(err,res)->
@@ -78,8 +82,14 @@ Template.franchisee_view.onCreated ->
 # customer
 FlowRouter.route '/customers', 
     action: -> BlazeLayout.render 'layout', main: 'customers'
+    
+Template.customers.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'customer'
 Template.customers.helpers
-    selector: ->  type: "customer"
+    customer_docs: ->  
+        Docs.find 
+            type: "customer"
+    
 Template.customers.events
     'click .sync_customers': ->
         Meteor.call 'sync_customers',(err,res)->

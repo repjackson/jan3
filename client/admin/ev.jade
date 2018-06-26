@@ -45,7 +45,30 @@ template(name='jpids')
                 //     input#ev_search(type='text' placeholder='Search EV')
         .row
             .sixteen.wide.column
-                +tabular table=TabularTables.Jpids selector=selector class="ui sortable fluid striped table"
+                // +tabular table=TabularTables.Jpids selector=selector class="ui sortable fluid striped table"
+                table.ui.celled.very.basic.table
+                    thead
+                        tr
+                            th jpid
+                            th Customer
+                            th Franchisee
+                            th Assigned To
+                            th Office
+                            th Status
+                            th Area
+                            th
+                    tbody
+                        each jpid_docs
+                            tr
+                                td #{jpid}
+                                td #{ev.CUSTOMER}
+                                td #{ev.FRANCHISEE}
+                                td #{ev.ASSIGNED_TO}
+                                td #{ev.MASTER_LICENSEE}
+                                td #{ev.ACCOUNT_STATUS}
+                                td #{ev.AREA}
+                                td 
+                                    +view_user_button
 
                     
 template(name='history')
@@ -166,12 +189,6 @@ template(name='franchisees')
                                 td #{profile.office_name}
                                 td 
                                     +view_user_button
-                        // {data: "jpid", title: "JP ID"},
-                        // {data: "franchisee", title: "Name"},
-                        // {data: "ev.FRANCH_EMAIL", title: "Email"},
-                        // {data: "ev.FRANCH_NAME", title: "Short Name"},
-                        // {data: "ev.TELE_CELL", title: "Cell"},
-                        // {data: "ev.MASTER_LICENSEE", title: "Office"},
 
                     
                     
@@ -204,16 +221,39 @@ template(name='customers')
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    +iconlarge name='customer-support'
+                    // +iconlarge name='customer-support'
                     | Customers
             .three.wide.right.aligned.column
                 if is_dev
                     .sync_customers(title='Refresh Customers')
-                        +icon name='refresh'
+                        i.refresh.icon
 
         .row
             .sixteen.wide.column
-                +tabular table=TabularTables.Customers selector=selector class="ui sortable striped very basic fluid table"
+                // +tabular table=TabularTables.Customers selector=selector class="ui sortable striped very basic fluid table"
+                table.ui.celled.table
+                    thead
+                        tr
+                            th Customer Name
+                            th JPID
+                            th Franchisee
+                            th Master Licensee
+                            th Customer Contact Person
+                            th Customer Contact Email
+                            th State
+                            th
+                    tbody
+                        each customer_docs
+                            tr
+                                td #{cust_name}
+                                td #{jpid}
+                                td #{franchisee}
+                                td #{master_licensee}
+                                td #{customer_contact_person}
+                                td #{customer_contact_email}
+                                td #{ev.ADDR_STATE}
+                                td 
+                                    +view_button
 
                     
                     

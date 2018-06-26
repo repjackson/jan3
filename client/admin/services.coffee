@@ -1,12 +1,13 @@
 FlowRouter.route '/services', action: ->
     BlazeLayout.render 'layout', main: 'services'
 
-Template.services.helpers
-    selector: ->  type: "special_service"
-    
-    
 Template.services.onCreated () ->
-    
+    @autorun => Meteor.subscribe 'type', 'special_service'
+Template.services.helpers
+    service_docs: ->  
+        Docs.find 
+            type: "special_service"
+
 Template.services.events
     'click .sync_services': ->
         Meteor.call 'sync_services', ->
