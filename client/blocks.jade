@@ -343,11 +343,11 @@ template(name='call_phone_button')
             
             
 template(name='link_button')    
-    a(href=link title=label)
+    a.ui.header(href=link title=label)
         // i.icon(class=icon)
         if icon
             +iconlarge name=icon classes='centered'
-        strong #{label}
+        | #{label}
 
 template(name='edit_author')
     .ui.header Edit Author

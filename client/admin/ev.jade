@@ -274,12 +274,6 @@ template(name='related_customers')
         |#{franchisee}'s Customers
     +tabular table=TabularTables.Related_customers selector=selector class="ui sortable fluid striped table"
                 
-template(name='franchise_by_customer')
-    .ui.dividing.header 
-        +icon name='collaborator-female'
-        |#{ev.CUST_NAME}'s Franchisee
-    +tabular table=TabularTables.Related_franchisees selector=selector class="ui sortable fluid striped table"
-    
     
 template(name='office_by_franchisee')
     .ui.secondary.segment

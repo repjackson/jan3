@@ -12,14 +12,14 @@ template(name='users')
                 //         |Uploading files...
             .ten.wide.column 
                 h1.ui.center.aligned.header 
-                    +icon name='groups'
+                    // +icon name='groups'
                     .content Users
             .three.wide.column 
         .centered.row
             .sixteen.wide.column 
                 // +user_table
                 // +tabular table=TabularTables.Users class="ui sortable selectable striped fluid very basic table"
-                table.ui.celled.table
+                table.ui.celled.very.basic.table
                     thead
                         tr
                             th Username
@@ -55,3 +55,32 @@ template(name='users')
                     //                 a.icon.item
                     //                     i.right.chevron.icon
                                 
+                                
+template(name='franchise_by_customer')                                
+    .ui.dividing.header 
+        +icon name='collaborator-female'
+        |#{ev.CUST_NAME}'s Franchisee
+    table.ui.celled.very.basic.table
+        thead
+            tr
+                th jpid
+                th franchisee
+                th ev.FRANCH_NAME
+                th ev.TELE_CELL
+                th franchisee_email
+                th ev.MASTER_LICENSEE
+                th Office Name
+                th
+        tbody
+    
+                        each all_user_objects
+                            tr
+                                td #{username}
+                                td #{profile.first_name}
+                                td #{profile.last_name}
+                                // td #{ev.JOB_TITLE}
+                                // td #{ev.WORK_TELEPHONE}
+                                td #{email}
+                                td #{profile.office_name}
+                                td 
+                                    +view_user_button
