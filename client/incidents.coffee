@@ -48,10 +48,13 @@ Template.incident_type_label.helpers
             when 'employee_issue' then 'basic'
             when 'other' then 'grey'
 
-
 Template.incidents.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'incident'
 Template.incidents.helpers
-    selector: ->  type: "incident"
+    incident_docs: ->  
+        Docs.find 
+            type: "incident"
+
 
 Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'docs', [], 'incident_type'

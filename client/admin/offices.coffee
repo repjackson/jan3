@@ -1,8 +1,12 @@
 FlowRouter.route '/offices', action: ->
     BlazeLayout.render 'layout', main: 'offices'
 
+Template.offices.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'office'
 Template.offices.helpers
-    selector: ->  type: "office"
+    office_docs: ->  
+        Docs.find 
+            type: "office"
     
     
 Template.office_view.onRendered ->

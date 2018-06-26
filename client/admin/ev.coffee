@@ -67,9 +67,14 @@ Template.jpids.events
 # franchisee
 FlowRouter.route '/franchisees', 
     action: -> BlazeLayout.render 'layout', main: 'franchisees'
+    
+Template.franchisees.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'franchisee'
 Template.franchisees.helpers
-    selected_franchisee: -> console.log @
-    # selector: ->  type: "franchisee"
+    franchisees_docs: ->  
+        Docs.find 
+            type: "franchisee"
+    
 Template.franchisees.events
     'click .get_all_franchisees': ->
         Meteor.call 'get_all_franchisees',(err,res)->

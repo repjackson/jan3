@@ -5,7 +5,7 @@ template(name='offices')
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    +iconlarge name='building'
+                    // +iconlarge name='building'
                     |Offices
             .three.wide.column
                 // if is_dev
@@ -16,7 +16,22 @@ template(name='offices')
                 //         |Uploading files...
         .row
             .sixteen.wide.column
-                |{{> tabular table=TabularTables.Offices selector=selector class="ui sortable striped fluid very basic table"}}
+                // |{{> tabular table=TabularTables.Offices selector=selector class="ui sortable striped fluid very basic table"}}
+                table.ui.celled.very.basic.table
+                    thead
+                        tr
+                            th Name
+                            th Phone
+                            th Address
+                            th
+                    tbody
+                        each office_docs
+                            tr
+                                td #{office_name}
+                                td #{telephone}
+                                td #{address}
+                                td 
+                                    +view_button
 
                     
                     

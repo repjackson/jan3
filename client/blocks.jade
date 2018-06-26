@@ -36,10 +36,10 @@ template(name='edit_button')
         // | Edit
 
 template(name='view_button')
-    a(href="/view/#{_id}" title='View Details') 
+    a.ui.icon.small.button(href="/view/#{_id}" title='View Details') 
         // +avatar_sprite name='chevron-right'
-        +icon name='circled-chevron-right'
-        // i.right.chevron.icon
+        // +icon name='circled-chevron-right'
+        i.right.chevron.large.icon
         
 template(name='view_user_button')
     a(href="/user/#{username}" title="View #{username}") 

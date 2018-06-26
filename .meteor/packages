@@ -35,7 +35,6 @@ less@2.7.12
 reywood:publish-composite
 tomwasd:flow-router-autoscroll
 http@1.4.1
-aldeed:tabular
 underscore@1.0.10
 yasinuslu:json-view
 peerlibrary:xml2js

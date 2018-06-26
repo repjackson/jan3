@@ -14,7 +14,33 @@ template(name='incidents')
             .three.wide.column
         .row
             .sixteen.wide.column
-                {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable striped fluid very basic table"}}
+                // {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable striped fluid very basic table"}}
+                table.ui.celled.table
+                    thead
+                        tr
+                            // th Ticket Number
+                            th Type
+                            th Logged
+                            th Details
+                            th Customer JPID
+                            th Level
+                            th Assigned To
+                            th Actions Taken
+                            th 
+                    tbody
+                        each incident_docs
+                            tr
+                                // td #{incident_number}
+                                td #{incident_type}
+                                td #{when}
+                                td #{incident_details}
+                                td #{current_level}
+                                td 
+                                    +associated_users
+                                td 
+                                    +small_doc_history
+                                td 
+                                    +view_button
 
 
                 

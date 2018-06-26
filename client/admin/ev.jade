@@ -89,9 +89,9 @@ template(name='history')
         .row
             .sixteen.wide.column
                 .ui.header Search API Results
-                +tabular table=TabularTables.Search_history selector=search_history_selector class="ui sortable fluid striped table"
-                .ui.header History API Results
-                +tabular table=TabularTables.History selector=selector class="ui sortable fluid striped table"
+                // +tabular table=TabularTables.Search_history selector=search_history_selector class="ui sortable fluid striped table"
+                // .ui.header History API Results
+                // +tabular table=TabularTables.History selector=selector class="ui sortable fluid striped table"
 
                     
 template(name='history_view')
@@ -169,26 +169,24 @@ template(name='franchisees')
                 table.ui.celled.table
                     thead
                         tr
-                            th Username
-                            th First Name
-                            th Last Name
-                            // th Job Title
-                            // th Work Tel
+                            th JP ID
+                            th Name
                             th Email
-                            th Office Name
+                            th Short Name
+                            th Cell
+                            th Office
                             th
                     tbody
-                        each all_franchisees
+                        each franchisees_docs
                             tr
-                                td #{username}
-                                td #{profile.first_name}
-                                td #{profile.last_name}
-                                // td #{ev.JOB_TITLE}
-                                // td #{ev.WORK_TELEPHONE}
-                                td #{email}
-                                td #{profile.office_name}
+                                td #{jpid}
+                                td #{franchisee}
+                                td #{ev.FRANCH_EMAIL}
+                                td #{ev.FRANCH_NAME}
+                                td #{ev.TELE_CELL}
+                                td #{ev.MASTER_LICENSEE}
                                 td 
-                                    +view_user_button
+                                    +view_button
 
                     
                     
