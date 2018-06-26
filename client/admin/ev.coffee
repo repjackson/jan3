@@ -1,6 +1,18 @@
 # history
 FlowRouter.route '/history', 
     action: -> BlazeLayout.render 'layout', main: 'history'
+Template.history.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'history'
+    @autorun => Meteor.subscribe 'type', 'search_history_doc'
+Template.history.helpers
+    history_docs: ->  
+        Docs.find {
+            type:'history' 
+            }, sort: "ev.TIMESTAMP": -1
+    search_history_docs: ->  
+        Docs.find {
+            type:'search_history_doc' 
+            }, sort: "ev.TIMESTAMP": -1
 
 Template.history.events
     'click .refresh_history': ->
@@ -9,9 +21,6 @@ Template.history.events
     'click .run_timestamp_search': ->
         Meteor.call 'search_ev',(err,res)->
             if err then console.error err
-Template.history.helpers
-    selector: ->  type: "history"
-    search_history_selector: ->  type: "search_history_doc"
 
 
 # jpids

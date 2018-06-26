@@ -5,15 +5,15 @@ Meteor.methods
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
             params:
-                user_id:'JPI'
-                password:'JPI'
+                user_id:'JAN-HUB'
+                password:'j@NhU8'
                 statevar: 'get_users'
                 # disabled: [Y|N|
                 # filter: pattern 
                 # filter_type: "ID"
 
 
-        # console.dir res.content
+        console.dir res.content
         split_res = res.content.split '\r\n'
         
         for user_string in split_res
@@ -49,12 +49,12 @@ Meteor.methods
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
             params:
-                user_id:'JPI'
-                password:'JPI'
+                user_id:'JAN-HUB'
+                password:'j@NhU8'
                 statevar:'get_user_info'
                 login_id: username
                 # console.log 'new id', new_id
-        # console.log res
+        console.log res
         split_res = res.content.split '\r\n'
         # console.log typeof split_res
         save_json = {}
@@ -74,8 +74,8 @@ Meteor.methods
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
             params:
-                user_id:'JPI'
-                password:'JPI'
+                user_id:'JAN-HUB'
+                password:'j@NhU8'
                 statevar:'history'
                 cutoff:  moment().subtract(100, 'days').calendar()
                 # cutoff_end:  moment(Date.now()+10000).format()
@@ -129,8 +129,8 @@ Meteor.methods
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
             params:
-                user_id:'JPI'
-                password:'JPI'
+                user_id:'JAN-HUB'
+                password:'j@NhU8'
                 statevar:'get'
                 id:jp_id
         # console.log res
@@ -205,8 +205,8 @@ Meteor.methods
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
-                user_id:'JPI'
-                password:'JPI'
+                user_id:'JAN-HUB'
+                password:'j@NhU8'
                 statevar:'run_report'
                 username_display:'ID'
                 api_reverse_lookup:'NO'
@@ -250,8 +250,8 @@ Meteor.methods
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
-                user_id:'JPI'
-                password:'JPI'
+                user_id:'JAN-HUB'
+                password:'j@NhU8'
                 statevar:'run_report'
                 username_display:'ID'
                 api_reverse_lookup:'NO'
@@ -294,8 +294,8 @@ Meteor.methods
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
-                user_id:'JPI'
-                password:'JPI'
+                user_id:'JAN-HUB'
+                password:'j@NhU8'
                 statevar:'run_report'
                 username_display:'ID'
                 api_reverse_lookup:'NO'

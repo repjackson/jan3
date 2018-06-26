@@ -30,12 +30,11 @@ Template.office_view.helpers
             master_licensee: page_office.office_name
             }
     
-    office_franchisees_selector: ->  
+    related_franchisees: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        return {
+        Docs.find
             type: "franchisee"
             "ev.MASTER_LICENSEE": page_office.office_name
-            }
     
     office_incidents_selector: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')

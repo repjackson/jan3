@@ -68,7 +68,7 @@ template(name='jpids')
                                 td #{ev.ACCOUNT_STATUS}
                                 td #{ev.AREA}
                                 td 
-                                    +view_user_button
+                                    +view_button
 
                     
 template(name='history')
@@ -89,8 +89,52 @@ template(name='history')
         .row
             .sixteen.wide.column
                 .ui.header Search API Results
+                table.ui.celled.table
+                    thead
+                        tr
+                            th JPID
+                            th Area
+                            th Timestamp
+                            th Last Change User
+                            th Project
+                            th Franchisee
+                            th
+                    tbody
+                        each search_history_docs
+                            tr
+                                td #{ev.ID}
+                                td #{ev.AREA}
+                                td #{ev.TIMESTAMP}
+                                td #{ev.LAST_CHANGE_USER}
+                                td #{ev.PROJECT}
+                                td #{ev.FRANCHISEE}
+                                td 
+                                    +view_button
+
                 // +tabular table=TabularTables.Search_history selector=search_history_selector class="ui sortable fluid striped table"
-                // .ui.header History API Results
+                .ui.header History API Results
+                table.ui.celled.table
+                    thead
+                        tr
+                            th JPID
+                            th Area
+                            th Timestamp
+                            th Last Change User
+                            th Project
+                            th Franchisee
+                            th
+                    tbody
+                        each history_docs
+                            tr
+                                td #{ev.ID}
+                                td #{ev.AREA}
+                                td #{ev.TIMESTAMP}
+                                td #{ev.LAST_CHANGE_USER}
+                                td #{ev.PROJECT}
+                                td #{ev.FRANCHISEE}
+                                td 
+                                    +view_button
+
                 // +tabular table=TabularTables.History selector=selector class="ui sortable fluid striped table"
 
                     
@@ -187,7 +231,6 @@ template(name='franchisees')
                                 td #{ev.MASTER_LICENSEE}
                                 td 
                                     +view_button
-
                     
                     
 template(name='franchisee_view')
