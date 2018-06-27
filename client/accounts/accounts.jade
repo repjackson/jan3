@@ -1,3 +1,38 @@
+template(name='accounts_nav')
+    #nav.ui.five.item.menu
+        +menu_item link='/login' label='Login' icon='password'
+        +menu_item link='/reset_password' label='Forgot Password' icon='forgot-password'
+        +menu_item link='/register_customer' label='Register Customer' icon='add-user-female'
+        +menu_item link='/register_officer' label='Register Officer' icon='add-user-male'
+
+
+template(name='menu_item')
+    a.item(href=link)
+        // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+        +icon name=icon
+        | &nbsp; #{label}
+
+
+template(name='reset_password')
+    .ui.middle.aligned.centered.padded.grid
+        .eight.wide.column
+            h1.ui.center.aligned.header 
+                +icon name='forgot-password'
+                | Reset Password
+            .ui.disabled.segment
+                .ui.form
+                    .field
+                        label Username/Email
+                        input.username(type='text')
+                    .field
+                        label Password
+                        input.password(type='password')
+                    .field
+                        .login.ui.fluid.disabled.button
+                            // +icon name='lock-2'
+                            | Email Reset Link
+
+
 template(name='login')
     .ui.middle.aligned.centered.padded.grid
         .eight.wide.column
@@ -16,18 +51,15 @@ template(name='login')
                         .login.ui.fluid.button
                             // +icon name='lock-2'
                             | Login
-            +message_button link='/password_reset' label='Forgot Password' icon='forgot-password'
-            +message_button link='/new_customer' label='New Customer' icon='add-user-female'
-            +message_button link='/new_officer' label='New Officer' icon='add-user-male'
 
                 
                 
-template(name='new_officer')
+template(name='register_officer')
     .ui.middle.aligned.centered.padded.grid
         .eight.wide.column
             h1.ui.center.aligned.header 
                 +icon name='add-user-male'
-                |New Officer
+                |Register Officer
             .ui.segment
                 .ui.form
                     .required.field
@@ -42,16 +74,16 @@ template(name='new_officer')
                     .required.field
                         label Repeat Password
                         input(type='text')
-            +message_button link='/login' label='Login' icon='password'
-            +message_button link='/new_customer' label='New Customer' icon='add-user-female'
+        .four.wide.column
+            .ui.header lookup office
+
                 
-                
-template(name='new_customer')
+template(name='register_customer')
     .ui.middle.aligned.centered.padded.grid
         .eight.wide.column
             h1.ui.center.aligned.header 
                 +icon name='customer-support'
-                |New Customer
+                |Register Customer
             .ui.segment
                 .ui.form
                     .required.field
@@ -69,7 +101,8 @@ template(name='new_customer')
                     .required.field
                         label Repeat Password
                         input(type='text')
-            +message_button link='/login' label='Login' icon='lock-2'
+        .eight.wide.column
+            .ui.header lookup customer account
 
                 
                 

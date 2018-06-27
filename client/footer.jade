@@ -4,14 +4,22 @@ template(name='footer')
             .row
                 .four.wide.inverted.column
                     // a.ui.inverted.header(href='/work') Development Log
-                    .ui.large.list
+                    .ui.list
                         .sitemap_list.item Why Jan-Pro
                         .sitemap_list.item Commercial Cleaning
                         .sitemap_list.item About Us
-                    .ui.large.list
+                    .ui.list
                         .sitemap_list.item Contact Us
                         .sitemap_list.item Legal/ Privacy Policy
                         .sitemap_list.item demo login: demo/password
+                    .ui.inverted.header 
+                        +icon name='user-shield'
+                        |Role Switcher
+                    .ui.button Admin
+                    .ui.button Officer
+                    .ui.button Office Owner
+                    .ui.button Customer
+                    .ui.button Franchisee
                 .four.wide.column
                     +my_customer_account
                 .four.wide.column

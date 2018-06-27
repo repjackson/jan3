@@ -3,37 +3,50 @@ template(name='admin')
         .row
             .sixteen.wide.column
                 h1.ui.center.aligned.header
-                    +icon name='user-shield'
+                    +iconlarge name='user-shield'
                     | Admin
         .column
-            +admin_widget type='jpid' label='JP Ids' link='/jpids'
+            .ui.card
+                .content
+                    a.ui.header(href='/jpids')
+                        +iconlarge name='fingerprint'
+                        | JP Ids
         .column
-            +admin_widget type='history' label='History' link='/history'
+            .ui.card
+                .content
+                    a.ui.header(href='/history')
+                        +iconlarge name='clock'
+                        | EV History
         .column
-            .ui.secondary.segment
-                a.ui.header(href='/offices')
-                    // +iconlarge name='link-company-parent'
-                    | Offices
+            .ui.card
+                .content
+                    a.ui.header(href='/offices')
+                        +iconlarge name='building'
+                        | Offices
         .column
-            .ui.secondary.segment
-                a.ui.header(href='/franchisees')
-                    // +iconlarge name='collaborator-female'
-                    | Franchisees
+            .ui.card
+                .content
+                    a.ui.header(href='/franchisees')
+                        +iconlarge name='client-company'
+                        | Franchisees
         .column
-            .ui.secondary.segment
-                a.ui.header(href='/customers')
-                    // +iconlarge name='customer-support'
-                    | Customers
+            .ui.card
+                .content
+                    a.ui.header(href='/customers')
+                        +iconlarge name='customer-support'
+                        | Customers
         .column
-            .ui.secondary.segment
-                a.ui.header(href='/services')
-                    // +iconlarge name='broom'
-                    | Services
+            .ui.card
+                .content
+                    a.ui.header(href='/services')
+                        +iconlarge name='broom'
+                        | Services
         .column
-            .ui.secondary.segment
-                a.ui.header(href='/feed')
-                    // +iconlarge name='rss'
-                    | Global Feed
+            .ui.card
+                .content
+                    a.ui.header(href='/feed')
+                        +iconlarge name='rss'
+                        | Global Feed
                     
 
                         

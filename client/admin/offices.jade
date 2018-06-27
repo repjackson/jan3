@@ -57,29 +57,29 @@ template(name='office_view')
                         |#{address}
                 .ui.top.attached.tabular.five.item.stackable.menu
                     a.active.item(data-tab='office_settings') 
-                        // +icon name='administrative-tools'
+                        +icon name='administrative-tools'
                         | &nbsp; Settings
                     a.item(data-tab='incidents') 
-                        // +icon name='error'
+                        +icon name='error'
                         | &nbsp; Incidents
                     a.item(data-tab='employees') 
-                        // +icon name='groups'
+                        +icon name='groups'
                         | &nbsp; Employees
                     a.item(data-tab='franchisees') 
-                        // +icon name='collaborator-female'
+                        +icon name='client-company'
                         | &nbsp; Franchisees
                     a.item(data-tab='customers') 
-                        // +icon name='customer-support'
+                        +icon name='customer-support'
                         | &nbsp; Customers
                 .ui.bottom.attached.active.tab.segment(data-tab='office_settings')
-                    // h2.ui.dividing.header 
-                    //     +icon name='sms'
-                    //     | Customer Message
+                    h2.ui.dividing.header 
+                        +icon name='sms'
+                        | Customer Message
                     // .ui.sub.header Shown on customer dashboard
                     +edit_text_field key='customer_message' label='Customer Dashboard Message'
                     // p #{customer_message}
                     h2.ui.dividing.header 
-                        // +icon name='checked-user-male'
+                        +icon name='checked-user-male'
                         |Office Roles
                     .ui.two.column.stackable.grid
                         .column
@@ -87,7 +87,7 @@ template(name='office_view')
                         .column
                             +single_user_select key='operations_manager' label='Operations Manager'
                     h2.ui.dividing.header 
-                        // +icon name='administrative-tools'
+                        +icon name='administrative-tools'
                         |SLA Settings
                     h3.ui.dividing.header Initial
                     h3.ui.dividing.header Escalation 1

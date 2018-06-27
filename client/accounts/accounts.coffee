@@ -1,16 +1,23 @@
 FlowRouter.route '/login', action: ->
     BlazeLayout.render 'layout', 
+        sub_nav: 'accounts_nav'
         main: 'login'
-FlowRouter.route '/new_officer', action: ->
+FlowRouter.route '/register_officer', action: ->
     BlazeLayout.render 'layout', 
-        main: 'new_officer'
-FlowRouter.route '/new_customer', action: ->
+        sub_nav: 'accounts_nav'
+        main: 'register_officer'
+FlowRouter.route '/register_customer', action: ->
     BlazeLayout.render 'layout', 
-        main: 'new_customer'
+        sub_nav: 'accounts_nav'
+        main: 'register_customer'
+FlowRouter.route '/reset_password', action: ->
+    BlazeLayout.render 'layout', 
+        sub_nav: 'accounts_nav'
+        main: 'reset_password'
 Template.login.events
     'click .login': (e,t)->
         e.preventDefault()
-        # comment = $('#new_comment').val().trim()
+        # comment = $('#register_comment').val().trim()
         login = $('.username').val();
         password = $('.password').val();
         Meteor.loginWithPassword login, password, (err,res)->

@@ -36,10 +36,9 @@ template(name='edit_button')
         // | Edit
 
 template(name='view_button')
-    a.ui.icon.small.button(href="/view/#{_id}" title='View Details') 
-        // +avatar_sprite name='chevron-right'
-        // +icon name='circled-chevron-right'
-        i.right.chevron.large.icon
+    a(href="/view/#{_id}" title='View Details') 
+        +icon name='view-details'
+        // i.right.chevron.large.icon
         
 template(name='view_user_button')
     a(href="/user/#{username}" title="View #{username}") 
@@ -345,9 +344,9 @@ template(name='call_phone_button')
 template(name='link_button')    
     a.ui.header(href=link title=label)
         // i.icon(class=icon)
-        // if icon
-        //     +iconlarge name=icon classes='centered'
-        i.left.chevron.icon
+        if icon
+            +icon name=icon classes='centered'
+        // i.left.chevron.icon
         | #{label}
 
 template(name='edit_author')
@@ -451,9 +450,9 @@ template(name='dusk_icon')
     img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
 template(name='icon')
-    img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes)
+    img.ui.mini.image(src="https://png.icons8.com/dusk/80/000000/#{name}.png" class=classes)
 template(name='iconlarge')
-    img.ui.image(src="https://png.icons8.com/ultraviolet/60/000000/#{name}.png")
+    img.ui.image(src="https://png.icons8.com/dusk/60/000000/#{name}.png")
 template(name='iconsmall')
     img.ui.image(src="https://png.icons8.com/ultraviolet/30/000000/#{name}.png")
 
@@ -593,12 +592,12 @@ template(name='user_franchise_card')
 template(name='toggle_boolean_checkbox')      
     .ui.form
         .field
-            .ui.slider.checkbox
+            .ui.toggle.checkbox
                 input(type='checkbox' name=key checked=key_value)
                 label #{label}
 
 template(name='radio_item')      
     .field
-        .ui.slider.checkbox
+        .ui.toggle.checkbox
             input(type="radio" name=key value=value checked=key_value)
             label #{label}
