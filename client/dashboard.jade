@@ -4,12 +4,15 @@ template(name='dashboard')
             .ui.hidden.divider
             img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             h2.ui.inverted.header Customer Portal
-            +customer_menu
+        +customer_menu
     .ui.padded.stackable.grid
-        .ui.hidden.divider
-        .ui.info.fluid.message
-            .header Office Message
-            p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
+        .row
+            .ui.container
+                .ui.info.icon.floating.message
+                    i.info.icon
+                    .content
+                        .header #{currentUser.users_customer.parent_franchisee.parent_office.office_name} Message
+                        p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
         .row
             .sixteen.wide.column
                 +my_office_contacts
@@ -18,7 +21,7 @@ template(name='dashboard')
                 h2.ui.header
                     // i.exclamation.circle.icon
                     +iconlarge name='error'
-                    | My #{currentUser.users_customer.cust_name}'s Incidents
+                    | #{currentUser.users_customer.cust_name}'s Incidents
                 table.ui.basic.striped.table
                     thead
                         tr
@@ -44,9 +47,8 @@ template(name='dashboard')
             with currentUser.users_customer.parent_franchisee
                 .sixteen.wide.column
                     h2.ui.header 
-                        // i.car.icon
-                        +iconlarge name='collaborator-female'
-                        |My #{franchisee} Franchisee Contact
+                        +iconlarge name='client-company'
+                        |#{franchisee} Franchisee Contact
                     table.ui.sortable.striped.table
                         tbody
                             tr
@@ -62,7 +64,7 @@ template(name='dashboard')
             .sixteen.wide.column
                 h2.ui.header 
                     +iconlarge name='organization'
-                    |My #{currentUser.users_customer.parent_franchisee.parent_office.office_name} Contacts
+                    |#{currentUser.users_customer.parent_franchisee.parent_office.office_name} Contacts
                 table.ui.sortable.striped.table
                     tbody
                         each office_contacts
@@ -135,7 +137,7 @@ template(name='my_cleaning_schedule')
     .ui.fluid.accordion
         .active.title
             h2.ui.header 
-                |My Cleaning Schedule
+                |Cleaning Schedule
                 i.dropdown.icon
         .active.content
             #cleaning_schedule
@@ -144,11 +146,11 @@ template(name='my_cleaning_schedule')
         
 template(name='my_office_contacts')
     h2.ui.header 
-        +iconlarge name='add-contact-to-company'
+        +iconlarge name='contacts'
         // i.large.icons
         //     i.users.icon
         //     i.corner.building.icon
-        |My Office Contacts
+        |Office Contacts
     .ui.four.stackable.centered.cards
         each crew
             .ui.card

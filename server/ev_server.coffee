@@ -91,7 +91,7 @@ Meteor.methods
             if err then console.error('errors',err)
             else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                console.dir json_result.HISTORY.PROBLEM_RECORD
+                # console.dir json_result.HISTORY.PROBLEM_RECORD
                 # new_id = Docs.insert 
                 # console.log 'new id', new_id
             if json_result.HISTORY.PROBLEM_RECORD

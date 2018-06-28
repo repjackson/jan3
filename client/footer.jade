@@ -12,14 +12,7 @@ template(name='footer')
                         .sitemap_list.item Contact Us
                         .sitemap_list.item Legal/ Privacy Policy
                         .sitemap_list.item demo login: demo/password
-                    .ui.inverted.header 
-                        +icon name='user-shield'
-                        |Role Switcher
-                    .ui.button Admin
-                    .ui.button Officer
-                    .ui.button Office Owner
-                    .ui.button Customer
-                    .ui.button Franchisee
+                    +role_switcher
                 .four.wide.column
                     +my_customer_account
                 .four.wide.column
@@ -31,3 +24,11 @@ template(name='footer')
                     +icon name='copyright'
                     | 2018 Jan-Pro
         
+        
+template(name='role_switcher')
+    .ui.inverted.header 
+        +icon name='user-shield'
+        |Role Switcher
+    each role_docs
+        .change_role.ui.button
+            |#{name}

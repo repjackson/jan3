@@ -55,7 +55,7 @@
     "bootstrap3": false,
     "chubby": false,
     "classic": false,
-    "colored": false,
+    "colored": true,
     "default": true,
     "duo": false,
     "fixed": false,

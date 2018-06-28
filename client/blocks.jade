@@ -36,8 +36,8 @@ template(name='edit_button')
         // | Edit
 
 template(name='view_button')
-    a(href="/view/#{_id}" title='View Details') 
-        +icon name='view-details'
+    a(href="/view/#{_id}" data-content='View Details') 
+        +icon name='details-pane'
         // i.right.chevron.large.icon
         
 template(name='view_user_button')
@@ -535,7 +535,7 @@ template(name='message_button')
 template(name='my_customer_account')
     .ui.secondary.segment
         .ui.header 
-            // +icon name='customer-support'
+            +icon name='customer-support'
             |Customer Account
         if currentUser.users_customer
             with currentUser.users_customer
@@ -560,7 +560,7 @@ template(name='my_customer_account')
 template(name='user_office_card')
     .ui.secondary.segment
         .ui.header 
-            // +icon name='link-company-parent'
+            +icon name='building'
             |Office
         if currentUser.users_customer.parent_franchisee.parent_office
             with currentUser.users_customer.parent_franchisee.parent_office
@@ -575,7 +575,7 @@ template(name='user_office_card')
 template(name='user_franchise_card')
     .ui.secondary.segment
         .ui.header 
-            // +icon name='collaborator-female'
+            +icon name='client-company'
             |Franchisee
         if currentUser.users_customer.parent_franchisee
             with currentUser.users_customer.parent_franchisee
@@ -592,12 +592,12 @@ template(name='user_franchise_card')
 template(name='toggle_boolean_checkbox')      
     .ui.form
         .field
-            .ui.toggle.checkbox
+            .ui.slider.checkbox
                 input(type='checkbox' name=key checked=key_value)
                 label #{label}
 
 template(name='radio_item')      
     .field
-        .ui.toggle.checkbox
+        .ui.slider.checkbox
             input(type="radio" name=key value=value checked=key_value)
             label #{label}
