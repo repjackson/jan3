@@ -81,10 +81,10 @@ template(name='history')
                     i.hashtag.icon
                     | EV History
             .four.wide.column
-                .refresh_history.ui.icon.button(title='Run History API Call')
-                    i.refresh.icon
+                // .refresh_history.ui.icon.button(title='Run History API Call')
+                //     i.refresh.icon
                 .run_timestamp_search.ui.icon.button(title='Run Search Update')
-                    i.calendar.icon
+                    i.refresh.icon
             
         .row
             .sixteen.wide.column
@@ -198,10 +198,10 @@ template(name='franchisees')
     .ui.padded.stackable.grid
         .middle.aligned.row
             .four.wide.column
-                +link_button link='/admin' label='Admin'
+                +link_button link='/admin' label='Admin' icon='user-shield'
             .eight.wide.column
                 h1.ui.center.aligned.header
-                    +iconlarge name='collaborator-female'
+                    +icon name='collaborator-female'
                     | Franchisees
             .four.wide.column
                 // if is_dev
@@ -262,7 +262,7 @@ template(name='customers')
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    +iconlarge name='customer-support'
+                    +icon name='customer-support'
                     | Customers
             .three.wide.right.aligned.column
                 if is_dev

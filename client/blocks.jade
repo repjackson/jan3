@@ -450,9 +450,9 @@ template(name='dusk_icon')
     img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
 template(name='icon')
-    img.ui.mini.image(src="https://png.icons8.com/dusk/80/000000/#{name}.png" class=classes)
+    img.ui.mini.image(src="https://png.icons8.com/office/80/000000/#{name}.png" class=classes)
 template(name='iconlarge')
-    img.ui.image(src="https://png.icons8.com/dusk/60/000000/#{name}.png")
+    img.ui.image(src="https://png.icons8.com/office/60/000000/#{name}.png")
 template(name='iconsmall')
     img.ui.image(src="https://png.icons8.com/ultraviolet/30/000000/#{name}.png")
 
@@ -537,57 +537,56 @@ template(name='my_customer_account')
         .ui.header 
             +icon name='customer-support'
             |Customer Account
-        if currentUser.users_customer
-            with currentUser.users_customer
-                .content
-                    a(href="/view/#{_id}")
-                        h4.ui.header #{ev.CUST_NAME}
-                .content
-                    .ui.list
-                        .item ##{ev.ID}
-                        .item #{ev.CUST_CONT_PERSON}
-                        .item #{ev.CUST_CONTACT_EMAIL}
-                        .item #{ev.TELEPHONE}
-                        .item #{ev.ADDR_STREET}
-                        .item #{ev.ADDR_STREET_2}
-                        .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                // .content
-                //     div Franchisee
-                //         strong #{ev.FRANCHISEE}
-                //     div Office
-                //         strong #{ev.MASTER_LICENSEE}
+        with currentUser.users_customer
+            .content
+                a(href="/view/#{_id}")
+                    h4.ui.header #{ev.CUST_NAME}
+            .content
+                .ui.list
+                    .item ##{ev.ID}
+                    .item #{ev.CUST_CONT_PERSON}
+                    .item #{ev.CUST_CONTACT_EMAIL}
+                    .item #{ev.TELEPHONE}
+                    .item #{ev.ADDR_STREET}
+                    .item #{ev.ADDR_STREET_2}
+                    .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+            // .content
+            //     div Franchisee
+            //         strong #{ev.FRANCHISEE}
+            //     div Office
+            //         strong #{ev.MASTER_LICENSEE}
 
 template(name='user_office_card')
     .ui.secondary.segment
-        .ui.header 
-            +icon name='building'
-            |Office
-        if currentUser.users_customer.parent_franchisee.parent_office
-            with currentUser.users_customer.parent_franchisee.parent_office
-                .content
-                    a(href="/view/#{_id}")
-                        h4.ui.header #{office_name}
-                .content
-                    | #{address}
-                .content
-                    a(href="tel:#{telephone}") #{telephone}
+        with currentUser.users_customer.parent_franchisee.parent_office
+            a(href="/view/#{_id}")
+                .ui.header 
+                    +icon name='building'
+                    |Office
+            .content
+                a(href="/view/#{_id}")
+                    h4.ui.header #{office_name}
+            .content
+                | #{address}
+            .content
+                a(href="tel:#{telephone}") #{telephone}
         
 template(name='user_franchise_card')
     .ui.secondary.segment
-        .ui.header 
-            +icon name='client-company'
-            |Franchisee
-        if currentUser.users_customer.parent_franchisee
-            with currentUser.users_customer.parent_franchisee
-                .content
-                    a(href="/view/#{_id}")
-                        h4.ui.header #{franchisee}
-                .content
-                    .ui.list
-                        .item(title='Short Name') #{ev.FRANCH_NAME}
-                        .item(title='Call Number')
-                            a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
-                        .item #{franchisee_email}
+        with currentUser.users_customer.parent_franchisee
+            a(href="/view/#{_id}")
+                .ui.header 
+                    +icon name='conference'
+                    |Franchisee
+            .content
+                a(href="/view/#{_id}")
+                    h4.ui.header #{franchisee}
+            .content
+                .ui.list
+                    .item(title='Short Name') #{ev.FRANCH_NAME}
+                    .item(title='Call Number')
+                        a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
+                    .item #{franchisee_email}
                     
 template(name='toggle_boolean_checkbox')      
     .ui.form

@@ -168,14 +168,14 @@ Meteor.methods
         res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
-                user_id: 'JPI'
-                password: 'JPI'
+                user_id:'JAN-HUB'
+                password:'j@NhU8'
                 statevar: 'search'
                 page_length: 100
                 record_start: 1
                 record_count: 100
                 username_display: 'ID'
-                timestamp: "'2018-06-01'-'2018-06-23'"
+                timestamp: "'2018-06-05'-'2018-06-29'"
         # console.log res
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)

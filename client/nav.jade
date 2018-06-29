@@ -1,16 +1,20 @@
 template(name='nav')
-    #nav.ui.inverted.top.attached.large.menu
+    #nav.ui.inverted.top.attached.menu
         a.toggle_left_sidebar.item 
-            +icon name='menu'
+            i.large.icon
+                +icon name='menu'
         a.item(href='/')
             // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            +icon name='dashboard'
+            i.large.icon
+                +icon name='dashboard'
             | &nbsp; Dashboard
         a.mobile.hidden.item(href='/users')
-            +icon name='groups'
+            i.large.icon
+                +icon name='groups'
             | &nbsp; Users
         a.mobile.hidden.item(href='/incidents')
-            +icon name='error'
+            i.large.icon
+                +icon name='error'
             | &nbsp; Incidents
         if is_admin
             a.mobile.hidden.item(href='/offices')
@@ -29,17 +33,17 @@ template(name='nav')
                 i.large.icon
                     +icon name='broom'
                 | Services
-            a.mobile.hidden.large.icon.icon.item(href='/schedule' data-position="bottom center" data-content='Schedule')
-                i.calendar.large.icon
-                | Schedule
-            .mobile.hidden.icon.item
-                .ui.large.icon.transparent.inverted.disabled.input
-                    input(type='text' placeholder='Search...')
-                    i.search.large.icon
+            // a.mobile.hidden.large.icon.icon.item(href='/schedule' data-position="bottom center" data-content='Schedule')
+            //     i.calendar.large.icon
+            //     | Schedule
+            // .mobile.hidden.icon.item
+            //     .ui.large.icon.transparent.inverted.disabled.input
+            //         input(type='text' placeholder='Search...')
+            //         i.search.large.icon
         .right.menu
-            a.item(href='/admin')
-                +icon name='user-shield'
-                | &nbsp; Admin
+            if is_admin
+                a.item(href='/admin')
+                    | &nbsp; Admin
             // a.mobile.hidden.icon.item(href='/dev' data-position="bottom center" data-content='Dev')
             //     i.terminal.large.icon
                 // | Dev

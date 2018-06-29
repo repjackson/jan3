@@ -20,7 +20,7 @@ template(name='dashboard')
             .sixteen.wide.column
                 h2.ui.header
                     // i.exclamation.circle.icon
-                    +iconlarge name='error'
+                    +icon name='error'
                     | #{currentUser.users_customer.cust_name}'s Incidents
                 table.ui.basic.striped.table
                     thead
@@ -47,7 +47,7 @@ template(name='dashboard')
             with currentUser.users_customer.parent_franchisee
                 .sixteen.wide.column
                     h2.ui.header 
-                        +iconlarge name='client-company'
+                        +icon name='conference'
                         |#{franchisee} Franchisee Contact
                     table.ui.sortable.striped.table
                         tbody
@@ -63,7 +63,7 @@ template(name='dashboard')
         .row
             .sixteen.wide.column
                 h2.ui.header 
-                    +iconlarge name='organization'
+                    +icon name='organization'
                     |#{currentUser.users_customer.parent_franchisee.parent_office.office_name} Contacts
                 table.ui.sortable.striped.table
                     tbody
@@ -85,7 +85,7 @@ template(name='dashboard')
                 .ui.secondary.segment
                     h2.ui.header 
                         // i.paint.brush.icon
-                        +iconlarge name='broom'
+                        +icon name='broom'
                         |Services Overview
                     with currentUser.users_customer
                         .ui.list
@@ -146,7 +146,7 @@ template(name='my_cleaning_schedule')
         
 template(name='my_office_contacts')
     h2.ui.header 
-        +iconlarge name='contacts'
+        +icon name='contacts'
         // i.large.icons
         //     i.users.icon
         //     i.corner.building.icon

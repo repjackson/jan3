@@ -9,7 +9,7 @@ template(name='incidents')
                     .ui.secondary.segment Add Office to Profile to Add Incident
             .ten.wide.column
                 h2.ui.center.aligned.header 
-                    +iconlarge name='error'
+                    +icon name='error'
                     | Incidents
             .three.wide.column
         .row
@@ -31,7 +31,8 @@ template(name='incidents')
                         each incident_docs
                             tr
                                 // td #{incident_number}
-                                td #{incident_type}
+                                td
+                                    +incident_type_label
                                 td #{when}
                                 td #{incident_details}
                                 td #{current_level}
