@@ -43,6 +43,8 @@ template(name='nav')
         .right.menu
             if is_admin
                 a.item(href='/admin')
+                    i.large.icon
+                        +icon name='user-shield'
                     | &nbsp; Admin
             // a.mobile.hidden.icon.item(href='/dev' data-position="bottom center" data-content='Dev')
             //     i.terminal.large.icon
@@ -97,7 +99,7 @@ template(name='left_sidebar')
         //     | Services
         a.toggle_left_sidebar.item(href='/franchisees') Franchisees
         a.toggle_left_sidebar.item(href='/customers') Customers
-        a.toggle_left_sidebar.item(href='/ev') ExtraView
+        a.toggle_left_sidebar.item(href='/admin') Admin
         .ui.divider
         a.toggle_left_sidebar.item(href='/roles') Roles
         a.toggle_left_sidebar.item(href='/feed') Feed

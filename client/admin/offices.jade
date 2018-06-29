@@ -8,7 +8,8 @@ template(name='offices')
                     // +iconlarge name='building'
                     |Offices
             .three.wide.column
-                // if is_dev
+                if is_dev
+                    +call_method name='sync_offices'
                 //     .ui.header upload office list
                 //     unless uploading
                 //         input(type="file" name="upload_csv")
@@ -20,20 +21,35 @@ template(name='offices')
                 table.ui.celled.very.basic.table
                     thead
                         tr
+                            th JPID
                             th Name
                             th Phone
+                            th Address
+                            th Address
+                            th Address
+                            th Address
+                            th Address
+                            th Address
                             th Address
                             th
                     tbody
                         each office_docs
                             tr
-                                td #{office_name}
-                                td #{telephone}
-                                td #{address}
+                                td #{ev.ID}
+                                td #{ev.MASTER_OFFICE_NAME}
+                                td #{ev.MASTER_OFFICE_MANAGER}
+                                td #{ev.MASTER_LICENSEE}
+                                td #{ev.MASTER_OFFICE_OWNER}
+                                td #{ev.MASTER_OFFICENAME}
+                                // td #{ev.PROJECT}
+                                // td #{ev.TIMESTAMP}
+                                td #{ev.TELEPHONE}
+                                td #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE}
+                                td #{ev.MASTER_COUNTRY}
                                 td 
                                     +view_button
 
-                    
+
                     
 template(name='office_view')
     .ui.padded.stackable.grid

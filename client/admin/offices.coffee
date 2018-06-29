@@ -7,8 +7,7 @@ Template.offices.helpers
     office_docs: ->  
         Docs.find 
             type: "office"
-    
-    
+
 Template.office_view.onRendered ->
     Meteor.setTimeout ->
         $('.ui.tabular.menu .item').tab()
