@@ -54,7 +54,13 @@ Meteor.methods
                 statevar:'get_user_info'
                 login_id: username
                 # console.log 'new id', new_id
-        console.log res
+        # console.log res.content
+        # console.log 'doesnt include'
+        if res.content.includes("denied")
+            console.log 'no'
+            throw new Meteor.Error('permission denied', "Permission denied to get user")
+        else
+            console.log 'doesnt include'
         split_res = res.content.split '\r\n'
         # console.log typeof split_res
         save_json = {}
@@ -65,7 +71,7 @@ Meteor.methods
         # console.log save_json
         Meteor.users.update user_doc._id,
             $set: ev: save_json
-        console.log 'updated', user_doc.username 
+        # console.log 'updated', user_doc.username 
 
 
 
@@ -147,8 +153,6 @@ Meteor.methods
                         if value == undefined then '' else value
                     )
                     # console.dir updatedList
-
-                    
                     existing_jpid = 
                         Docs.findOne 
                             type: 'jpid'

@@ -25,6 +25,7 @@ Template.users.helpers
 Template.user_view.events
     'click .get_user_info': ->
         Meteor.call 'get_user_info', FlowRouter.getParam('username'), (err,res)->
-            if err then console.error err
+            if err 
+                Bert.alert "#{err.reason}", 'danger', 'growl-top-right'
             # else
                 # console.dir res
