@@ -9,8 +9,13 @@ template(name='incidents')
                     .ui.secondary.segment Add Office to Profile to Add Incident
             .ten.wide.column
                 h2.ui.center.aligned.header 
-                    +icon name='error'
-                    | Incidents
+                    if is_customer
+                        +icon name='error'
+                        | My Incidents
+                    if is_admin
+                        | All Incidents
+                    if is_officer
+                        | Office Incidents
             .three.wide.column
         .row
             .sixteen.wide.column
@@ -61,35 +66,39 @@ template(name='incident_view')
                 // if is_dev
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
-                unless submitted
-                    +edit_date_field key='service_date' label='Service Date' icon='leave'
+                unless is_customer
+                    unless submitted
+                        +edit_date_field key='service_date' label='Service Date' icon='leave'
+                    else
+                        .ui.header Date: #{service_date}
                 else
                     .ui.dividing.header 
                         +icon name='leave'
                         |Date
                     |#{service_date}
-                        
-                +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
-                +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
+                unless is_customer
+                    +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
+                    +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
                 if submitted
                     .ui.dividing.header Level #{current_level}
-                    unless is_closed
-                        if can_set_to_one
-                            .set_level_one.ui.button Set 1
-                        else
-                            .ui.disabled.button Set 1
-                        if can_set_to_two
-                            .set_level_two.ui.button Set 2
-                        else
-                            .ui.disabled.button Set 2
-                        if can_set_to_three
-                            .set_level_three.ui.button Set 3
-                        else
-                            .ui.disabled.button Set 3
-                        if can_set_to_four
-                            .set_level_four.ui.button Set 4
-                        else
-                            .ui.disabled.button Set 4
+                    unless is_customer
+                        unless is_closed
+                            if can_set_to_one
+                                .set_level_one.ui.button Set 1
+                            else
+                                .ui.disabled.button Set 1
+                            if can_set_to_two
+                                .set_level_two.ui.button Set 2
+                            else
+                                .ui.disabled.button Set 2
+                            if can_set_to_three
+                                .set_level_three.ui.button Set 3
+                            else
+                                .ui.disabled.button Set 3
+                            if can_set_to_four
+                                .set_level_four.ui.button Set 4
+                            else
+                                .ui.disabled.button Set 4
                     .ui.dividing.header Status
                     +toggle_key key='status' value='closed' label='Closed'
                     +toggle_key key='status' value='open' label='Open'
@@ -129,9 +138,10 @@ template(name='incident_view')
                         |Type
                     each incident_type_docs
                         +toggle_key key='incident_type' value=slug label=name
-                if submitted
-                    +incident_tasks
-                +notify_button
+                unless is_customer
+                    if submitted
+                        +incident_tasks
+                    +notify_button
         
 
 template(name='edit_priority_field')

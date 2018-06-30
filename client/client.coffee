@@ -33,6 +33,12 @@ Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getParam('doc_id')
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 
+Template.registerHelper 'nav_class', () -> 
+    if Meteor.user() and Meteor.user().roles and 'customer' in Meteor.user().roles then 'blue' else 'nav_bar'
+
+Template.registerHelper 'footer_class', () ->
+    if Meteor.user() and Meteor.user().roles and 'customer' in Meteor.user().roles then 'blue' else 'footer_area'
+
 Template.registerHelper 'from_now', (date) -> moment(date).fromNow()
 
 Template.registerHelper 'formal_when', () -> moment(@timestamp).format('MMMM Do YYYY, h:mm:ss a')
