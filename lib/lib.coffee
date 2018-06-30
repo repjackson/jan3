@@ -80,7 +80,7 @@ Docs.helpers
         # attached to franchisee
         Docs.findOne
             type:'office'
-            office_name: @ev.MASTER_LICENSEE
+            "ev.MASTER_OFFICE_NAME": @ev.MASTER_LICENSEE
 
 
 Meteor.methods

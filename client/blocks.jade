@@ -533,11 +533,12 @@ template(name='message_button')
 
                 
 template(name='my_customer_account')
-    .ui.secondary.segment
-        .ui.header 
-            +icon name='customer-support'
-            |Customer Account
+    .ui.card
         with currentUser.users_customer
+            .content
+                a.ui.header(href="/view/#{_id}")
+                    +icon name='customer-support'
+                    |Customer Account
             .content
                 a(href="/view/#{_id}")
                     h4.ui.header #{ev.CUST_NAME}
@@ -557,27 +558,29 @@ template(name='my_customer_account')
             //         strong #{ev.MASTER_LICENSEE}
 
 template(name='user_office_card')
-    .ui.secondary.segment
+    .ui.card
         with currentUser.users_customer.parent_franchisee.parent_office
-            a(href="/view/#{_id}")
-                .ui.header 
-                    +icon name='building'
-                    |Office
             .content
                 a(href="/view/#{_id}")
-                    h4.ui.header #{office_name}
+                    .ui.header 
+                        +icon name='building'
+                        |Office
             .content
-                | #{address}
+                a(href="/view/#{_id}")
+                    h4.ui.header #{ev.MASTER_OFFICE_NAME}
             .content
-                a(href="tel:#{telephone}") #{telephone}
+                | #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+            .content
+                a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
         
 template(name='user_franchise_card')
-    .ui.secondary.segment
+    .ui.card
         with currentUser.users_customer.parent_franchisee
-            a(href="/view/#{_id}")
-                .ui.header 
-                    +icon name='conference'
-                    |Franchisee
+            .content
+                a(href="/view/#{_id}")
+                    .ui.header 
+                        +icon name='conference'
+                        |Franchisee
             .content
                 a(href="/view/#{_id}")
                     h4.ui.header #{franchisee}

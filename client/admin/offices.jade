@@ -5,7 +5,7 @@ template(name='offices')
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    // +iconlarge name='building'
+                    +icon name='building'
                     |Offices
             .three.wide.column
                 if is_dev
@@ -18,34 +18,27 @@ template(name='offices')
         .row
             .sixteen.wide.column
                 // |{{> tabular table=TabularTables.Offices selector=selector class="ui sortable striped fluid very basic table"}}
-                table.ui.celled.very.basic.table
+                table.ui.celled.striped.basic.table
                     thead
                         tr
                             th JPID
                             th Name
+                            th Manager
+                            th Owner
                             th Phone
                             th Address
-                            th Address
-                            th Address
-                            th Address
-                            th Address
-                            th Address
-                            th Address
-                            th
+                            th View
                     tbody
                         each office_docs
                             tr
                                 td #{ev.ID}
                                 td #{ev.MASTER_OFFICE_NAME}
-                                td #{ev.MASTER_OFFICE_MANAGER}
-                                td #{ev.MASTER_LICENSEE}
-                                td #{ev.MASTER_OFFICE_OWNER}
-                                td #{ev.MASTER_OFFICENAME}
-                                // td #{ev.PROJECT}
-                                // td #{ev.TIMESTAMP}
+                                td 
+                                    a(href="/user/#{ev.MASTER_OFFICE_MANAGER}") #{ev.MASTER_OFFICE_MANAGER}
+                                td 
+                                    a(href="/user/#{ev.MASTER_OFFICE_OWNER}") #{ev.MASTER_OFFICE_OWNER}
                                 td #{ev.TELEPHONE}
-                                td #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE}
-                                td #{ev.MASTER_COUNTRY}
+                                td #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                                 td 
                                     +view_button
 
@@ -57,20 +50,27 @@ template(name='office_view')
             .three.wide.column
                 +link_button link='/offices' icon='building' label='Offices'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header #{office_name} Office
+                h1.ui.center.aligned.grey.header #{ev.MASTER_OFFICE_NAME} Office
             .three.wide.right.aligned.column
                 // +edit_button
         .row
             .sixteen.wide.column
                 .ui.secondary.segment
-                    .ui.header Office Name: #{office_name}
-                    // .ui.header Display Name: #{display_name}
-                    .ui.header 
-                        i.telephone.icon
-                        |#{telephone}
-                    .ui.header 
-                        i.location.icon
-                        |#{address}
+                    .ui.list
+                        .item ID
+                            strong #{ev.ID}
+                        .item Office Name
+                            strong #{ev.MASTER_OFFICE_NAME}
+                        .item Office Manager
+                            strong #{ev.MASTER_OFFICE_MANAGER}
+                        .item Office Owner
+                            strong #{ev.MASTER_OFFICE_OWNER}
+                        .item Last Updated
+                            strong #{ev.TIMESTAMP}
+                        .item Phone
+                            strong #{ev.TELEPHONE}
+                        .item Address 
+                            strong #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                 .ui.top.attached.tabular.five.item.stackable.menu
                     a.active.item(data-tab='office_settings') 
                         +icon name='administrative-tools'
@@ -82,7 +82,7 @@ template(name='office_view')
                         +icon name='groups'
                         | &nbsp; Employees
                     a.item(data-tab='franchisees') 
-                        +icon name='client-company'
+                        +icon name='conference'
                         | &nbsp; Franchisees
                     a.item(data-tab='customers') 
                         +icon name='customer-support'

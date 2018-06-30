@@ -154,7 +154,7 @@ Meteor.publish 'office_by_franchisee', (franch_id)->
     if franch_doc.ev
         found = Docs.find
             type:'office'
-            office_name:franch_doc.ev.MASTER_LICENSEE
+            "ev.MASTER_OFFICE_NAME":franch_doc.ev.MASTER_LICENSEE
         # console.log found.count()
         return found
         
