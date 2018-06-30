@@ -22,9 +22,9 @@ template(name='user_view')
                         +jsonView json=ev
                     +users_feed
                 .four.wide.column
-                    .ui.header Roles
-                    each roles
-                        .ui.large.basic.label #{this}
+                    .ui.header Role
+                        each roles
+                            .ui.basic.label #{this}
                     +my_customer_account
                     .ui.header user comments
                     .ui.header user assigned to incidents

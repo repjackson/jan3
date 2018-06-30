@@ -78,6 +78,7 @@ Docs.helpers
     
     parent_office: ->
         # attached to franchisee
+        # console.log @
         Docs.findOne
             type:'office'
             "ev.MASTER_OFFICE_NAME": @ev.MASTER_LICENSEE

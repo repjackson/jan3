@@ -14,11 +14,14 @@ template(name='footer')
                     //     .sitemap_list.item demo login: demo/password
                     +role_switcher
                 .four.wide.column
-                    +my_customer_account
+                    if is_customer
+                        +my_customer_account
                 .four.wide.column
-                    +user_franchise_card
+                    if is_customer
+                        +user_franchise_card
                 .four.wide.column
-                    +user_office_card
+                    if is_customer
+                        +user_office_card
             .centered.row
                 .ui.center.aligned.inverted.grey.header
                     +icon name='copyright'
@@ -30,5 +33,5 @@ template(name='role_switcher')
         +icon name='user-shield'
         |Role Switcher
     each role_docs
-        .change_role.ui.button
+        .change_role.ui.button(class=role_button_class)
             |#{name}

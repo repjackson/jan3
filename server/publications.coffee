@@ -219,7 +219,7 @@ publishComposite 'me', ()->
                         find: (customer)-> 
                             # grandparent office
                             Docs.find
-                                office_name: customer.master_licensee
+                                "ev.MASTER_OFFICE_NAME": customer.master_licensee
                                 type:'office'
                         children: [
                             {
@@ -227,7 +227,7 @@ publishComposite 'me', ()->
                                     # offices users
                                     # console.log 'query users from office doc', office
                                     Meteor.users.find
-                                        "profile.office_name": office.office_name
+                                        "profile.office_name": office.ev.MASTER_OFFICE_NAME
                             }
                         ]
                     }

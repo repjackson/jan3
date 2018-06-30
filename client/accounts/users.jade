@@ -58,29 +58,16 @@ template(name='franchise_by_customer')
     .ui.dividing.header 
         +icon name='collaborator-female'
         |#{ev.CUST_NAME}'s Franchisee
-    table.ui.celled.very.basic.table
-        thead
-            tr
-                th jpid
-                th franchisee
-                th ev.FRANCH_NAME
-                th ev.TELE_CELL
-                th franchisee_email
-                th ev.MASTER_LICENSEE
-                th Office Name
-                th
-        tbody
-            each all_user_objects
-                tr
-                    td #{jpid}
-                    td #{username}
-                    td #{profile.first_name}
-                    td #{profile.last_name}
-                    // td #{ev.JOB_TITLE}
-
-                    // td #{ev.JOB_TITLE}
-                    // td #{ev.WORK_TELEPHONE}
-                    td #{email}
-                    td #{profile.office_name}
-                    td 
-                        +view_user_button
+        .ui.list
+            td #{jpid}
+            td #{username}
+            td #{profile.first_name}
+            td #{profile.last_name}
+            // td #{ev.JOB_TITLE}
+    
+            // td #{ev.JOB_TITLE}
+            // td #{ev.WORK_TELEPHONE}
+            td #{email}
+            td #{profile.office_name}
+            td 
+                +view_user_button

@@ -6,9 +6,14 @@ Template.role_switcher.helpers
         Docs.find 
             type: 'role'
 
+    role_button_class: ->
+        if Meteor.user() and Meteor.user().roles and @name in Meteor.user().roles then 'blue' else ''
+
+
+
 Template.role_switcher.events
     'click .change_role': ->
         cursor = Docs.find(type:'role').fetch()
-        console.log @
+        # console.log @
         Meteor.users.update Meteor.userId(),
             $set: roles: [@name]
