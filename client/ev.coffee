@@ -91,38 +91,3 @@ Template.franchisees.events
 Template.franchisee_view.onCreated ->
     @autorun => Meteor.subscribe 'office_by_franchisee', FlowRouter.getParam('doc_id')
 
-
-
-# customer
-FlowRouter.route '/customers', 
-    action: -> BlazeLayout.render 'layout', main: 'customers'
-    
-Template.customers.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'customer'
-Template.customers.helpers
-    customer_docs: ->  
-        Docs.find 
-            type: "customer"
-    
-Template.customers.events
-    'click .sync_customers': ->
-        Meteor.call 'sync_customers',(err,res)->
-            if err then console.error err
-
-
-Template.related_customers.helpers
-    selector: ->  
-        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        return {
-            type: "customer"
-            franchisee: page_doc.franchisee
-        }
-            
-Template.franchise_by_customer.helpers
-    selector: ->  
-        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        return {
-            type: "franchisee"
-            franchisee: page_doc.franchisee
-        }
-            

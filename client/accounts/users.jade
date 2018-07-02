@@ -54,20 +54,3 @@ template(name='users')
                     //                     i.right.chevron.icon
                                 
                                 
-template(name='franchise_by_customer')                                
-    .ui.dividing.header 
-        +icon name='collaborator-female'
-        |#{ev.CUST_NAME}'s Franchisee
-        .ui.list
-            td #{jpid}
-            td #{username}
-            td #{profile.first_name}
-            td #{profile.last_name}
-            // td #{ev.JOB_TITLE}
-    
-            // td #{ev.JOB_TITLE}
-            // td #{ev.WORK_TELEPHONE}
-            td #{email}
-            td #{profile.office_name}
-            td 
-                +view_user_button

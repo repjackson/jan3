@@ -2,6 +2,10 @@ FlowRouter.route '/incidents',
     action: ->
         BlazeLayout.render 'layout', main: 'incidents'
 
+FlowRouter.route '/customer_incidents', 
+    action: ->
+        BlazeLayout.render 'layout', main: 'customer_incidents'
+
 
 Template.incidents.events
     'click #add_incident': ->
@@ -50,11 +54,14 @@ Template.incident_type_label.helpers
 
 Template.incidents.onCreated ->
     @autorun => Meteor.subscribe 'type', 'incident'
+
 Template.incidents.helpers
     incident_docs: ->  
         Docs.find 
             type: "incident"
 
+Template.customer_incidents.helpers
+    customer_incidents: -> Docs.find type:'incident'
 
 Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'docs', [], 'incident_type'

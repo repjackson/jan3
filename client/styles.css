@@ -2,7 +2,7 @@
         margin-top: 12px;
 }
 
-.nav_bar.ui.inverted.menu {
+.nav_bar.ui.menu {
   /*border: 0px solid transparent; */
   border: none !important; 
   /*background: #01336C; //dark blue*/
@@ -42,7 +42,7 @@ body {
   bottom: 0;
   width: 100%;
   margin: 0 !important;
-  background: rgb(31, 112, 158);
+  background: rgb(31, 112, 158) !important;
 }
 .footer_area .sitemap_list{
   color:white !important;

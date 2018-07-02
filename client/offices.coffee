@@ -8,7 +8,7 @@ Template.offices.helpers
         Docs.find 
             type: "office"
 
-Template.office_view.onRendered ->
+Template.office_admin_section.onRendered ->
     Meteor.setTimeout ->
         $('.ui.tabular.menu .item').tab()
     , 500
@@ -21,7 +21,7 @@ Template.office_view.onCreated ->
     @autorun -> Meteor.subscribe 'office', FlowRouter.getParam('doc_id')
 
     
-Template.office_view.helpers
+Template.office_admin_section.helpers
     office_customers_selector: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
         return {

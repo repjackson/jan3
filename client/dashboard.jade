@@ -6,43 +6,20 @@ template(name='dashboard')
             h2.ui.inverted.header Customer Portal
         +customer_menu
     .ui.padded.stackable.grid
-        .row
-            .ui.container
-                .ui.info.icon.floating.message
-                    i.info.icon
-                    .content
-                        .header #{currentUser.users_customer.parent_franchisee.parent_office.office_name} Message
-                        p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
+        if currentUser.users_customer.parent_franchisee.parent_office.customer_message
+            .row
+                .ui.container
+                    .ui.info.icon.floating.message
+                        i.info.icon
+                        .content
+                            .header #{currentUser.users_customer.parent_franchisee.parent_office.office_name} Message
+                            p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
         .row
             .sixteen.wide.column
                 +my_office_contacts
         .row
             .sixteen.wide.column
-                h2.ui.header
-                    // i.exclamation.circle.icon
-                    +icon name='error'
-                    | #{currentUser.users_customer.cust_name}'s Incidents
-                table.ui.basic.striped.table
-                    thead
-                        tr
-                            th Type
-                            th When
-                            th Details
-                            th Level
-                            th History
-                            th Actions
-                    tbody
-                        each customer_incidents
-                            tr
-                                td
-                                    +incident_type_label
-                                td #{when}
-                                td #{incident_details}
-                                td #{current_level}
-                                td
-                                    +small_doc_history
-                                td 
-                                    +view_button
+            +customer_incidents_widget
         .row
             with currentUser.users_customer.parent_franchisee
                 .sixteen.wide.column
@@ -153,8 +130,7 @@ template(name='my_office_contacts')
         |Office Contacts
     .ui.four.stackable.centered.cards
         each crew
-            .ui.card
-                +office_contact_card
+            +office_contact_card
 
 template(name='office_contact_card')
     .ui.card
@@ -171,3 +147,31 @@ template(name='office_contact_card')
                 .item #{ev.JOB_TITLE}
                 
         // +view_button
+
+
+template(name='customer_incidents_widget')
+    h2.ui.header
+        // i.exclamation.circle.icon
+        +icon name='error'
+        | #{currentUser.users_customer.cust_name}'s Incidents
+    table.ui.basic.striped.table
+        thead
+            tr
+                th Type
+                th When
+                th Details
+                th Level
+                th History
+                th Actions
+        tbody
+            each customer_incidents
+                tr
+                    td
+                        +incident_type_label
+                    td #{when}
+                    td #{incident_details}
+                    td #{current_level}
+                    td
+                        +small_doc_history
+                    td 
+                        +view_button
