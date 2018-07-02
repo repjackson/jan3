@@ -2,7 +2,7 @@ Meteor.methods
     sync_ev_users: ()->
         self = @
         
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
             params:
                 user_id:'JAN-HUB'
@@ -46,7 +46,7 @@ Meteor.methods
         # if each_user.ev.LAST_NAME
         #     console.log 'skipping existing ev', each_user.username
         # else 
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
             params:
                 user_id:'JAN-HUB'
@@ -77,7 +77,7 @@ Meteor.methods
 
 
     get_history: () ->
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
             params:
                 user_id:'JAN-HUB'
@@ -132,7 +132,7 @@ Meteor.methods
 
 
     get_jp_id: (jp_id)->
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
             params:
                 user_id:'JAN-HUB'
@@ -169,7 +169,7 @@ Meteor.methods
                             
                             
     search_ev: (query)->
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
                 user_id:'JAN-HUB'
@@ -206,7 +206,7 @@ Meteor.methods
         
 
     get_all_franchisees: () ->
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
                 user_id:'JAN-HUB'
@@ -251,7 +251,7 @@ Meteor.methods
                     #     console.log "added #{doc.FRANCHISEE}"
     
     sync_services: () ->
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
                 user_id:'JAN-HUB'
@@ -294,7 +294,7 @@ Meteor.methods
                         console.log "added #{doc.ID}"
     
     sync_offices: () ->
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
                 user_id:'JAN-HUB'
@@ -302,10 +302,10 @@ Meteor.methods
                 statevar:'run_report'
                 username_display:'ID'
                 api_reverse_lookup:'NO'
-                id:'48262'
-                page_length:'100'
+                id:'48307'
+                page_length:'250'
                 record_start:'1'
-                record_count:'100'
+                record_count:'250'
         # return res.content
         # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
@@ -336,7 +336,7 @@ Meteor.methods
     
     
     sync_customers: () ->
-        res = HTTP.call 'GET',"http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action",
+        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
                 user_id:'JAN-HUB'

@@ -8,8 +8,8 @@ template(name='offices')
                     +icon name='building'
                     |Offices
             .three.wide.column
-                if is_dev
-                    +call_method name='sync_offices'
+                // if is_dev
+                +call_method name='sync_offices'
                 //     .ui.header upload office list
                 //     unless uploading
                 //         input(type="file" name="upload_csv")
@@ -32,7 +32,7 @@ template(name='offices')
                         each office_docs
                             tr
                                 td #{ev.ID}
-                                td #{ev.MASTER_OFFICE_NAME}
+                                td #{ev.MASTER_LICENSEE}
                                 td 
                                     a(href="/user/#{ev.MASTER_OFFICE_MANAGER}") #{ev.MASTER_OFFICE_MANAGER}
                                 td 
@@ -42,7 +42,6 @@ template(name='offices')
                                 td 
                                     +view_button
 
-
                     
 template(name='office_view')
     .ui.padded.stackable.grid
@@ -51,7 +50,7 @@ template(name='office_view')
                 unless is_customer
                     +link_button link='/offices' icon='building' label='Offices'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header #{ev.MASTER_OFFICE_NAME} Office
+                h1.ui.center.aligned.grey.header #{ev.MASTER_LICENSEE} Office
             .three.wide.right.aligned.column
                 // +edit_button
         .row
@@ -61,7 +60,7 @@ template(name='office_view')
                         .item ID
                             strong #{ev.ID}
                         .item Office Name
-                            strong #{ev.MASTER_OFFICE_NAME}
+                            strong #{ev.MASTER_LICENSEE}
                         .item Office Manager
                             strong #{ev.MASTER_OFFICE_MANAGER}
                         .item Office Owner
@@ -277,7 +276,7 @@ template(name='office_admin_section')
                                 else
                                     p Franchisee will not be contacted.
     .ui.bottom.attached.tab.segment(data-tab='franchisees')
-        .ui.center.aligned.header #{ev.MASTER_OFFICE_NAME}'s Franchisees
+        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Franchisees
         // +tabular table=TabularTables.Related_franchisees selector=office_franchisees_selector class="ui sortable fluid striped table"
         table.ui.celled.table
             thead
@@ -301,7 +300,7 @@ template(name='office_admin_section')
                         td 
                             +view_button
     .ui.bottom.attached.tab.segment(data-tab='incidents')
-        .ui.center.aligned.header #{ev.MASTER_OFFICE_NAME}'s Incidents
+        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Incidents
         // +tabular table=TabularTables.Incidents selector=office_incidents_selector class="ui sortable fluid striped table"
         table.ui.basic.striped.table
             thead
@@ -326,7 +325,7 @@ template(name='office_admin_section')
                             +view_button
 
     .ui.bottom.attached.tab.segment(data-tab='employees')
-        .ui.center.aligned.header #{ev.MASTER_OFFICE_NAME}'s Employees
+        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Employees
         table.ui.basic.striped.table
             thead
                 tr
@@ -352,7 +351,30 @@ template(name='office_admin_section')
                             +view_user_button
         // +tabular table=TabularTables.Users selector=office_users_selector class="ui sortable fluid striped table"
     .ui.bottom.attached.tab.segment(data-tab='customers')
-        .ui.center.aligned.header #{ev.MASTER_OFFICE_NAME}'s Customers
+        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Customers
         // +tabular table=TabularTables.Related_customers selector=office_customers_selector class="ui sortable fluid striped table"
+        table.ui.basic.striped.table
+            thead
+                tr
+                    th JPID
+                    th Franchisee
+                    th Customer Name
+                    th Master Licensee
+                    th Contact Person
+                    th Contact Email
+                    th State
+                    th 
+            tbody
+                each office_customers
+                    tr
+                        td #{jpid}
+                        td #{franchisee}
+                        td #{cust_name}
+                        td #{master_licensee}
+                        td #{customer_contact_person}
+                        td #{customer_contact_email}
+                        td #{ev.ADDR_STATE}
+                        td 
+                            +view_user_button
     
 

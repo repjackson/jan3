@@ -22,12 +22,16 @@ Template.office_view.onCreated ->
 
     
 Template.office_admin_section.helpers
+    current_office: ->
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log page_office
+        return page_office
+        
     office_customers_selector: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        return {
+        Docs.find
             type: "customer"
             master_licensee: page_office.office_name
-            }
     
     related_franchisees: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
@@ -35,16 +39,11 @@ Template.office_admin_section.helpers
             type: "franchisee"
             "ev.MASTER_LICENSEE": page_office.office_name
     
-    office_incidents_selector: ->  
+    office_incidents: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        return {
+        Docs.find
             type: "incident"
             "ev.MASTER_LICENSEE": page_office.office_name
-            }
-    
-    office_incidents: ->  
-        Docs.find
-            type: 'incident'
     
     office_employees: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
