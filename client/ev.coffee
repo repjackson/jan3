@@ -80,10 +80,9 @@ FlowRouter.route '/franchisees',
 Template.franchisees.onCreated ->
     @autorun => Meteor.subscribe 'type', 'franchisee'
 Template.franchisees.helpers
-    franchisees_docs: ->  
-        Docs.find 
-            type: "franchisee"
-    
+    franchisees_docs: ->  Docs.find type: "franchisee"
+    current_franchisee_counter: -> Counts.get 'franchisee_counter'
+
 Template.franchisees.events
     'click .get_all_franchisees': ->
         Meteor.call 'get_all_franchisees',(err,res)->

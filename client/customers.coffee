@@ -3,11 +3,11 @@ FlowRouter.route '/customers',
     
 Template.customers.onCreated ->
     @autorun => Meteor.subscribe 'type', 'customer'
+    @autorun -> Meteor.subscribe 'customer_counter_publication'
 Template.customers.helpers
-    customer_docs: ->  
-        Docs.find 
-            type: "customer"
-    
+    customer_docs: ->  Docs.find type: "customer"
+    current_customer_counter: -> Counts.get 'customer_counter'
+
 Template.customers.events
     'click .sync_customers': ->
         Meteor.call 'sync_customers',(err,res)->

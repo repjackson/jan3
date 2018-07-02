@@ -10,15 +10,9 @@ template(name='offices')
             .three.wide.column
                 // if is_dev
                 +call_method name='sync_offices'
-                //     .ui.header upload office list
-                //     unless uploading
-                //         input(type="file" name="upload_csv")
-                //     else
-                //         |Uploading files...
         .row
             .sixteen.wide.column
-                .ui.header Office Count: #{current_office_counter}
-                // |{{> tabular table=TabularTables.Offices selector=selector class="ui sortable striped fluid very basic table"}}
+                h5 Count: #{current_office_counter}
                 table.ui.celled.striped.basic.table
                     thead
                         tr

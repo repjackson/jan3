@@ -8,12 +8,13 @@ template(name='customers')
                     +icon name='customer-support'
                     | Customers
             .three.wide.right.aligned.column
-                if is_dev
-                    .sync_customers(title='Refresh Customers')
-                        i.refresh.icon
+                // if is_dev
+                .sync_customers.ui.icon.button(title='Refresh Customers')
+                    i.refresh.icon
 
         .row
             .sixteen.wide.column
+                h5 Count: #{current_customer_counter}
                 table.ui.celled.table
                     thead
                         tr
@@ -23,23 +24,21 @@ template(name='customers')
                             th Master Licensee
                             th Customer Contact Person
                             th Customer Contact Email
+                            th City
                             th State
                             th
                     tbody
                         each customer_docs
                             tr
-                                td #{cust_name}
-                                td #{jpid}
-                                td #{franchisee}
-                                td #{master_licensee}
-                                td #{customer_contact_person}
-                                td #{customer_contact_email}
+                                td #{ev.MASTER_LICENSEE}
+                                td #{ev.ID}
+                                td #{ev.CUST_CONT_PERSON}
+                                td #{ev.CUST_CONTACT_EMAIL}
+                                td #{ev.ADDR_CITY}
                                 td #{ev.ADDR_STATE}
                                 td 
                                     +view_button
 
-                    
-                    
 template(name='customer_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row

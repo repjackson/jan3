@@ -344,10 +344,10 @@ Meteor.methods
                 statevar:'run_report'
                 username_display:'ID'
                 api_reverse_lookup:'NO'
-                id:'26955'
-                page_length:'6000'
+                id:'48302'
+                page_length:'11900'
                 record_start:'1'
-                record_count:'6000'
+                record_count:'11900'
         # return res.content
         # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
@@ -359,27 +359,20 @@ Meteor.methods
                 # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # console.log doc.CUST_NAME
+                    # console.log doc
                     # doc.type = 'customer'
                     existing_customer_doc = 
                         Docs.findOne 
                             type: 'customer'
-                            jpid: doc.ID
-                            cust_name: doc.CUST_NAME
+                            "ev.ID": doc.ID
+                            "ev.CUST_NAME": doc.CUST_NAME
                     if existing_customer_doc
-                        console.log "existing customer #{existing_customer_doc.cust_name}"
+                        console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
                         # Docs.update existing_customer_doc._id,
                         #     $set:
                         #         ev: doc
                     else                    
                         new_customer_doc = Docs.insert 
                             type: 'customer'
-                            jpid: doc.ID
-                            cust_name: doc.CUST_NAME
-                            master_licensee: doc.MASTER_LICENSEE
-                            customer_contact_person: doc.CUST_CONT_PERSON
-                            customer_contact_email: doc.CUST_CONTACT_EMAIL
-                            telephone: doc.TELEPHONE
-                            franchisee: doc.FRANCHISEE
                             ev: doc
                         console.log "added #{doc.CUST_NAME}"

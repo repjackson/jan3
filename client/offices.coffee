@@ -6,12 +6,8 @@ Template.offices.onCreated ->
     @autorun -> Meteor.subscribe 'office_counter_publication'
 
 Template.offices.helpers
-    current_office_counter: ->
-        Counts.get 'office_counter'
-
-    office_docs: ->  
-        Docs.find 
-            type: "office"
+    current_office_counter: -> Counts.get 'office_counter'
+    office_docs: -> Docs.find type: "office"
 
 Template.office_admin_section.onRendered ->
     Meteor.setTimeout ->

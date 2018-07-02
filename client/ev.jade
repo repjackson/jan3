@@ -9,9 +9,6 @@ template(name='children_widget')
                 each children
                     a.item(href="/view/#{_id}") #{name} #{title} !{html}
     
-    
-      
-      
 template(name='jpid_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
@@ -135,8 +132,6 @@ template(name='history')
                                 td 
                                     +view_button
 
-                // +tabular table=TabularTables.History selector=selector class="ui sortable fluid striped table"
-
                     
 template(name='history_view')
     .ui.padded.stackable.grid
@@ -173,12 +168,6 @@ template(name='history_view')
                         .item EXTRA_SERV_DESC: #{EXTRA_SERV_DESC}
                         .item FULL_TIMESTAMP: #{FULL_TIMESTAMP}
 
-                    
-                    
-
-                    
-              
-            
 template(name='search_history_doc_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
@@ -192,8 +181,6 @@ template(name='search_history_doc_view')
             .sixteen.wide.column
                 +jsonView json=ev
             
-            
-
 template(name='franchisees')
     .ui.padded.stackable.grid
         .middle.aligned.row
@@ -209,7 +196,7 @@ template(name='franchisees')
                 //         +icon name='refresh'
         .row
             .sixteen.wide.column
-                // +tabular table=TabularTables.Franchisees selector=selector class="ui sortable striped very basic fluid table"
+                h5 Count: #{current_franchisee_counter}
                 table.ui.celled.table
                     thead
                         tr
@@ -263,6 +250,3 @@ template(name='office_by_franchisee')
             |#{ev.FRANCHISEE}'s Office
         with parent_office
             a.ui.header(href="/view/#{_id}") #{ev.MASTER_OFFICE_NAME}
-    
-    
-    

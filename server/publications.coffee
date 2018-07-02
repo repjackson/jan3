@@ -92,6 +92,14 @@ Meteor.publish 'office_counter_publication', ->
     Counts.publish this, 'office_counter', Docs.find({type:'office'})
     return undefined
         
+Meteor.publish 'franchisee_counter_publication', ->
+    Counts.publish this, 'franchisee_counter', Docs.find({type:'franchisee'})
+    return undefined
+        
+Meteor.publish 'customer_counter_publication', ->
+    Counts.publish this, 'customer_counter', Docs.find({type:'customer'})
+    return undefined
+        
 
 
 publishComposite 'docs', (selected_tags, type)->
