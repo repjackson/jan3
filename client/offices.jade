@@ -74,6 +74,8 @@ template(name='office_view')
                             strong #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                 unless is_customer 
                     +office_admin_section
+
+
 template(name='office_admin_section')
     .ui.top.attached.tabular.five.item.stackable.menu
         a.active.item(data-tab='office_settings') 
@@ -325,6 +327,29 @@ template(name='office_admin_section')
 
     .ui.bottom.attached.tab.segment(data-tab='employees')
         .ui.center.aligned.header #{ev.MASTER_OFFICE_NAME}'s Employees
+        table.ui.basic.striped.table
+            thead
+                tr
+                    th Username
+                    th First Name
+                    th Last Name
+                    th Title
+                    th Work Tel
+                    th Email
+                    th Office Name
+                    th 
+            tbody
+                each office_employees
+                    tr
+                        td #{username}
+                        td #{profile.first_name}
+                        td #{profile.last_name}
+                        td #{ev.JOB_TITLE}
+                        td #{ev.WORK_TELEPHONE}
+                        td #{email}
+                        td #{profile.office_name}
+                        td 
+                            +view_user_button
         // +tabular table=TabularTables.Users selector=office_users_selector class="ui sortable fluid striped table"
     .ui.bottom.attached.tab.segment(data-tab='customers')
         .ui.center.aligned.header #{ev.MASTER_OFFICE_NAME}'s Customers

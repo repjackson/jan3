@@ -46,9 +46,8 @@ Template.office_admin_section.helpers
         Docs.find
             type: 'incident'
     
-    office_users_selector: ->  
+    office_employees: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        return {
+        Meteor.users.find
             "profile.office_name": page_office.office_name
-            }
     
