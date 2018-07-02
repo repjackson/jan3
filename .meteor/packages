@@ -45,3 +45,4 @@ pacreach:jade
 standard-minifier-js
 coffeescript
 juliancwirko:postcss
+tmeasday:publish-counts

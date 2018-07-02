@@ -342,10 +342,11 @@ template(name='call_phone_button')
             
             
 template(name='link_button')    
-    a.ui.header(href=link title=label)
+    a.ui.button(href=link title=label)
         // i.icon(class=icon)
         if icon
-            +icon name=icon classes='centered'
+            i.icon
+                +icon name=icon classes='centered'
         // i.left.chevron.icon
         | #{label}
 

@@ -88,6 +88,9 @@ Meteor.publish 'has_key_value', (key, value)->
     # Docs.find "ev.FRANCH_NAME": $exists: true
         
         
+Meteor.publish 'office_counter_publication', ->
+    Counts.publish this, 'office_counter', Docs.find({type:'office'})
+    return undefined
         
 
 
