@@ -296,28 +296,7 @@ template(name='office_admin_section')
                             +view_button
     .ui.bottom.attached.tab.segment(data-tab='incidents')
         .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Incidents
-        // +tabular table=TabularTables.Incidents selector=office_incidents_selector class="ui sortable fluid striped table"
-        table.ui.basic.striped.table
-            thead
-                tr
-                    th Type
-                    th When
-                    th Details
-                    th Level
-                    th History
-                    th Actions
-            tbody
-                each office_incidents
-                    tr
-                        td
-                            +incident_type_label
-                        td #{when}
-                        td #{incident_details}
-                        td #{current_level}
-                        td
-                            +small_doc_history
-                        td 
-                            +view_button
+        +office_incidents
 
     .ui.bottom.attached.tab.segment(data-tab='employees')
         .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Employees
@@ -347,29 +326,55 @@ template(name='office_admin_section')
         // +tabular table=TabularTables.Users selector=office_users_selector class="ui sortable fluid striped table"
     .ui.bottom.attached.tab.segment(data-tab='customers')
         .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Customers
-        // +tabular table=TabularTables.Related_customers selector=office_customers_selector class="ui sortable fluid striped table"
-        table.ui.basic.striped.table
-            thead
-                tr
-                    th JPID
-                    th Franchisee
-                    th Customer Name
-                    th Master Licensee
-                    th Contact Person
-                    th Contact Email
-                    th State
-                    th 
-            tbody
-                each office_customers
-                    tr
-                        td #{jpid}
-                        td #{franchisee}
-                        td #{cust_name}
-                        td #{master_licensee}
-                        td #{customer_contact_person}
-                        td #{customer_contact_email}
-                        td #{ev.ADDR_STATE}
-                        td 
-                            +view_user_button
-    
+        +office_customers
 
+
+template(name='office_customers')
+    table.ui.basic.striped.table
+        thead
+            tr
+                th JPID
+                th Franchisee
+                th Customer Name
+                th Master Licensee
+                th Contact Person
+                th Contact Email
+                th State
+                th 
+        tbody
+            each office_customers
+                tr
+                    td #{jpid}
+                    td #{franchisee}
+                    td #{cust_name}
+                    td #{master_licensee}
+                    td #{customer_contact_person}
+                    td #{customer_contact_email}
+                    td #{ev.ADDR_STATE}
+                    td 
+                        +view_user_button
+
+template(name='office_incidents')
+    table.ui.basic.striped.table
+        thead
+            tr
+                th Type
+                th When
+                th Office
+                th Details
+                th Level
+                th History
+                th Actions
+        tbody
+            each office_incidents
+                tr
+                    td
+                        +incident_type_label
+                    td #{when}
+                    td #{incident_office_name}
+                    td #{incident_details}
+                    td #{current_level}
+                    td
+                        +small_doc_history
+                    td 
+                        +view_button

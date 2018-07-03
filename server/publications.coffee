@@ -41,40 +41,40 @@ Meteor.publish 'parent_doc', (child_id)->
 publishComposite 'office', (office_id)->
     {
         find: -> Docs.find office_id
-        children: [
-            # {
-            #     # offices customers
-            #     find: (office)-> 
-            #         cursor = 
-            #             Docs.find 
-            #                 "ev.MASTER_LICENSEE":office.office_name
-            #                 type:'customer'
-            #         # console.log "found #{cursor.count()} customers"
-            #         cursor
-            #     children: [
-            #         {
-            #             find: (customer)-> 
-            #                 # console.log "finding incidents for customer #{customer.cust_name}"
-            #                 cursor = 
-            #                     Docs.find 
-            #                         customer_jpid:customer.ev.ID
-            #                         type:'incident'
-            #                 # console.log "found #{cursor.count()} incidents"
-            #                 cursor
+        # children: [
+        #     # {
+        #     #     # offices customers
+        #     #     find: (office)-> 
+        #     #         cursor = 
+        #     #             Docs.find 
+        #     #                 "ev.MASTER_LICENSEE":office.office_name
+        #     #                 type:'customer'
+        #     #         # console.log "found #{cursor.count()} customers"
+        #     #         cursor
+        #     #     children: [
+        #     #         {
+        #     #             find: (customer)-> 
+        #     #                 # console.log "finding incidents for customer #{customer.cust_name}"
+        #     #                 cursor = 
+        #     #                     Docs.find 
+        #     #                         customer_jpid:customer.ev.ID
+        #     #                         type:'incident'
+        #     #                 # console.log "found #{cursor.count()} incidents"
+        #     #                 cursor
             
-            #         }
-            #     ]
-            # }
-            {
-                find: (office)-> 
-                    Docs.find 
-                        incident_office_name:office.office_name
-                        type:'incident'
-            }
-            # {
-            #     find: (doc)-> Docs.find _id:doc.parent_id
-            # }
-        ]
+        #     #         }
+        #     #     ]
+        #     # }
+        #     # {
+        #     #     find: (office)-> 
+        #     #         Docs.find 
+        #     #             incident_office_name:office.office_name
+        #     #             type:'incident'
+        #     # }
+        #     # {
+        #     #     find: (doc)-> Docs.find _id:doc.parent_id
+        #     # }
+        # ]
     }
         
 Meteor.publish 'has_key', (key)->
@@ -100,7 +100,20 @@ Meteor.publish 'customer_counter_publication', ->
     Counts.publish this, 'customer_counter', Docs.find({type:'customer'})
     return undefined
         
+Meteor.publish 'office_customers', (office_doc_id)->    
+    office_doc = Docs.findOne office_doc_id
+    Docs.find {
+        "ev.MASTER_LICENSEE": office_doc.office_name
+        type: "customer"
+    }, limit:20
 
+
+Meteor.publish 'office_incidents', (office_doc_id)->    
+    office_doc = Docs.findOne office_doc_id
+    Docs.find {
+        incident_office_name: office_doc.ev.MASTER_LICENSEE
+        type: "incident"
+    }, limit:20
 
 publishComposite 'docs', (selected_tags, type)->
     {
@@ -202,14 +215,14 @@ publishComposite 'me', ()->
                     Docs.find
                         jpid: user.profile.customer_jpid
                 children: [
-                    {
-                        find: (customer)-> 
-                            # console.log 'finding franchisees for', customer
-                            # parent incidents
-                            Docs.find
-                                customer_jpid: customer.jpid
-                                type:'incident'
-                    }
+                    # {
+                    #     find: (customer)-> 
+                    #         # console.log 'finding franchisees for', customer
+                    #         # parent incidents
+                    #         Docs.find
+                    #             customer_jpid: customer.jpid
+                    #             type:'incident'
+                    # }
                     {
                         find: (customer)-> 
                             # console.log 'finding franchisees for', customer
@@ -218,29 +231,29 @@ publishComposite 'me', ()->
                                 franchisee: customer.franchisee
                                 type:'franchisee'
                     }
-                    {
-                        find: (customer)-> 
-                            # console.log 'finding special services for', customer
-                            # special services
-                            Docs.find
-                                "ev.CUSTOMER": customer.cust_name
-                                type:'special_service'
-                    }
+                    # {
+                    #     find: (customer)-> 
+                    #         # console.log 'finding special services for', customer
+                    #         # special services
+                    #         Docs.find
+                    #             "ev.CUSTOMER": customer.cust_name
+                    #             type:'special_service'
+                    # }
                     {
                         find: (customer)-> 
                             # grandparent office
                             Docs.find
                                 "ev.MASTER_LICENSEE": customer.master_licensee
                                 type:'office'
-                        children: [
-                            {
-                                find: (office)-> 
-                                    # offices users
-                                    # console.log 'query users from office doc', office
-                                    Meteor.users.find
-                                        "profile.office_name": office.ev.MASTER_OFFICE_NAME
-                            }
-                        ]
+                        # children: [
+                        #     {
+                        #         find: (office)-> 
+                        #             # offices users
+                        #             # console.log 'query users from office doc', office
+                        #             Meteor.users.find
+                        #                 "profile.office_name": office.ev.MASTER_OFFICE_NAME
+                        #     }
+                        # ]
                     }
                 ]    
             }

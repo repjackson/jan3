@@ -7,7 +7,7 @@ FlowRouter.route '/customer_incidents',
         BlazeLayout.render 'layout', main: 'customer_incidents'
 
 
-Template.incidents.events
+Template.add_incident_button.events
     'click #add_incident': ->
         my_customer_ob = Meteor.user().users_customer()
         new_incident_id = 

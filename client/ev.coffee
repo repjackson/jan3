@@ -79,6 +79,7 @@ FlowRouter.route '/franchisees',
     
 Template.franchisees.onCreated ->
     @autorun => Meteor.subscribe 'type', 'franchisee'
+    @autorun => Meteor.subscribe 'franchisee_counter_publication'
 Template.franchisees.helpers
     franchisees_docs: ->  Docs.find type: "franchisee"
     current_franchisee_counter: -> Counts.get 'franchisee_counter'

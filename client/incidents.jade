@@ -2,6 +2,7 @@ template(name='incidents')
     .ui.stackable.padded.centered.grid
         .middle.aligned.centered.row
             .three.wide.column
+                +add_incident_button
             .ten.wide.column
                 h2.ui.center.aligned.header 
                     if is_admin
@@ -11,11 +12,10 @@ template(name='incidents')
             .three.wide.column
         .row
             .sixteen.wide.column
-                // {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable striped fluid very basic table"}}
                 table.ui.celled.table
                     thead
                         tr
-                            // th Ticket Number
+                            th Office
                             th Type
                             th Logged
                             th Details
@@ -27,7 +27,7 @@ template(name='incidents')
                     tbody
                         each incident_docs
                             tr
-                                // td #{incident_number}
+                                td #{incident_office_name}
                                 td
                                     +incident_type_label
                                 td #{when}
@@ -235,11 +235,7 @@ template(name='customer_incidents')
     .ui.stackable.padded.centered.grid
         .middle.aligned.centered.row
             .three.wide.column
-                if has_user_customer_jpid
-                    a#add_incident(href='#')
-                        +icon name='plus'
-                else
-                    .ui.secondary.segment Add Office to Profile to Add Incident
+                +add_incident_button
             .ten.wide.column
                 h2.ui.center.aligned.header 
                     +icon name='error'
@@ -247,7 +243,6 @@ template(name='customer_incidents')
             .three.wide.column
         .row
             .sixteen.wide.column
-                // {{> tabular table=TabularTables.Incidents selector=selector class="ui sortable striped fluid very basic table"}}
                 table.ui.celled.table
                     thead
                         tr
@@ -275,4 +270,11 @@ template(name='customer_incidents')
                                     +small_doc_history
                                 td 
                                     +view_button
-            
+        
+        
+template(name='add_incident_button')
+    if has_user_customer_jpid
+        a#add_incident(href='#')
+            +icon name='plus'
+    else
+        .ui.secondary.segment Add Office to Profile to Add Incident

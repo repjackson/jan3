@@ -28,11 +28,10 @@ Template.office_admin_section.helpers
         # console.log page_office
         return page_office
         
-    office_customers_selector: ->  
+    office_employees: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        Docs.find
-            type: "customer"
-            master_licensee: page_office.office_name
+        Meteor.users.find
+            "profile.office_name": page_office.office_name
     
     related_franchisees: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
@@ -40,14 +39,24 @@ Template.office_admin_section.helpers
             type: "franchisee"
             "ev.MASTER_LICENSEE": page_office.office_name
     
+    
+    
+    
+Template.office_customers.onCreated ->
+    @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id')
+Template.office_customers.helpers    
+    office_customers: ->  
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        Docs.find
+            type: "customer"
+            master_licensee: page_office.office_name
+
+
+Template.office_incidents.onCreated ->
+    @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id')
+Template.office_incidents.helpers    
     office_incidents: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
         Docs.find
+            incident_office_name: page_office.ev.MASTER_LICENSEE
             type: "incident"
-            "ev.MASTER_LICENSEE": page_office.office_name
-    
-    office_employees: ->  
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        Meteor.users.find
-            "profile.office_name": page_office.office_name
-    

@@ -15,8 +15,8 @@ template(name='nav')
                 | &nbsp; My Incidents
         if is_officer
             a.mobile.hidden.item(href='/myoffice')
-                // i.large.icon
-                //     +icon name='groups'
+                i.large.icon
+                    +icon name='groups'
                 | &nbsp; Office Name
             a.mobile.hidden.item(href='/office_incidents')
                 i.large.icon
@@ -27,6 +27,10 @@ template(name='nav')
                     +icon name='groups'
                 | &nbsp; Office Franchisees
         if is_admin
+            a.mobile.hidden.item(href='/incidents')
+                i.large.icon
+                    +icon name='error'
+                | &nbsp; Incidents
             a.mobile.hidden.item(href='/users')
                 i.large.icon
                     +icon name='groups'
@@ -47,33 +51,12 @@ template(name='nav')
                 i.large.icon
                     +icon name='broom'
                 | Services
-            // a.mobile.hidden.large.icon.icon.item(href='/schedule' data-position="bottom center" data-content='Schedule')
-            //     i.calendar.large.icon
-            //     | Schedule
-            // .mobile.hidden.icon.item
-            //     .ui.large.icon.transparent.inverted.disabled.input
-            //         input(type='text' placeholder='Search...')
-            //         i.search.large.icon
         .right.menu
             if is_admin
                 a.item(href='/admin')
-                    // i.large.icon
-                    //     +icon name='user-shield'
+                    i.large.icon
+                        +icon name='user-shield'
                     | &nbsp; Admin
-            // a.mobile.hidden.icon.item(href='/dev' data-position="bottom center" data-content='Dev')
-            //     i.terminal.large.icon
-                // | Dev
-            // a.mobile.hidden.icon.item(href='/admin' data-position="bottom center" data-content='Admin')
-            //     i.shield.alternate.large.icon
-                // | Admin
-            // a.large.icon.mobile.hidden.item(href='/chat' data-position="bottom center" data-content='Chat')
-            //     i.comments.large.icon
-            // .icon.mobile.hidden.disabled.item(data-position="bottom center" data-content='Cart')
-            //     i.shopping.cart.icon
-            // a.ui.simple.dropdown.icon.mobile.hidden.item(href='/alerts')
-            //     i.bell.icon
-            //     .menu
-            //         .item No alerts
             if currentUser
                 a.item(href="/user/#{currentUser.username}")
                     if currentUser.profile.image_id
