@@ -186,7 +186,7 @@ Meteor.publish 'office_by_franchisee', (franch_id)->
         # console.log found.count()
         return found
         
-Meteor.publish 'my_customer_account_card', (franch_id)->
+Meteor.publish 'my_customer_account', ()->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
     if user.profile.customer_jpid
@@ -194,7 +194,7 @@ Meteor.publish 'my_customer_account_card', (franch_id)->
             "ev.ID": user.profile.customer_jpid
             type:'customer'
         
-Meteor.publish 'my_franchisee', (franch_id)->
+Meteor.publish 'my_franchisee', ()->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
     if user.profile.customer_jpid
