@@ -86,10 +86,12 @@ Docs.helpers
     parent_office: ->
         # attached to franchisee
         # console.log @
-        Docs.findOne
+        found = Docs.findOne
             type:'office'
             "ev.MASTER_LICENSEE": @ev.MASTER_LICENSEE
-
+        # console.log found
+        if found
+            found
 
 Meteor.methods
     # vote_up: (id)->

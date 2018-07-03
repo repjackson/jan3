@@ -300,30 +300,7 @@ template(name='office_admin_section')
 
     .ui.bottom.attached.tab.segment(data-tab='employees')
         .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Employees
-        table.ui.basic.striped.table
-            thead
-                tr
-                    th Username
-                    th First Name
-                    th Last Name
-                    th Title
-                    th Work Tel
-                    th Email
-                    th Office Name
-                    th 
-            tbody
-                each office_employees
-                    tr
-                        td #{username}
-                        td #{profile.first_name}
-                        td #{profile.last_name}
-                        td #{ev.JOB_TITLE}
-                        td #{ev.WORK_TELEPHONE}
-                        td #{email}
-                        td #{profile.office_name}
-                        td 
-                            +view_user_button
-        // +tabular table=TabularTables.Users selector=office_users_selector class="ui sortable fluid striped table"
+        +office_employees
     .ui.bottom.attached.tab.segment(data-tab='customers')
         .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Customers
         +office_customers
@@ -381,3 +358,29 @@ template(name='office_incidents')
                         +small_doc_history
                     td 
                         +view_button
+
+
+template(name='office_employees')
+    table.ui.basic.striped.table
+        thead
+            tr
+                th Username
+                th First Name
+                th Last Name
+                th Title
+                th Work Tel
+                th Email
+                th Office Name
+                th 
+        tbody
+            each office_employee_obs
+                tr
+                    td #{username}
+                    td #{profile.first_name}
+                    td #{profile.last_name}
+                    td #{ev.JOB_TITLE}
+                    td #{ev.WORK_TELEPHONE}
+                    td #{email}
+                    td #{profile.office_name}
+                    td 
+                        +view_user_button

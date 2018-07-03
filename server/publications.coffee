@@ -104,10 +104,14 @@ Meteor.publish 'customer_counter_publication', ->
     Counts.publish this, 'customer_counter', Docs.find({type:'customer'})
     return undefined
         
+        
+        
+# office subsections
+
 Meteor.publish 'office_customers', (office_doc_id)->    
     office_doc = Docs.findOne office_doc_id
     Docs.find {
-        "ev.MASTER_LICENSEE": office_doc.office_name
+        "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
         type: "customer"
     }, limit:20
 
@@ -118,6 +122,26 @@ Meteor.publish 'office_incidents', (office_doc_id)->
         incident_office_name: office_doc.ev.MASTER_LICENSEE
         type: "incident"
     }, limit:20
+    
+Meteor.publish 'office_employees', (office_doc_id)->    
+    office_doc = Docs.findOne office_doc_id
+    Meteor.users.find {
+        "profile.office_name": office_doc.ev.MASTER_LICENSEE
+    }, limit:20
+    
+    
+    
+    
+    
+    
+Meteor.publish 'my_customer_incidents', ()->    
+    user = Meteor.user()
+    if user.profile and user.profile.customer_jpid
+        # customer_doc = Docs.findOne "ev.ID":user.profile.customer_jpid
+        Docs.find {
+            customer_jpid: user.profile.customer_jpid
+            type: "incident"
+        }, limit:20
 
 publishComposite 'docs', (selected_tags, type)->
     {
@@ -186,7 +210,7 @@ Meteor.publish 'office_by_franchisee', (franch_id)->
         # console.log found.count()
         return found
         
-Meteor.publish 'my_customer_account', ()->
+Meteor.publish 'my_customer_account', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
     if user.profile.customer_jpid
@@ -194,7 +218,7 @@ Meteor.publish 'my_customer_account', ()->
             "ev.ID": user.profile.customer_jpid
             type:'customer'
         
-Meteor.publish 'my_franchisee', ()->
+Meteor.publish 'my_franchisee', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
     if user.profile.customer_jpid
@@ -207,7 +231,7 @@ Meteor.publish 'my_franchisee', ()->
 
         
         
-Meteor.publish 'my_office', (franch_id)->
+Meteor.publish 'my_office', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
     if user.profile.customer_jpid
@@ -215,8 +239,9 @@ Meteor.publish 'my_office', (franch_id)->
             "ev.ID": user.profile.customer_jpid
             type:'customer'
             # grandparent office
+        console.log customer_doc
         Docs.find
-            "ev.MASTER_LICENSEE": customer_doc.master_licensee
+            "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
             type:'office'
     
         

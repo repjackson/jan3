@@ -5,10 +5,8 @@ template(name='incidents')
                 +add_incident_button
             .ten.wide.column
                 h2.ui.center.aligned.header 
-                    if is_admin
-                        | All Incidents
-                    if is_officer
-                        | Office Incidents
+                    +icon name='error'
+                    | All Incidents
             .three.wide.column
                 | Count: #{current_incident_count}
         .row
