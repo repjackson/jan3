@@ -22,22 +22,25 @@ template(name='customers')
                             th JPID
                             th Franchisee
                             th Master Licensee
-                            th Customer Contact Person
-                            th Customer Contact Email
-                            th City
-                            th State
+                            th Contact Person
+                            th Contact Email
+                            th Telephone
+                            th Address
                             th
                     tbody
                         each customer_docs
                             tr
-                                td #{ev.MASTER_LICENSEE}
+                                td #{ev.CUST_NAME}
                                 td #{ev.ID}
+                                td #{ev.FRANCHISEE}
+                                td #{ev.MASTER_LICENSEE}
                                 td #{ev.CUST_CONT_PERSON}
                                 td #{ev.CUST_CONTACT_EMAIL}
-                                td #{ev.ADDR_CITY}
-                                td #{ev.ADDR_STATE}
+                                td #{ev.TELEPHONE}
+                                td #{ev.ADDR_STREET} #{ev.ADDR_CITY} #{ev.ADDR_STATE}
                                 td 
                                     +view_button
+
 
 template(name='customer_view')
     .ui.padded.stackable.grid

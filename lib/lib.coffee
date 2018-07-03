@@ -81,7 +81,7 @@ Docs.helpers
         # console.log @
         Docs.findOne
             type:'office'
-            "ev.MASTER_OFFICE_NAME": @ev.MASTER_LICENSEE
+            "ev.MASTER_LICENSEE": @ev.MASTER_LICENSEE
 
 
 Meteor.methods

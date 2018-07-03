@@ -230,7 +230,7 @@ publishComposite 'me', ()->
                         find: (customer)-> 
                             # grandparent office
                             Docs.find
-                                "ev.MASTER_OFFICE_NAME": customer.master_licensee
+                                "ev.MASTER_LICENSEE": customer.master_licensee
                                 type:'office'
                         children: [
                             {

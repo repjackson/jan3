@@ -345,9 +345,9 @@ Meteor.methods
                 username_display:'ID'
                 api_reverse_lookup:'NO'
                 id:'48302'
-                page_length:'11900'
+                page_length:'119000'
                 record_start:'1'
-                record_count:'11900'
+                record_count:'119000'
         # return res.content
         # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
@@ -366,12 +366,12 @@ Meteor.methods
                             type: 'customer'
                             "ev.ID": doc.ID
                             "ev.CUST_NAME": doc.CUST_NAME
-                    if existing_customer_doc
-                        console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
+                    # if existing_customer_doc
+                    #     console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
                         # Docs.update existing_customer_doc._id,
                         #     $set:
                         #         ev: doc
-                    else                    
+                    unless existing_customer_doc                    
                         new_customer_doc = Docs.insert 
                             type: 'customer'
                             ev: doc
