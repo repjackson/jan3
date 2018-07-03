@@ -331,28 +331,31 @@ template(name='office_admin_section')
 
 template(name='office_customers')
     table.ui.basic.striped.table
-        thead
-            tr
-                th JPID
-                th Franchisee
-                th Customer Name
-                th Master Licensee
-                th Contact Person
-                th Contact Email
-                th State
-                th 
-        tbody
-            each office_customers
+        table.ui.celled.table
+            thead
                 tr
-                    td #{jpid}
-                    td #{franchisee}
-                    td #{cust_name}
-                    td #{master_licensee}
-                    td #{customer_contact_person}
-                    td #{customer_contact_email}
-                    td #{ev.ADDR_STATE}
-                    td 
-                        +view_user_button
+                    th Customer Name
+                    th JPID
+                    th Franchisee
+                    th Master Licensee
+                    th Contact Person
+                    th Contact Email
+                    th Telephone
+                    th Address
+                    th
+            tbody
+                each office_customers
+                    tr
+                        td #{ev.CUST_NAME}
+                        td #{ev.ID}
+                        td #{ev.FRANCHISEE}
+                        td #{ev.MASTER_LICENSEE}
+                        td #{ev.CUST_CONT_PERSON}
+                        td #{ev.CUST_CONTACT_EMAIL}
+                        td #{ev.TELEPHONE}
+                        td #{ev.ADDR_STREET} #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                        td 
+                            +view_button
 
 template(name='office_incidents')
     table.ui.basic.striped.table

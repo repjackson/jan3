@@ -30,3 +30,18 @@ Template.customers_franchisee.helpers
             # type: "franchisee"
         console.log found
         return found
+        
+        
+Template.my_customer_account_card.onCreated ->
+    @autorun =>  Meteor.subscribe 'my_customer_account'
+                
+                
+Template.my_franchisee_card.onCreated ->
+    @autorun =>  Meteor.subscribe 'my_franchisee'
+                
+                
+Template.my_office_card.onCreated ->
+    @autorun =>  Meteor.subscribe 'my_office'
+                
+                
+                

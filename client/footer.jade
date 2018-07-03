@@ -15,13 +15,13 @@ template(name='footer')
                     +role_switcher
                 .four.wide.column
                     if is_customer
-                        +my_customer_account
+                        +my_customer_account_card
                 .four.wide.column
                     if is_customer
-                        +user_franchise_card
+                        +my_franchisee_card
                 .four.wide.column
                     if is_customer
-                        +user_office_card
+                        +my_office_card
             .centered.row
                 .ui.center.aligned.inverted.grey.header
                     +icon name='copyright'

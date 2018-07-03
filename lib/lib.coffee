@@ -43,10 +43,13 @@ Meteor.users.helpers
     last_login: -> moment(@status?.lastLogin.date).fromNow()
 
     users_customer: ->
-        Docs.findOne
+        found = Docs.findOne
             type:'customer'
-            jpid: @profile.customer_jpid
-            
+            "ev.ID": @profile.customer_jpid
+        # console.log found
+        found
+        
+        
     email: -> 
         if @emails
             @emails[0].address
@@ -64,17 +67,21 @@ Docs.helpers
     franchisee_customers: ->
         Docs.find
             type: 'customer'
-            franchisee: @franchisee
+            "ev.FRANCHISEE": @ev.FRANCHISEE
 
     parent_franchisee: ->
         Docs.findOne
             type: 'franchisee'
-            franchisee: @franchisee
+            "ev.FRANCHISEE": @ev.FRANCHISEE
     
-    users_customer: ->
-        Docs.findOne
-            type:'customer'
-            jpid: @profile.customer_jpid
+    # users_customer: ->
+    #     user = Meteor.user()
+    #     found = Docs.findOne
+    #         type:'customer'
+    #         "ev.ID": user.profile.customer_jpid
+    #     console.log found, 'hi'
+    #     found
+    
     
     parent_office: ->
         # attached to franchisee

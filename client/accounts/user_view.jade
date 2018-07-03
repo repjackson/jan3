@@ -9,6 +9,8 @@ template(name='user_view')
                 .four.wide.center.aligned.column
                     .get_user_info.ui.icon.button(title='Refresh User Info')
                         i.refresh.icon
+                    a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}")
+                        i.pencil.icon
             .row
                 .four.wide.column
                     if profile.image_id
@@ -25,7 +27,7 @@ template(name='user_view')
                     .ui.header Role
                         each roles
                             .ui.basic.label #{this}
-                    +my_customer_account
+                    +my_customer_account_card
                     .ui.header user comments
                     .ui.header user assigned to incidents
                     .ui.header if customer then user customer account

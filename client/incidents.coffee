@@ -54,6 +54,10 @@ Template.incident_type_label.helpers
 
 Template.incidents.onCreated ->
     @autorun => Meteor.subscribe 'type', 'incident'
+    @autorun -> Meteor.subscribe 'incident_counter_publication'
+
+Template.incidents.helpers
+    current_incident_count: -> Counts.get 'incident_counter'
 
 Template.incidents.helpers
     incident_docs: ->  

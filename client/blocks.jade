@@ -539,65 +539,6 @@ template(name='message_button')
             +icon name=icon
             a(href=link) #{label}
 
-                
-template(name='my_customer_account')
-    .ui.card
-        with currentUser.users_customer
-            .content
-                a.ui.header(href="/view/#{_id}")
-                    +icon name='customer-support'
-                    |Customer Account
-            .content
-                a(href="/view/#{_id}")
-                    h4.ui.header #{ev.CUST_NAME}
-            .content
-                .ui.list
-                    .item ##{ev.ID}
-                    .item #{ev.CUST_CONT_PERSON}
-                    .item #{ev.CUST_CONTACT_EMAIL}
-                    .item #{ev.TELEPHONE}
-                    .item #{ev.ADDR_STREET}
-                    .item #{ev.ADDR_STREET_2}
-                    .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-            // .content
-            //     div Franchisee
-            //         strong #{ev.FRANCHISEE}
-            //     div Office
-            //         strong #{ev.MASTER_LICENSEE}
-
-template(name='user_office_card')
-    .ui.card
-        with currentUser.users_customer.parent_franchisee.parent_office
-            .content
-                a(href="/view/#{_id}")
-                    .ui.header 
-                        +icon name='building'
-                        |Office
-            .content
-                a(href="/view/#{_id}")
-                    h4.ui.header #{ev.MASTER_LICENSEE}
-            .content
-                | #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-            .content
-                a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
-        
-template(name='user_franchise_card')
-    .ui.card
-        with currentUser.users_customer.parent_franchisee
-            .content
-                a(href="/view/#{_id}")
-                    .ui.header 
-                        +icon name='conference'
-                        |Franchisee
-            .content
-                a(href="/view/#{_id}")
-                    h4.ui.header #{franchisee}
-            .content
-                .ui.list
-                    .item(title='Short Name') #{ev.FRANCH_NAME}
-                    .item(title='Call Number')
-                        a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
-                    .item #{franchisee_email}
                     
 template(name='toggle_boolean_checkbox')      
     .ui.form

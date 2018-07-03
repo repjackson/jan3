@@ -10,6 +10,7 @@ template(name='incidents')
                     if is_officer
                         | Office Incidents
             .three.wide.column
+                | Count: #{current_incident_count}
         .row
             .sixteen.wide.column
                 table.ui.celled.table

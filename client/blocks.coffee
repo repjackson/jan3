@@ -513,9 +513,6 @@ Template.single_user_select.events
                 $unset: "#{context.key}": 1
 
     
-    
-
-
 Template.multiple_user_select.helpers
     settings: -> 
         # console.log @
