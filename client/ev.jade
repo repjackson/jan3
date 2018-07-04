@@ -201,6 +201,8 @@ template(name='franchisees')
                     
 template(name='franchisee_view')
     .ui.padded.stackable.grid
+        .centered.row
+            +office_by_franchisee
         .centered.middle.aligned.row
             .three.wide.column
                 +link_button link='/franchisees' icon='collaborator-female' label='Franchisees'
@@ -209,17 +211,22 @@ template(name='franchisee_view')
             .three.wide.right.aligned.column
                 +edit_button
         .centered.row
-            +office_by_franchisee
-        .centered.row
             .twelve.wide.column
                 .ui.secondary.segment
-                    // .ui.header Franchisee Name: #{ev.FRANCHISEE}
-                    h3.ui.header JPID ##{ev.ID}
-                    h3.ui.header Email: #{ev.FRANCH_EMAIL}
-                    h3.ui.header Short Name: #{ev.FRANCH_NAME}
-                    h3.ui.header Cell: #{ev.TELE_CELL}
-                    h3.ui.header Master Licensee: #{ev.MASTER_LICENSEE}
-                +related_customers
+                    .ui.large.list
+                        .item JPID #
+                            strong #{ev.ID}
+                        .item Email: 
+                            strong #{ev.FRANCH_EMAIL}
+                        .item Short Name: 
+                            strong #{ev.FRANCH_NAME}
+                        .item Cell: 
+                            strong #{ev.TELE_CELL}
+                        .item Master Licensee: 
+                            strong #{ev.MASTER_LICENSEE}
+        .centered.row
+            .fifteen.wide.column
+                +franchisee_customers
 
     
 template(name='office_by_franchisee')
