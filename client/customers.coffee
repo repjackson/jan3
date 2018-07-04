@@ -1,11 +1,24 @@
 FlowRouter.route '/customers', 
     action: -> BlazeLayout.render 'layout', main: 'customers'
     
-Template.customers.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'customer'
-    @autorun -> Meteor.subscribe 'customer_counter_publication'
 Template.customers.helpers
-    customer_docs: ->  Docs.find type: "customer"
+    settings: ->
+        collection: 'customers'
+        rowsPerPage: 20
+        showFilter: true
+        showRowCount: true
+        # showColumnToggles: true
+        fields: [
+            { key: 'ev.CUST_NAME', label: 'Customer Name' }
+            { key: 'ev.ID', label: 'JPID' }
+            { key: 'ev.FRANCHISEE', label: 'Franchisee' }
+            { key: 'ev.MASTER_LICENSEE', label: 'Master Licensee' }
+            { key: 'ev.CUST_CONT_PERSON', label: 'Contact Person' }
+            { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
+            { key: 'ev.TELEPHONE', label: 'Telephone' }
+            { key: 'ev.ADDR_STREET', label: 'Address' }
+            { key: '', label: 'View', tmpl:Template.view_button }
+        ]
     current_customer_counter: -> Counts.get 'customer_counter'
 
 Template.customers.events

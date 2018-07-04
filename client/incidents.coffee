@@ -58,11 +58,22 @@ Template.incidents.onCreated ->
 
 Template.incidents.helpers
     current_incident_count: -> Counts.get 'incident_counter'
-
-Template.incidents.helpers
-    incident_docs: ->  
-        Docs.find 
-            type: "incident"
+    incident_docs: -> Docs.find(type:"incident")
+    settings: ->
+        collection: Docs.find(type:"incident")
+        rowsPerPage: 50
+        showFilter: true
+        # showColumnToggles: true
+        fields: [
+            { key: 'incident_office_name', label: 'Office' }
+            { key: '', label: 'Type', tmpl:Template.incident_type_label }
+            { key: 'when', label: 'Logged' }
+            { key: 'incident_details', label: 'Details' }
+            { key: 'level', label: 'Level' }
+            { key: '', label: 'Assigned To', tmpl:Template.associated_users }
+            { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
+            { key: '', label: 'View', tmpl:Template.view_button }
+        ]
 
 Template.customer_incidents.helpers
     customer_incidents: -> Docs.find type:'incident'

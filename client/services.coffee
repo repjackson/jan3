@@ -2,11 +2,24 @@ FlowRouter.route '/services', action: ->
     BlazeLayout.render 'layout', main: 'services'
 
 Template.services.onCreated () ->
-    @autorun => Meteor.subscribe 'type', 'special_service'
 Template.services.helpers
-    service_docs: ->  
-        Docs.find 
-            type: "special_service"
+    settings: ->
+        collection: 'special_services'
+        rowsPerPage: 50
+        showFilter: true
+        showRowCount: true
+        # showColumnToggles: true
+        fields: [
+            { key: 'ev.ID', label: 'JPID' }
+            { key: 'ev.CUSTOMER', label: 'Customer' }
+            { key: 'ev.CUST_OPS_MANAGER', label: 'Operations Manager' }
+            { key: 'ev.FRANCHISEE', label: 'Franchisee' }
+            { key: 'ev.SERV_TYPE', label: 'Extra Service Description' }
+            { key: 'ev.EXTRA_SERV_DESC', label: 'Date Created' }
+            { key: 'ev.DATE_CREATED', label: 'Extra Price' }
+            { key: 'ev.EXTRA_PRICE', label: 'Extra Price' }
+            { key: '', label: 'View', tmpl:Template.view_button }
+        ]
 
 Template.services.events
     'click .sync_services': ->

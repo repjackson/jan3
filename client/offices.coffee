@@ -1,13 +1,24 @@
 FlowRouter.route '/offices', action: ->
     BlazeLayout.render 'layout', main: 'offices'
 
-Template.offices.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'office'
-    @autorun -> Meteor.subscribe 'office_counter_publication'
 
 Template.offices.helpers
-    current_office_counter: -> Counts.get 'office_counter'
-    office_docs: -> Docs.find type: "office"
+    settings: ->
+        collection: 'offices'
+        rowsPerPage: 20
+        showFilter: true
+        showRowCount: true
+        # showColumnToggles: true
+        fields: [
+            { key: 'ev.ID', label: 'JPID' }
+            { key: 'ev.MASTER_LICENSEE', label: 'Name' }
+            { key: 'ev.MASTER_OFFICE_MANAGER', label: 'Manager' }
+            { key: 'ev.MASTER_OFFICE_OWNER', label: 'Owner' }
+            { key: 'ev.ev.TELEPHONE', label: 'Phone' }
+            { key: 'ev.ADDR_STREET', label: 'Address' }
+            { key: '', label: 'View', tmpl:Template.view_button }
+        ]
+
 
 Template.office_admin_section.onRendered ->
     Meteor.setTimeout ->

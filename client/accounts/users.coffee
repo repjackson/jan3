@@ -10,4 +10,19 @@ Template.users.onCreated ->
 
 
 Template.users.helpers
-    all_user_objects: -> Meteor.users.find()
+    settings: ->
+        collection: 'all_users'
+        rowsPerPage: 50
+        showFilter: true
+        # showColumnToggles: true
+        showRowCount: true
+        fields: [
+            { key: 'username', label: 'Username' }
+            { key: 'profile.first_name', label: 'First Name' }
+            { key: 'profile.last_name', label: 'Last Name' }
+            { key: 'ev.JOB_TITLE', label: 'Job Title' }
+            { key: 'ev.WORK_TELEPHONE', label: 'Work Tel' }
+            { key: 'email', label: 'Email' }
+            { key: 'profile.office_name', label: 'Email' }
+            { key: '', label: 'View', tmpl:Template.view_user_button.view_button }
+        ]

@@ -12,30 +12,8 @@ template(name='offices')
                 +call_method name='sync_offices'
         .row
             .sixteen.wide.column
-                h5 Count: #{current_office_counter}
-                table.ui.celled.striped.basic.table
-                    thead
-                        tr
-                            th JPID
-                            th Name
-                            th Manager
-                            th Owner
-                            th Phone
-                            th Address
-                            th View
-                    tbody
-                        each office_docs
-                            tr
-                                td #{ev.ID}
-                                td #{ev.MASTER_LICENSEE}
-                                td 
-                                    a(href="/user/#{ev.MASTER_OFFICE_MANAGER}") #{ev.MASTER_OFFICE_MANAGER}
-                                td 
-                                    a(href="/user/#{ev.MASTER_OFFICE_OWNER}") #{ev.MASTER_OFFICE_OWNER}
-                                td #{ev.TELEPHONE}
-                                td #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-                                td 
-                                    +view_button
+                +reactiveTable settings=settings class="ui celled striped sortable table"
+
 
                     
 template(name='office_view')

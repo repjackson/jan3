@@ -16,9 +16,17 @@ Meteor.publish 'users_feed', (username)->
         author_id: user._id
     }, limit:20
     
-Meteor.publish 'all_users', ()->
-    Meteor.users.find {},
-        limit: 20
+# Meteor.publish 'all_users', ()->
+#     Meteor.users.find {},
+#         limit: 20
+
+ReactiveTable.publish 'all_users', Meteor.users,'', {disablePageCountReactivity:true}
+ReactiveTable.publish 'customers', Docs, {type:'customer'}, {disablePageCountReactivity:true}
+ReactiveTable.publish 'franchisees', Docs, {type:'franchisee'}, {disablePageCountReactivity:true}
+ReactiveTable.publish 'incidents', Docs, {type:'incident'}, {disablePageCountReactivity:true}
+ReactiveTable.publish 'offices', Docs, {type:'office'}, {disablePageCountReactivity:true}
+ReactiveTable.publish 'special_services', Docs, {type:'special_service'}, {disablePageCountReactivity:true}
+
     
     
 Meteor.publish 'child_docs', (doc_id, limit)->

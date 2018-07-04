@@ -196,28 +196,7 @@ template(name='franchisees')
                 //         +icon name='refresh'
         .row
             .sixteen.wide.column
-                h5 Count: #{current_franchisee_counter}
-                table.ui.celled.table
-                    thead
-                        tr
-                            th JP ID
-                            th Name
-                            th Email
-                            th Short Name
-                            th Cell
-                            th Office
-                            th
-                    tbody
-                        each franchisees_docs
-                            tr
-                                td #{jpid}
-                                td #{franchisee}
-                                td #{ev.FRANCH_EMAIL}
-                                td #{ev.FRANCH_NAME}
-                                td #{ev.TELE_CELL}
-                                td #{ev.MASTER_LICENSEE}
-                                td 
-                                    +view_button
+                +reactiveTable settings=settings class="ui celled striped sortable table"
                     
                     
 template(name='franchisee_view')

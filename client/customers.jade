@@ -14,32 +14,7 @@ template(name='customers')
 
         .row
             .sixteen.wide.column
-                h5 Count: #{current_customer_counter}
-                table.ui.celled.table
-                    thead
-                        tr
-                            th Customer Name
-                            th JPID
-                            th Franchisee
-                            th Master Licensee
-                            th Contact Person
-                            th Contact Email
-                            th Telephone
-                            th Address
-                            th
-                    tbody
-                        each customer_docs
-                            tr
-                                td #{ev.CUST_NAME}
-                                td #{ev.ID}
-                                td #{ev.FRANCHISEE}
-                                td #{ev.MASTER_LICENSEE}
-                                td #{ev.CUST_CONT_PERSON}
-                                td #{ev.CUST_CONTACT_EMAIL}
-                                td #{ev.TELEPHONE}
-                                td #{ev.ADDR_STREET} #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                                td 
-                                    +view_button
+                +reactiveTable settings=settings class="ui celled striped sortable table"
 
 
 template(name='customer_view')

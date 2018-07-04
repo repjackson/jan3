@@ -77,12 +77,22 @@ Template.jpids.events
 FlowRouter.route '/franchisees', 
     action: -> BlazeLayout.render 'layout', main: 'franchisees'
     
-Template.franchisees.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'franchisee'
-    @autorun => Meteor.subscribe 'franchisee_counter_publication'
 Template.franchisees.helpers
-    franchisees_docs: ->  Docs.find type: "franchisee"
-    current_franchisee_counter: -> Counts.get 'franchisee_counter'
+    settings: ->
+        collection: 'franchisees'
+        rowsPerPage: 20
+        showFilter: true
+        showRowCount: true
+        # showColumnToggles: true
+        fields: [
+            { key: 'ev.ID', label: 'JPID' }
+            { key: 'ev.FRANCHISEE', label: 'Name' }
+            { key: 'ev.FRANCH_EMAIL', label: 'Email' }
+            { key: 'ev.FRANCH_NAME', label: 'Short Name' }
+            { key: 'ev.TELE_CELL', label: 'Phone' }
+            { key: 'ev.MASTER_LICENSEE', label: 'Office' }
+            { key: '', label: 'View', tmpl:Template.view_button }
+        ]
 
 Template.franchisees.events
     'click .get_all_franchisees': ->
