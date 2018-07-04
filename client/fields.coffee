@@ -164,10 +164,9 @@ Template.edit_datetime_field.onRendered ->
 Template.edit_datetime_field.events
     'blur #datetime_field': (e,t)->
         datetime_value = e.currentTarget.value
-        console.log 'hi'
+        # console.log 'hi'
         value = $('#datetime_field').calendar('get date')
-        console.log value
-
+        # console.log value
         Docs.update FlowRouter.getParam('doc_id'),
             { $set: "#{@key}": datetime_value } 
             , (err,res)=>

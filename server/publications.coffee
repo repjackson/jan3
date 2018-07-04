@@ -205,6 +205,8 @@ publishComposite 'incidents', (level)->
             }
         ]
     }
+    
+    
 
 Meteor.publish 'my_profile', ->
     Meteor.users.find @userId,

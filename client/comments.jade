@@ -21,4 +21,5 @@ template(name='comments')
                         p #{text}
                     .actions
                         // a.reply Reply
-                        a.delete_comment delete
+                        if is_admin
+                            a.delete_comment delete

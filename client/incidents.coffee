@@ -1,10 +1,8 @@
 FlowRouter.route '/incidents', 
-    action: ->
-        BlazeLayout.render 'layout', main: 'incidents'
+    action: -> BlazeLayout.render 'layout', main:'incidents'
 
 FlowRouter.route '/customer_incidents', 
-    action: ->
-        BlazeLayout.render 'layout', main: 'customer_incidents'
+    action: -> BlazeLayout.render 'layout', main:'customer_incidents'
 
 
 Template.add_incident_button.events
@@ -55,8 +53,6 @@ Template.incident_type_label.helpers
 
 
 Template.incidents.helpers
-    current_incident_count: -> Counts.get 'incident_counter'
-    incident_docs: -> Docs.find(type:"incident")
     settings: ->
         collection: 'incidents'
         rowsPerPage: 20
@@ -74,8 +70,26 @@ Template.incidents.helpers
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
 
+Template.customer_incidents.onCreated ->
+    @autorun -> Meteor.subscribe 'my_customer_incidents'
+
 Template.customer_incidents.helpers
     customer_incidents: -> Docs.find type:'incident'
+    settings: ->
+        rowsPerPage: 20
+        showFilter: true
+        showRowCount: true
+        # showColumnToggles: true
+        fields: [
+            { key: 'incident_office_name', label: 'Office' }
+            { key: '', label: 'Type', tmpl:Template.incident_type_label }
+            { key: 'when', label: 'Logged' }
+            { key: 'incident_details', label: 'Details' }
+            { key: 'level', label: 'Level' }
+            { key: '', label: 'Assigned To', tmpl:Template.associated_users }
+            { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
+            { key: '', label: 'View', tmpl:Template.view_button }
+        ]
 
 Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'docs', [], 'incident_type'
@@ -220,7 +234,6 @@ Template.incident_view.events
                 $set: current_level:4
             Meteor.call 'email_about_escalation_four', doc_id
             Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 4"
-
 
     'click #delete': ->
         template = Template.currentData()

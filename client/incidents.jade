@@ -212,33 +212,7 @@ template(name='customer_incidents')
             .three.wide.column
         .row
             .sixteen.wide.column
-                table.ui.celled.table
-                    thead
-                        tr
-                            // th Ticket Number
-                            th Type
-                            th Logged
-                            th Details
-                            th Customer JPID
-                            th Level
-                            th Assigned To
-                            th Actions Taken
-                            th 
-                    tbody
-                        each customer_incidents
-                            tr
-                                // td #{incident_number}
-                                td
-                                    +incident_type_label
-                                td #{when}
-                                td #{incident_details}
-                                td #{current_level}
-                                td 
-                                    +associated_users
-                                td 
-                                    +small_doc_history
-                                td 
-                                    +view_button
+                +reactiveTable settings=settings collection=customer_incidents class="ui celled striped sortable table"
         
         
 template(name='add_incident_button')
