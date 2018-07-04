@@ -82,7 +82,7 @@ Template.office_incidents.helpers
         showNavigation: 'auto'
         # showColumnToggles: true
         fields: [
-            { key: 'incident_office_name', label: 'Office' }
+            # { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
             { key: 'when', label: 'Logged' }
             { key: 'incident_details', label: 'Details' }

@@ -162,8 +162,12 @@ Template.edit_datetime_field.onRendered ->
 
 
 Template.edit_datetime_field.events
-    'change #datetime_field': (e,t)->
+    'blur #datetime_field': (e,t)->
         datetime_value = e.currentTarget.value
+        console.log 'hi'
+        value = $('#datetime_field').calendar('get date')
+        console.log value
+
         Docs.update FlowRouter.getParam('doc_id'),
             { $set: "#{@key}": datetime_value } 
             , (err,res)=>
@@ -174,8 +178,9 @@ Template.edit_datetime_field.events
 
 
 Template.edit_date_field.events
-    'change #date_field': (e,t)->
+    'blur #date_field': (e,t)->
         date_value = e.currentTarget.value
+        console.log date_value
         Docs.update FlowRouter.getParam('doc_id'),
             { $set: "#{@key}": date_value } 
             , (err,res)=>
@@ -216,8 +221,6 @@ Template.edit_profile_text_field.events
 #             # console.log current_user.profile["#{key}"]
 #             console.log current_user.profile
 #             console.log current_user
-
-
 
 
 Template.complete.events

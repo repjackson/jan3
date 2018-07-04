@@ -30,11 +30,8 @@ template(name='incident_view')
                 // if is_dev
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
-                unless is_customer
-                    unless submitted
-                        +edit_date_field key='service_date' label='Service Date' icon='leave'
-                    else
-                        .ui.header Date: #{service_date}
+                unless submitted
+                    +edit_datetime_field key='service_date' label='Service Date' icon='leave'
                 else
                     .ui.dividing.header 
                         +icon name='leave'
