@@ -12,7 +12,20 @@ Template.dashboard.helpers
 Template.dashboard_office_contacts_list.onCreated ->
     @autorun -> Meteor.subscribe 'my_office_contacts'
 Template.dashboard_office_contacts_list.helpers
-    office_contacts: -> Meteor.users.find( _id:$ne:Meteor.userId() )
+    office_contacts: -> 
+        user = Meteor.user()
+        # console.log 'franch_doc', franch_doc
+        if user and user.profile and user.profile.customer_jpid
+            customer_doc = Docs.findOne
+                "ev.ID": user.profile.customer_jpid
+                type:'customer'
+                # grandparent office
+            # console.log 'ss cust doc', customer_doc
+            if customer_doc
+                Meteor.users.find {
+                    "profile.office_name": customer_doc.ev.MASTER_LICENSEE
+                }, limit:100
+        
 
 
 Template.customer_special_services.onCreated ->
