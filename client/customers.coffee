@@ -19,7 +19,6 @@ Template.customers.helpers
             { key: 'ev.ADDR_STREET', label: 'Address' }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
-    current_customer_counter: -> Counts.get 'customer_counter'
 
 Template.customers.events
     'click .sync_customers': ->

@@ -50,10 +50,7 @@ template(name='office_view')
 
 template(name='office_admin_section')
     .ui.top.attached.tabular.five.item.stackable.menu
-        a.active.item(data-tab='office_settings') 
-            +icon name='administrative-tools'
-            | &nbsp; Settings
-        a.item(data-tab='incidents') 
+        a.active.item(data-tab='incidents') 
             +icon name='error'
             | &nbsp; Incidents
         a.item(data-tab='employees') 
@@ -65,7 +62,23 @@ template(name='office_admin_section')
         a.item(data-tab='customers') 
             +icon name='customer-support'
             | &nbsp; Customers
-    .ui.bottom.attached.active.tab.segment(data-tab='office_settings')
+        a.item(data-tab='office_settings') 
+            +icon name='settings'
+            | &nbsp; Settings
+    .ui.bottom.attached.tab.segment(data-tab='franchisees')
+        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Franchisees
+        +office_franchisees
+    .ui.bottom.attached.active.tab.segment(data-tab='incidents')
+        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Incidents
+        +office_incidents
+
+    .ui.bottom.attached.tab.segment(data-tab='employees')
+        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Employees
+        +office_employees
+    .ui.bottom.attached.tab.segment(data-tab='customers')
+        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Customers
+        +office_customers
+    .ui.bottom.attached.tab.segment(data-tab='office_settings')
         h2.ui.dividing.header 
             +icon name='sms'
             | Customer Message
@@ -248,120 +261,17 @@ template(name='office_admin_section')
                                     p Franchisee will be contacted.
                                 else
                                     p Franchisee will not be contacted.
-    .ui.bottom.attached.tab.segment(data-tab='franchisees')
-        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Franchisees
-        +office_franchisees
-    .ui.bottom.attached.tab.segment(data-tab='incidents')
-        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Incidents
-        +office_incidents
-
-    .ui.bottom.attached.tab.segment(data-tab='employees')
-        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Employees
-        +office_employees
-    .ui.bottom.attached.tab.segment(data-tab='customers')
-        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Customers
-        +office_customers
 
 
 template(name='office_customers')
-    table.ui.basic.striped.table
-        table.ui.celled.table
-            thead
-                tr
-                    th Customer Name
-                    th JPID
-                    th Franchisee
-                    // th Master Licensee
-                    th Contact Person
-                    th Contact Email
-                    th Telephone
-                    th Address
-                    th
-            tbody
-                each office_customers
-                    tr
-                        td #{ev.CUST_NAME}
-                        td #{ev.ID}
-                        td #{ev.FRANCHISEE}
-                        // td #{ev.MASTER_LICENSEE}
-                        td #{ev.CUST_CONT_PERSON}
-                        td #{ev.CUST_CONTACT_EMAIL}
-                        td #{ev.TELEPHONE}
-                        td #{ev.ADDR_STREET} #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                        td 
-                            +view_button
+    +reactiveTable settings=settings collection=office_customers class="ui celled striped sortable table"
 
 template(name='office_incidents')
-    table.ui.basic.striped.table
-        thead
-            tr
-                th Type
-                th When
-                // th Office
-                th Details
-                th Level
-                th History
-                th Actions
-        tbody
-            each office_incidents
-                tr
-                    td
-                        +incident_type_label
-                    td #{when}
-                    // td #{incident_office_name}
-                    td #{incident_details}
-                    td #{current_level}
-                    td
-                        +small_doc_history
-                    td 
-                        +view_button
+    +reactiveTable settings=settings collection=office_incidents class="ui celled striped sortable table"
 
 
 template(name='office_employees')
-    table.ui.basic.striped.table
-        thead
-            tr
-                th Username
-                th First Name
-                th Last Name
-                th Title
-                th Work Tel
-                th Email
-                // th Office Name
-                th 
-        tbody
-            each office_employee_obs
-                tr
-                    td #{username}
-                    td #{profile.first_name}
-                    td #{profile.last_name}
-                    td #{ev.JOB_TITLE}
-                    td #{ev.WORK_TELEPHONE}
-                    td #{email}
-                    // td #{profile.office_name}
-                    td 
-                        +view_user_button
-
+    +reactiveTable settings=settings collection=collection class="ui celled striped sortable table"
 
 template(name='office_franchisees')
-    table.ui.celled.table
-        thead
-            tr
-                th JP ID
-                th Name
-                th Email
-                th Short Name
-                th Cell
-                // th Office
-                th
-        tbody
-            each office_franchisees_obs
-                tr
-                    td #{ev.ID}
-                    td #{franchisee}
-                    td #{ev.FRANCH_EMAIL}
-                    td #{ev.FRANCH_NAME}
-                    td #{ev.TELE_CELL}
-                    // td #{ev.MASTER_LICENSEE}
-                    td 
-                        +view_button
+    +reactiveTable settings=settings collection=office_franchisees_obs class="ui celled striped sortable table"

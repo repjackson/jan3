@@ -5,7 +5,7 @@ FlowRouter.route '/offices', action: ->
 Template.offices.helpers
     settings: ->
         collection: 'offices'
-        rowsPerPage: 20
+        rowsPerPage: 10
         showFilter: true
         showRowCount: true
         # showColumnToggles: true
@@ -48,6 +48,23 @@ Template.office_customers.helpers
         Docs.find
             type: "customer"
             "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
+    settings: ->
+        rowsPerPage: 10
+        showFilter: true
+        showRowCount: true
+        showNavigation: 'auto'
+        # showColumnToggles: true
+        fields: [
+            { key: 'ev.CUST_NAME', label: 'Customer Name' }
+            { key: 'ev.ID', label: 'JPID' }
+            { key: 'ev.FRANCHISEE', label: 'Franchisee' }
+            { key: 'ev.MASTER_LICENSEE', label: 'Master Licensee' }
+            { key: 'ev.CUST_CONT_PERSON', label: 'Contact Person' }
+            { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
+            { key: 'ev.TELEPHONE', label: 'Telephone' }
+            { key: 'ev.ADDR_STREET', label: 'Address' }
+            { key: '', label: 'View', tmpl:Template.view_button }
+        ]
 
 
 Template.office_incidents.onCreated ->
@@ -58,17 +75,51 @@ Template.office_incidents.helpers
         Docs.find
             incident_office_name: page_office.ev.MASTER_LICENSEE
             type: "incident"
+    settings: ->
+        rowsPerPage: 10
+        showFilter: true
+        showRowCount: true
+        showNavigation: 'auto'
+        # showColumnToggles: true
+        fields: [
+            { key: 'incident_office_name', label: 'Office' }
+            { key: '', label: 'Type', tmpl:Template.incident_type_label }
+            { key: 'when', label: 'Logged' }
+            { key: 'incident_details', label: 'Details' }
+            { key: 'level', label: 'Level' }
+            { key: '', label: 'Assigned To', tmpl:Template.associated_users }
+            { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
+            { key: '', label: 'View', tmpl:Template.view_button }
+        ]
 
 
 
 Template.office_employees.onCreated ->
     @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('doc_id')
 Template.office_employees.helpers    
-    office_employee_obs: ->  
+    collection: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
         # console.log page_office
         Meteor.users.find
             "profile.office_name": page_office.ev.MASTER_LICENSEE
+    settings: ->
+        rowsPerPage: 10
+        showFilter: true
+        showRowCount: true
+        showNavigation: 'auto'
+        # showColumnToggles: true
+        fields: [
+            { key: 'username', label: 'Username' }
+            { key: 'profile.first_name', label: 'First Name' }
+            { key: 'profile.last_name', label: 'Last Name' }
+            { key: 'ev.JOB_TITLE', label: 'Job Title' }
+            { key: 'ev.WORK_TELEPHONE', label: 'Work Tel' }
+            { key: 'email', label: 'Email' }
+            { key: '', label: 'View', tmpl:Template.view_user_button }
+        ]
+
+
+
 
 Template.office_franchisees.onCreated ->
     @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id')
@@ -78,7 +129,17 @@ Template.office_franchisees.helpers
         Docs.find
             type: "franchisee"
             "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
-    
-    
-
-
+    settings: ->
+        rowsPerPage: 10
+        showFilter: true
+        showRowCount: true
+        # showColumnToggles: true
+        fields: [
+            { key: 'ev.ID', label: 'JPID' }
+            { key: 'ev.FRANCHISEE', label: 'Name' }
+            { key: 'ev.FRANCH_EMAIL', label: 'Email' }
+            { key: 'ev.FRANCH_NAME', label: 'Short Name' }
+            { key: 'ev.TELE_CELL', label: 'Phone' }
+            { key: 'ev.MASTER_LICENSEE', label: 'Office' }
+            { key: '', label: 'View', tmpl:Template.view_button }
+        ]

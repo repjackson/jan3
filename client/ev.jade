@@ -213,12 +213,12 @@ template(name='franchisee_view')
         .centered.row
             .twelve.wide.column
                 .ui.secondary.segment
-                    .ui.header Franchisee Name: #{ev.FRANCHISEE}
-                    .ui.header JPID ##{ev.ID}
-                    .ui.header Email: #{ev.FRANCH_EMAIL}
-                    .ui.header Short Name: #{ev.FRANCH_NAME}
-                    .ui.header Cell: #{ev.TELE_CELL}
-                    .ui.header Master Licensee: #{ev.MASTER_LICENSEE}
+                    // .ui.header Franchisee Name: #{ev.FRANCHISEE}
+                    h3.ui.header JPID ##{ev.ID}
+                    h3.ui.header Email: #{ev.FRANCH_EMAIL}
+                    h3.ui.header Short Name: #{ev.FRANCH_NAME}
+                    h3.ui.header Cell: #{ev.TELE_CELL}
+                    h3.ui.header Master Licensee: #{ev.MASTER_LICENSEE}
                 +related_customers
 
     
@@ -228,4 +228,4 @@ template(name='office_by_franchisee')
             +icon name='link-company-parent'
             |#{ev.FRANCHISEE}'s Office
         with parent_office
-            a.ui.header(href="/view/#{_id}") #{ev.MASTER_OFFICE_NAME} hi
+            a.ui.header(href="/view/#{_id}") #{ev.MASTER_LICENSEE}

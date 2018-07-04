@@ -13,20 +13,7 @@ template(name='nav')
                 i.large.icon
                     +icon name='error'
                 | &nbsp; My Incidents
-        if is_officer
-            a.mobile.hidden.item(href='/myoffice')
-                i.large.icon
-                    +icon name='groups'
-                | &nbsp; Office Name
-            a.mobile.hidden.item(href='/office_incidents')
-                i.large.icon
-                    +icon name='groups'
-                | &nbsp; Office Incidents
-            a.mobile.hidden.item(href='/office_franchisees')
-                i.large.icon
-                    +icon name='groups'
-                | &nbsp; Office Franchisees
-        if is_admin
+        unless is_customer
             a.mobile.hidden.item(href='/incidents')
                 i.large.icon
                     +icon name='error'

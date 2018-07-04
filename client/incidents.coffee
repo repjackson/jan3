@@ -10,15 +10,16 @@ FlowRouter.route '/customer_incidents',
 Template.add_incident_button.events
     'click #add_incident': ->
         my_customer_ob = Meteor.user().users_customer()
-        new_incident_id = 
-            Docs.insert
-                type: 'incident'
-                customer_jpid: my_customer_ob.ev.ID
-                incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
-                level: 1
-                open: true
-                submitted: false
-        FlowRouter.go "/view/#{new_incident_id}"
+        if my_customer_ob
+            new_incident_id = 
+                Docs.insert
+                    type: 'incident'
+                    customer_jpid: my_customer_ob.ev.ID
+                    incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
+                    level: 1
+                    open: true
+                    submitted: false
+            FlowRouter.go "/view/#{new_incident_id}"
 
 
 Template.incident_view.onRendered ->
@@ -52,17 +53,15 @@ Template.incident_type_label.helpers
             when 'employee_issue' then 'basic'
             when 'other' then 'grey'
 
-Template.incidents.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'incident'
-    @autorun -> Meteor.subscribe 'incident_counter_publication'
 
 Template.incidents.helpers
     current_incident_count: -> Counts.get 'incident_counter'
     incident_docs: -> Docs.find(type:"incident")
     settings: ->
-        collection: Docs.find(type:"incident")
-        rowsPerPage: 50
+        collection: 'incidents'
+        rowsPerPage: 20
         showFilter: true
+        showRowCount: true
         # showColumnToggles: true
         fields: [
             { key: 'incident_office_name', label: 'Office' }

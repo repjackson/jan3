@@ -27,6 +27,13 @@ ReactiveTable.publish 'incidents', Docs, {type:'incident'}, {disablePageCountRea
 ReactiveTable.publish 'offices', Docs, {type:'office'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'special_services', Docs, {type:'special_service'}, {disablePageCountReactivity:true}
 
+
+ReactiveTable.publish 'office_employees', (input)->
+    console.log 'input', input
+    # page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    # # console.log page_office
+    # Meteor.users.find
+    #     "profile.office_name": page_office.ev.MASTER_LICENSEE
     
     
 Meteor.publish 'child_docs', (doc_id, limit)->
