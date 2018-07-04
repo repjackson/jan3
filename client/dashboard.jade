@@ -23,7 +23,7 @@ template(name='dashboard')
         .row
             with currentUser.users_customer.parent_franchisee
                 .sixteen.wide.column
-                    h2.ui.header 
+                    h3.ui.header 
                         +icon name='conference'
                         |#{ev.FRANCHISEE} Franchisee Contact
                     table.ui.sortable.striped.table
@@ -65,7 +65,7 @@ template(name='customer_menu')
 template(name='my_cleaning_schedule')
     .ui.fluid.accordion
         .active.title
-            h2.ui.header 
+            h3.ui.header 
                 |Cleaning Schedule
                 i.dropdown.icon
         .active.content
@@ -74,7 +74,7 @@ template(name='my_cleaning_schedule')
             
         
 template(name='my_office_contacts')
-    h2.ui.header 
+    h3.ui.header 
         +icon name='contacts'
         // i.large.icons
         //     i.users.icon
@@ -102,7 +102,7 @@ template(name='office_contact_card')
 
 
 template(name='customer_incidents_widget')
-    h2.ui.header
+    h3.ui.header
         // i.exclamation.circle.icon
         +icon name='error'
         | #{currentUser.users_customer.ev.CUST_NAME}'s Incidents
@@ -113,6 +113,8 @@ template(name='customer_incidents_widget')
                 th When
                 th Details
                 th Level
+                th Status
+                th Submitted
                 th History
                 th Actions
         tbody
@@ -122,7 +124,17 @@ template(name='customer_incidents_widget')
                         +incident_type_label
                     td #{when}
                     td #{incident_details}
-                    td #{current_level}
+                    td #{level}
+                    td 
+                        if open
+                            .ui.basic.label Open
+                        else
+                            .ui.label Closed
+                    td 
+                        if submitted
+                            .ui.basic.label Submitted
+                        else
+                            .ui.label Not Submitted
                     td
                         +small_doc_history
                     td 
@@ -131,7 +143,7 @@ template(name='customer_incidents_widget')
 
 template(name='customer_special_services')
     .ui.secondary.segment
-        h2.ui.header 
+        h3.ui.header 
             // i.paint.brush.icon
             +icon name='broom'
             |Services Overview
@@ -166,7 +178,7 @@ template(name='customer_special_services')
 
 
 template(name='dashboard_office_contacts_list')
-    h2.ui.header 
+    h3.ui.header 
         +icon name='organization'
         |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Contacts
     table.ui.sortable.striped.table

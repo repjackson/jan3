@@ -272,28 +272,7 @@ template(name='office_admin_section')
                                     p Franchisee will not be contacted.
     .ui.bottom.attached.tab.segment(data-tab='franchisees')
         .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Franchisees
-        // +tabular table=TabularTables.Related_franchisees selector=office_franchisees_selector class="ui sortable fluid striped table"
-        table.ui.celled.table
-            thead
-                tr
-                    th JP ID
-                    th Name
-                    th Email
-                    th Short Name
-                    th Cell
-                    th Office
-                    th
-            tbody
-                each related_franchisees
-                    tr
-                        td #{ev.ID}
-                        td #{franchisee}
-                        td #{ev.FRANCH_EMAIL}
-                        td #{ev.FRANCH_NAME}
-                        td #{ev.TELE_CELL}
-                        td #{ev.MASTER_LICENSEE}
-                        td 
-                            +view_button
+        +office_franchisees
     .ui.bottom.attached.tab.segment(data-tab='incidents')
         .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Incidents
         +office_incidents
@@ -314,7 +293,7 @@ template(name='office_customers')
                     th Customer Name
                     th JPID
                     th Franchisee
-                    th Master Licensee
+                    // th Master Licensee
                     th Contact Person
                     th Contact Email
                     th Telephone
@@ -326,7 +305,7 @@ template(name='office_customers')
                         td #{ev.CUST_NAME}
                         td #{ev.ID}
                         td #{ev.FRANCHISEE}
-                        td #{ev.MASTER_LICENSEE}
+                        // td #{ev.MASTER_LICENSEE}
                         td #{ev.CUST_CONT_PERSON}
                         td #{ev.CUST_CONTACT_EMAIL}
                         td #{ev.TELEPHONE}
@@ -340,7 +319,7 @@ template(name='office_incidents')
             tr
                 th Type
                 th When
-                th Office
+                // th Office
                 th Details
                 th Level
                 th History
@@ -351,7 +330,7 @@ template(name='office_incidents')
                     td
                         +incident_type_label
                     td #{when}
-                    td #{incident_office_name}
+                    // td #{incident_office_name}
                     td #{incident_details}
                     td #{current_level}
                     td
@@ -370,7 +349,7 @@ template(name='office_employees')
                 th Title
                 th Work Tel
                 th Email
-                th Office Name
+                // th Office Name
                 th 
         tbody
             each office_employee_obs
@@ -381,6 +360,30 @@ template(name='office_employees')
                     td #{ev.JOB_TITLE}
                     td #{ev.WORK_TELEPHONE}
                     td #{email}
-                    td #{profile.office_name}
+                    // td #{profile.office_name}
                     td 
                         +view_user_button
+
+
+template(name='office_franchisees')
+    table.ui.celled.table
+        thead
+            tr
+                th JP ID
+                th Name
+                th Email
+                th Short Name
+                th Cell
+                // th Office
+                th
+        tbody
+            each office_franchisees_obs
+                tr
+                    td #{ev.ID}
+                    td #{franchisee}
+                    td #{ev.FRANCH_EMAIL}
+                    td #{ev.FRANCH_NAME}
+                    td #{ev.TELE_CELL}
+                    // td #{ev.MASTER_LICENSEE}
+                    td 
+                        +view_button

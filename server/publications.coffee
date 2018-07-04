@@ -16,7 +16,7 @@ Meteor.publish 'users_feed', (username)->
         author_id: user._id
     }, limit:20
     
-Meteor.publish 'all_users', (username)->
+Meteor.publish 'all_users', ()->
     Meteor.users.find {},
         limit: 20
     
@@ -88,6 +88,8 @@ Meteor.publish 'has_key_value', (key, value)->
     # Docs.find "ev.FRANCH_NAME": $exists: true
         
         
+# admin counters        
+        
 Meteor.publish 'office_counter_publication', ->
     Counts.publish this, 'office_counter', Docs.find({type:'office'})
     return undefined
@@ -113,21 +115,27 @@ Meteor.publish 'office_customers', (office_doc_id)->
     Docs.find {
         "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
         type: "customer"
-    }, limit:20
-
+    }, limit:100
 
 Meteor.publish 'office_incidents', (office_doc_id)->    
     office_doc = Docs.findOne office_doc_id
     Docs.find {
         incident_office_name: office_doc.ev.MASTER_LICENSEE
         type: "incident"
-    }, limit:20
+    }, limit:100
+    
+Meteor.publish 'office_franchisees', (office_doc_id)->    
+    office_doc = Docs.findOne office_doc_id
+    Docs.find {
+        type: "franchisee"
+        "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
+    }, limit:100
     
 Meteor.publish 'office_employees', (office_doc_id)->    
     office_doc = Docs.findOne office_doc_id
     Meteor.users.find {
         "profile.office_name": office_doc.ev.MASTER_LICENSEE
-    }, limit:20
+    }, limit:100
     
     
     
@@ -210,6 +218,10 @@ Meteor.publish 'office_by_franchisee', (franch_id)->
         # console.log found.count()
         return found
         
+        
+        
+# customer parents        
+        
 Meteor.publish 'my_customer_account', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
@@ -228,8 +240,6 @@ Meteor.publish 'my_franchisee', ->
         Docs.find
             "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
             type:'franchisee'
-
-        
         
 Meteor.publish 'my_office', ->
     user = Meteor.user()
@@ -239,10 +249,25 @@ Meteor.publish 'my_office', ->
             "ev.ID": user.profile.customer_jpid
             type:'customer'
             # grandparent office
-        console.log customer_doc
+        # console.log customer_doc
         Docs.find
             "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
             type:'office'
+    
+        
+Meteor.publish 'my_special_services', ->
+    user = Meteor.user()
+    # console.log 'franch_doc', franch_doc
+    if user.profile.customer_jpid
+        customer_doc = Docs.findOne
+            "ev.ID": user.profile.customer_jpid
+            type:'customer'
+            # grandparent office
+        # console.log 'ss cust doc', customer_doc
+        Docs.find {
+            type:'special_service'
+            "ev.CUSTOMER": customer_doc.ev.CUST_NAME
+        },limit:20
     
         
 

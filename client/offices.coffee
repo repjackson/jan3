@@ -29,15 +29,6 @@ Template.office_admin_section.helpers
         return page_office
         
     
-    related_franchisees: ->  
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        Docs.find
-            type: "franchisee"
-            "ev.MASTER_LICENSEE": page_office.office_name
-    
-    
-    
-    
 Template.office_customers.onCreated ->
     @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id')
 Template.office_customers.helpers    
@@ -64,6 +55,19 @@ Template.office_employees.onCreated ->
 Template.office_employees.helpers    
     office_employee_obs: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        console.log page_office
+        # console.log page_office
         Meteor.users.find
             "profile.office_name": page_office.ev.MASTER_LICENSEE
+
+Template.office_franchisees.onCreated ->
+    @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id')
+Template.office_franchisees.helpers    
+    office_franchisees_obs: ->  
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        Docs.find
+            type: "franchisee"
+            "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
+    
+    
+
+
