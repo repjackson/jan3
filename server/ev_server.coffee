@@ -336,6 +336,7 @@ Meteor.methods
     
     
     sync_customers: () ->
+        console.log 'starting customer sync'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
@@ -346,7 +347,7 @@ Meteor.methods
                 api_reverse_lookup:'NO'
                 id:'48302'
                 page_length:'119000'
-                record_start:'1'
+                record_start:'60000'
                 record_count:'119000'
         # return res.content
         # console.log res.content
@@ -366,8 +367,8 @@ Meteor.methods
                             type: 'customer'
                             "ev.ID": doc.ID
                             "ev.CUST_NAME": doc.CUST_NAME
-                    # if existing_customer_doc
-                    #     console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
+                    if existing_customer_doc
+                        console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
                         # Docs.update existing_customer_doc._id,
                         #     $set:
                         #         ev: doc

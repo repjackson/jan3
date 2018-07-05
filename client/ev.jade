@@ -205,11 +205,12 @@ template(name='franchisee_view')
             +office_by_franchisee
         .centered.middle.aligned.row
             .three.wide.column
-                +link_button link='/franchisees' icon='collaborator-female' label='Franchisees'
+                if is_admin
+                    +link_button link='/franchisees' icon='collaborator-female' label='Franchisees'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header #{ev.FRANCHISEE} Franchisee
             .three.wide.right.aligned.column
-                +edit_button
+                // +edit_button
         .centered.row
             .twelve.wide.column
                 .ui.secondary.segment

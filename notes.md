@@ -13,5 +13,3 @@ customer
     contact
     basically just customer page
     
-    
-officer view

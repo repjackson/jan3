@@ -13,7 +13,13 @@ template(name='nav')
                 i.large.icon
                     +icon name='error'
                 | &nbsp; My Incidents
-        unless is_customer
+        if is_officer
+            // with currentUser.users_customer.parent_franchisee.parent_office
+            a.item(href="/view/#{currentUser.users_customer.parent_franchisee.parent_office._id}")
+                i.large.icon
+                    +icon name='link-company-parent'
+                | &nbsp; #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE}
+        if is_admin
             a.mobile.hidden.item(href='/incidents')
                 i.large.icon
                     +icon name='error'

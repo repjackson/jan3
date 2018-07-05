@@ -335,48 +335,48 @@ publishComposite 'me', ()->
                     Docs.find
                         "ev.ID": user.profile.customer_jpid
                         type:'customer'
-                # children: [
-                #     # {
-                #     #     find: (customer)-> 
-                #     #         # console.log 'finding franchisees for', customer
-                #     #         # parent incidents
-                #     #         Docs.find
-                #     #             customer_jpid: customer.jpid
-                #     #             type:'incident'
-                #     # }
-                #     {
-                #         find: (customer)-> 
-                #             # console.log 'finding franchisees for', customer
-                #             # parent franchisee
-                #             Docs.find
-                #                 franchisee: customer.franchisee
-                #                 type:'franchisee'
-                #     }
-                #     # {
-                #     #     find: (customer)-> 
-                #     #         # console.log 'finding special services for', customer
-                #     #         # special services
-                #     #         Docs.find
-                #     #             "ev.CUSTOMER": customer.cust_name
-                #     #             type:'special_service'
-                #     # }
-                #     {
-                #         find: (customer)-> 
-                #             # grandparent office
-                #             Docs.find
-                #                 "ev.MASTER_LICENSEE": customer.master_licensee
-                #                 type:'office'
-                #         # children: [
-                #         #     {
-                #         #         find: (office)-> 
-                #         #             # offices users
-                #         #             # console.log 'query users from office doc', office
-                #         #             Meteor.users.find
-                #         #                 "profile.office_name": office.ev.MASTER_OFFICE_NAME
-                #         #     }
-                #         # ]
-                #     }
-                # ]    
+                children: [
+                    # {
+                    #     find: (customer)-> 
+                    #         # console.log 'finding franchisees for', customer
+                    #         # parent incidents
+                    #         Docs.find
+                    #             customer_jpid: customer.jpid
+                    #             type:'incident'
+                    # }
+                    {
+                        find: (customer)-> 
+                            # console.log 'finding franchisees for', customer
+                            # parent franchisee
+                            Docs.find
+                                franchisee: customer.franchisee
+                                type:'franchisee'
+                    }
+                    # {
+                    #     find: (customer)-> 
+                    #         # console.log 'finding special services for', customer
+                    #         # special services
+                    #         Docs.find
+                    #             "ev.CUSTOMER": customer.cust_name
+                    #             type:'special_service'
+                    # }
+                    {
+                        find: (customer)-> 
+                            # grandparent office
+                            Docs.find
+                                "ev.MASTER_LICENSEE": customer.master_licensee
+                                type:'office'
+                        # children: [
+                        #     {
+                        #         find: (office)-> 
+                        #             # offices users
+                        #             # console.log 'query users from office doc', office
+                        #             Meteor.users.find
+                        #                 "profile.office_name": office.ev.MASTER_OFFICE_NAME
+                        #     }
+                        # ]
+                    }
+                ]    
             }
         ]
     }

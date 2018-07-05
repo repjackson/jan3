@@ -79,13 +79,13 @@ template(name='office_admin_section')
         .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Customers
         +office_customers
     .ui.bottom.attached.tab.segment(data-tab='office_settings')
-        h2.ui.dividing.header 
+        h2.ui.header 
             +icon name='sms'
             | Customer Message
         // .ui.sub.header Shown on customer dashboard
         +edit_text_field key='customer_message' label='Customer Dashboard Message'
         // p #{customer_message}
-        // h2.ui.dividing.header 
+        // h2.ui.header 
         //     +icon name='checked-user-male'
         //     |Office Roles
         // .ui.two.column.stackable.grid
@@ -93,11 +93,11 @@ template(name='office_admin_section')
         //         +single_user_select key='office_owner' label='Office Owner'
         //     .column
         //         +single_user_select key='operations_manager' label='Operations Manager'
-        h2.ui.dividing.header 
+        h2.ui.header 
             +icon name='administrative-tools'
             |SLA Settings
-        h3.ui.dividing.header Initial
-        .ui.secondary.segment
+        h3.ui.header Initial
+        .ui.segment
             h3.ui.header Escalation 1
             .ui.two.column.divided.padded.grid
                 .row
@@ -140,7 +140,7 @@ template(name='office_admin_section')
                                     else
                                         p Franchisee will not be contacted.
         .ui.segment
-            h3.ui.dividing.header Escalation 2
+            h3.ui.header Escalation 2
             .ui.two.column.divided.padded.grid
                 .row
                     +edit_number_field key='escalation_two_hours' label='Escalation Hours' field_class='inline' min=0 max=24
@@ -182,7 +182,7 @@ template(name='office_admin_section')
                                     else
                                         p Franchisee will not be contacted.
         .ui.segment
-            h3.ui.dividing.header Escalation 3
+            h3.ui.header Escalation 3
             .ui.two.column.divided.padded.grid
                 .row
                     +edit_number_field key='escalation_three_hours' label='Escalation Hours' field_class='inline' min=0 max=24
@@ -224,7 +224,7 @@ template(name='office_admin_section')
                                     else
                                         p Franchisee will not be contacted.
         .ui.segment
-            h3.ui.dividing.header Escalation 4
+            h3.ui.header Escalation 4
             .ui.two.column.divided.padded.grid
                 .row
                     +edit_number_field key='escalation_four_hours' label='Escalation Hours' field_class='inline' min=0 max=24

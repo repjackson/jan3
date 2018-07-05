@@ -58,7 +58,7 @@ Template.office_customers.helpers
             { key: 'ev.CUST_NAME', label: 'Customer Name' }
             { key: 'ev.ID', label: 'JPID' }
             { key: 'ev.FRANCHISEE', label: 'Franchisee' }
-            { key: 'ev.MASTER_LICENSEE', label: 'Master Licensee' }
+            # { key: 'ev.MASTER_LICENSEE', label: 'Master Licensee' }
             { key: 'ev.CUST_CONT_PERSON', label: 'Contact Person' }
             { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
             { key: 'ev.TELEPHONE', label: 'Telephone' }
