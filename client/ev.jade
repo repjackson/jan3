@@ -207,7 +207,7 @@ template(name='franchisee_view')
             .three.wide.column
                 +link_button link='/franchisees' icon='collaborator-female' label='Franchisees'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header #{ev.FRANCHISEE} Franchisee View
+                h1.ui.center.aligned.grey.header #{ev.FRANCHISEE} Franchisee
             .three.wide.right.aligned.column
                 +edit_button
         .centered.row
@@ -222,17 +222,17 @@ template(name='franchisee_view')
                             strong #{ev.FRANCH_NAME}
                         .item Cell: 
                             strong #{ev.TELE_CELL}
-                        .item Master Licensee: 
-                            strong #{ev.MASTER_LICENSEE}
+                        // .item Master Licensee: 
+                        //     strong #{ev.MASTER_LICENSEE}
         .centered.row
             .fifteen.wide.column
                 +franchisee_customers
 
     
 template(name='office_by_franchisee')
-    .ui.secondary.segment
-        .ui.dividing.header 
+    a.ui.center.aligned.button(href="/view/#{parent_office._id}" title="#{ev.FRANCHISEE}'s Office")
+        // .ui.dividing.header 
+        i.large.icon
             +icon name='link-company-parent'
-            |#{ev.FRANCHISEE}'s Office
         with parent_office
-            a.ui.header(href="/view/#{_id}") #{ev.MASTER_LICENSEE}
+            | #{ev.MASTER_LICENSEE}

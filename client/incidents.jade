@@ -19,8 +19,9 @@ template(name='incident_view')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 unless submitted
-                    a#delete(href='#' title='Delete Incident')
-                        +icon name='cancel'
+                    a.ui.icon.button#delete(href='#' title='Delete Incident')
+                        i.icon
+                            +icon name='cancel'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Incident #{incident_number}
             .three.wide.column
@@ -31,7 +32,7 @@ template(name='incident_view')
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
                 unless submitted
-                    +edit_datetime_field key='service_date' label='Service Date' icon='leave'
+                    +edit_datetime_field key='service_date' label='Service Date/Time' icon='leave'
                 else
                     .ui.dividing.header 
                         +icon name='leave'
@@ -208,7 +209,7 @@ template(name='customer_incidents')
             .ten.wide.column
                 h2.ui.center.aligned.header 
                     +icon name='error'
-                    | Customer Incidents
+                    | My Incidents
             .three.wide.column
         .row
             .sixteen.wide.column

@@ -83,8 +83,9 @@ Template.office_incidents.helpers
         # showColumnToggles: true
         fields: [
             # { key: 'incident_office_name', label: 'Office' }
+            { key: 'incident_customer.ev.CUST_NAME', label: 'Customer' }
+            { key: 'when', label: 'Logged'}
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
-            { key: 'when', label: 'Logged' }
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
             { key: '', label: 'Assigned To', tmpl:Template.associated_users }
@@ -140,6 +141,6 @@ Template.office_franchisees.helpers
             { key: 'ev.FRANCH_EMAIL', label: 'Email' }
             { key: 'ev.FRANCH_NAME', label: 'Short Name' }
             { key: 'ev.TELE_CELL', label: 'Phone' }
-            { key: 'ev.MASTER_LICENSEE', label: 'Office' }
+            # { key: 'ev.MASTER_LICENSEE', label: 'Office' }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]

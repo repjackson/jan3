@@ -74,6 +74,11 @@ Docs.helpers
             type: 'franchisee'
             "ev.FRANCHISEE": @ev.FRANCHISEE
     
+    incident_customer: ->
+        Docs.findOne
+            type:'customer'
+            "ev.ID": @customer_jpid
+    
     # users_customer: ->
     #     user = Meteor.user()
     #     found = Docs.findOne

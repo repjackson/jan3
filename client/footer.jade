@@ -20,7 +20,7 @@ template(name='footer')
                     if is_customer
                         +my_franchisee_card
                 .four.wide.column
-                    if is_customer
+                    unless is_admin
                         +my_office_card
             .centered.row
                 .ui.center.aligned.inverted.grey.header

@@ -30,8 +30,9 @@ template(name='save_button')
         // | Save
         
 template(name='edit_button')
-    a(href="/edit/#{_id}" title='Edit') 
-        +icon name='pencil'
+    a.ui.icon.button(href="/edit/#{_id}" title='Edit') 
+        i.pencil.icon
+            // +icon name='pencil'
         // i.pencil.icon
         // | Edit
 
