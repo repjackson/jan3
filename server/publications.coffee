@@ -250,7 +250,7 @@ Meteor.publish 'my_customer_account', ->
 Meteor.publish 'my_franchisee', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
-    if user.profile.customer_jpid
+    if user and user.profile and user.profile.customer_jpid
         customer_doc = Docs.findOne
             "ev.ID": user.profile.customer_jpid
             type:'customer'
@@ -261,7 +261,7 @@ Meteor.publish 'my_franchisee', ->
 Meteor.publish 'my_office', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
-    if user.profile.customer_jpid
+    if user and user.profile and user.profile.customer_jpid
         customer_doc = Docs.findOne
             "ev.ID": user.profile.customer_jpid
             type:'customer'
@@ -331,7 +331,7 @@ publishComposite 'me', ()->
             {
                 find: (user)-> 
                     # users customer account
-                    console.log 'current user?', user.profile
+                    # console.log 'current user?', user.profile
                     Docs.find
                         "ev.ID": user.profile.customer_jpid
                         type:'customer'
@@ -380,3 +380,7 @@ publishComposite 'me', ()->
             }
         ]
     }
+Meteor.publish 'comments', (doc_id)->
+    Docs.find
+        parent_id: doc_id
+        type:'comment'

@@ -36,17 +36,20 @@ template(name='view_text_field')
         
 template(name='edit_date_field')            
     .ui.dividing.header 
-        +icon name=icon
+        +icon name='calendar'
         |#{label}
     .field
-        .ui.icon.fluid.transparent.input
+        .ui.icon.fluid.input
             if icon
                 i.icon(class=icon)
             input#date_field(type='date' value=key_value)        
 
 
 template(name='edit_datetime_field')       
-    h3 #{label}
+    h3 
+        i.large.icon
+            +icon name='calendar'
+        |#{label}
     #semcal.ui.calendar
         .ui.left.icon.input
             i.clock.icon

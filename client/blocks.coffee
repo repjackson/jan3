@@ -685,6 +685,10 @@ Template.single_doc_select.helpers
             Docs.findOne _id: parent_doc["#{context.save_key}"]
         # console.log doc
         doc
+        
+Template.single_doc_view.onCreated ->
+    console.log @data
+    # @autorun =>  Meteor.subscribe 'users'
 Template.single_doc_view.helpers
     selected_doc: ->
         context = Template.currentData(0)

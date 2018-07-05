@@ -317,3 +317,16 @@ Meteor.methods
                 text: "#{current_user.username} changed level to #{level}"
 
 
+    create_alert: (type, parent_id, comment_id)->
+        doc = Docs.findOne comment_id
+        if type is 'comment'
+            new_alert_id = 
+                Docs.insert
+                    type:'event'
+                    event_type:'comment'
+                    parent_id:parent_id
+                    comment_id:comment_id
+                    text: "#{doc.author().username} commented #{doc.text}."
+            return new_alert_id
+        else
+          throw new Meteor.Error 'unknown_type', 'unknown alert type'

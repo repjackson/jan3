@@ -84,7 +84,7 @@ Template.customer_incidents.helpers
         showRowCount: true
         # showColumnToggles: true
         fields: [
-            { key: 'incident_customer.ev.CUST_NAME', label: 'Customer' }
+            { key: 'customer_name', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
             { key: 'when', label: 'Logged' }

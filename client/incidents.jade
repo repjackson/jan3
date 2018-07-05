@@ -18,14 +18,16 @@ template(name='incident_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
+                a.ui.icon.button(href='/customer_ncidents' title='Save')
+                    i.icon
+                        +icon name='checkmark'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Incident #{incident_number}
+            .three.wide.column
                 unless submitted
                     a.ui.icon.button#delete(href='#' title='Delete Incident')
                         i.icon
                             +icon name='cancel'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header Incident #{incident_number}
-            .three.wide.column
-                // +save_button
         .row
             .four.wide.column
                 // if is_dev
