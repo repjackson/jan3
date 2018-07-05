@@ -83,7 +83,7 @@ Template.office_incidents.helpers
         # showColumnToggles: true
         fields: [
             # { key: 'incident_office_name', label: 'Office' }
-            { key: 'incident_customer.ev.CUST_NAME', label: 'Customer' }
+            { key: 'customer_name', label: 'Customer' }
             { key: 'when', label: 'Logged'}
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
             { key: 'incident_details', label: 'Details' }
