@@ -43,10 +43,11 @@ Meteor.users.helpers
     last_login: -> moment(@status?.lastLogin.date).fromNow()
 
     users_customer: ->
+        console.log @
         found = Docs.findOne
             type:'customer'
             "ev.ID": @profile.customer_jpid
-        # console.log found
+        console.log found
         found
         
         

@@ -8,11 +8,13 @@ FlowRouter.route '/customer_incidents',
 Template.add_incident_button.events
     'click #add_incident': ->
         my_customer_ob = Meteor.user().users_customer()
+        console.log my_customer_ob
         if my_customer_ob
             new_incident_id = 
                 Docs.insert
                     type: 'incident'
                     customer_jpid: my_customer_ob.ev.ID
+                    customer_name: my_customer_ob.ev.CUST_NAME
                     incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
                     level: 1
                     open: true
@@ -60,6 +62,7 @@ Template.incidents.helpers
         showRowCount: true
         # showColumnToggles: true
         fields: [
+            { key: 'customer_name', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
             { key: 'when', label: 'Logged' }
@@ -81,6 +84,7 @@ Template.customer_incidents.helpers
         showRowCount: true
         # showColumnToggles: true
         fields: [
+            { key: 'incident_customer.ev.CUST_NAME', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
             { key: 'when', label: 'Logged' }
