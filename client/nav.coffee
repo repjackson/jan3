@@ -5,7 +5,10 @@ Template.left_sidebar.events
 
     
 Template.nav.onCreated ->
+    @autorun -> Meteor.subscribe 'my_customer_account'
+    @autorun -> Meteor.subscribe 'my_franchisee'
     @autorun -> Meteor.subscribe 'me'
+    @autorun -> Meteor.subscribe 'my_office'
     
 Template.dashboard.onRendered ->
     # Meteor.setTimeout ->
@@ -16,13 +19,11 @@ Template.nav.onRendered ->
     # Meteor.setTimeout ->
     #     $('.ui.dropdown').dropdown()
     # , 1000
-    Meteor.setTimeout ->
-        $('.item').popup()
-    , 400
+    # Meteor.setTimeout ->
+    #     $('.item').popup()
+    # , 400
     
     
     
-Template.nav.helpers
-
 
 

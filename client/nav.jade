@@ -15,10 +15,10 @@ template(name='nav')
                 | &nbsp; My Incidents
         if is_officer
             // with currentUser.users_customer.parent_franchisee.parent_office
-            a.item(href="/view/#{currentUser.users_customer.parent_franchisee.parent_office._id}")
+            a.item(href="/view/#{my_office._id}")
                 i.large.icon
                     +icon name='link-company-parent'
-                | &nbsp; #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE}
+                | &nbsp; #{my_office.ev.MASTER_LICENSEE}
         if is_admin
             a.mobile.hidden.item(href='/incidents')
                 i.large.icon

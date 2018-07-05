@@ -118,7 +118,7 @@ template(name='my_customer_account_card')
 
 template(name='my_office_card')
     .ui.card
-        with currentUser.users_customer.parent_franchisee.parent_office
+        with my_office
             .content
                 a(href="/view/#{_id}")
                     .ui.header 

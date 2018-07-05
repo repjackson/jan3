@@ -19,7 +19,8 @@ template(name='dashboard')
                 +my_office_contacts
         .row
             .sixteen.wide.column
-                +customer_incidents_widget
+                if is_customer
+                    +customer_incidents_widget
         .row
             with currentUser.users_customer.parent_franchisee
                 .sixteen.wide.column

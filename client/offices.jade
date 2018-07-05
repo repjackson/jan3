@@ -97,6 +97,7 @@ template(name='office_admin_section')
             +icon name='administrative-tools'
             |SLA Settings
         h3.ui.header Initial
+        p ie type=level2
         .ui.segment
             h3.ui.header Escalation 1
             .ui.two.column.divided.padded.grid
@@ -113,6 +114,7 @@ template(name='office_admin_section')
                                             // label Primary Contact
                                             +radio_item key='escalation_one_primary_contact' label='Office Owner' value='office_owner'
                                             +radio_item key='escalation_one_primary_contact' label='Operations Manager' value='operations_manager'
+                                            p user dropdown third options
                                     +toggle_boolean_checkbox key='escalation_one_primary_contact_franchisee' label='Franchisee'
                                 .column
                                     +view_sla_contact key='escalation_one_primary_contact'

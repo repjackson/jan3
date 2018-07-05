@@ -265,7 +265,6 @@ Meteor.publish 'my_office', ->
         customer_doc = Docs.findOne
             "ev.ID": user.profile.customer_jpid
             type:'customer'
-            # grandparent office
         # console.log customer_doc
         Docs.find
             "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
@@ -344,14 +343,14 @@ publishComposite 'me', ()->
                     #             customer_jpid: customer.jpid
                     #             type:'incident'
                     # }
-                    {
-                        find: (customer)-> 
-                            # console.log 'finding franchisees for', customer
-                            # parent franchisee
-                            Docs.find
-                                franchisee: customer.franchisee
-                                type:'franchisee'
-                    }
+                    # {
+                    #     find: (customer)-> 
+                    #         # console.log 'finding franchisees for', customer
+                    #         # parent franchisee
+                    #         Docs.find
+                    #             franchisee: customer.franchisee
+                    #             type:'franchisee'
+                    # }
                     # {
                     #     find: (customer)-> 
                     #         # console.log 'finding special services for', customer
@@ -360,22 +359,23 @@ publishComposite 'me', ()->
                     #             "ev.CUSTOMER": customer.cust_name
                     #             type:'special_service'
                     # }
-                    {
-                        find: (customer)-> 
-                            # grandparent office
-                            Docs.find
-                                "ev.MASTER_LICENSEE": customer.master_licensee
-                                type:'office'
-                        # children: [
-                        #     {
-                        #         find: (office)-> 
-                        #             # offices users
-                        #             # console.log 'query users from office doc', office
-                        #             Meteor.users.find
-                        #                 "profile.office_name": office.ev.MASTER_OFFICE_NAME
-                        #     }
-                        # ]
-                    }
+                    # {
+                    #     find: (customer)-> 
+                    #         # grandparent office
+                    #         console.log 'customer', customer
+                    #         Docs.find
+                    #             # "ev.MASTER_LICENSEE": customer.ev.MASTER_LICENSEE
+                    #             type:'office'
+                    #     # children: [
+                    #     #     {
+                    #     #         find: (office)-> 
+                    #     #             # offices users
+                    #     #             # console.log 'query users from office doc', office
+                    #     #             # Meteor.users.find
+                    #     #             #     "profile.office_name": office.ev.MASTER_OFFICE_NAME
+                    #     #     }
+                    #     # ]
+                    # }
                 ]    
             }
         ]
