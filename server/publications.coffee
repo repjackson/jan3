@@ -26,6 +26,8 @@ ReactiveTable.publish 'franchisees', Docs, {type:'franchisee'}, {disablePageCoun
 ReactiveTable.publish 'incidents', Docs, {type:'incident'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'offices', Docs, {type:'office'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'special_services', Docs, {type:'special_service'}, {disablePageCountReactivity:true}
+ReactiveTable.publish 'jpids', Docs, {type:'jpid'}, {disablePageCountReactivity:true}
+ReactiveTable.publish 'search_history_docs', Docs, {type:'search_history_doc'}, {disablePageCountReactivity:true}
 
 
 ReactiveTable.publish 'office_employees', (input)->

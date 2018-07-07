@@ -89,6 +89,7 @@ template(name='incident_view')
                         +icon name='order-history'
                         |History
                     +full_doc_history
+                +incident_actions_list
             .four.wide.column
                 if can_submit
                     +toggle_boolean key='submitted' yes_label='Submitted' no_label='Submit'
@@ -224,3 +225,78 @@ template(name='add_incident_button')
             +icon name='plus'
     else
         .ui.secondary.segment Add Office to Profile to Add Incident
+
+
+template(name='incident_actions_list')
+    .ui.header Incident SLA Rules List
+    with my_office
+        .ui.cards
+            .ui.card
+                .content
+                    .right.floated.meta(title='Automatic Escalation Time')
+                        i.icon
+                            +icon name='clock'
+                        strong #{escalation_one_hours}
+                    .header Escalation 1
+                .content
+                    .ui.sub.header Primary Contact
+                    .item Office #{escalation_one_primary_contact} 
+                    if escalation_one_primary_contact_franchisee
+                        .item Franchisee #{escalation_one_primary_contact_franchisee}
+                .content
+                    .ui.sub.header Secondary Contact
+                    .item Office #{escalation_one_secondary_contact} 
+                    if escalation_one_secondary_contact_franchisee
+                        .item Franchisee #{escalation_one_secondary_contact_franchisee}
+            .ui.card
+                .content
+                    .right.floated.meta(title='Automatic Escalation Time')
+                        i.icon
+                            +icon name='clock'
+                        strong #{escalation_two_hours}
+                    .header Escalation 2
+                .content
+                    .ui.sub.header Primary Contact
+                    .item Office #{escalation_two_primary_contact} 
+                    if escalation_two_primary_contact_franchisee
+                        .item Franchisee #{escalation_two_primary_contact_franchisee}
+                .content
+                    .ui.sub.header Secondary Contact
+                    .item Office #{escalation_two_secondary_contact} 
+                    if escalation_two_secondary_contact_franchisee
+                        .item Franchisee #{escalation_two_secondary_contact_franchisee}
+            .ui.card
+                .content
+                    .right.floated.meta(title='Automatic Escalation Time')
+                        i.icon
+                            +icon name='clock'
+                        strong #{escalation_three_hours}
+                    .header Escalation 3
+                .content
+                    .ui.sub.header Primary Contact
+                    .item Office #{escalation_three_primary_contact} 
+                    if escalation_three_primary_contact_franchisee
+                        .item Franchisee #{escalation_three_primary_contact_franchisee}
+                .content
+                    .ui.sub.header Secondary Contact
+                    .item Office #{escalation_three_secondary_contact} 
+                    if escalation_three_secondary_contact_franchisee
+                        .item Franchisee #{escalation_three_secondary_contact_franchisee}
+            .ui.card
+                .content
+                    .right.floated.meta(title='Automatic Escalation Time')
+                        i.icon
+                            +icon name='clock'
+                        strong #{escalation_four_hours}
+                    .header Escalation 4
+                .content
+                    .ui.sub.header Primary Contact
+                    .item Office #{escalation_four_primary_contact}
+                    if escalation_four_primary_contact_franchisee
+                        .item Franchisee #{escalation_four_primary_contact_franchisee}
+                .content
+                    .ui.sub.header Secondary Contact
+                    .item Office #{escalation_four_secondary_contact} 
+                    if escalation_four_secondary_contact_franchisee
+                        .item Franchisee #{escalation_four_secondary_contact_franchisee}
+            

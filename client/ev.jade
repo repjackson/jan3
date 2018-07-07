@@ -42,30 +42,7 @@ template(name='jpids')
                 //     input#ev_search(type='text' placeholder='Search EV')
         .row
             .sixteen.wide.column
-                // +tabular table=TabularTables.Jpids selector=selector class="ui sortable fluid striped table"
-                table.ui.celled.very.basic.table
-                    thead
-                        tr
-                            th jpid
-                            th Customer
-                            th Franchisee
-                            th Assigned To
-                            th Office
-                            th Status
-                            th Area
-                            th
-                    tbody
-                        each jpid_docs
-                            tr
-                                td #{jpid}
-                                td #{ev.CUSTOMER}
-                                td #{ev.FRANCHISEE}
-                                td #{ev.ASSIGNED_TO}
-                                td #{ev.MASTER_LICENSEE}
-                                td #{ev.ACCOUNT_STATUS}
-                                td #{ev.AREA}
-                                td 
-                                    +view_button
+                +reactiveTable settings=settings class="ui celled striped sortable table"
 
                     
 template(name='history')
@@ -78,11 +55,8 @@ template(name='history')
                     i.hashtag.icon
                     | EV History
             .four.wide.column
-                // .refresh_history.ui.icon.button(title='Run History API Call')
-                //     i.refresh.icon
                 .run_timestamp_search.ui.icon.button(title='Run Search Update')
                     i.refresh.icon
-            
         .row
             .sixteen.wide.column
                 .ui.header Search API Results
@@ -108,29 +82,6 @@ template(name='history')
                                 td 
                                     +view_button
 
-                // +tabular table=TabularTables.Search_history selector=search_history_selector class="ui sortable fluid striped table"
-                .ui.header History API Results
-                table.ui.celled.table
-                    thead
-                        tr
-                            th JPID
-                            th Area
-                            th Timestamp
-                            th Last Change User
-                            th Project
-                            th Franchisee
-                            th
-                    tbody
-                        each history_docs
-                            tr
-                                td #{ev.ID}
-                                td #{ev.AREA}
-                                td #{ev.TIMESTAMP}
-                                td #{ev.LAST_CHANGE_USER}
-                                td #{ev.PROJECT}
-                                td #{ev.FRANCHISEE}
-                                td 
-                                    +view_button
 
                     
 template(name='history_view')
@@ -192,8 +143,8 @@ template(name='franchisees')
                     | Franchisees
             .four.wide.column
                 // if is_dev
-                //     .get_all_franchisees
-                //         +icon name='refresh'
+                .ui.icon.button.get_all_franchisees
+                    i.refresh.icon
         .row
             .sixteen.wide.column
                 +reactiveTable settings=settings class="ui celled striped sortable table"

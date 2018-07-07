@@ -687,7 +687,7 @@ Template.single_doc_select.helpers
         doc
         
 Template.single_doc_view.onCreated ->
-    console.log @data
+    # console.log @data
     # @autorun =>  Meteor.subscribe 'users'
 Template.single_doc_view.helpers
     selected_doc: ->

@@ -179,7 +179,7 @@ Meteor.methods
                 record_start: 1
                 record_count: 100
                 username_display: 'ID'
-                timestamp: "'2018-06-05'-'2018-06-29'"
+                timestamp: "'2018-06-05'-'2018-07-20'"
         # console.log res
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
@@ -206,6 +206,7 @@ Meteor.methods
         
 
     get_all_franchisees: () ->
+        console.log 'starting franchisee sync'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
@@ -214,10 +215,10 @@ Meteor.methods
                 statevar:'run_report'
                 username_display:'ID'
                 api_reverse_lookup:'NO'
-                id:'40607'
-                page_length:'3000'
-                record_start:'1'
-                record_count:'3000'
+                id:'48297'
+                page_length:'5000'
+                record_start:'55000'
+                record_count:'5000'
         # return res.content
         # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
@@ -234,21 +235,18 @@ Meteor.methods
                     existing_franchisee = 
                         Docs.findOne 
                             type: 'franchisee'
-                            jpid: doc.ID
-                            franchisee: doc.FRANCHISEE
+                            "ev.ID": doc.ID
                     if existing_franchisee
                         console.log "existing franchisee #{existing_franchisee.franchisee}"
                         # console.log doc
                         Docs.update existing_franchisee._id,
                             $set:
                                 ev: doc
-                    # else                    
-                    #     new_franchisee_doc = Docs.insert 
-                    #         type:'franchisee'
-                    #         jpid: doc.ID
-                    #         franchisee: doc.FRANCHISEE
-                    #         ev: doc
-                    #     console.log "added #{doc.FRANCHISEE}"
+                    else                    
+                        new_franchisee_doc = Docs.insert 
+                            type:'franchisee'
+                            ev: doc
+                        console.log "added #{doc.SHORT_NAME}"
     
     sync_services: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -346,9 +344,9 @@ Meteor.methods
                 username_display:'ID'
                 api_reverse_lookup:'NO'
                 id:'48302'
-                page_length:'119000'
-                record_start:'60000'
-                record_count:'119000'
+                page_length:'20000'
+                record_start:'50000'
+                record_count:'20000'
         # return res.content
         # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
@@ -367,8 +365,8 @@ Meteor.methods
                             type: 'customer'
                             "ev.ID": doc.ID
                             "ev.CUST_NAME": doc.CUST_NAME
-                    if existing_customer_doc
-                        console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
+                    # if existing_customer_doc
+                    #     console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
                         # Docs.update existing_customer_doc._id,
                         #     $set:
                         #         ev: doc
