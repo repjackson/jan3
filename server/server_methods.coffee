@@ -330,3 +330,86 @@ Meteor.methods
             return new_alert_id
         else
           throw new Meteor.Error 'unknown_type', 'unknown alert type'
+          
+          
+    # mark_read: (doc_id)-> Docs.update doc_id, $addToSet: read_by: Meteor.userId()
+    # mark_unread: (doc_id)-> Docs.update doc_id, $pull: read_by: Meteor.userId()
+          
+          
+    create_conversation: (tags=[])->
+        Docs.insert
+            tags: tags
+            type: 'conversation'
+            subscribers: [Meteor.userId()]
+            participant_ids: [Meteor.userId()]
+        # FlowRouter.go "/conversation/#{id}"
+
+    close_conversation: (conversation_id)->
+        Docs.remove conversation_id
+        Docs.remove 
+            type: 'message'
+            group_id: conversation_id
+
+    join_conversation: (conversation_id)->
+        Docs.update conversation_id,
+            $addToSet:
+                participant_ids: Meteor.userId()
+
+    leave_conversation: (conversation_id)->
+        Docs.update conversation_id,
+            $pull:
+                participant_ids: Meteor.userId()
+    add_message: (body,group_id)->
+        new_message_id = Docs.insert
+            body: body
+            type: 'message'
+            group_id: group_id
+            tags: ['conversation', 'message']
+        
+        conversation_doc = Docs.findOne _id: group_id
+        message_doc = Docs.findOne new_message_id
+        message_author = Meteor.users.findOne message_doc.author_id
+        
+        message_link = "https://www.jan.meteorapp.com/view/#{conversation_doc._id}"
+        # console.log 'message author', message_author
+        # console.log 'message_doc', message_doc
+        
+        this.unblock()
+        
+        offline_ids = []
+        for participant_id in conversation_doc.participant_ids
+            user = Meteor.users.findOne participant_id
+            console.log participant_id
+            if user.status.online is true
+                console.log 'user online:', user.profile.first_name
+            else
+                offline_ids.push user._id
+                console.log 'user offline:', user.profile.first_name
+        
+        
+        for offline_id in offline_ids
+            console.log 'offline id', offline_id
+            offline_user = Meteor.users.findOne offline_id
+            
+            Email.send
+                to: " #{offline_user.profile.first_name} #{offline_user.profile.last_name} <#{offline_user.emails[0].address}>",
+                from: "Jan-Pro Customer Portal Admin <no-reply@toriwebster.com>",
+                subject: "New Message from #{message_author.profile.first_name} #{message_author.profile.last_name}",
+                html: 
+                    "<h4>#{message_author.profile.first_name} just sent the following message while you were offline: </h4>
+                    #{text} <br><br>
+                    
+                    Click <a href=#{message_link}> here to view.</a><br><br>
+                    You can unsubscribe from this conversation in the Actions panel.
+                    "
+                
+                # html: 
+                #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
+                #     #{text} <br>
+                #     In conversation with tags: #{conversation_doc.tags}. \n
+                #     In conversation with description: #{conversation_doc.description}. \n
+                #     \n
+                #     Click <a href="/view/#{_id}"
+                # "
+        return new_message_id
+      

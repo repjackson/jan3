@@ -1,0 +1,287 @@
+template(name='mail')
+    .ui.stackable.padded.grid
+        .row
+            .five.wide.center.aligned.column
+                if currentUser
+                    #create_conversation.ui.circular.icon.button
+                        +icon name='plus' classes='ui mini inline image'
+                        // |New Conversation
+            .eight.wide.center.aligned.column
+                h1.ui.header 
+                    +icon name='chat'
+                    |Conversations
+            .three.wide.center.aligned.column
+                .ui.large.circular.basic.label(data-tooltip='Unread Messages' data-position='bottom center')
+                    +icon name='new-message' classes='ui mini inline image'
+                    |#{unread_message_count}
+        .row
+            .four.wide.column
+                // +theme_tag_filter type='conversation'
+                // +participant_filter type='conversation'
+                +conversation_list
+                // .ui.dividing.header Viewing: 
+                //     if viewing_published
+                //         #view_private_conversations.ui.basic.button 
+                //             i.unhide.icon
+                //             |Published
+                //     if viewing_private
+                //         #view_published_conversations.ui.basic.button 
+                //             i.lock.icon
+                //             |Private
+            .twelve.wide.column
+                with selected_conversation
+                    +full_conversation_view
+                // .ui.cards
+                //     each conversations
+
+                
+template(name='conversation_list')
+    .ui.segments
+        each conversation_list_items
+            +conversation_list_item
+            
+            
+template(name='conversation_list_item')
+    .ui.segment.conversation_list_item(href='#' class=conversation_list_item_class)
+        .content
+            .description
+                .ui.horizontal.list
+                    each participants
+                        .item
+                            // a(href="/user/#{username}")
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}" title=name)
+                            |#{profile.first_name}
+                            +staus_indicator
+            .description
+                each tags
+                    .ui.small.basic.circular.label #{this}
+            .description
+                strong {{cutString last_message.body 100}}
+            .description
+                |by #{last_message.author.name} #{last_message.when}
+            // .extra
+            //     .span #{unread_message_count} unread messages
+            //     .span #{_message_count} total messages
+                
+                
+                
+template(name='conversation_message')
+    .ui.segment.message_segment(class=message_segment_class)
+        .ui.comments
+            .comment
+                a.avatar(href="/user/#{username}")
+                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                .content
+                    a.author(href="/user/#{username}") #{author.name}
+                    .metadata
+                        span.date #{from_now}
+                    .text
+                        | #{text}
+                        | #{body}
+                        |!{content}
+                    .actions
+                        if is_author
+                            +session_delete_button
+                        else
+                            +voting
+                            if read
+                                a.mark_unread 
+                                    i.mail.icon
+                                    |Mark Unread
+                            else
+                                a.mark_read 
+                                    i.mail.outline.icon
+                                    |Mark Read
+                        |Read by:
+                        each readers
+                            .ui.tiny.basic.label #{name}
+                            // img.ui.avatar.image(src="{{c.url profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        if parent_id
+                            .ui.accordion
+                                .title
+                                    i.vertically.flipped.share.icon
+                                    |In reference to...
+                                    i.dropdown.icon
+                                .content
+                                    .ui.basic.segment
+                                        each parent.tags
+                                            .ui.small.basic.label #{this}
+                                        strong by #{parent.author.profile.first_name}
+                                        p #{parent.body}
+                                        if parent.parent_id
+                                            .ui.basic.segment
+                                                i.vertically.flipped.share.icon
+                                                each parent.parent.tags
+                                                    .ui.small.basic.label #{this}
+                                                p #{parent.parent.body}
+                                                if parent.parent.parent_id
+                                                    .ui.basic.segment
+                                                        i.vertically.flipped.share.icon
+                                                        each parent.parent.parent.tags
+                                                            .ui.small.basic.label #{this}
+                                                        if parent.parent.parent.title
+                                                            strong #{parent.parent.parent.title}
+                                                        p #{parent.parent.parent.body}
+                
+                
+template(name='view_conversation')
+    .ui.stackable.padded.grid
+        .centered.row
+            .three.wide.column
+            .ten.wide.column
+                h1.ui.center.aligned.header View Conversation 
+            .three.wide.column
+                if can_edit
+                    +edit_button
+        .centered.row
+            .ten.wide.column.shadowed-box
+                // +minimal_conversation_view this
+                +conversation_messages_pane this
+            .five.wide.column.shadowed.padded10
+                .ui.dividing.header 
+                    +icon name='line-chart'
+                    |Stats
+                .ui.small.horizontal.statistic
+                    .value #{message_count}
+                    .label Total Messages
+                .ui.small.horizontal.statistic
+                    .value #{unread_message_count} 
+                    .label Unread Messages
+                .ui.dividing.header 
+                    +icon name='align-left'
+                    |Description
+                |!{content}
+                .ui.dividing.header
+                    +icon name='queue'
+                    |Participants
+                .ui.divided.relaxed.list
+                    each participants
+                        .item
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            .content
+                                .header
+                                    |#{name}
+                                    if subscribed
+                                        .ui.small.basic.green.label
+                                            |Subscribed
+                                    else
+                                        .ui.basic.label
+                                            |Not Subscribed
+                                    .sub.header @#{username}
+                                .description
+                                    each five_tags
+                                        .ui.tiny.basic.label #{this}
+            
+                .ui.dividing.header 
+                    +icon name='tags'
+                    |Conversation Tags
+                each tags
+                    .ui.basic.large.label.doc_tag #{this}
+                .ui.dividing.header 
+                    +icon name='sports=mode'
+                    |Actions
+                +subscribe_button
+                +bookmark_button
+                unless is_author
+                    +resonate_button
+                    +thanks_button
+                +resonates_list
+
+                .ui.dividing.header 
+                    +icon name='eye'
+                    |Visibility
+                if published
+                    .ui.basic.green.large.label 
+                        i.unlock.icon
+                        | Public
+                else
+                    .ui.basic.large.label 
+                        i.lock.icon
+                        | Private
+                .ui.header Started by #{author.name} #{when}
+                .ui.divider
+
+
+template(name='conversation_edit')
+    .ui.container
+        h1.ui.center.aligned.header Edit Conversation
+        .ui.stackable.grid
+            .twelve.wide.column
+                .ui.form
+                    // +participants
+                    +multiple_user_select key='participant_ids' label='Participants'
+                    // +tags
+                    +edit_textarea key='description' label='Description' 
+            .four.wide.column
+                if tags
+                    a.ui.fluid.green.big.button(href="/view/#{_id}") 
+                        |Save Conversation
+                else
+                    .ui.fluid.green.big.disabled.button Add Tags to Save
+                #delete_doc.ui.small.fluid.red.compact.button 
+                    |Delete Conversation
+                .ui.divider
+                | Private conversations are only shown to participants you invite.  
+                +published
+                
+                
+                
+template(name='full_conversation_view')
+    .ui.fluid.card
+        .content
+            span.right.floated
+                if is_admin
+                    +session_delete_button
+                // +subscribe_button
+                +view_full_button
+            .ui.header 
+                |!{content}    
+            // if published    
+            //     span.right.floated
+            //         i.unlock.icon
+            //         |Published
+            // else
+            //     span.right.floated
+            //         i.lock.icon
+            //         |Private
+            div
+                +icon name='hashtag' classes='ui mini inline image'
+                each tags
+                    .ui.basic.label(class=conversation_tag_class) #{this}
+            div
+                .ui.horizontal.list
+                    each participants
+                        .item
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            |#{name}
+                            +staus_indicator
+            +conversation_messages_pane this
+                    
+template(name='conversation_messages_pane')
+    .ui.horizontal.list.participant_list
+        if published
+            .item
+                if in_conversation
+                    .ui.basic.circular.button.leave_conversation
+                        +icon name='leaving-queue' classes='ui mini inline image'
+                        |Leave
+                else
+                    .ui.basic.circular.button.join_conversation
+                        +icon name='joining-queue' classes='ui mini inline image'
+                        |Join
+        each participants
+            .item.participant_item
+                a(href="/user/#{username}")
+                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    |#{name}
+                    +staus_indicator
+    .ui.divider
+    .description.conversation_messages
+        each conversation_messages
+            +conversation_message
+    if in_conversation
+        .ui.divider
+        .ui.form
+            .field
+                textarea.add_message(rows='3' placeholder='Add Message')
+                

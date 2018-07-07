@@ -554,3 +554,24 @@ template(name='radio_item')
         .ui.slider.checkbox
             input(type="radio" name=key value=value checked=key_value)
             label #{label}
+
+
+template(name='session_delete_button')
+    unless confirming
+        .delete.ui.basic.red.icon.circular.large.button
+            i.remove.icon
+    else
+        .ui.basic.icon.large.button.circular.cancel 
+            i.ban.icon
+            // |Cancel
+        .ui.basic.large.button.red.circular.confirm 
+            i.red.trash.icon
+            |Confirm
+
+
+template(name='published')
+    if can_edit
+        #publish.ui.icon.compact.button(data-tooltip='Publish' class=published_class)
+            +icon name='visible' classes='ui mini inline image'
+        #unpublish.ui.icon.compact.button(data-tooltip='Unpublish' class=private_class)
+            +icon name='invisible' classes='ui mini inline image'

@@ -724,3 +724,35 @@ Template.doc_result.helpers
         # console.log found
         found
         
+Template.delete_button.onCreated ->
+    @confirming = new ReactiveVar(false)
+            
+Template.delete_button.helpers
+    confirming: -> Template.instance().confirming.get()
+
+Template.delete_button.events
+    'click .delete': (e,t)-> t.confirming.set true
+
+    'click .cancel': (e,t)-> t.confirming.set false
+    'click .confirm': (e,t)-> 
+        Docs.remove @_id
+        FlowRouter.go("/view/#{@parent_id}")
+            
+Template.session_delete_button.onCreated ->
+    @confirming = new ReactiveVar(false)
+            
+     
+Template.session_delete_button.helpers
+    confirming: -> Template.instance().confirming.get()
+Template.session_delete_button.events
+    'click .delete': (e,t)-> 
+        # $(e.currentTarget).closest('.comment').transition('pulse')
+        t.confirming.set true
+
+    'click .cancel': (e,t)-> t.confirming.set false
+    'click .confirm': (e,t)-> 
+        $(e.currentTarget).closest('.comment').transition('fade right')
+        $(e.currentTarget).closest('.notification_segment').transition('fade right')
+        Meteor.setTimeout =>
+            Docs.remove(@_id)
+        , 1000

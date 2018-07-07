@@ -1,0 +1,29 @@
+template(name='alerts')
+    .ui.padded.stackable.grid
+        .row
+            .four.wide.column
+                h1.ui.header
+                    +icon name='appointment-reminders'
+                    | Alerts
+            .twelve.wide.column
+                .ui.feed
+                    each alert_docs
+                        +alert
+                        
+                        
+template(name='alert')
+    .event
+        .label
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .content
+            .summary
+                a.user #{author.username}
+                |#{action} #{text}
+                a(href="/view/#{parent._id}") #{parent.title}
+                .date #{when}
+            .meta
+                +mark_read_link
+                if is_admin
+                    i.remove_event.remove.link.icon
+                    
+                    

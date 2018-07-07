@@ -33,7 +33,6 @@ template(name='layout')
                 #main_area
                     +Template.dynamic template=cloud
                     +Template.dynamic template=sub_nav
-                    +Template.dynamic template=sub_sub_nav
                     +Template.dynamic template=main
             // +bottom_sidebar
     +footer
@@ -47,3 +46,12 @@ template(name='not_found')
             |Page Not Found
 
 
+template(name='staus_indicator')
+    if online 
+        // .ui.label(class='{{labelClass}}') 
+        img.ui.avatar.image(src="https://png.icons8.com/connection-status-on/color/48" title='Online' width="48" height="48")
+        // |Online
+    else if idle
+        .ui.label(class='{{labelClass}}') Idle
+        // else 
+        //     |Offline

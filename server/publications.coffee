@@ -155,6 +155,10 @@ Meteor.publish 'office_employees', (office_doc_id)->
     }, limit:100
     
     
+Meteor.publish 'my_conversations', ->
+    Docs.find
+        type: 'conversation'
+        participant_ids: $in: [Meteor.userId()]
     
     
     
@@ -386,3 +390,135 @@ Meteor.publish 'comments', (doc_id)->
     Docs.find
         parent_id: doc_id
         type:'comment'
+
+
+
+Meteor.publish 'people_list', (conversation_id) ->
+    # console.log conversation_id
+    conversation = Docs.findOne conversation_id
+    Meteor.users.find
+        _id: $in: conversation.participant_ids
+
+
+
+# Meteor.publish 'conversation_messages', (conversation_id) ->
+#     Docs.find
+#         type: 'message'
+#         conversation_id: conversation_id
+
+
+publishComposite 'participant_ids', (selected_theme_tags, selected_participant_ids)->
+    
+    {
+        find: ->
+            self = @
+            match = {}
+            # console.log selected_participant_ids
+            # console.log selected_theme_tags
+            match.type = 'conversation'
+            if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+            if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
+            match.published = true
+            
+            cloud = Docs.aggregate [
+                { $match: match }
+                { $project: participant_ids: 1 }
+                { $unwind: "$participant_ids" }
+                { $group: _id: '$participant_ids', count: $sum: 1 }
+                { $match: _id: $nin: selected_participant_ids }
+                { $sort: count: -1, _id: 1 }
+                { $limit: 20 }
+                { $project: _id: 0, text: '$_id', count: 1 }
+                ]
+        
+        
+            # console.log cloud
+            
+            # author_objects = []
+            # Meteor.users.find _id: $in: cloud.
+        
+            cloud.forEach (participant_ids) ->
+                self.added 'participant_ids', Random.id(),
+                    text: participant_ids.text
+                    count: participant_ids.count
+            self.ready()
+        
+        # children: [
+        #     { find: (doc) ->
+        #         Meteor.users.find 
+        #             _id: doc.participant_ids
+        #         }
+        #     ]    
+    }            
+    
+    
+Meteor.publish 'conversations', (selected_theme_tags, selected_participant_ids, view_published)->
+
+    self = @
+    match = {}
+    # console.log selected_participant_ids
+    if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+    if view_published is true
+        match.published = 1
+        if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
+    else if view_published = false
+        match.published = -1
+        selected_participant_ids.push Meteor.userId()
+        match.participant_ids = $in: selected_participant_ids
+    # if view_mode
+    #     if view_mode is 'mine'
+    #         match
+    #         match.participant_ids = $in: [Meteor.userId()]
+    # else
+        # if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
+            
+            
+    match.type = 'conversation'
+    # console.log match
+    
+    cursor = Docs.find match
+    # console.log cursor.count()
+    return cursor
+
+publishComposite 'group_docs', (group_id)->
+    {
+        find: -> Docs.find group_id: group_id
+        children: [
+            {
+                find: (doc)-> Docs.find _id: doc.parent_id
+                children: [
+                    { 
+                        find: (doc)-> Docs.find _id: doc.parent_id 
+                        children: [
+                            { find: (doc)-> Docs.find _id: doc.parent_id }
+                        ]
+                    }
+                    {
+                        find: (doc)->
+                            Meteor.users.find
+                                _id: doc.author_id
+                    }
+                ]
+            }
+            {
+                find: (doc)->
+                    Meteor.users.find
+                        _id: doc.author_id
+            }
+
+        ]
+    }
+Meteor.publish 'userStatus', ->
+    Meteor.users.find { 'status.online': true }, 
+        fields: 
+            points: 1
+            tags: 1
+            
+            
+            
+Meteor.publish 'user_status_notification', ->
+    Meteor.users.find('status.online': true).observe
+        added: (id) ->
+            console.log "#{id} just logged in"
+        removed: (id) ->
+            console.log "#{id} just logged out"

@@ -10,6 +10,34 @@ Template.role_switcher.helpers
         if Meteor.user() and Meteor.user().roles and @name in Meteor.user().roles then 'blue' else ''
 
 
+Template.footer.helpers
+    site_doc: -> 
+        site_doc = Docs.findOne Session.get('current_site_id')
+        if site_doc then site_doc
+
+    bug_link: -> Session.get 'bug_link'
+
+
+Template.footer.events
+    "click #report_bug": ->
+        Session.set 'bug_link', window.location.pathname
+        $('.ui.report.modal').modal(
+            inverted: true
+            transition: 'vertical flip'
+            # observeChanges: true
+            duration: 500
+            onApprove : ()->
+                val = $("#bug_description").val()
+                # window.alert val
+                Docs.insert
+                    type: 'bug_report'
+                    complete: false
+                    body: val
+                    link: window.location.pathname
+                $("#bug_description").val('')
+    
+                # $('.ui.confirm.modal').modal('show');
+            ).modal('show')
 
 Template.role_switcher.events
     'click .change_role': ->

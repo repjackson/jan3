@@ -11,11 +11,8 @@ Template.add_user.helpers
     unassigned_roles: ->
         role_list = [
             'admin'
-            'desk'
-            'staff'
-            'resident'
-            'owner'
-            'board'
+            'office'
+            'customer'
             ]
         _.difference role_list, @roles
         
