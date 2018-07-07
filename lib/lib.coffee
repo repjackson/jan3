@@ -17,6 +17,11 @@ Docs.before.insert (userId, doc)->
     # console.log date_array
     doc.timestamp_tags = date_array
     doc.author_id = Meteor.userId()
+    doc.points = 0
+    doc.read_by = [Meteor.userId()]
+    doc.upvoters = []
+    doc.downvoters = []
+
     return
 
 Meteor.users.helpers
@@ -175,15 +180,15 @@ Meteor.methods
                 $addToSet: read_by: Meteor.userId()
                 $inc: read_count: 1
     
-    # bookmark: (doc)->
-    #     if doc.bookmarked_ids and Meteor.userId() in doc.bookmarked_ids
-    #         Docs.update doc._id,
-    #             $pull: bookmarked_ids: Meteor.userId()
-    #             $inc: bookmarked_count: -1
-    #     else
-    #         Docs.update doc._id,
-    #             $addToSet: bookmarked_ids: Meteor.userId()
-    #             $inc: bookmarked_count: 1
+    bookmark: (doc)->
+        if doc.bookmarked_ids and Meteor.userId() in doc.bookmarked_ids
+            Docs.update doc._id,
+                $pull: bookmarked_ids: Meteor.userId()
+                $inc: bookmarked_count: -1
+        else
+            Docs.update doc._id,
+                $addToSet: bookmarked_ids: Meteor.userId()
+                $inc: bookmarked_count: 1
     
     # pin: (doc)->
     #     if doc.pinned_ids and Meteor.userId() in doc.pinned_ids

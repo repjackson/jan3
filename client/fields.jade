@@ -93,7 +93,7 @@ template(name='view_numeric_field')
 
 
 template(name='edit_textarea')
-    .ui.dividing.header 
+    .ui.header 
         +icon name=icon
         |#{label}
     .ui.form
@@ -125,3 +125,22 @@ template(name='edit_array_field')
         a.ui.button.doc_tag
             i.remove.icon
             |#{this}
+
+
+template(name='edit_image_field')
+    .ui.secondary.segment
+        .ui.header 
+            +icon name='picture'
+            |Image
+        if image_id
+            .ui.image
+                img(src="{{c.url image_id }}")
+                a#remove_photo.ui.top.left.attached.link.label remove
+                // .ui.bottom.right.attached.label Image Id: #{image_id}
+        else
+            input(type='file' name='upload_picture' accept='image/*')
+        // if isInRole 'admin'
+        //     .field
+        //         label or Choose Cloudinary Image Id
+        //         input#input_image_id(type='text')
+        

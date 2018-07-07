@@ -36,36 +36,18 @@ template(name='incident_view')
                 unless submitted
                     +edit_datetime_field key='service_date' label='Service Date/Time' icon='leave'
                 else
-                    .ui.dividing.header 
-                        +icon name='leave'
-                        |Date
-                    |#{service_date}
+                    .ui.secondary.segment
+                        .ui.header 
+                            +icon name='leave'
+                            |Date
+                        h5 #{service_date}
                 unless is_customer
-                    +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
                     +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
                 if submitted
-                    .ui.dividing.header Level #{current_level}
-                    unless is_customer
-                        unless is_closed
-                            if can_set_to_one
-                                .set_level_one.ui.button Set 1
-                            else
-                                .ui.disabled.button Set 1
-                            if can_set_to_two
-                                .set_level_two.ui.button Set 2
-                            else
-                                .ui.disabled.button Set 2
-                            if can_set_to_three
-                                .set_level_three.ui.button Set 3
-                            else
-                                .ui.disabled.button Set 3
-                            if can_set_to_four
-                                .set_level_four.ui.button Set 4
-                            else
-                                .ui.disabled.button Set 4
-                    .ui.dividing.header Status
-                    +toggle_key key='status' value='closed' label='Closed'
-                    +toggle_key key='status' value='open' label='Open'
+                    .ui.secondary.segment
+                        .ui.header Status
+                        +toggle_key key='status' value='closed' label='Closed'
+                        +toggle_key key='status' value='open' label='Open'
                     if is_closed
                         .ui.button 
                             i.reply.icon
@@ -85,11 +67,12 @@ template(name='incident_view')
                         img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
                 if submitted
                     +comments
-                    .ui.dividing.header 
-                        +icon name='order-history'
-                        |History
-                    +full_doc_history
-                +incident_actions_list
+                    .ui.secondary.segment
+                        .ui.header 
+                            +icon name='order-history'
+                            |History
+                        +full_doc_history
+                +incident_sla_widget
             .four.wide.column
                 if can_submit
                     +toggle_boolean key='submitted' yes_label='Submitted' no_label='Submit'
@@ -98,16 +81,19 @@ template(name='incident_view')
                 if submitted
                     +incident_type_label
                 else
-                    .ui.dividing.header 
-                        +icon name='category'
-                        |Type
-                    each incident_type_docs
-                        +toggle_key key='incident_type' value=slug label=name
+                    .ui.secondary.segment
+                        .ui.header 
+                            +icon name='category'
+                            |Type
+                        each incident_type_docs
+                            +toggle_key key='incident_type' value=slug label=name
                 unless is_customer
                     if submitted
-                        +incident_tasks
+                        .ui.secondary.segment
+                            +incident_tasks
                     +notify_button
-        
+                    +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
+
 
 template(name='edit_priority_field')
     .ui.secondary.segment
@@ -133,7 +119,7 @@ template(name='incident_status')
 
 
 template(name='incident_tasks')
-    .ui.dividing.header
+    .ui.header
         +icon name='to-do'
         |Incident Tasks
     a#add_incident_task(title='Add Task' href='#')
@@ -227,11 +213,12 @@ template(name='add_incident_button')
         .ui.secondary.segment Add Office to Profile to Add Incident
 
 
-template(name='incident_actions_list')
+template(name='incident_sla_widget')
     .ui.header Incident SLA Rules List
+    .ui.sub.header.header Level #{current_level}
     with my_office
         .ui.cards
-            .ui.card
+            .ui.card(class="{{escalation_level_card_class '1'}}")
                 .content
                     .right.floated.meta(title='Automatic Escalation Time')
                         i.icon
@@ -248,7 +235,14 @@ template(name='incident_actions_list')
                     .item Office #{escalation_one_secondary_contact} 
                     if escalation_one_secondary_contact_franchisee
                         .item Franchisee #{escalation_one_secondary_contact_franchisee}
-            .ui.card
+                .content
+                    .right.floated.meta
+                        a(href='#') Set Level
+                    if can_set_to_one
+                        .set_level_one.ui.button Set 1
+                    else
+                        .ui.disabled.button Set 1
+            .ui.card(class="{{escalation_level_card_class '2'}}")
                 .content
                     .right.floated.meta(title='Automatic Escalation Time')
                         i.icon
@@ -265,7 +259,13 @@ template(name='incident_actions_list')
                     .item Office #{escalation_two_secondary_contact} 
                     if escalation_two_secondary_contact_franchisee
                         .item Franchisee #{escalation_two_secondary_contact_franchisee}
-            .ui.card
+                .content
+                    .right.floated.meta
+                        if can_set_to_two
+                            .set_level_two.ui.button Set 2
+                        else
+                            .ui.disabled.button Set 2
+            .ui.card(class="{{escalation_level_card_class number='1'}}")
                 .content
                     .right.floated.meta(title='Automatic Escalation Time')
                         i.icon
@@ -282,7 +282,13 @@ template(name='incident_actions_list')
                     .item Office #{escalation_three_secondary_contact} 
                     if escalation_three_secondary_contact_franchisee
                         .item Franchisee #{escalation_three_secondary_contact_franchisee}
-            .ui.card
+                .content
+                    .right.floated.meta
+                        if can_set_to_three
+                            .set_level_three.ui.button Set 3
+                        else
+                            .ui.disabled.button Set 3
+            .ui.card(class="{{escalation_level_card_class '1'}}")
                 .content
                     .right.floated.meta(title='Automatic Escalation Time')
                         i.icon
@@ -299,4 +305,10 @@ template(name='incident_actions_list')
                     .item Office #{escalation_four_secondary_contact} 
                     if escalation_four_secondary_contact_franchisee
                         .item Franchisee #{escalation_four_secondary_contact_franchisee}
+                .content
+                    .right.floated.meta
+                        if can_set_to_four
+                            .set_level_four.ui.button Set 4
+                        else
+                            .ui.disabled.button Set 4
             

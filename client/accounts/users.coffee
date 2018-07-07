@@ -22,7 +22,7 @@ Template.users.helpers
             { key: 'profile.last_name', label: 'Last Name' }
             { key: 'ev.JOB_TITLE', label: 'Job Title' }
             { key: 'ev.WORK_TELEPHONE', label: 'Work Tel' }
-            { key: 'email', label: 'Email' }
+            { key: 'emails[0].address', label: 'Email' }
             { key: 'profile.office_name', label: 'Email' }
-            { key: '', label: 'View', tmpl:Template.view_user_button.view_button }
+            { key: '', label: 'View', tmpl:Template.view_user_button }
         ]

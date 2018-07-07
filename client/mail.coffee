@@ -110,36 +110,35 @@ Template.conversation_list.events
         Meteor.call 'mark_unread', @_id, ->
             $(e.currentTarget).closest('.message_segment').transition('pulse')
 
-if Meteor.isClient
-    Template.conversation_message.onRendered ->
-        Meteor.setTimeout ->
-            $('.ui.accordion').accordion()
-        , 500
-        
-        
-    Template.conversation_message.helpers
-        message_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''
-        read: -> Meteor.userId() in @read_by
+Template.conversation_message.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.accordion').accordion()
+    , 500
+    
+    
+Template.conversation_message.helpers
+    message_segment_class: -> if Meteor.userId() in @read_by then 'basic' else ''
+    read: -> Meteor.userId() in @read_by
 
-        readers: ->
-            readers = []
-            for reader_id in @read_by
-                readers.push Meteor.users.findOne reader_id
-            readers
+    readers: ->
+        readers = []
+        for reader_id in @read_by
+            readers.push Meteor.users.findOne reader_id
+        readers
 
 
-    Template.conversation_message.events
-        'click .mark_read, click .text': (e,t)->
-            unless Meteor.userId() in @read_by
-                Meteor.call 'mark_read', @_id, ->
-                    $(e.currentTarget).closest('.message_segment').transition('pulse')
-        
-        'click .mark_unread': (e,t)-> 
-            Meteor.call 'mark_unread', @_id, ->
+Template.conversation_message.events
+    'click .mark_read, click .text': (e,t)->
+        unless Meteor.userId() in @read_by
+            Meteor.call 'mark_read', @_id, ->
                 $(e.currentTarget).closest('.message_segment').transition('pulse')
+    
+    'click .mark_unread': (e,t)-> 
+        Meteor.call 'mark_unread', @_id, ->
+            $(e.currentTarget).closest('.message_segment').transition('pulse')
 
 
-Template.view_conversation.helpers
+Template.conversation_view.helpers
     participants: ->
         participants = []
         for participant_id in @participant_ids

@@ -92,22 +92,6 @@ template(name='set_session_item')
         
         
         
-template(name='edit_image_field')
-    .ui.dividing.header 
-        +icon name='picture'
-        |Image
-    if image_id
-        .ui.image
-            img(src="{{c.url image_id }}")
-            a#remove_photo.ui.top.left.attached.link.label remove
-            // .ui.bottom.right.attached.label Image Id: #{image_id}
-    else
-        input(type='file' name='upload_picture' accept='image/*')
-    // if isInRole 'admin'
-    //     .field
-    //         label or Choose Cloudinary Image Id
-    //         input#input_image_id(type='text')
-    
 
 template(name='complete')            
     .field
@@ -211,27 +195,28 @@ template(name='associated_users')
             
           
 template(name='multiple_user_select')
-    .ui.dividing.header 
-        +icon name=icon
-        |#{label}
-    .ui.form
-        .field
-            .ui.icon.input
-                i.search.icon
-                +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder="Select Users..."
-        .field
-            .ui.list
-                each user_array_users
-                    .item
-                        .right.floated.content
-                            i.pull_user.remove.red.link.icon
-                        .image
-                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        .content
-                            .header
-                                |#{profile.first_name} #{profile.last_name}
-                            .description
-                                | @#{username}
+    .ui.secondary.segment
+        .ui.header 
+            +icon name=icon
+            |#{label}
+        .ui.form
+            .field
+                .ui.icon.input
+                    i.search.icon
+                    +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder="Select Users..."
+            .field
+                .ui.list
+                    each user_array_users
+                        .item
+                            .right.floated.content
+                                i.pull_user.remove.red.link.icon
+                            .image
+                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            .content
+                                .header
+                                    |#{profile.first_name} #{profile.last_name}
+                                .description
+                                    | @#{username}
 
 template(name='view_sla_contact')
     // .ui.header SLA Contact #{key}
@@ -301,22 +286,23 @@ template(name='single_doc_select')
                     .item Master Licensee: #{master_licensee}
           
 template(name='single_doc_view')
-    .ui.dividing.header
-        +icon name=icon
-        |#{label}
-    with selected_doc
-        .ui.fluid.card
-            .content
-                .header 
-                    |#{cust_name}
-            .content
-                .ui.list
-                    .item JPID: #{jpid}
-                    .item Tel: #{telephone}
-                    .item Contact Person: #{customer_contact_person}
-                    .item Contact Email: #{customer_contact_email}
-                    .item Franchisee: #{franchisee}
-                    .item Master Licensee: #{master_licensee}
+    .ui.secondary.segment
+        .ui.header
+            +icon name=icon
+            |#{label}
+        with selected_doc
+            .ui.fluid.card
+                .content
+                    .header 
+                        |#{cust_name}
+                .content
+                    .ui.list
+                        .item JPID: #{jpid}
+                        .item Tel: #{telephone}
+                        .item Contact Person: #{customer_contact_person}
+                        .item Contact Email: #{customer_contact_email}
+                        .item Franchisee: #{franchisee}
+                        .item Master Licensee: #{master_licensee}
           
 template(name='view_multiple_user')
     .ui.form
@@ -558,13 +544,13 @@ template(name='radio_item')
 
 template(name='session_delete_button')
     unless confirming
-        .delete.ui.basic.red.icon.circular.large.button
+        .delete.ui.icon.button
             i.remove.icon
     else
-        .ui.basic.icon.large.button.circular.cancel 
+        .ui.icon.button.cancel 
             i.ban.icon
             // |Cancel
-        .ui.basic.large.button.red.circular.confirm 
+        .ui.button.confirm 
             i.red.trash.icon
             |Confirm
 
@@ -575,3 +561,15 @@ template(name='published')
             +icon name='visible' classes='ui mini inline image'
         #unpublish.ui.icon.compact.button(data-tooltip='Unpublish' class=private_class)
             +icon name='invisible' classes='ui mini inline image'
+            
+            
+template(name='subscribe_button')
+    if is_participant
+        #subscribe_button.ui.button(class=subscribe_buton_class)
+            if subscribed
+                +icon48 name='checked' classes='ui mini inline image'
+                | Subscribed
+            else
+                +icon48 name='unchecked-checkbox' classes='ui mini inline image'
+                |Not Subscribed
+            

@@ -101,13 +101,18 @@ Template.incident_view.onCreated ->
 Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
     can_submit: -> @service_date and @incident_details and @incident_type
-    can_set_to_one: -> @current_level is 2
-    can_set_to_two: -> @current_level is 1 or 3
-    can_set_to_three: -> @current_level is 2 or 4
-    can_set_to_four: -> @current_level is 3
     
     
-Template.incident_view.events
+Template.incident_sla_widget.helpers
+    can_set_to_one: -> Template.parentData().current_level is 2
+    can_set_to_two: -> Template.parentData().current_level is 1 or 3
+    can_set_to_three: -> Template.parentData().current_level is 2 or 4
+    can_set_to_four: -> Template.parentData().current_level is 3
+    escalation_level_card_class: ->
+        console.log @
+    
+    
+Template.incident_sla_widget.events
     'click .set_level_one': ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id

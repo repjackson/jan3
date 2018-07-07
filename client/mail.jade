@@ -11,7 +11,7 @@ template(name='mail')
                     +icon name='chat'
                     |Conversations
             .three.wide.center.aligned.column
-                .ui.large.circular.basic.label(data-tooltip='Unread Messages' data-position='bottom center')
+                .ui.large.circular.label(data-tooltip='Unread Messages' data-position='bottom center')
                     +icon name='new-message' classes='ui mini inline image'
                     |#{unread_message_count}
         .row
@@ -124,7 +124,7 @@ template(name='conversation_message')
                                                         p #{parent.parent.parent.body}
                 
                 
-template(name='view_conversation')
+template(name='conversation_view')
     .ui.stackable.padded.grid
         .centered.row
             .three.wide.column
@@ -172,24 +172,12 @@ template(name='view_conversation')
                                     each five_tags
                                         .ui.tiny.basic.label #{this}
             
-                .ui.dividing.header 
-                    +icon name='tags'
-                    |Conversation Tags
+                +icon name='tags' title='Conversation Tags'
                 each tags
                     .ui.basic.large.label.doc_tag #{this}
-                .ui.dividing.header 
-                    +icon name='sports=mode'
-                    |Actions
+                div
                 +subscribe_button
                 +bookmark_button
-                unless is_author
-                    +resonate_button
-                    +thanks_button
-                +resonates_list
-
-                .ui.dividing.header 
-                    +icon name='eye'
-                    |Visibility
                 if published
                     .ui.basic.green.large.label 
                         i.unlock.icon
@@ -198,6 +186,11 @@ template(name='view_conversation')
                     .ui.basic.large.label 
                         i.lock.icon
                         | Private
+                unless is_author
+                    +resonate_button
+                    +thanks_button
+                +resonates_list
+
                 .ui.header Started by #{author.name} #{when}
                 .ui.divider
 
@@ -210,7 +203,7 @@ template(name='conversation_edit')
                 .ui.form
                     // +participants
                     +multiple_user_select key='participant_ids' label='Participants'
-                    // +tags
+                    +edit_array_field key='tags' label='Tags'
                     +edit_textarea key='description' label='Description' 
             .four.wide.column
                 if tags
@@ -233,9 +226,9 @@ template(name='full_conversation_view')
                 if is_admin
                     +session_delete_button
                 // +subscribe_button
-                +view_full_button
+                +view_button
             .ui.header 
-                |!{content}    
+                |#{description}    
             // if published    
             //     span.right.floated
             //         i.unlock.icon
