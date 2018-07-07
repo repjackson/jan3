@@ -67,11 +67,7 @@ template(name='incident_view')
                         img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
                 if submitted
                     +comments
-                    .ui.secondary.segment
-                        .ui.header 
-                            +icon name='order-history'
-                            |History
-                        +full_doc_history
+                    +full_doc_history
                 +incident_sla_widget
             .four.wide.column
                 if can_submit
@@ -214,11 +210,10 @@ template(name='add_incident_button')
 
 
 template(name='incident_sla_widget')
-    .ui.header Incident SLA Rules List
-    .ui.sub.header.header Level #{current_level}
+    .ui.header Incident SLA Rules List (Current Level: #{incident_doc.current_level})
     with my_office
-        .ui.cards
-            .ui.card(class="{{escalation_level_card_class '1'}}")
+        .ui.fluid.cards
+            .ui.fluid.card(class="{{escalation_level_card_class '1'}}")
                 .content
                     .right.floated.meta(title='Automatic Escalation Time')
                         i.icon
@@ -237,12 +232,11 @@ template(name='incident_sla_widget')
                         .item Franchisee #{escalation_one_secondary_contact_franchisee}
                 .content
                     .right.floated.meta
-                        a(href='#') Set Level
-                    if can_set_to_one
-                        .set_level_one.ui.button Set 1
-                    else
-                        .ui.disabled.button Set 1
-            .ui.card(class="{{escalation_level_card_class '2'}}")
+                        if can_set_to_one
+                            .set_level_one.ui.button Set 1
+                        else
+                            .ui.disabled.button Set 1
+            .ui.fluid.card(class="{{escalation_level_card_class '2'}}")
                 .content
                     .right.floated.meta(title='Automatic Escalation Time')
                         i.icon
@@ -265,7 +259,7 @@ template(name='incident_sla_widget')
                             .set_level_two.ui.button Set 2
                         else
                             .ui.disabled.button Set 2
-            .ui.card(class="{{escalation_level_card_class number='1'}}")
+            .ui.fluid.card(class="{{escalation_level_card_class number='1'}}")
                 .content
                     .right.floated.meta(title='Automatic Escalation Time')
                         i.icon
@@ -288,7 +282,7 @@ template(name='incident_sla_widget')
                             .set_level_three.ui.button Set 3
                         else
                             .ui.disabled.button Set 3
-            .ui.card(class="{{escalation_level_card_class '1'}}")
+            .ui.fluid.card(class="{{escalation_level_card_class '1'}}")
                 .content
                     .right.floated.meta(title='Automatic Escalation Time')
                         i.icon

@@ -96,7 +96,7 @@ Template.customer_incidents.helpers
         ]
 
 Template.incident_view.onCreated ->
-    @autorun -> Meteor.subscribe 'docs', [], 'incident_type'
+    @autorun -> Meteor.subscribe 'type','incident_type'
 
 Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
@@ -109,8 +109,11 @@ Template.incident_sla_widget.helpers
     can_set_to_three: -> Template.parentData().current_level is 2 or 4
     can_set_to_four: -> Template.parentData().current_level is 3
     escalation_level_card_class: ->
-        console.log @
-    
+        # console.log @
+    incident_doc: ->
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+
     
 Template.incident_sla_widget.events
     'click .set_level_one': ->

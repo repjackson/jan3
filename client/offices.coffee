@@ -31,6 +31,8 @@ Template.office_admin_section.onRendered ->
     
 Template.office_view.onCreated ->
     @autorun -> Meteor.subscribe 'office', FlowRouter.getParam('doc_id')
+Template.office_admin_section.onCreated ->
+    @autorun -> Meteor.subscribe 'type', 'rule'
 
     
 Template.office_admin_section.helpers
@@ -38,6 +40,17 @@ Template.office_admin_section.helpers
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
         # console.log page_office
         return page_office
+        
+    rule_docs: ->
+        Docs.find type:'rule'
+        
+    hours_key: -> "escalation_#{@number}_hours"
+    
+    primary_franchisee_toggle_key: -> "escalation_#{@number}_primary_contact_franchisee"
+    primary_contact_key: -> "escalation_#{@number}_primary_contact"
+
+    secondary_franchisee_toggle_key: -> "escalation_#{@number}_secondary_contact_franchisee"
+    secondary_contact_key: -> "escalation_#{@number}_primary_contact"
         
     
 Template.office_customers.onCreated ->

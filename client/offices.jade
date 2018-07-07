@@ -98,182 +98,49 @@ template(name='office_admin_section')
             |SLA Settings
         // h3.ui.header Initial
         // p ie type=level2
-        .ui.segment
-            h3.ui.header Escalation 1
-            .ui.two.column.divided.padded.grid
-                .row
-                    +edit_number_field key='escalation_one_hours' label='Escalation Hours' field_class='inline' min=0 max=24
-                .row
-                    .column
-                        h4.ui.header Primary Contact
-                        .ui.two.column.stackable.grid
-                            .row
-                                .column
-                                    .ui.form
-                                        .grouped.fields
-                                            // label Primary Contact
-                                            +toggle_boolean_checkbox key='escalation_one_primary_contact_franchisee' label='Franchisee'
-                                            +radio_item key='escalation_one_primary_contact' label='Office Owner' value='office_owner'
-                                            +radio_item key='escalation_one_primary_contact' label='Operations Manager' value='operations_manager'
-                                            +single_user_select key='escalation_one_primary_contact' label='Employee Select Esc 1 Primary'
-                                .column
-                                    +view_sla_contact key='escalation_one_primary_contact'
-                                    .ui.hidden.divider
-                                    if escalation_one_primary_contact_franchisee
-                                        p Franchisee will be contacted.
-                                    else
-                                        p Franchisee will not be contacted.
-                    .column
-                        h4.ui.header Secondary Contact
-                        .ui.two.column.stackable.grid
-                            .row
-                                .column
-                                    .ui.form
-                                        .grouped.fields
-                                            // label Primary Contact
-                                            +toggle_boolean_checkbox key='escalation_one_secondary_contact_franchisee' label='Franchisee'
-                                            +radio_item key='escalation_one_secondary_contact' label='Office Owner' value='office_owner'
-                                            +radio_item key='escalation_one_secondary_contact' label='Operations Manager' value='operations_manager'
-                                            +single_user_select key='escalation_one_secondary_contact' label='Employee Select Esc 1 Secondary'
-                                .column
-                                    +view_sla_contact key='escalation_one_secondary_contact'
-                                    .ui.hidden.divider
-                                    if escalation_one_secondary_contact_franchisee
-                                        p Franchisee will be contacted.
-                                    else
-                                        p Franchisee will not be contacted.
-        .ui.segment
-            h3.ui.header Escalation 2
-            .ui.two.column.divided.padded.grid
-                .row
-                    +edit_number_field key='escalation_two_hours' label='Escalation Hours' field_class='inline' min=0 max=24
-                .row
-                    .column
-                        h4.ui.header Primary Contact
-                        .ui.two.column.stackable.grid
-                            .row
-                                .column
-                                    .ui.form
-                                        .grouped.fields
-                                            // label Primary Contact
-                                            +toggle_boolean_checkbox key='escalation_two_primary_contact_franchisee' label='Franchisee'
-                                            +radio_item key='escalation_two_primary_contact' label='Office Owner' value='office_owner'
-                                            +radio_item key='escalation_two_primary_contact' label='Operations Manager' value='operations_manager'
-                                            +single_user_select key='escalation_two_primary_contact' label='Employee Select Esc 2 Primary'
-                                .column
-                                    +view_sla_contact key='escalation_two_primary_contact'
-                                    .ui.hidden.divider
-                                    if escalation_two_primary_contact_franchisee
-                                        p Franchisee will be contacted.
-                                    else
-                                        p Franchisee will not be contacted.
-                    .column
-                        h4.ui.header Secondary Contact
-                        .ui.two.column.stackable.grid
-                            .row
-                                .column
-                                    .ui.form
-                                        .grouped.fields
-                                            // label Primary Contact
-                                            +toggle_boolean_checkbox key='escalation_two_secondary_contact_franchisee' label='Franchisee'
-                                            +radio_item key='escalation_two_secondary_contact' label='Office Owner' value='office_owner'
-                                            +radio_item key='escalation_two_secondary_contact' label='Operations Manager' value='operations_manager'
-                                            +single_user_select key='escalation_two_secondary_contact' label='Employee Select Esc 2 Secondary'
-                                .column
-                                    +view_sla_contact key='escalation_two_secondary_contact'
-                                    .ui.hidden.divider
-                                    if escalation_two_secondary_contact_franchisee
-                                        p Franchisee will be contacted.
-                                    else
-                                        p Franchisee will not be contacted.
-        .ui.segment
-            h3.ui.header Escalation 3
-            .ui.two.column.divided.padded.grid
-                .row
-                    +edit_number_field key='escalation_three_hours' label='Escalation Hours' field_class='inline' min=0 max=24
-                .row
-                    .column
-                        h4.ui.header Primary Contact
-                        .ui.two.column.stackable.grid
-                            .row
-                                .column
-                                    .ui.form
-                                        .grouped.fields
-                                            // label Primary Contact
-                                            +toggle_boolean_checkbox key='escalation_three_primary_contact_franchisee' label='Franchisee'
-                                            +radio_item key='escalation_three_primary_contact' label='Office Owner' value='office_owner'
-                                            +radio_item key='escalation_three_primary_contact' label='Operations Manager' value='operations_manager'
-                                            +single_user_select key='escalation_three_primary_contact' label='Employee Select Esc 2 Primary Contact'
-                                .column
-                                    +view_sla_contact key='escalation_three_primary_contact'
-                                    .ui.hidden.divider
-                                    if escalation_three_primary_contact_franchisee
-                                        p Franchisee will be contacted.
-                                    else
-                                        p Franchisee will not be contacted.
-                    .column
-                        h4.ui.header Secondary Contact
-                        .ui.two.column.stackable.grid
-                            .row
-                                .column
-                                    .ui.form
-                                        .grouped.fields
-                                            // label Primary Contact
-                                            +toggle_boolean_checkbox key='escalation_three_secondary_contact_franchisee' label='Franchisee'
-                                            +radio_item key='escalation_three_secondary_contact' label='Office Owner' value='office_owner'
-                                            +radio_item key='escalation_three_secondary_contact' label='Operations Manager' value='operations_manager'
-                                            +single_user_select key='escalation_three_secondary_contact' label='Employee Select Esc 2 Secondary Contact'
-                                .column
-                                    +view_sla_contact key='escalation_three_secondary_contact'
-                                    .ui.hidden.divider
-                                    if escalation_three_secondary_contact_franchisee
-                                        p Franchisee will be contacted.
-                                    else
-                                        p Franchisee will not be contacted.
-        .ui.segment
-            h3.ui.header Escalation 4
-            .ui.two.column.divided.padded.grid
-                .row
-                    +edit_number_field key='escalation_four_hours' label='Escalation Hours' field_class='inline' min=0 max=24
-                .row
-                    .column
-                        h4.ui.header Primary Contact
-                        .ui.two.column.stackable.grid
-                            .row
-                                .column
-                                    .ui.form
-                                        .grouped.fields
-                                            // label Primary Contact
-                                            +toggle_boolean_checkbox key='escalation_four_primary_contact_franchisee' label='Franchisee'
-                                            +radio_item key='escalation_four_primary_contact' label='Office Owner' value='office_owner'
-                                            +radio_item key='escalation_four_primary_contact' label='Operations Manager' value='operations_manager'
-                                            +single_user_select key='escalation_four_primary_contact' label='Employee Select Esc 2 Primary Contact'
-                                .column
-                                    +view_sla_contact key='escalation_four_primary_contact'
-                                    .ui.hidden.divider
-                                    if escalation_four_primary_contact_franchisee
-                                        p Franchisee will be contacted.
-                                    else
-                                        p Franchisee will not be contacted.
-                    .column
-                        h4.ui.header Secondary Contact
-                        .ui.two.column.stackable.grid
-                            .row
-                                .column
-                                    .ui.form
-                                        .grouped.fields
-                                            // label Primary Contact
-                                            +toggle_boolean_checkbox key='escalation_four_secondary_contact_franchisee' label='Franchisee'
-                                            +radio_item key='escalation_four_secondary_contact' label='Office Owner' value='office_owner'
-                                            +radio_item key='escalation_four_secondary_contact' label='Operations Manager' value='operations_manager'
-                                            +single_user_select key='escalation_four_secondary_contact' label='Employee Select Esc 4 Secondary Contact'
-                                .column
-                                    +view_sla_contact key='escalation_four_secondary_contact'
-                                    .ui.hidden.divider
-                                    if escalation_four_secondary_contact_franchisee
-                                        p Franchisee will be contacted.
-                                    else
-                                        p Franchisee will not be contacted.
+        each rule_docs
+            .ui.segment
+                h3.ui.header #{name}
+                .ui.two.column.divided.padded.grid
+                    .row
+                        +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
+                    .row
+                        .column
+                            h4.ui.header Primary Contact
+                            .ui.two.column.stackable.grid
+                                .row
+                                    .column
+                                        .ui.form
+                                            .grouped.fields
+                                                +toggle_boolean_checkbox key=primary_franchisee_toggle_key label='Franchisee'
+                                                +radio_item key=primary_contact_key label='Office Owner' value='office_owner'
+                                                +radio_item key=primary_contact_key label='Operations Manager' value='operations_manager'
+                                                +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
+                                    .column
+                                        +view_sla_contact key=primary_contact_key
+                                        .ui.hidden.divider
+                                        if escalation_one_primary_contact_franchisee
+                                            p Franchisee will be contacted.
+                                        else
+                                            p Franchisee will not be contacted.
+                        .column
+                            h4.ui.header Secondary Contact
+                            .ui.two.column.stackable.grid
+                                .row
+                                    .column
+                                        .ui.form
+                                            .grouped.fields
+                                                +toggle_boolean_checkbox key=secondary_franchisee_toggle_key label='Franchisee'
+                                                +radio_item key=secondary_contact_key label='Office Owner' value='office_owner'
+                                                +radio_item key=secondary_contact_key label='Operations Manager' value='operations_manager'
+                                                +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
+                                    .column
+                                        +view_sla_contact key=secondary_contact_key
+                                        .ui.hidden.divider
+                                        if escalation_secondary_contact_franchisee     
+                                            p Franchisee will be contacted.
+                                        else
+                                            p Franchisee will not be contacted.
 
 
 template(name='office_customers')

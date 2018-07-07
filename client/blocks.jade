@@ -48,7 +48,7 @@ template(name='view_user_button')
         // i.right.chevron.icon
         
 template(name='add_button')
-    #add(title='Add')
+    #add.ui.icon.circular.button(title='Add')
         // i.plus.icon
         +icon name='plus-math'
 
@@ -463,20 +463,22 @@ template(name='user_pill')
 
 
 template(name='full_doc_history')
-    // .ui.header History
-    if is_admin
-        #clear_events.ui.small.compact.icon.button(title='Clear')
-            i.remove.icon
-    .ui.feed
-        each doc_history_events
-            .event
-                .label
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                .content
-                    .summary
-                        a.user #{author.username}
-                        |#{action} #{text}
-                        .date #{when}
+    .ui.secondary.segment
+        .ui.header 
+            +icon name='clock'
+            |History
+        if is_admin
+            i#clear_events.remove.icon(title='Clear')
+        .ui.feed
+            each doc_history_events
+                .event
+                    .label
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    .content
+                        .summary
+                            a.user #{author.username}
+                            |#{action} #{text}
+                            .date #{when}
 
 template(name='small_doc_history')
     // .ui.header History
