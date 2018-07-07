@@ -16,7 +16,7 @@ template(name='user_view')
                     if profile.image_id
                         img.ui.medium.image.item(src="{{c.url profile.image_id width=500 height=500 gravity='face' crop='fill'}}")
                 .eight.wide.column
-                    +edit_profile_text_field key='customer_jpid' label='Connected Customer Account'
+                    // +edit_profile_text_field key='customer_jpid' label='Connected Customer Account'
                     .ui.list
                         if profile.customer_jpid
                             .item

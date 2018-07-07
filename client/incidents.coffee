@@ -97,6 +97,7 @@ Template.customer_incidents.helpers
 
 Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'type','incident_type'
+    @autorun -> Meteor.subscribe 'type','rule'
 
 Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
@@ -114,7 +115,31 @@ Template.incident_sla_widget.helpers
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
 
+    sla_rule_docs: -> Docs.find type:'rule'
     
+    hours_key: -> 
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        incident["escalation_#{@number}_hours"]
+    
+    primary_franchisee_toggle_value: ->
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        incident["escalation_#{@number}_primary_contact_franchisee"]
+    primary_contact_value: -> 
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        incident["escalation_#{@number}_primary_contact"]
+
+    secondary_franchisee_toggle_value: ->
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        incident["escalation_#{@number}_secondary_contact_franchisee"]
+    secondary_contact_value: -> 
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        incident["escalation_#{@number}_secondary_contact"]
+
 Template.incident_sla_widget.events
     'click .set_level_one': ->
         doc_id = FlowRouter.getParam('doc_id')

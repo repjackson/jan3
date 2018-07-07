@@ -41,8 +41,7 @@ Template.office_admin_section.helpers
         # console.log page_office
         return page_office
         
-    rule_docs: ->
-        Docs.find type:'rule'
+    rule_docs: -> Docs.find type:'rule'
         
     hours_key: -> "escalation_#{@number}_hours"
     
@@ -50,7 +49,7 @@ Template.office_admin_section.helpers
     primary_contact_key: -> "escalation_#{@number}_primary_contact"
 
     secondary_franchisee_toggle_key: -> "escalation_#{@number}_secondary_contact_franchisee"
-    secondary_contact_key: -> "escalation_#{@number}_primary_contact"
+    secondary_contact_key: -> "escalation_#{@number}_secondary_contact"
         
     
 Template.office_customers.onCreated ->

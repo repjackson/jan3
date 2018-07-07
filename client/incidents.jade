@@ -211,98 +211,98 @@ template(name='add_incident_button')
 
 template(name='incident_sla_widget')
     .ui.header Incident SLA Rules List (Current Level: #{incident_doc.current_level})
-    with my_office
-        .ui.fluid.cards
-            .ui.fluid.card(class="{{escalation_level_card_class '1'}}")
+    .ui.cards
+        each sla_rule_docs
+            .ui.fluid.card(class=escalation_level_card_class)
                 .content
                     .right.floated.meta(title='Automatic Escalation Time')
                         i.icon
                             +icon name='clock'
-                        strong #{escalation_one_hours}
-                    .header Escalation 1
+                        strong #{my_office.hours_key}
+                    .header #{name}
                 .content
                     .ui.sub.header Primary Contact
-                    .item Office #{escalation_one_primary_contact} 
-                    if escalation_one_primary_contact_franchisee
-                        .item Franchisee #{escalation_one_primary_contact_franchisee}
+                    .item Office #{my_office.primary_contact_key} 
+                    if my_office.primary_franchisee_toggle_key
+                        .item Franchisee #{my_office.primary_franchisee_toggle_key}
                 .content
                     .ui.sub.header Secondary Contact
-                    .item Office #{escalation_one_secondary_contact} 
-                    if escalation_one_secondary_contact_franchisee
-                        .item Franchisee #{escalation_one_secondary_contact_franchisee}
+                    .item Office #{my_office.secondary_contact_key} 
+                    if my_office.primary_franchisee_toggle_key
+                        .item Franchisee #{my_office.secondary_franchisee_toggle_key}
                 .content
                     .right.floated.meta
                         if can_set_to_one
-                            .set_level_one.ui.button Set 1
+                            .set_level_one.ui.button Set #{number}
                         else
-                            .ui.disabled.button Set 1
-            .ui.fluid.card(class="{{escalation_level_card_class '2'}}")
-                .content
-                    .right.floated.meta(title='Automatic Escalation Time')
-                        i.icon
-                            +icon name='clock'
-                        strong #{escalation_two_hours}
-                    .header Escalation 2
-                .content
-                    .ui.sub.header Primary Contact
-                    .item Office #{escalation_two_primary_contact} 
-                    if escalation_two_primary_contact_franchisee
-                        .item Franchisee #{escalation_two_primary_contact_franchisee}
-                .content
-                    .ui.sub.header Secondary Contact
-                    .item Office #{escalation_two_secondary_contact} 
-                    if escalation_two_secondary_contact_franchisee
-                        .item Franchisee #{escalation_two_secondary_contact_franchisee}
-                .content
-                    .right.floated.meta
-                        if can_set_to_two
-                            .set_level_two.ui.button Set 2
-                        else
-                            .ui.disabled.button Set 2
-            .ui.fluid.card(class="{{escalation_level_card_class number='1'}}")
-                .content
-                    .right.floated.meta(title='Automatic Escalation Time')
-                        i.icon
-                            +icon name='clock'
-                        strong #{escalation_three_hours}
-                    .header Escalation 3
-                .content
-                    .ui.sub.header Primary Contact
-                    .item Office #{escalation_three_primary_contact} 
-                    if escalation_three_primary_contact_franchisee
-                        .item Franchisee #{escalation_three_primary_contact_franchisee}
-                .content
-                    .ui.sub.header Secondary Contact
-                    .item Office #{escalation_three_secondary_contact} 
-                    if escalation_three_secondary_contact_franchisee
-                        .item Franchisee #{escalation_three_secondary_contact_franchisee}
-                .content
-                    .right.floated.meta
-                        if can_set_to_three
-                            .set_level_three.ui.button Set 3
-                        else
-                            .ui.disabled.button Set 3
-            .ui.fluid.card(class="{{escalation_level_card_class '1'}}")
-                .content
-                    .right.floated.meta(title='Automatic Escalation Time')
-                        i.icon
-                            +icon name='clock'
-                        strong #{escalation_four_hours}
-                    .header Escalation 4
-                .content
-                    .ui.sub.header Primary Contact
-                    .item Office #{escalation_four_primary_contact}
-                    if escalation_four_primary_contact_franchisee
-                        .item Franchisee #{escalation_four_primary_contact_franchisee}
-                .content
-                    .ui.sub.header Secondary Contact
-                    .item Office #{escalation_four_secondary_contact} 
-                    if escalation_four_secondary_contact_franchisee
-                        .item Franchisee #{escalation_four_secondary_contact_franchisee}
-                .content
-                    .right.floated.meta
-                        if can_set_to_four
-                            .set_level_four.ui.button Set 4
-                        else
-                            .ui.disabled.button Set 4
+                            .ui.disabled.button Set #{number}
+            // .ui.fluid.card(class="{{escalation_level_card_class '2'}}")
+            //     .content
+            //         .right.floated.meta(title='Automatic Escalation Time')
+            //             i.icon
+            //                 +icon name='clock'
+            //             strong #{escalation_two_hours}
+            //         .header Escalation 2
+            //     .content
+            //         .ui.sub.header Primary Contact
+            //         .item Office #{escalation_two_primary_contact} 
+            //         if escalation_two_primary_contact_franchisee
+            //             .item Franchisee #{escalation_two_primary_contact_franchisee}
+            //     .content
+            //         .ui.sub.header Secondary Contact
+            //         .item Office #{escalation_two_secondary_contact} 
+            //         if escalation_two_secondary_contact_franchisee
+            //             .item Franchisee #{escalation_two_secondary_contact_franchisee}
+            //     .content
+            //         .right.floated.meta
+            //             if can_set_to_two
+            //                 .set_level_two.ui.button Set 2
+            //             else
+            //                 .ui.disabled.button Set 2
+            // .ui.fluid.card(class="{{escalation_level_card_class number='1'}}")
+            //     .content
+            //         .right.floated.meta(title='Automatic Escalation Time')
+            //             i.icon
+            //                 +icon name='clock'
+            //             strong #{escalation_three_hours}
+            //         .header Escalation 3
+            //     .content
+            //         .ui.sub.header Primary Contact
+            //         .item Office #{escalation_three_primary_contact} 
+            //         if escalation_three_primary_contact_franchisee
+            //             .item Franchisee #{escalation_three_primary_contact_franchisee}
+            //     .content
+            //         .ui.sub.header Secondary Contact
+            //         .item Office #{escalation_three_secondary_contact} 
+            //         if escalation_three_secondary_contact_franchisee
+            //             .item Franchisee #{escalation_three_secondary_contact_franchisee}
+            //     .content
+            //         .right.floated.meta
+            //             if can_set_to_three
+            //                 .set_level_three.ui.button Set 3
+            //             else
+            //                 .ui.disabled.button Set 3
+            // .ui.fluid.card(class="{{escalation_level_card_class '1'}}")
+            //     .content
+            //         .right.floated.meta(title='Automatic Escalation Time')
+            //             i.icon
+            //                 +icon name='clock'
+            //             strong #{escalation_four_hours}
+            //         .header Escalation 4
+            //     .content
+            //         .ui.sub.header Primary Contact
+            //         .item Office #{escalation_four_primary_contact}
+            //         if escalation_four_primary_contact_franchisee
+            //             .item Franchisee #{escalation_four_primary_contact_franchisee}
+            //     .content
+            //         .ui.sub.header Secondary Contact
+            //         .item Office #{escalation_four_secondary_contact} 
+            //         if escalation_four_secondary_contact_franchisee
+            //             .item Franchisee #{escalation_four_secondary_contact_franchisee}
+            //     .content
+            //         .right.floated.meta
+            //             if can_set_to_four
+            //                 .set_level_four.ui.button Set 4
+            //             else
+            //                 .ui.disabled.button Set 4
             

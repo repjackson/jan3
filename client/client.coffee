@@ -69,7 +69,7 @@ Template.registerHelper 'is_dev', () ->
         'dev' in Meteor.user().roles
 Template.registerHelper 'is_officer', () -> 
     if Meteor.user() and Meteor.user().roles
-        'officer' in Meteor.user().roles
+        'office' in Meteor.user().roles
 Template.registerHelper 'is_customer', () -> 
     if Meteor.user() and Meteor.user().roles
         'customer' in Meteor.user().roles
