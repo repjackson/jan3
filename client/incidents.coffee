@@ -108,12 +108,27 @@ Template.incident_view.helpers
     
     
 Template.incident_sla_widget.helpers
-    can_set_to_one: -> Template.parentData().current_level is 2
-    can_set_to_two: -> Template.parentData().current_level is 1 or 3
-    can_set_to_three: -> Template.parentData().current_level is 2 or 4
-    can_set_to_four: -> Template.parentData().current_level is 3
+    can_escalate: -> 
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        console.log @number
+        console.log incident.level
+        console.log incident.level is (@number+1)
+        return incident.level is (@number+1)
+    is_level: -> 
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        # console.log @number
+        # console.log incident.level
+        # console.log incident.level is @number
+        if incident
+            incident.level is @number
     escalation_level_card_class: ->
-        # console.log @
+        doc_id = FlowRouter.getParam('`doc_id')
+        incident = Docs.findOne doc_id
+        if incident
+            if incident.level is @number then 'raised green' else 'disabled'
+        # console.log @number
     incident_doc: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
@@ -143,6 +158,7 @@ Template.incident_sla_widget.helpers
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
                 users_office["escalation_#{@number}_primary_contact_franchisee"]
+    
     primary_contact_value: -> 
         user = Meteor.user()
         if user and user.profile and user.profile.customer_jpid
@@ -180,8 +196,12 @@ Template.incident_sla_widget.helpers
                     type:'office'
                 users_office["escalation_#{@number}_secondary_contact"]
 
+    
+
+
 Template.incident_sla_widget.events
-    'click .set_level_one': ->
+    'click .set_level': ->
+        console.log @
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
         office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
@@ -199,138 +219,20 @@ Template.incident_sla_widget.events
                 Meteor.users.findOne( username: office_doc["#{secondary_contact_type}"] )
             secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
         swal {
-            title: 'De-escalate Incident to 1?'
+            title: "Change Incident to Level #{@number}?"
             text: "This will alert the office primary contact #{primary_contact_type} #{primary_username} and secondary contact #{secondary_contact_type} #{secondary_username}."
             type: 'info'
             animation: false
             showCancelButton: true
             closeOnConfirm: true
             cancelButtonText: 'Cancel'
-            confirmButtonText: 'De-escalate'
+            confirmButtonText: 'Change'
             confirmButtonColor: '#da5347'
         }, =>
             Docs.update doc_id,
-                $set: current_level:1
-            Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 1"
+                $set: level:@number
+            Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
             
-    'click .set_level_two': ->
-        doc_id = FlowRouter.getParam('doc_id')
-        incident = Docs.findOne doc_id
-        office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
-        primary_contact_type =  office_doc.escalation_two_primary_contact
-        secondary_contact_type =  office_doc.escalation_two_secondary_contact
-        # console.log parent_doc["#{context.key}"]
-        # console.log parent_doc[parent_doc["#{context.key}"]]
-        if primary_contact_type
-            primary_contact_target =
-                Meteor.users.findOne
-                    username: office_doc["#{primary_contact_type}"]
-            primary_username = if primary_contact_target and primary_contact_target.username then primary_contact_target.username else ''
-        if secondary_contact_type
-            secondary_contact_target =
-                Meteor.users.findOne( username: office_doc["#{secondary_contact_type}"] )
-            secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
-        swal {
-            title: 'Escalate Incident to 2?'
-            text: "This will alert the office primary contact #{primary_contact_type} #{primary_username} and secondary contact #{secondary_contact_type} #{secondary_username}."
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Escalate'
-            confirmButtonColor: '#da5347'
-        }, =>
-            Docs.update doc_id,
-                $set: current_level:2
-            Meteor.call 'email_about_escalation_two', doc_id
-            Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 2"
-
-    'click .set_level_three': ->
-        doc_id = FlowRouter.getParam('doc_id')
-        incident = Docs.findOne doc_id
-        office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
-        primary_contact_type =  office_doc.escalation_three_primary_contact
-        secondary_contact_type =  office_doc.escalation_three_secondary_contact
-        # console.log parent_doc["#{context.key}"]
-        # console.log parent_doc[parent_doc["#{context.key}"]]
-        if primary_contact_type
-            primary_contact_target =
-                Meteor.users.findOne
-                    username: office_doc["#{primary_contact_type}"]
-            primary_username = if primary_contact_target and primary_contact_target.username then primary_contact_target.username else ''
-        if secondary_contact_type
-            secondary_contact_target =
-                Meteor.users.findOne( username: office_doc["#{secondary_contact_type}"] )
-            secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
-        swal {
-            title: 'Escalate Incident to 3?'
-            text: "This will alert the office primary contact #{primary_contact_type} #{primary_username} and secondary contact #{secondary_contact_type} #{secondary_username}."
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Escalate'
-            confirmButtonColor: '#da5347'
-        }, =>
-            Docs.update doc_id,
-                $set: current_level:3
-            Meteor.call 'email_about_escalation_three', doc_id
-            Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 3"
-
-    'click .set_level_four': ->
-        doc_id = FlowRouter.getParam('doc_id')
-        incident = Docs.findOne doc_id
-        office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
-        primary_contact_type =  office_doc.escalation_four_primary_contact
-        secondary_contact_type =  office_doc.escalation_four_secondary_contact
-        # console.log parent_doc["#{context.key}"]
-        # console.log parent_doc[parent_doc["#{context.key}"]]
-        if primary_contact_type
-            primary_contact_target =
-                Meteor.users.findOne
-                    username: office_doc["#{primary_contact_type}"]
-            primary_username = if primary_contact_target and primary_contact_target.username then primary_contact_target.username else ''
-        if secondary_contact_type
-            secondary_contact_target =
-                Meteor.users.findOne( username: office_doc["#{secondary_contact_type}"] )
-            secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
-        swal {
-            title: 'Escalate Incident to 4?'
-            text: "This will alert the office primary contact #{primary_contact_type} #{primary_username} and secondary contact #{secondary_contact_type} #{secondary_username}."
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Escalate'
-            confirmButtonColor: '#da5347'
-        }, =>
-            Docs.update doc_id,
-                $set: current_level:4
-            Meteor.call 'email_about_escalation_four', doc_id
-            Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to 4"
-
-    'click #delete': ->
-        template = Template.currentData()
-        swal {
-            title: 'Delete Incident?'
-            # text: 'Confirm delete?'
-            type: 'error'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Delete'
-            confirmButtonColor: '#da5347'
-        }, =>
-            doc = Docs.findOne FlowRouter.getParam('doc_id')
-            # console.log doc
-            Docs.remove doc._id, ->
-                FlowRouter.go "/incidents"
-
-
 Template.full_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
 
@@ -339,6 +241,7 @@ Template.incident_tasks.helpers
         Docs.find
             type: 'incident_task'
             parent_id: FlowRouter.getParam('doc_id')
+
 Template.incident_tasks.events
     'click #add_incident_task': ->
         new_incident_task_id = 

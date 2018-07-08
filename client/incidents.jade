@@ -210,7 +210,7 @@ template(name='add_incident_button')
 
 
 template(name='incident_sla_widget')
-    .ui.header Incident SLA Rules List (Current Level: #{incident_doc.current_level})
+    .ui.header Incident SLA Rules List (Current Level: #{incident_doc.level})
     .ui.cards
         each sla_rule_docs
             .ui.fluid.card(class=escalation_level_card_class)
@@ -219,7 +219,10 @@ template(name='incident_sla_widget')
                         i.icon
                             +icon name='clock'
                         strong #{hours_value}
-                    .header #{name}
+                    .header 
+                        if is_level
+                            i.green.checkmark.icon
+                        |#{name}
                 .content
                     .ui.sub.header Primary Contact
                     .item Office #{primary_contact_value} 
@@ -232,77 +235,9 @@ template(name='incident_sla_widget')
                         .item Franchisee #{secondary_franchisee_toggle_value}
                 .content
                     .right.floated.meta
-                        if can_set_to_one
-                            .set_level_one.ui.button Set #{number}
-                        else
-                            .ui.disabled.button Set #{number}
-            // .ui.fluid.card(class="{{escalation_level_card_class '2'}}")
-            //     .content
-            //         .right.floated.meta(title='Automatic Escalation Time')
-            //             i.icon
-            //                 +icon name='clock'
-            //             strong #{escalation_two_hours}
-            //         .header Escalation 2
-            //     .content
-            //         .ui.sub.header Primary Contact
-            //         .item Office #{escalation_two_primary_contact} 
-            //         if escalation_two_primary_contact_franchisee
-            //             .item Franchisee #{escalation_two_primary_contact_franchisee}
-            //     .content
-            //         .ui.sub.header Secondary Contact
-            //         .item Office #{escalation_two_secondary_contact} 
-            //         if escalation_two_secondary_contact_franchisee
-            //             .item Franchisee #{escalation_two_secondary_contact_franchisee}
-            //     .content
-            //         .right.floated.meta
-            //             if can_set_to_two
-            //                 .set_level_two.ui.button Set 2
-            //             else
-            //                 .ui.disabled.button Set 2
-            // .ui.fluid.card(class="{{escalation_level_card_class number='1'}}")
-            //     .content
-            //         .right.floated.meta(title='Automatic Escalation Time')
-            //             i.icon
-            //                 +icon name='clock'
-            //             strong #{escalation_three_hours}
-            //         .header Escalation 3
-            //     .content
-            //         .ui.sub.header Primary Contact
-            //         .item Office #{escalation_three_primary_contact} 
-            //         if escalation_three_primary_contact_franchisee
-            //             .item Franchisee #{escalation_three_primary_contact_franchisee}
-            //     .content
-            //         .ui.sub.header Secondary Contact
-            //         .item Office #{escalation_three_secondary_contact} 
-            //         if escalation_three_secondary_contact_franchisee
-            //             .item Franchisee #{escalation_three_secondary_contact_franchisee}
-            //     .content
-            //         .right.floated.meta
-            //             if can_set_to_three
-            //                 .set_level_three.ui.button Set 3
-            //             else
-            //                 .ui.disabled.button Set 3
-            // .ui.fluid.card(class="{{escalation_level_card_class '1'}}")
-            //     .content
-            //         .right.floated.meta(title='Automatic Escalation Time')
-            //             i.icon
-            //                 +icon name='clock'
-            //             strong #{escalation_four_hours}
-            //         .header Escalation 4
-            //     .content
-            //         .ui.sub.header Primary Contact
-            //         .item Office #{escalation_four_primary_contact}
-            //         if escalation_four_primary_contact_franchisee
-            //             .item Franchisee #{escalation_four_primary_contact_franchisee}
-            //     .content
-            //         .ui.sub.header Secondary Contact
-            //         .item Office #{escalation_four_secondary_contact} 
-            //         if escalation_four_secondary_contact_franchisee
-            //             .item Franchisee #{escalation_four_secondary_contact_franchisee}
-            //     .content
-            //         .right.floated.meta
-            //             if can_set_to_four
-            //                 .set_level_four.ui.button Set 4
-            //             else
-            //                 .ui.disabled.button Set 4
+                        |#{number}
+                        unless is_level
+                            .set_level.ui.button Set #{number}
+                        // else
+                        //     .ui.disabled.button Can't Set #{number}
             
