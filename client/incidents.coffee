@@ -131,8 +131,9 @@ Template.incident_sla_widget.helpers
         # console.log incident.level is @number
         if incident
             if incident.level is @number 
-                console.log 'yeah'
-            else 'raised green' 
+                'raised green' 
+            else
+                ''
     incident_doc: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
