@@ -687,8 +687,8 @@ Template.single_doc_select.helpers
         doc
         
 Template.single_doc_view.onCreated ->
-    # console.log @data
-    # @autorun =>  Meteor.subscribe 'users'
+    console.log @data
+    @autorun =>  Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
 Template.single_doc_view.helpers
     selected_doc: ->
         context = Template.currentData(0)
@@ -697,7 +697,7 @@ Template.single_doc_view.helpers
         # console.log parent_doc["#{context.key}"]
         doc = 
             Docs.findOne 
-                jpid: parent_doc["#{context.key}"]
+                "ev.ID": parent_doc["#{context.key}"]
         # console.log doc
         doc
 Template.view_multiple_user.onCreated ->

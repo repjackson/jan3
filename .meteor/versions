@@ -96,6 +96,7 @@ pacreach:jade@0.5.5
 pacreach:jade-compiler@0.5.5
 peerlibrary:blocking@0.5.2
 peerlibrary:xml2js@0.4.8_1
+percolate:synced-cron@1.3.2
 promise@0.11.1
 raix:handlebar-helpers@0.2.5
 random@1.1.0

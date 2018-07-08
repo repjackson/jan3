@@ -4,6 +4,9 @@ FlowRouter.route '/incidents',
 FlowRouter.route '/customer_incidents', 
     action: -> BlazeLayout.render 'layout', main:'customer_incidents'
 
+Template.incident_view.onCreated ->
+    @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
+    
 
 Template.add_incident_button.events
     'click #add_incident': ->

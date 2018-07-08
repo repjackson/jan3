@@ -294,15 +294,12 @@ template(name='single_doc_view')
             .ui.fluid.card
                 .content
                     .header 
-                        |#{cust_name}
+                        |#{ev.CUST_NAME}
                 .content
                     .ui.list
-                        .item JPID: #{jpid}
-                        .item Tel: #{telephone}
-                        .item Contact Person: #{customer_contact_person}
-                        .item Contact Email: #{customer_contact_email}
-                        .item Franchisee: #{franchisee}
-                        .item Master Licensee: #{master_licensee}
+                        .item JPID: #{ev.ID}
+                        .item #{ev.ADDR_STREET}
+                        .item #{ev.ADDR_CITY}
           
 template(name='view_multiple_user')
     .ui.form

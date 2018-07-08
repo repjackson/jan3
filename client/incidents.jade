@@ -41,8 +41,8 @@ template(name='incident_view')
                             +icon name='leave'
                             |Date
                         h5 #{service_date}
-                unless is_customer
-                    +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
+                // unless is_customer
+                +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
                 if submitted
                     .ui.secondary.segment
                         .ui.header Status

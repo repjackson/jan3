@@ -237,42 +237,6 @@ Meteor.methods
             event_type: 'assignment'
             text: "#{user.username} was unassigned from #{doc.type}"
         
-    parse_user_upload: ( data )->
-        for doc in data
-            console.log 'doc', doc
-            # options = {
-            #     username: doc.USERNAME
-            #     email: doc.EMAIL
-            #     profile:
-            #         first_name: doc.FIRST
-            #         last_name: doc.LAST
-            #         office_name: doc.OFFICE
-            # }
-            
-            # Meteor.call 'create_user', options, (err,res)->
-            #     if err then console.log 'err', err
-            #     else
-            #         console.log res
-    
-    parse_office_upload: ( data )->
-        for doc in data
-            # console.log doc
-            
-            found_office_doc = 
-                Docs.findOne
-                    type:'office'
-                    office_name: doc.office_name
-            if found_office_doc
-                console.log 'existing office doc', doc.office_name
-                # Docs.update doc_id,
-                #     $set: "#{key}": doc._id
-            else
-                Docs.insert
-                    type:'office'
-                    office_name: doc.office_name
-                    display_name: doc.display_name
-                    address: doc.address
-                    telephone: doc.telephone
         
     create_event: (parent_id, event_type, action)->
         Docs.insert
@@ -330,13 +294,13 @@ Meteor.methods
 
     join_conversation: (conversation_id)->
         Docs.update conversation_id,
-            $addToSet:
-                participant_ids: Meteor.userId()
+            $addToSet: participant_ids: Meteor.userId()
 
     leave_conversation: (conversation_id)->
         Docs.update conversation_id,
-            $pull:
-                participant_ids: Meteor.userId()
+            $pull: participant_ids: Meteor.userId()
+            
+            
     add_message: (body,group_id)->
         new_message_id = Docs.insert
             body: body
@@ -391,3 +355,7 @@ Meteor.methods
                 # "
         return new_message_id
       
+      
+    update_escalation_statuses: ->
+        incident_count = Docs.find(type:'incident').count()
+        console.log incident_count

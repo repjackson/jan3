@@ -12,7 +12,15 @@ Cloudinary.config
     api_secret: Meteor.settings.cloudinary_secret
 
 
-        
+SyncedCron.add
+    name: 'Crunch some important numbers for the marketing department'
+    schedule: (parser) ->
+        # parser is a later.parse object
+        parser.text 'every 2 hours'
+    job: -> 
+        Meteor.call 'update_escalation_statuses', (err,res)->
+            
+
     
     
 Docs.allow

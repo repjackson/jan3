@@ -326,6 +326,32 @@ publishComposite 'doc', (id)->
             }
         ]
     }
+    
+    
+publishComposite 'incident', (id)->
+    {
+        find: -> Docs.find id
+        children: [
+            {
+                find: (incident)-> Meteor.users.find _id:incident.author_id
+            }
+            {
+                find: (incident)-> 
+                    # customer doc
+                    # console.log incident
+                    Docs.find
+                        type:'customer'
+                        "ev.ID": incident.customer_jpid
+
+            }
+            # {
+            #     find: (incident)-> Docs.find _id:doc.referenced_customer_id
+            # }
+            # {
+            #     find: (incident)-> Docs.find _id:doc.parent_id
+            # }
+        ]
+    }
 
 publishComposite 'me', ()->
     {
@@ -508,6 +534,7 @@ publishComposite 'group_docs', (group_id)->
 
         ]
     }
+    
 Meteor.publish 'userStatus', ->
     Meteor.users.find { 'status.online': true }, 
         fields: 
