@@ -124,11 +124,15 @@ Template.incident_sla_widget.helpers
         if incident
             incident.level is @number
     escalation_level_card_class: ->
-        doc_id = FlowRouter.getParam('`doc_id')
+        doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-        if incident
-            if incident.level is @number then 'raised green' else 'disabled'
         # console.log @number
+        # console.log incident.level
+        # console.log incident.level is @number
+        if incident
+            if incident.level is @number 
+                console.log 'yeah'
+            else 'raised green' 
     incident_doc: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
@@ -165,7 +169,7 @@ Template.incident_sla_widget.helpers
             customer_doc = Docs.findOne
                 "ev.ID": user.profile.customer_jpid
                 type:'customer'
-            if customer_doc
+            if customer_doc 
                 users_office = Docs.findOne
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
