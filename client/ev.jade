@@ -227,6 +227,9 @@ template(name='franchisee_view')
                         //     strong #{ev.MASTER_LICENSEE}
         .centered.row
             .fifteen.wide.column
+                .ui.center.aligned.header 
+                    +icon name='customer-support'
+                    |#{ev.FRANCHISEE}'s Customers
                 +franchisee_customers
 
     

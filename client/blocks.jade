@@ -37,9 +37,9 @@ template(name='edit_button')
         // | Edit
 
 template(name='view_button')
-    a(href="/view/#{_id}" data-content='View Details') 
-        +icon name='details-pane'
-        // i.right.chevron.large.icon
+    a.ui.icon.button(href="/view/#{_id}" data-content='View Details') 
+        // +icon name='details-pane'
+        i.right.chevron.large.icon
         
 template(name='view_user_button')
     a(href="/user/#{username}" title="View #{username}") 
@@ -530,7 +530,7 @@ template(name='message_button')
 template(name='toggle_boolean_checkbox')      
     .ui.form
         .field
-            .ui.slider.checkbox
+            .ui.checkbox
                 input(type='checkbox' name=key checked=key_value)
                 label #{label}
 

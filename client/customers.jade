@@ -66,9 +66,6 @@ template(name='customer_view')
                 
                 
 template(name='franchisee_customers')
-    .ui.center.aligned.header 
-        +icon name='customer-support'
-        |#{franchisee}'s Customers
     +reactiveTable settings=settings collection=franchisee_customers_docs class="ui celled striped sortable table"
 
 

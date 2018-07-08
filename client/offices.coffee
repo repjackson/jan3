@@ -51,6 +51,17 @@ Template.office_admin_section.helpers
     secondary_franchisee_toggle_key: -> "escalation_#{@number}_secondary_contact_franchisee"
     secondary_contact_key: -> "escalation_#{@number}_secondary_contact"
         
+    is_primary_indivdual: ->
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        prim_ind = page_office["escalation_#{@number}_primary_contact"]
+        console.log prim_ind
+        prim_ind
+        
+        
+    is_secondary_indivdual: ->
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        page_office["escalation_#{@number}_secondary_contact"]
+        
     
 Template.office_customers.onCreated ->
     @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id')

@@ -115,7 +115,9 @@ template(name='office_admin_section')
                                                 +toggle_boolean_checkbox key=primary_franchisee_toggle_key label='Franchisee'
                                                 +radio_item key=primary_contact_key label='Office Owner' value='office_owner'
                                                 +radio_item key=primary_contact_key label='Operations Manager' value='operations_manager'
-                                                +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
+                                                +radio_item key=primary_contact_key label='Individual' value='individual'
+                                                if is_primary_indivdual
+                                                    +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
                                     .column
                                         +view_sla_contact key=primary_contact_key
                                         .ui.hidden.divider
@@ -133,7 +135,9 @@ template(name='office_admin_section')
                                                 +toggle_boolean_checkbox key=secondary_franchisee_toggle_key label='Franchisee'
                                                 +radio_item key=secondary_contact_key label='Office Owner' value='office_owner'
                                                 +radio_item key=secondary_contact_key label='Operations Manager' value='operations_manager'
-                                                +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
+                                                +radio_item key=secondary_contact_key label='Individual' value='individual'
+                                                if is_secondary_indivdual
+                                                    +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
                                     .column
                                         +view_sla_contact key=secondary_contact_key
                                         .ui.hidden.divider
