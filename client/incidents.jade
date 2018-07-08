@@ -218,18 +218,18 @@ template(name='incident_sla_widget')
                     .right.floated.meta(title='Automatic Escalation Time')
                         i.icon
                             +icon name='clock'
-                        strong #{my_office.hours_key}
+                        strong #{hours_value}
                     .header #{name}
                 .content
                     .ui.sub.header Primary Contact
-                    .item Office #{my_office.primary_contact_key} 
+                    .item Office #{primary_contact_value} 
                     if my_office.primary_franchisee_toggle_key
-                        .item Franchisee #{my_office.primary_franchisee_toggle_key}
+                        .item Franchisee #{primary_franchisee_toggle_value}
                 .content
                     .ui.sub.header Secondary Contact
-                    .item Office #{my_office.secondary_contact_key} 
+                    .item Office #{secondary_contact_value} 
                     if my_office.primary_franchisee_toggle_key
-                        .item Franchisee #{my_office.secondary_franchisee_toggle_key}
+                        .item Franchisee #{secondary_franchisee_toggle_value}
                 .content
                     .right.floated.meta
                         if can_set_to_one
