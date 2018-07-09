@@ -534,9 +534,15 @@ template(name='toggle_boolean_checkbox')
                 input(type='checkbox' name=key checked=key_value)
                 label #{label}
 
+
+template(name='toggle_user_published')
+    #toggle_button.ui.icon.button
+        if published
+            i.green.checkmark.icon
+
 template(name='radio_item')      
     .field
-        .ui.slider.checkbox
+        .ui.toggle.checkbox
             input(type="radio" name=key value=value checked=key_value)
             label #{label}
 

@@ -88,7 +88,7 @@ Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 Template.registerHelper 'key_value', (key) -> 
     doc_field = Template.parentData(2)
     current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-    console.log @key
+    # console.log @key
     # console.log Template.parentData(1)
     # console.log Template.parentData(2)
     # console.log Template.parentData(3)
@@ -109,6 +109,13 @@ Template.registerHelper 'profile_key_value', () ->
     current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
     if current_user
         current_user.profile["#{@key}"]
+        
+# Template.registerHelper 'user_key_value', () -> 
+#     # doc_field = Template.parentData(2)
+#     current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
+#     console.log Template.parentData()
+#     Meteor.users. 
+#         current_user["#{@key}"]
         
         
 

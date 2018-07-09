@@ -99,52 +99,45 @@ template(name='office_admin_section')
         // h3.ui.header Initial
         // p ie type=level2
         each rule_docs
-            .ui.segment
-                h3.ui.header #{name}
-                .ui.two.column.divided.padded.grid
-                    .row
-                        +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
-                    .row
-                        .column
-                            h4.ui.header Primary Contact
-                            .ui.two.column.stackable.grid
-                                .row
-                                    .column
-                                        .ui.form
-                                            .grouped.fields
-                                                +toggle_boolean_checkbox key=primary_franchisee_toggle_key label='Franchisee'
-                                                +radio_item key=primary_contact_key label='Office Owner' value='office_owner'
-                                                +radio_item key=primary_contact_key label='Operations Manager' value='operations_manager'
-                                                +radio_item key=primary_contact_key label='Individual' value='individual'
-                                                if is_primary_indivdual
-                                                    +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
-                                    .column
-                                        +view_sla_contact key=primary_contact_key
-                                        .ui.hidden.divider
-                                        if escalation_one_primary_contact_franchisee
-                                            p Franchisee will be contacted.
-                                        else
-                                            p Franchisee will not be contacted.
-                        .column
-                            h4.ui.header Secondary Contact
-                            .ui.two.column.stackable.grid
-                                .row
-                                    .column
-                                        .ui.form
-                                            .grouped.fields
-                                                +toggle_boolean_checkbox key=secondary_franchisee_toggle_key label='Franchisee'
-                                                +radio_item key=secondary_contact_key label='Office Owner' value='office_owner'
-                                                +radio_item key=secondary_contact_key label='Operations Manager' value='operations_manager'
-                                                +radio_item key=secondary_contact_key label='Individual' value='individual'
-                                                if is_secondary_indivdual
-                                                    +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
-                                    .column
-                                        +view_sla_contact key=secondary_contact_key
-                                        .ui.hidden.divider
-                                        if escalation_secondary_contact_franchisee     
-                                            p Franchisee will be contacted.
-                                        else
-                                            p Franchisee will not be contacted.
+            h3.ui.dividing.header #{name}
+            .ui.two.column.padded.grid
+                .row
+                    +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
+                .row
+                    .column
+                        h4.ui.dividing.header Primary Contact
+                        +toggle_boolean_checkbox key=primary_franchisee_toggle_key label='Franchisee'
+                        +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
+                        // .ui.two.column.stackable.grid
+                        //     .row
+                        //         .column
+                        //             .ui.form
+                        //                 .grouped.fields
+                        //                     +toggle_boolean_checkbox key=primary_franchisee_toggle_key label='Franchisee'
+                        //                     +radio_item key=primary_contact_key label='Office Owner' value='office_owner'
+                        //                     +radio_item key=primary_contact_key label='Operations Manager' value='operations_manager'
+                        //                     +radio_item key=primary_contact_key label='Individual' value='individual'
+                        //         .column
+                        //             +view_sla_contact key=primary_contact_key
+                        //             if is_primary_indivdual
+                                        +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
+                    .column
+                        h4.ui.dividing.header Secondary Contact
+                        +toggle_boolean_checkbox key=secondary_franchisee_toggle_key label='Franchisee'
+                        +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
+                        // .ui.two.column.stackable.grid
+                        //     .row
+                        //         .column
+                        //             .ui.form
+                        //                 .grouped.fields
+                        //                     +toggle_boolean_checkbox key=secondary_franchisee_toggle_key label='Franchisee'
+                        //                     +radio_item key=secondary_contact_key label='Office Owner' value='office_owner'
+                        //                     +radio_item key=secondary_contact_key label='Operations Manager' value='operations_manager'
+                        //                     +radio_item key=secondary_contact_key label='Individual' value='individual'
+                        //         .column
+                        //             +view_sla_contact key=secondary_contact_key
+                        //             if is_secondary_indivdual
+                        //                 +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
 
 
 template(name='office_customers')

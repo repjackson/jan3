@@ -4,7 +4,10 @@ FlowRouter.route '/', action: ->
 
 
 Template.my_office_contacts.helpers
-    crew: -> Meteor.users.find {_id:$ne:Meteor.userId()}, limit:4
+    crew: -> 
+        Meteor.users.find {
+            published:true
+        }, limit:4
 
 Template.dashboard.helpers
 
@@ -20,12 +23,14 @@ Template.dashboard_office_contacts_list.helpers
                 "ev.ID": user.profile.customer_jpid
                 type:'customer'
                 # grandparent office
-            # console.log 'ss cust doc', customer_doc
+            console.log 'ss cust doc', customer_doc
             if customer_doc
-                Meteor.users.find {
-                    "profile.office_name": customer_doc.ev.MASTER_LICENSEE
+                found = Meteor.users.find {
+                    published:true
+                    # "profile.office_name": customer_doc.ev.MASTER_LICENSEE
                 }, limit:100
-        
+                console.log found.fetch()
+                found
 
 
 Template.customer_special_services.onCreated ->

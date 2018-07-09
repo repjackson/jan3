@@ -84,9 +84,9 @@ template(name='incident_view')
                         each incident_type_docs
                             +toggle_key key='incident_type' value=slug label=name
                 unless is_customer
-                    if submitted
-                        .ui.secondary.segment
-                            +incident_tasks
+                    // if submitted
+                    //     .ui.secondary.segment
+                    //         +incident_tasks
                     +notify_button
                     +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
 

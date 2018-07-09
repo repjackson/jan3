@@ -230,6 +230,7 @@ Meteor.publish 'user', (username)->
             profile: 1
             username: 1
             ev:1
+            published:1
 
 Meteor.publish 'office_by_franchisee', (franch_id)->
     franch_doc = Docs.findOne franch_id

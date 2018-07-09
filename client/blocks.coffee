@@ -386,7 +386,7 @@ Template.toggle_boolean_checkbox.onRendered ->
 #         else ''
 
 Template.toggle_boolean_checkbox.events
-    'click .ui.slider.checkbox': (e,t)->
+    'click .ui.toggle.checkbox': (e,t)->
         # console.log t.find('.ui.slider.checkbox')
         doc_id = FlowRouter.getParam('doc_id')
         # console.log Template.parentData()
@@ -408,10 +408,32 @@ Template.toggle_boolean_checkbox.events
         Docs.update doc_id, 
             $set: "#{@key}": checkbox_value
                         
+Template.toggle_user_published.events
+    'click #toggle_button': (e,t)->
+        # console.log t.find('.ui.slider.checkbox')
+        doc_id = FlowRouter.getParam('doc_id')
+        console.log Template.parentData()
+        console.log @
+        # if @value
+        #     Docs.update {_id:doc_id}, 
+        #         { $set: "#{@key}": "#{@value}" },
+        #         (err,res)=>
+        #             if err
+        #                 Bert.alert "Error changing #{@key} to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
+        #             else
+        #                 Docs.insert
+        #                     type:'event'
+        #                     parent_id: doc_id
+        #                     text:"changed #{@key} to #{@value}."
+        #                 Bert.alert "Changed #{@key} to #{@value}", 'success', 'growl-top-right'
+        
+        Meteor.users.update @_id, 
+            $set: published: !@published
+                        
 
         
 Template.radio_item.events
-    'click .ui.slider.checkbox': (e,t)->
+    'click .ui.toggle.checkbox': (e,t)->
         # console.log t.find('.ui.slider.checkbox')
         doc_id = FlowRouter.getParam('doc_id')
         # console.log Template.parentData()
