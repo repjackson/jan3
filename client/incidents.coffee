@@ -221,7 +221,7 @@ Template.incident_sla_widget.helpers
 
 Template.incident_sla_widget.events
     'click .set_level': ->
-        console.log @
+        # console.log @
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
         
@@ -245,7 +245,7 @@ Template.incident_sla_widget.events
             transition: 'vertical flip'
             # observeChanges: true
             duration: 500
-            onApprove : ()->
+            onApprove : ()=>
                 Docs.update doc_id,
                     $set: level:sla.number
                 Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"

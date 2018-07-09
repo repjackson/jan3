@@ -243,8 +243,7 @@ template(name='incident_sla_widget')
             
     .ui.incident.modal
         h1.ui.center.aligned.header
-            img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
-            | Confirm Change
+            | Confirm Change Incident Level from #{level}
         .actions
             .ui.cancel.basic.button
                 // i.remove.icon
@@ -253,4 +252,4 @@ template(name='incident_sla_widget')
             .ui.green.ok.ok_button.button
                 // i.checkmark.icon
                 // +icon24 name='checkmark' classes='ui avatar image'
-                | Submit
+                | Confirm
