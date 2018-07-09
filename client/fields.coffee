@@ -74,6 +74,7 @@ Template.edit_image_field.events
 
 Template.edit_number_field.events
     'change #number_field': (e,t)->
+        console.log @
         number_value = parseInt e.currentTarget.value
         Docs.update FlowRouter.getParam('doc_id'),
             { $set: "#{@key}": number_value }
