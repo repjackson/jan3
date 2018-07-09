@@ -42,10 +42,10 @@ template(name='view_button')
         i.right.chevron.large.icon
         
 template(name='view_user_button')
-    a(href="/user/#{username}" title="View #{username}") 
+    a.ui.icon.button(href="/user/#{username}" title="View #{username}") 
         // +avatar_sprite name='chevron-right'
-        +icon name='circled-chevron-right'
-        // i.right.chevron.icon
+        // +icon name='circled-chevron-right'
+        i.right.chevron.icon
         
 template(name='add_button')
     #add.ui.icon.circular.button(title='Add')
@@ -539,6 +539,9 @@ template(name='toggle_user_published')
     #toggle_button.ui.icon.button
         if published
             i.green.checkmark.icon
+        else
+            i.circle.outline.icon
+    
 
 template(name='radio_item')      
     .field

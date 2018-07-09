@@ -14,8 +14,8 @@ template(name='footer')
                     //     .sitemap_list.item demo login: demo/password
                     +role_switcher
                     .ui.hidden.divider
-                    #report_bug.ui.icon.button(data-position="bottom center" data-tooltip="Report a Bug/Feature Request")
-                        +icon name='bug'
+                    #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report a Bug/Feature Request")
+                        i.bug.icon
 
                 .four.wide.column
                     if is_customer
@@ -34,7 +34,6 @@ template(name='footer')
         
     .ui.basic.small.report.modal
         h1.ui.center.aligned.header
-            img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
             | Report Bug/ Feature Request
         h3.ui.center.aligned.header Current Page: #{bug_link}
         .content
@@ -49,11 +48,6 @@ template(name='footer')
                 // i.checkmark.icon
                 // +icon24 name='checkmark' classes='ui avatar image'
                 | Submit
-    .ui.basic.small.confirm.modal
-        h1.ui.center.aligned.header Thanks!
-            .ui.green.ok.large.ok_button.button
-                | You're welcome
-        
         
         
 template(name='role_switcher')

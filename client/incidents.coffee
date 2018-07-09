@@ -108,21 +108,23 @@ Template.incident_view.helpers
     
 Template.incident_sla_widget.onRendered ->
     # Meteor.setTimeout( =>
-    $('.ui.report.modal').modal(
-        transition: 'vertical flip'
-        closable: true
-        inverted: true
-        onApprove : =>
-            text = $('#thanks_message_text').val()
-            Meteor.call 'create_message', recipient_id=self.data.author_id, text=text, parent_id=self.data._id, (err,res)->
-                if err then console.error err
-                else
-                    $('#message_sent.modal').modal('show')
-                    $('#thanks_message_text').val('')
-    )
-            # ), 500            
+    # $('.ui.report.modal').modal(
+    #     transition: 'vertical flip'
+    #     closable: true
+    #     inverted: true
+    #     onApprove : =>
+    #         text = $('#thanks_message_text').val()
+    #         Meteor.call 'create_message', recipient_id=self.data.author_id, text=text, parent_id=self.data._id, (err,res)->
+    #             if err then console.error err
+    #             else
+    #                 $('#message_sent.modal').modal('show')
+    #                 $('#thanks_message_text').val('')
+    # )
+    #         # ), 500            
 
 Template.incident_sla_widget.helpers
+    sla_rule_docs: -> Docs.find type:'rule'
+Template.sla_rule_doc.helpers
     can_escalate: -> 
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
@@ -153,7 +155,6 @@ Template.incident_sla_widget.helpers
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
 
-    sla_rule_docs: -> Docs.find type:'rule'
     
     hours_value: -> 
         user = Meteor.user()
@@ -219,8 +220,8 @@ Template.incident_sla_widget.helpers
     
 
 
-Template.incident_sla_widget.events
-    'click .set_level': ->
+Template.sla_rule_doc.events
+    'click .set_level': (e,t)->
         # console.log @
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
@@ -240,17 +241,17 @@ Template.incident_sla_widget.events
                 Meteor.users.findOne( username: office_doc["#{secondary_contact_type}"] )
             secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
         sla = @
-        $('.ui.incident.modal').modal(
-            inverted: false
-            # transition: 'vertical flip'
-            # observeChanges: true
-            duration: 500
-            onApprove : ()=>
-                Docs.update doc_id,
-                    $set: level:sla.number
-                Meteor.call 'email_about_escalation', doc_id
-                Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
-            ).modal('show')
+        Docs.update doc_id,
+            $set: level:sla.number
+        Meteor.call 'email_about_escalation', doc_id
+        Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
+        # $(e.currentTarget).closest('.ui.incident.modal').modal(
+        #     inverted: false
+        #     # transition: 'vertical flip'
+        #     # observeChanges: true
+        #     duration: 400
+        #     onApprove : ()=>
+        #     ).modal('show')
         
         # swal {
         #     title: "Change Incident to Level #{@number}?"

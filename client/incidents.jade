@@ -213,43 +213,52 @@ template(name='incident_sla_widget')
     .ui.header Incident SLA Rules List (Current Level: #{incident_doc.level})
     .ui.cards
         each sla_rule_docs
-            .ui.fluid.card(class=escalation_level_card_class)
-                .content
-                    .right.floated.meta(title='Automatic Escalation Time')
-                        i.icon
-                            +icon name='clock'
-                        strong #{hours_value}
-                    .header 
-                        if is_level
-                            i.green.checkmark.icon
-                        |#{name}
-                .content
-                    .ui.sub.header Primary Contact
-                    .item Office #{primary_contact_value} 
-                    if my_office.primary_franchisee_toggle_key
-                        .item Franchisee #{primary_franchisee_toggle_value}
-                .content
-                    .ui.sub.header Secondary Contact
-                    .item Office #{secondary_contact_value} 
-                    if my_office.primary_franchisee_toggle_key
-                        .item Franchisee #{secondary_franchisee_toggle_value}
-                .content
-                    .right.floated.meta
-                        // |#{number}
-                        unless is_level
-                            .set_level.ui.button Set #{number}
-                        // else
-                        //     .ui.disabled.button Can't Set #{number}
+            +sla_rule_doc
             
-    .ui.incident.modal
-        h1.ui.center.aligned.header
-            | Confirm Change Incident Level from #{level}
-        .actions
-            .ui.cancel.basic.button
-                // i.remove.icon
-                | Cancel
-            // if can_submit_bug
-            .ui.green.ok.ok_button.button
-                // i.checkmark.icon
-                // +icon24 name='checkmark' classes='ui avatar image'
-                | Confirm
+template(name='sla_rule_doc')            
+    .ui.fluid.card(class=escalation_level_card_class)
+        .content
+            .right.floated.meta(title='Automatic Escalation Time')
+                i.icon
+                    +icon name='clock'
+                strong #{hours_value}
+            .header 
+                if is_level
+                    i.green.checkmark.icon
+                |#{name}
+        .content
+            .ui.sub.header Primary Contact
+            .item #{primary_contact_value} 
+            if primary_franchisee_toggle_value
+                .item Franchisee
+        .content
+            .ui.sub.header Secondary Contact
+            .item #{secondary_contact_value} 
+            if secondary_franchisee_toggle_value
+                .item Franchisee
+        .content
+            .right.floated.meta
+                // |#{number}
+                unless is_level
+                    .set_level.ui.button Set #{number}
+                // else
+                //     .ui.disabled.button Can't Set #{number}
+            
+    // .ui.incident.modal
+    //     h1.ui.center.aligned.header
+    //         | Confirm Change Incident Level from #{level}
+    //         p This will notify
+    //         h5 #{primary_contact_value}
+    //         if primary_franchisee_toggle_value
+    //             .item Franchisee
+    //         h5 #{secondary_contact_value}
+    //         if secondary_franchisee_toggle_value
+    //             .item Franchisee
+    //     .actions
+    //         .ui.cancel.basic.button
+    //             // i.remove.icon
+    //             | Cancel
+    //         .ui.green.ok.ok_button.button
+    //             // i.checkmark.icon
+    //             // +icon24 name='checkmark' classes='ui avatar image'
+    //             | Confirm

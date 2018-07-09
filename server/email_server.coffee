@@ -33,17 +33,31 @@
 Meteor.methods
     email_about_escalation: (incident_id)->
         incident = Docs.findOne incident_id
-        console.log incident
+        office_doc = Docs.findOne {
+            "ev.MASTER_LICENSEE":incident.incident_office_name
+            type:'office'
+        }
+        # escalation_1_primary_contact_franchisee: true,
+        escalation_primary_contact_value = office_doc["escalation_#{incident.level}_primary_contact}"]
+        escalation_secondary_contact_value = office_doc["escalation_#{incident.level}_secondary_contact}"]
+
+        console.log escalation_primary_contact_value
+        console.log escalation_secondary_contact_value
         mailFields = {
             to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
-            subject: "Incident has been escalated to #{incident.level}."
+            subject: "Incident from #{incident.customer_name} has been escalated to #{incident.level}."
             text: ''
             html: "<h4>Incident from #{incident.customer_name} escalated to #{incident.level}.</h4>
                 <h5>Type: #{incident.incident_type}</h5>
                 <h5>Details: #{incident.incident_details}</h5>
+                <h5>Office: #{incident.incident_office_name}</h5>
                 <h5>Status: #{incident.status}</h5>
                 <h5>Service Date: #{incident.service_date}</h5>
+                <h4>This will notify</h4>
+                <h5>Primary Office Contact: #{escalation_primary_contact_value}</h5>
+                <h5>Secondary Office: #{escalation_secondary_contact_value}</h5>
+
             "
         }
         Meteor.call 'sendEmail', mailFields

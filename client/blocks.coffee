@@ -556,9 +556,7 @@ Template.multiple_user_select.helpers
         context = Template.currentData(0)
         # console.log context.key
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        Meteor.users.find
-            _id: $in: parent_doc["#{context.key}"]
-
+        list = Meteor.users.find(_id: $in: parent_doc["#{context.key}"]).fetch()
 
 Template.single_user_select.helpers
     settings: -> 
