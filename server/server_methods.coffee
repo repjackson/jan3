@@ -335,7 +335,7 @@ Meteor.methods
             
             Email.send
                 to: " #{offline_user.profile.first_name} #{offline_user.profile.last_name} <#{offline_user.emails[0].address}>",
-                from: "Jan-Pro Customer Portal Admin <no-reply@toriwebster.com>",
+                from: "Jan-Pro Customer Portal Admin <no-reply@jan-pro.com>",
                 subject: "New Message from #{message_author.profile.first_name} #{message_author.profile.last_name}",
                 html: 
                     "<h4>#{message_author.profile.first_name} just sent the following message while you were offline: </h4>

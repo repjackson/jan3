@@ -68,7 +68,7 @@ Template.incidents.helpers
             { key: 'customer_name', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
-            { key: 'when', label: 'Logged' }
+            { key: 'timestamp', label: 'Logged' }
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
             { key: '', label: 'Assigned To', tmpl:Template.associated_users }
@@ -241,18 +241,16 @@ Template.incident_sla_widget.events
             secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
         sla = @
         $('.ui.incident.modal').modal(
-            inverted: true
-            transition: 'vertical flip'
+            inverted: false
+            # transition: 'vertical flip'
             # observeChanges: true
             duration: 500
             onApprove : ()=>
                 Docs.update doc_id,
                     $set: level:sla.number
+                Meteor.call 'email_about_escalation', doc_id
                 Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
-
-                # $('.ui.confirm.modal').modal('show');
             ).modal('show')
-
         
         # swal {
         #     title: "Change Incident to Level #{@number}?"
