@@ -106,7 +106,22 @@ Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
     can_submit: -> @service_date and @incident_details and @incident_type
     
-    
+Template.incident_sla_widget.onRendered ->
+    # Meteor.setTimeout( =>
+    $('.ui.report.modal').modal(
+        transition: 'vertical flip'
+        closable: true
+        inverted: true
+        onApprove : =>
+            text = $('#thanks_message_text').val()
+            Meteor.call 'create_message', recipient_id=self.data.author_id, text=text, parent_id=self.data._id, (err,res)->
+                if err then console.error err
+                else
+                    $('#message_sent.modal').modal('show')
+                    $('#thanks_message_text').val('')
+    )
+            # ), 500            
+
 Template.incident_sla_widget.helpers
     can_escalate: -> 
         doc_id = FlowRouter.getParam('doc_id')
@@ -209,6 +224,7 @@ Template.incident_sla_widget.events
         console.log @
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
+        
         office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
         primary_contact_type =  office_doc.escalation_one_primary_contact
         secondary_contact_type =  office_doc.escalation_one_secondary_contact
@@ -223,20 +239,36 @@ Template.incident_sla_widget.events
             secondary_contact_target =
                 Meteor.users.findOne( username: office_doc["#{secondary_contact_type}"] )
             secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
-        swal {
-            title: "Change Incident to Level #{@number}?"
-            text: "This will alert the office primary contact #{primary_contact_type} #{primary_username} and secondary contact #{secondary_contact_type} #{secondary_username}."
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Change'
-            confirmButtonColor: '#da5347'
-        }, =>
-            Docs.update doc_id,
-                $set: level:@number
-            Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
+        sla = @
+        $('.ui.incident.modal').modal(
+            inverted: true
+            transition: 'vertical flip'
+            # observeChanges: true
+            duration: 500
+            onApprove : ()->
+                Docs.update doc_id,
+                    $set: level:sla.number
+                Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
+
+                # $('.ui.confirm.modal').modal('show');
+            ).modal('show')
+
+        
+        # swal {
+        #     title: "Change Incident to Level #{@number}?"
+        #     text: "This will alert the office primary contact #{primary_contact_type} #{primary_username} and secondary contact #{secondary_contact_type} #{secondary_username}."
+        #     type: 'info'
+        #     animation: false
+        #     showCancelButton: true
+        #     closeOnConfirm: true
+        #     cancelButtonText: 'Cancel'
+        #     confirmButtonText: 'Change'
+        #     confirmButtonColor: '#da5347'
+        # }, =>
+        #     Docs.update doc_id,
+        #         $set: level:@number
+        #     Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
+            
             
 Template.full_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')

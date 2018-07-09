@@ -241,3 +241,16 @@ template(name='incident_sla_widget')
                         // else
                         //     .ui.disabled.button Can't Set #{number}
             
+    .ui.incident.modal
+        h1.ui.center.aligned.header
+            img.bug_icon.ui.avatar.image(src="https://png.icons8.com/bug/color/96" width="96" height="96")
+            | Confirm Change
+        .actions
+            .ui.cancel.basic.button
+                // i.remove.icon
+                | Cancel
+            // if can_submit_bug
+            .ui.green.ok.ok_button.button
+                // i.checkmark.icon
+                // +icon24 name='checkmark' classes='ui avatar image'
+                | Submit
