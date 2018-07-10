@@ -13,13 +13,18 @@ Cloudinary.config
 
 
 SyncedCron.add
-    name: 'Crunch some important numbers for the marketing department'
+    name: 'Update incident escalations'
     schedule: (parser) ->
         # parser is a later.parse object
-        parser.text 'every 2 hours'
+        parser.text 'every 1 minute'
     job: -> 
         Meteor.call 'update_escalation_statuses', (err,res)->
+            if err then console.log err
+            # else
+                # console.log 'res:',res
             
+
+# SyncedCron.start()
 
     
     

@@ -357,5 +357,25 @@ Meteor.methods
       
       
     update_escalation_statuses: ->
-        incident_count = Docs.find(type:'incident').count()
-        console.log incident_count
+        incident_cursor = Docs.find(type:'incident')
+        console.log incident_cursor.count()
+        for incident in incident_cursor.fetch()
+            # console.log incident.level
+            # console.log incident.timestamp
+            now = Date.now()
+            # console.log incident.incident_office_name
+            incidents_office =
+                Docs.findOne
+                    "ev.MASTER_LICENSEE": incident.incident_office_name
+                    type:'office'
+            difference = now - incident.timestamp
+            # console.log 'difference', difference
+            # console.log 'level',incident.level
+            hours_value = "escalation_#{incident.level}_hours"
+            # hours_value = incidents_office["escalation_#{incident.level}_hours"]
+            console.log hours_value
+            # if difference < hours_value*60
+            #     console.log 'escalate'
+            # else
+            #     console.log 'dont'
+            # console.log 'the office', incidents_office

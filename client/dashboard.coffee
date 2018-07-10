@@ -9,11 +9,27 @@ Template.my_office_contacts.helpers
             published:true
         }, limit:4
 
-Template.dashboard.helpers
+Template.dashboard.events
+    'click .log_ticket': (e,t)->
+        my_customer_ob = Meteor.user().users_customer()
+        console.log my_customer_ob
+        if my_customer_ob
+            new_incident_id = 
+                Docs.insert
+                    type: 'incident'
+                    customer_jpid: my_customer_ob.ev.ID
+                    customer_name: my_customer_ob.ev.CUST_NAME
+                    incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
+                    level: 1
+                    open: true
+                    submitted: false
+            FlowRouter.go "/view/#{new_incident_id}"
+
 
 
 Template.dashboard_office_contacts_list.onCreated ->
     @autorun -> Meteor.subscribe 'my_office_contacts'
+    
 Template.dashboard_office_contacts_list.helpers
     office_contacts: -> 
         user = Meteor.user()

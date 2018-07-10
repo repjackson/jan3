@@ -41,7 +41,7 @@ Template.office_admin_section.helpers
         # console.log page_office
         return page_office
         
-    rule_docs: -> Docs.find type:'rule'
+    rule_docs: -> Docs.find {type:'rule'}, sort:number:1
         
     hours_key: -> "escalation_#{@number}_hours"
     

@@ -107,7 +107,26 @@ Template.incident_view.onCreated ->
 Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
     can_submit: -> @service_date and @incident_details and @incident_type
-    
+Template.incident_view.events
+    'click .submit': -> 
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        Docs.update doc_id,
+            $set:
+                submitted:true
+                submitted_datetime: Date.now()
+        Meteor.call 'create_event', doc_id, 'submit', "#{Meteor.user().username} submitted the incident."
+
+
+    'click .unsubmit': -> 
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        Docs.update doc_id,
+            $set:
+                submitted:false
+                submitted_datetime: null
+        Meteor.call 'create_event', doc_id, 'unsubmit', "#{Meteor.user().username} unsubmitted the incident."
+        
 Template.incident_sla_widget.onRendered ->
     # Meteor.setTimeout( =>
     # $('.ui.report.modal').modal(
@@ -125,7 +144,7 @@ Template.incident_sla_widget.onRendered ->
     #         # ), 500            
 
 Template.incident_sla_widget.helpers
-    sla_rule_docs: -> Docs.find type:'rule'
+    sla_rule_docs: -> Docs.find {type:'rule'}, sort:number:1
 Template.sla_rule_doc.helpers
     can_escalate: -> 
         doc_id = FlowRouter.getParam('doc_id')

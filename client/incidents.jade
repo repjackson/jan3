@@ -22,7 +22,7 @@ template(name='incident_view')
                     i.icon
                         +icon name='checkmark'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Incident #{incident_number}
+                h1.ui.center.aligned.grey.header #{customer_name} Incident #{incident_number}
             .three.wide.column
                 unless submitted
                     a.ui.icon.button#delete(href='#' title='Delete Incident')
@@ -41,8 +41,8 @@ template(name='incident_view')
                             +icon name='leave'
                             |Date
                         h5 #{service_date}
-                // unless is_customer
-                +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
+                unless is_customer
+                    +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
                 if submitted
                     .ui.secondary.segment
                         .ui.header Status
@@ -68,14 +68,6 @@ template(name='incident_view')
                 if submitted
                     +comments
                     +full_doc_history
-                +incident_sla_widget
-            .four.wide.column
-                if can_submit
-                    +toggle_boolean key='submitted' yes_label='Submitted' no_label='Submit'
-                else
-                    .ui.secondary.segment Fill Date, Details, and Type to Submit
-                if submitted
-                    +incident_type_label
                 else
                     .ui.secondary.segment
                         .ui.header 
@@ -84,9 +76,31 @@ template(name='incident_view')
                         each incident_type_docs
                             +toggle_key key='incident_type' value=slug label=name
                 unless is_customer
-                    // if submitted
-                    //     .ui.secondary.segment
-                    //         +incident_tasks
+                    .ui.header Incident SLA Rules List (Current Level: #{level})
+                    +incident_sla_widget
+            .four.wide.column
+                if can_submit
+                    if submitted
+                        .ui.disabled.button
+                            |Submitted {{reg_format submitted_datetime}}
+                        if is_admin
+                            .unsubmit.ui.fluid.button
+                                i.undo.icon
+                                |Unsubmit
+                    else
+                        .submit.ui.fluid.button
+                            i.green.checkmark.icon
+                            |Submit
+                else
+                    .ui.secondary.segment Fill Date, Details, and Type to Submit
+                if submitted
+                    .ui.secondary.segment
+                        .ui.dividing.header Incident Type
+                        +incident_type_label
+                unless is_customer
+                    if submitted
+                        .ui.secondary.segment
+                            +incident_tasks
                     +notify_button
                     +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
 
@@ -118,8 +132,8 @@ template(name='incident_tasks')
     .ui.header
         +icon name='to-do'
         |Incident Tasks
-    a#add_incident_task(title='Add Task' href='#')
-        +icon name='plus'
+    a#add_incident_task.ui.icon.button(title='Add Task' href='#')
+        i.plus.icon
     .ui.list
         each incident_tasks
             .item
@@ -203,14 +217,13 @@ template(name='customer_incidents')
         
 template(name='add_incident_button')
     if has_user_customer_jpid
-        a#add_incident(href='#')
-            +icon name='plus'
+        a.ui.icon.button#add_incident(href='#')
+            i.plus.icon
     else
         .ui.secondary.segment Add Office to Profile to Add Incident
 
 
 template(name='incident_sla_widget')
-    .ui.header Incident SLA Rules List (Current Level: #{incident_doc.level})
     .ui.cards
         each sla_rule_docs
             +sla_rule_doc
