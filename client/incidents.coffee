@@ -111,11 +111,20 @@ Template.incident_view.events
     'click .submit': -> 
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
+        
+        incidents_office =
+            Docs.findOne
+                "ev.MASTER_LICENSEE": incident.incident_office_name
+                type:'office'
+        
+        escalation_minutes = incidents_office.escalation_1_hours
+        Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to initial #{incident.incident_office_name} rules."
         Docs.update doc_id,
             $set:
                 submitted:true
                 submitted_datetime: Date.now()
-        Meteor.call 'create_event', doc_id, 'submit', "#{Meteor.user().username} submitted the incident."
+                last_updated_datetime: Date.now()
+        Meteor.call 'create_event', doc_id, 'submit', "submitted the incident."
 
 
     'click .unsubmit': -> 
@@ -125,7 +134,8 @@ Template.incident_view.events
             $set:
                 submitted:false
                 submitted_datetime: null
-        Meteor.call 'create_event', doc_id, 'unsubmit', "#{Meteor.user().username} unsubmitted the incident."
+                last_updated_datetime: Date.now()
+        Meteor.call 'create_event', doc_id, 'unsubmit', "unsubmitted the incident."
         
 Template.incident_sla_widget.onRendered ->
     # Meteor.setTimeout( =>

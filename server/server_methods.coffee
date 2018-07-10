@@ -368,7 +368,7 @@ Meteor.methods
                 Docs.findOne
                     "ev.MASTER_LICENSEE": incident.incident_office_name
                     type:'office'
-            difference = now - incident.timestamp
+            difference = now - incident.last_updated_datetime
             # console.log 'difference', difference
             # console.log 'level',incident.level
             hours_value = "escalation_#{incident.level}_hours"

@@ -134,9 +134,9 @@ template(name='incident_tasks')
         |Incident Tasks
     a#add_incident_task.ui.icon.button(title='Add Task' href='#')
         i.plus.icon
-    .ui.list
+    .ui.divided.list
         each incident_tasks
-            .item
+            .large.item
                 .content
                     a.header(href="/view/#{_id}") 
                         if complete
@@ -191,7 +191,7 @@ template(name='incident_task_view')
                         i.large.toggle.off.icon
                     .ui.header Incomplete
             .eight.wide.column
-                +parent_segment
+                // +parent_segment
                 .ui.header #{title}
                 |#{text}
                 +comments
