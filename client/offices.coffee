@@ -140,6 +140,7 @@ Template.office_employees.helpers
             { key: 'ev.WORK_TELEPHONE', label: 'Work Tel' }
             { key: 'email', label: 'Email' }
             { key: '', label: 'Publicize', tmpl:Template.toggle_user_published }
+            { key: '', label: 'Edit', tmpl:Template.edit_user_button }
             { key: '', label: 'View', tmpl:Template.view_user_button }
         ]
 

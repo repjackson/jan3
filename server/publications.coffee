@@ -231,6 +231,13 @@ Meteor.publish 'user', (username)->
             username: 1
             ev:1
             published:1
+Meteor.publish 'user_profile', (user_id)->
+    Meteor.users.find user_id,
+        fields:
+            profile: 1
+            username: 1
+            ev:1
+            published:1
 
 Meteor.publish 'office_by_franchisee', (franch_id)->
     franch_doc = Docs.findOne franch_id

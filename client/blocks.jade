@@ -47,6 +47,11 @@ template(name='view_user_button')
         // +icon name='circled-chevron-right'
         i.right.chevron.icon
         
+template(name='edit_user_button')
+    a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}") 
+        // +icon name='circled-chevron-right'
+        i.pencil.icon
+        
 template(name='add_button')
     #add.ui.icon.circular.button(title='Add')
         // i.plus.icon

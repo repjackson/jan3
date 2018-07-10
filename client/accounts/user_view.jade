@@ -3,12 +3,13 @@ template(name='user_view')
         .ui.padded.stackable.grid
             .middle.aligned.row
                 .four.wide.center.aligned.column
-                    +link_button link='/users' icon='groups' label='Users' classes='centered'
+                    if is_admin
+                        +link_button link='/users' icon='groups' label='Users' classes='centered'
                 .eight.wide.center.aligned.column
                     h1.header.item #{profile.first_name} #{profile.last_name}
                 .four.wide.center.aligned.column
-                    .get_user_info.ui.icon.button(title='Refresh User Info')
-                        i.refresh.icon
+                    // .get_user_info.ui.icon.button(title='Refresh User Info')
+                    //     i.refresh.icon
                     a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}")
                         i.pencil.icon
             .row

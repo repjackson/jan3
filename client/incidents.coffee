@@ -101,6 +101,8 @@ Template.customer_incidents.helpers
 Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'type','incident_type'
     @autorun -> Meteor.subscribe 'type','rule'
+    @autorun -> Meteor.subscribe 'my_office_contacts'
+
 
 Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'

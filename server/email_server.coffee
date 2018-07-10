@@ -38,9 +38,11 @@ Meteor.methods
             type:'office'
         }
         # escalation_1_primary_contact_franchisee: true,
-        escalation_primary_contact_value = office_doc["escalation_#{incident.level}_primary_contact}"]
-        escalation_secondary_contact_value = office_doc["escalation_#{incident.level}_secondary_contact}"]
-
+        escalation_primary_contact_value = office_doc["escalation_#{incident.level}_primary_contact"]
+        escalation_secondary_contact_value = office_doc["escalation_#{incident.level}_secondary_contact"]
+        console.log incident
+        console.log office_doc
+        console.log "escalation_#{incident.level}_secondary_contact"
         console.log escalation_primary_contact_value
         console.log escalation_secondary_contact_value
         mailFields = {
@@ -57,7 +59,6 @@ Meteor.methods
                 <h4>This will notify</h4>
                 <h5>Primary Office Contact: #{escalation_primary_contact_value}</h5>
                 <h5>Secondary Office: #{escalation_secondary_contact_value}</h5>
-
             "
         }
         Meteor.call 'sendEmail', mailFields
