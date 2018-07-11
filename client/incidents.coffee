@@ -116,9 +116,10 @@ Template.incident_view.events
             Docs.findOne
                 "ev.MASTER_LICENSEE": incident.incident_office_name
                 type:'office'
-        
-        escalation_minutes = incidents_office.escalation_1_hours
-        Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to initial #{incident.incident_office_name} rules."
+        # if incidents_office
+        #     escalation_minutes = incidents_office.escalation_1_hours
+        console.log incidents_office
+        # Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to initial #{incident.incident_office_name} rules."
         Docs.update doc_id,
             $set:
                 submitted:true

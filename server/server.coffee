@@ -24,7 +24,7 @@ SyncedCron.add
                 # console.log 'res:',res
             
 
-# SyncedCron.start()
+SyncedCron.start()
 
     
     

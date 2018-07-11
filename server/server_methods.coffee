@@ -368,14 +368,17 @@ Meteor.methods
                 Docs.findOne
                     "ev.MASTER_LICENSEE": incident.incident_office_name
                     type:'office'
-            difference = now - incident.last_updated_datetime
+            difference = now - (incident.last_updated_datetime+=hours_value*60*60)
             # console.log 'difference', difference
             # console.log 'level',incident.level
-            hours_value = "escalation_#{incident.level}_hours"
-            # hours_value = incidents_office["escalation_#{incident.level}_hours"]
-            console.log hours_value
-            # if difference < hours_value*60
-            #     console.log 'escalate'
-            # else
-            #     console.log 'dont'
+            # hours_value = "escalation_#{incident.level}_hours"
+            hours_value = incidents_office["escalation_#{incident.level}_hours"]
+            console.log 'hours',hours_value*3600000
+            console.log 'plus time',incident.last_updated_datetime+=hours_value*3600000
+            console.log 'diff', difference
+            if difference < hours_value
+                console.log 'escalate'
+            else
+                console.log 'dont'
             # console.log 'the office', incidents_office
+            
