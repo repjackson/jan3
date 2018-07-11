@@ -1,32 +1,40 @@
 template(name='feed')
     .ui.padded.stackable.grid
-        .row
-            .four.wide.column
+        .centered.row
+            .ten.wide.column
                 h1.ui.header
                     +iconlarge name='rss'
                     | Feed
-                h5.ui.header Global Events
-            .twelve.wide.column
-                .ui.feed
-                    each feed_events
-                        +feed_event
+        .row
+            .sixteen.wide.column
+                +reactiveTable settings=settings class="ui celled striped sortable table"
                         
                         
-template(name='feed_event')
-    .event
-        .label
-            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-        .content
-            .summary
-                a.user #{author.username}
-                |#{action} #{text}
-                a(href="/view/#{parent._id}") #{parent.title}
-                .date #{when}
-            .meta
-                +mark_read_link
-                if is_dev
-                    i.remove_event.remove.link.icon
-                    
+template(name='event_view')
+    .ui.padded.stackable.grid
+        .centered.row
+            .three.wide.column
+                +link_button link='/feed' label='Feed' icon='rss'
+            .ten.wide.column
+                h1.ui.header
+                    +iconlarge name='rss'
+                    | Event View
+        .centered.row
+            .ten.wide.column
+                .event
+                    .label
+                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    .content
+                        .summary
+                            a.user #{author.username}
+                            |#{action} #{text}
+                            a(href="/view/#{parent._id}") #{parent.title}
+                            .date #{when}
+                        .meta
+                            +mark_read_link
+                            if is_dev
+                                i.remove_event.remove.link.icon
+                                
                     
 template(name='users_feed')
     h1.ui.header

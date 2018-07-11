@@ -358,8 +358,8 @@ Meteor.methods
       
       
     update_escalation_statuses: ->
-        incident_cursor = Docs.find({type:'incident'}, limit:2)
-        # console.log incident_cursor.count()
+        incident_cursor = Docs.find({type:'incident'})
+        console.log incident_cursor.count()
         for incident in incident_cursor.fetch()
             # console.log incident.level
             # console.log incident.timestamp
@@ -378,19 +378,22 @@ Meteor.methods
             # console.log 'plus time',incident.last_updated_datetime+=hours_value*60000
             # console.log 'diff', difference
             # console.log 'escalating incident'
-            Meteor.call 'escalate_incident', incident._id, ->
-                
-            # if difference < hours_value
-            #     console.log 'escalate'
-            # else
-            #     console.log 'dont'
-            # console.log 'the office', incidents_office
+            if incident.level is 2
+                console.log 'found incident level two, escalating'
+                Meteor.call 'escalate_incident', incident._id, ->
+            else continue    
+            
+                # if difference < hours_value
+                #     console.log 'escalate'
+                # else
+                #     console.log 'dont'
+                # console.log 'the office', incidents_office
             
             
     escalate_incident: (doc_id)-> 
         incident = Docs.findOne doc_id
         current_level = incident.level
-        console.log 'escalating', doc_id
+        console.log 'escalating doc id from two', doc_id
         Docs.update doc_id,
-            $inc:level:1
+            $set:level:3
         Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{current_level+1}."

@@ -170,7 +170,7 @@ template(name='mark_read_link')
                 
 template(name='read_by_list')
     if read_by.count
-        .ui.dividing.header
+        h5.ui.dividing.header
             |Read by... 
             span.floated.right (#{read_by.count})
         .ui.divided.list

@@ -7,6 +7,8 @@ template(name='author_info')
         // +staus_indicator
     // .ui.sub.header #{when}
 
+template(name='when_template')
+    |#{when}
 
 template(name='list_item')
     .item
@@ -120,7 +122,7 @@ template(name='parent_segment')
         +view_button
 
 template(name='parent_link')
-    with parent
+    with parent_doc
         a.ui.button(href="/view/#{_id}") 
             i.chevron.up.icon
             if image_url

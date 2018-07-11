@@ -12,11 +12,20 @@ Cloudinary.config
     api_secret: Meteor.settings.cloudinary_secret
 
 
+SyncedCron.config
+    log: true
+    logger: null
+    collectionName: 'cron_history'
+    utc: false
+    collectionTTL: 172800
+
+
+
 SyncedCron.add
     name: 'Update incident escalations'
     schedule: (parser) ->
         # parser is a later.parse object
-        parser.text 'every 1 minute'
+        parser.text 'every 5 minutes'
     job: -> 
         Meteor.call 'update_escalation_statuses', (err,res)->
             if err then console.log err

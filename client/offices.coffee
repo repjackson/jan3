@@ -81,7 +81,7 @@ Template.office_customers.helpers
             { key: 'ev.CUST_NAME', label: 'Customer Name' }
             { key: 'ev.ID', label: 'JPID' }
             { key: 'ev.FRANCHISEE', label: 'Franchisee' }
-            # { key: 'ev.MASTER_LICENSEE', label: 'Master Licensee' }
+            { key: 'ev.MASTER_LICENSEE', label: 'Master Licensee' }
             { key: 'ev.CUST_CONT_PERSON', label: 'Contact Person' }
             { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
             { key: 'ev.TELEPHONE', label: 'Telephone' }
@@ -105,7 +105,7 @@ Template.office_incidents.helpers
         showNavigation: 'auto'
         # showColumnToggles: true
         fields: [
-            # { key: 'incident_office_name', label: 'Office' }
+            { key: 'incident_office_name', label: 'Office' }
             { key: 'customer_name', label: 'Customer' }
             { key: 'when', label: 'Logged'}
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
@@ -166,6 +166,6 @@ Template.office_franchisees.helpers
             { key: 'ev.FRANCH_EMAIL', label: 'Email' }
             { key: 'ev.FRANCH_NAME', label: 'Short Name' }
             { key: 'ev.TELE_CELL', label: 'Phone' }
-            # { key: 'ev.MASTER_LICENSEE', label: 'Office' }
+            { key: 'ev.MASTER_LICENSEE', label: 'Office' }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]

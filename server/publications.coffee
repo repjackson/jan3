@@ -22,6 +22,7 @@ Meteor.publish 'users_feed', (username)->
 
 ReactiveTable.publish 'all_users', Meteor.users,'', {disablePageCountReactivity:true}
 ReactiveTable.publish 'customers', Docs, {type:'customer'}, {disablePageCountReactivity:true}
+ReactiveTable.publish 'events', Docs, {type:'event'}, {disablePageCountReactivity:false}
 ReactiveTable.publish 'franchisees', Docs, {type:'franchisee'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'incidents', Docs, {type:'incident'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'offices', Docs, {type:'office'}, {disablePageCountReactivity:true}
@@ -132,27 +133,27 @@ Meteor.publish 'office_customers', (office_doc_id)->
     Docs.find {
         "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
         type: "customer"
-    }, limit:100
+    }
 
 Meteor.publish 'office_incidents', (office_doc_id)->    
     office_doc = Docs.findOne office_doc_id
     Docs.find {
         incident_office_name: office_doc.ev.MASTER_LICENSEE
         type: "incident"
-    }, limit:100
+    }
     
 Meteor.publish 'office_franchisees', (office_doc_id)->    
     office_doc = Docs.findOne office_doc_id
     Docs.find {
         type: "franchisee"
         "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
-    }, limit:100
+    }
     
 Meteor.publish 'office_employees', (office_doc_id)->    
     office_doc = Docs.findOne office_doc_id
     Meteor.users.find {
         "profile.office_name": office_doc.ev.MASTER_LICENSEE
-    }, limit:100
+    }
     
     
 Meteor.publish 'my_conversations', ->
@@ -200,8 +201,7 @@ publishComposite 'incidents', (level)->
             # match.current_level = parseInt(level)
             match.type = 'incident'
             # console.log match
-            Docs.find match,
-                limit:20
+            Docs.find match
         children: [
             {
                 find: (doc)-> Meteor.users.find _id:doc.author_id
