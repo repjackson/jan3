@@ -239,6 +239,7 @@ Meteor.methods
         
         
     create_event: (parent_id, event_type, action)->
+        console.log "creating event with parent_id #{parent_id} of type: #{event_type} and action #{action}"
         Docs.insert
             type:'event'
             parent_id: parent_id
@@ -357,8 +358,8 @@ Meteor.methods
       
       
     update_escalation_statuses: ->
-        incident_cursor = Docs.find(type:'incident')
-        console.log incident_cursor.count()
+        incident_cursor = Docs.find({type:'incident'}, limit:2)
+        # console.log incident_cursor.count()
         for incident in incident_cursor.fetch()
             # console.log incident.level
             # console.log incident.timestamp
@@ -373,12 +374,23 @@ Meteor.methods
             # console.log 'level',incident.level
             # hours_value = "escalation_#{incident.level}_hours"
             hours_value = incidents_office["escalation_#{incident.level}_hours"]
-            console.log 'hours',hours_value*3600000
-            console.log 'plus time',incident.last_updated_datetime+=hours_value*3600000
-            console.log 'diff', difference
-            if difference < hours_value
-                console.log 'escalate'
-            else
-                console.log 'dont'
+            # console.log 'minutes',hours_value*60000
+            # console.log 'plus time',incident.last_updated_datetime+=hours_value*60000
+            # console.log 'diff', difference
+            # console.log 'escalating incident'
+            Meteor.call 'escalate_incident', incident._id, ->
+                
+            # if difference < hours_value
+            #     console.log 'escalate'
+            # else
+            #     console.log 'dont'
             # console.log 'the office', incidents_office
             
+            
+    escalate_incident: (doc_id)-> 
+        incident = Docs.findOne doc_id
+        current_level = incident.level
+        console.log 'escalating', doc_id
+        Docs.update doc_id,
+            $inc:level:1
+        Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{current_level+1}."
