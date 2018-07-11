@@ -127,19 +127,26 @@ template(name='customer_incidents_widget')
                     td #{incident_details}
                     td #{level}
                     td 
-                        if open
-                            .ui.basic.label Open
-                        else
-                            .ui.label Closed
+                        +status_template
                     td 
-                        if submitted
-                            .ui.basic.label Submitted
-                        else
-                            .ui.label Not Submitted
+                        +submitted_template
                     td
                         +small_doc_history
                     td 
                         +view_button
+
+template(name='status_template')
+    if open
+        .ui.basic.label Open
+    else
+        .ui.label Closed
+
+template(name='submitted_template')
+    if submitted
+        .ui.basic.label Submitted
+    else
+        .ui.label Not Submitted
+
 
 
 template(name='customer_special_services')

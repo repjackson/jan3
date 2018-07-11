@@ -108,21 +108,21 @@ Meteor.publish 'has_key_value', (key, value)->
         
 # admin counters        
         
-Meteor.publish 'office_counter_publication', ->
-    Counts.publish this, 'office_counter', Docs.find({type:'office'})
-    return undefined
+# Meteor.publish 'office_counter_publication', ->
+#     Counts.publish this, 'office_counter', Docs.find({type:'office'})
+#     return undefined
     
-Meteor.publish 'incident_counter_publication', ->
-    Counts.publish this, 'incident_counter', Docs.find({type:'incident'})
-    return undefined
+# Meteor.publish 'incident_counter_publication', ->
+#     Counts.publish this, 'incident_counter', Docs.find({type:'incident'})
+#     return undefined
         
-Meteor.publish 'franchisee_counter_publication', ->
-    Counts.publish this, 'franchisee_counter', Docs.find({type:'franchisee'})
-    return undefined
+# Meteor.publish 'franchisee_counter_publication', ->
+#     Counts.publish this, 'franchisee_counter', Docs.find({type:'franchisee'})
+#     return undefined
         
-Meteor.publish 'customer_counter_publication', ->
-    Counts.publish this, 'customer_counter', Docs.find({type:'customer'})
-    return undefined
+# Meteor.publish 'customer_counter_publication', ->
+#     Counts.publish this, 'customer_counter', Docs.find({type:'customer'})
+#     return undefined
         
         
         
@@ -134,6 +134,7 @@ Meteor.publish 'office_customers', (office_doc_id)->
         "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
         type: "customer"
     }
+# ReactiveTable.publish 'office_customers', Docs, {"ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE, type:"customer"}, {disablePageCountReactivity:true}
 
 Meteor.publish 'office_incidents', (office_doc_id)->    
     office_doc = Docs.findOne office_doc_id

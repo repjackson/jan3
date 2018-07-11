@@ -295,7 +295,7 @@ Template.parent_link.onCreated ->
     @autorun =>  Meteor.subscribe 'parent_doc', @data._id
 Template.parent_link.helpers
     parent_doc: ->
-        console.log Template.currentData()
+        # console.log Template.currentData()
         Docs.find 
             _id: Template.currentData().parent_id
         

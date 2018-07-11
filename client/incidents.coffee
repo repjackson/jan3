@@ -68,7 +68,9 @@ Template.incidents.helpers
             { key: 'customer_name', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
-            { key: 'timestamp', label: 'Logged' }
+            { key: 'timestamp', label: 'Logged', tmpl:Template.when_template}
+            { key: 'status', label: 'Status', tmpl:Template.status_template}
+            { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
             { key: '', label: 'Assigned To', tmpl:Template.associated_users }
@@ -93,6 +95,8 @@ Template.customer_incidents.helpers
             { key: 'when', label: 'Logged' }
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
+            { key: 'status', label: 'Status', tmpl:Template.status_template}
+            { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
             { key: '', label: 'Assigned To', tmpl:Template.associated_users }
             { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
             { key: '', label: 'View', tmpl:Template.view_button }
@@ -116,10 +120,10 @@ Template.incident_view.events
             Docs.findOne
                 "ev.MASTER_LICENSEE": incident.incident_office_name
                 type:'office'
-        # if incidents_office
-        #     escalation_minutes = incidents_office.escalation_1_hours
-        console.log incidents_office
-        Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to initial #{incident.incident_office_name} rules."
+        if incidents_office
+            escalation_minutes = incidents_office.escalation_1_hours
+            console.log incidents_office.escalation_1_hours
+            Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to initial #{incident.incident_office_name} rules."
         Docs.update doc_id,
             $set:
                 submitted:true

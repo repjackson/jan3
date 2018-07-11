@@ -64,14 +64,15 @@ Template.office_admin_section.helpers
         
     
 Template.office_customers.onCreated ->
-    @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id')
+    # @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id')
 Template.office_customers.helpers    
-    office_customers: ->  
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        Docs.find
-            type: "customer"
-            "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
+    # office_customers: ->  
+    #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    #     Docs.find
+    #         type: "customer"
+    #         "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
     settings: ->
+        collection:'office_customers'
         rowsPerPage: 10
         showFilter: true
         showRowCount: true
