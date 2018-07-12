@@ -20,32 +20,28 @@ template(name='office_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .three.wide.column
-                unless is_customer
+                if is_admin
                     +link_button link='/offices' icon='building' label='Offices'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header #{ev.MASTER_LICENSEE} Office
             .three.wide.right.aligned.column
                 // +edit_button
+        .centered.row
+            .sixteen.wide.center.aligned.column
+                .ui.horizontal.list
+                    .item ##{ev.ID}
+                    // .item Office Name
+                    //     strong #{ev.MASTER_LICENSEE}
+                    .item Owner
+                        strong #{ev.MASTER_OFFICE_OWNER}
+                    .item Manager
+                        strong #{ev.MASTER_OFFICE_MANAGER}
+                    // .item Last Updated
+                    //     strong #{ev.TIMESTAMP}
+                    .item #{ev.TELEPHONE}
+                    .item #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
         .row
             .sixteen.wide.column
-                .ui.secondary.segment
-                    .ui.horizontal.list
-                        .item
-                            strong ##{ev.ID}
-                        // .item Office Name
-                        //     strong #{ev.MASTER_LICENSEE}
-                        .item Manager
-                            strong #{ev.MASTER_OFFICE_MANAGER}
-                        .item Owner
-                            strong #{ev.MASTER_OFFICE_OWNER}
-                        // .item Last Updated
-                        //     strong #{ev.TIMESTAMP}
-                        .item
-                            i.phone.icon
-                            strong #{ev.TELEPHONE}
-                        .item 
-                            i.location.icon
-                            strong #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                 unless is_customer 
                     +office_admin_section
 
@@ -53,37 +49,42 @@ template(name='office_view')
 template(name='office_admin_section')
     .ui.top.attached.tabular.five.item.stackable.menu
         a.active.item(data-tab='incidents') 
-            +icon name='error'
+            i.large.icon
+                +icon name='error'
             | &nbsp; Incidents
         a.item(data-tab='employees') 
-            +icon name='groups'
+            i.large.icon
+                +icon name='groups'
             | &nbsp; Employees
         a.item(data-tab='franchisees') 
-            +icon name='conference'
+            i.large.icon
+                +icon name='conference'
             | &nbsp; Franchisees
         a.item(data-tab='customers') 
-            +icon name='customer-support'
+            i.large.icon
+                +icon name='customer-support'
             | &nbsp; Customers
         a.item(data-tab='office_settings') 
-            +icon name='settings'
+            i.large.icon
+                +icon name='settings'
             | &nbsp; Settings
     .ui.bottom.attached.tab.segment(data-tab='franchisees')
-        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Franchisees
+        // .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Franchisees
         +office_franchisees
     .ui.bottom.attached.active.tab.segment(data-tab='incidents')
-        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Incidents
+        // .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Incidents
         +office_incidents
 
     .ui.bottom.attached.tab.segment(data-tab='employees')
-        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Employees
+        // .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Employees
         +office_employees
     .ui.bottom.attached.tab.segment(data-tab='customers')
-        .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Customers
+        // .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Customers
         +office_customers
     .ui.bottom.attached.tab.segment(data-tab='office_settings')
-        h2.ui.header 
-            +icon name='sms'
-            | Customer Message
+        // h2.ui.header 
+        //     +icon name='sms'
+        //     | Customer Message
         // .ui.sub.header Shown on customer dashboard
         +edit_text_field key='customer_message' label='Customer Dashboard Message'
         // p #{customer_message}
@@ -95,51 +96,52 @@ template(name='office_admin_section')
         //         +single_user_select key='office_owner' label='Office Owner'
         //     .column
         //         +single_user_select key='operations_manager' label='Operations Manager'
-        h2.ui.header 
+        h3.ui.header 
             +icon name='administrative-tools'
-            |SLA Settings
+            |SLA
         // h3.ui.header Initial
         // p ie type=level2
         each rule_docs
-            h3.ui.dividing.header #{name}
-            .ui.two.column.padded.grid
-                .row
-                    +edit_number_field key=hours_key label='Escalation Hours (currently minutes for testing)' field_class='inline' min=0 max=24
-                .row
-                    .column
-                        h4.ui.dividing.header Primary Contact
-                        +toggle_boolean_checkbox key=primary_franchisee_toggle_key label='Franchisee'
-                        +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
-                        // .ui.two.column.stackable.grid
-                        //     .row
-                        //         .column
-                        //             .ui.form
-                        //                 .grouped.fields
-                        //                     +toggle_boolean_checkbox key=primary_franchisee_toggle_key label='Franchisee'
-                        //                     +radio_item key=primary_contact_key label='Office Owner' value='office_owner'
-                        //                     +radio_item key=primary_contact_key label='Operations Manager' value='operations_manager'
-                        //                     +radio_item key=primary_contact_key label='Individual' value='individual'
-                        //         .column
-                        //             +view_sla_contact key=primary_contact_key
-                        //             if is_primary_indivdual
-                                        +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
-                    .column
-                        h4.ui.dividing.header Secondary Contact
-                        +toggle_boolean_checkbox key=secondary_franchisee_toggle_key label='Franchisee'
-                        +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
-                        // .ui.two.column.stackable.grid
-                        //     .row
-                        //         .column
-                        //             .ui.form
-                        //                 .grouped.fields
-                        //                     +toggle_boolean_checkbox key=secondary_franchisee_toggle_key label='Franchisee'
-                        //                     +radio_item key=secondary_contact_key label='Office Owner' value='office_owner'
-                        //                     +radio_item key=secondary_contact_key label='Operations Manager' value='operations_manager'
-                        //                     +radio_item key=secondary_contact_key label='Individual' value='individual'
-                        //         .column
-                        //             +view_sla_contact key=secondary_contact_key
-                        //             if is_secondary_indivdual
-                        //                 +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
+            .ui.secondary.segment
+                h3.ui.header #{name}
+                .ui.two.column.padded.grid
+                    .row
+                        +edit_number_field key=hours_key label='Escalation Hours (currently minutes for testing)' field_class='inline' min=0 max=24
+                    .row
+                        .column
+                            h4.ui.dividing.header Primary Contact
+                            +toggle_boolean_checkbox key=primary_franchisee_toggle_key label='Franchisee'
+                            +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
+                            // .ui.two.column.stackable.grid
+                            //     .row
+                            //         .column
+                            //             .ui.form
+                            //                 .grouped.fields
+                            //                     +toggle_boolean_checkbox key=primary_franchisee_toggle_key label='Franchisee'
+                            //                     +radio_item key=primary_contact_key label='Office Owner' value='office_owner'
+                            //                     +radio_item key=primary_contact_key label='Operations Manager' value='operations_manager'
+                            //                     +radio_item key=primary_contact_key label='Individual' value='individual'
+                            //         .column
+                            //             +view_sla_contact key=primary_contact_key
+                            //             if is_primary_indivdual
+                                            +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
+                        .column
+                            h4.ui.dividing.header Secondary Contact
+                            +toggle_boolean_checkbox key=secondary_franchisee_toggle_key label='Franchisee'
+                            +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
+                            // .ui.two.column.stackable.grid
+                            //     .row
+                            //         .column
+                            //             .ui.form
+                            //                 .grouped.fields
+                            //                     +toggle_boolean_checkbox key=secondary_franchisee_toggle_key label='Franchisee'
+                            //                     +radio_item key=secondary_contact_key label='Office Owner' value='office_owner'
+                            //                     +radio_item key=secondary_contact_key label='Operations Manager' value='operations_manager'
+                            //                     +radio_item key=secondary_contact_key label='Individual' value='individual'
+                            //         .column
+                            //             +view_sla_contact key=secondary_contact_key
+                            //             if is_secondary_indivdual
+                            //                 +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
 
 
 template(name='office_customers')
