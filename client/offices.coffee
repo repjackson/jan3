@@ -29,8 +29,8 @@ Template.office_admin_section.onRendered ->
     # , 500
 
     
-Template.office_view.onCreated ->
-    @autorun -> Meteor.subscribe 'office', FlowRouter.getParam('doc_id')
+# Template.office_view.onCreated ->
+#     @autorun -> Meteor.subscribe 'office', FlowRouter.getParam('doc_id')
 Template.office_admin_section.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'rule'
 
@@ -64,6 +64,12 @@ Template.office_admin_section.helpers
         
     
 Template.office_customers.onCreated ->
+    # Template.filter = new ReactiveTable.Filter('office', ["ev.MASTER_LICENSEE"])
+    Template.filter = new ReactiveTable.Filter('office_customers', ["ev.MASTER_LICENSEE"])
+    page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    ReactiveTable.Filter('office_customers').set(page_office.ev.MASTER_LICENSEE)
+
+
     # @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id')
 Template.office_customers.helpers    
     # office_customers: ->  
@@ -72,12 +78,13 @@ Template.office_customers.helpers
     #         type: "customer"
     #         "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
     settings: ->
-        collection:'office_customers'
+        collection:'customers'
         rowsPerPage: 10
         showFilter: true
         showRowCount: true
         showNavigation: 'auto'
         # showColumnToggles: true
+        filters: ['office_customers'],
         fields: [
             { key: 'ev.CUST_NAME', label: 'Customer Name' }
             { key: 'ev.ID', label: 'JPID' }
@@ -92,18 +99,24 @@ Template.office_customers.helpers
 
 
 Template.office_incidents.onCreated ->
-    @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id')
+    # @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id')
+    Template.filter = new ReactiveTable.Filter('office_incidents', ["incident_office_name"])
+    page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    ReactiveTable.Filter('office_incidents').set(page_office.ev.MASTER_LICENSEE)
+
 Template.office_incidents.helpers    
-    office_incidents: ->  
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        Docs.find
-            incident_office_name: page_office.ev.MASTER_LICENSEE
-            type: "incident"
+    # office_incidents: ->  
+    #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    #     Docs.find
+    #         incident_office_name: page_office.ev.MASTER_LICENSEE
+    #         type: "incident"
     settings: ->
+        collection: 'incidents'
         rowsPerPage: 10
         showFilter: true
         showRowCount: true
         showNavigation: 'auto'
+        filters: ['office_incidents']
         # showColumnToggles: true
         fields: [
             { key: 'incident_office_name', label: 'Office' }
@@ -121,6 +134,11 @@ Template.office_incidents.helpers
 
 Template.office_employees.onCreated ->
     @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('doc_id')
+    # Template.filter = new ReactiveTable.Filter('office_employees', ["profile.office_name"])
+    # page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    # console.log page_office.ev.MASTER_LICENSEE
+    # ReactiveTable.Filter('office_employees').set(page_office.ev.MASTER_LICENSEE)
+
 Template.office_employees.helpers    
     collection: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
@@ -128,6 +146,8 @@ Template.office_employees.helpers
         Meteor.users.find
             "profile.office_name": page_office.ev.MASTER_LICENSEE
     settings: ->
+        # collection: 'users'
+        # filters:['office_employees']
         rowsPerPage: 10
         showFilter: true
         showRowCount: true
@@ -140,7 +160,7 @@ Template.office_employees.helpers
             { key: 'ev.JOB_TITLE', label: 'Job Title' }
             { key: 'ev.WORK_TELEPHONE', label: 'Work Tel' }
             { key: 'email', label: 'Email' }
-            { key: '', label: 'Publicize', tmpl:Template.toggle_user_published }
+            { key: '', label: 'Public', tmpl:Template.toggle_user_published }
             { key: '', label: 'Edit', tmpl:Template.edit_user_button }
             { key: '', label: 'View', tmpl:Template.view_user_button }
         ]
@@ -149,17 +169,23 @@ Template.office_employees.helpers
 
 
 Template.office_franchisees.onCreated ->
-    @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id')
+    # @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id')
+    Template.filter = new ReactiveTable.Filter('office_franchisees', ["ev.MASTER_LICENSEE"])
+    page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    ReactiveTable.Filter('office_franchisees').set(page_office.ev.MASTER_LICENSEE)
+
 Template.office_franchisees.helpers    
-    office_franchisees_obs: ->  
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        Docs.find
-            type: "franchisee"
-            "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
+    # office_franchisees_obs: ->  
+    #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    #     Docs.find
+    #         type: "franchisee"
+    #         "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
     settings: ->
+        collection:'franchisees'
         rowsPerPage: 10
         showFilter: true
         showRowCount: true
+        filters:['office_franchisees']
         # showColumnToggles: true
         fields: [
             { key: 'ev.ID', label: 'JPID' }

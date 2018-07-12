@@ -6,12 +6,12 @@ FlowRouter.route '/users', action: (params) ->
 
 
 Template.users.onCreated ->
-    @autorun -> Meteor.subscribe 'all_users'
+    # @autorun -> Meteor.subscribe 'all_users'
 
 
 Template.users.helpers
     settings: ->
-        collection: 'all_users'
+        collection: 'users'
         rowsPerPage: 50
         showFilter: true
         # showColumnToggles: true

@@ -29,20 +29,22 @@ template(name='office_view')
         .row
             .sixteen.wide.column
                 .ui.secondary.segment
-                    .ui.list
-                        .item ID
-                            strong #{ev.ID}
-                        .item Office Name
-                            strong #{ev.MASTER_LICENSEE}
-                        .item Office Manager
+                    .ui.horizontal.list
+                        .item
+                            strong ##{ev.ID}
+                        // .item Office Name
+                        //     strong #{ev.MASTER_LICENSEE}
+                        .item Manager
                             strong #{ev.MASTER_OFFICE_MANAGER}
-                        .item Office Owner
+                        .item Owner
                             strong #{ev.MASTER_OFFICE_OWNER}
-                        .item Last Updated
-                            strong #{ev.TIMESTAMP}
-                        .item Phone
+                        // .item Last Updated
+                        //     strong #{ev.TIMESTAMP}
+                        .item
+                            i.phone.icon
                             strong #{ev.TELEPHONE}
-                        .item Address 
+                        .item 
+                            i.location.icon
                             strong #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                 unless is_customer 
                     +office_admin_section
@@ -141,15 +143,15 @@ template(name='office_admin_section')
 
 
 template(name='office_customers')
-    +reactiveTable settings=settings collection=office_customers class="ui celled striped sortable table"
+    +reactiveTable settings=settings class="ui celled striped sortable table"
 
 template(name='office_incidents')
-    +reactiveTable settings=settings collection=office_incidents class="ui celled striped sortable table"
+    +reactiveTable settings=settings class="ui celled striped sortable table"
 
 
 template(name='office_employees')
     +reactiveTable settings=settings collection=collection class="ui celled striped sortable table"
 
 template(name='office_franchisees')
-    +reactiveTable settings=settings collection=office_franchisees_obs class="ui celled striped sortable table"
+    +reactiveTable settings=settings class="ui celled striped sortable table"
 

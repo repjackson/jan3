@@ -10,6 +10,7 @@ template(name='incidents')
             .three.wide.column
         .row
             .sixteen.wide.column
+                +reactiveTableFilter id="myFilter" label="Filter"
                 +reactiveTable settings=settings class="ui celled striped sortable table"
 
 
@@ -18,9 +19,9 @@ template(name='incident_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
-                a.ui.icon.button(href='/customer_incidents' title='Save')
-                    i.icon
-                        +icon name='checkmark'
+                a.ui.button(href='/customer_incidents' title='Save')
+                    i.left.chevron.icon
+                    | My Incidents    
             .ten.wide.column
                 h1.ui.center.aligned.grey.header #{customer_name} Incident #{incident_number}
             .three.wide.column

@@ -81,13 +81,21 @@ template(name='left_sidebar')
                 img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 |#{currentUser.username}
     
-        a.header.toggle_left_sidebar.item(href='/') Dashboard
+        a.header.toggle_left_sidebar.item(href='/') 
+            |Dashboard
+            i.home.icon
         // a.toggle_left_sidebar.item(href='/front')
         //     i.globe.icon
         //     | Sales Page
-        a.toggle_left_sidebar.item(href='/users') Users
-        a.toggle_left_sidebar.item(href='/incidents') Incidents
-        a.toggle_left_sidebar.item(href='/offices') Offices
+        a.toggle_left_sidebar.item(href='/users') 
+            i.users.icon
+            |Users
+        a.toggle_left_sidebar.item(href='/incidents') 
+            i.alert.icon
+            |Incidents
+        a.toggle_left_sidebar.item(href='/offices') 
+            i.building.icon
+            |Offices
         // a.toggle_left_sidebar.item(href='/schedule')
         //     | Schedule
         // a.toggle_left_sidebar.item(href='/services')
@@ -96,10 +104,16 @@ template(name='left_sidebar')
         //     | Services
         a.toggle_left_sidebar.item(href='/franchisees') Franchisees
         a.toggle_left_sidebar.item(href='/customers') Customers
-        a.toggle_left_sidebar.item(href='/admin') Admin
-        a.toggle_left_sidebar.item(href='/feed') Feed
+        a.toggle_left_sidebar.item(href='/admin') 
+            i.user.shield.icon
+            |Admin
+        a.toggle_left_sidebar.item(href='/feed') 
+            i.rss.icon
+            |Feed
         .ui.divider
-        a.toggle_left_sidebar.item(href='/roles') Roles
+        a.toggle_left_sidebar.item(href='/roles') 
+            i.rules.icon
+            |Roles
         a.toggle_left_sidebar.item(href='/rules') SLA Rules
 
         //     // a.icon.item(href='/dashboard' data-position="right center" data-content='Charts')

@@ -64,11 +64,12 @@ Template.incidents.helpers
         showFilter: true
         showRowCount: true
         # showColumnToggles: true
+        filters: ['myFilter']
         fields: [
             { key: 'customer_name', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
-            { key: 'timestamp', label: 'Logged', tmpl:Template.when_template}
+            { key: 'timestamp', label: 'Logged', tmpl:Template.when_template, sortOrder:0, sortDirection:'descending' }
             { key: 'status', label: 'Status', tmpl:Template.status_template}
             { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
             { key: 'incident_details', label: 'Details' }

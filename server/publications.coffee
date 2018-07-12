@@ -20,7 +20,7 @@ Meteor.publish 'users_feed', (username)->
 #     Meteor.users.find {},
 #         limit: 20
 
-ReactiveTable.publish 'all_users', Meteor.users,'', {disablePageCountReactivity:true}
+ReactiveTable.publish 'users', Meteor.users,'', {disablePageCountReactivity:true}
 ReactiveTable.publish 'customers', Docs, {type:'customer'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'events', Docs, {type:'event'}, {disablePageCountReactivity:false}
 ReactiveTable.publish 'franchisees', Docs, {type:'franchisee'}, {disablePageCountReactivity:true}
