@@ -37,8 +37,9 @@ template(name='incident_view')
                 // if is_dev
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
-                unless submitted
-                    +edit_datetime_field key='service_date' label='Service Date/Time' icon='leave'
+                if can_edit_core
+                    // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
+                    +edit_datetime_field key='service_date' label='Service Time'
                 else
                     .ui.secondary.segment
                         .ui.header 
@@ -46,7 +47,8 @@ template(name='incident_view')
                             |Date
                         h5 #{service_date}
                 unless is_customer
-                    +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
+                    // +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
+                    +single_doc_view type='customer' key='customer_jpid' label='Customer'
                     +user_card
                 if submitted
                     .ui.secondary.segment
@@ -59,18 +61,18 @@ template(name='incident_view')
                             |Create Related Ticket
 
             .eight.wide.column
-                unless submitted
+                if can_edit_core
                     +edit_textarea label='Incident Details' key='incident_details' icon='view-details'
                 else
                     .ui.basic.segment
                         // +icon name='view-details'
                         .large130 #{incident_details}
-                unless submitted
+                if can_edit_core
                     +edit_image_field
                 else
                     if image_id
                         img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                if submitted
+                unless can_edit_core
                     +comments
                     +full_doc_history
                 else
@@ -81,10 +83,11 @@ template(name='incident_view')
                         each incident_type_docs
                             +toggle_key key='incident_type' value=slug label=name
                 unless is_customer
-                    .ui.header Incident SLA Rules List (Current Level: #{level})
+                    .ui.header Incident SLA Rules List 
+                        // small (Current Level: #{level})
                     +incident_sla_widget
             .four.wide.column
-                if can_submit
+                if can_edit_core
                     if submitted
                         .ui.disabled.button
                             |Submitted {{reg_format submitted_datetime}}
@@ -93,11 +96,12 @@ template(name='incident_view')
                                 i.user.shield.icon
                                 |Unsubmit
                     else
-                        .submit.ui.fluid.button
+                        .submit.ui.fluid.large.button
                             i.green.checkmark.icon
                             |Submit
                 else
-                    .ui.secondary.segment Fill Date, Details, and Type to Submit
+                    if is_customer
+                        .ui.secondary.segment Fill Date, Details, and Type to Submit
                 if submitted
                     .ui.secondary.segment
                         .ui.dividing.header Incident Type

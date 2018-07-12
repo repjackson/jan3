@@ -111,7 +111,26 @@ Template.incident_view.onCreated ->
 
 Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
-    can_submit: -> @service_date and @incident_details and @incident_type
+    can_submit: -> 
+        user = Meteor.user()
+        is_customer = user and user.roles and 'customer' in user.roles
+        @service_date and @incident_details and @incident_type and is_customer
+    
+    can_edit_core: ->
+        user = Meteor.user()
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        if user and user.roles and 'customer' in user.roles
+            # console.log 'right type o guy'
+            if incident.submitted is true
+                return true
+                # console.log 'incident submitted, user is customer'
+            else
+                # console.log 'incident isnt submitted'
+                return false
+        else
+            return false
+    
 Template.incident_view.events
     'click .submit': -> 
         doc_id = FlowRouter.getParam('doc_id')
