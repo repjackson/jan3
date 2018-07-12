@@ -23,14 +23,15 @@ Template.footer.events
         Session.set 'bug_link', window.location.pathname
         $('.ui.report.modal').modal(
             inverted: true
-            transition: 'vertical flip'
+            # transition: 'vertical flip'
             # observeChanges: true
             duration: 500
             onApprove : ()->
                 val = $("#bug_description").val()
-                # window.alert val
+                window.alert val
+                console.log val
                 Docs.insert
-                    type: 'bug_report'
+                    type: 'bug'
                     complete: false
                     body: val
                     link: window.location.pathname

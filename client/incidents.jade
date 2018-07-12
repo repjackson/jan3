@@ -19,9 +19,12 @@ template(name='incident_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
-                a.ui.button(href='/customer_incidents' title='Save')
-                    i.left.chevron.icon
-                    | My Incidents    
+                if is_customer
+                    a.ui.button(href='/customer_incidents' title='Save')
+                        i.left.chevron.icon
+                        | My Incidents    
+                else
+                    +link_button link='/incidents' icon='user-shield' label='All Incidents'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header #{customer_name} Incident #{incident_number}
             .three.wide.column
@@ -44,6 +47,7 @@ template(name='incident_view')
                         h5 #{service_date}
                 unless is_customer
                     +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
+                    +user_card
                 if submitted
                     .ui.secondary.segment
                         .ui.header Status
@@ -86,7 +90,7 @@ template(name='incident_view')
                             |Submitted {{reg_format submitted_datetime}}
                         if is_admin
                             .unsubmit.ui.fluid.button
-                                i.undo.icon
+                                i.user.shield.icon
                                 |Unsubmit
                     else
                         .submit.ui.fluid.button
@@ -133,8 +137,9 @@ template(name='incident_tasks')
     .ui.header
         +icon name='to-do'
         |Incident Tasks
-    a#add_incident_task.ui.icon.button(title='Add Task' href='#')
-        i.plus.icon
+        |&nbsp;
+        small 
+            a#add_incident_task(href='#') add
     .ui.divided.list
         each incident_tasks
             .large.item
@@ -219,7 +224,7 @@ template(name='customer_incidents')
 template(name='add_incident_button')
     if has_user_customer_jpid
         a.ui.icon.button#add_incident(href='#')
-            i.plus.icon
+            i.large.green.plus.icon
     else
         .ui.secondary.segment Add Office to Profile to Add Incident
 

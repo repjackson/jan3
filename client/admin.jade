@@ -105,10 +105,7 @@ template(name='bugs')
 template(name='bug_card')
     .ui.card
         .content
-            a.grey.header(href="/view/#{_id}")
-                |#{name} 
-        .content
-            |!{description}
+            |#{body}
         .content
             +edit_button
             +view_button

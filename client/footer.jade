@@ -13,9 +13,9 @@ template(name='footer')
                     //     .sitemap_list.item Legal/ Privacy Policy
                     //     .sitemap_list.item demo login: demo/password
                     +role_switcher
-                    // .ui.hidden.divider
-                    // #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report a Bug/Feature Request")
-                    //     i.bug.icon
+                    .ui.hidden.divider
+                    #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
+                        i.bug.icon
 
                 .four.wide.column
                     if is_customer
@@ -33,21 +33,18 @@ template(name='footer')
         
         
     .ui.basic.small.report.modal
-        h1.ui.center.aligned.header
-            | Report Bug/ Feature Request
-        h3.ui.center.aligned.header Current Page: #{bug_link}
+        h3.ui.center.aligned.header
+            | Report Bug on #{bug_link}
         .content
             .ui.fluid.input
-                input#bug_description(type='text' placeholder='Description...')
+                input#bug_description(type='text')
         .actions
-            .ui.cancel.basic.button
+            .ui.cancel.button
                 // i.remove.icon
                 | Cancel
             // if can_submit_bug
-            .ui.green.ok.ok_button.button
-                // i.checkmark.icon
-                // +icon24 name='checkmark' classes='ui avatar image'
-                | Submit
+            .ui.green.ok.ok_button.large.icon.button
+                i.checkmark.large.icon
         
         
 template(name='role_switcher')

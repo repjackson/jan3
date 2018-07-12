@@ -468,11 +468,12 @@ template(name='user_pill')
 
 template(name='full_doc_history')
     .ui.secondary.segment
+        if is_admin
+            #clear_events.ui.top.right.attached.label
+                i.remove.icon(title='Clear')
         .ui.header 
             +icon name='clock'
             |History
-        if is_admin
-            i#clear_events.remove.icon(title='Clear')
         .ui.feed
             each doc_history_events
                 .event
@@ -588,3 +589,11 @@ template(name='subscribe_button')
                 +icon48 name='unchecked-checkbox' classes='ui mini inline image'
                 |Not Subscribed
             
+            
+template(name='user_card')
+    .ui.secondary.segment
+        .ui.header Creator
+        with author
+            img.ui.small.rounded.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            h4 
+                a(href="/user/#{username}") #{username}

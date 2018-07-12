@@ -64,7 +64,7 @@ Template.incidents.helpers
         showFilter: true
         showRowCount: true
         # showColumnToggles: true
-        filters: ['myFilter']
+        # filters: ['myFilter']
         fields: [
             { key: 'customer_name', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
@@ -74,7 +74,7 @@ Template.incidents.helpers
             { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
-            { key: '', label: 'Assigned To', tmpl:Template.associated_users }
+            # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
             { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
@@ -124,7 +124,8 @@ Template.incident_view.events
         if incidents_office
             escalation_minutes = incidents_office.escalation_1_hours
             console.log incidents_office.escalation_1_hours
-            Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to initial #{incident.incident_office_name} rules."
+            Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} rules."
+            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incident_office.initial_primary_contact} and #{incident_office.initial_secondary_contact} have been notified per #{incident.incident_office_name} rules."
         Docs.update doc_id,
             $set:
                 submitted:true

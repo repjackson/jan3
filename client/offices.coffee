@@ -19,6 +19,13 @@ Template.offices.helpers
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
 
+Template.office_view.helpers
+    office_map_address: ->
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        encoded_address = encodeURIComponent "#{page_office.ev.ADDR_STREET} #{page_office.ev.ADDR_STREET_2} #{page_office.ev.ADDR_CITY},#{page_office.ev.ADDR_STATE} #{page_office.ev.ADDR_POSTAL_CODE} #{page_office.ev.MASTER_COUNTRY}"
+        # console.log encoded_address
+        "https://www.google.com/maps/search/?api=1&query=#{encoded_address}"
+
 
 Template.office_admin_section.onRendered ->
     Meteor.setTimeout ->
