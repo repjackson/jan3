@@ -17,7 +17,7 @@ SyncedCron.config
     logger: null
     collectionName: 'cron_history'
     utc: false
-    collectionTTL: 172800
+    collectionTTL: 17280
 
 
 
@@ -25,7 +25,7 @@ SyncedCron.add
     name: 'Update incident escalations'
     schedule: (parser) ->
         # parser is a later.parse object
-        parser.text 'every 5 minutes'
+        parser.text 'every 10 minutes'
     job: -> 
         Meteor.call 'update_escalation_statuses', (err,res)->
             if err then console.log err
@@ -38,8 +38,8 @@ SyncedCron.start()
     
     
 Docs.allow
-    insert: (user_id, doc) -> true
+    insert: (user_id, doc) -> user_id
     # update: (user_id, doc) -> doc.author_id is user_id or Roles.userIsInRole(user_id, 'admin')
     # remove: (user_id, doc) -> doc.author_id is user_id or Roles.userIsInRole(user_id, 'admin')
-    update: (user_id, doc) -> true
-    remove: (user_id, doc) -> 'admin' in Meteor.user().roles
+    update: (user_id, doc) -> 'admin' in Meteor.user().roles or doc.author_id is user_id
+    remove: (user_id, doc) -> 'admin' in Meteor.user().roles or doc.author_id is user_id

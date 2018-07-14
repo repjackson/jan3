@@ -370,15 +370,18 @@ Meteor.methods
                     "ev.MASTER_LICENSEE": incident.incident_office_name
                     type:'office'
             difference = now - (incident.last_updated_datetime+=hours_value*60*60)
+            console.log 'office doc', incidents_office
             console.log 'difference', difference
             console.log 'level',incident.level
-            # hours_value = "escalation_#{incident.level}_hours"
+            console.log "escalation_#{incident.level}_hours"
             hours_value = incidents_office["escalation_#{incident.level}_hours"]
-            console.log 'minutes',hours_value*60000
+            console.log 'hours value',hours_value
+            console.log 'hours value in minutes',hours_value*60000
+            console.log 'incident last update', incident.last_updated_datetime
             console.log 'plus time',incident.last_updated_datetime+=hours_value*60000
             console.log 'diff', difference
             # console.log 'escalating incident'
-            if difference < 0
+            if difference > 0
                 console.log 'open incident has not passed esclation time'
                 continue
             else    
@@ -395,7 +398,15 @@ Meteor.methods
     escalate_incident: (doc_id)-> 
         incident = Docs.findOne doc_id
         current_level = incident.level
-        console.log 'escalating doc id from two', doc_id
-        Docs.update doc_id,
-            $set:level:3
-        Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{current_level+1}."
+        if current_level is 4
+            console.log "current level is 4, cant escalate beyond"
+            Docs.update doc_id,
+                $set:level:current_level-1
+        else
+            next_level = current_level++ 
+            console.log 'escalating doc id', doc_id
+            Docs.update doc_id,
+                $set:
+                    level:current_level-1
+                    last_updated_datetime: Date.now()
+            Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{current_level-1}."

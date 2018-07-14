@@ -9,6 +9,11 @@ template(name='author_info')
 
 template(name='when_template')
     |#{when}
+    
+template(name='last_updated_template')
+    |{{ reg_format last_updated_datetime }}
+    
+    
 
 template(name='list_item')
     .item

@@ -21,7 +21,7 @@ Template.edit_image_field.events
                         { $set: image_id: res.public_id }
                         , (err,res)=>
                             if err
-                                Bert.alert "Error Updating Image: #{error.reason}", 'danger', 'growl-top-right'
+                                Bert.alert "Error Updating Image: #{err.reason}", 'danger', 'growl-top-right'
                             else
                                 Bert.alert "Updated Image", 'success', 'growl-top-right'
                 return
@@ -74,13 +74,13 @@ Template.edit_image_field.events
 
 Template.edit_number_field.events
     'change #number_field': (e,t)->
-        console.log @
+        # console.log @
         number_value = parseInt e.currentTarget.value
         Docs.update FlowRouter.getParam('doc_id'),
             { $set: "#{@key}": number_value }
             , (err,res)=>
                 if err
-                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
             
@@ -92,7 +92,7 @@ Template.edit_textarea.events
             { $set: "#{@key}": textarea_value }
             , (err,res)=>
                 if err
-                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
@@ -134,7 +134,7 @@ Template.edit_timerange_field.events
             {$set: time_start: value}
             , (err,res)=>
                 if err
-                    Bert.alert "Error Updating Start Time: #{error.reason}", 'danger', 'growl-top-right'
+                    Bert.alert "Error Updating Start Time: #{err.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert "Updated Start Time", 'success', 'growl-top-right'
     'blur #time_end': (e,t)->
@@ -144,7 +144,7 @@ Template.edit_timerange_field.events
             {$set: time_end: value}
             , (err,res)=>
                 if err
-                    Bert.alert "Error Updating End Time: #{error.reason}", 'danger', 'growl-top-right'
+                    Bert.alert "Error Updating End Time: #{err.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert "Updated End Time", 'success', 'growl-top-right'
 
@@ -172,7 +172,7 @@ Template.edit_datetime_field.events
             { $set: "#{@key}": datetime_value } 
             , (err,res)=>
                 if err
-                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
@@ -185,7 +185,7 @@ Template.edit_date_field.events
             { $set: "#{@key}": date_value } 
             , (err,res)=>
                 if err
-                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
@@ -197,7 +197,7 @@ Template.edit_text_field.events
             { $set: "#{@key}": text_value }
             , (err,res)=>
                 if err
-                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
@@ -208,7 +208,7 @@ Template.edit_profile_text_field.events
             { $set: "profile.#{@key}": text_value }
             , (err,res)=>
                 if err
-                    Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 

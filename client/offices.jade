@@ -52,37 +52,32 @@ template(name='office_view')
 template(name='office_admin_section')
     .ui.top.attached.tabular.five.item.stackable.menu
         a.active.item(data-tab='incidents') 
-            // i.large.icon
-            //     +icon name='error'
+            i.large.icon
+                +icon name='error'
             | &nbsp; Incidents
         a.item(data-tab='employees') 
-            // i.large.icon
-            //     +icon name='groups'
+            i.large.icon
+                +icon name='groups'
             | &nbsp; Employees
         a.item(data-tab='franchisees') 
-            // i.large.icon
-            //     +icon name='conference'
+            i.large.icon
+                +icon name='conference'
             | &nbsp; Franchisees
         a.item(data-tab='customers') 
-            // i.large.icon
-            //     +icon name='customer-support'
+            i.large.icon
+                +icon name='customer-support'
             | &nbsp; Customers
         a.item(data-tab='office_settings') 
-            // i.large.icon
-            //     +icon name='settings'
+            i.large.icon
+                +icon name='settings'
             | &nbsp; Settings
     .ui.bottom.attached.tab.segment(data-tab='franchisees')
-        // .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Franchisees
         +office_franchisees
     .ui.bottom.attached.active.tab.segment(data-tab='incidents')
-        // .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Incidents
-        +office_incidents
-
+        // +office_incidents
     .ui.bottom.attached.tab.segment(data-tab='employees')
-        // .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Employees
         +office_employees
     .ui.bottom.attached.tab.segment(data-tab='customers')
-        // .ui.center.aligned.header #{current_office.ev.MASTER_LICENSEE}'s Customers
         +office_customers
     .ui.bottom.attached.tab.segment(data-tab='office_settings')
         // h2.ui.header 

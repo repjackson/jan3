@@ -526,7 +526,7 @@ Template.single_user_select.events
 
     'click .pull_user': ->
         context = Template.currentData(0)
-        console.log context
+        # console.log context
         swal {
             title: "Remove #{@username}?"
             # text: 'Confirm delete?'

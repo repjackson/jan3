@@ -69,9 +69,10 @@ Template.incidents.helpers
             { key: 'customer_name', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
-            { key: 'timestamp', label: 'Logged', tmpl:Template.when_template, sortOrder:0, sortDirection:'descending' }
+            { key: 'timestamp', label: 'Logged', tmpl:Template.when_template, sortOrder:1, sortDirection:'descending' }
+            { key: 'last_updated_datetime', label: 'Updated', tmpl:Template.last_updated_template, sortOrder:0, sortDirection:'descending' }
             { key: 'status', label: 'Status', tmpl:Template.status_template}
-            { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
+            # { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
             # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
@@ -144,7 +145,7 @@ Template.incident_view.events
             escalation_minutes = incidents_office.escalation_1_hours
             console.log incidents_office.escalation_1_hours
             Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} rules."
-            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incident_office.initial_primary_contact} and #{incident_office.initial_secondary_contact} have been notified per #{incident.incident_office_name} rules."
+            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office.initial_primary_contact} and #{incident_office.initial_secondary_contact} have been notified per #{incident.incident_office_name} rules."
         Docs.update doc_id,
             $set:
                 submitted:true
