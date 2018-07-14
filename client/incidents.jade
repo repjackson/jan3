@@ -10,8 +10,8 @@ template(name='incidents')
             .three.wide.column
         .row
             .sixteen.wide.column
-                +reactiveTableFilter id="myFilter" label="Filter"
-                +reactiveTable settings=settings class="ui celled striped sortable table"
+                // +reactiveTableFilter id='myFilter' label='Filter'
+                +reactiveTable settings=settings class='ui celled striped sortable table'
 
 
                 
@@ -52,17 +52,12 @@ template(name='incident_view')
                     +user_card
                 if submitted
                     .ui.secondary.segment
-                        .ui.header Status
-                        +toggle_key key='status' value='closed' label='Closed'
-                        +toggle_key key='status' value='open' label='Open'
-                    if is_closed
-                        .ui.button 
-                            i.reply.icon
-                            |Create Related Ticket
+                        .ui.header Type
+                        +incident_type_label
 
             .eight.wide.column
                 if can_edit_core
-                    +edit_textarea label='Incident Details' key='incident_details' icon='view-details'
+                    +edit_textarea label='Details' key='incident_details' icon='view-details'
                 else
                     .ui.basic.segment
                         // +icon name='view-details'
@@ -82,11 +77,25 @@ template(name='incident_view')
                             |Type
                         each incident_type_docs
                             +toggle_key key='incident_type' value=slug label=name
-                unless is_customer
-                    .ui.header Incident SLA Rules List 
-                        // small (Current Level: #{level})
-                    +incident_sla_widget
             .four.wide.column
+                if submitted
+                    .ui.secondary.segment
+                        .ui.header Status
+                            if open
+                                .ui.basic.label Open
+                            else
+                                .ui.label Closed
+                        if open
+                            .close_incident.ui.fluid.button
+                                i.calendar.times.icon
+                                | Close Incident
+                        else
+                            .reopen_incident.ui.fluid.button
+                                i.user.shield.icon
+                                | Reopen Incident
+                            .ui.button 
+                                i.reply.icon
+                                |Create Related Ticket
                 if can_edit_core
                     if submitted
                         .ui.disabled.button
@@ -96,22 +105,37 @@ template(name='incident_view')
                                 i.user.shield.icon
                                 |Unsubmit
                     else
-                        .submit.ui.fluid.large.button
-                            i.green.checkmark.icon
-                            |Submit
-                else
-                    if is_customer
-                        .ui.secondary.segment Fill Date, Details, and Type to Submit
-                if submitted
-                    .ui.secondary.segment
-                        .ui.dividing.header Incident Type
-                        +incident_type_label
+                        if can_submit
+                            .submit.ui.fluid.large.button
+                                i.green.checkmark.icon
+                                |Submit
+                        else
+                            .ui.secondary.segment Fill Date, Details, and Type to Submit
                 unless is_customer
                     if submitted
                         .ui.secondary.segment
                             +incident_tasks
                     +notify_button
                     +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
+                    +incident_sla_widget
+                else
+                    .ui.secondary.segment
+                        .ui.header Level: #{level}
+
+    .ui.confirm_close.modal
+        h3.ui.center.aligned.header
+            | Confirm Close Incident
+        .content
+            p This will stop automatic escalations.
+        .actions
+            .ui.cancel.icon.button
+                i.remove.icon
+            // if can_submit_bug
+            .ui.green.ok.ok_button.large.icon.button
+                i.checkmark.large.icon
+
+
+
 
 
 template(name='edit_priority_field')
@@ -140,7 +164,8 @@ template(name='incident_status')
 template(name='incident_tasks')
     .ui.header
         +icon name='to-do'
-        |Incident Tasks
+        |&nbsp;
+        |Tasks
         |&nbsp;
         small 
             a#add_incident_task(href='#') add
@@ -161,7 +186,7 @@ template(name='incident_task_edit')
             .three.wide.center.aligned.column
                 +save_button
             .ten.wide.center.aligned.column
-                h1.ui.center.aligned.grey.header Edit Incident Task
+                h1.ui.center.aligned.grey.header Edit Task
             .three.wide.center.aligned.column
                 #delete.ui.icon.button
                     i.trash.icon
@@ -185,7 +210,7 @@ template(name='incident_task_view')
             .three.wide.center.aligned.column
                 +parent_link
             .ten.wide.center.aligned.column
-                h1.ui.center.aligned.grey.header View Incident Task
+                h1.ui.center.aligned.grey.header View Task
             .three.wide.center.aligned.column
                 +edit_button
         .row
@@ -234,38 +259,33 @@ template(name='add_incident_button')
 
 
 template(name='incident_sla_widget')
-    .ui.cards
+    .ui.secondary.segment
+        .ui.header 
+            i.user.shield.icon
+            |SLA Rules List 
         each sla_rule_docs
             +sla_rule_doc
             
 template(name='sla_rule_doc')            
-    .ui.fluid.card(class=escalation_level_card_class)
-        .content
-            .right.floated.meta(title='Automatic Escalation Time')
-                i.icon
-                    +icon name='clock'
-                strong #{hours_value}
-            .header 
-                if is_level
-                    i.green.checkmark.icon
-                |#{name}
-        .content
-            .ui.sub.header Primary Contact
-            .item #{primary_contact_value} 
-            if primary_franchisee_toggle_value
-                .item Franchisee
-        .content
-            .ui.sub.header Secondary Contact
-            .item #{secondary_contact_value} 
-            if secondary_franchisee_toggle_value
-                .item Franchisee
-        .content
-            .right.floated.meta
-                // |#{number}
-                unless is_level
-                    .set_level.ui.button Set #{number}
-                // else
-                //     .ui.disabled.button Can't Set #{number}
+    .ui.dividing.header 
+        if is_level
+            i.green.checkmark.icon
+        |#{name}
+    .content
+        unless is_level
+            .set_level.ui.small.compact.button Set #{number}
+        strong Hours: #{hours_value}
+    .content
+        .ui.sub.header Primary Contact
+        .item #{primary_contact_value} 
+        if primary_franchisee_toggle_value
+            .item Franchisee
+    .content
+        .ui.sub.header Secondary Contact
+        .item #{secondary_contact_value} 
+        if secondary_franchisee_toggle_value
+            .item Franchisee
+            //     .ui.disabled.button Can't Set #{number}
             
     // .ui.incident.modal
     //     h1.ui.center.aligned.header

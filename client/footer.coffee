@@ -25,11 +25,9 @@ Template.footer.events
             inverted: true
             # transition: 'vertical flip'
             # observeChanges: true
-            duration: 500
+            duration: 400
             onApprove : ()->
                 val = $("#bug_description").val()
-                window.alert val
-                console.log val
                 Docs.insert
                     type: 'bug'
                     complete: false

@@ -5,7 +5,7 @@ FlowRouter.route '/customer_incidents',
     action: -> BlazeLayout.render 'layout', main:'customer_incidents'
 
 Template.incident_view.onCreated ->
-    @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
+    @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam 'doc_id'
     
 
 Template.add_incident_button.events
@@ -118,22 +118,22 @@ Template.incident_view.helpers
     
     can_edit_core: ->
         user = Meteor.user()
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getParam 'doc_id'
         incident = Docs.findOne doc_id
         if user and user.roles and 'customer' in user.roles
             # console.log 'right type o guy'
             if incident.submitted is true
-                return true
+                return false
                 # console.log 'incident submitted, user is customer'
             else
                 # console.log 'incident isnt submitted'
-                return false
+                return true
         else
             return false
     
 Template.incident_view.events
     'click .submit': -> 
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getParam 'doc_id'
         incident = Docs.findOne doc_id
         
         incidents_office =
@@ -154,7 +154,7 @@ Template.incident_view.events
 
 
     'click .unsubmit': -> 
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getParam 'doc_id'
         incident = Docs.findOne doc_id
         Docs.update doc_id,
             $set:
@@ -162,6 +162,44 @@ Template.incident_view.events
                 submitted_datetime: null
                 last_updated_datetime: Date.now()
         Meteor.call 'create_event', doc_id, 'unsubmit', "unsubmitted the incident."
+        
+    'click .close_incident': ->
+        doc_id = FlowRouter.getParam 'doc_id'
+        incident = Docs.findOne doc_id
+        
+        $('.ui.confirm_close.modal').modal(
+            inverted: false
+            # transition: 'vertical flip'
+            # observeChanges: true
+            duration: 400
+            onApprove : ()->
+                Docs.update doc_id,
+                    $set:
+                        open:false
+                        closed_datetime: Date.now()
+                        last_updated_datetime: Date.now()
+                Meteor.call 'create_event', doc_id, 'close', "closed the incident."
+            ).modal('show')
+
+       
+    'click .reopen_incident': ->
+        doc_id = FlowRouter.getParam 'doc_id'
+        incident = Docs.findOne doc_id
+
+        if confirm 'Reopen incident?'        
+            Docs.update doc_id,
+                $set:
+                    open:true
+                    # closed_datetime: Date.now()
+                    last_updated_datetime: Date.now()
+            Meteor.call 'create_event', doc_id, 'open', "reopened the incident."
+
+       
+       
+
+        
+        
+        
         
 Template.incident_sla_widget.onRendered ->
     # Meteor.setTimeout( =>
@@ -183,7 +221,7 @@ Template.incident_sla_widget.helpers
     sla_rule_docs: -> Docs.find {type:'rule'}, sort:number:1
 Template.sla_rule_doc.helpers
     can_escalate: -> 
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getParam 'doc_id'
         incident = Docs.findOne doc_id
         console.log @number
         console.log incident.level
@@ -333,22 +371,22 @@ Template.incident_tasks.helpers
     incident_tasks: ->
         Docs.find
             type: 'incident_task'
-            parent_id: FlowRouter.getParam('doc_id')
+            parent_id: FlowRouter.getParam 'doc_id'
 
 Template.incident_tasks.events
     'click #add_incident_task': ->
         new_incident_task_id = 
             Docs.insert
                 type: 'incident_task'
-                parent_id: FlowRouter.getParam('doc_id')
+                parent_id: FlowRouter.getParam 'doc_id'
         FlowRouter.go "/edit/#{new_incident_task_id}"
         
         
         
 Template.incident_task_edit.onCreated ->
-    @autorun -> Meteor.subscribe 'docs', [], 'action'
+    @autorun -> Meteor.subscribe 'type','action'
         
 Template.incident_task_edit.helpers
-    incident: -> Doc.findOne FlowRouter.getParam('doc_id')
+    incident: -> Doc.findOne FlowRouter.getParam 'doc_id'
     action_docs: -> Docs.find type:'action'
     

@@ -358,9 +358,9 @@ Meteor.methods
       
       
     update_escalation_statuses: ->
-        incident_cursor = Docs.find({type:'incident'})
-        console.log incident_cursor.count()
-        for incident in incident_cursor.fetch()
+        open_incidents = Docs.find({type:'incident', open:true})
+        console.log open_incidents.count()
+        for incident in open_incidents.fetch()
             # console.log incident.level
             # console.log incident.timestamp
             now = Date.now()
@@ -370,18 +370,20 @@ Meteor.methods
                     "ev.MASTER_LICENSEE": incident.incident_office_name
                     type:'office'
             difference = now - (incident.last_updated_datetime+=hours_value*60*60)
-            # console.log 'difference', difference
-            # console.log 'level',incident.level
+            console.log 'difference', difference
+            console.log 'level',incident.level
             # hours_value = "escalation_#{incident.level}_hours"
             hours_value = incidents_office["escalation_#{incident.level}_hours"]
-            # console.log 'minutes',hours_value*60000
-            # console.log 'plus time',incident.last_updated_datetime+=hours_value*60000
-            # console.log 'diff', difference
+            console.log 'minutes',hours_value*60000
+            console.log 'plus time',incident.last_updated_datetime+=hours_value*60000
+            console.log 'diff', difference
             # console.log 'escalating incident'
-            if incident.level is 2
-                console.log 'found incident level two, escalating'
+            if difference < 0
+                console.log 'open incident has not passed esclation time'
+                continue
+            else    
+                console.log 'open incident has passed esclation time, escalating'
                 Meteor.call 'escalate_incident', incident._id, ->
-            else continue    
             
                 # if difference < hours_value
                 #     console.log 'escalate'
