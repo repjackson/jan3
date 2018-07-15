@@ -66,6 +66,7 @@ Template.incidents.helpers
         # showColumnToggles: true
         # filters: ['myFilter']
         fields: [
+            { key: '_id', label: 'id' }
             { key: 'customer_name', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
@@ -197,12 +198,13 @@ Template.incident_view.events
 
        
        
-
+    'click #run_single_escalation_check': ->
+        Meteor.call 'single_escalation_check', FlowRouter.getParam 'doc_id'
         
         
         
         
-Template.incident_sla_widget.onRendered ->
+# Template.incident_sla_widget.onRendered ->
     # Meteor.setTimeout( =>
     # $('.ui.report.modal').modal(
     #     transition: 'vertical flip'

@@ -8,6 +8,8 @@ template(name='incidents')
                     +icon name='error'
                     | All Incidents
             .three.wide.column
+                if is_admin
+                    +call_method name='update_escalation_statuses' label='Run Escalation Check'
         .row
             .sixteen.wide.column
                 // +reactiveTableFilter id='myFilter' label='Filter'
@@ -32,6 +34,8 @@ template(name='incident_view')
                     a.ui.icon.button#delete(href='#' title='Delete Incident')
                         i.icon
                             +icon name='cancel'
+                if is_admin
+                    #run_single_escalation_check.ui.button Run Escalation Check
         .row
             .four.wide.column
                 // if is_dev

@@ -358,55 +358,62 @@ Meteor.methods
       
       
     update_escalation_statuses: ->
-        open_incidents = Docs.find({type:'incident', open:true})
+        open_incidents = Docs.find({type:'incident', open:true}, limit:1)
         console.log open_incidents.count()
         for incident in open_incidents.fetch()
-            # console.log incident.level
-            # console.log incident.timestamp
-            now = Date.now()
-            # console.log incident.incident_office_name
-            incidents_office =
-                Docs.findOne
-                    "ev.MASTER_LICENSEE": incident.incident_office_name
-                    type:'office'
-            difference = now - (incident.last_updated_datetime+=hours_value*60*60)
-            console.log 'office doc', incidents_office
-            console.log 'difference', difference
-            console.log 'level',incident.level
-            console.log "escalation_#{incident.level}_hours"
-            hours_value = incidents_office["escalation_#{incident.level}_hours"]
-            console.log 'hours value',hours_value
-            console.log 'hours value in minutes',hours_value*60000
-            console.log 'incident last update', incident.last_updated_datetime
-            console.log 'plus time',incident.last_updated_datetime+=hours_value*60000
-            console.log 'diff', difference
-            # console.log 'escalating incident'
-            if difference > 0
-                console.log 'open incident has not passed esclation time'
-                continue
-            else    
-                console.log 'open incident has passed esclation time, escalating'
-                Meteor.call 'escalate_incident', incident._id, ->
-            
-                # if difference < hours_value
-                #     console.log 'escalate'
-                # else
-                #     console.log 'dont'
-                # console.log 'the office', incidents_office
+            Meteor.call 'single_escalation_check', incident._id
+         
+    single_escalation_check: (incident_id)->
+        incident = Docs.findOne incident_id
+        console.log incident._id
+        # console.log incident.timestamp
+        now = Date.now()
+        # console.log incident.incident_office_name
+        incidents_office =
+            Docs.findOne
+                "ev.MASTER_LICENSEE": incident.incident_office_name
+                type:'office'
+        difference = now - (incident.last_updated_datetime+=hours_value*60*60)
+        console.log 'office doc', incidents_office
+        console.log 'difference', difference
+        console.log 'level',incident.level
+        console.log "escalation_#{incident.level}_hours"
+        hours_value = incidents_office["escalation_#{incident.level}_hours"]
+        console.log 'hours value',hours_value
+        console.log 'hours value in minutes',hours_value*60000
+        console.log 'incident last update', incident.last_updated_datetime
+        console.log 'plus time',incident.last_updated_datetime+=hours_value*60000
+        console.log 'diff', difference
+        # console.log 'escalating incident'
+        if difference > 0
+            console.log 'open incident has not passed esclation time'
+            # continue
+        else    
+            console.log 'open incident has passed esclation time, escalating'
+            Meteor.call 'escalate_incident', incident._id, ->
+        
+            # if difference < hours_value
+            #     console.log 'escalate'
+            # else
+            #     console.log 'dont'
+            # console.log 'the office', incidents_office
+        
+         
             
             
     escalate_incident: (doc_id)-> 
         incident = Docs.findOne doc_id
         current_level = incident.level
-        if current_level is 4
-            console.log "current level is 4, cant escalate beyond"
-            Docs.update doc_id,
-                $set:level:current_level-1
-        else
-            next_level = current_level++ 
-            console.log 'escalating doc id', doc_id
-            Docs.update doc_id,
-                $set:
-                    level:current_level-1
-                    last_updated_datetime: Date.now()
-            Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{current_level-1}."
+        console.log current_level
+        # if current_level > 3
+        #     console.log "current level is 4, cant escalate beyond"
+        #     Docs.update doc_id,
+        #         $set:level:current_level-1
+        # else
+        #     next_level = current_level++ 
+        #     console.log 'escalating doc id', doc_id
+        #     Docs.update doc_id,
+        #         $set:
+        #             level:current_level+1
+        #             last_updated_datetime: Date.now()
+        #     Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{current_level+1}."
