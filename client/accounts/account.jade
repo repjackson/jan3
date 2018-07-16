@@ -3,14 +3,14 @@ template(name='account_settings')
         .centered.row
             .twelve.wide.column
                 h1.ui.center.aligned.grey.header 
-                    +icon name='account-settings'
+                    i.large.cog.icon
                     | Account
                 // |{{> atForm state='changePwd'}}
-                h2.ui.center.aligned.header 
-                    i.envelope.icon
-                    | Email(s)
                 .ui.segment
-                    #test_email.ui.big.button test email
+                    h2.ui.header 
+                        i.envelope.icon
+                        | Email(s)
+                    // #test_email.ui.big.button test email
                     .ui.divided.list
                         each currentUser.emails
                             .item 
@@ -28,7 +28,7 @@ template(name='account_settings')
                         input#new_email(type='email')
                         #add_email.ui.submit.button Add Email
                 .ui.segment
-                    h2.ui.center.aligned.header 
+                    h2.ui.header 
                         |Username: 
                         .ui.basic.label #{currentUser.username}
                     .ui.action.fluid.input

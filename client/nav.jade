@@ -1,8 +1,7 @@
 template(name='nav')
     .nav_bar.ui.inverted.top.attached.pointing.menu
-        if is_admin
-            a.toggle_left_sidebar.icon.item 
-                i.bars.icon
+        a.toggle_left_sidebar.icon.item 
+            i.bars.icon
         if is_customer
             a.item(href='/')
                 // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')

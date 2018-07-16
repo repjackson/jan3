@@ -146,7 +146,7 @@ Template.incident_view.events
             escalation_minutes = incidents_office.escalation_1_hours
             console.log incidents_office.escalation_1_hours
             Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} rules."
-            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office.initial_primary_contact} and #{incident_office.initial_secondary_contact} have been notified per #{incident.incident_office_name} rules."
+            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office.initial_primary_contact} and #{incidents_office.initial_secondary_contact} have been notified per #{incident.incident_office_name} rules."
         Docs.update doc_id,
             $set:
                 submitted:true
@@ -162,7 +162,7 @@ Template.incident_view.events
             $set:
                 submitted:false
                 submitted_datetime: null
-                last_updated_datetime: Date.now()
+                updated: Date.now()
         Meteor.call 'create_event', doc_id, 'unsubmit', "unsubmitted the incident."
         
     'click .close_incident': ->
@@ -175,11 +175,12 @@ Template.incident_view.events
             # observeChanges: true
             duration: 400
             onApprove : ()->
+                console.log 'update', Date.now()
                 Docs.update doc_id,
                     $set:
                         open:false
+                        updated: Date.now()
                         closed_datetime: Date.now()
-                        last_updated_datetime: Date.now()
                 Meteor.call 'create_event', doc_id, 'close', "closed the incident."
             ).modal('show')
 
@@ -193,14 +194,18 @@ Template.incident_view.events
                 $set:
                     open:true
                     # closed_datetime: Date.now()
-                    last_updated_datetime: Date.now()
+                    updated: Date.now()
             Meteor.call 'create_event', doc_id, 'open', "reopened the incident."
 
        
        
     'click #run_single_escalation_check': ->
-        Meteor.call 'single_escalation_check', FlowRouter.getParam 'doc_id'
-        
+        Meteor.call 'single_escalation_check', FlowRouter.getParam 'doc_id', (err,res)->
+            if err 
+                console.dir err
+                Bert.alert "#{err.reason}.", 'info', 'growl-top-right'
+            else
+                Bert.alert "#{res}.", 'success', 'growl-top-right'
         
         
         
@@ -252,7 +257,6 @@ Template.sla_rule_doc.helpers
     incident_doc: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-
     
     hours_value: -> 
         user = Meteor.user()
@@ -302,7 +306,6 @@ Template.sla_rule_doc.helpers
                     type:'office'
                 users_office["escalation_#{@number}_secondary_contact_franchisee"]
     
-    
     secondary_contact_value: -> 
         user = Meteor.user()
         if user and user.profile and user.profile.customer_jpid
@@ -314,8 +317,6 @@ Template.sla_rule_doc.helpers
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
                 users_office["escalation_#{@number}_secondary_contact"]
-
-    
 
 
 Template.sla_rule_doc.events

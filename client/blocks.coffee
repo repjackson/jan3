@@ -318,7 +318,7 @@ Template.full_doc_history.events
                 parent_id: doc_id
                 type:'event'
             for event_doc in cursor.fetch()
-                console.log event_doc
+                # console.log event_doc
                 Docs.remove event_doc._id
             
 Template.incidents_by_type.onCreated ->

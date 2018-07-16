@@ -49,7 +49,7 @@ template(name='incident_view')
                         .ui.header 
                             +icon name='leave'
                             |Date
-                        h5 #{service_date}
+                        h4 #{service_date}
                 unless is_customer
                     // +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
                     +single_doc_view type='customer' key='customer_jpid' label='Customer'
@@ -58,6 +58,9 @@ template(name='incident_view')
                     .ui.secondary.segment
                         .ui.header Type
                         +incident_type_label
+                .ui.secondary.segment
+                    .ui.header Last Updated
+                    |{{ reg_format updated }}
 
             .eight.wide.column
                 if can_edit_core
