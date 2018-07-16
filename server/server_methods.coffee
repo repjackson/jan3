@@ -385,17 +385,12 @@ Meteor.methods
         escalation_calculation = minutes_elapsed - hours_value
         console.log 'escalation_calculation', escalation_calculation
         if minutes_elapsed < hours_value
-            console.log "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{incident.level} rules, not escalating"
+            Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{incident.level} rules, not escalating"
             # continue
         else    
-            console.log "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{incident.level} rules, escalating"
+            Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{incident.level} rules, escalating"
             Meteor.call 'escalate_incident', incident._id, ->
         
-        #     # if difference < hours_value
-        #     #     console.log 'escalate'
-        #     # else
-        #     #     console.log 'dont'
-        #     # console.log 'the office', incident_office
         
          
             
@@ -404,15 +399,15 @@ Meteor.methods
         incident = Docs.findOne doc_id
         current_level = incident.level
         console.log current_level
-        # if current_level > 3
-        #     console.log "current level is 4, cant escalate beyond"
-        #     Docs.update doc_id,
-        #         $set:level:current_level-1
-        # else
-        #     next_level = current_level++ 
-        #     console.log 'escalating doc id', doc_id
-        #     Docs.update doc_id,
-        #         $set:
-        #             level:current_level+1
-        #             updated: Date.now()
-        #     Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{current_level+1}."
+        if current_level > 3
+            console.log "current level is 4, cant escalate beyond"
+            Docs.update doc_id,
+                $set:level:current_level-1
+        else
+            next_level = current_level++ 
+            console.log 'escalating doc id', doc_id
+            Docs.update doc_id,
+                $set:
+                    level:current_level+1
+                    updated: Date.now()
+            Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{current_level+1}."

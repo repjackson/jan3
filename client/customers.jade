@@ -27,9 +27,10 @@ template(name='customer_view')
             .three.wide.right.aligned.column
                 +edit_button
         // unless is_customer
-        .centered.row
-            .fifteen.wide.column
-                +customers_franchisee
+        if ev.FRANCHISEE
+            .centered.row
+                .fifteen.wide.column
+                    +customers_franchisee
         .centered.row
             .twelve.wide.column
                 .ui.secondary.segment

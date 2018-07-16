@@ -20,28 +20,28 @@ template(name='nav')
                 | &nbsp; #{my_office.ev.MASTER_LICENSEE}
         if is_admin
             a.mobile.hidden.item(href='/incidents')
-                // i.large.icon
-                //     +icon name='error'
+                i.large.icon
+                    +icon name='error'
                 | &nbsp; Incidents
             a.mobile.hidden.item(href='/users')
-                // i.large.icon
-                //     +icon name='groups'
+                i.large.icon
+                    +icon name='groups'
                 | &nbsp; Users
             a.mobile.hidden.item(href='/offices')
-                // i.large.icon
-                //     +icon name='link-company-parent'
+                i.large.icon
+                    +icon name='link-company-parent'
                 | Offices
             a.mobile.hidden.item(href='/franchisees')
-                // i.large.icon
-                //     +icon name='collaborator-female'
+                i.large.icon
+                    +icon name='collaborator-female'
                 | Franchisees
             a.mobile.hidden.item(href='/customers')
-                // i.large.icon
-                //     +icon name='customer-support'
+                i.large.icon
+                    +icon name='customer-support'
                 | Customers
             a.mobile.hidden.item(href='/services')
-                // i.large.icon
-                //     +icon name='broom'
+                i.large.icon
+                    +icon name='broom'
                 | Services
         .right.menu
             if is_admin
@@ -54,7 +54,7 @@ template(name='nav')
                 //     i.large.icon
                 //         +icon name='chat'
                 if is_admin
-                    a.item(href='/feed')
+                    a.icon.item(href='/feed')
                         i.large.icon
                             +icon name='appointment-reminders'
                 a.item(href="/user/#{currentUser.username}")
@@ -91,7 +91,7 @@ template(name='left_sidebar')
             i.users.icon
             |Users
         a.toggle_left_sidebar.item(href='/incidents') 
-            i.alert.icon
+            i.exclamation.icon
             |Incidents
         a.toggle_left_sidebar.item(href='/offices') 
             i.building.icon
@@ -102,8 +102,12 @@ template(name='left_sidebar')
         //     i.clock.icon
         //     // +tiny_sprite name='duster'
         //     | Services
-        a.toggle_left_sidebar.item(href='/franchisees') Franchisees
-        a.toggle_left_sidebar.item(href='/customers') Customers
+        a.toggle_left_sidebar.item(href='/franchisees') 
+            i.street.view.icon
+            |Franchisees
+        a.toggle_left_sidebar.item(href='/customers') 
+            i.money.icon
+            |Customers
         a.toggle_left_sidebar.item(href='/admin') 
             i.user.shield.icon
             |Admin

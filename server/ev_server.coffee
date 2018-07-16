@@ -11,8 +11,6 @@ Meteor.methods
                 # disabled: [Y|N|
                 # filter: pattern 
                 # filter_type: "ID"
-
-
         console.dir res.content
         split_res = res.content.split '\r\n'
         
@@ -34,8 +32,6 @@ Meteor.methods
                     console.log 'added user doc id:', new_user_id
                 else
                     console.log 'existing user doc:', found_user._id
-
-
 
     get_user_info: (username)->
         # users_cursor = Meteor.users.find({}).fetch()
@@ -72,9 +68,6 @@ Meteor.methods
         Meteor.users.update user_doc._id,
             $set: ev: save_json
         # console.log 'updated', user_doc.username 
-
-
-
 
     get_history: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -128,9 +121,6 @@ Meteor.methods
             #     jpid: split_report[1]
             #     value: split_report[2]
 
-
-
-
     get_jp_id: (jp_id)->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
@@ -167,7 +157,6 @@ Meteor.methods
                             jpid:jp_id
                             ev: json_result.PROBLEM_RECORD
                             
-                            
     search_ev: (query)->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
@@ -203,8 +192,7 @@ Meteor.methods
                             type:'search_history_doc'
                             ev: doc
                         console.log "added #{doc.ID}"
-        
-
+    
     get_all_franchisees: () ->
         console.log 'starting franchisee sync'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -217,7 +205,7 @@ Meteor.methods
                 api_reverse_lookup:'NO'
                 id:'48297'
                 page_length:'10000'
-                record_start:'50000'
+                record_start:'10000'
                 record_count:'10000'
         # return res.content
         # console.log res.content
@@ -230,7 +218,7 @@ Meteor.methods
                 # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # console.log doc
+                    console.log doc
                     # doc.type = 'customer'
                     existing_franchisee = 
                         Docs.findOne 
@@ -332,7 +320,6 @@ Meteor.methods
                             ev: doc
                         console.log "added #{doc.ID}"
     
-    
     sync_customers: () ->
         console.log 'starting customer sync'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -346,7 +333,7 @@ Meteor.methods
                 id:'48302'
                 page_length:'20000'
                 record_start:'50000'
-                record_count:'20000'
+                record_count:'1'
         # return res.content
         # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
@@ -358,7 +345,7 @@ Meteor.methods
                 # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # console.log doc
+                    console.log doc
                     # doc.type = 'customer'
                     existing_customer_doc = 
                         Docs.findOne 
