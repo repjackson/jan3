@@ -30,7 +30,48 @@
 
 #     #     message_link = "https://www.toriwebster.com/view/#{new_transaction_id}"
         
-Meteor.methods
+        
+        
+Meteor.startup ->
+    Meteor.Mailgun.config
+        username: 'portalmailer@sandbox97641e5041e64bfd943374748157462b.mailgun.org'
+        password: 'portalmailer'
+    return
+
+
+Meteor.methods 
+    sendEmail: (mailFields) ->
+        console.log 'about to send email...'
+        console.log mailFields
+        # check([mailFields.to, mailFields.from, mailFields.subject, mailFields.text, mailFields.html], [String]);
+        # Let other method calls from the same client start running,
+        # without waiting for the email sending to complete.
+        @unblock()
+        if Meteor.isProduction
+            Meteor.Mailgun.send
+                to: mailFields.to
+                from: mailFields.from
+                subject: mailFields.subject
+                text: mailFields.text
+                html: mailFields.html
+            console.log 'email sent from prod'
+        if Meteor.isDevelopment
+            console.log 'email sending from dev'
+            Docs.insert
+                type:'message'
+                mail_fields: mailFields
+            # Email.send
+            #     to: mailFields.to
+            #     from: mailFields.from
+            #     subject: mailFields.subject
+            #     text: mailFields.text
+            #     html: mailFields.html
+            # console.log 'email sent from dev'
+        else
+            console.log 'not prod or dev'
+        return
+        
+        
     email_about_escalation: (incident_id)->
         incident = Docs.findOne incident_id
         office_doc = Docs.findOne {
@@ -61,6 +102,12 @@ Meteor.methods
                 <h5>Secondary Office: #{escalation_secondary_contact_value}</h5>
             "
         }
+        Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{escalation_primary_contact_value} has been emailed as the primary contact for escalation to level #{incident.level}."
+        Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{escalation_secondary_contact_value} has been emailed as the secondary contact for escalation to level #{incident.level}."
+
+        #{escalation_primary_contact_value}
+        
+        
         Meteor.call 'sendEmail', mailFields
     #         # html: 
     #         #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>

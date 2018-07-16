@@ -364,32 +364,35 @@ Meteor.methods
             Meteor.call 'single_escalation_check', incident._id
          
     single_escalation_check: (incident_id)->
-        # console.log 'first',incident_id
         incident = Docs.findOne incident_id
-        incident_office =
-            Docs.findOne
-                "ev.MASTER_LICENSEE": incident.incident_office_name
-                type:'office'
-        # console.log incident._id
-        last_updated = incident.updated
-        hours_value = incident_office["escalation_#{incident.level}_hours"]
-        now = Date.now()
-        console.log 'hours value',hours_value
-        console.log 'last_updated value', last_updated
-        updated_now_difference = now-last_updated
-        console.log 'difference between last updated and now', updated_now_difference
-        seconds_elapsed = Math.floor(updated_now_difference/1000)
-        console.log 'seconds elapsed =', seconds_elapsed
-        minutes_elapsed = seconds_elapsed/60
-        console.log 'minutes elapsed =', minutes_elapsed
-        escalation_calculation = minutes_elapsed - hours_value
-        console.log 'escalation_calculation', escalation_calculation
-        if minutes_elapsed < hours_value
-            Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{incident.level} rules, not escalating"
-            # continue
-        else    
-            Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{incident.level} rules, escalating"
-            Meteor.call 'escalate_incident', incident._id, ->
+        if incident.level is 4
+            Meteor.call 'create_event', incident_id, 'max_level_notice', "Incident is at max level 4, not escalating."
+        else
+            # console.log 'first',incident_id
+            incident_office =
+                Docs.findOne
+                    "ev.MASTER_LICENSEE": incident.incident_office_name
+                    type:'office'
+            # console.log incident._id
+            last_updated = incident.updated
+            hours_value = incident_office["escalation_#{incident.level}_hours"]
+            now = Date.now()
+            console.log 'hours value',hours_value
+            console.log 'last_updated value', last_updated
+            updated_now_difference = now-last_updated
+            console.log 'difference between last updated and now', updated_now_difference
+            seconds_elapsed = Math.floor(updated_now_difference/1000)
+            console.log 'seconds elapsed =', seconds_elapsed
+            minutes_elapsed = Math.floor(seconds_elapsed/60)
+            console.log 'minutes elapsed =', minutes_elapsed
+            escalation_calculation = minutes_elapsed - hours_value
+            console.log 'escalation_calculation', escalation_calculation
+            if minutes_elapsed < hours_value
+                Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{incident.level} rules, not escalating"
+                # continue
+            else    
+                Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{incident.level} rules, escalating"
+                Meteor.call 'escalate_incident', incident._id, ->
         
         
          
@@ -411,3 +414,13 @@ Meteor.methods
                     level:current_level+1
                     updated: Date.now()
             Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{current_level+1}."
+            Meteor.call 'email_about_escalation', doc_id
+
+
+    'clear_incident_events': (incident_id)->
+        cursor = Docs.find
+            parent_id: incident_id
+            type:'event'
+        for event_doc in cursor.fetch()
+            # console.log event_doc
+            Docs.remove event_doc._id

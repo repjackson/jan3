@@ -314,12 +314,7 @@ Template.full_doc_history.events
         # console.log Template.parentData()
         # console.log @
         if confirm 'Clear all events? Irriversible.'
-            cursor = Docs.find
-                parent_id: doc_id
-                type:'event'
-            for event_doc in cursor.fetch()
-                # console.log event_doc
-                Docs.remove event_doc._id
+            Meteor.call 'clear_incident_events', doc_id
             
 Template.incidents_by_type.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], 'incident'

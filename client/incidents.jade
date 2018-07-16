@@ -31,9 +31,8 @@ template(name='incident_view')
                 h1.ui.center.aligned.grey.header #{customer_name} Incident #{incident_number}
             .three.wide.column
                 unless submitted
-                    a.ui.icon.button#delete(href='#' title='Delete Incident')
-                        i.icon
-                            +icon name='cancel'
+                    .ui.icon.remove_incident.button(title='Delete Incident')
+                        i.remove.icon
                 if is_admin
                     #run_single_escalation_check.ui.button Run Escalation Check
         .row
@@ -141,6 +140,17 @@ template(name='incident_view')
             .ui.green.ok.ok_button.large.icon.button
                 i.checkmark.large.icon
 
+    // .ui.delete_incident.basic.modal
+    //     h3.ui.center.aligned.header
+    //         | Confirm Delete Incident
+    //     .actions
+    //         .ui.cancel.icon.button
+    //             i.cancel.icon
+    //             |Cancel
+    //         // if can_submit_bug
+    //         .ui.red.ok.ok_button.large.button
+    //             i.checkmark.large.icon
+    //             | Remove
 
 
 

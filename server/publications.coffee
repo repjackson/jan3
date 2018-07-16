@@ -41,7 +41,7 @@ ReactiveTable.publish 'office_employees', (input)->
     
 Meteor.publish 'child_docs', (doc_id, limit)->
     if limit
-        Docs.find {parent_id:doc_id}, limit:limit
+        Docs.find {parent_id:doc_id}, {limit:limit, sort:timestamp:-1}
     else
         Docs.find parent_id:doc_id
         

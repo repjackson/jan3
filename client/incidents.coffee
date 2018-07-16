@@ -66,7 +66,7 @@ Template.incidents.helpers
         # showColumnToggles: true
         # filters: ['myFilter']
         fields: [
-            { key: '_id', label: 'id' }
+            # { key: '_id', label: 'id' }
             { key: 'customer_name', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
@@ -207,7 +207,25 @@ Template.incident_view.events
             else
                 Bert.alert "#{res}.", 'success', 'growl-top-right'
         
-        
+    'click .remove_incident': ->
+        swal {
+            title: "Remove Incident?"
+            # text: 'Confirm delete?'
+            type: 'info'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Remove'
+            confirmButtonColor: '#da5347'
+        }, =>
+            doc_id = FlowRouter.getParam('doc_id')
+            Docs.remove doc_id
+            FlowRouter.go '/incidents'
+
+
+       
+
         
 # Template.incident_sla_widget.onRendered ->
     # Meteor.setTimeout( =>

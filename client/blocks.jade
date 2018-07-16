@@ -481,27 +481,26 @@ template(name='full_doc_history')
             |History
         .ui.feed
             each doc_history_events
-                .event
-                    .label
-                        img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                    .content
-                        .summary
-                            a.user #{author.username}
-                            |#{action} #{text}
-                            .date #{when}
-
+                +doc_history_event
+                
 template(name='small_doc_history')
     // .ui.header History
     .ui.feed
         each doc_history_events
-            .event
-                .label
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                .content
-                    .summary
-                        a.user #{author.username}
-                        |#{action} #{text}
-                        .date #{when}
+            +doc_history_event
+                
+template(name='doc_history_event')
+    .event
+        .label
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .content
+            .summary
+                a.user #{author.username}
+                |#{action} #{text}
+                .date #{when}
+
+
+
 
 
 template(name='view_telephone_field')

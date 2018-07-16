@@ -3,6 +3,7 @@
 Docs.before.insert (userId, doc)->
     timestamp = Date.now()
     doc.timestamp = timestamp
+    doc.updated = timestamp
     # console.log moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
     date = moment(timestamp).format('Do')
     weekdaynum = moment(timestamp).isoWeekday()
@@ -19,8 +20,8 @@ Docs.before.insert (userId, doc)->
     doc.author_id = Meteor.userId()
     doc.points = 0
     doc.read_by = [Meteor.userId()]
-    doc.upvoters = []
-    doc.downvoters = []
+    # doc.upvoters = []
+    # doc.downvoters = []
 
     return
 
