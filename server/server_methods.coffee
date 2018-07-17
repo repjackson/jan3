@@ -388,10 +388,10 @@ Meteor.methods
             escalation_calculation = minutes_elapsed - hours_value
             console.log 'escalation_calculation', escalation_calculation
             if minutes_elapsed < hours_value
-                Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{incident.level} rules, not escalating"
+                Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{incident.level} rules, not escalating."
                 # continue
             else    
-                Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{incident.level} rules, escalating"
+                Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{incident.level} rules, escalating."
                 Meteor.call 'escalate_incident', incident._id, ->
         
         

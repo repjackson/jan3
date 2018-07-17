@@ -5,9 +5,21 @@ FlowRouter.route '/', action: ->
 
 Template.my_office_contacts.helpers
     crew: -> 
-        Meteor.users.find {
-            published:true
-        }, limit:4
+        user = Meteor.user()
+        # console.log 'franch_doc', franch_doc
+        if user and user.profile and user.profile.customer_jpid
+            customer_doc = Docs.findOne
+                "ev.ID": user.profile.customer_jpid
+                type:'customer'
+                # grandparent office
+            # console.log 'ss cust doc', customer_doc
+            if customer_doc
+                found = Meteor.users.find {
+                    published:true
+                    # "profile.office_name": customer_doc.ev.MASTER_LICENSEE
+                }, limit:100
+                found
+    
 
 Template.dashboard.events
     'click .log_ticket': (e,t)->
@@ -39,13 +51,11 @@ Template.dashboard_office_contacts_list.helpers
                 "ev.ID": user.profile.customer_jpid
                 type:'customer'
                 # grandparent office
-            console.log 'ss cust doc', customer_doc
             if customer_doc
                 found = Meteor.users.find {
                     published:true
                     # "profile.office_name": customer_doc.ev.MASTER_LICENSEE
                 }, limit:100
-                console.log found.fetch()
                 found
 
 

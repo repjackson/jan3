@@ -74,7 +74,7 @@ template(name='office_admin_section')
     .ui.bottom.attached.tab.segment(data-tab='franchisees')
         +office_franchisees
     .ui.bottom.attached.active.tab.segment(data-tab='incidents')
-        +office_incidents
+        // +office_incidents
     .ui.bottom.attached.tab.segment(data-tab='employees')
         +office_employees
     .ui.bottom.attached.tab.segment(data-tab='customers')
@@ -103,12 +103,14 @@ template(name='office_admin_section')
             .ui.secondary.segment
                 h3.ui.header #{name}
                 .ui.two.column.padded.grid
+                    unless is_initial
+                        .row
+                            +edit_number_field key=hours_key label='Escalation Hours (currently minutes for testing)' field_class='inline' min=0 max=24
                     .row
-                        +edit_number_field key=hours_key label='Escalation Hours (currently minutes for testing)' field_class='inline' min=0 max=24
+                        +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
                     .row
                         .column
                             h4.ui.dividing.header Primary Contact
-                            +toggle_boolean_checkbox key=primary_franchisee_toggle_key label='Franchisee'
                             +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
                             // .ui.two.column.stackable.grid
                             //     .row
@@ -125,7 +127,6 @@ template(name='office_admin_section')
                                             +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
                         .column
                             h4.ui.dividing.header Secondary Contact
-                            +toggle_boolean_checkbox key=secondary_franchisee_toggle_key label='Franchisee'
                             +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
                             // .ui.two.column.stackable.grid
                             //     .row

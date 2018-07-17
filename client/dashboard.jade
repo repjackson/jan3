@@ -16,11 +16,10 @@ template(name='dashboard')
                             p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
         .row
             .sixteen.wide.column
-                +my_office_contacts
+                +customer_incidents_widget
         .row
             .sixteen.wide.column
-                if is_customer
-                    +customer_incidents_widget
+                +my_office_contacts
         .row
             with currentUser.users_customer.parent_franchisee
                 .sixteen.wide.column
@@ -81,7 +80,7 @@ template(name='my_office_contacts')
         //     i.users.icon
         //     i.corner.building.icon
         |Office Contacts
-    .ui.four.stackable.centered.cards
+    .ui.six.stackable.centered.cards
         each crew
             +office_contact_card
 

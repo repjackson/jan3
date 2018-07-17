@@ -393,10 +393,11 @@ Template.toggle_boolean_checkbox.events
     'click .ui.toggle.checkbox': (e,t)->
         # console.log t.find('.ui.slider.checkbox')
         doc_id = FlowRouter.getParam('doc_id')
-        # console.log Template.parentData()
-        # console.log @
+        console.log Template.parentData()
         checkbox_value = $("input[name=#{@key}]").is(":checked")
-
+        console.log @key
+        console.log checkbox_value
+        console.log Docs.findOne doc_id
         # if @value
         #     Docs.update {_id:doc_id}, 
         #         { $set: "#{@key}": "#{@value}" },

@@ -30,9 +30,8 @@ template(name='incident_view')
             .ten.wide.column
                 h1.ui.center.aligned.grey.header #{customer_name} Incident #{incident_number}
             .three.wide.column
-                unless submitted
-                    .ui.icon.remove_incident.button(title='Delete Incident')
-                        i.remove.icon
+                .ui.icon.remove_incident.button(title='Delete Incident')
+                    i.remove.icon
                 if is_admin
                     #run_single_escalation_check.ui.button Run Escalation Check
         .row
@@ -50,8 +49,7 @@ template(name='incident_view')
                             |Date
                         h4 #{service_date}
                 unless is_customer
-                    // +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
-                    +single_doc_view type='customer' key='customer_jpid' label='Customer'
+                    +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
                     +user_card
                 if submitted
                     .ui.secondary.segment
@@ -102,21 +100,19 @@ template(name='incident_view')
                             .ui.button 
                                 i.reply.icon
                                 |Create Related Ticket
-                if can_edit_core
-                    if submitted
-                        .ui.disabled.button
-                            |Submitted {{reg_format submitted_datetime}}
-                        if is_admin
-                            .unsubmit.ui.fluid.button
-                                i.user.shield.icon
-                                |Unsubmit
-                    else
-                        if can_submit
-                            .submit.ui.fluid.large.button
-                                i.green.checkmark.icon
-                                |Submit
-                        else
-                            .ui.secondary.segment Fill Date, Details, and Type to Submit
+                if submitted
+                    .ui.disabled.button
+                        | Submitted {{reg_format submitted_datetime}}
+                    if is_admin
+                        .unsubmit.ui.fluid.button
+                            i.user.shield.icon
+                            |Unsubmit
+                    if can_submit
+                        .submit.ui.fluid.large.button
+                            i.green.checkmark.icon
+                            |Submit
+                else
+                    .ui.secondary.segment Fill Date, Details, and Type to Submit
                 unless is_customer
                     if submitted
                         .ui.secondary.segment

@@ -19,6 +19,7 @@ Template.add_incident_button.events
                     customer_jpid: my_customer_ob.ev.ID
                     customer_name: my_customer_ob.ev.CUST_NAME
                     incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
+                    incident_franchisee: my_customer_ob.ev.FRANCHISEE
                     level: 1
                     open: true
                     submitted: false
@@ -73,7 +74,7 @@ Template.incidents.helpers
             { key: 'timestamp', label: 'Logged', tmpl:Template.when_template, sortOrder:1, sortDirection:'descending' }
             { key: 'last_updated_datetime', label: 'Updated', tmpl:Template.last_updated_template, sortOrder:0, sortDirection:'descending' }
             { key: 'status', label: 'Status', tmpl:Template.status_template}
-            # { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
+            { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
             # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
@@ -222,9 +223,6 @@ Template.incident_view.events
             doc_id = FlowRouter.getParam('doc_id')
             Docs.remove doc_id
             FlowRouter.go '/incidents'
-
-
-       
 
         
 # Template.incident_sla_widget.onRendered ->

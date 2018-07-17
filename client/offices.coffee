@@ -48,14 +48,15 @@ Template.office_admin_section.helpers
         # console.log page_office
         return page_office
         
+    is_initial: -> @number is 0    
+        
     rule_docs: -> Docs.find {type:'rule'}, sort:number:1
         
     hours_key: -> "escalation_#{@number}_hours"
     
-    primary_franchisee_toggle_key: -> "escalation_#{@number}_primary_contact_franchisee"
+    franchisee_toggle_key: -> "escalation_#{@number}_contact_franchisee"
     primary_contact_key: -> "escalation_#{@number}_primary_contact"
 
-    secondary_franchisee_toggle_key: -> "escalation_#{@number}_secondary_contact_franchisee"
     secondary_contact_key: -> "escalation_#{@number}_secondary_contact"
         
     is_primary_indivdual: ->

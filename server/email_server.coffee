@@ -40,32 +40,32 @@ Meteor.startup ->
 
 
 Meteor.methods 
-    sendEmail: (mailFields) ->
+    sendEmail: (mail_fields) ->
         console.log 'about to send email...'
-        console.log mailFields
-        # check([mailFields.to, mailFields.from, mailFields.subject, mailFields.text, mailFields.html], [String]);
+        console.log mail_fields
+        # check([mail_fields.to, mail_fields.from, mail_fields.subject, mail_fields.text, mail_fields.html], [String]);
         # Let other method calls from the same client start running,
         # without waiting for the email sending to complete.
         @unblock()
         if Meteor.isProduction
             Meteor.Mailgun.send
-                to: mailFields.to
-                from: mailFields.from
-                subject: mailFields.subject
-                text: mailFields.text
-                html: mailFields.html
+                to: mail_fields.to
+                from: mail_fields.from
+                subject: mail_fields.subject
+                text: mail_fields.text
+                html: mail_fields.html
             console.log 'email sent from prod'
         if Meteor.isDevelopment
             console.log 'email sending from dev'
             Docs.insert
                 type:'message'
-                mail_fields: mailFields
+                mail_fields: mail_fields
             # Email.send
-            #     to: mailFields.to
-            #     from: mailFields.from
-            #     subject: mailFields.subject
-            #     text: mailFields.text
-            #     html: mailFields.html
+            #     to: mail_fields.to
+            #     from: mail_fields.from
+            #     subject: mail_fields.subject
+            #     text: mail_fields.text
+            #     html: mail_fields.html
             # console.log 'email sent from dev'
         else
             console.log 'not prod or dev'
@@ -74,6 +74,16 @@ Meteor.methods
         
     email_about_escalation: (incident_id)->
         incident = Docs.findOne incident_id
+        customer = Docs.findOne {
+            "ev.ID":incident.customer_jpid
+            type:'customer'
+        }
+        franchisee = Docs.findOne {
+            "ev.FRANCHISEE":customer.ev.FRANCHISEE
+            type:'franchisee'
+        }
+            
+        console.log 'franchisee', franchisee 
         office_doc = Docs.findOne {
             "ev.MASTER_LICENSEE":incident.incident_office_name
             type:'office'
@@ -81,12 +91,16 @@ Meteor.methods
         # escalation_1_primary_contact_franchisee: true,
         escalation_primary_contact_value = office_doc["escalation_#{incident.level}_primary_contact"]
         escalation_secondary_contact_value = office_doc["escalation_#{incident.level}_secondary_contact"]
-        console.log incident
-        console.log office_doc
+        
+        escalation_franchisee_value = office_doc["escalation_#{incident.level}_contact_franchisee"]
+        
+        
+        console.log escalation_franchisee_value
+        
         console.log "escalation_#{incident.level}_secondary_contact"
         console.log escalation_primary_contact_value
         console.log escalation_secondary_contact_value
-        mailFields = {
+        mail_fields = {
             to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Incident from #{incident.customer_name} has been escalated to #{incident.level}."
@@ -99,16 +113,19 @@ Meteor.methods
                 <h5>Service Date: #{incident.service_date}</h5>
                 <h4>This will notify</h4>
                 <h5>Primary Office Contact: #{escalation_primary_contact_value}</h5>
-                <h5>Secondary Office: #{escalation_secondary_contact_value}</h5>
+                <h5>Secondary Office Contact: #{escalation_secondary_contact_value}</h5>
+                <h5>Franchisee: #{escalation_franchisee_value}</h5>
             "
         }
         Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{escalation_primary_contact_value} has been emailed as the primary contact for escalation to level #{incident.level}."
         Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{escalation_secondary_contact_value} has been emailed as the secondary contact for escalation to level #{incident.level}."
+        if escalation_franchisee_value
+            Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} has been emailed for escalation to level #{incident.level}."
 
         #{escalation_primary_contact_value}
         
         
-        Meteor.call 'sendEmail', mailFields
+        Meteor.call 'sendEmail', mail_fields
     #         # html: 
     #         #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
     #         #     #{text} <br>

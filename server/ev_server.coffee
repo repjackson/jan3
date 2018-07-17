@@ -204,9 +204,9 @@ Meteor.methods
                 username_display:'ID'
                 api_reverse_lookup:'NO'
                 id:'48297'
-                page_length:'10000'
-                record_start:'10000'
-                record_count:'10000'
+                page_length:'5000'
+                record_start:'55000'
+                record_count:'5000'
         # return res.content
         # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
@@ -218,14 +218,14 @@ Meteor.methods
                 # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    console.log doc
+                    # console.log doc
                     # doc.type = 'customer'
                     existing_franchisee = 
                         Docs.findOne 
                             type: 'franchisee'
                             "ev.ID": doc.ID
                     if existing_franchisee
-                        console.log "existing franchisee #{existing_franchisee.ev}"
+                        console.log "existing franchisee #{existing_franchisee.ev.FRANCHISEE}"
                         # console.log doc
                         Docs.update existing_franchisee._id,
                             $set:

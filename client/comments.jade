@@ -3,10 +3,9 @@ template(name='comments')
         .ui.header 
             +icon name='comments'
             |#{comment_count} Comments
-        if ../open
-            .ui.fluid.left.icon.input
-                i.plus.icon
-                input#new_comment(type='text' placeholder='Add...')
+        .ui.fluid.left.icon.input
+            i.plus.icon
+            input#new_comment(type='text' placeholder='Add...')
         .ui.comments
             each comments
                 .comment
