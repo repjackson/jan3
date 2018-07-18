@@ -125,6 +125,7 @@ Template.office_incidents.helpers
         showRowCount: true
         showNavigation: 'auto'
         filters: ['office_incidents']
+        noDataTmpl: 'no_data'
         # showColumnToggles: true
         fields: [
             { key: 'incident_office_name', label: 'Office' }
