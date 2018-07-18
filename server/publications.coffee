@@ -21,7 +21,7 @@ Meteor.publish 'users_feed', (username)->
 #         limit: 20
 
 ReactiveTable.publish 'users', Meteor.users,'', {disablePageCountReactivity:true}
-ReactiveTable.publish 'customers', Docs, {type:'customer'}, {disablePageCountReactivity:true}
+ReactiveTable.publish 'customers', Docs, {type:'customer', "ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'events', Docs, {type:'event'}, {disablePageCountReactivity:false}
 ReactiveTable.publish 'franchisees', Docs, {type:'franchisee'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'incidents', Docs, {type:'incident'}, {disablePageCountReactivity:true}

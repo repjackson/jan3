@@ -204,9 +204,9 @@ Meteor.methods
                 username_display:'ID'
                 api_reverse_lookup:'NO'
                 id:'48297'
-                page_length:'5000'
+                page_length:'10000'
                 record_start:'55000'
-                record_count:'5000'
+                record_count:'10000'
         # return res.content
         # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
@@ -321,6 +321,7 @@ Meteor.methods
                         console.log "added #{doc.ID}"
     
     sync_customers: () ->
+        
         console.log 'starting customer sync'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
@@ -332,8 +333,8 @@ Meteor.methods
                 api_reverse_lookup:'NO'
                 id:'48302'
                 page_length:'20000'
-                record_start:'50000'
-                record_count:'1'
+                record_start:'40000'
+                record_count:'20000'
         # return res.content
         # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
@@ -350,13 +351,12 @@ Meteor.methods
                     existing_customer_doc = 
                         Docs.findOne 
                             type: 'customer'
-                            "ev.ID": doc.ID
                             "ev.CUST_NAME": doc.CUST_NAME
-                    # if existing_customer_doc
-                    #     console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
-                        # Docs.update existing_customer_doc._id,
-                        #     $set:
-                        #         ev: doc
+                    if existing_customer_doc
+                        console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
+                        Docs.update existing_customer_doc._id,
+                            $set:
+                                ev: doc
                     unless existing_customer_doc                    
                         new_customer_doc = Docs.insert 
                             type: 'customer'

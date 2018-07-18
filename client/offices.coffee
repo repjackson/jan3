@@ -129,7 +129,7 @@ Template.office_incidents.helpers
         fields: [
             { key: 'incident_office_name', label: 'Office' }
             { key: 'customer_name', label: 'Customer' }
-            { key: 'when', label: 'Logged'}
+            { key: 'timestamp', label: 'Logged', tmpl:Template.when_template, sortOrder:1, sortDirection:'descending' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
