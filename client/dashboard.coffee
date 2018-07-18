@@ -69,11 +69,33 @@ Template.customer_special_services.helpers
 Template.customer_incidents_widget.onCreated ->
     @autorun -> Meteor.subscribe 'my_customer_incidents'
 Template.customer_incidents_widget.helpers    
-    customer_incidents: ->  
-        user = Meteor.user()
-        if user and user.profile and user.profile.customer_jpid
-            # customer_doc = Docs.findOne "ev.ID":user.profile.customer_jpid
-            Docs.find {
-                customer_jpid: user.profile.customer_jpid
-                type: "incident"
-            }, limit:20
+    # customer_incidents: ->  
+    #     user = Meteor.user()
+    #     if user and user.profile and user.profile.customer_jpid
+    #         # customer_doc = Docs.findOne "ev.ID":user.profile.customer_jpid
+    #         Docs.find {
+    #             customer_jpid: user.profile.customer_jpid
+    #             type: "incident"
+    #         }, limit:20
+
+Template.customer_incidents_widget.helpers
+    customer_incidents: -> Docs.find type:'incident'
+    
+    settings: ->
+        rowsPerPage: 5
+        showFilter: true
+        showRowCount: true
+        # showColumnToggles: true
+        fields: [
+            { key: 'customer_name', label: 'Customer' }
+            { key: 'incident_office_name', label: 'Office' }
+            { key: '', label: 'Type', tmpl:Template.incident_type_label }
+            { key: 'when', label: 'Logged' }
+            { key: 'incident_details', label: 'Details' }
+            { key: 'level', label: 'Level' }
+            { key: 'status', label: 'Status', tmpl:Template.status_template}
+            { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
+            { key: '', label: 'Assigned To', tmpl:Template.associated_users }
+            # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
+            { key: '', label: 'View', tmpl:Template.view_button }
+        ]

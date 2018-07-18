@@ -8,11 +8,11 @@ template(name='dashboard')
     .ui.padded.stackable.grid
         if currentUser.users_customer.parent_franchisee.parent_office.customer_message
             .row
-                .ui.container
+                .sixteen.wide.column
                     .ui.info.icon.floating.message
                         i.info.icon
                         .content
-                            .header #{currentUser.users_customer.parent_franchisee.parent_office.office_name} Message
+                            .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Message
                             p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
         .row
             .sixteen.wide.column
@@ -106,33 +106,8 @@ template(name='customer_incidents_widget')
         // i.exclamation.circle.icon
         +icon name='error'
         | #{currentUser.users_customer.ev.CUST_NAME}'s Incidents
-    table.ui.basic.striped.table
-        thead
-            tr
-                th Type
-                th When
-                th Details
-                th Level
-                th Status
-                th Submitted
-                th History
-                th Actions
-        tbody
-            each customer_incidents
-                tr
-                    td
-                        +incident_type_label
-                    td #{when}
-                    td #{incident_details}
-                    td #{level}
-                    td 
-                        +status_template
-                    td 
-                        +submitted_template
-                    td
-                        +small_doc_history
-                    td 
-                        +view_button
+    +reactiveTable settings=settings collection=customer_incidents class="ui celled striped sortable table"
+        
 
 template(name='status_template')
     if open

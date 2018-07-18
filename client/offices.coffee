@@ -133,8 +133,8 @@ Template.office_incidents.helpers
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
-            { key: '', label: 'Assigned To', tmpl:Template.associated_users }
-            { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
+            # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
+            # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
 

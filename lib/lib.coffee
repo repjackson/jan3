@@ -1,4 +1,6 @@
 @Docs = new Meteor.Collection 'docs'
+@Settings = new Meteor.Collection 'settings'
+
 
 Docs.before.insert (userId, doc)->
     timestamp = Date.now()

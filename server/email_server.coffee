@@ -114,7 +114,7 @@ Meteor.methods
                 <h4>This will notify</h4>
                 <h5>Primary Office Contact: #{escalation_primary_contact_value}</h5>
                 <h5>Secondary Office Contact: #{escalation_secondary_contact_value}</h5>
-                <h5>Franchisee: #{escalation_franchisee_value}</h5>
+                <h5>Franchisee: #{escalation_franchisee_value}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
             "
         }
         Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{escalation_primary_contact_value} has been emailed as the primary contact for escalation to level #{incident.level}."

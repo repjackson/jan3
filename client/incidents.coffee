@@ -78,7 +78,7 @@ Template.incidents.helpers
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
             # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
-            { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
+            # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
 
@@ -102,7 +102,7 @@ Template.customer_incidents.helpers
             { key: 'status', label: 'Status', tmpl:Template.status_template}
             { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
             { key: '', label: 'Assigned To', tmpl:Template.associated_users }
-            { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
+            # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
 
@@ -117,7 +117,7 @@ Template.incident_view.helpers
     can_submit: -> 
         user = Meteor.user()
         is_customer = user and user.roles and 'customer' in user.roles
-        @service_date and @incident_details and @incident_type and is_customer
+        @service_date and @incident_details and @incident_type and is_customer and not @submitted
     
     can_edit_core: ->
         user = Meteor.user()

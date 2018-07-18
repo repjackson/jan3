@@ -8,7 +8,7 @@ template(name='incidents')
                     +icon name='error'
                     | All Incidents
             .three.wide.column
-                if is_admin
+                unless is_customer
                     +call_method name='update_escalation_statuses' label='Run Escalation Check'
         .row
             .sixteen.wide.column
@@ -27,13 +27,15 @@ template(name='incident_view')
                         | My Incidents    
                 else
                     +link_button link='/incidents' icon='user-shield' label='All Incidents'
-            .ten.wide.column
+            .nine.wide.column
                 h1.ui.center.aligned.grey.header #{customer_name} Incident #{incident_number}
-            .three.wide.column
+            .four.wide.column
                 .ui.icon.remove_incident.button(title='Delete Incident')
                     i.remove.icon
                 if is_admin
-                    #run_single_escalation_check.ui.button Run Escalation Check
+                    #run_single_escalation_check.ui.button 
+                        i.user.shield.icon
+                        |Run Escalation Check
         .row
             .four.wide.column
                 // if is_dev
@@ -107,12 +109,13 @@ template(name='incident_view')
                         .unsubmit.ui.fluid.button
                             i.user.shield.icon
                             |Unsubmit
-                    if can_submit
-                        .submit.ui.fluid.large.button
-                            i.green.checkmark.icon
-                            |Submit
-                else
-                    .ui.secondary.segment Fill Date, Details, and Type to Submit
+                if can_submit
+                    .submit.ui.fluid.large.button
+                        i.green.checkmark.icon
+                        |Submit
+                if is_customer
+                    unless submitted
+                        .ui.secondary.segment Fill Date, Details, and Type to Submit
                 unless is_customer
                     if submitted
                         .ui.secondary.segment
