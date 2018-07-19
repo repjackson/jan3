@@ -1,0 +1,89 @@
+template(name='office_customers')
+    +office_header
+    h1.ui.grey.header Office Customers
+    +reactiveTable settings=settings class="ui celled striped sortable table"
+
+template(name='office_incidents')
+    +office_header
+    h1.ui.grey.header Office Incidents
+    +reactiveTable settings=settings class="ui celled striped sortable table"
+
+
+template(name='office_employees')
+    +office_header
+    h1.ui.grey.header Office Employees
+    +reactiveTable settings=settings collection=collection class="ui celled striped sortable table"
+
+template(name='office_franchisees')
+    +office_header
+    h1.ui.grey.header Office Franchisees
+    +reactiveTable settings=settings class="ui celled striped sortable table"
+
+template(name='office_header')
+    with office_doc
+        .ui.padded.stackable.grid
+            .centered.middle.aligned.row
+                .three.wide.column
+                    if is_admin
+                        +link_button link='/offices' icon='building' label='Offices'
+                .ten.wide.column
+                    h1.ui.center.aligned.grey.header #{ev.MASTER_LICENSEE} Office
+                .three.wide.right.aligned.column
+                    // +edit_button
+            .centered.row
+                .sixteen.wide.center.aligned.column
+                    .ui.horizontal.list
+                        .item ##{ev.ID}
+                        // .item Office Name
+                        //     strong #{ev.MASTER_LICENSEE}
+                        .item Owner
+                            strong #{ev.MASTER_OFFICE_OWNER}
+                        .item Manager
+                            strong #{ev.MASTER_OFFICE_MANAGER}
+                        // .item Last Updated
+                        //     strong #{ev.TIMESTAMP}
+                        .item #{ev.TELEPHONE}
+                        .item 
+                            |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                            a(href=office_map_address target='_blank')
+                                i.external.icon
+
+
+template(name='office_settings')
+    with my_office
+        // h2.ui.header 
+        //     +icon name='sms'
+        //     | Customer Message
+        // .ui.sub.header Shown on customer dashboard
+        +edit_text_field key='customer_message' label='Customer Dashboard Message'
+        // p #{customer_message}
+        // h2.ui.header 
+        //     +icon name='checked-user-male'
+        //     |Office Roles
+        // .ui.two.column.stackable.grid
+        //     .column
+        //         +single_user_select key='office_owner' label='Office Owner'
+        //     .column
+        //         +single_user_select key='operations_manager' label='Operations Manager'
+        h3.ui.header 
+            +icon name='administrative-tools'
+            |SLA
+        // h3.ui.header Initial
+        // p ie type=level2
+        each rule_docs
+            .ui.secondary.segment
+                h3.ui.header #{name}
+                .ui.two.column.padded.grid
+                    unless is_initial
+                        .row
+                            +edit_number_field key=hours_key label='Escalation Hours (currently minutes for testing)' field_class='inline' min=0 max=24
+                    .row
+                        +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
+                    .row
+                        .column
+                            h4.ui.dividing.header Primary Contact
+                            +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
+                        .column
+                            h4.ui.dividing.header Secondary Contact
+                            +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
+    

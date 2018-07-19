@@ -3,13 +3,15 @@ FlowRouter.route '/history',
     action: -> BlazeLayout.render 'layout', main: 'history'
 Template.history.helpers
     settings: ->
-        collection: 'jpsearch_history_docs'
+        collection: 'search_history_docs'
         rowsPerPage: 10
         showFilter: true
         showRowCount: true
         # showColumnToggles: true
         fields: [
             { key: 'ev.ID', label: 'JPID' }
+            { key: 'ev.TIMESTAMP', label: 'EV Timestamp' }
+            
             { key: 'ev.FRANCHISEE', label: 'Franchisee' }
             { key: 'ev.CUSTOMER', label: 'Customer' }
             { key: 'ev.FRANCH_EMAIL', label: 'Email' }

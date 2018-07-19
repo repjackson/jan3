@@ -1,5 +1,5 @@
 template(name='nav')
-    .nav_bar.ui.inverted.top.attached.pointing.menu
+    .nav_bar.ui.inverted.top.attached.borderless.menu
         a.toggle_left_sidebar.icon.item 
             i.bars.icon
         if is_customer
@@ -18,6 +18,26 @@ template(name='nav')
                 i.large.icon
                     +icon name='link-company-parent'
                 | &nbsp; #{my_office.ev.MASTER_LICENSEE}
+            a.item(href="/office/#{my_office._id}/incidents")
+                i.large.icon
+                    +icon name='error'
+                | &nbsp; Incidents
+            a.item(href="/office/#{my_office._id}/employees")
+                i.large.icon
+                    +icon name='groups'
+                | &nbsp; Employees
+            a.item(href="/office/#{my_office._id}/franchisees")
+                i.large.icon
+                    +icon name='conference'
+                | &nbsp; Franchisees
+            a.item(href="/office/#{my_office._id}/customers")
+                i.large.icon
+                    +icon name='customer-support'
+                | &nbsp; Customers
+            a.item(href="/office/#{my_office._id}/settings")
+                i.large.icon
+                    +icon name='settings'
+                | &nbsp; Settings
         if is_admin
             a.mobile.hidden.item(href='/incidents')
                 i.large.icon

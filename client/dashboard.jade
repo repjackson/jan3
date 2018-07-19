@@ -16,34 +16,38 @@ template(name='dashboard')
                             p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
         .row
             .sixteen.wide.column
-                +customer_incidents_widget
+                .ui.secondary.segment
+                    +customer_incidents_widget
         .row
             .sixteen.wide.column
-                +office_contact_cards
+                .ui.secondary.segment
+                    +office_contact_cards
         .row
             with currentUser.users_customer.parent_franchisee
                 .sixteen.wide.column
-                    h3.ui.header 
-                        +icon name='conference'
-                        // |#{ev.FRANCHISEE} Franchisee Contact
-                        |Your Local Jan-Pro Contact
-                    table.ui.sortable.striped.table
-                        tbody
-                            tr
-                                td #{ev.FRANCHISEE}
-                                td(title='Short Name') #{ev.FRANCH_NAME}
-                                td #{ev.FRANCH_EMAIL}
-                                td #{ev.TELE_CELL}
-                                td
-                                    a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
-                                        // i.mail.icon
-                                        +icon name='send'
+                    .ui.secondary.segment
+                        h3.ui.header 
+                            +icon name='conference'
+                            // |#{ev.FRANCHISEE} Franchisee Contact
+                            |Your Local Jan-Pro Contact
+                        table.ui.sortable.striped.table
+                            tbody
+                                tr
+                                    td #{ev.FRANCHISEE}
+                                    td(title='Short Name') #{ev.FRANCH_NAME}
+                                    td #{ev.FRANCH_EMAIL}
+                                    td #{ev.TELE_CELL}
+                                    td
+                                        a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
+                                            // i.mail.icon
+                                            +icon name='send'
         .centered.row
-            .twelve.wide.column
-                +dashboard_office_contacts_list
-        .centered.row
-            .sixteen.wide.column
-                +customer_special_services
+            .eight.wide.column
+                .ui.secondary.segment
+                    +dashboard_office_contacts_list
+            .eight.wide.column
+                .ui.secondary.segment
+                    +customer_special_services
         // .centered.row
         //     .five.wide.column
         //         +my_customer_account_card
@@ -125,38 +129,37 @@ template(name='submitted_template')
 
 
 template(name='customer_special_services')
-    .ui.secondary.segment
-        h3.ui.header 
-            // i.paint.brush.icon
-            +icon name='broom'
-            |Services Overview
-        with currentUser.users_customer
-            .ui.horizontal.divided.list
-                .item #{customer_contact_person}
-                .item #{customer_contact_email}
-                .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
-                .item Days of Service: #{ev.CUST_DAYS_SERVICE}
-                .item Regular Service Amount: #{ev.CUST_REG_SERVICE_AMT}
-        .ui.header Special Services
-        table.ui.sortable.striped.table
-            thead
+    h3.ui.header 
+        // i.paint.brush.icon
+        +icon name='broom'
+        |Services Overview
+    with currentUser.users_customer
+        .ui.horizontal.divided.list
+            .item #{customer_contact_person}
+            .item #{customer_contact_email}
+            .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
+            .item Days of Service: #{ev.CUST_DAYS_SERVICE}
+            .item Regular Service Amount: #{ev.CUST_REG_SERVICE_AMT}
+    .ui.header Special Services
+    table.ui.sortable.striped.table
+        thead
+            tr
+                // th JPID
+                th Customer
+                th Service Type
+                th Description
+                th Date Created
+                th Extra Price
+                
+        tbody
+            each my_special_services
                 tr
-                    // th JPID
-                    th Customer
-                    th Service Type
-                    th Description
-                    th Date Created
-                    th Extra Price
-                    
-            tbody
-                each my_special_services
-                    tr
-                        // td #{ev.ID}
-                        td #{ev.CUSTOMER}
-                        td #{ev.SERV_TYPE}
-                        td #{ev.EXTRA_SERV_DESC}
-                        td #{ev.DATE_CREATED}
-                        td #{ev.EXTRA_PRICE}
+                    // td #{ev.ID}
+                    td #{ev.CUSTOMER}
+                    td #{ev.SERV_TYPE}
+                    td #{ev.EXTRA_SERV_DESC}
+                    td #{ev.DATE_CREATED}
+                    td #{ev.EXTRA_PRICE}
 
 
 
@@ -164,6 +167,7 @@ template(name='dashboard_office_contacts_list')
     h3.ui.header 
         +icon name='organization'
         |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Contacts
+
     table.ui.sortable.striped.table
         tbody
             each office_contacts

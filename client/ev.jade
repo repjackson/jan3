@@ -86,51 +86,9 @@ template(name='history')
         .row
             .sixteen.wide.column
                 .ui.header Search API Results
-                table.ui.celled.table
-                    thead
-                        tr
-                            th JPID
-                            th Area
-                            th Timestamp
-                            th Last Change User
-                            th Project
-                            th Franchisee
-                            th
-                    tbody
-                        each search_history_docs
-                            tr
-                                td #{ev.ID}
-                                td #{ev.AREA}
-                                td #{ev.TIMESTAMP}
-                                td #{ev.LAST_CHANGE_USER}
-                                td #{ev.PROJECT}
-                                td #{ev.FRANCHISEE}
-                                td 
-                                    +view_button
+                +reactiveTable settings=settings class="ui celled striped sortable table"
 
                 // +tabular table=TabularTables.Search_history selector=search_history_selector class="ui sortable fluid striped table"
-                .ui.header History API Results
-                table.ui.celled.table
-                    thead
-                        tr
-                            th JPID
-                            th Area
-                            th Timestamp
-                            th Last Change User
-                            th Project
-                            th Franchisee
-                            th
-                    tbody
-                        each history_docs
-                            tr
-                                td #{ev.ID}
-                                td #{ev.AREA}
-                                td #{ev.TIMESTAMP}
-                                td #{ev.LAST_CHANGE_USER}
-                                td #{ev.PROJECT}
-                                td #{ev.FRANCHISEE}
-                                td 
-                                    +view_button
 
                     
 template(name='history_view')
@@ -240,3 +198,24 @@ template(name='office_by_franchisee')
             +icon name='link-company-parent'
         with parent_office
             | #{ev.MASTER_LICENSEE}
+            
+template(name='offices')
+    .ui.stackable.centered.padded.grid
+        .middle.aligned.row
+            .three.wide.column
+                +link_button link='/admin' icon='user-shield' label='Admin'
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    +icon name='building'
+                    |Offices
+            .three.wide.column
+                // if is_dev
+                // +call_method name='sync_offices'
+        .row
+            .sixteen.wide.column
+                +reactiveTable settings=settings class="ui celled striped sortable table"
+
+
+                    
+
+            

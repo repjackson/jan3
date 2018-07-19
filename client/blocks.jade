@@ -52,7 +52,7 @@ template(name='view_user_button')
     a.ui.icon.button(href="/user/#{username}" title="View #{username}") 
         // +avatar_sprite name='chevron-right'
         // +icon name='circled-chevron-right'
-        i.right.chevron.icon
+        i.right.chevron.green.icon
         
 template(name='edit_user_button')
     a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}") 
@@ -449,9 +449,11 @@ template(name='dusk_icon')
 
 template(name='icon')
     if is_customer
-        img.ui.mini.image(src="https://png.icons8.com/office/80/000000/#{name}.png" class=classes)
-    else
+        img.ui.mini.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes)
+    if is_admin
         img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes)
+    if is_officer
+        img.ui.mini.image(src="https://png.icons8.com/office/64/000000/#{name}.png" class=classes)
 template(name='iconlarge')
     if is_customer
         img.ui.image(src="https://png.icons8.com/office/60/000000/#{name}.png")
