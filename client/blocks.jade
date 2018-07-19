@@ -448,17 +448,22 @@ template(name='dusk_icon')
     img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
 template(name='icon')
+    unless currentUser
+        img.ui.mini.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes)
     if is_customer
         img.ui.mini.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes)
     if is_admin
         img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes)
     if is_officer
         img.ui.mini.image(src="https://png.icons8.com/office/64/000000/#{name}.png" class=classes)
+
+
 template(name='iconlarge')
     if is_customer
         img.ui.image(src="https://png.icons8.com/office/60/000000/#{name}.png")
     else
         img.ui.image(src="https://png.icons8.com/ultraviolet/60/000000/#{name}.png")
+
 template(name='iconsmall')
     // img.ui.image(src="https://png.icons8.com/ultraviolet/30/000000/#{name}.png")
 

@@ -4,6 +4,12 @@ Template.left_sidebar.events
         Meteor.logout()
 
     
+Template.nav.events
+    'click #logout': (e,t)-> 
+        e.preventDefault()
+        Meteor.logout()
+
+    
 Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'my_customer_account'
     @autorun -> Meteor.subscribe 'my_franchisee'

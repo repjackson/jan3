@@ -73,23 +73,20 @@ template(name='nav')
                 // a.item(href='/mail')
                 //     i.large.icon
                 //         +icon name='chat'
-                if is_admin
-                    a.icon.item(href='/feed')
-                        i.bell.icon
                 a.item(href="/user/#{currentUser.username}")
                     if currentUser.profile.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
-                    //  |#{currentUser.username}
-                // if currentUser.name
-                //      #{currentUser.name}
-                // else
+                a#logout.ui.item(href='#') 
+                    | Sign Out
+                    i.sign.out.icon
+
             else
                 a.ui.item(href='/login') 
                     // +icon name='login-rounded-right'
-                    i.right.chevron.icon
                     | &nbsp; Log In
+                    i.right.chevron.icon
 
 
 

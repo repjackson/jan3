@@ -100,7 +100,8 @@ template(name='office_contact_card')
                 .meta #{username}
         .content
             .ui.small.list
-                .item #{email}
+                a.item(href="mailto:#{email}" target='_window' title="Email #{name}")
+                    |#{email}
                 .item #{ev.JOB_TITLE}
                 
         // +view_button
@@ -145,7 +146,7 @@ template(name='customer_special_services')
         thead
             tr
                 // th JPID
-                th Customer
+                // th Customer
                 th Service Type
                 th Description
                 th Date Created
@@ -155,7 +156,7 @@ template(name='customer_special_services')
             each my_special_services
                 tr
                     // td #{ev.ID}
-                    td #{ev.CUSTOMER}
+                    // td #{ev.CUSTOMER}
                     td #{ev.SERV_TYPE}
                     td #{ev.EXTRA_SERV_DESC}
                     td #{ev.DATE_CREATED}
