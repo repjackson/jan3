@@ -9,7 +9,7 @@ if Meteor.isClient
         # feed_events: -> Docs.find {type:'event'}, sort:timestamp:-1
         settings: ->
             collection: 'events'
-            rowsPerPage: 20
+            rowsPerPage: 10
             showFilter: true
             showRowCount: true
             # showColumnToggles: true
@@ -17,7 +17,7 @@ if Meteor.isClient
                 { key: 'author_id', label: 'Author', tmpl:Template.author_info }
                 { key: 'text', label: 'Text' }
                 { key: 'action', label: 'Action' }
-                { key: 'parent_id', label: 'Parent Link', tmpl:Template.parent_link }
+                # { key: 'parent_id', label: 'Parent Link', tmpl:Template.parent_link }
                 { key: 'timestamp', label: 'Logged', tmpl:Template.when_template }
                 { key: 'timestamp_tags', label: 'Time Tags' }
                 { key: '', label: 'Mark Read', tmpl:Template.mark_read_link }

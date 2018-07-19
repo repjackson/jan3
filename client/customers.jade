@@ -27,10 +27,6 @@ template(name='customer_view')
             .three.wide.right.aligned.column
                 +edit_button
         // unless is_customer
-        if ev.FRANCHISEE
-            .centered.row
-                .fifteen.wide.column
-                    +customers_franchisee
         .centered.row
             .twelve.wide.column
                 .ui.secondary.segment
@@ -62,6 +58,10 @@ template(name='customer_view')
                             strong #{CUST_DAYS_SERVICE}
                         div Regular Service Amount
                             strong #{CUST_REG_SERVICE_AMT}
+        if ev.FRANCHISEE
+            .centered.row
+                .fifteen.wide.column
+                    +customers_franchisee
 
                 
                 
@@ -72,20 +72,21 @@ template(name='franchisee_customers')
 
 template(name='customers_franchisee')    
     with customers_franchisee_doc
-        .ui.header 
-            |#{ev.CUST_NAME}'s Franchisee
-        .ui.list
-            .item ID
-                strong #{jpid}
-                // strong #{ev.ID}
-            .item Name
-                strong #{franchisee}
-            .item 
-                #{franchisee_email}
-            // .item Cell:
-            //     strong #{ev.TELE_CELL}
-            .item 
-                +view_button
+        .ui.secondary.segment
+            .ui.header 
+                |#{ev.CUST_NAME}'s Franchisee
+            .ui.list
+                .item ID
+                    strong #{jpid}
+                    // strong #{ev.ID}
+                .item Name
+                    strong #{franchisee}
+                .item 
+                    #{franchisee_email}
+                // .item Cell:
+                //     strong #{ev.TELE_CELL}
+                .item 
+                    +view_button
                 
                 
                 

@@ -50,6 +50,7 @@ template(name='role_switcher')
     .ui.inverted.header 
         +icon name='user-shield'
         |Role Switcher
+    h5.ui.inverted.header Switching reloads the page
     each role_docs
         .change_role.ui.button(class=role_button_class)
             |#{name}

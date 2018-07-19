@@ -5,7 +5,7 @@ Template.services.onCreated () ->
 Template.services.helpers
     settings: ->
         collection: 'special_services'
-        rowsPerPage: 20
+        rowsPerPage: 10
         showFilter: true
         showRowCount: true
         # showColumnToggles: true

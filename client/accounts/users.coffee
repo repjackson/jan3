@@ -12,7 +12,7 @@ Template.users.onCreated ->
 Template.users.helpers
     settings: ->
         collection: 'users'
-        rowsPerPage: 50
+        rowsPerPage: 10
         showFilter: true
         # showColumnToggles: true
         showRowCount: true

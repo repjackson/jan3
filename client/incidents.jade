@@ -285,22 +285,21 @@ template(name='incident_sla_widget')
 template(name='sla_rule_doc')            
     .ui.dividing.header 
         if is_level
-            i.green.checkmark.icon
+            i.green.checkmark.icon(title="Current Level: #{number}")
+        unless is_level
+            .set_level.ui.small.compact.button(title="Manually set incident to #{number}") Set #{number}
         |#{name}
     .content
-        unless is_level
-            .set_level.ui.small.compact.button Set #{number}
-        strong Hours: #{hours_value}
-    .content
-        .ui.sub.header Primary Contact
-        .item #{primary_contact_value} 
-        if primary_franchisee_toggle_value
+        unless is_initial
+            strong Hours: #{hours_value}
+        if franchisee_toggle_value
             .item Franchisee
     .content
-        .ui.sub.header Secondary Contact
-        .item #{secondary_contact_value} 
-        if secondary_franchisee_toggle_value
-            .item Franchisee
+        | Primary Contact
+        strong #{primary_contact_value} 
+    .content
+        | Secondary Contact
+        strong #{secondary_contact_value} 
             //     .ui.disabled.button Can't Set #{number}
             
     // .ui.incident.modal

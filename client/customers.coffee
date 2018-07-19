@@ -4,10 +4,10 @@ FlowRouter.route '/customers',
 Template.customers.helpers
     settings: ->
         collection: 'customers'
-        rowsPerPage: 20
+        rowsPerPage: 10
         showFilter: true
         showRowCount: true
-        noDataTmpl: 'no_data'
+        # noDataTmpl: 'no_data'
         # showColumnToggles: true
         fields: [
             { key: 'ev.CUST_NAME', label: 'Customer Name' }
@@ -35,7 +35,7 @@ Template.franchisee_customers.helpers
             # franchisee: page_doc.franchisee
 
     settings: ->
-        rowsPerPage: 20
+        rowsPerPage: 10
         showFilter: false
         showRowCount: false
         # showColumnToggles: true

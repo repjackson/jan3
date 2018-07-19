@@ -4,7 +4,7 @@ FlowRouter.route '/history',
 Template.history.helpers
     settings: ->
         collection: 'jpsearch_history_docs'
-        rowsPerPage: 20
+        rowsPerPage: 10
         showFilter: true
         showRowCount: true
         # showColumnToggles: true
@@ -38,7 +38,7 @@ Template.jpids.onCreated ->
 Template.jpids.helpers
     settings: ->
         collection: 'jpids'
-        rowsPerPage: 20
+        rowsPerPage: 10
         showFilter: true
         showRowCount: true
         # showColumnToggles: true
@@ -102,7 +102,7 @@ FlowRouter.route '/franchisees',
 Template.franchisees.helpers
     settings: ->
         collection: 'franchisees'
-        rowsPerPage: 20
+        rowsPerPage: 10
         showFilter: true
         showRowCount: true
         # showColumnToggles: true

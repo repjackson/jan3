@@ -61,7 +61,7 @@ Template.incident_type_label.helpers
 Template.incidents.helpers
     settings: ->
         collection: 'incidents'
-        rowsPerPage: 20
+        rowsPerPage: 10
         showFilter: true
         showRowCount: true
         # showColumnToggles: true
@@ -88,7 +88,7 @@ Template.customer_incidents.onCreated ->
 Template.customer_incidents.helpers
     customer_incidents: -> Docs.find type:'incident'
     settings: ->
-        rowsPerPage: 20
+        rowsPerPage: 10
         showFilter: true
         showRowCount: true
         # showColumnToggles: true
@@ -243,7 +243,10 @@ Template.incident_view.events
 
 Template.incident_sla_widget.helpers
     sla_rule_docs: -> Docs.find {type:'rule'}, sort:number:1
+
 Template.sla_rule_doc.helpers
+    is_initial: -> @number is 0    
+
     can_escalate: -> 
         doc_id = FlowRouter.getParam 'doc_id'
         incident = Docs.findOne doc_id
@@ -274,65 +277,58 @@ Template.sla_rule_doc.helpers
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
     
-    hours_value: -> 
-        user = Meteor.user()
-        if user and user.profile and user.profile.customer_jpid
+    hours_value: ->
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        if incident and incident.customer_jpid
             customer_doc = Docs.findOne
-                "ev.ID": user.profile.customer_jpid
+                "ev.ID": incident.customer_jpid
                 type:'customer'
             if customer_doc
-                users_office = Docs.findOne
+                incident_office = Docs.findOne
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
-                users_office["escalation_#{@number}_hours"]
+                incident_office["escalation_#{@number}_hours"]
 
-    primary_franchisee_toggle_value: ->
-        user = Meteor.user()
-        if user and user.profile and user.profile.customer_jpid
+    franchisee_toggle_value: ->
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        if incident and incident.customer_jpid
             customer_doc = Docs.findOne
-                "ev.ID": user.profile.customer_jpid
+                "ev.ID": incident.customer_jpid
                 type:'customer'
             if customer_doc
-                users_office = Docs.findOne
+                incident_office = Docs.findOne
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
-                users_office["escalation_#{@number}_primary_contact_franchisee"]
+                incident_office["escalation_#{@number}_contact_franchisee"]
     
-    primary_contact_value: -> 
-        user = Meteor.user()
-        if user and user.profile and user.profile.customer_jpid
+    primary_contact_value: ->
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        if incident and incident.customer_jpid
             customer_doc = Docs.findOne
-                "ev.ID": user.profile.customer_jpid
+                "ev.ID": incident.customer_jpid
                 type:'customer'
             if customer_doc 
-                users_office = Docs.findOne
+                incident_office = Docs.findOne
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
-                users_office["escalation_#{@number}_primary_contact"]
+                incident_office["escalation_#{@number}_primary_contact"]
 
-    secondary_franchisee_toggle_value: ->
-        user = Meteor.user()
-        if user and user.profile and user.profile.customer_jpid
-            customer_doc = Docs.findOne
-                "ev.ID": user.profile.customer_jpid
-                type:'customer'
-            if customer_doc
-                users_office = Docs.findOne
-                    "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
-                    type:'office'
-                users_office["escalation_#{@number}_secondary_contact_franchisee"]
     
-    secondary_contact_value: -> 
-        user = Meteor.user()
-        if user and user.profile and user.profile.customer_jpid
+    secondary_contact_value: ->
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
+        if incident and incident.customer_jpid
             customer_doc = Docs.findOne
-                "ev.ID": user.profile.customer_jpid
+                "ev.ID": incident.customer_jpid
                 type:'customer'
             if customer_doc
-                users_office = Docs.findOne
+                incident_office = Docs.findOne
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
-                users_office["escalation_#{@number}_secondary_contact"]
+                incident_office["escalation_#{@number}_secondary_contact"]
 
 
 Template.sla_rule_doc.events
