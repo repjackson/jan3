@@ -166,7 +166,8 @@ Template.office_employees.helpers
             { key: 'username', label: 'Username' }
             { key: 'profile.first_name', label: 'First Name' }
             { key: 'profile.last_name', label: 'Last Name' }
-            { key: 'ev.JOB_TITLE', label: 'Job Title' }
+            { key: 'profile.title', label: 'Title' }
+            # { key: 'ev.JOB_TITLE', label: 'Job Title' }
             { key: 'ev.WORK_TELEPHONE', label: 'Work Tel' }
             { key: 'email', label: 'Email' }
             { key: '', label: 'Public', tmpl:Template.toggle_user_published }

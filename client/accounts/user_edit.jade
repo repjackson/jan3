@@ -30,14 +30,8 @@ template(name='user_edit')
                             +edit_profile_text_field key='first_name' label='First Name'
                         .field
                             +edit_profile_text_field key='last_name' label='Last Name'
-                        // .field
-                        //     label First Name 
-                        //     .ui.input
-                        //         input#first_name(type='text' value=profile.first_name)
-                        // .field
-                        //     label Last Name 
-                        //     .ui.input
-                        //         input#last_name(type='text' value=profile.last_name)
+                        .field
+                            +edit_profile_text_field key='title' label='Job Title'
                         .field
                             label Email
                             each emails

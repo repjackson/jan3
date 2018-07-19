@@ -3,8 +3,8 @@ FlowRouter.route '/', action: ->
         main: 'dashboard'
 
 
-Template.my_office_contacts.helpers
-    crew: -> 
+Template.office_contact_cards.helpers
+    office_contacts: -> 
         user = Meteor.user()
         # console.log 'franch_doc', franch_doc
         if user and user.profile and user.profile.customer_jpid

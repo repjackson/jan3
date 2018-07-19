@@ -19,13 +19,14 @@ template(name='dashboard')
                 +customer_incidents_widget
         .row
             .sixteen.wide.column
-                +my_office_contacts
+                +office_contact_cards
         .row
             with currentUser.users_customer.parent_franchisee
                 .sixteen.wide.column
                     h3.ui.header 
                         +icon name='conference'
-                        |#{ev.FRANCHISEE} Franchisee Contact
+                        // |#{ev.FRANCHISEE} Franchisee Contact
+                        |Your Local Jan-Pro Contact
                     table.ui.sortable.striped.table
                         tbody
                             tr
@@ -37,8 +38,8 @@ template(name='dashboard')
                                     a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
                                         // i.mail.icon
                                         +icon name='send'
-        .row
-            .sixteen.wide.column
+        .centered.row
+            .twelve.wide.column
                 +dashboard_office_contacts_list
         .centered.row
             .sixteen.wide.column
@@ -73,7 +74,7 @@ template(name='my_cleaning_schedule')
                 +fullcalendar cal_options
             
         
-template(name='my_office_contacts')
+template(name='office_contact_cards')
     h3.ui.header 
         +icon name='contacts'
         // i.large.icons
@@ -81,7 +82,7 @@ template(name='my_office_contacts')
         //     i.corner.building.icon
         |Office Contacts
     .ui.six.stackable.centered.cards
-        each crew
+        each office_contacts
             +office_contact_card
 
 template(name='office_contact_card')
@@ -140,7 +141,7 @@ template(name='customer_special_services')
         table.ui.sortable.striped.table
             thead
                 tr
-                    th JPID
+                    // th JPID
                     th Customer
                     th Service Type
                     th Description
@@ -150,7 +151,7 @@ template(name='customer_special_services')
             tbody
                 each my_special_services
                     tr
-                        td #{ev.ID}
+                        // td #{ev.ID}
                         td #{ev.CUSTOMER}
                         td #{ev.SERV_TYPE}
                         td #{ev.EXTRA_SERV_DESC}
@@ -167,10 +168,10 @@ template(name='dashboard_office_contacts_list')
         tbody
             each office_contacts
                 tr
-                    td #{title}
                     td 
                         img.ui.avatar.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
                         |#{profile.first_name} #{profile.last_name}
+                    td #{profile.title}
                     td 
                         |#{ev.WORK_TELEPHONE} #{ev.JOB_TITLE}
                         |#{email}
