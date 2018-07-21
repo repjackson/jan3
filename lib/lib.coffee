@@ -173,6 +173,7 @@ Meteor.methods
     #             $addToSet: completed_ids: Meteor.userId()
     #             $inc: completed_count: 1
     
+    
     mark_read: (doc)->
         if doc.read_by and Meteor.userId() in doc.read_by
             Docs.update doc._id,

@@ -26,16 +26,12 @@ template(name='layout')
     .context.example
         +nav
         .ui.bottom.attached.basic.segment.pushable
-            // +top_sidebar
             +left_sidebar
-            // +right_sidebar
             .pusher
                 #main_area
                     +Template.dynamic template=sub_nav
                     +Template.dynamic template=main
-            // +bottom_sidebar
-    +footer
-        // +jsonView json=doc
+        +footer
 
 
 template(name='not_found')

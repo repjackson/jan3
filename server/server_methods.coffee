@@ -414,10 +414,22 @@ Meteor.methods
             Meteor.call 'email_about_escalation', doc_id
 
 
-    'clear_incident_events': (incident_id)->
+    clear_incident_events: (incident_id)->
         cursor = Docs.find
             parent_id: incident_id
             type:'event'
         for event_doc in cursor.fetch()
             # console.log event_doc
             Docs.remove event_doc._id
+
+
+
+    check_username: (username)->
+        found_user = Accounts.findUserByUsername username
+        console.log found_user
+        found_user
+    
+    check_email: (email)->
+        found_user = Accounts.findUserByEmail email
+        console.log found_user
+        found_user
