@@ -285,82 +285,82 @@ Template.edit_profile_text_field.events({
   }
 });
 
-Template.complete.events({
-  'click #mark_complete': function(e, t) {
-    return Docs.update(this._id, {
-      $set: {
-        complete: true
-      }
-    });
-  },
-  'click #mark_incomplete': function(e, t) {
-    return Docs.update(this._id, {
-      $set: {
-        complete: false
-      }
-    });
-  }
-});
+// Template.complete.events({
+//   'click #mark_complete': function(e, t) {
+//     return Docs.update(this._id, {
+//       $set: {
+//         complete: true
+//       }
+//     });
+//   },
+//   'click #mark_incomplete': function(e, t) {
+//     return Docs.update(this._id, {
+//       $set: {
+//         complete: false
+//       }
+//     });
+//   }
+// });
 
-Template.complete.helpers({
-  complete_class: function() {
-    if (this.complete) {
-      return 'green';
-    } else {
-      return 'basic';
-    }
-  },
-  incomplete_class: function() {
-    if (this.complete) {
-      return 'basic';
-    } else {
-      return 'red';
-    }
-  }
-});
+// Template.complete.helpers({
+//   complete_class: function() {
+//     if (this.complete) {
+//       return 'green';
+//     } else {
+//       return 'basic';
+//     }
+//   },
+//   incomplete_class: function() {
+//     if (this.complete) {
+//       return 'basic';
+//     } else {
+//       return 'red';
+//     }
+//   }
+// });
 
-Template.toggle_follow.helpers({
-  is_following: function() {
-    var ref, ref1;
-    if ((ref = Meteor.user()) != null ? ref.following_ids : void 0) {
-      return ref1 = this._id, indexOf.call(Meteor.user().following_ids, ref1) >= 0;
-    }
-  }
-});
+// Template.toggle_follow.helpers({
+//   is_following: function() {
+//     var ref, ref1;
+//     if ((ref = Meteor.user()) != null ? ref.following_ids : void 0) {
+//       return ref1 = this._id, indexOf.call(Meteor.user().following_ids, ref1) >= 0;
+//     }
+//   }
+// });
 
-Template.toggle_follow.events({
-  'click #follow': function(e, t) {
-    return Meteor.users.update(Meteor.userId(), {
-      $addToSet: {
-        following_ids: this._id
-      }
-    });
-  },
-  'click #unfollow': function(e, t) {
-    return Meteor.users.update(Meteor.userId(), {
-      $pull: {
-        following_ids: this._id
-      }
-    });
-  }
-});
+// Template.toggle_follow.events({
+//   'click #follow': function(e, t) {
+//     return Meteor.users.update(Meteor.userId(), {
+//       $addToSet: {
+//         following_ids: this._id
+//       }
+//     });
+//   },
+//   'click #unfollow': function(e, t) {
+//     return Meteor.users.update(Meteor.userId(), {
+//       $pull: {
+//         following_ids: this._id
+//       }
+//     });
+//   }
+// });
 
-Template.toggle_boolean.events({
-  'click #make_featured': function() {
-    return Docs.update(FlowRouter.getParam('doc_id'), {
-      $set: {
-        featured: true
-      }
-    });
-  },
-  'click #make_unfeatured': function() {
-    return Docs.update(FlowRouter.getParam('doc_id'), {
-      $set: {
-        featured: false
-      }
-    });
-  }
-});
+// Template.toggle_boolean.events({
+//   'click #make_featured': function() {
+//     return Docs.update(FlowRouter.getParam('doc_id'), {
+//       $set: {
+//         featured: true
+//       }
+//     });
+//   },
+//   'click #make_unfeatured': function() {
+//     return Docs.update(FlowRouter.getParam('doc_id'), {
+//       $set: {
+//         featured: false
+//       }
+//     });
+//   }
+// });
 
 Template.edit_array_field.events({
   'keyup .new_entry': function(e, t) {

@@ -1,19 +1,3 @@
-FlowRouter.route('/admin', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'admin'
-    });
-  }
-});
-
-FlowRouter.route('/bugs', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'bugs'
-    });
-  }
-});
-
 Template.bugs.onCreated(function() {
   return this.autorun(function() {
     return Meteor.subscribe('type', 'bug');

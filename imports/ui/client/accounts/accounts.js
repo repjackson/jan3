@@ -1,34 +1,3 @@
-FlowRouter.route('/login', {
-  action: function() {
-    return BlazeLayout.render('accounts_layout', {
-      main: 'login'
-    });
-  }
-});
-
-FlowRouter.route('/register_officer', {
-  action: function() {
-    return BlazeLayout.render('accounts_layout', {
-      main: 'register_officer'
-    });
-  }
-});
-
-FlowRouter.route('/register_customer', {
-  action: function() {
-    return BlazeLayout.render('accounts_layout', {
-      main: 'register_customer'
-    });
-  }
-});
-
-FlowRouter.route('/reset_password', {
-  action: function() {
-    return BlazeLayout.render('accounts_layout', {
-      main: 'reset_password'
-    });
-  }
-});
 
 Template.login.events({
   'click .login': function(e, t) {
@@ -62,7 +31,7 @@ Template.login.events({
     }
   },
   'click #login_demo_admin': function() {
-    return Meteor.loginWithPassword('demo_admin', 'demoadminpassword', function(err, res) {
+    return Meteor.loginWithPassword('admin', 'adminpassword', function(err, res) {
       if (err) {
         return console.error(err);
       } else {
@@ -71,7 +40,7 @@ Template.login.events({
     });
   },
   'click #login_demo_office': function() {
-    return Meteor.loginWithPassword('demo_office', 'demoofficepassword', function(err, res) {
+    return Meteor.loginWithPassword('office', 'officepassword', function(err, res) {
       if (err) {
         return console.error(err);
       } else {
@@ -80,7 +49,7 @@ Template.login.events({
     });
   },
   'click #login_demo_customer': function() {
-    return Meteor.loginWithPassword('demo_customer', 'democustomerpassword', function(err, res) {
+    return Meteor.loginWithPassword('customer', 'customerpassword', function(err, res) {
       if (err) {
         return console.error(err);
       } else {

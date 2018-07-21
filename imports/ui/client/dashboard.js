@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor'
+
 FlowRouter.route('/', {
   action: function() {
     return BlazeLayout.render('layout', {

@@ -1,10 +1,3 @@
-FlowRouter.route('/account/settings', {
-	action: function(params) {
-		return BlazeLayout.render('layout', {
-			main: 'account_settings'
-		})
-	}
-})
 
 Template.account_settings.onCreated(function() {
 	return this.autorun(function() {

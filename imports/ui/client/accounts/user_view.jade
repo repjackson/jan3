@@ -13,11 +13,11 @@ template(name='user_view')
                     a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}")
                         i.pencil.large.icon
             .row
-                +user_nav
-            .row
                 .four.wide.column
                     if profile.image_id
                         img.ui.medium.image.item(src="{{c.url profile.image_id width=500 height=500 gravity='face' crop='fill'}}")
+                    if is_user
+                        a.ui.button(href="/account/settings") Account Settings
                 .eight.wide.column
                     // +edit_profile_text_field key='customer_jpid' label='Connected Customer Account'
                     .ui.list

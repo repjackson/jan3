@@ -1,11 +1,3 @@
-FlowRouter.route('/user/add', {
-  action: function(params) {
-    return BlazeLayout.render('layout', {
-      nav: 'nav',
-      main: 'add_user'
-    });
-  }
-});
 
 Template.add_user.onCreated(function() {});
 
