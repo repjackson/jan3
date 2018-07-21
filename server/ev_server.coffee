@@ -332,9 +332,9 @@ Meteor.methods
                 username_display:'ID'
                 api_reverse_lookup:'NO'
                 id:'48302'
-                page_length:'20000'
+                page_length:'40000'
                 record_start:'1'
-                record_count:'20000'
+                record_count:'40000'
         # return res.content
         # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>

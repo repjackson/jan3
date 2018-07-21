@@ -2,12 +2,12 @@ template(name='account_settings')
     .ui.padded.centered.grid
         .centered.row
             .twelve.wide.column
-                h1.ui.center.aligned.grey.header 
+                h1.ui.center.aligned.header 
                     i.large.cog.icon
-                    | Account
-                // |{{> atForm state='changePwd'}}
-                .ui.segment
-                    h2.ui.header 
+                    | #{currentUser.username} Account Settings
+                +change_password_widget
+                .ui.secondary.segment
+                    .ui.header 
                         i.envelope.icon
                         | Email(s)
                     // #test_email.ui.big.button test email
@@ -27,11 +27,34 @@ template(name='account_settings')
                     .ui.action.fluid.input
                         input#new_email(type='email')
                         #add_email.ui.submit.button Add Email
-                .ui.segment
-                    h2.ui.header 
+                .ui.secondary.segment
+                    .ui.header 
                         |Username: 
                         .ui.basic.label #{currentUser.username}
                     .ui.action.fluid.input
                         input#new_username(type='text' placeholder='change...')
                         #change_username.ui.submit.button Change
                     
+                    
+                
+                
+template(name='change_password_widget')
+    .ui.secondary.segment
+        .ui.header Change Password
+        .ui.form
+            .field
+                label Old Password 
+                input.old_password(type='password')
+            .field
+                label New Password
+                input.new_password(type='password')
+            .field
+                label New Password Again
+                input.new_password_again(type='password')
+            if can_submit_new_password
+                .field
+                    .login.ui.fluid.disabled.button
+                        // +icon name='lock-2'
+                        | Change Password
+
+        

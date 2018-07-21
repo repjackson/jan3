@@ -23,76 +23,68 @@ template(name='user_view')
                             .item
                                 strong Customer JPID 
                                 | #{profile.customer_jpid}
-                        +jsonView json=ev
+                        // +jsonView json=ev
+                    .ui.list
+                        with ev
+                            .item LOGIN_ID: 
+                                strong #{LOGIN_ID}
+                            .item LAST_NAME: 
+                                strong #{LAST_NAME}
+                            .item FIRST_NAME: 
+                                strong #{FIRST_NAME}
+                            .item JOB_TITLE: 
+                                strong #{JOB_TITLE}
+                            .item WORK_TELEPHONE: 
+                                strong #{WORK_TELEPHONE}
+                            .item HOME_TELEPHONE: 
+                                strong #{HOME_TELEPHONE}
+                            .item CELL_PHONE: 
+                                strong #{CELL_PHONE}
+                            .item COMPANY_NAME: 
+                                strong #{COMPANY_NAME}
+                            .item ADDRESS_LINE1: 
+                                strong #{ADDRESS_LINE1}
+                            .item ADDRESS_LINE2: 
+                                strong #{ADDRESS_LINE2}
+                            .item CITY: 
+                                strong #{CITY}
+                            .item STATE: 
+                                strong #{STATE}
+                            .item POSTAL_CODE: 
+                                strong #{POSTAL_CODE}
+                            .item COUNTRY: 
+                                strong #{COUNTRY}
+                            .item EMAIL: 
+                                strong #{EMAIL}
+                            .item TIMEZONE: 
+                                strong #{TIMEZONE}
+                            .item ALPHA_TIMEZONE: 
+                                strong #{ALPHA_TIMEZONE}
+                            .item REGION: 
+                                strong #{REGION}
+                            .item VARIANT: 
+                                strong #{VARIANT}
+                            .item AREA_ID: 
+                                strong #{AREA_ID}
+                            .item EMAIL_ON: 
+                                strong #{EMAIL_ON}
+                            .item LANGUAGE: 
+                                strong #{LANGUAGE}
                     // +users_feed
                 .four.wide.column
                     .ui.header Role
                         each roles
                             .ui.basic.label #{this}
-                    +my_customer_account_card
-                    // .ui.header user comments
-                    // .ui.header user assigned to incidents
-                    // .ui.header if customer then user customer account
-                    // .ui.header if customer then user franchisee account
-                    // .ui.header if customer then user officer document
-                    // .ui.header if customer then incdients created
-                    // .ui.header if officer then user office document
-                    // .ui.header if officer then user office document
-                        // with ev
-                        //     .item LOGIN_ID: #{LOGIN_ID}
-                        //     .item LAST_NAME: #{LAST_NAME}
-                        //     .item FIRST_NAME: #{FIRST_NAME}
-                        //     .item JOB_TITLE: #{JOB_TITLE}
-                        //     .item WORK_TELEPHONE: #{WORK_TELEPHONE}
-                        //     .item HOME_TELEPHONE: #{HOME_TELEPHONE}
-                        //     .item CELL_PHONE: #{CELL_PHONE}
-                        //     .item FAX: #{FAX}
-                        //     .item PAGER: #{PAGER}
-                        //     .item COMPANY_NAME: #{COMPANY_NAME}
-                        //     .item ADDRESS_LINE1: #{ADDRESS_LINE1}
-                        //     .item ADDRESS_LINE2: #{ADDRESS_LINE2}
-                        //     .item CITY: #{CITY}
-                        //     .item STATE: #{STATE}
-                        //     .item POSTAL_CODE: #{POSTAL_CODE}
-                        //     .item COUNTRY: #{COUNTRY}
-                        //     .item ENABLED_USER: #{ENABLED_USER}
-                        //     .item EMAIL: #{EMAIL}
-                        //     .item EMAIL_FORMAT: #{EMAIL_FORMAT}
-                        //     .item DATE_FORMAT: #{DATE_FORMAT}
-                        //     .item TIMEZONE: #{TIMEZONE}
-                        //     .item NOTIFY_ON_OWN_UPDATES: #{NOTIFY_ON_OWN_UPDATES}
-                        //     .item DRILLDOWN_REPORT: #{DRILLDOWN_REPORT}
-                        //     .item ALPHA_TIMEZONE: #{ALPHA_TIMEZONE}
-                        //     .item TWENTY_FOUR_HOUR_TIME: #{TWENTY_FOUR_HOUR_TIME}
-                        //     .item REPORT_1_ID: #{REPORT_1_ID}
-                        //     .item REPORT_2_ID: #{REPORT_2_ID}
-                        //     .item REPORT_3_ID: #{REPORT_3_ID}
-                        //     .item HTTP_CHARSET: #{HTTP_CHARSET}
-                        //     .item CHART_FONT: #{CHART_FONT}
-                        //     .item STYLESHEET: #{STYLESHEET}
-                        //     .item MS_OFFICE_CHARSET: #{MS_OFFICE_CHARSET}
-                        //     .item ADDITIONAL_EMAIL: #{ADDITIONAL_EMAIL}
-                        //     .item ADDITIONAL_EMAIL_ON: #{ADDITIONAL_EMAIL_ON}
-                        //     .item REGION: #{REGION}
-                        //     .item VARIANT: #{VARIANT}
-                        //     .item AREA_ID: #{AREA_ID}
-                        //     .item EMAIL_ON: #{EMAIL_ON}
-                        //     .item LANGUAGE: #{LANGUAGE}
-                        //     .item LAST_ACCESS_DATE: #{LAST_ACCESS_DATE}
-                        //     .item LOGIN_MSG_DT: #{LOGIN_MSG_DT}
-                        //     .item PASSWORD_EXPIRY_DATE: #{PASSWORD_EXPIRY_DATE}
-                        //     .item PASSWORD_INTERVAL: #{PASSWORD_INTERVAL}
-                        //     .item PROJECT_ID: #{PROJECT_ID}
-                        //     .item USER_DEFINED_1: #{USER_DEFINED_1}
-                        //     .item USER_DEFINED_2: #{USER_DEFINED_2}
-                        //     .item USER_DEFINED_3: #{USER_DEFINED_3}
-                        //     .item USER_DEFINED_4: #{USER_DEFINED_4}
-                        //     .item USER_DEFINED_5: #{USER_DEFINED_5}
-                        //     .item USER_DEFINED_6: #{USER_DEFINED_6}
-                        //     .item USER_DEFINED_7: #{USER_DEFINED_7}
-                        //     .item USER_DEFINED_8: #{USER_DEFINED_8}
-                        //     .item USER_DEFINED_9: #{USER_DEFINED_9}
-                        //     .item USER_DEFINED_10: #{USER_DEFINED_10}
+                    .ui.header future widgets
+                    .ui.list
+                        .item user comments
+                        .item user assigned to incidents
+                        .item if customer then user customer account
+                        .item if customer then user franchisee account
+                        .item if customer then user officer document
+                        .item if customer then incdients created
+                        .item if officer then user office document
+                        .item if officer then user office document
 
         
                     // +jsonView json=ev

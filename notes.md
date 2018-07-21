@@ -18,4 +18,14 @@ customer
     my office card not accurate 
     
 checkbox on employees table to show info
-un
+
+
+make this a game
+input/output
+money in/incidents out
+competition
+stats
+like any video game
+but points are dollars and recognition
+anyone can clea
+its fun if its all recorded

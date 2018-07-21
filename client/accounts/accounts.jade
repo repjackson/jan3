@@ -1,6 +1,8 @@
 template(name='accounts_nav')
     #nav.ui.five.item.borderless.borderless.menu
-        +menu_item link='/' label='Home' icon='home'
+        a.item(href='/' isActivePath='/')
+            img.ui.avatar.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
+            | &nbsp; Home
         +menu_item link='/login' label='Login' icon='password'
         +menu_item link='/reset_password' label='Forgot Password' icon='forgot-password'
         +menu_item link='/register_customer' label='Register Customer' icon='add-user-female'
@@ -52,6 +54,7 @@ template(name='login')
                 // img.ui.large.center.aligned.image(src="{{c.url 'white_logo' gravity='face' crop='fill'}}")
                 h1.ui.center.aligned.header 
                     // +icon name='password'
+                    img.ui.spaced.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
                     | Jan-Pro Customer Portal Login
                 .ui.segment
                     .ui.large.form
@@ -61,13 +64,12 @@ template(name='login')
                         .field
                             label Password
                             input.password(type='password')
-                        .field
-                            .login.ui.fluid.large.button
-                                +icon name='submit-progress' classes='ui inline image'
-                                | Login
-                .ui.horizontal.divider or
-        .row
-            .twelve.wide.column
+                        if can_submit
+                            .field
+                                .login.ui.fluid.large.green.button
+                                    // +icon name='checkmark' classes='ui inline image'
+                                    | Login
+                .ui.horizontal.divider or login as
                 .ui.three.column.grid
                     .column
                         #login_demo_admin.ui.fluid.large.button
