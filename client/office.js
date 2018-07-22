@@ -1,50 +1,54 @@
+import { FlowRouter } from 'meteor/kadira:flow-router'
+import { BlazeLayout } from 'meteor/kadira:blaze-layout'
+
+
 FlowRouter.route('/offices', {
   action: function() {
     return BlazeLayout.render('layout', {
       main: 'offices'
-    });
+    })
   }
-});
+})
 
 FlowRouter.route('/office/:doc_id/incidents', {
   action: function() {
     return BlazeLayout.render('layout', {
       main: 'office_incidents'
-    });
+    })
   }
-});
+})
 
 FlowRouter.route('/office/:doc_id/employees', {
   action: function() {
     return BlazeLayout.render('layout', {
       main: 'office_employees'
-    });
+    })
   }
-});
+})
 
 FlowRouter.route('/office/:doc_id/franchisees', {
   action: function() {
     return BlazeLayout.render('layout', {
       main: 'office_franchisees'
-    });
+    })
   }
-});
+})
 
 FlowRouter.route('/office/:doc_id/customers', {
   action: function() {
     return BlazeLayout.render('layout', {
       main: 'office_customers'
-    });
+    })
   }
-});
+})
 
 FlowRouter.route('/office/:doc_id/settings', {
   action: function() {
     return BlazeLayout.render('layout', {
       main: 'office_settings'
-    });
+    })
   }
-});
+})
 
 Template.offices.helpers({
   settings: function() {
@@ -59,7 +63,9 @@ Template.offices.helpers({
           label: 'JPID'
         }, {
           key: 'ev.MASTER_LICENSEE',
-          label: 'Name'
+          label: 'Name',
+          sortOrder: 1,
+          sortDirection: 'ascending'
         }, {
           key: 'ev.MASTER_OFFICE_MANAGER',
           label: 'Manager'
@@ -78,48 +84,48 @@ Template.offices.helpers({
           tmpl: Template.view_button
         }
       ]
-    };
+    }
   }
-});
+})
 
 Template.office_header.helpers({
   office_doc: function() {
-    return Docs.findOne(FlowRouter.getParam('doc_id'));
+    return Docs.findOne(FlowRouter.getParam('doc_id'))
   },
   office_map_address: function() {
-    var encoded_address, page_office;
-    page_office = Docs.findOne(FlowRouter.getParam('doc_id'));
-    encoded_address = encodeURIComponent(page_office.ev.ADDR_STREET + " " + page_office.ev.ADDR_STREET_2 + " " + page_office.ev.ADDR_CITY + "," + page_office.ev.ADDR_STATE + " " + page_office.ev.ADDR_POSTAL_CODE + " " + page_office.ev.MASTER_COUNTRY);
-    return "https://www.google.com/maps/search/?api=1&query=" + encoded_address;
+    var encoded_address, page_office
+    page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
+    encoded_address = encodeURIComponent(page_office.ev.ADDR_STREET + " " + page_office.ev.ADDR_STREET_2 + " " + page_office.ev.ADDR_CITY + "," + page_office.ev.ADDR_STATE + " " + page_office.ev.ADDR_POSTAL_CODE + " " + page_office.ev.MASTER_COUNTRY)
+    return "https://www.google.com/maps/search/?api=1&query=" + encoded_address
   }
-});
+})
 
 Template.office_header.onCreated(function() {
   return this.autorun(function() {
-    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'));
-  });
-});
+    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'))
+  })
+})
 
 Template.office_settings.onCreated(function() {
   this.autorun(function() {
-    return Meteor.subscribe('type', 'rule');
-  });
+    return Meteor.subscribe('type', 'rule')
+  })
   this.autorun(function() {
-    return Meteor.subscribe('office_employees', FlowRouter.getParam('doc_id'));
-  });
+    return Meteor.subscribe('office_employees', FlowRouter.getParam('doc_id'))
+  })
   return this.autorun(function() {
-    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'));
-  });
-});
+    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'))
+  })
+})
 
 Template.office_settings.helpers({
   current_office: function() {
-    var page_office;
-    page_office = Docs.findOne(FlowRouter.getParam('doc_id'));
-    return page_office;
+    var page_office
+    page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
+    return page_office
   },
   is_initial: function() {
-    return this.number === 0;
+    return this.number === 0
   },
   rule_docs: function() {
     return Docs.find({
@@ -128,46 +134,46 @@ Template.office_settings.helpers({
       sort: {
         number: 1
       }
-    });
+    })
   },
   hours_key: function() {
-    return "escalation_" + this.number + "_hours";
+    return "escalation_" + this.number + "_hours"
   },
   franchisee_toggle_key: function() {
-    return "escalation_" + this.number + "_contact_franchisee";
+    return "escalation_" + this.number + "_contact_franchisee"
   },
   primary_contact_key: function() {
-    console.log("escalation_" + this.number + "_primary_contact");
-    return "escalation_" + this.number + "_primary_contact";
+    console.log("escalation_" + this.number + "_primary_contact")
+    return "escalation_" + this.number + "_primary_contact"
   },
   secondary_contact_key: function() {
-    return "escalation_" + this.number + "_secondary_contact";
+    return "escalation_" + this.number + "_secondary_contact"
   },
   is_primary_indivdual: function() {
-    var page_office, prim_ind;
-    page_office = Docs.findOne(FlowRouter.getParam('doc_id'));
-    prim_ind = page_office["escalation_" + this.number + "_primary_contact"];
-    console.log(prim_ind);
-    return prim_ind;
+    var page_office, prim_ind
+    page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
+    prim_ind = page_office["escalation_" + this.number + "_primary_contact"]
+    console.log(prim_ind)
+    return prim_ind
   },
   is_secondary_indivdual: function() {
-    var page_office;
-    page_office = Docs.findOne(FlowRouter.getParam('doc_id'));
-    return page_office["escalation_" + this.number + "_secondary_contact"];
+    var page_office
+    page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
+    return page_office["escalation_" + this.number + "_secondary_contact"]
   }
-});
+})
 
 Template.office_customers.onCreated(function() {
-  var page_office;
+  var page_office
   this.autorun(function() {
-    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'));
-  });
+    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'))
+  })
   if (this.subscriptionsReady()) {
-    Template.filter = new ReactiveTable.Filter('office_customers', ["ev.MASTER_LICENSEE"]);
-    page_office = Docs.findOne(FlowRouter.getParam('doc_id'));
-    return ReactiveTable.Filter('office_customers').set(page_office.ev.MASTER_LICENSEE);
+    Template.filter = new ReactiveTable.Filter('office_customers', ["ev.MASTER_LICENSEE"])
+    page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
+    return ReactiveTable.Filter('office_customers').set(page_office.ev.MASTER_LICENSEE)
   }
-});
+})
 
 Template.office_customers.helpers({
   settings: function() {
@@ -209,24 +215,24 @@ Template.office_customers.helpers({
           tmpl: Template.view_button
         }
       ]
-    };
-  }
-});
-
-Template.office_incidents.onCreated(function() {
-  var page_office, user;
-  this.autorun(function() {
-    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'));
-  });
-  if (this.subscriptionsReady()) {
-    Template.filter = new ReactiveTable.Filter('office_incidents', ["incident_office_name"]);
-    user = Meteor.user();
-    page_office = Docs.findOne(FlowRouter.getParam('doc_id'));
-    if (page_office) {
-      return ReactiveTable.Filter('office_incidents').set(page_office.ev.MASTER_LICENSEE);
     }
   }
-});
+})
+
+Template.office_incidents.onCreated(function() {
+  var page_office, user
+  this.autorun(function() {
+    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'))
+  })
+  if (this.subscriptionsReady()) {
+    Template.filter = new ReactiveTable.Filter('office_incidents', ["incident_office_name"])
+    user = Meteor.user()
+    page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
+    if (page_office) {
+      return ReactiveTable.Filter('office_incidents').set(page_office.ev.MASTER_LICENSEE)
+    }
+  }
+})
 
 Template.office_incidents.helpers({
   settings: function() {
@@ -266,26 +272,26 @@ Template.office_incidents.helpers({
           tmpl: Template.view_button
         }
       ]
-    };
+    }
   }
-});
+})
 
 Template.office_employees.onCreated(function() {
   this.autorun(function() {
-    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'));
-  });
+    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'))
+  })
   return this.autorun(function() {
-    return Meteor.subscribe('office_employees', FlowRouter.getParam('doc_id'));
-  });
-});
+    return Meteor.subscribe('office_employees', FlowRouter.getParam('doc_id'))
+  })
+})
 
 Template.office_employees.helpers({
   collection: function() {
-    var page_office;
-    page_office = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var page_office
+    page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
     return Meteor.users.find({
       "profile.office_name": page_office.ev.MASTER_LICENSEE
-    });
+    })
   },
   settings: function() {
     return {
@@ -326,23 +332,23 @@ Template.office_employees.helpers({
           tmpl: Template.view_user_button
         }
       ]
-    };
-  }
-});
-
-Template.office_franchisees.onCreated(function() {
-  var page_office;
-  this.autorun(function() {
-    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'));
-  });
-  if (this.subscriptionsReady()) {
-    Template.filter = new ReactiveTable.Filter('office_franchisees', ["ev.MASTER_LICENSEE"]);
-    page_office = Docs.findOne(FlowRouter.getParam('doc_id'));
-    if (page_office) {
-      return ReactiveTable.Filter('office_franchisees').set(page_office.ev.MASTER_LICENSEE);
     }
   }
-});
+})
+
+Template.office_franchisees.onCreated(function() {
+  var page_office
+  this.autorun(function() {
+    return Meteor.subscribe('doc', FlowRouter.getParam('doc_id'))
+  })
+  if (this.subscriptionsReady()) {
+    Template.filter = new ReactiveTable.Filter('office_franchisees', ["ev.MASTER_LICENSEE"])
+    page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
+    if (page_office) {
+      return ReactiveTable.Filter('office_franchisees').set(page_office.ev.MASTER_LICENSEE)
+    }
+  }
+})
 
 Template.office_franchisees.helpers({
   settings: function() {
@@ -377,9 +383,9 @@ Template.office_franchisees.helpers({
           tmpl: Template.view_button
         }
       ]
-    };
+    }
   }
-});
+})
 
 // ---
 // generated by coffee-script 1.9.2

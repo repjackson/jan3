@@ -511,7 +511,7 @@ template(name='doc_history_event')
             .summary
                 a.user #{author.username}
                 |#{action} #{text}
-                .date #{when}
+                .date {{when timestamp}}: {{reg_format timestamp}}
 
 
 

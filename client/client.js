@@ -35,10 +35,6 @@ Template.registerHelper('is_closed', ()=> {
   return this.status === 'closed'
 })
 
-Template.registerHelper('publish_when', ()=> {
-  return moment(this.publish_date).fromNow()
-})
-
 Template.registerHelper('reg_format', function(input) {
   return moment(input).format('MMMM Do YYYY, h:mm:ss a')
 })
@@ -47,8 +43,8 @@ Template.registerHelper('doc', ()=> {
   return Docs.findOne(FlowRouter.getParam('doc_id'))
 })
 
-Template.registerHelper('when', ()=> {
-  return moment(this.timestamp).fromNow()
+Template.registerHelper('when', (value)=> {
+  return moment(value).fromNow()
 })
 
 Template.registerHelper('my_office', ()=> {
@@ -71,25 +67,7 @@ Template.registerHelper('my_office', ()=> {
   }
 })
 
-Template.registerHelper('nav_class', ()=> {
-  if (Meteor.user() && Meteor.user().roles && indexOf.call(Meteor.user().roles, 'customer') >= 0) {
-    return 'nav_bar'
-  } else {
-    return 'inverted'
-  }
-})
-
-Template.registerHelper('footer_class', ()=> {
-  if (Meteor.user() && Meteor.user().roles && indexOf.call(Meteor.user().roles, 'customer') >= 0) {
-    return 'footer_area inverted'
-  } else {
-    return 'inverted'
-  }
-})
-
-Template.registerHelper('from_now', function(date) {
-  return moment(date).fromNow()
-})
+Template.registerHelper('from_now', function(date) { return moment(date).fromNow() })
 
 Template.registerHelper('formal_when', ()=> { return moment(this.timestamp).format('MMMM Do YYYY, h:mm:ss a') })
 

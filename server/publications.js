@@ -21,7 +21,7 @@ ReactiveTable.publish('customers', Docs, {type:'customer', "ev.ACCOUNT_STATUS":'
 
 ReactiveTable.publish('events', Docs, {type: 'event'}, {disablePageCountReactivity: false})
 
-ReactiveTable.publish('franchisees', Docs, {type: 'franchisee'}, {disablePageCountReactivity: true})
+ReactiveTable.publish('franchisees', Docs, {type:'franchisee', "ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity: true})
 
 ReactiveTable.publish('incidents', Docs, {type:'incident'}, {disablePageCountReactivity: true})
 

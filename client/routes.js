@@ -19,9 +19,17 @@ FlowRouter.route('/customers', {
   action: ()=> {
     return BlazeLayout.render('layout', {
       main: 'customers'
-    });
+    })
   }
-});
+})
+
+FlowRouter.route('/history', {
+  action: function() {
+    return BlazeLayout.render('layout', {
+      main: 'history'
+    })
+  }
+})
 
 
 FlowRouter.route('/users', {
@@ -38,9 +46,9 @@ FlowRouter.route('/user/:username', {
   action: function(params) {
     return BlazeLayout.render('layout', {
       main: 'user_view'
-    });
+    })
   }
-});
+})
 
 
 

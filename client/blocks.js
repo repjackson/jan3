@@ -1,59 +1,59 @@
 Template.toggle_boolean.events({
   'click #turn_on': function() {
-    var obj;
+    var obj
     return Docs.update(FlowRouter.getParam('doc_id'), {
       $set: (
         obj = {},
         obj["" + this.key] = true,
         obj
       )
-    });
+    })
   },
   'click #turn_off': function() {
-    var obj;
+    var obj
     return Docs.update(FlowRouter.getParam('doc_id'), {
       $set: (
         obj = {},
         obj["" + this.key] = false,
         obj
       )
-    });
+    })
   }
-});
+})
 
 Template.toggle_boolean.helpers({
   is_on: function() {
-    var page_doc;
-    page_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
-    return page_doc["" + this.key];
+    var page_doc
+    page_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
+    return page_doc["" + this.key]
   }
-});
+})
 
 Template.add_button.events({
   'click #add': function() {
-    var id;
+    var id
     id = Docs.insert({
       type: this.type
-    });
-    return FlowRouter.go("/edit/" + id);
+    })
+    return FlowRouter.go("/edit/" + id)
   }
-});
+})
 
 Template.reference_type_single.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('docs', [], _this.data.type);
-    };
-  })(this));
-});
+      return Meteor.subscribe('docs', [], _this.data.type)
+    }
+  })(this))
+})
 
 Template.reference_type_multiple.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('docs', [], _this.data.type);
-    };
-  })(this));
-});
+      return Meteor.subscribe('docs', [], _this.data.type)
+    }
+  })(this))
+})
 
 Template.associated_users.helpers({
   associated_users: function() {
@@ -62,26 +62,26 @@ Template.associated_users.helpers({
         _id: {
           $in: this.assigned_to
         }
-      });
+      })
     }
   }
-});
+})
 
 Template.associated_incidents.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('docs', [], 'incident');
-    };
-  })(this));
-});
+      return Meteor.subscribe('docs', [], 'incident')
+    }
+  })(this))
+})
 
 Template.associated_incidents.helpers({
   incidents: function() {
     return Docs.find({
       type: 'incident'
-    });
+    })
   }
-});
+})
 
 Template.reference_type_single.helpers({
   settings: function() {
@@ -99,9 +99,9 @@ Template.reference_type_single.helpers({
           template: Template.office_result
         }
       ]
-    };
+    }
   }
-});
+})
 
 Template.reference_type_multiple.helpers({
   settings: function() {
@@ -119,90 +119,90 @@ Template.reference_type_multiple.helpers({
           template: Template.customer_result
         }
       ]
-    };
+    }
   }
-});
+})
 
 Template.reference_type_single.events({
   'autocompleteselect #search': function(event, template, doc) {
-    var obj, searched_value;
-    searched_value = doc["" + template.data.key];
+    var obj, searched_value
+    searched_value = doc["" + template.data.key]
     Docs.update(FlowRouter.getParam('doc_id'), {
       $set: (
         obj = {},
         obj["" + template.data.key] = "" + doc._id,
         obj
       )
-    });
-    return $('#search').val('');
+    })
+    return $('#search').val('')
   }
-});
+})
 
 Template.reference_type_multiple.events({
   'autocompleteselect #search': function(event, template, doc) {
-    var obj, searched_value;
-    searched_value = doc["" + template.data.key];
+    var obj, searched_value
+    searched_value = doc["" + template.data.key]
     Docs.update(FlowRouter.getParam('doc_id'), {
       $addToSet: (
         obj = {},
         obj["" + template.data.key] = "" + doc._id,
         obj
       )
-    });
-    return $('#search').val('');
+    })
+    return $('#search').val('')
   }
-});
+})
 
 Template.set_view_mode.helpers({
   view_mode_button_class: function() {
     if (Session.equals('view_mode', this.view)) {
-      return 'active';
+      return 'active'
     } else {
-      return '';
+      return ''
     }
   }
-});
+})
 
 Template.set_view_mode.events({
   'click #set_view_mode': function() {
-    return Session.set('view_mode', this.view);
+    return Session.set('view_mode', this.view)
   }
-});
+})
 
 Template.set_session_button.events({
   'click .set_session_filter': function() {
-    return Session.set("" + this.key, this.value);
+    return Session.set("" + this.key, this.value)
   }
-});
+})
 
 Template.set_session_button.helpers({
   filter_class: function() {
     if (Session.equals("" + this.key, "all")) {
       if (this.value === 'all') {
-        return 'primary';
+        return 'primary'
       } else {
-        return 'basic';
+        return 'basic'
       }
     } else if (Session.get("" + this.key)) {
       if (Session.equals("" + this.key, parseInt(this.value))) {
-        return 'primary';
+        return 'primary'
       } else {
-        return 'basic';
+        return 'basic'
       }
     }
   }
-});
+})
 
 Template.set_session_item.events({
   'click .set_session_filter': function() {
-    return Session.set("" + this.key, this.value);
+    return Session.set("" + this.key, this.value)
   }
-});
+})
 
 Template.delete_button.events({
   'click #delete': function() {
-    var template;
-    template = Template.currentData();
+    var template
+    template = Template.currentData()
     return swal({
       title: 'Delete?',
       type: 'error',
@@ -214,23 +214,23 @@ Template.delete_button.events({
       confirmButtonColor: '#da5347'
     }, (function(_this) {
       return function() {
-        return console.log(template);
-      };
-    })(this));
+        return console.log(template)
+      }
+    })(this))
   }
-});
+})
 
 Template.edit_link.events({
   'blur #link': function() {
-    var link;
-    link = $('#link').val();
+    var link
+    link = $('#link').val()
     return Docs.update(FlowRouter.getParam('doc_id'), {
       $set: {
         link: link
       }
-    });
+    })
   }
-});
+})
 
 Template.publish_button.events({
   'click #publish': function() {
@@ -238,26 +238,26 @@ Template.publish_button.events({
       $set: {
         published: true
       }
-    });
+    })
   },
   'click #unpublish': function() {
     return Docs.update(FlowRouter.getParam('doc_id'), {
       $set: {
         published: false
       }
-    });
+    })
   }
-});
+})
 
 Template.call_method.events({
   'click .call_method': function() {
-    return Meteor.call(this.name, Template.parentData(1)._id, function(err, res) {});
+    return Meteor.call(this.name, Template.parentData(1)._id, function(err, res) {})
   }
-});
+})
 
 Template.edit_author.onCreated(function() {
-  return Meteor.subscribe('usernames');
-});
+  return Meteor.subscribe('usernames')
+})
 
 Template.edit_author.events({
   "autocompleteselect input": function(event, template, doc) {
@@ -266,11 +266,11 @@ Template.edit_author.events({
         $set: {
           author_id: doc._id
         }
-      });
-      return $('#author_select').val("");
+      })
+      return $('#author_select').val("")
     }
   }
-});
+})
 
 Template.edit_author.helpers({
   author_edit_settings: function() {
@@ -285,21 +285,21 @@ Template.edit_author.helpers({
           template: Template.user_pill
         }
       ]
-    };
+    }
   }
-});
+})
 
 Template.small_doc_history.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('child_docs', _this.data._id, 1);
-    };
-  })(this));
-});
+      return Meteor.subscribe('child_docs', _this.data._id, 1)
+    }
+  })(this))
+})
 
 Template.small_doc_history.helpers({
   doc_history_events: function() {
-    var cursor;
+    var cursor
     return cursor = Docs.find({
       parent_id: Template.currentData()._id,
       type: 'event'
@@ -308,31 +308,31 @@ Template.small_doc_history.helpers({
         timestamp: -1
       },
       limit: 1
-    });
+    })
   }
-});
+})
 
 Template.parent_link.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('parent_doc', _this.data._id);
-    };
-  })(this));
-});
+      return Meteor.subscribe('parent_doc', _this.data._id)
+    }
+  })(this))
+})
 
 Template.parent_link.helpers({
   parent_doc: function() {
     return Docs.find({
       _id: Template.currentData().parent_id
-    });
+    })
   }
-});
+})
 
 Template.full_doc_history.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('child_docs', _this.data._id);
-    };
+      return Meteor.subscribe('child_docs', _this.data._id)
+    }
   })(this));
 });
 
@@ -343,7 +343,7 @@ Template.full_doc_history.helpers({
       type: 'event'
     }, {
       sort: {
-        timestamp: -1
+        timestamp: 1
       }
     });
   }
@@ -905,4 +905,4 @@ Template.full_doc_history.onCreated(function() {
       return Meteor.subscribe('child_docs', FlowRouter.getParam('doc_id'));
     };
   })(this));
-});
+})
