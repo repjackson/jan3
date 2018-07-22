@@ -487,13 +487,6 @@ Template.sla_rule_doc.events({
   }
 });
 
-Template.full_doc_history.onCreated(function() {
-  return this.autorun((function(_this) {
-    return function() {
-      return Meteor.subscribe('child_docs', FlowRouter.getParam('doc_id'));
-    };
-  })(this));
-});
 
 Template.incident_tasks.helpers({
   incident_tasks: function() {

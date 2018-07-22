@@ -15,6 +15,13 @@ FlowRouter.route('/account/settings', {
 		})
 	}
 })
+FlowRouter.route('/customers', {
+  action: function() {
+    return BlazeLayout.render('layout', {
+      main: 'customers'
+    });
+  }
+});
 
 
 FlowRouter.route('/users', {

@@ -1,10 +1,3 @@
-FlowRouter.route('/customers', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'customers'
-    });
-  }
-});
 
 Template.customers.helpers({
   settings: function() {
