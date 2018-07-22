@@ -24,10 +24,8 @@ kadira:flow-router
 kadira:blaze-layout
 accounts-base@1.4.2
 lepozepo:cloudinary@4.2.6
-momentjs:moment
 reactive-var@1.0.11
 kevohagan:sweetalert
-matb33:collection-hooks
 themeteorchef:bert
 mizzao:autocomplete
 less@2.7.12

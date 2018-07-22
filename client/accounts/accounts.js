@@ -1,13 +1,14 @@
 import {$} from 'meteor/jquery'
 
 Template.login.events({
-  'keyup .username': (e,t)=>{
+  'blur .username': (e,t)=>{
     const username = $('.username').val()
+    console.log(username)
     Session.set('username',username)
   },
-  'keyup .password': (e,t)=>{
+  'blur .password': (e,t)=>{
     const password = $('.password').val()
-    // console.log(password)
+    console.log(password)
     Session.set('password',password)
   },
   'click .login': function(e, t) {

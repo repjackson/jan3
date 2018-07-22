@@ -2,7 +2,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router'
 import { BlazeLayout } from 'meteor/kadira:blaze-layout'
 
 FlowRouter.notFound = {
-  action: function() {
+  action: ()=> {
     return BlazeLayout.render('layout', {
       main: 'not_found'
     })
@@ -16,7 +16,7 @@ FlowRouter.route('/account/settings', {
 	}
 })
 FlowRouter.route('/customers', {
-  action: function() {
+  action: ()=> {
     return BlazeLayout.render('layout', {
       main: 'customers'
     });
@@ -45,7 +45,7 @@ FlowRouter.route('/user/:username', {
 
 
 FlowRouter.route('/user/add', {
-  action: function() {
+  action: ()=> {
     return BlazeLayout.render('layout', {
       nav: 'nav',
       main: 'add_user'
@@ -55,7 +55,7 @@ FlowRouter.route('/user/add', {
 
 
 FlowRouter.route('/admin', {
-  action: function() {
+  action: ()=> {
     return BlazeLayout.render('layout', {
       main: 'admin'
     })
@@ -63,7 +63,7 @@ FlowRouter.route('/admin', {
 })
 
 FlowRouter.route('/bugs', {
-  action: function() {
+  action: ()=> {
     return BlazeLayout.render('layout', {
       main: 'bugs'
     })
@@ -72,7 +72,7 @@ FlowRouter.route('/bugs', {
 
 
 FlowRouter.route('/login', {
-  action: function() {
+  action: ()=> {
     return BlazeLayout.render('accounts_layout', {
       main: 'login'
     })
@@ -80,7 +80,7 @@ FlowRouter.route('/login', {
 })
 
 FlowRouter.route('/register_officer', {
-  action: function() {
+  action: ()=> {
     return BlazeLayout.render('accounts_layout', {
       main: 'register_officer'
     })
@@ -88,15 +88,12 @@ FlowRouter.route('/register_officer', {
 })
 
 FlowRouter.route('/register_customer', {
-  action: function() {
-    return BlazeLayout.render('accounts_layout', {
-      main: 'register_customer'
-    })
+  action: ()=> { return BlazeLayout.render('accounts_layout', { main: 'register_customer'})
   }
 })
 
 FlowRouter.route('/reset_password', {
-  action: function() {
+  action: ()=> {
     return BlazeLayout.render('accounts_layout', {
       main: 'reset_password'
     })
