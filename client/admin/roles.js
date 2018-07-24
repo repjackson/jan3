@@ -6,13 +6,6 @@ Template.roles.onCreated(function() {
 
 Template.roles.helpers;
 
-FlowRouter.route('/roles', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'roles'
-    });
-  }
-});
 
 Template.roles.onCreated(function() {
   return this.autorun((function(_this) {

@@ -1,12 +1,5 @@
 import { Meteor } from 'meteor/meteor'
 
-FlowRouter.route('/', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'dashboard'
-    });
-  }
-});
 
 Template.office_contact_cards.helpers({
   office_contacts: function() {

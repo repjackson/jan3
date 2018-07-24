@@ -1,31 +1,41 @@
-import { FlowRouter } from 'meteor/kadira:flow-router'
-import { BlazeLayout } from 'meteor/kadira:blaze-layout'
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
 
-FlowRouter.notFound = {
-  action: ()=> {
-    return BlazeLayout.render('layout', {
-      main: 'not_found'
+// FlowRouter.notFound = {
+//   action() {
+//     this.render('layout', {
+//       main: 'not_found'
+//     })
+//   }
+// }
+
+FlowRouter.route('/', {
+  action() {
+    this.render('layout', {
+      main: 'dashboard'
     })
   }
-}
+})
+
+
 FlowRouter.route('/account/settings', {
-	action: function(params) {
-		return BlazeLayout.render('layout', {
+	action(params) {
+		this.render('layout', {
 			main: 'account_settings'
 		})
 	}
 })
+
 FlowRouter.route('/customers', {
-  action: ()=> {
-    return BlazeLayout.render('layout', {
+  action() {
+    this.render('layout', {
       main: 'customers'
     })
   }
 })
 
 FlowRouter.route('/history', {
-  action: function() {
-    return BlazeLayout.render('layout', {
+  action() {
+    this.render('layout', {
       main: 'history'
     })
   }
@@ -33,18 +43,104 @@ FlowRouter.route('/history', {
 
 
 FlowRouter.route('/users', {
-  action: function(params) {
-    return BlazeLayout.render('layout', {
+  action(params) {
+    this.render('layout', {
       nav: 'nav',
       main: 'users'
+    })
+  }
+})
+FlowRouter.route('/jpids', {
+  action: function() {
+    this.render('layout', {
+      main: 'jpids'
+    })
+  }
+})
+
+FlowRouter.route('/incidents', {
+  action: function() {
+    this.render('layout', {
+      main: 'incidents'
+    });
+  }
+});
+
+FlowRouter.route('/edit/:doc_id', {
+  action: function(params) {
+    this.render('layout', {
+      main: 'doc_edit'
+    });
+  }
+});
+
+
+
+FlowRouter.route('/view/:doc_id', {
+  name: 'view',
+  action: function(params) {
+    this.render('layout', {
+      main: 'doc_view'
+    });
+  }
+});
+
+
+FlowRouter.route('/rules', {
+  action: function() {
+    this.render('layout', {
+      main: 'rules'
+    });
+  }
+});
+
+FlowRouter.route('/rules', {
+  action: function() {
+    this.render('layout', {
+      main: 'rules'
+    });
+  }
+});
+FlowRouter.route('/roles', {
+  action: function() {
+    this.render('layout', {
+      main: 'roles'
+    });
+  }
+});
+
+
+FlowRouter.route('/user/edit/:user_id', {
+  action: function(params) {
+    this.render('layout', {
+      main: 'user_edit'
+    });
+  }
+});
+
+
+FlowRouter.route('/customer_incidents', {
+  action: function() {
+    this.render('layout', {
+      main: 'customer_incidents'
+    });
+  }
+});
+
+
+
+FlowRouter.route('/franchisees', {
+  action: function() {
+    this.render('layout', {
+      main: 'franchisees'
     })
   }
 })
 
 
 FlowRouter.route('/user/:username', {
-  action: function(params) {
-    return BlazeLayout.render('layout', {
+  action(params) {
+    this.render('layout', {
       main: 'user_view'
     })
   }
@@ -53,8 +149,8 @@ FlowRouter.route('/user/:username', {
 
 
 FlowRouter.route('/user/add', {
-  action: ()=> {
-    return BlazeLayout.render('layout', {
+  action() {
+    this.render('layout', {
       nav: 'nav',
       main: 'add_user'
     })
@@ -63,16 +159,16 @@ FlowRouter.route('/user/add', {
 
 
 FlowRouter.route('/admin', {
-  action: ()=> {
-    return BlazeLayout.render('layout', {
+  action() {
+    this.render('layout', {
       main: 'admin'
     })
   }
 })
 
 FlowRouter.route('/bugs', {
-  action: ()=> {
-    return BlazeLayout.render('layout', {
+  action() {
+    this.render('layout', {
       main: 'bugs'
     })
   }
@@ -80,30 +176,80 @@ FlowRouter.route('/bugs', {
 
 
 FlowRouter.route('/login', {
-  action: ()=> {
-    return BlazeLayout.render('accounts_layout', {
+  action() {
+    this.render('accounts_layout', {
       main: 'login'
     })
   }
 })
 
 FlowRouter.route('/register_officer', {
-  action: ()=> {
-    return BlazeLayout.render('accounts_layout', {
+  action() {
+    this.render('accounts_layout', {
       main: 'register_officer'
     })
   }
 })
 
 FlowRouter.route('/register_customer', {
-  action: ()=> { return BlazeLayout.render('accounts_layout', { main: 'register_customer'})
+  action() { 
+    this.render('accounts_layout', { main: 'register_customer'})
   }
 })
 
 FlowRouter.route('/reset_password', {
-  action: ()=> {
-    return BlazeLayout.render('accounts_layout', {
+  action() {
+    this.render('accounts_layout', {
       main: 'reset_password'
+    })
+  }
+})
+
+
+FlowRouter.route('/offices', {
+  action() {
+    this.render('layout', {
+      main: 'offices'
+    })
+  }
+})
+
+FlowRouter.route('/office/:doc_id/incidents', {
+  action() {
+    this.render('layout', {
+      main: 'office_incidents'
+    })
+  }
+})
+
+FlowRouter.route('/office/:doc_id/employees', {
+  action() {
+    this.render('layout', {
+      main: 'office_employees'
+    })
+  }
+})
+
+FlowRouter.route('/office/:doc_id/franchisees', {
+  action() {
+    this.render('layout', {
+      main: 'office_franchisees'
+    })
+  }
+})
+
+FlowRouter.route('/office/:doc_id/customers', {
+  action() {
+    this.render('layout', {
+      main: 'office_customers'
+    })
+  }
+})
+
+FlowRouter.route('/office/:doc_id/settings', {
+  action() {
+    this.render('layout', {
+      main: 'office_settings'
     })
   }
 })

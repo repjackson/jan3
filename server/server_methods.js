@@ -1,15 +1,13 @@
 Meteor.methods({
-  calculate_child_count: function(doc_id) {
-    var child_count;
-    child_count = Docs.find({
-      parent_id: doc_id
-    }).count();
-    return Docs.update(doc_id, {
-      $set: {
-        child_count: child_count
-      }
-    });
-  },
+  // calculate_child_count: function(doc_id) {
+  //   var child_count;
+  //   child_count = Docs.find({
+  //     parent_id: doc_id
+  //   }).count();
+  //   return Docs.update(doc_id, {
+  //     $set: { child_count: child_count }
+  //   });
+  // },
   create_user: function(options) {
     var new_id;
     new_id = Accounts.createUser(options);
@@ -33,30 +31,30 @@ Meteor.methods({
     Accounts.addEmail(userId, new_email);
     return "Updated Email to " + new_email;
   },
-  tagify_timestamp: function(doc_id) {
-    var ampm, date, date_array, doc, month, timestamp, weekday, weekdaynum, year;
-    console.log('doc_id', doc_id);
-    doc = Docs.findOne(doc_id);
-    if (doc) {
-      timestamp = doc.timestamp;
-      date = moment(timestamp).format('Do');
-      ampm = moment(timestamp).format('a');
-      weekdaynum = moment(timestamp).isoWeekday();
-      weekday = moment().isoWeekday(weekdaynum).format('dddd');
-      month = moment(timestamp).format('MMMM');
-      year = moment(timestamp).format('YYYY');
-      date_array = [ampm, weekday, month, date, year];
-      date_array = _.map(date_array, function(el) {
-        return el.toString().toLowerCase();
-      });
-      Docs.update(doc_id, {
-        $set: {
-          timestamp_tags: date_array
-        }
-      });
-      return date_array;
-    }
-  },
+  // tagify_timestamp: function(doc_id) {
+  //   var ampm, date, date_array, doc, month, timestamp, weekday, weekdaynum, year;
+  //   console.log('doc_id', doc_id);
+  //   doc = Docs.findOne(doc_id);
+  //   if (doc) {
+  //     timestamp = doc.timestamp;
+  //     date = moment(timestamp).format('Do');
+  //     ampm = moment(timestamp).format('a');
+  //     weekdaynum = moment(timestamp).isoWeekday();
+  //     weekday = moment().isoWeekday(weekdaynum).format('dddd');
+  //     month = moment(timestamp).format('MMMM');
+  //     year = moment(timestamp).format('YYYY');
+  //     date_array = [ampm, weekday, month, date, year];
+  //     date_array = _.map(date_array, function(el) {
+  //       return el.toString().toLowerCase();
+  //     });
+  //     Docs.update(doc_id, {
+  //       $set: {
+  //         timestamp_tags: date_array
+  //       }
+  //     });
+  //     return date_array;
+  //   }
+  // },
   verify_email: function(user_id) {
     return Accounts.sendVerificationEmail(user_id);
   },

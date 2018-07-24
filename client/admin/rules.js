@@ -6,13 +6,6 @@ Template.rules.onCreated(function() {
 
 Template.rules.helpers;
 
-FlowRouter.route('/rules', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'rules'
-    });
-  }
-});
 
 Template.rules.onCreated(function() {
   return this.autorun((function(_this) {

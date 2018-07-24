@@ -333,8 +333,8 @@ Template.full_doc_history.onCreated(function() {
     return function() {
       return Meteor.subscribe('child_docs', _this.data._id)
     }
-  })(this));
-});
+  })(this))
+})
 
 Template.full_doc_history.helpers({
   doc_history_events: function(e, t) {
@@ -345,32 +345,33 @@ Template.full_doc_history.helpers({
       sort: {
         timestamp: 1
       }
-    });
+    })
   }
-});
+})
+
 
 Template.full_doc_history.events({
   'click #clear_events': function() {
-    var doc_id;
-    doc_id = FlowRouter.getParam('doc_id');
+    var doc_id
+    doc_id = FlowRouter.getParam('doc_id')
     if (confirm('Clear all events? Irriversible.')) {
-      return Meteor.call('clear_incident_events', doc_id);
+      return Meteor.call('clear_incident_events', doc_id)
     }
   }
-});
+})
 
 Template.incidents_by_type.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('docs', [], 'incident');
-    };
-  })(this));
-});
+      return Meteor.subscribe('docs', [], 'incident')
+    }
+  })(this))
+})
 
 Template.incidents_by_type.helpers({
   typed_incidents: function() {
-    var incident_type_doc;
-    incident_type_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var incident_type_doc
+    incident_type_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     return Docs.find({
       type: 'incident',
       incident_type: incident_type_doc.slug
@@ -378,28 +379,28 @@ Template.incidents_by_type.helpers({
       sort: {
         timestamp: -1
       }
-    });
+    })
   }
-});
+})
 
 Template.toggle_key.helpers({
   toggle_key_button_class: function() {
-    var current_doc;
-    current_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var current_doc
+    current_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     if (this.value) {
       if (current_doc["" + this.key] === this.value) {
-        return 'primary';
+        return 'primary'
       }
     } else {
-      return '';
+      return ''
     }
   }
-});
+})
 
 Template.toggle_key.events({
   'click .toggle_key': function() {
-    var doc_id, obj, obj1, obj2;
-    doc_id = FlowRouter.getParam('doc_id');
+    var doc_id, obj, obj1, obj2
+    doc_id = FlowRouter.getParam('doc_id')
     if (this.value) {
       return Docs.update({
         _id: doc_id
@@ -412,17 +413,17 @@ Template.toggle_key.events({
       }, (function(_this) {
         return function(err, res) {
           if (err) {
-            return Bert.alert("Error changing " + _this.key + " to " + _this.value + ": " + error.reason, 'danger', 'growl-top-right');
+            return Bert.alert("Error changing " + _this.key + " to " + _this.value + ": " + error.reason, 'danger', 'growl-top-right')
           } else {
             Docs.insert({
               type: 'event',
               parent_id: doc_id,
               text: "changed " + _this.key + " to " + _this.value + "."
-            });
-            return Bert.alert("Changed " + _this.key + " to " + _this.value, 'success', 'growl-top-right');
+            })
+            return Bert.alert("Changed " + _this.key + " to " + _this.value, 'success', 'growl-top-right')
           }
-        };
-      })(this));
+        }
+      })(this))
     } else if (Template.parentData()["" + this.key] === true) {
       return Docs.update(doc_id, {
         $set: (
@@ -430,7 +431,7 @@ Template.toggle_key.events({
           obj1["" + this.key] = false,
           obj1
         )
-      });
+      })
     } else {
       return Docs.update(doc_id, {
         $set: (
@@ -438,86 +439,86 @@ Template.toggle_key.events({
           obj2["" + this.key] = true,
           obj2
         )
-      });
+      })
     }
   }
-});
+})
 
 Template.toggle_boolean_checkbox.onRendered(function() {
   return Meteor.setTimeout(function() {
-    return $('.checkbox').checkbox();
-  }, 500);
-});
+    return $('.checkbox').checkbox()
+  }, 500)
+})
 
 Template.toggle_boolean_checkbox.events({
   'click .ui.toggle.checkbox': function(e, t) {
-    var checkbox_value, doc_id, obj;
-    doc_id = FlowRouter.getParam('doc_id');
-    console.log(Template.parentData());
-    checkbox_value = $("input[name=" + this.key + "]").is(":checked");
-    console.log(this.key);
-    console.log(checkbox_value);
-    console.log(Docs.findOne(doc_id));
+    var checkbox_value, doc_id, obj
+    doc_id = FlowRouter.getParam('doc_id')
+    console.log(Template.parentData())
+    checkbox_value = $("input[name=" + this.key + "]").is(":checked")
+    console.log(this.key)
+    console.log(checkbox_value)
+    console.log(Docs.findOne(doc_id))
     return Docs.update(doc_id, {
       $set: (
         obj = {},
         obj["" + this.key] = checkbox_value,
         obj
       )
-    });
+    })
   }
-});
+})
 
 Template.toggle_user_published.events({
   'click #toggle_button': function(e, t) {
-    var doc_id;
-    doc_id = FlowRouter.getParam('doc_id');
-    console.log(Template.parentData());
-    console.log(this);
+    var doc_id
+    doc_id = FlowRouter.getParam('doc_id')
+    console.log(Template.parentData())
+    console.log(this)
     return Meteor.users.update(this._id, {
       $set: {
         published: !this.published
       }
-    });
+    })
   }
-});
+})
 
 Template.radio_item.events({
   'click .ui.toggle.checkbox': function(e, t) {
-    var doc_id, element, obj, radio_item_value;
-    doc_id = FlowRouter.getParam('doc_id');
-    element = t.find("input:radio[name=" + this.key + "]:checked");
-    radio_item_value = $(element).val();
+    var doc_id, element, obj, radio_item_value
+    doc_id = FlowRouter.getParam('doc_id')
+    element = t.find("input:radio[name=" + this.key + "]:checked")
+    radio_item_value = $(element).val()
     return Docs.update(doc_id, {
       $set: (
         obj = {},
         obj["" + this.key] = radio_item_value,
         obj
       )
-    });
+    })
   }
-});
+})
 
 Template.multiple_user_select.events({
   'autocompleteselect #search': function(event, template, selected_user) {
-    var key, page_doc;
-    key = Template.parentData(0).key;
-    page_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var key, page_doc
+    key = Template.parentData(0).key
+    page_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     Meteor.call('user_array_add', page_doc._id, key, selected_user, (function(_this) {
       return function(err, res) {
         if (err) {
-          return Bert.alert("Error Assigning " + selected_user.username + ": " + err.reason, 'danger', 'growl-top-right');
+          return Bert.alert("Error Assigning " + selected_user.username + ": " + err.reason, 'danger', 'growl-top-right')
         } else {
-          return Bert.alert("Assigned " + selected_user.username + ".", 'success', 'growl-top-right');
+          return Bert.alert("Assigned " + selected_user.username + ".", 'success', 'growl-top-right')
         }
-      };
-    })(this));
-    return $('#search').val('');
+      }
+    })(this))
+    return $('#search').val('')
   },
   'click .pull_user': function() {
-    var context;
-    context = Template.currentData(0);
-    console.log(context);
+    var context
+    context = Template.currentData(0)
+    console.log(context)
     return swal({
       title: "Remove " + this.username + "?",
       type: 'info',
@@ -529,37 +530,37 @@ Template.multiple_user_select.events({
       confirmButtonColor: '#da5347'
     }, (function(_this) {
       return function() {
-        var page_doc;
-        page_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+        var page_doc
+        page_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
         return Meteor.call('user_array_pull', page_doc._id, context.key, _this, function(err, res) {
           if (err) {
-            return Bert.alert("Error removing " + _this.username + ": " + err.reason, 'danger', 'growl-top-right');
+            return Bert.alert("Error removing " + _this.username + ": " + err.reason, 'danger', 'growl-top-right')
           } else {
-            return Bert.alert("Removed " + _this.username + ".", 'success', 'growl-top-right');
+            return Bert.alert("Removed " + _this.username + ".", 'success', 'growl-top-right')
           }
-        });
-      };
-    })(this));
+        })
+      }
+    })(this))
   }
-});
+})
 
 Template.single_user_select.events({
   'autocompleteselect #search': function(event, template, selected_user) {
-    var key, obj, page_doc;
-    key = Template.parentData(0).key;
-    page_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var key, obj, page_doc
+    key = Template.parentData(0).key
+    page_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     Docs.update(page_doc._id, {
       $set: (
         obj = {},
         obj["" + key] = selected_user.username,
         obj
       )
-    });
-    return $('#search').val('');
+    })
+    return $('#search').val('')
   },
   'click .pull_user': function() {
-    var context;
-    context = Template.currentData(0);
+    var context
+    context = Template.currentData(0)
     return swal({
       title: "Remove " + this.username + "?",
       type: 'info',
@@ -571,19 +572,19 @@ Template.single_user_select.events({
       confirmButtonColor: '#da5347'
     }, (function(_this) {
       return function() {
-        var obj, page_doc;
-        page_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+        var obj, page_doc
+        page_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
         return Docs.update(page_doc._id, {
           $unset: (
             obj = {},
             obj["" + context.key] = 1,
             obj
           )
-        });
-      };
-    })(this));
+        })
+      }
+    })(this))
   }
-});
+})
 
 Template.multiple_user_select.helpers({
   settings: function() {
@@ -598,19 +599,19 @@ Template.multiple_user_select.helpers({
           template: Template.user_result
         }
       ]
-    };
+    }
   },
   user_array_users: function() {
-    var context, list, parent_doc;
-    context = Template.currentData(0);
-    parent_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var context, list, parent_doc
+    context = Template.currentData(0)
+    parent_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     return list = Meteor.users.find({
       _id: {
         $in: parent_doc["" + context.key]
       }
-    }).fetch();
+    }).fetch()
   }
-});
+})
 
 Template.single_user_select.helpers({
   settings: function() {
@@ -625,65 +626,65 @@ Template.single_user_select.helpers({
           template: Template.user_result
         }
       ]
-    };
+    }
   },
   selected_user: function() {
-    var context, parent_doc;
-    context = Template.currentData(0);
-    parent_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var context, parent_doc
+    context = Template.currentData(0)
+    parent_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     if (parent_doc["" + context.key]) {
       return Meteor.users.findOne({
         username: parent_doc["" + context.key]
-      });
+      })
     } else {
-      return false;
+      return false
     }
   }
-});
+})
 
 Template.view_sla_contact.helpers({
   selected_contact: function() {
-    var context, parent_doc;
-    context = Template.currentData(0);
-    parent_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var context, parent_doc
+    context = Template.currentData(0)
+    parent_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     if (parent_doc["" + context.key]) {
       return Meteor.users.findOne({
         username: parent_doc[parent_doc["" + context.key]]
-      });
+      })
     } else {
-      return false;
+      return false
     }
   }
-});
+})
 
 Template.many_doc_select.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('type', 'customer');
-    };
-  })(this));
-});
+      return Meteor.subscribe('type', 'customer')
+    }
+  })(this))
+})
 
 Template.many_doc_select.events({
   'autocompleteselect #search': function(event, template, selected_doc) {
-    var key, page_doc;
-    key = Template.parentData(0).key;
-    page_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var key, page_doc
+    key = Template.parentData(0).key
+    page_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     Meteor.call('doc_array_add', page_doc._id, key, selected_doc, (function(_this) {
       return function(err, res) {
         if (err) {
-          return Bert.alert("Error Assigning " + selected_doc.text + ": " + err.reason, 'danger', 'growl-top-right');
+          return Bert.alert("Error Assigning " + selected_doc.text + ": " + err.reason, 'danger', 'growl-top-right')
         } else {
-          return Bert.alert("Assigned " + selected_doc.text + ".", 'success', 'growl-top-right');
+          return Bert.alert("Assigned " + selected_doc.text + ".", 'success', 'growl-top-right')
         }
-      };
-    })(this));
-    return $('#search').val('');
+      }
+    })(this))
+    return $('#search').val('')
   },
   'click .pull_doc': function() {
-    var context;
-    context = Template.currentData(0);
-    console.log(context);
+    var context
+    context = Template.currentData(0)
+    console.log(context)
     return swal({
       title: "Remove " + this.title + " " + this.text + "?",
       type: 'info',
@@ -695,48 +696,48 @@ Template.many_doc_select.events({
       confirmButtonColor: '#da5347'
     }, (function(_this) {
       return function() {
-        var page_doc;
-        page_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+        var page_doc
+        page_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
         return Meteor.call('doc_array_pull', page_doc._id, context.key, _this, function(err, res) {
           if (err) {
-            return Bert.alert("Error removing " + _this.title + " " + _this.text + ": " + err.reason, 'danger', 'growl-top-right');
+            return Bert.alert("Error removing " + _this.title + " " + _this.text + ": " + err.reason, 'danger', 'growl-top-right')
           } else {
-            return Bert.alert("Removed " + _this.title + " " + _this.text + ".", 'success', 'growl-top-right');
+            return Bert.alert("Removed " + _this.title + " " + _this.text + ".", 'success', 'growl-top-right')
           }
-        });
-      };
-    })(this));
+        })
+      }
+    })(this))
   }
-});
+})
 
 Template.single_doc_select.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('type', 'customer');
-    };
-  })(this));
-});
+      return Meteor.subscribe('type', 'customer')
+    }
+  })(this))
+})
 
 Template.single_doc_select.events({
   'autocompleteselect #search': function(event, template, selected_doc) {
-    var page_doc, save_key;
-    save_key = Template.parentData(0).save_key;
-    page_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var page_doc, save_key
+    save_key = Template.parentData(0).save_key
+    page_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     Meteor.call('link_doc', page_doc._id, save_key, selected_doc, (function(_this) {
       return function(err, res) {
         if (err) {
-          return Bert.alert("Error Assigning " + selected_doc.cust_name + ": " + err.reason, 'danger', 'growl-top-right');
+          return Bert.alert("Error Assigning " + selected_doc.cust_name + ": " + err.reason, 'danger', 'growl-top-right')
         } else {
-          return Bert.alert("Assigned " + selected_doc.cust_name + ".", 'success', 'growl-top-right');
+          return Bert.alert("Assigned " + selected_doc.cust_name + ".", 'success', 'growl-top-right')
         }
-      };
-    })(this));
-    return $('#search').val('');
+      }
+    })(this))
+    return $('#search').val('')
   },
   'click .remove_doc': function() {
-    var context;
-    context = Template.currentData(0);
-    console.log(context);
+    var context
+    context = Template.currentData(0)
+    console.log(context)
     return swal({
       title: "Remove " + this.cust_name + "?",
       type: 'info',
@@ -748,19 +749,19 @@ Template.single_doc_select.events({
       confirmButtonColor: '#da5347'
     }, (function(_this) {
       return function() {
-        var page_doc;
-        page_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+        var page_doc
+        page_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
         return Meteor.call('unlink_doc', page_doc._id, context.save_key, _this, function(err, res) {
           if (err) {
-            return Bert.alert("Error removing " + _this.cust_name + ": " + err.reason, 'danger', 'growl-top-right');
+            return Bert.alert("Error removing " + _this.cust_name + ": " + err.reason, 'danger', 'growl-top-right')
           } else {
-            return Bert.alert("Removed " + _this.cust_name + ".", 'success', 'growl-top-right');
+            return Bert.alert("Removed " + _this.cust_name + ".", 'success', 'growl-top-right')
           }
-        });
-      };
-    })(this));
+        })
+      }
+    })(this))
   }
-});
+})
 
 Template.single_doc_select.helpers({
   settings: function() {
@@ -778,131 +779,131 @@ Template.single_doc_select.helpers({
           template: Template.doc_result
         }
       ]
-    };
+    }
   },
   selected_doc: function() {
-    var context, doc, parent_doc;
-    context = Template.currentData(0);
-    parent_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var context, doc, parent_doc
+    context = Template.currentData(0)
+    parent_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     doc = Docs.findOne({
       _id: parent_doc["" + context.save_key]
-    });
-    return doc;
+    })
+    return doc
   }
-});
+})
 
 Template.single_doc_view.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('incident', FlowRouter.getParam('doc_id'));
-    };
-  })(this));
-});
+      return Meteor.subscribe('incident', FlowRouter.getParam('doc_id'))
+    }
+  })(this))
+})
 
 Template.single_doc_view.helpers({
   selected_doc: function() {
-    var context, doc, parent_doc;
-    context = Template.currentData(0);
-    parent_doc = Docs.findOne(FlowRouter.getParam('doc_id'));
+    var context, doc, parent_doc
+    context = Template.currentData(0)
+    parent_doc = Docs.findOne(FlowRouter.getParam('doc_id'))
     doc = Docs.findOne({
       "ev.ID": parent_doc["" + context.key]
-    });
-    return doc;
+    })
+    return doc
   }
-});
+})
 
 Template.view_multiple_user.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('users');
-    };
-  })(this));
-});
+      return Meteor.subscribe('users')
+    }
+  })(this))
+})
 
 Template.view_multiple_user.helpers({
   user_array_users: function() {
-    var context, parent_doc;
-    context = Template.parentData(1);
-    parent_doc = Docs.findOne(context._id);
+    var context, parent_doc
+    context = Template.parentData(1)
+    parent_doc = Docs.findOne(context._id)
     return Meteor.users.find({
       _id: {
         $in: parent_doc["" + this.key]
       }
-    });
+    })
   }
-});
+})
 
 Template.doc_result.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('doc', _this.data._id);
-    };
-  })(this));
-});
+      return Meteor.subscribe('doc', _this.data._id)
+    }
+  })(this))
+})
 
 Template.doc_result.helpers({
   doc_context: function() {
-    var context, found;
-    context = Template.currentData(0);
-    found = Docs.findOne(context._id);
-    return found;
+    var context, found
+    context = Template.currentData(0)
+    found = Docs.findOne(context._id)
+    return found
   }
-});
+})
 
 Template.delete_button.onCreated(function() {
-  return this.confirming = new ReactiveVar(false);
-});
+  return this.confirming = new ReactiveVar(false)
+})
 
 Template.delete_button.helpers({
   confirming: function() {
-    return Template.instance().confirming.get();
+    return Template.instance().confirming.get()
   }
-});
+})
 
 Template.delete_button.events({
   'click .delete': function(e, t) {
-    return t.confirming.set(true);
+    return t.confirming.set(true)
   },
   'click .cancel': function(e, t) {
-    return t.confirming.set(false);
+    return t.confirming.set(false)
   },
   'click .confirm': function(e, t) {
-    Docs.remove(this._id);
-    return FlowRouter.go("/view/" + this.parent_id);
+    Docs.remove(this._id)
+    return FlowRouter.go("/view/" + this.parent_id)
   }
-});
+})
 
 Template.session_delete_button.onCreated(function() {
-  return this.confirming = new ReactiveVar(false);
-});
+  return this.confirming = new ReactiveVar(false)
+})
 
 Template.session_delete_button.helpers({
   confirming: function() {
-    return Template.instance().confirming.get();
+    return Template.instance().confirming.get()
   }
-});
+})
 
 Template.session_delete_button.events({
   'click .delete': function(e, t) {
-    return t.confirming.set(true);
+    return t.confirming.set(true)
   },
   'click .cancel': function(e, t) {
-    return t.confirming.set(false);
+    return t.confirming.set(false)
   },
   'click .confirm': function(e, t) {
-    $(e.currentTarget).closest('.comment').transition('fade right');
-    $(e.currentTarget).closest('.notification_segment').transition('fade right');
+    $(e.currentTarget).closest('.comment').transition('fade right')
+    $(e.currentTarget).closest('.notification_segment').transition('fade right')
     return Meteor.setTimeout((function(_this) {
       return function() {
-        return Docs.remove(_this._id);
-      };
-    })(this), 1000);
+        return Docs.remove(_this._id)
+      }
+    })(this), 1000)
   }
-});
+})
 Template.full_doc_history.onCreated(function() {
   return this.autorun((function(_this) {
     return function() {
-      return Meteor.subscribe('child_docs', FlowRouter.getParam('doc_id'));
-    };
-  })(this));
+      return Meteor.subscribe('child_docs', FlowRouter.getParam('doc_id'))
+    }
+  })(this))
 })

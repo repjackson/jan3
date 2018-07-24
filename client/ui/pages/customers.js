@@ -31,9 +31,9 @@ Template.customers.helpers({
         }, {
           key: 'ev.ADDR_STREET',
           label: 'Address'
-        // }, {
-        //   key: 'ev.ACCOUNT_STATUS',
-        //   label: 'Status'
+        }, {
+          key: 'ev.ACCOUNT_STATUS',
+          label: 'Status'
         }, {
           key: '',
           label: 'View',

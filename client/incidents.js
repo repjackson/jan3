@@ -1,20 +1,5 @@
 var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-FlowRouter.route('/incidents', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'incidents'
-    });
-  }
-});
-
-FlowRouter.route('/customer_incidents', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'customer_incidents'
-    });
-  }
-});
 
 Template.incident_view.onCreated(function() {
   return this.autorun(function() {

@@ -20,7 +20,6 @@ blaze-html-templates
 dburles:collection-helpers
 accounts-password@1.5.1
 shell-server@0.3.1
-kadira:flow-router
 kadira:blaze-layout
 accounts-base@1.4.2
 lepozepo:cloudinary@4.2.6
@@ -42,7 +41,7 @@ standard-minifier-js
 juliancwirko:postcss
 tmeasday:publish-counts
 aslagle:reactive-table
-mizzao:user-status
 percolate:synced-cron
 okgrow:analytics
-zimme:active-route
+ostrio:flow-router-extra
+coffeescript

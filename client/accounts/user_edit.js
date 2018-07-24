@@ -1,11 +1,3 @@
-FlowRouter.route('/user/edit/:user_id', {
-  action: function(params) {
-    return BlazeLayout.render('layout', {
-      main: 'user_edit'
-    });
-  }
-});
-
 Template.user_edit.onCreated(function() {
   return this.autorun(function() {
     return Meteor.subscribe('user_profile', FlowRouter.getParam('user_id'));

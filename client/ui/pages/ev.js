@@ -57,13 +57,6 @@ Template.history.events({
   }
 })
 
-FlowRouter.route('/jpids', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'jpids'
-    })
-  }
-})
 
 Template.jpids.onCreated(function() {
   return this.autorun((function(_this) {
@@ -179,13 +172,8 @@ Template.jpids.events({
   }
 })
 
-FlowRouter.route('/franchisees', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'franchisees'
-    })
-  }
-})
+
+
 
 Template.franchisees.helpers({
   settings: function() {

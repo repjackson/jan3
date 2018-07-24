@@ -1,11 +1,3 @@
-FlowRouter.route('/view/:doc_id', {
-  name: 'view',
-  action: function(params) {
-    return BlazeLayout.render('layout', {
-      main: 'doc_view'
-    });
-  }
-});
 
 Template.doc_view.onCreated(function() {
   return this.autorun(function() {
@@ -22,13 +14,6 @@ Template.doc_view.helpers({
   }
 });
 
-FlowRouter.route('/edit/:doc_id', {
-  action: function(params) {
-    return BlazeLayout.render('layout', {
-      main: 'doc_edit'
-    });
-  }
-});
 
 Template.doc_edit.onCreated(function() {
   return this.autorun(function() {

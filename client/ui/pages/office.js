@@ -1,57 +1,9 @@
-import { FlowRouter } from 'meteor/kadira:flow-router'
-import { BlazeLayout } from 'meteor/kadira:blaze-layout'
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra'
+// import { BlazeLayout } from 'meteor/kadira:blaze-layout'
 
-
-FlowRouter.route('/offices', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'offices'
-    })
-  }
-})
-
-FlowRouter.route('/office/:doc_id/incidents', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'office_incidents'
-    })
-  }
-})
-
-FlowRouter.route('/office/:doc_id/employees', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'office_employees'
-    })
-  }
-})
-
-FlowRouter.route('/office/:doc_id/franchisees', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'office_franchisees'
-    })
-  }
-})
-
-FlowRouter.route('/office/:doc_id/customers', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'office_customers'
-    })
-  }
-})
-
-FlowRouter.route('/office/:doc_id/settings', {
-  action: function() {
-    return BlazeLayout.render('layout', {
-      main: 'office_settings'
-    })
-  }
-})
 
 Template.offices.helpers({
-  settings: function() {
+  settings() {
     return {
       collection: 'offices',
       rowsPerPage: 10,
@@ -89,10 +41,10 @@ Template.offices.helpers({
 })
 
 Template.office_header.helpers({
-  office_doc: function() {
+  office_doc() {
     return Docs.findOne(FlowRouter.getParam('doc_id'))
   },
-  office_map_address: function() {
+  office_map_address() {
     var encoded_address, page_office
     page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
     encoded_address = encodeURIComponent(page_office.ev.ADDR_STREET + " " + page_office.ev.ADDR_STREET_2 + " " + page_office.ev.ADDR_CITY + "," + page_office.ev.ADDR_STATE + " " + page_office.ev.ADDR_POSTAL_CODE + " " + page_office.ev.MASTER_COUNTRY)
@@ -119,15 +71,15 @@ Template.office_settings.onCreated(function() {
 })
 
 Template.office_settings.helpers({
-  current_office: function() {
+  current_office() {
     var page_office
     page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
     return page_office
   },
-  is_initial: function() {
+  is_initial() {
     return this.number === 0
   },
-  rule_docs: function() {
+  rule_docs() {
     return Docs.find({
       type: 'rule'
     }, {
@@ -136,27 +88,27 @@ Template.office_settings.helpers({
       }
     })
   },
-  hours_key: function() {
+  hours_key() {
     return "escalation_" + this.number + "_hours"
   },
-  franchisee_toggle_key: function() {
+  franchisee_toggle_key() {
     return "escalation_" + this.number + "_contact_franchisee"
   },
-  primary_contact_key: function() {
+  primary_contact_key() {
     console.log("escalation_" + this.number + "_primary_contact")
     return "escalation_" + this.number + "_primary_contact"
   },
-  secondary_contact_key: function() {
+  secondary_contact_key() {
     return "escalation_" + this.number + "_secondary_contact"
   },
-  is_primary_indivdual: function() {
+  is_primary_indivdual() {
     var page_office, prim_ind
     page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
     prim_ind = page_office["escalation_" + this.number + "_primary_contact"]
     console.log(prim_ind)
     return prim_ind
   },
-  is_secondary_indivdual: function() {
+  is_secondary_indivdual() {
     var page_office
     page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
     return page_office["escalation_" + this.number + "_secondary_contact"]
@@ -176,7 +128,7 @@ Template.office_customers.onCreated(function() {
 })
 
 Template.office_customers.helpers({
-  settings: function() {
+  settings() {
     return {
       collection: 'customers',
       rowsPerPage: 10,
@@ -235,7 +187,7 @@ Template.office_incidents.onCreated(function() {
 })
 
 Template.office_incidents.helpers({
-  settings: function() {
+  settings() {
     return {
       collection: 'incidents',
       rowsPerPage: 10,
@@ -286,14 +238,14 @@ Template.office_employees.onCreated(function() {
 })
 
 Template.office_employees.helpers({
-  collection: function() {
+  collection() {
     var page_office
     page_office = Docs.findOne(FlowRouter.getParam('doc_id'))
     return Meteor.users.find({
       "profile.office_name": page_office.ev.MASTER_LICENSEE
     })
   },
-  settings: function() {
+  settings() {
     return {
       rowsPerPage: 10,
       showFilter: true,
@@ -351,7 +303,7 @@ Template.office_franchisees.onCreated(function() {
 })
 
 Template.office_franchisees.helpers({
-  settings: function() {
+  settings() {
     return {
       collection: 'franchisees',
       rowsPerPage: 10,
