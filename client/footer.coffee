@@ -45,4 +45,4 @@ Template.role_switcher.events
         
         Meteor.users.update Meteor.userId(),
             $set: roles: [@name]
-        location.reload()
+        # location.reload()

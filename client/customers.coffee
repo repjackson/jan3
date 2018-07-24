@@ -18,7 +18,7 @@ Template.customers.helpers
             { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
             { key: 'ev.TELEPHONE', label: 'Telephone' }
             { key: 'ev.ADDR_STREET', label: 'Address' }
-            { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
+            # { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
 

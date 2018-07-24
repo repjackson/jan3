@@ -115,7 +115,7 @@ Template.franchisees.helpers
             { key: 'ev.FRANCH_NAME', label: 'Short Name' }
             { key: 'ev.TELE_CELL', label: 'Phone' }
             { key: 'ev.MASTER_LICENSEE', label: 'Office' }
-            { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
+            # { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
 

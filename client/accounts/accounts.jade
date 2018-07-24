@@ -64,11 +64,10 @@ template(name='login')
                         .field
                             label Password
                             input.password(type='password')
-                        if can_submit
-                            .field
-                                .login.ui.fluid.large.green.button
-                                    // +icon name='checkmark' classes='ui inline image'
-                                    | Login
+                        .field
+                            .login.ui.fluid.large.button
+                                // +icon name='checkmark' classes='ui inline image'
+                                | Login
                 .ui.horizontal.divider or login as
                 .ui.three.column.grid
                     .column

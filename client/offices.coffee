@@ -79,7 +79,6 @@ Template.office_settings.helpers
         console.log prim_ind
         prim_ind
         
-        
     is_secondary_indivdual: ->
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
         page_office["escalation_#{@number}_secondary_contact"]
@@ -91,7 +90,8 @@ Template.office_customers.onCreated ->
         # Template.filter = new ReactiveTable.Filter('office', ["ev.MASTER_LICENSEE"])
         Template.filter = new ReactiveTable.Filter('office_customers', ["ev.MASTER_LICENSEE"])
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        ReactiveTable.Filter('office_customers').set(page_office.ev.MASTER_LICENSEE)
+        if page_office
+            ReactiveTable.Filter('office_customers').set(page_office.ev.MASTER_LICENSEE)
 
 
 Template.office_customers.helpers    
@@ -117,6 +117,7 @@ Template.office_customers.helpers
             { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
             { key: 'ev.TELEPHONE', label: 'Telephone' }
             { key: 'ev.ADDR_STREET', label: 'Address' }
+            { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
 
@@ -159,8 +160,6 @@ Template.office_incidents.helpers
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
 
-
-
 Template.office_employees.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     
@@ -197,9 +196,6 @@ Template.office_employees.helpers
             { key: '', label: 'View', tmpl:Template.view_user_button }
         ]
 
-
-
-
 Template.office_franchisees.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     if @subscriptionsReady()
@@ -230,5 +226,6 @@ Template.office_franchisees.helpers
             { key: 'ev.FRANCH_NAME', label: 'Short Name' }
             { key: 'ev.TELE_CELL', label: 'Phone' }
             { key: 'ev.MASTER_LICENSEE', label: 'Office' }
+            { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]

@@ -321,7 +321,6 @@ Meteor.methods
                         console.log "added #{doc.ID}"
     
     sync_customers: () ->
-        
         console.log 'starting customer sync'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
@@ -363,86 +362,83 @@ Meteor.methods
                             ev: doc
                         console.log "added #{doc.CUST_NAME}"
                         
+    # sync_ny_statements: () ->
+    #     console.log 'starting ny statement sync'
+    #     res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
+    #         headers:"User-Agent": "Meteor/1.0"
+    #         params:
+    #             user_id:'JAN-HUB'
+    #             password:'j@NhU8'
+    #             statevar:'run_report'
+    #             username_display:'ID'
+    #             api_reverse_lookup:'NO'
+    #             id:'48927'
+    #             page_length:'500'
+    #             record_start:'1'
+    #             record_count:'500'
+    #     # return res.content
+    #     # console.log res.content
+    #     xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
+    #         if err then console.error('errors',err)
+    #         else
+    #             # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+    #             # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+    #             # new_id = Docs.insert 
+    #             # console.log 'new id', new_id
+    #         if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+    #             for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+    #                 console.log doc
+    #                 # doc.type = 'statment'
+    #                 existing_statment_doc = 
+    #                     Docs.findOne 
+    #                         type: 'statment'
+    #                         "ev.CUST_NAME": doc.CUST_NAME
+    #                 if existing_statment_doc
+    #                     console.log "existing statment #{existing_statment_doc.ev.CUST_NAME}"
+    #                     Docs.update existing_statment_doc._id,
+    #                         $set:
+    #                             ev: doc
+    #                 unless existing_statment_doc                    
+    #                     new_statment_doc = Docs.insert 
+    #                         type: 'statment'
+    #                         ev: doc
+    #                     console.log "added #{doc.CUST_NAME}"
                         
                         
-                        
-    sync_ny_statements: () ->
-        console.log 'starting ny statement sync'
-        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
-            headers:"User-Agent": "Meteor/1.0"
-            params:
-                user_id:'JAN-HUB'
-                password:'j@NhU8'
-                statevar:'run_report'
-                username_display:'ID'
-                api_reverse_lookup:'NO'
-                id:'48927'
-                page_length:'500'
-                record_start:'1'
-                record_count:'500'
-        # return res.content
-        # console.log res.content
-        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
-            if err then console.error('errors',err)
-            else
-                # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
-                # new_id = Docs.insert 
-                # console.log 'new id', new_id
-            if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    console.log doc
-                    # doc.type = 'statment'
-                    existing_statment_doc = 
-                        Docs.findOne 
-                            type: 'statment'
-                            "ev.CUST_NAME": doc.CUST_NAME
-                    if existing_statment_doc
-                        console.log "existing statment #{existing_statment_doc.ev.CUST_NAME}"
-                        Docs.update existing_statment_doc._id,
-                            $set:
-                                ev: doc
-                    unless existing_statment_doc                    
-                        new_statment_doc = Docs.insert 
-                            type: 'statment'
-                            ev: doc
-                        console.log "added #{doc.CUST_NAME}"
-                        
-                        
-    list_attachments: (id) ->
-        console.log 'starting ny statement sync'
-        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
-            headers:"User-Agent": "Meteor/1.0"
-            params:
-                user_id:'JAN-HUB'
-                password:'j@NhU8'
-                statevar:'list_attachment'
-                username_display:'ID'
-                id:id
-        # return res.content
-        console.log res.content
-#         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
-#             if err then console.error('errors',err)
-#             else
-#                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-#                 # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
-#                 # new_id = Docs.insert 
-#                 # console.log 'new id', new_id
-#             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-#                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-#                     console.log doc
-#                     # doc.type = 'statment'
-#                     existing_statment_doc = 
-#                         Docs.findOne 
-#                             type: 'statment'
-#                             "ev.CUST_NAME": doc.CUST_NAME
-#                     if existing_statment_doc
-#                         console.log "existing statment #{existing_statment_doc.ev.CUST_NAME}"
-#                         Docs.update existing_statment_doc._id,
-#                             $set:
-#                                 ev: doc
-#                     unless existing_statment_doc                    
-#                         new_statment_doc = Docs.insert 
-#                             type: 'statment'
-#                             ev: doc
-#                         console.log "added #{doc.CUST_NAME}"
+#     list_attachments: (id) ->
+#         console.log 'starting ny statement sync'
+#         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
+#             headers:"User-Agent": "Meteor/1.0"
+#             params:
+#                 user_id:'JAN-HUB'
+#                 password:'j@NhU8'
+#                 statevar:'list_attachment'
+#                 username_display:'ID'
+#                 id:id
+#         # return res.content
+#         console.log res.content
+# #         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
+# #             if err then console.error('errors',err)
+# #             else
+# #                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+# #                 # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+# #                 # new_id = Docs.insert 
+# #                 # console.log 'new id', new_id
+# #             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+# #                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+# #                     console.log doc
+# #                     # doc.type = 'statment'
+# #                     existing_statment_doc = 
+# #                         Docs.findOne 
+# #                             type: 'statment'
+# #                             "ev.CUST_NAME": doc.CUST_NAME
+# #                     if existing_statment_doc
+# #                         console.log "existing statment #{existing_statment_doc.ev.CUST_NAME}"
+# #                         Docs.update existing_statment_doc._id,
+# #                             $set:
+# #                                 ev: doc
+# #                     unless existing_statment_doc                    
+# #                         new_statment_doc = Docs.insert 
+# #                             type: 'statment'
+# #                             ev: doc
+# #                         console.log "added #{doc.CUST_NAME}"
