@@ -12,7 +12,7 @@ template(name='footer')
                             .sitemap_list.item Contact Us
                             .sitemap_list.item Legal/ Privacy Policy
                             // .sitemap_list.item demo login: demo/password
-                    +role_switcher
+                    // +role_switcher
                     .ui.hidden.divider
                     #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
                         i.bug.icon
@@ -23,9 +23,10 @@ template(name='footer')
                     if is_customer
                         +my_franchisee_card
                 .four.wide.column
-                    if currentUser
-                        unless is_admin
-                            +my_office_card
+                    if is_customer
+                        +my_office_card
+                    if is_officer
+                        +office_card office_jpid=currentUser.profile.office_jpid
             .centered.row
                 .ui.center.aligned.inverted.grey.header
                     +icon name='copyright'

@@ -37,11 +37,12 @@ Meteor.users.helpers
 
     users_customer: ->
         # console.log @
-        found = Docs.findOne
-            type:'customer'
-            "ev.ID": @profile.customer_jpid
-        # console.log found
-        found
+        if @profile and @profile.customer_jpid
+            found = Docs.findOne
+                type:'customer'
+                "ev.ID": @profile.customer_jpid
+            # console.log found
+            found
         
     email: -> 
         if @emails

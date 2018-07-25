@@ -615,3 +615,46 @@ template(name='user_card')
             img.ui.small.rounded.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
             h4 
                 a(href="/user/#{username}") #{username}
+
+
+template(name='customer_card')
+    .ui.card
+        with customer_doc
+            .content
+                a.ui.header(href="/view/#{_id}")
+                    +icon name='customer-support'
+                    |Customer Account
+            .content
+                a(href="/view/#{_id}")
+                    h4.ui.header #{ev.CUST_NAME}
+            .content
+                .ui.list
+                    .item ##{ev.ID}
+                    .item #{ev.CUST_CONT_PERSON}
+                    .item #{ev.CUST_CONTACT_EMAIL}
+                    .item #{ev.TELEPHONE}
+                    .item #{ev.ADDR_STREET}
+                    .item #{ev.ADDR_STREET_2}
+                    .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+            // .content
+            //     div Franchisee
+            //         strong #{ev.FRANCHISEE}
+            //     div Office
+            //         strong #{ev.MASTER_LICENSEE}
+
+
+template(name='office_card')
+    .ui.card
+        with office_doc
+            .content
+                a(href="/view/#{_id}")
+                    .ui.header 
+                        +icon name='building'
+                        |Office
+            .content
+                a(href="/view/#{_id}")
+                    h4.ui.header #{ev.MASTER_LICENSEE}
+            .content
+                | #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+            .content
+                a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}

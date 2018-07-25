@@ -73,6 +73,12 @@ Template.registerHelper 'is_officer', () ->
 Template.registerHelper 'is_customer', () -> 
     if Meteor.user() and Meteor.user().roles
         'customer' in Meteor.user().roles
+        
+Template.registerHelper 'user_is_customer', () -> @roles and 'customer' in @roles
+Template.registerHelper 'user_is_officer', () -> @roles and 'office' in @roles
+        
+        
+        
 Template.registerHelper 'has_user_customer_jpid', () -> 
     Meteor.user() and Meteor.user().profile and Meteor.user().profile.customer_jpid
 

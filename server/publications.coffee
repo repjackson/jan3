@@ -372,9 +372,10 @@ publishComposite 'me', ()->
                 find: (user)-> 
                     # users customer account
                     # console.log 'current user?', user.profile
-                    Docs.find
-                        "ev.ID": user.profile.customer_jpid
-                        type:'customer'
+                    if user.profile and user.profile.customer_jpid
+                        Docs.find
+                            "ev.ID": user.profile.customer_jpid
+                            type:'customer'
                 # children: [
                 #     # {
                 #     #     find: (customer)-> 
@@ -558,3 +559,14 @@ Meteor.publish 'user_status_notification', ->
             console.log "#{id} just logged in"
         removed: (id) ->
             console.log "#{id} just logged out"
+
+
+Meteor.publish 'office_by_id', (office_jpid)->
+    Docs.find
+        type:'office'
+        "ev.ID": office_jpid
+        
+Meteor.publish 'customer_by_id', (customer_jpid)->
+    Docs.find
+        type:'customer'
+        "ev.ID": customer_jpid

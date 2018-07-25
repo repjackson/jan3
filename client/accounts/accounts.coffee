@@ -10,6 +10,7 @@ FlowRouter.route '/register_customer', action: ->
 FlowRouter.route '/reset_password', action: ->
     BlazeLayout.render 'accounts_layout', 
         main: 'reset_password'
+
 Template.login.events
     'click .login': (e,t)->
         e.preventDefault()
@@ -36,26 +37,27 @@ Template.login.events
                 else
                     Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
                     FlowRouter.go '/'                
-            #     # console.log comment
-            
             
     'click #login_demo_admin': ->
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->
             if err then console.error err
             else
-                console.log res
+                Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                FlowRouter.go '/'                
             
     'click #login_demo_office': ->
         Meteor.loginWithPassword 'demo_office', 'demoofficepassword', (err,res)->
             if err then console.error err
             else
-                console.log res
+                Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                FlowRouter.go '/'                
             
     'click #login_demo_customer': ->
         Meteor.loginWithPassword 'demo_customer', 'democustomerpassword', (err,res)->
             if err then console.error err
             else
-                console.log res
+                Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                FlowRouter.go '/'                
             
         
 Template.register_customer.helpers

@@ -69,19 +69,19 @@ template(name='login')
                                 // +icon name='checkmark' classes='ui inline image'
                                 | Login
                 .ui.horizontal.divider or login as
-                .ui.three.column.grid
+                .ui.three.column.stackable.grid
                     .column
-                        #login_demo_admin.ui.fluid.large.button
-                            +icon name='crown' classes='ui inline image'
-                            |Demo Admin
+                        #login_demo_customer.ui.fluid.large.button
+                            +icon name='online-support' classes='ui inline image'
+                            |Demo Customer
                     .column
                         #login_demo_officer.ui.fluid.large.button
                             +icon name='coach' classes='ui inline image'
                             |Demo Officer
                     .column
-                        #login_demo_customer.ui.fluid.large.button
-                            +icon name='online-support' classes='ui inline image'
-                            |Demo Customer
+                        #login_demo_admin.ui.fluid.large.button
+                            +icon name='crown' classes='ui inline image'
+                            |Demo Admin
                 
                 
 template(name='register_officer')

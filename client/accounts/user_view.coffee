@@ -10,7 +10,9 @@ Template.user_view.onCreated ->
 Template.user_view.helpers
     user: -> Meteor.users.findOne username:FlowRouter.getParam('username') 
     
-    is_user: -> FlowRouter.getParam('username') is Meteor.user().username
+    is_user: -> 
+        if Meteor.user()
+            FlowRouter.getParam('username') is Meteor.user().username
     
 
 Template.user_view.events

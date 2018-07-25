@@ -781,3 +781,30 @@ Template.session_delete_button.events
         Meteor.setTimeout =>
             Docs.remove(@_id)
         , 1000
+
+
+Template.office_card.onCreated ->
+    console.log @data
+    @autorun =>  Meteor.subscribe 'office_by_id', @data.office_jpid
+Template.office_card.helpers
+    office_doc: ->
+        context = Template.currentData(0)
+        doc = 
+            Docs.findOne 
+                type:'office'
+                "ev.ID": context.office_jpid
+        # console.log doc
+        doc
+        
+Template.customer_card.onCreated ->
+    console.log @data
+    @autorun =>  Meteor.subscribe 'customer_by_id', @data.customer_jpid
+Template.customer_card.helpers
+    customer_doc: ->
+        context = Template.currentData(0)
+        doc = 
+            Docs.findOne 
+                type:'customer'
+                "ev.ID": context.customer_jpid
+        # console.log doc
+        doc
