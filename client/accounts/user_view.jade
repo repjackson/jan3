@@ -16,6 +16,11 @@ template(name='user_view')
                 .four.wide.column
                     if profile.image_id
                         img.ui.medium.image.item(src="{{c.url profile.image_id width=500 height=500 gravity='face' crop='fill'}}")
+                    if is_user
+                        a.ui.button(href='/account/settings')
+                            i.cog.icon
+                            |Account Settings
+                        
                 .eight.wide.column
                     // +edit_profile_text_field key='customer_jpid' label='Connected Customer Account'
                     .ui.list

@@ -44,17 +44,13 @@ template(name='change_password_widget')
         .ui.form
             .field
                 label Old Password 
-                input.old_password(type='password')
+                input#old_password(type='password')
             .field
                 label New Password
-                input.new_password(type='password')
+                input#new_password(type='password')
             .field
-                label New Password Again
-                input.new_password_again(type='password')
-            if can_submit_new_password
-                .field
-                    .login.ui.fluid.disabled.button
-                        // +icon name='lock-2'
-                        | Change Password
+                #change_password.ui.fluid.button
+                    // +icon name='lock-2'
+                    | Change Password
 
         

@@ -35,6 +35,7 @@ Template.account_settings.events
                         Bert.alert result, 'success', 'growl-top-right'
                     return
     
+    
     'click #test_email': ->
         Meteor.call('sendEmail',{
             to: 'repjackson@gmail.com',
@@ -66,4 +67,34 @@ Template.account_settings.events
     'click .send_verification_email': (e,t)->
         Meteor.call 'verify_email', Meteor.userId(), ->
             Bert.alert 'Verification Email Sent', 'success', 'growl-top-right'
+            
+            
+            
+Template.change_password_widget.events
+    'click #change_password': ->
+        old_password = $('#old_password').val().trim()
+        new_password = $('#new_password').val().trim()
+        user = Meteor.user()
+        if new_password
+            Accounts.changePassword old_password, new_password, (error, result) ->
+                if error
+                    # console.log 'updateUsername', error
+                    Bert.alert "Error Updating Password: #{error.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Changed Password", 'success', 'growl-top-right'
+                return
+
+    'keydown #new_password': (e,t)->
+        if e.which is 13
+            old_password = $('#old_password').val().trim()
+            new_password = $('#new_password').val().trim()
+            user = Meteor.user()
+            if new_password
+                Accounts.changePassword old_password, new_password, (error, result) ->
+                    if error
+                        # console.log 'updateUsername', error
+                        Bert.alert "Error Updating Password: #{error.reason}", 'danger', 'growl-top-right'
+                    else
+                        Bert.alert "Changed Password", 'success', 'growl-top-right'
+                    return
             

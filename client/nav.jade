@@ -12,32 +12,32 @@ template(name='nav')
                 i.large.icon
                     +iconsmall name='error'
                 | &nbsp; My Incidents
-        if is_officer
+        // if is_officer
             // with currentUser.users_customer.parent_franchisee.parent_office
-            a.item(href="/view/#{my_office._id}")
-                i.large.icon
-                    +iconsmall name='link-company-parent'
-                | &nbsp; #{my_office.ev.MASTER_LICENSEE}
-            a.item(href="/office/#{my_office._id}/incidents")
-                i.large.icon
-                    +iconsmall name='error'
-                | &nbsp; Incidents
-            a.item(href="/office/#{my_office._id}/employees")
-                i.large.icon
-                    +iconsmall name='groups'
-                | &nbsp; Employees
-            a.item(href="/office/#{my_office._id}/franchisees")
-                i.large.icon
-                    +iconsmall name='conference'
-                | &nbsp; Franchisees
-            a.item(href="/office/#{my_office._id}/customers")
-                i.large.icon
-                    +iconsmall name='customer-support'
-                | &nbsp; Customers
-            a.item(href="/office/#{my_office._id}/settings")
-                i.large.icon
-                    +iconsmall name='settings'
-                | &nbsp; Settings
+            // a.item(href="/view/#{my_office._id}")
+            //     i.large.icon
+            //         +iconsmall name='link-company-parent'
+            //     | &nbsp; #{my_office.ev.MASTER_LICENSEE}
+            // a.item(href="/office/#{my_office._id}/incidents")
+            //     i.large.icon
+            //         +iconsmall name='error'
+            //     | &nbsp; Incidents
+            // a.item(href="/office/#{my_office._id}/employees")
+            //     i.large.icon
+            //         +iconsmall name='groups'
+            //     | &nbsp; Employees
+            // a.item(href="/office/#{my_office._id}/franchisees")
+            //     i.large.icon
+            //         +iconsmall name='conference'
+            //     | &nbsp; Franchisees
+            // a.item(href="/office/#{my_office._id}/customers")
+            //     i.large.icon
+            //         +iconsmall name='customer-support'
+            //     | &nbsp; Customers
+            // a.item(href="/office/#{my_office._id}/settings")
+            //     i.large.icon
+            //         +iconsmall name='settings'
+            //     | &nbsp; Settings
         if is_admin
             a.mobile.hidden.item(href='/incidents')
                 i.large.icon

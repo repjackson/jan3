@@ -20,7 +20,7 @@ Meteor.methods
         userId = Meteor.userId();
         if !userId
             throw new Meteor.Error(401, "Unauthorized");
-        Accounts.addEmail(userId, new_email);
+        Accounts.addEmail(userId, new_email)
         return "Updated Email to #{new_email}"
         
     tagify_timestamp: (doc_id)->
@@ -433,3 +433,4 @@ Meteor.methods
         found_user = Accounts.findUserByEmail email
         console.log found_user
         found_user
+

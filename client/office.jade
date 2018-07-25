@@ -1,22 +1,22 @@
 template(name='office_customers')
     +office_header
-    h1.ui.grey.header Office Customers
+    h2.ui.center.aligned.header Office Customers
     +reactiveTable settings=settings class="ui celled striped sortable table"
 
 template(name='office_incidents')
     +office_header
-    h1.ui.grey.header Office Incidents
+    h2.ui.center.aligned.header Office Incidents
     +reactiveTable settings=settings class="ui celled striped sortable table"
 
 
 template(name='office_employees')
     +office_header
-    h1.ui.grey.header Office Employees
+    h2.ui.center.aligned.header Office Employees
     +reactiveTable settings=settings collection=collection class="ui celled striped sortable table"
 
 template(name='office_franchisees')
     +office_header
-    h1.ui.grey.header Office Franchisees
+    h2.ui.center.aligned.header Office Franchisees
     +reactiveTable settings=settings class="ui celled striped sortable table"
 
 template(name='office_header')
@@ -47,6 +47,36 @@ template(name='office_header')
                             |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                             a(href=office_map_address target='_blank')
                                 i.external.icon
+    +office_nav
+
+template(name='office_nav')
+    .ui.six.item.stackable.menu
+        a.item(href="/view/#{my_office._id}" isActivePath="/view/#{my_office._id}")
+            i.large.icon
+                +iconsmall name='link-company-parent'
+            | &nbsp; #{my_office.ev.MASTER_LICENSEE}
+        a.item(href="/office/#{my_office._id}/incidents" isActivePath="/office/#{my_office._id}/incidents")
+            i.large.icon
+                +iconsmall name='error'
+            | &nbsp; Incidents
+        a.item(href="/office/#{my_office._id}/employees" isActivePath="/office/#{my_office._id}/employees")
+            i.large.icon
+                +iconsmall name='groups'
+            | &nbsp; Employees
+        a.item(href="/office/#{my_office._id}/franchisees" isActivePath="/office/#{my_office._id}/franchisees")
+            i.large.icon
+                +iconsmall name='conference'
+            | &nbsp; Franchisees
+        a.item(href="/office/#{my_office._id}/customers" isActivePath="/office/#{my_office._id}/customers")
+            i.large.icon
+                +iconsmall name='customer-support'
+            | &nbsp; Customers
+        a.item(href="/office/#{my_office._id}/settings" isActivePath="/office/#{my_office._id}/settings")
+            i.large.icon
+                +iconsmall name='settings'
+            | &nbsp; Settings
+
+
 
 template(name='office_view')
     +office_header

@@ -393,14 +393,14 @@ Meteor.methods
                 # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    console.log doc
+                    # console.log doc
                     # doc.type = 'customer'
                     existing_customer_doc = 
                         Docs.findOne 
                             type: 'customer'
                             "ev.CUST_NAME": doc.CUST_NAME
                     if existing_customer_doc
-                        console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
+                        # console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
                         Docs.update existing_customer_doc._id,
                             $set:
                                 ev: doc
