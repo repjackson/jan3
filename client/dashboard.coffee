@@ -88,6 +88,7 @@ Template.customer_incidents_widget.helpers
         # showColumnToggles: true
         fields: [
             { key: 'customer_name', label: 'Customer' }
+            { key: 'incident_number', label: 'Number' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
             { key: 'when', label: 'Logged' }

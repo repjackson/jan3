@@ -13,13 +13,44 @@ template(name='dashboard')
     if currentUser
         .ui.padded.stackable.grid
             if currentUser.users_customer.parent_franchisee.parent_office.customer_message
-                .row
-                    .sixteen.wide.column
+                .three.column.row
+                    .column
                         .ui.info.icon.floating.message
                             i.info.icon
                             .content
                                 .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Message
                                 p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
+                    .column
+                        .ui.info.icon.floating.message
+                            i.bullhorn.icon
+                            .content
+                                .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Promotions
+                                p #{currentUser.users_customer.parent_franchisee.parent_office.customer_promotions}
+                    .column
+                        .ui.info.icon.floating.message
+                            i.paint.brush.icon
+                            .content
+                                .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Special Services
+                                p #{currentUser.users_customer.parent_franchisee.parent_office.customer_special_services}
+            .row
+                with currentUser.users_customer.parent_franchisee
+                    .sixteen.wide.column
+                        .ui.secondary.segment
+                            h3.ui.header 
+                                +icon name='conference'
+                                // |#{ev.FRANCHISEE} Franchisee Contact
+                                |Your Local Owner / Operator
+                            table.ui.sortable.striped.table
+                                tbody
+                                    tr
+                                        td #{ev.FRANCHISEE}
+                                        td(title='Short Name') #{ev.FRANCH_NAME}
+                                        td #{ev.FRANCH_EMAIL}
+                                        td #{ev.TELE_CELL} #{profile.phone}
+                                        td
+                                            a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
+                                                // i.mail.icon
+                                                +icon name='send'
             .row
                 .sixteen.wide.column
                     .ui.secondary.segment
@@ -28,25 +59,6 @@ template(name='dashboard')
                 .sixteen.wide.column
                     .ui.secondary.segment
                         +office_contact_cards
-            .row
-                with currentUser.users_customer.parent_franchisee
-                    .sixteen.wide.column
-                        .ui.secondary.segment
-                            h3.ui.header 
-                                +icon name='conference'
-                                // |#{ev.FRANCHISEE} Franchisee Contact
-                                |Your Local Jan-Pro Contact
-                            table.ui.sortable.striped.table
-                                tbody
-                                    tr
-                                        td #{ev.FRANCHISEE}
-                                        td(title='Short Name') #{ev.FRANCH_NAME}
-                                        td #{ev.FRANCH_EMAIL}
-                                        td #{ev.TELE_CELL}
-                                        td
-                                            a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
-                                                // i.mail.icon
-                                                +icon name='send'
             .centered.row
                 .eight.wide.column
                     .ui.secondary.segment
@@ -109,6 +121,7 @@ template(name='office_contact_card')
                 a.item(href="mailto:#{email}" target='_window' title="Email #{name}")
                     |#{email}
                 .item #{ev.JOB_TITLE}
+                .item #{ev.TELE_CELL} #{profile.phone}
                 
         // +view_button
 
@@ -184,11 +197,12 @@ template(name='dashboard_office_contacts_list')
                         |#{profile.first_name} #{profile.last_name}
                     td #{profile.title}
                     td 
-                        |#{ev.WORK_TELEPHONE} #{ev.JOB_TITLE}
-                        |#{email}
+                        div #{ev.JOB_TITLE}
+                        div #{ev.WORK_TELEPHONE} #{ev.TELE_CELL} #{profile.phone}
+                        div #{email}
                     td
                         a(href="mailto:#{email}" target='_window' title="Email #{name}")
                             // i.mail.icon
                             +icon name='send'
-                    td 
-                        +view_user_button
+                    // td 
+                    //     +view_user_button

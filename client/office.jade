@@ -48,7 +48,8 @@ template(name='office_header')
                             |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                             a(href=office_map_address target='_blank')
                                 i.external.icon
-        +office_nav
+        unless is_customer
+            +office_nav
 
 template(name='office_nav')
     .ui.six.item.stackable.menu
@@ -89,12 +90,14 @@ template(name='office_settings')
         .row
             .sixteen.wide.column
                 h1.ui.grey.header Office Settings
-                with my_office
+                with current_office
                     // h2.ui.header 
                     //     +icon name='sms'
                     //     | Customer Message
                     // .ui.sub.header Shown on customer dashboard
                     +edit_text_field key='customer_message' label='Customer Dashboard Message'
+                    +edit_text_field key='customer_promotions' label='Customer Dashboard Promotions Message'
+                    +edit_text_field key='customer_special_services' label='Customer Dashboard Special Services'
                     // p #{customer_message}
                     // h2.ui.header 
                     //     +icon name='checked-user-male'

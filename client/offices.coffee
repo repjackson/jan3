@@ -68,7 +68,7 @@ Template.office_settings.helpers
     
     franchisee_toggle_key: -> "escalation_#{@number}_contact_franchisee"
     primary_contact_key: -> 
-        console.log "escalation_#{@number}_primary_contact"
+        # console.log "escalation_#{@number}_primary_contact"
         "escalation_#{@number}_primary_contact"
 
     secondary_contact_key: -> "escalation_#{@number}_secondary_contact"

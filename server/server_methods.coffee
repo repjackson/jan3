@@ -443,7 +443,23 @@ Meteor.methods
 
     send_password_reset_email_by_username: (username)->
         console.log username
-        user = Meteor.users.findOne(username:username)
-        sent = Accounts.sendResetPasswordEmail(user._id)
+        found_user = Accounts.findUserByUsername(username)
+        console.log found_user
+        sent = Accounts.sendResetPasswordEmail(found_user._id)
         console.log sent
         return sent
+        
+    send_password_reset_email_by_email: (email)->
+        console.log email
+        found_user = Accounts.findUserByEmail(email)
+        console.log found_user
+        sent = Accounts.sendResetPasswordEmail(found_user._id)
+        console.log sent
+        return sent
+        
+        
+        
+    count_current_incident_number: ->
+        incident_count = Docs.find(type:'incident').count()
+        console.log 'incident count', incident_count
+        return incident_count

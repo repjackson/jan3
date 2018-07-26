@@ -13,17 +13,24 @@ Template.add_incident_button.events
         my_customer_ob = Meteor.user().users_customer()
         console.log my_customer_ob
         if my_customer_ob
-            new_incident_id = 
-                Docs.insert
-                    type: 'incident'
-                    customer_jpid: my_customer_ob.ev.ID
-                    customer_name: my_customer_ob.ev.CUST_NAME
-                    incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
-                    incident_franchisee: my_customer_ob.ev.FRANCHISEE
-                    level: 1
-                    open: true
-                    submitted: false
-            FlowRouter.go "/view/#{new_incident_id}"
+            Meteor.call 'count_current_incident_number', (err,incident_count)=>
+                if err then console.error err
+                else
+                    console.log incident_count
+                    next_incident_number = incident_count + 1
+                    console.log next_incident_number
+                    new_incident_id = 
+                        Docs.insert
+                            type: 'incident'
+                            incident_number: next_incident_number
+                            customer_jpid: my_customer_ob.ev.ID
+                            customer_name: my_customer_ob.ev.CUST_NAME
+                            incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
+                            incident_franchisee: my_customer_ob.ev.FRANCHISEE
+                            level: 1
+                            open: true
+                            submitted: false
+                    FlowRouter.go "/view/#{new_incident_id}"
 
 
 Template.incident_view.onRendered ->
@@ -68,6 +75,7 @@ Template.incidents.helpers
         # filters: ['myFilter']
         fields: [
             # { key: '_id', label: 'id' }
+            { key: 'incident_number', label: 'Number' }
             { key: 'customer_name', label: 'Customer' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
@@ -94,6 +102,7 @@ Template.customer_incidents.helpers
         # showColumnToggles: true
         fields: [
             { key: 'customer_name', label: 'Customer' }
+            { key: 'incident_number', label: 'Number' }
             { key: 'incident_office_name', label: 'Office' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
             { key: 'when', label: 'Logged' }

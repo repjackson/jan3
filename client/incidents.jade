@@ -41,6 +41,7 @@ template(name='incident_view')
                 // if is_dev
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
+                h4.ui.header Incident #:#{incident_number}    
                 if can_edit_core
                     // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
                     +edit_datetime_field key='service_date' label='Service Time'
@@ -268,7 +269,7 @@ template(name='customer_incidents')
         
 template(name='add_incident_button')
     if has_user_customer_jpid
-        a.ui.icon.button#add_incident(href='#')
+        a.ui.icon.button#add_incident(href='#' title='Create New Incident')
             i.large.green.plus.icon
     else
         .ui.secondary.segment Add Office to Profile to Add Incident

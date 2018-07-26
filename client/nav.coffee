@@ -2,12 +2,14 @@ Template.left_sidebar.events
     'click #logout': (e,t)-> 
         e.preventDefault()
         Meteor.logout()
+        FlowRouter.go '/login'
 
     
 Template.nav.events
     'click #logout': (e,t)-> 
         e.preventDefault()
         Meteor.logout()
+        FlowRouter.go '/login'
 
     
 Template.nav.onCreated ->
