@@ -92,12 +92,15 @@ Template.register_customer.events
         options.email = email
         options.profile = {}
         options.profile.customer_jpid = customer_jpid
-        Accounts.createUser options, (err,res)->
+        Accounts.createUser options, (err,res)=>
             if err
-                console.log err
+                Bert.alert "Error registering user #{username}: #{err.reason}", 'error', 'growl-top-right'
             else
                 Bert.alert "Registered #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                FlowRouter.go '/'                
+                FlowRouter.go '/'     
+                Meteor.call 'add_role_to_user', Meteor.userId(), 'customer', (err,res)=>
+                    if err then console.error err
+                    else console.log res
     
     'keyup #username': (e,t)->
         username = $('#username').val()

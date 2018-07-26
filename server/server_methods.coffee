@@ -432,3 +432,10 @@ Meteor.methods
         console.log found_user
         found_user
 
+
+    add_role_to_user: (userid, role)->
+        Meteor.users.update userid,
+            $addToSet: roles: role
+        user = Meteor.users.findOne userid
+        console.log "added role #{role} to user #{user.username}" 
+        Meteor.call 'create_event', userid, 'add role to user', "#{role} was added to #{user.username}."

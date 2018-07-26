@@ -1,12 +1,12 @@
 template(name='accounts_nav')
-    #nav.ui.five.item.borderless.borderless.stackable.menu
+    #nav.ui.four.item.borderless.borderless.stackable.menu
         a.item(href='/' isActivePath='/')
             img.ui.avatar.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
             | &nbsp; Home
         +menu_item link='/login' label='Login' icon='password'
         +menu_item link='/reset_password' label='Forgot Password' icon='forgot-password'
         +menu_item link='/register_customer' label='Register Customer' icon='customer-support'
-        +menu_item link='/register_officer' label='Register Officer' icon='add-user-male'
+        // +menu_item link='/register_officer' label='Register Officer' icon='add-user-male'
 
 
 template(name='accounts_layout')
@@ -77,7 +77,7 @@ template(name='login')
                             |Demo Officer
                     .column
                         #login_demo_admin.ui.fluid.large.button
-                            +icon name='crown' classes='ui inline image'
+                            +icon name='user-shield' classes='ui inline image'
                             |Demo Admin
                 
                 
