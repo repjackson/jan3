@@ -125,7 +125,7 @@ Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
     can_submit: -> 
         user = Meteor.user()
-        is_customer = user and user.roles and 'customer' in user.roles
+        is_customer = user and user.roles and ('customer' in user.roles)
         @service_date and @incident_details and @incident_type and is_customer and not @submitted
     
     can_edit_core: ->
@@ -155,14 +155,15 @@ Template.incident_view.events
         if incidents_office
             escalation_minutes = incidents_office.escalation_1_hours
             console.log incidents_office.escalation_1_hours
-            Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} rules."
-            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office.initial_primary_contact} and #{incidents_office.initial_secondary_contact} have been notified per #{incident.incident_office_name} rules."
+            Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} escalation 1 rules."
+            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office.escalation_0_primary_contact} and #{incidents_office.escalation_0_secondary_contact} have been notified per #{incident.incident_office_name} rules."
         Docs.update doc_id,
             $set:
                 submitted:true
                 submitted_datetime: Date.now()
                 last_updated_datetime: Date.now()
         Meteor.call 'create_event', doc_id, 'submit', "submitted the incident."
+        Meteor.call 'email_about_incident_submission', incident._id
 
 
     'click .unsubmit': -> 
@@ -270,7 +271,7 @@ Template.sla_rule_doc.helpers
         # console.log incident.level
         # console.log incident.level is @number
         if incident
-            incident.level is @number
+            incident.level is (@number+1)
     escalation_level_card_class: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
@@ -285,7 +286,7 @@ Template.sla_rule_doc.helpers
     incident_doc: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-    
+    next_level_from_escalation: -> @number+1
     hours_value: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id

@@ -156,12 +156,14 @@ Template.office_incidents.helpers
         # noDataTmpl: 'no_data'
         # showColumnToggles: true
         fields: [
+            { key: 'incident_number', label: 'Number' }
             { key: 'incident_office_name', label: 'Office' }
             { key: 'customer_name', label: 'Customer' }
             { key: 'timestamp', label: 'Logged', tmpl:Template.when_template, sortOrder:1, sortDirection:'descending' }
             { key: '', label: 'Type', tmpl:Template.incident_type_label }
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
+            { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
             # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
             # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
             { key: '', label: 'View', tmpl:Template.view_button }

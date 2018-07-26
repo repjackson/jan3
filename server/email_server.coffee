@@ -137,4 +137,67 @@ Meteor.methods
     
     
     
+    email_about_incident_submission: (incident_id)->
+        incident = Docs.findOne incident_id
+        customer = Docs.findOne {
+            "ev.ID":incident.customer_jpid
+            type:'customer'
+        }
+        franchisee = Docs.findOne {
+            "ev.FRANCHISEE":customer.ev.FRANCHISEE
+            type:'franchisee'
+        }
+            
+        console.log 'franchisee', franchisee 
+        office_doc = Docs.findOne {
+            "ev.MASTER_LICENSEE":incident.incident_office_name
+            type:'office'
+        }
+        # escalation_1_primary_contact_franchisee: true,
+        initial_primary_contact_value = office_doc["escalation_0_primary_contact"]
+        initial_secondary_contact_value = office_doc["escalation_0_secondary_contact"]
+        
+        initial_franchisee_value = office_doc["escalation_0_contact_franchisee"]
+        
+        console.log 'initial_primary_contact_value', initial_primary_contact_value
+        console.log 'initial_secondary_contact_value', initial_secondary_contact_value
+        mail_fields = {
+            to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
+            from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
+            subject: "Incident from #{incident.customer_name} has been submitted."
+            text: ''
+            html: "<h4>Incident from #{incident.customer_name} has been submitted by customer.</h4>
+                <h5>Type: #{incident.incident_type}</h5>
+                <h5>Number: #{incident.incident_number}</h5>
+                <h5>Details: #{incident.incident_details}</h5>
+                <h5>Timestamp: #{incident.timestamp}</h5>
+                <h5>Office: #{incident.incident_office_name}</h5>
+                <h5>Status: #{incident.status}</h5>
+                <h5>Service Date: #{incident.service_date}</h5>
+                <h4>This will notify</h4>
+                <h5>Primary Office Contact: #{initial_primary_contact_value}</h5>
+                <h5>Secondary Office Contact: #{initial_secondary_contact_value}</h5>
+                <h5>Franchisee: #{initial_franchisee_value}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
+            "
+        }
+        Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{initial_primary_contact_value} has been emailed as the primary contact for escalation to level #{incident.level}."
+        Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{initial_secondary_contact_value} has been emailed as the secondary contact for escalation to level #{incident.level}."
+        if initial_franchisee_value
+            Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} has been emailed for incident submission."
+
+        #{escalation_primary_contact_value}
+        
+        
+        Meteor.call 'sendEmail', mail_fields
+    #         # html: 
+    #         #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
+    #         #     #{text} <br>
+    #         #     In conversation with tags: #{conversation_doc.tags}. \n
+    #         #     In conversation with description: #{conversation_doc.description}. \n
+    #         #     \n
+    #         #     Click <a href="/view/#{_id}"
+    #         # "
+    
+    
+    
     

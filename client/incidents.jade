@@ -41,7 +41,7 @@ template(name='incident_view')
                 // if is_dev
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
-                h4.ui.header Incident #:#{incident_number}    
+                h4.ui.header Incident ##{incident_number}    
                 if can_edit_core
                     // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
                     +edit_datetime_field key='service_date' label='Service Time'
@@ -92,31 +92,32 @@ template(name='incident_view')
                                 .ui.basic.label Open
                             else
                                 .ui.label Closed
-                        if open
-                            .close_incident.ui.fluid.button
-                                i.calendar.times.icon
-                                | Close Incident
-                        else
-                            .reopen_incident.ui.fluid.button
-                                i.user.shield.icon
-                                | Reopen Incident
-                            .ui.button 
-                                i.reply.icon
-                                |Create Related Ticket
+                        unless is_customer
+                            if open
+                                .close_incident.ui.fluid.button
+                                    i.calendar.times.icon
+                                    | Close Incident
+                            else
+                                .reopen_incident.ui.fluid.button
+                                    i.user.shield.icon
+                                    | Reopen Incident
+                                .ui.button 
+                                    i.reply.icon
+                                    |Create Related Ticket
                 if submitted
                     .ui.disabled.button
                         | Submitted {{reg_format submitted_datetime}}
-                    if is_admin
+                    unless is_customer
                         .unsubmit.ui.fluid.button
                             i.user.shield.icon
                             |Unsubmit
+                else
+                    if is_customer
+                        .ui.secondary.segment Fill Date, Details, and Type to Submit
                 if can_submit
                     .submit.ui.fluid.large.button
                         i.green.checkmark.icon
                         |Submit
-                if is_customer
-                    unless submitted
-                        .ui.secondary.segment Fill Date, Details, and Type to Submit
                 unless is_customer
                     if submitted
                         .ui.secondary.segment
@@ -124,7 +125,6 @@ template(name='incident_view')
                     +notify_button
                     +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
                     +incident_sla_widget
-                else
                     .ui.secondary.segment
                         .ui.header Level: #{level}
 
@@ -286,9 +286,9 @@ template(name='incident_sla_widget')
 template(name='sla_rule_doc')            
     .ui.dividing.header 
         if is_level
-            i.green.checkmark.icon(title="Current Level: #{number}")
+            i.green.checkmark.icon(title="Current Level: #{incident_doc.level}")
         unless is_level
-            .set_level.ui.small.compact.button(title="Manually set incident to #{number}") Set #{number}
+            .set_level.ui.small.compact.button(title="Simulate Escalation #{number} to set incident level to #{next_level_from_escalation}") Set Level #{next_level_from_escalation}
         |#{name}
     .content
         unless is_initial
