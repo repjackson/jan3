@@ -168,3 +168,23 @@ Template.register_customer.events
         #             Session.set 'email_found', null
                 
     
+    
+Template.reset_password.events
+    'keyup #username': (e,t)->
+        username = $('#username').val()
+        Session.set 'session_username', username
+        if e.which is 13 #enter
+            Meteor.call 'send_password_reset_email_by_username', username, (err, res)->
+                if err
+                    Bert.alert "Error sending email reset link to #{username}: #{err.reason}.", 'success', 'growl-top-right'
+                else if res
+                    Bert.alert "Sent email reset link to #{username}.", 'error', 'growl-top-right'
+    'click #reset_password_by_username': (e,t)->
+        username = $('#username').val()
+        Session.set 'session_username', username
+        if e.which is 13 #enter
+            Meteor.call 'send_password_reset_email_by_username', username, (err, res)->
+                if err
+                    Bert.alert "Error sending email reset link to #{username}: #{err.reason}.", 'success', 'growl-top-right'
+                else if res
+                    Bert.alert "Sent email reset link to #{username}.", 'success', 'growl-top-right'

@@ -439,3 +439,11 @@ Meteor.methods
         user = Meteor.users.findOne userid
         console.log "added role #{role} to user #{user.username}" 
         Meteor.call 'create_event', userid, 'add role to user', "#{role} was added to #{user.username}."
+
+
+    send_password_reset_email_by_username: (username)->
+        console.log username
+        user = Meteor.users.findOne(username:username)
+        sent = Accounts.sendResetPasswordEmail(user._id)
+        console.log sent
+        return sent

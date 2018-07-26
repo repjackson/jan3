@@ -33,15 +33,23 @@ template(name='reset_password')
             h1.ui.center.aligned.header 
                 +icon name='forgot-password'
                 | Reset Password
-            .ui.disabled.segment
+            .ui.segment
                 .ui.form
                     .field
-                        label Username/Email
-                        input.username(type='text')
+                        label Username
+                        input#username(type='text')
                     .field
-                        .login.ui.fluid.disabled.button
+                        #reset_password_by_username.ui.fluid.button
                             // +icon name='lock-2'
-                            | Email Reset Link
+                            | Reset password by Username
+                .ui.form
+                    .field
+                        label Email
+                        input#email(type='email')
+                    .field
+                        #reset_password_by_email.ui.fluid.button
+                            // +icon name='lock-2'
+                            | Reset password by Email
 
 
 template(name='login')
