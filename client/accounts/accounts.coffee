@@ -81,15 +81,23 @@ Template.register_customer.helpers
         if Session.get('session_username') and Session.get('session_password_one') and Session.get('session_email') and Session.get('session_customer_jpid') then true else false
     
 Template.register_customer.events
-    # 'click #register': (e,t)->
-    #     login = $('.username').val()
-    #     password = $('.password').val()
-    #     Meteor.createUser login, password, (err,res)->
-    #         if err
-    #             console.log err
-    #         else
-    #             Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-    #             FlowRouter.go '/'                
+    'click #register': (e,t)->
+        username = $('#username').val()
+        customer_jpid = $('#customer_jpid').val()
+        email = $('#email').val()
+        password_one = $('#password_one').val()
+        options = {}
+        options.username = username
+        options.password = password_one
+        options.email = email
+        options.profile = {}
+        options.profile.customer_jpid = customer_jpid
+        Accounts.createUser options, (err,res)->
+            if err
+                console.log err
+            else
+                Bert.alert "Registered #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                FlowRouter.go '/'                
     
     'keyup #username': (e,t)->
         username = $('#username').val()
@@ -114,7 +122,8 @@ Template.register_customer.events
                 
     'keyup #email': (e,t)->
         email = $('#email').val()
-        Session.set 'session_email', email
+        if email.length > 0
+            Session.set 'session_email', email
         Meteor.call 'check_email', email, (err, res)->
             if err then console.error err
             else 
