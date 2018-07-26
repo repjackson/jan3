@@ -89,7 +89,7 @@ template(name='office_settings')
             +office_header
         .row
             .sixteen.wide.column
-                h1.ui.grey.header Office Settings
+                h1.ui.center.aligned.header Office Settings
                 with current_office
                     // h2.ui.header 
                     //     +icon name='sms'
@@ -109,12 +109,14 @@ template(name='office_settings')
                     //         +single_user_select key='operations_manager' label='Operations Manager'
                     h3.ui.header 
                         +icon name='administrative-tools'
-                        |SLA
+                        |SLA Settings for
+                    each incident_types
+                        .select_incident_type.ui.small.compact.button(class=select_incident_type_button_class) #{name}
                     // h3.ui.header Initial
                     // p ie type=level2
                     each rule_docs
                         .ui.secondary.segment
-                            h3.ui.header #{name}
+                            h3.ui.header #{name} for #{selected_incident_type} Settings
                             .ui.two.column.padded.grid
                                 unless is_initial
                                     .row

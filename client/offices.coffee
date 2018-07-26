@@ -48,41 +48,6 @@ Template.office_header.helpers
 Template.office_header.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
-Template.office_settings.onCreated ->
-    @autorun -> Meteor.subscribe 'type', 'rule'
-    @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('doc_id')
-
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    
-Template.office_settings.helpers
-    current_office: ->
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log page_office
-        return page_office
-        
-    is_initial: -> @number is 0    
-        
-    rule_docs: -> Docs.find {type:'rule'}, sort:number:1
-        
-    hours_key: -> "escalation_#{@number}_hours"
-    
-    franchisee_toggle_key: -> "escalation_#{@number}_contact_franchisee"
-    primary_contact_key: -> 
-        # console.log "escalation_#{@number}_primary_contact"
-        "escalation_#{@number}_primary_contact"
-
-    secondary_contact_key: -> "escalation_#{@number}_secondary_contact"
-        
-    is_primary_indivdual: ->
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        prim_ind = page_office["escalation_#{@number}_primary_contact"]
-        console.log prim_ind
-        prim_ind
-        
-    is_secondary_indivdual: ->
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        page_office["escalation_#{@number}_secondary_contact"]
-        
     
 Template.office_customers.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
@@ -238,3 +203,61 @@ Template.office_franchisees.helpers
             { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
+
+
+
+Template.office_settings.onCreated ->
+    @autorun -> Meteor.subscribe 'type', 'rule'
+    @autorun -> Meteor.subscribe 'type', 'incident_type'
+    @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('doc_id')
+
+    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    
+Template.office_settings.events
+    'click .select_incident_type': ->
+        Session.set 'incident_type_selection', @name
+
+
+Template.office_settings.helpers
+    current_office: ->
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log page_office
+        return page_office
+        
+    incident_types: -> Docs.find {type:'incident_type'}
+    
+    select_incident_type_button_class: ->
+        if Session.equals('incident_type_selection', @name) then 'blue' else 'basic'
+        
+    selected_incident_type: -> Session.get 'incident_type_selection'
+        
+    is_initial: -> @number is 0    
+        
+    rule_docs: -> Docs.find {type:'rule'}, sort:number:1
+        
+    hours_key: -> 
+        current_incident_type = Session.get 'incident_type_selection'
+        "escalation_#{@number}_#{current_incident_type}_hours"
+    
+    franchisee_toggle_key: -> 
+        current_incident_type = Session.get 'incident_type_selection'
+        "escalation_#{@number}_#{current_incident_type}_contact_franchisee"
+    primary_contact_key: -> 
+        current_incident_type = Session.get 'incident_type_selection'
+        # console.log "escalation_#{@number}_primary_contact"
+        "escalation_#{@number}_#{current_incident_type}_primary_contact"
+
+    secondary_contact_key: -> 
+        current_incident_type = Session.get 'incident_type_selection'
+        "escalation_#{@number}_#{current_incident_type}_secondary_contact"
+        
+    # is_primary_indivdual: ->
+    #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    #     prim_ind = page_office["escalation_#{@number}_primary_contact"]
+    #     console.log prim_ind
+    #     prim_ind
+        
+    # is_secondary_indivdual: ->
+    #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    #     page_office["escalation_#{@number}_secondary_contact"]
+        
