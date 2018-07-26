@@ -1,6 +1,7 @@
 template(name='office_customers')
     +office_header
     h2.ui.center.aligned.header Office Customers
+        i#refresh_ny_customers.refresh.icon
     +reactiveTable settings=settings class="ui celled striped sortable table"
 
 template(name='office_incidents')
@@ -47,31 +48,31 @@ template(name='office_header')
                             |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                             a(href=office_map_address target='_blank')
                                 i.external.icon
-    +office_nav
+        +office_nav
 
 template(name='office_nav')
     .ui.six.item.stackable.menu
-        a.item(href="/view/#{my_office._id}" isActivePath="/view/#{my_office._id}")
+        a.item(href="/view/#{_id}" isActivePath="/view/#{_id}")
             i.large.icon
                 +iconsmall name='link-company-parent'
-            | &nbsp; #{my_office.ev.MASTER_LICENSEE}
-        a.item(href="/office/#{my_office._id}/incidents" isActivePath="/office/#{my_office._id}/incidents")
+            | &nbsp; #{ev.MASTER_LICENSEE}
+        a.item(href="/office/#{_id}/incidents" isActivePath="/office/#{_id}/incidents")
             i.large.icon
                 +iconsmall name='error'
             | &nbsp; Incidents
-        a.item(href="/office/#{my_office._id}/employees" isActivePath="/office/#{my_office._id}/employees")
+        a.item(href="/office/#{_id}/employees" isActivePath="/office/#{_id}/employees")
             i.large.icon
                 +iconsmall name='groups'
             | &nbsp; Employees
-        a.item(href="/office/#{my_office._id}/franchisees" isActivePath="/office/#{my_office._id}/franchisees")
+        a.item(href="/office/#{_id}/franchisees" isActivePath="/office/#{_id}/franchisees")
             i.large.icon
                 +iconsmall name='conference'
             | &nbsp; Franchisees
-        a.item(href="/office/#{my_office._id}/customers" isActivePath="/office/#{my_office._id}/customers")
+        a.item(href="/office/#{_id}/customers" isActivePath="/office/#{_id}/customers")
             i.large.icon
                 +iconsmall name='customer-support'
             | &nbsp; Customers
-        a.item(href="/office/#{my_office._id}/settings" isActivePath="/office/#{my_office._id}/settings")
+        a.item(href="/office/#{_id}/settings" isActivePath="/office/#{_id}/settings")
             i.large.icon
                 +iconsmall name='settings'
             | &nbsp; Settings

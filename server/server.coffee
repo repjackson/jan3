@@ -31,9 +31,22 @@ SyncedCron.add
             if err then console.log err
             # else
                 # console.log 'res:',res
+
+
+SyncedCron.add
+    name: 'Update ny customers'
+    schedule: (parser) ->
+        # parser is a later.parse object
+        parser.text 'every 1 hour'
+    job: -> 
+        Meteor.call 'sync_ny_customers', (err, res)->
+            if err then console.log err
+            else
+                console.log 'res:',res
+            
             
 
-# SyncedCron.start()
+SyncedCron.start()
 
     
     

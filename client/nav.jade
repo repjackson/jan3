@@ -78,6 +78,7 @@ template(name='nav')
                         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
+                    | #{currentUser.username}
                 a#logout.ui.icon.item(href='#' title='Log Out') 
                     i.icon
                         i.sign.out.icon

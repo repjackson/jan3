@@ -90,9 +90,15 @@ Template.office_customers.onCreated ->
         # Template.filter = new ReactiveTable.Filter('office', ["ev.MASTER_LICENSEE"])
         Template.filter = new ReactiveTable.Filter('office_customers', ["ev.MASTER_LICENSEE"])
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        console.log FlowRouter.getParam('doc_id')
+        console.log Docs.findOne FlowRouter.getParam('doc_id')
         if page_office
             ReactiveTable.Filter('office_customers').set(page_office.ev.MASTER_LICENSEE)
 
+Template.office_customers.events
+    'click #refresh_ny_customers': ->
+        Meteor.call 'sync_ny_customers', ->
+            
 
 Template.office_customers.helpers    
     # office_customers: ->  
@@ -117,7 +123,8 @@ Template.office_customers.helpers
             { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
             { key: 'ev.TELEPHONE', label: 'Telephone' }
             { key: 'ev.ADDR_STREET', label: 'Address' }
-            { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
+            # { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
+            { key: 'ev.TIMESTAMP', label: 'Timestamp' }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
 

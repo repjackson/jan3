@@ -369,7 +369,7 @@ Meteor.methods
                         console.log "added #{doc.CUST_NAME}"
                         
     sync_ny_customers: () ->
-        console.log 'starting customer sync'
+        console.log 'starting ny customer sync'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
@@ -400,7 +400,7 @@ Meteor.methods
                             type: 'customer'
                             "ev.CUST_NAME": doc.CUST_NAME
                     if existing_customer_doc
-                        # console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
+                        console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
                         Docs.update existing_customer_doc._id,
                             $set:
                                 ev: doc
@@ -408,7 +408,7 @@ Meteor.methods
                         new_customer_doc = Docs.insert 
                             type: 'customer'
                             ev: doc
-                        console.log "added #{doc.CUST_NAME}"
+                        console.log "added #{doc.CUST_NAME}: #{doc.MASTER_LICENSEE}"
                         
     # sync_ny_statements: () ->
     #     console.log 'starting ny statement sync'
