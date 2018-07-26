@@ -101,7 +101,7 @@ Meteor.methods
         console.log escalation_primary_contact_value
         console.log escalation_secondary_contact_value
         mail_fields = {
-            to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>", "nick.bhagat@premiumfranchisebrands.com <nick.bhagat@premiumfranchisebrands.com>"]
+            to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Incident from #{incident.customer_name} has been escalated to #{incident.level}."
             text: ''

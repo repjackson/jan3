@@ -68,7 +68,7 @@ Template.register_customer.onRendered ->
 Template.register_customer.helpers
     user_found: -> Session.get 'username_found'
     
-    session_customer_jpid: -> Session.get 'customer_jpid'
+    session_customer_jpid: -> Session.get 'session_customer_jpid'
     
     passwords_match: ->
         password_one = Session.get 'password_one'
@@ -146,6 +146,17 @@ Template.register_customer.events
         console.log password_two
                 
     'keyup #customer_jpid': (e,t)->
+        customer_jpid = $('#customer_jpid').val()
+        Session.set 'session_customer_jpid', customer_jpid
+        # Meteor.call 'check_password_two', password_two, (err, res)->
+        #     if err then console.error err
+        #     else 
+        #         if res
+        #             Session.set 'email_found', res
+        #         else
+        #             Session.set 'email_found', null
+                
+    'blur #customer_jpid': (e,t)->
         customer_jpid = $('#customer_jpid').val()
         Session.set 'session_customer_jpid', customer_jpid
         # Meteor.call 'check_password_two', password_two, (err, res)->
