@@ -784,7 +784,7 @@ Template.session_delete_button.events
 
 
 Template.office_card.onCreated ->
-    console.log @data
+    # console.log @data
     @autorun =>  Meteor.subscribe 'office_by_id', @data.office_jpid
 Template.office_card.helpers
     office_doc: ->
@@ -797,7 +797,7 @@ Template.office_card.helpers
         doc
         
 Template.customer_card.onCreated ->
-    console.log @data
+    # console.log @data
     @autorun =>  Meteor.subscribe 'customer_by_id', @data.customer_jpid
 Template.customer_card.helpers
     customer_doc: ->

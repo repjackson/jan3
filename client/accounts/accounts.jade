@@ -5,7 +5,7 @@ template(name='accounts_nav')
             | &nbsp; Home
         +menu_item link='/login' label='Login' icon='password'
         +menu_item link='/reset_password' label='Forgot Password' icon='forgot-password'
-        +menu_item link='/register_customer' label='Register Customer' icon='add-user-female'
+        +menu_item link='/register_customer' label='Register Customer' icon='customer-support'
         +menu_item link='/register_officer' label='Register Officer' icon='add-user-male'
 
 
@@ -38,9 +38,6 @@ template(name='reset_password')
                     .field
                         label Username/Email
                         input.username(type='text')
-                    .field
-                        label Password
-                        input.password(type='password')
                     .field
                         .login.ui.fluid.disabled.button
                             // +icon name='lock-2'
@@ -122,7 +119,7 @@ template(name='register_customer')
                     .ui.form
                         .required.field
                             label Username
-                            input.username(type='text')
+                            input#username(type='text')
                             if username_found
                                 .ui.info.message 
                                     |Existing Username Found
@@ -131,7 +128,7 @@ template(name='register_customer')
                                         i.right.arrow.icon
                         .required.field
                             label Email
-                            input.email(type='email')
+                            input#email(type='email')
                             if email_found
                                 .ui.info.message 
                                     |Existing Email Found
@@ -143,21 +140,21 @@ template(name='register_customer')
                                     |Existing Available
                         .required.field
                             label Customer ID
-                            input(type='text')
-                        +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
+                            input#customer_jpid(type='text')
+                        +customer_card customer_jpid=session_customer_jpid                    
                         .required.field
                             label Password
-                            input.password_one(type='password')
-                        .required.field
-                            label Repeat Password
-                            input.password_two(type='password')
-                            if passwords_match
-                                i.green.checkmark.icon
-                                |Passwords Match
-                            else
-                                i.red.remove.icon
-                                |Passwords Don't Match
+                            input#password_one(type='password')
+                        // .required.field
+                        //     label Repeat Password
+                        //     input.password_two(type='password')
+                        //     if passwords_match
+                        //         i.green.checkmark.icon
+                        //         |Passwords Match
+                        //     else
+                        //         i.red.remove.icon
+                        //         |Passwords Don't Match
                             
-                    .ui.fluid.button
-                        if can_submit
+                    if can_submit
+                        .ui.fluid.button
                             |Register

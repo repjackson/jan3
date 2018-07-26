@@ -60,8 +60,15 @@ Template.login.events
                 FlowRouter.go '/'                
             
         
+        
+Template.register_customer.onRendered ->
+    Session.setDefault 'customer_jpid', null
+        
+        
 Template.register_customer.helpers
     user_found: -> Session.get 'username_found'
+    
+    session_customer_jpid: -> Session.get 'customer_jpid'
     
     passwords_match: ->
         password_one = Session.get 'password_one'
@@ -69,63 +76,45 @@ Template.register_customer.helpers
         if password_one.length and password_one is password_two then true else false
         
     can_submit: ->
-        login = $('.username').val()
-        email = $('.email').val()
-        customer_jpid = $('.customer_jpid').val()
-        password_one = Session.get 'password_one'
-        password_two = Session.get 'password_two'
-        if login and password and customer_jpid and password_one and password_two then true else false
+        # password_two = Session.get 'password_two'
+        session_customer_jpid = Session.get 'customer_jpid'
+        if Session.get('session_username') and Session.get('session_password_one') and Session.get('session_email') and Session.get('session_customer_jpid') then true else false
     
 Template.register_customer.events
-    'click .login': (e,t)->
-        e.preventDefault()
-        # comment = $('#register_comment').val().trim()
-        login = $('.username').val()
-        password = $('.password').val()
-        Meteor.loginWithPassword login, password, (err,res)->
-            if err
-                console.log err
-            else
-                Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                FlowRouter.go '/'                
-        # if e.which is 13 #enter
+    # 'click #register': (e,t)->
+    #     login = $('.username').val()
+    #     password = $('.password').val()
+    #     Meteor.createUser login, password, (err,res)->
+    #         if err
+    #             console.log err
+    #         else
+    #             Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+    #             FlowRouter.go '/'                
     
-    'keyup .username': (e,t)->
-        if e.which is 13 #enter
-            e.preventDefault()
-            # comment = $('#register_comment').val().trim()
-            login = $('.username').val()
-            password = $('.password').val()
-            Meteor.loginWithPassword login, password, (err,res)->
-                if err
-                    console.log err
-                else
-                    Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                    FlowRouter.go '/'                
-            #     # console.log comment
-            
-    'blur .username': (e,t)->
-        # comment = $('#register_comment').val().trim()
-        username = $('.username').val()
-        console.log username   
-    
-    'keyup .username': (e,t)->
-        e.preventDefault()
-        # comment = $('#register_comment').val().trim()
-        username = $('.username').val()
+    'keyup #username': (e,t)->
+        username = $('#username').val()
+        Session.set 'session_username', username
         Meteor.call 'check_username', username, (err, res)->
             if err then console.error err
             else 
                 if res
-                    Session.set 'username_found', res
+                    Session.set 'username_found', true
                 else
-                    Session.set 'username_found', null
+                    Session.set 'username_found', false
+        if e.which is 13 #enter
+            password = $('#password').val()
+            if username.length > 0 and password.length > 0
+                Meteor.loginWithPassword login, password, (err,res)->
+                    if err
+                        console.log err
+                    else
+                        Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                        FlowRouter.go '/'                
+            
                 
-    'keyup .email': (e,t)->
-        e.preventDefault()
-        # comment = $('#register_comment').val().trim()
-        email = $('.email').val()
-        console.log email
+    'keyup #email': (e,t)->
+        email = $('#email').val()
+        Session.set 'session_email', email
         Meteor.call 'check_email', email, (err, res)->
             if err then console.error err
             else 
@@ -134,19 +123,19 @@ Template.register_customer.events
                 else
                     Session.set 'email_found', null
                 
-    'keyup .password_one': (e,t)->
-        e.preventDefault()
-        # comment = $('#register_comment').val().trim()
-        password_one = $('.password_one').val()
-        Session.set 'password_one', password_one
+    'keyup #password_one': (e,t)->
+        password_one = $('#password_one').val()
+        Session.set 'session_password_one', password_one
         console.log password_one
                 
-    'keyup .password_two': (e,t)->
-        e.preventDefault()
-        # comment = $('#register_comment').val().trim()
-        password_two = $('.password_two').val()
-        Session.set 'password_two', password_two
+    'keyup #password_two': (e,t)->
+        password_two = $('#password_two').val()
+        Session.set 'session_password_two', password_one
         console.log password_two
+                
+    'keyup #customer_jpid': (e,t)->
+        customer_jpid = $('#customer_jpid').val()
+        Session.set 'session_customer_jpid', customer_jpid
         # Meteor.call 'check_password_two', password_two, (err, res)->
         #     if err then console.error err
         #     else 

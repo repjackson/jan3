@@ -422,8 +422,6 @@ Meteor.methods
             # console.log event_doc
             Docs.remove event_doc._id
 
-
-
     check_username: (username)->
         found_user = Accounts.findUserByUsername username
         console.log found_user
