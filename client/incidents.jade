@@ -260,7 +260,7 @@ template(name='customer_incidents')
             .ten.wide.column
                 h2.ui.center.aligned.header 
                     +icon name='error'
-                    | My Incidents
+                    |#{currentUser.users_customer.ev.CUST_NAME} Incidents
             .three.wide.column
         .row
             .sixteen.wide.column

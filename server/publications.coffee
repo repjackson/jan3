@@ -148,6 +148,7 @@ Meteor.publish 'office_franchisees', (office_doc_id)->
     office_doc = Docs.findOne office_doc_id
     Docs.find {
         type: "franchisee"
+        "ev.ACCOUNT_STATUS": 'ACTIVE'
         "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
     }
     

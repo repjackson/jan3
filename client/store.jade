@@ -26,14 +26,15 @@ template(name='product_card')
             .description
                 p #{description}
         .content
-            .ui.button 
-                i.large.icon
-                    +iconsmall name='add-shopping-cart'
-                | Add to Cart
-            .ui.button 
-                i.large.icon
-                    +iconsmall name='view-details'
-                |Details
+            .ui.buttons
+                .ui.button 
+                    i.large.icon
+                        +iconsmall name='add-shopping-cart'
+                    | Add to Cart
+                a.ui.button(href="/view/#{_id}")
+                    i.large.icon
+                        +iconsmall name='view-details'
+                    |Details
     
 
 template(name='product_edit')

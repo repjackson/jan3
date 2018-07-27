@@ -31,7 +31,7 @@ template(name='service_card')
                 i.large.icon
                     +iconsmall name='service-bell'
                 | Request
-            .ui.button 
+            a.ui.button(href="/view/#{_id}") 
                 i.large.icon
                     +iconsmall name='view-details'
                 |Details

@@ -11,7 +11,6 @@ FlowRouter.notFound =
 #         libraries: 'places'
 # )
 
-
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
 
@@ -36,31 +35,22 @@ Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 Template.registerHelper 'my_office', () -> 
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
-    if user and user.profile and user.profile.customer_jpid
-        customer_doc = Docs.findOne
-            "ev.ID": user.profile.customer_jpid
-            type:'customer'
-        # console.log customer_doc
-        if customer_doc
-            users_office = Docs.findOne
-                "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
-                type:'office'
-            # console.log users_office
-            users_office
-        else null
-
-    
-
-Template.registerHelper 'nav_class', () -> 
-    if Meteor.user() and Meteor.user().roles and 'customer' in Meteor.user().roles then 'nav_bar' else 'inverted'
-
-Template.registerHelper 'footer_class', () ->
-    if Meteor.user() and Meteor.user().roles and 'customer' in Meteor.user().roles then 'footer_area inverted' else 'inverted'
+    if user and user.profile and user.profile.office_jpid
+        users_office = Docs.findOne
+            "ev.ID": user.profile.office_jpid
+            type:'office'
+        # console.log users_office
+        users_office
+    else null
 
 Template.registerHelper 'from_now', (date) -> moment(date).fromNow()
 
 Template.registerHelper 'formal_when', () -> moment(@timestamp).format('MMMM Do YYYY, h:mm:ss a')
 
+Template.registerHelper 'is_current_route', (name) -> 
+    if FlowRouter.current().route.name is name then 'active' else ''
+    
+    
 Template.registerHelper 'is_admin', () -> 
     if Meteor.user() and Meteor.user().roles
         'admin' in Meteor.user().roles
@@ -76,8 +66,6 @@ Template.registerHelper 'is_customer', () ->
         
 Template.registerHelper 'user_is_customer', () -> @roles and 'customer' in @roles
 Template.registerHelper 'user_is_officer', () -> @roles and 'office' in @roles
-        
-        
         
 Template.registerHelper 'has_user_customer_jpid', () -> 
     Meteor.user() and Meteor.user().profile and Meteor.user().profile.customer_jpid
@@ -123,11 +111,6 @@ Template.registerHelper 'profile_key_value', () ->
 #     Meteor.users. 
 #         current_user["#{@key}"]
         
-        
-
-
-
-
 Template.left_sidebar.onRendered ->
     @autorun =>
         if @subscriptionsReady()
@@ -152,5 +135,4 @@ Template.left_sidebar.onRendered ->
     #                 .sidebar('attach events', '.toggle_right_sidebar.item')
     #                 # .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')
     #         , 1500
-            
             

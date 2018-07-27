@@ -93,12 +93,13 @@ template(name='view_numeric_field')
 
 
 template(name='edit_textarea')
-    .ui.header 
-        +icon name=icon
+    h4.ui.header 
+        if icon
+            +icon name=icon
         |#{label}
     .ui.form
         .field
-            textarea#textarea(rows='10') #{key_value}
+            textarea#textarea(rows='5') #{key_value}
 
 
         

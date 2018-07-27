@@ -82,23 +82,27 @@ template(name='dashboard')
 template(name='customer_menu')
     .ui.four.item.stackable.large.menu
         a.item(href='/account/settings') 
-            +icon name='settings'
+            i.large.icon
+                +icon name='settings'
             | &nbsp; Account
         a.log_ticket.item(href='#') 
-            +icon name='add-ticket'
+            i.large.icon
+                +icon name='add-ticket'
             | &nbsp; Log a Ticket
         a.item(href='/store') 
-            +icon name='toilet-paper'
+            i.large.icon
+                +icon name='toilet-paper'
             | &nbsp; Consumables
         a.item(href='/services') 
-            +icon name='service-bell'
-            | &nbsp; Service Request
+            i.large.icon
+                +icon name='service-bell'
+            | &nbsp; Request Service
 
 template(name='dashboard_services_widget')
     .ui.secondary.segment
         .ui.header Services Offered
         .ui.cards
-            each services_offereed
+            each services_offered
                 .card
                     .content
                         .header #{title}

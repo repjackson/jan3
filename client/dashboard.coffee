@@ -93,3 +93,13 @@ Template.customer_incidents_widget.helpers
             # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]
+        
+        
+        
+Template.dashboard_services_widget.onCreated ->
+    @autorun -> Meteor.subscribe 'services'
+Template.dashboard_services_widget.helpers
+    services_offered: -> 
+        console.log Meteor.user().users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE
+        Docs.find type:'service'
+        

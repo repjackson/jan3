@@ -1,22 +1,30 @@
 FlowRouter.route '/offices', action: ->
     BlazeLayout.render 'layout', main: 'offices'
 
-FlowRouter.route '/office/:doc_id/incidents', action: ->
-    BlazeLayout.render 'layout', main: 'office_incidents'
+FlowRouter.route '/office/:doc_id/incidents', 
+    name: 'office_incidents'
+    action: ->
+        BlazeLayout.render 'layout', main: 'office_incidents'
 
-FlowRouter.route '/office/:doc_id/employees', action: ->
-    BlazeLayout.render 'layout', main: 'office_employees'
+FlowRouter.route '/office/:doc_id/employees', 
+    name: 'office_employees'
+    action: ->
+        BlazeLayout.render 'layout', main: 'office_employees'
 
-FlowRouter.route '/office/:doc_id/franchisees', action: ->
-    BlazeLayout.render 'layout', main: 'office_franchisees'
+FlowRouter.route '/office/:doc_id/franchisees', 
+    name: 'office_franchisees'
+    action: ->
+        BlazeLayout.render 'layout', main: 'office_franchisees'
 
-FlowRouter.route '/office/:doc_id/customers', action: ->
-    BlazeLayout.render 'layout', main: 'office_customers'
+FlowRouter.route '/office/:doc_id/customers', 
+    name: 'office_customers'
+    action: ->
+        BlazeLayout.render 'layout', main: 'office_customers'
 
-FlowRouter.route '/office/:doc_id/settings', action: ->
-    BlazeLayout.render 'layout', main: 'office_settings'
-
-
+FlowRouter.route '/office/:doc_id/settings', 
+    name: 'office_settings'
+    action: ->
+        BlazeLayout.render 'layout', main: 'office_settings'
 
 Template.offices.helpers
     settings: ->
@@ -37,7 +45,6 @@ Template.offices.helpers
 
 Template.office_header.helpers
     office_doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-
     office_map_address: ->
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
         encoded_address = encodeURIComponent "#{page_office.ev.ADDR_STREET} #{page_office.ev.ADDR_STREET_2} #{page_office.ev.ADDR_CITY},#{page_office.ev.ADDR_STATE} #{page_office.ev.ADDR_POSTAL_CODE} #{page_office.ev.MASTER_COUNTRY}"
@@ -48,91 +55,92 @@ Template.office_header.helpers
 Template.office_header.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
-    
 Template.office_customers.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    if @subscriptionsReady()
-        # Template.filter = new ReactiveTable.Filter('office', ["ev.MASTER_LICENSEE"])
-        Template.filter = new ReactiveTable.Filter('office_customers', ["ev.MASTER_LICENSEE"])
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        console.log FlowRouter.getParam('doc_id')
-        console.log Docs.findOne FlowRouter.getParam('doc_id')
-        if page_office
-            ReactiveTable.Filter('office_customers').set(page_office.ev.MASTER_LICENSEE)
+    @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id')
+    # if @subscriptionsReady()
+    #     # Template.filter = new ReactiveTable.Filter('office', ["ev.MASTER_LICENSEE"])
+    #     Template.filter = new ReactiveTable.Filter('office_customers', ["ev.MASTER_LICENSEE"])
+    #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    #     console.log FlowRouter.getParam('doc_id')
+    #     console.log Docs.findOne FlowRouter.getParam('doc_id')
+    #     if page_office
+    #         ReactiveTable.Filter('office_customers').set(page_office.ev.MASTER_LICENSEE)
 
-Template.office_customers.events
-    'click #refresh_ny_customers': ->
-        Meteor.call 'sync_ny_customers', ->
-            
+# Template.office_customers.events
+    # 'click #refresh_ny_customers': ->
+    #     Meteor.call 'sync_ny_customers', ->
 
 Template.office_customers.helpers    
-    # office_customers: ->  
-    #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
-    #     Docs.find
-    #         type: "customer"
-    #         "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
-    settings: ->
-        collection:'customers'
-        rowsPerPage: 10
-        showFilter: true
-        showRowCount: true
-        showNavigation: 'auto'
-        # showColumnToggles: true
-        filters: ['office_customers'],
-        fields: [
-            { key: 'ev.CUST_NAME', label: 'Customer Name' }
-            { key: 'ev.ID', label: 'JPID' }
-            { key: 'ev.FRANCHISEE', label: 'Franchisee' }
-            { key: 'ev.MASTER_LICENSEE', label: 'Master Licensee' }
-            { key: 'ev.CUST_CONT_PERSON', label: 'Contact Person' }
-            { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
-            { key: 'ev.TELEPHONE', label: 'Telephone' }
-            { key: 'ev.ADDR_STREET', label: 'Address' }
-            # { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
-            { key: 'ev.TIMESTAMP', label: 'Timestamp' }
-            { key: '', label: 'View', tmpl:Template.view_button }
-        ]
+    office_customers: ->  
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        if page_office
+            Docs.find
+                type: "customer"
+                "ev.ACCOUNT_STATUS": 'ACTIVE'
+                "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
+    # settings: ->
+    #     collection:'customers'
+    #     rowsPerPage: 10
+    #     showFilter: true
+    #     showRowCount: true
+    #     showNavigation: 'auto'
+    #     # showColumnToggles: true
+    #     filters: ['office_customers'],
+    #     fields: [
+    #         { key: 'ev.CUST_NAME', label: 'Customer Name' }
+    #         { key: 'ev.ID', label: 'JPID' }
+    #         { key: 'ev.FRANCHISEE', label: 'Franchisee' }
+    #         { key: 'ev.MASTER_LICENSEE', label: 'Master Licensee' }
+    #         { key: 'ev.CUST_CONT_PERSON', label: 'Contact Person' }
+    #         { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
+    #         { key: 'ev.TELEPHONE', label: 'Telephone' }
+    #         { key: 'ev.ADDR_STREET', label: 'Address' }
+    #         # { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
+    #         { key: 'ev.TIMESTAMP', label: 'Timestamp' }
+    #         { key: '', label: 'View', tmpl:Template.view_button }
+    #     ]
 
 
 Template.office_incidents.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    if @subscriptionsReady()
-        Template.filter = new ReactiveTable.Filter('office_incidents', ["incident_office_name"])
-        user = Meteor.user()
-        # console.log 'franch_doc', franch_doc
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        if page_office
-            ReactiveTable.Filter('office_incidents').set(page_office.ev.MASTER_LICENSEE)
+    @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id')
+    # if @subscriptionsReady()
+    #     Template.filter = new ReactiveTable.Filter('office_incidents', ["incident_office_name"])
+    #     user = Meteor.user()
+    #     # console.log 'franch_doc', franch_doc
+    #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
+    #     if page_office
+    #         ReactiveTable.Filter('office_incidents').set(page_office.ev.MASTER_LICENSEE)
     
 
 Template.office_incidents.helpers    
-    # office_incidents: ->  
-    #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
-    #     Docs.find
-    #         incident_office_name: page_office.ev.MASTER_LICENSEE
-    #         type: "incident"
-    settings: ->
-        collection: 'incidents'
-        rowsPerPage: 10
-        showFilter: true
-        showRowCount: true
-        showNavigation: 'auto'
-        filters: ['office_incidents']
-        # noDataTmpl: 'no_data'
-        # showColumnToggles: true
-        fields: [
-            { key: 'incident_number', label: 'Number' }
-            { key: 'incident_office_name', label: 'Office' }
-            { key: 'customer_name', label: 'Customer' }
-            { key: 'timestamp', label: 'Logged', tmpl:Template.when_template, sortOrder:1, sortDirection:'descending' }
-            { key: '', label: 'Type', tmpl:Template.incident_type_label }
-            { key: 'incident_details', label: 'Details' }
-            { key: 'level', label: 'Level' }
-            { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
-            # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
-            # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
-            { key: '', label: 'View', tmpl:Template.view_button }
-        ]
+    office_incidents: ->  
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        if page_office
+            Docs.find
+                incident_office_name: page_office.ev.MASTER_LICENSEE
+                type: "incident"
+    # settings: ->
+    #     collection: 'incidents'
+    #     rowsPerPage: 10
+    #     showFilter: true
+    #     showRowCount: true
+    #     showNavigation: 'auto'
+    #     filters: ['office_incidents']
+    #     # noDataTmpl: 'no_data'
+    #     # showColumnToggles: true
+    #     fields: [
+    #         { key: 'incident_number', label: 'Number' }
+    #         { key: 'incident_office_name', label: 'Office' }
+    #         { key: 'customer_name', label: 'Customer' }
+    #         { key: 'timestamp', label: 'Logged', tmpl:Template.when_template, sortOrder:1, sortDirection:'descending' }
+    #         { key: '', label: 'Type', tmpl:Template.incident_type_label }
+    #         { key: 'incident_details', label: 'Details' }
+    #         { key: 'level', label: 'Level' }
+    #         { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
+    #         # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
+    #         # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
+    #         { key: '', label: 'View', tmpl:Template.view_button }
+    #     ]
 
 Template.office_employees.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
@@ -171,38 +179,41 @@ Template.office_employees.helpers
         ]
 
 Template.office_franchisees.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    if @subscriptionsReady()
-        Template.filter = new ReactiveTable.Filter('office_franchisees', ["ev.MASTER_LICENSEE"])
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log FlowRouter.getParam('doc_id')
-        # console.log Docs.findOne FlowRouter.getParam('doc_id')
-        if page_office
-            ReactiveTable.Filter('office_franchisees').set(page_office.ev.MASTER_LICENSEE)
-
-Template.office_franchisees.helpers    
-    # office_franchisees_obs: ->  
+    # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+# if @subscriptionsReady()
+    #     Template.filter = new ReactiveTable.Filter('office_franchisees', ["ev.MASTER_LICENSEE"])
     #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
-    #     Docs.find
-    #         type: "franchisee"
-    #         "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
-    settings: ->
-        collection:'franchisees'
-        rowsPerPage: 10
-        showFilter: true
-        showRowCount: true
-        filters:['office_franchisees']
-        # showColumnToggles: true
-        fields: [
-            { key: 'ev.ID', label: 'JPID' }
-            { key: 'ev.FRANCHISEE', label: 'Name' }
-            { key: 'ev.FRANCH_EMAIL', label: 'Email' }
-            { key: 'ev.FRANCH_NAME', label: 'Short Name' }
-            { key: 'ev.TELE_CELL', label: 'Phone' }
-            { key: 'ev.MASTER_LICENSEE', label: 'Office' }
-            { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
-            { key: '', label: 'View', tmpl:Template.view_button }
-        ]
+    #     # console.log FlowRouter.getParam('doc_id')
+    #     # console.log Docs.findOne FlowRouter.getParam('doc_id')
+    #     if page_office
+    #         ReactiveTable.Filter('office_franchisees').set(page_office.ev.MASTER_LICENSEE)
+    @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id')
+    
+
+Template.office_franchisees.helpers  
+    office_franchisees: ->
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        if page_office
+            Docs.find
+                type: "franchisee"
+                "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
+    # settings: ->
+    #     collection:'franchisees'
+    #     rowsPerPage: 10
+    #     showFilter: true
+    #     showRowCount: true
+    #     filters:['office_franchisees']
+    #     # showColumnToggles: true
+    #     fields: [
+    #         { key: 'ev.ID', label: 'JPID' }
+    #         { key: 'ev.FRANCHISEE', label: 'Name' }
+    #         { key: 'ev.FRANCH_EMAIL', label: 'Email' }
+    #         { key: 'ev.FRANCH_NAME', label: 'Short Name' }
+    #         { key: 'ev.TELE_CELL', label: 'Phone' }
+    #         { key: 'ev.MASTER_LICENSEE', label: 'Office' }
+    #         # { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
+    #         { key: '', label: 'View', tmpl:Template.view_button }
+    #     ]
 
 
 
@@ -214,13 +225,13 @@ Template.office_settings.onCreated ->
 Template.office_service_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'service'
     
-Template.office_settings.onRendered ->
-    Meteor.setTimeout =>
-        console.log '1'
-        $('.office_tab_menu .item').tab()
-        console.log '2'
-    , 1000
-    console.log '3'
+# Template.office_settings.onRendered ->
+#     Meteor.setTimeout =>
+#         console.log '1'
+#         $('.office_tab_menu .item').tab()
+#         console.log '2'
+#     , 1000
+#     console.log '3'
     
     
 Template.office_settings.events
@@ -238,13 +249,16 @@ Template.office_service_settings.events
     'click .select_service': -> 
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
         console.log @
-        if @slug in page_office.services
+        if page_office.services
+            if @slug in page_office.services
+                Docs.update page_office._id,
+                    $addToSet: services: @slug
+            else
+                Docs.update page_office._id,
+                    $pull: services: @slug
+        else    
             Docs.update page_office._id,
                 $addToSet: services: @slug
-        else
-            Docs.update page_office._id,
-                $pull: services: @slug
-    
     
 Template.office_settings.helpers
     current_office: ->
