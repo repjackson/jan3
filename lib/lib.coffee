@@ -44,6 +44,29 @@ Meteor.users.helpers
             # console.log found
             found
         
+    users_office: ->
+        # console.log @
+        if @profile
+            if @profile.office_jpid
+                officers_office = Docs.findOne
+                    type:'office'
+                    "ev.ID": @profile.office_jpid
+                return officers_office
+            else if @profile.customer_jpid
+                users_customer = Docs.findOne
+                    type:'customer'
+                    "ev.ID": @profile.customer_jpid
+                if users_customer
+                    customers_franchisee = Docs.findOne
+                        type: 'franchisee'
+                        "ev.FRANCHISEE": users_customer.ev.FRANCHISEE
+                    if customers_franchisee
+                        customers_office = Docs.findOne
+                            type:'office'
+                            "ev.MASTER_LICENSEE": customers_franchisee.ev.MASTER_LICENSEE
+                        return customers_office
+
+        
     email: -> 
         if @emails
             @emails[0].address

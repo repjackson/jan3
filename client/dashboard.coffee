@@ -97,9 +97,13 @@ Template.customer_incidents_widget.helpers
         
         
 Template.dashboard_services_widget.onCreated ->
-    @autorun -> Meteor.subscribe 'services'
+    @autorun -> Meteor.subscribe 'type','service'
 Template.dashboard_services_widget.helpers
     services_offered: -> 
-        console.log Meteor.user().users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE
-        Docs.find type:'service'
-        
+        # console.log Meteor.user().users_office()
+        users_office = Meteor.user().users_office()
+        if users_office
+            # console.log users_office.services
+            Docs.find
+                type:'service'
+                slug: $in: users_office.services

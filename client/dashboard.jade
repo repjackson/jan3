@@ -53,8 +53,7 @@ template(name='dashboard')
                                                 +icon name='send'
             .row
                 .sixteen.wide.column
-                    .ui.secondary.segment
-                        +dashboard_services_widget
+                    +dashboard_services_widget
             .row
                 .sixteen.wide.column
                     .ui.secondary.segment
@@ -100,14 +99,13 @@ template(name='customer_menu')
 
 template(name='dashboard_services_widget')
     .ui.secondary.segment
-        .ui.header Services Offered
+        .ui.header 
+            +iconsmall name='broom'
+            |Services Offered by #{currentUser.users_office.ev.MASTER_LICENSEE}
         .ui.cards
             each services_offered
-                .card
-                    .content
-                        .header #{title}
-                        .meta #{price}
-            
+                +service_card     
+                
 template(name='my_cleaning_schedule')
     .ui.fluid.accordion
         .active.title
@@ -126,7 +124,7 @@ template(name='office_contact_cards')
         //     i.users.icon
         //     i.corner.building.icon
         |Office Contacts
-    .ui.six.stackable.centered.cards
+    .ui.stackable.centered.cards
         each office_contacts
             +office_contact_card
 
