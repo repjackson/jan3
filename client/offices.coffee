@@ -236,7 +236,7 @@ Template.office_service_settings.onCreated ->
     
 Template.office_settings.events
     'click .select_incident_type': ->
-        Session.set 'incident_type_selection', @name
+        Session.set 'incident_type_selection', @slug
 
 
 Template.office_service_settings.helpers
@@ -248,17 +248,17 @@ Template.office_service_settings.helpers
 Template.office_service_settings.events
     'click .select_service': -> 
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        console.log @
-        if page_office.services
-            if @slug in page_office.services
+        if page_office 
+            if page_office.services
+                if @slug in page_office.services
+                    Docs.update page_office._id,
+                        $pull: services: @slug
+                else
+                    Docs.update page_office._id,
+                        $addToSet: services: @slug
+            else    
                 Docs.update page_office._id,
-                    $addToSet: services: @slug
-            else
-                Docs.update page_office._id,
-                    $pull: services: @slug
-        else    
-            Docs.update page_office._id,
-                $addToSet: services: @slug
+                    $set: services: [@slug]
     
 Template.office_settings.helpers
     current_office: ->
@@ -266,7 +266,7 @@ Template.office_settings.helpers
         # console.log page_office
         return page_office
     incident_types: -> Docs.find {type:'incident_type'}
-    select_incident_type_button_class: -> if Session.equals('incident_type_selection', @name) then 'blue' else 'basic'
+    select_incident_type_button_class: -> if Session.equals('incident_type_selection', @slug) then 'blue' else 'basic'
     selected_incident_type: -> Session.get 'incident_type_selection'
     is_initial: -> @number is 0    
     rule_docs: -> Docs.find {type:'rule'}, sort:number:1

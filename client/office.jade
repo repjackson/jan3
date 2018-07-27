@@ -176,7 +176,7 @@ template(name='office_settings')
                 .ui.secondary.segment
                     h3.ui.header
                         +icon name='broom'
-                        | &nbsp; Services
+                        | &nbsp; Offered Services
                     +office_service_settings
         .row
             .sixteen.wide.column
@@ -205,6 +205,6 @@ template(name='office_settings')
                                         +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
             
 template(name='office_service_settings')
-    h5.ui.header Select which to offer customers.
+    // h5.ui.header Select which to offer customers.
     each services
         .select_service.ui.button(class=select_service_button_class) #{title}
