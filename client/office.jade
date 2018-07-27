@@ -1,7 +1,7 @@
 template(name='office_customers')
     +office_header
-    h2.ui.center.aligned.header Office Customers
-        i#refresh_ny_customers.refresh.icon
+    // h2.ui.center.aligned.header Office Customers
+    //     i#refresh_ny_customers.refresh.icon
     +reactiveTable settings=settings class="ui celled striped sortable table"
 
 template(name='office_incidents')
@@ -48,8 +48,9 @@ template(name='office_header')
                             |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                             a(href=office_map_address target='_blank')
                                 i.external.icon
-        unless is_customer
-            +office_nav
+            .centered.row
+                unless is_customer
+                    +office_nav
 
 template(name='office_nav')
     .ui.six.item.stackable.menu
@@ -87,49 +88,60 @@ template(name='office_settings')
     .ui.padded.stackable.grid
         .row
             +office_header
-        .row
-            .sixteen.wide.column
-                h1.ui.center.aligned.header Office Settings
-                with current_office
-                    // h2.ui.header 
-                    //     +icon name='sms'
-                    //     | Customer Message
-                    // .ui.sub.header Shown on customer dashboard
-                    +edit_text_field key='customer_message' label='Customer Dashboard Message'
-                    +edit_text_field key='customer_promotions' label='Customer Dashboard Promotions Message'
-                    +edit_text_field key='customer_special_services' label='Customer Dashboard Special Services'
-                    // p #{customer_message}
-                    // h2.ui.header 
-                    //     +icon name='checked-user-male'
-                    //     |Office Roles
-                    // .ui.two.column.stackable.grid
-                    //     .column
-                    //         +single_user_select key='office_owner' label='Office Owner'
-                    //     .column
-                    //         +single_user_select key='operations_manager' label='Operations Manager'
-                    h3.ui.header 
-                        +icon name='administrative-tools'
-                        |SLA Settings for
-                    each incident_types
-                        .select_incident_type.ui.small.compact.button(class=select_incident_type_button_class) #{name}
-                    // h3.ui.header Initial
-                    // p ie type=level2
-                    each rule_docs
-                        .ui.secondary.segment
-                            h3.ui.header #{name} for #{selected_incident_type} Settings
-                            .ui.two.column.padded.grid
-                                unless is_initial
-                                    .row
-                                        +edit_number_field key=hours_key label='Escalation Hours (currently minutes for testing)' field_class='inline' min=0 max=24
-                                .row
-                                    +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
-                                .row
-                                    .column
-                                        h4.ui.dividing.header Primary Contact
-                                        +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
-                                    .column
-                                        h4.ui.dividing.header Secondary Contact
-                                        +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
+        with current_office
+            .row
+                .sixteen.wide.column
+                    h1.ui.center.aligned.header 
+                        +icon name='settings'
+                        |Office Settings
+                    .ui.top.attached.tabular.three.item.menu
+                        a.active.item(data-tab='services')
+                            +icon name='broom'
+                            | &nbsp; Services
+                        a.item(data-tab='messages') 
+                            +icon name='sms'
+                            | &nbsp; Notices
+                        a.item(data-tab='sla')
+                            +icon name='administrative-tools'
+                            | &nbsp; SLA Settings
+                    .ui.bottom.attached.active.tab.segment(data-tab='services')
+                        h5.ui.header Select which to offer customers.
+                        each services
+                            .select_service.ui.button(class=select_service_button_class) #{title}
+                    .ui.bottom.attached.tab.segment(data-tab='messages')
+                            +edit_text_field key='customer_message' label='Customer Dashboard Message'
+                            +edit_text_field key='customer_promotions' label='Customer Dashboard Promotions Message'
+                            +edit_text_field key='customer_special_services' label='Customer Dashboard Special Services'
+                    .ui.bottom.attached.tab.segment(data-tab='sla')
+                        // p #{customer_message}
+                        // h2.ui.header 
+                        //     +icon name='checked-user-male'
+                        //     |Office Roles
+                        // .ui.two.column.stackable.grid
+                        //     .column
+                        //         +single_user_select key='office_owner' label='Office Owner'
+                        //     .column
+                        //         +single_user_select key='operations_manager' label='Operations Manager'
+                        .ui.header Select Incident Types
+                        each incident_types
+                            .select_incident_type.ui.small.compact.button(class=select_incident_type_button_class) #{name}
+                        if selected_incident_type
+                            each rule_docs
+                                .ui.secondary.segment
+                                    h3.ui.header #{name} for #{selected_incident_type} Settings
+                                    .ui.equal.width.grid
+                                        unless is_initial
+                                            .column
+                                                +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
+                                        .column
+                                            +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
+                                        .column
+                                            // h4.ui.dividing.header Primary Contact
+                                            +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
+                                        .column
+                                            // h4.ui.dividing.header Secondary Contact
+                                            +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
                 
+            
         
     

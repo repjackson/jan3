@@ -209,9 +209,18 @@ Template.office_franchisees.helpers
 Template.office_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'rule'
     @autorun -> Meteor.subscribe 'type', 'incident_type'
+    @autorun -> Meteor.subscribe 'type', 'service'
     @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('doc_id')
 
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    
+    
+Template.office_settings.onRendered ->
+    Meteor.setTimeout ->
+        console.log 'hi'
+        $('.ui.menu .item').tab()
+    , 1000
+    
     
 Template.office_settings.events
     'click .select_incident_type': ->
@@ -225,6 +234,7 @@ Template.office_settings.helpers
         return page_office
         
     incident_types: -> Docs.find {type:'incident_type'}
+    services: -> Docs.find {type:'service'}
     
     select_incident_type_button_class: ->
         if Session.equals('incident_type_selection', @name) then 'blue' else 'basic'

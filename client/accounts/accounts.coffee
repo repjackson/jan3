@@ -68,7 +68,7 @@ Template.register_customer.onRendered ->
 Template.register_customer.helpers
     user_found: -> Session.get 'username_found'
     
-    session_customer_jpid: -> Session.get 'session_customer_jpid'
+    session_customer_jpid: -> Session.get 'customer_jpid'
     
     passwords_match: ->
         password_one = Session.get 'password_one'
@@ -81,26 +81,15 @@ Template.register_customer.helpers
         if Session.get('session_username') and Session.get('session_password_one') and Session.get('session_email') and Session.get('session_customer_jpid') then true else false
     
 Template.register_customer.events
-    'click #register': (e,t)->
-        username = $('#username').val()
-        customer_jpid = $('#customer_jpid').val()
-        email = $('#email').val()
-        password_one = $('#password_one').val()
-        options = {}
-        options.username = username
-        options.password = password_one
-        options.email = email
-        options.profile = {}
-        options.profile.customer_jpid = customer_jpid
-        Accounts.createUser options, (err,res)=>
-            if err
-                Bert.alert "Error registering user #{username}: #{err.reason}", 'error', 'growl-top-right'
-            else
-                Bert.alert "Registered #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                FlowRouter.go '/'     
-                Meteor.call 'add_role_to_user', Meteor.userId(), 'customer', (err,res)=>
-                    if err then console.error err
-                    else console.log res
+    # 'click #register': (e,t)->
+    #     login = $('.username').val()
+    #     password = $('.password').val()
+    #     Meteor.createUser login, password, (err,res)->
+    #         if err
+    #             console.log err
+    #         else
+    #             Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+    #             FlowRouter.go '/'                
     
     'keyup #username': (e,t)->
         username = $('#username').val()
@@ -156,35 +145,4 @@ Template.register_customer.events
         #         else
         #             Session.set 'email_found', null
                 
-    'blur #customer_jpid': (e,t)->
-        customer_jpid = $('#customer_jpid').val()
-        Session.set 'session_customer_jpid', customer_jpid
-        # Meteor.call 'check_password_two', password_two, (err, res)->
-        #     if err then console.error err
-        #     else 
-        #         if res
-        #             Session.set 'email_found', res
-        #         else
-        #             Session.set 'email_found', null
-                
     
-    
-Template.reset_password.events
-    'keyup #username': (e,t)->
-        username = $('#username').val()
-        Session.set 'session_username', username
-        if e.which is 13 #enter
-            Meteor.call 'send_password_reset_email_by_username', username, (err, res)->
-                if err
-                    Bert.alert "Error sending email reset link to #{username}: #{err.reason}.", 'success', 'growl-top-right'
-                else if res
-                    Bert.alert "Sent email reset link to #{username}.", 'error', 'growl-top-right'
-    'click #reset_password_by_username': (e,t)->
-        username = $('#username').val()
-        Session.set 'session_username', username
-        if e.which is 13 #enter
-            Meteor.call 'send_password_reset_email_by_username', username, (err, res)->
-                if err
-                    Bert.alert "Error sending email reset link to #{username}: #{err.reason}.", 'success', 'growl-top-right'
-                else if res
-                    Bert.alert "Sent email reset link to #{username}.", 'success', 'growl-top-right'

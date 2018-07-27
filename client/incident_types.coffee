@@ -1,26 +1,12 @@
 if Meteor.isClient
-    Template.incident_types.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    Template.incident_types.helpers
-    
-    
     FlowRouter.route '/incident_types', action: ->
         BlazeLayout.render 'layout', 
             sub_nav: 'admin_nav'
             main: 'incident_types'
     
     
-    @selected_incident_type_tags = new ReactiveArray []
-    
     Template.incident_types.onCreated ->
-        @autorun => Meteor.subscribe 'facet', 
-            selected_tags.array()
-            selected_keywords.array()
-            selected_author_ids.array()
-            selected_location_tags.array()
-            selected_timestamp_tags.array()
-            type='incident_type'
-            author_id=null
+        @autorun => Meteor.subscribe 'type', 'incident_type'
     Template.incident_types.helpers
         incident_types: ->  Docs.find { type:'incident_type'}
 
@@ -31,7 +17,7 @@ if Meteor.isClient
         
     
     Template.incident_type_edit.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+        # @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     
     Template.incident_type_edit.helpers
         incident_type: -> Doc.findOne FlowRouter.getParam('doc_id')

@@ -6,69 +6,75 @@ template(name='admin')
                     +icon name='user-shield'
                     | Admin
         .column
-            .ui.card
+            a.ui.card(href='/jpids')
                 .content
-                    a.ui.header(href='/jpids')
+                    .ui.header
                         +icon name='fingerprint'
                         | JP Ids
         .column
-            .ui.card
+            a.ui.card(href='/history')
                 .content
-                    a.ui.header(href='/history')
+                    .ui.header
                         +icon name='clock'
                         | EV History
         .column
-            .ui.card
+            a.ui.card(href='/offices')
                 .content
-                    a.ui.header(href='/offices')
+                    .ui.header
                         +icon name='building'
                         | Offices
         .column
-            .ui.card
+            a.ui.card(href='/franchisees')
                 .content
-                    a.ui.header(href='/franchisees')
+                    .ui.header
                         +icon name='conference'
                         | Franchisees
         .column
-            .ui.card
+            a.ui.card(href='/customers')
                 .content
-                    a.ui.header(href='/customers')
+                    .ui.header
                         +icon name='customer-support'
                         | Customers
         .column
-            .ui.card
+            a.ui.card(href='/special_services')
                 .content
-                    a.ui.header(href='/services')
+                    .ui.header
+                        +icon name='invoice'
+                        | Special Services
+        .column
+            a.ui.card(href='/services')
+                .content
+                    .ui.header
                         +icon name='broom'
                         | Services
         .column
-            .ui.card
+            a.ui.card(href='/feed')
                 .content
-                    a.ui.header(href='/feed')
+                    .ui.header
                         +icon name='rss'
                         | Global Feed
         .column
-            .ui.card
+            a.ui.card(href='/roles')
                 .content
-                    a.ui.header(href='/roles')
+                    .ui.header
                         +icon name='checked-user-male'
                         | Roles
         .column
-            .ui.card
+            a.ui.card(href='/rules')
                 .content
-                    a.ui.header(href='/rules')
+                    .ui.header
                         +icon name='rules'
                         | Rules
         .column
-            .ui.card
+            a.ui.card(href='/bugs')
                 .content
-                    a.ui.header(href='/bugs')
+                    .ui.header
                         +icon name='bug'
                         | Bugs
         .column
-            .ui.card
+            a.ui.card(href='/incident_types')
                 .content
-                    a.ui.header(href='/incident_types')
+                    .ui.header
                         +icon name='clone'
                         | Incident Types
                     

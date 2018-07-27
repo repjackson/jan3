@@ -4,7 +4,7 @@ template(name='incident_types')
             .three.wide.column
             .ten.wide.column
                 h1.ui.center.aligned.header 
-                    i.exclamation.triangle.icon
+                    i.clone.icon
                     | Incident Types
             .three.wide.column
                 +add_button type='incident_type'
@@ -40,7 +40,7 @@ template(name='incident_type_edit')
             .ui.form
                 +edit_text_field key='name' label='Incident Type Name'
                 +edit_text_field key='slug' label='Slug (machine readable)'
-                +edit_html
+                // +edit_html
         
         
 template(name='incident_type_view')
