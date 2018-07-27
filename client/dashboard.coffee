@@ -2,7 +2,6 @@ FlowRouter.route '/', action: ->
     BlazeLayout.render 'layout', 
         main: 'dashboard'
 
-
 Template.office_contact_cards.helpers
     office_contacts: -> 
         user = Meteor.user()
@@ -19,7 +18,6 @@ Template.office_contact_cards.helpers
                     # "profile.office_name": customer_doc.ev.MASTER_LICENSEE
                 }, limit:100
                 found
-    
 
 Template.dashboard.events
     'click .log_ticket': (e,t)->
@@ -36,8 +34,6 @@ Template.dashboard.events
                     open: true
                     submitted: false
             FlowRouter.go "/view/#{new_incident_id}"
-
-
 
 Template.dashboard_office_contacts_list.onCreated ->
     @autorun -> Meteor.subscribe 'my_office_contacts'
@@ -58,13 +54,10 @@ Template.dashboard_office_contacts_list.helpers
                 }, limit:100
                 found
 
-
 Template.customer_special_services.onCreated ->
     @autorun -> Meteor.subscribe 'my_special_services'
 Template.customer_special_services.helpers
     my_special_services: -> Docs.find type:'special_service'
-
-
 
 Template.customer_incidents_widget.onCreated ->
     @autorun -> Meteor.subscribe 'my_customer_incidents'
@@ -95,8 +88,8 @@ Template.customer_incidents_widget.helpers
             { key: 'incident_details', label: 'Details' }
             { key: 'level', label: 'Level' }
             { key: 'status', label: 'Status', tmpl:Template.status_template}
-            { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
-            { key: '', label: 'Assigned To', tmpl:Template.associated_users }
+            { key: 'submitted', label: 'Submitted', tmpl:Template.submitted_template}
+            # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
             # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
             { key: '', label: 'View', tmpl:Template.view_button }
         ]

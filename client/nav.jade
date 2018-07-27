@@ -12,6 +12,14 @@ template(name='nav')
                 i.large.icon
                     +iconsmall name='error'
                 | &nbsp; My Incidents
+            a.mobile.hidden.item(href='/store')
+                i.large.icon
+                    +iconsmall name='small-business'
+                | &nbsp; Consumables
+            a.mobile.hidden.item(href='/services')
+                i.large.icon
+                    +iconsmall name='broom'
+                | Services
         // if is_officer
             // with currentUser.users_customer.parent_franchisee.parent_office
             // a.item(href="/view/#{my_office._id}")
@@ -70,9 +78,12 @@ template(name='nav')
                         +icon name='user-shield'
                     | &nbsp; Admin
             if currentUser
-                // a.item(href='/mail')
-                //     i.large.icon
-                //         +icon name='chat'
+                a.item(href='/feed')
+                    i.large.icon
+                        +icon name='appointment-reminders'
+                a.item(href='/mail')
+                    i.large.icon
+                        +icon name='chat'
                 a.item(href="/user/#{currentUser.username}" title='View Profile')
                     if currentUser.profile.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")

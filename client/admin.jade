@@ -48,6 +48,12 @@ template(name='admin')
                         +icon name='broom'
                         | Services
         .column
+            a.ui.card(href='/store')
+                .content
+                    .ui.header
+                        +icon name='small-business'
+                        | Store
+        .column
             a.ui.card(href='/feed')
                 .content
                     .ui.header
@@ -100,8 +106,8 @@ template(name='bugs')
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
-                    +icon name='reviewer-female'
-                    | bugs
+                    +icon name='bug'
+                    | Bugs
             .three.wide.column
                 +add_button type='bug'
         .row 
@@ -124,7 +130,7 @@ template(name='bug_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                #delete.ui.icon.button
+                #delete_bug.ui.icon.button
                     i.trash.icon
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit bug #{name}
@@ -143,7 +149,7 @@ template(name='bug_view')
             .three.wide.column
                 +link_button link='/bugs' icon='bugs' label='bugs'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header bug: #{name}
+                h1.ui.center.aligned.grey.header View '#{name}' Bug 
             .three.wide.column
                 +edit_button
         .row

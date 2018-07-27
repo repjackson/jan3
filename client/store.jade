@@ -1,0 +1,72 @@
+template(name='store')
+    .ui.stackable.centered.padded.grid
+        .centered.row
+            .three.wide.column
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    +icon name='small-business'
+                    | Store
+            .three.wide.column
+                +add_button type='product'
+        .centered.row
+            .twelve.wide.column
+                .ui.centered.cards
+                    each products
+                        +product_card
+                        
+template(name='product_card')
+    .ui.card
+        if image_id
+            .image
+                img.ui.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+        .content
+            .right.floated.meta $#{price}
+            .header #{title}
+            // a.author #{author.username}
+            .description
+                p #{description}
+        .content
+            .ui.button 
+                i.large.icon
+                    +iconsmall name='add-shopping-cart'
+                | Add to Cart
+            .ui.button 
+                i.large.icon
+                    +iconsmall name='view-details'
+                |Details
+    
+
+template(name='product_edit')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                #delete.ui.icon.button
+                    i.trash.icon
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Edit '#{title}' Product
+            .three.wide.column
+                +save_button
+        .eight.wide.column
+            .ui.form
+                +edit_text_field key='title' label='Title'
+                +edit_number_field key='price' label='Price' icon='money'
+                +edit_textarea name='description' label='Description' icon='details'
+                +edit_image_field
+        
+template(name='product_view')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +link_button link='/store' icon='small-business' label='Store'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header View '#{title}' Product
+            .three.wide.column
+                +edit_button
+        .row
+            .eight.wide.column
+                img.ui.image.item(src="{{c.url image_id width=500 height=500 gravity='face' crop='fill'}}")
+                .ui.header Title: #{title}
+                .ui.header Price: $#{price}
+                .ui.header Description: #{description}
+                
+        

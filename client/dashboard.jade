@@ -8,8 +8,8 @@ template(name='dashboard')
                 a.ui.center.aligned.big.inverted.blue.button(href='/login')
                     |Login to see Dashboard
                     i.right.arrow.icon
-        // if currentUser
-        //     +customer_menu
+        if currentUser
+            +customer_menu
     if currentUser
         .ui.padded.stackable.grid
             if currentUser.users_customer.parent_franchisee.parent_office.customer_message
@@ -54,6 +54,10 @@ template(name='dashboard')
             .row
                 .sixteen.wide.column
                     .ui.secondary.segment
+                        +dashboard_services_widget
+            .row
+                .sixteen.wide.column
+                    .ui.secondary.segment
                         +customer_incidents_widget
             .row
                 .sixteen.wide.column
@@ -76,14 +80,29 @@ template(name='dashboard')
 
     
 template(name='customer_menu')
-    .ui.six.item.stackable.large.menu
-        a.item(href='/account/settings') Account
-        a.log_ticket.item(href='#') Log a Ticket
-        a.disabled.item(href='/schedule') Schedule Cleaning
-        a.disabled.item(href='/store') Consumables
-        a.item(href='/services') Service Request
-        a.disabled.item(href='/questions') Help
-            
+    .ui.four.item.stackable.large.menu
+        a.item(href='/account/settings') 
+            +icon name='settings'
+            | &nbsp; Account
+        a.log_ticket.item(href='#') 
+            +icon name='add-ticket'
+            | &nbsp; Log a Ticket
+        a.item(href='/store') 
+            +icon name='toilet-paper'
+            | &nbsp; Consumables
+        a.item(href='/services') 
+            +icon name='service-bell'
+            | &nbsp; Service Request
+
+template(name='dashboard_services_widget')
+    .ui.secondary.segment
+        .ui.header Services Offered
+        .ui.cards
+            each services_offereed
+                .card
+                    .content
+                        .header #{title}
+                        .meta #{price}
             
 template(name='my_cleaning_schedule')
     .ui.fluid.accordion

@@ -1,28 +1,12 @@
 FlowRouter.route '/services', action: ->
     BlazeLayout.render 'layout', main: 'services'
 
-Template.services.onCreated () ->
-Template.services.helpers
-    settings: ->
-        collection: 'services'
-        rowsPerPage: 10
-        showFilter: true
-        showRowCount: true
-        # showColumnToggles: true
-        fields: [
-            { key: 'title', label: 'Title' }
-            { key: 'price', label: 'Price' }
-            { key: '', label: 'View', tmpl:Template.view_button }
-        ]
+Template.services.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'service'
 
-Template.services.events
-    'click .sync_services': ->
-        Meteor.call 'sync_services', ->
-            
-    
-    
-        
-    
+Template.services.helpers
+    services: -> Docs.find type:'service'
+
 Template.service_edit.events
     'click #delete': ->
         template = Template.currentData()

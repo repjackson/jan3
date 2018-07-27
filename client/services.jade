@@ -10,8 +10,32 @@ template(name='services')
             .three.wide.column
                 +add_button type='service'
         .row
-            .sixteen.wide.column
-                +reactiveTable settings=settings class="ui celled striped sortable table"
+            .fourteen.wide.column
+                .ui.centered.cards
+                    each services
+                        +service_card
+                
+template(name='service_card')
+    .ui.card
+        if image_id
+            .image
+                img.ui.image.item(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+        .content
+            .right.floated.meta $#{price}
+            .header #{title}
+            // a.author #{author.username}
+            .description
+                p #{description}
+        .content
+            .ui.button 
+                i.large.icon
+                    +iconsmall name='service-bell'
+                | Request
+            .ui.button 
+                i.large.icon
+                    +iconsmall name='view-details'
+                |Details
+    
                     
                     
 template(name='service_view')
@@ -48,3 +72,4 @@ template(name='service_edit')
                     +edit_text_field key='title' label='Title' icon='code'
                     +edit_text_field key='slug' label='Slug (lowercase computer version)' icon='code'
                     +edit_number_field key='price' label='Price' icon='money'
+                    +edit_image_field
