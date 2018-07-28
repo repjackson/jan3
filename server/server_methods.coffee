@@ -463,3 +463,14 @@ Meteor.methods
         incident_count = Docs.find(type:'incident').count()
         console.log 'incident count', incident_count
         return incident_count
+        
+        
+    find_customer_by_jpid: (customer_jpid)->
+        found = 
+            Docs.findOne
+                type:'customer'
+                "ev.ID":customer_jpid
+        if found
+            return found
+        else
+            throw new Meteor.Error "Customer not found with JPID #{customer_jpid}."

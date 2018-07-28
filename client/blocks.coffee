@@ -797,7 +797,7 @@ Template.office_card.helpers
         doc
         
 Template.customer_card.onCreated ->
-    # console.log @data
+    console.log @data.customer_jpid
     @autorun =>  Meteor.subscribe 'customer_by_id', @data.customer_jpid
 Template.customer_card.helpers
     customer_doc: ->

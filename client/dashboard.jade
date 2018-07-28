@@ -56,6 +56,9 @@ template(name='dashboard')
                     +dashboard_services_widget
             .row
                 .sixteen.wide.column
+                    +dashboard_consumables_widget
+            .row
+                .sixteen.wide.column
                     .ui.secondary.segment
                         +customer_incidents_widget
             .row
@@ -79,7 +82,7 @@ template(name='dashboard')
 
     
 template(name='customer_menu')
-    .ui.four.item.stackable.large.menu
+    .ui.four.item.stackable.menu
         a.item(href='/account/settings') 
             i.large.icon
                 +icon name='settings'
@@ -109,10 +112,10 @@ template(name='dashboard_services_widget')
 template(name='dashboard_consumables_widget')
     .ui.secondary.segment
         .ui.header 
-            +iconsmall name='toilet paper'
+            +iconsmall name='toilet-paper'
             |Consumables For Sale through #{currentUser.users_office.ev.MASTER_LICENSEE}
         .ui.cards
-            each consumables_offered
+            each products_available
                 +product_card     
                 
 template(name='my_cleaning_schedule')
@@ -133,7 +136,7 @@ template(name='office_contact_cards')
         //     i.users.icon
         //     i.corner.building.icon
         |Office Contacts
-    .ui.stackable.centered.cards
+    .ui.stackable.centered.five.cards
         each office_contacts
             +office_contact_card
 

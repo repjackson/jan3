@@ -1,12 +1,11 @@
 template(name='accounts_nav')
-    #nav.ui.four.item.borderless.borderless.stackable.menu
+    #nav.ui.four.item.stackable.large.menu
         a.item(href='/' isActivePath='/')
             img.ui.avatar.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
             | &nbsp; Home
         +menu_item link='/login' label='Login' icon='password'
-        +menu_item link='/reset_password' label='Forgot Password' icon='forgot-password'
-        +menu_item link='/register_customer' label='Register Customer' icon='customer-support'
-        // +menu_item link='/register_officer' label='Register Officer' icon='add-user-male'
+        +menu_item link='/reset_password' label='Reset Password' icon='forgot-password'
+        +menu_item link='/register_user' label='Register User' icon='add-user-group-woman-man'
 
 
 template(name='accounts_layout')
@@ -89,70 +88,65 @@ template(name='login')
                             |Demo Admin
                 
                 
-template(name='register_officer')
+template(name='register_user')
     .ui.middle.aligned.centered.padded.grid
         .row
             h1.ui.center.aligned.header 
-                +icon name='add-user-male'
-                |Register Officer
+                if customer_selected
+                    +icon name='customer-support'
+                if officer_selected
+                    +icon name='small-business'
+                |Register #{current_user_type_selection}
         .row
-            .eight.wide.column
+            .ten.wide.column
                 .ui.segment
+                    .ui.basic.center.aligned.segment
+                        #select_customer.ui.button(class=customer_button_class) 
+                            +iconsmall name='customer-support'
+                            |Customer
+                        #select_officer.ui.button(class=officer_button_class) 
+                            +iconsmall name='small-business'
+                            |Officer
                     .ui.form
-                        .required.field
-                            label Username
-                            input(type='text')
-                        .required.field
-                            label Email
-                            input(type='email')
-                        .required.field
-                            label Password
-                            input(type='text')
-                        .required.field
-                            label Repeat Password
-                            input(type='text')
-            .four.wide.column
-                .ui.header lookup office
-
-                
-template(name='register_customer')
-    .ui.middle.aligned.centered.padded.grid
-        .row
-            h1.ui.center.aligned.header 
-                +icon name='customer-support'
-                |Register Customer
-        .row
-            .eight.wide.column
-                .ui.segment
-                    .ui.form
-                        .required.field
-                            label Username
-                            input#username(type='text')
-                            if username_found
-                                .ui.info.message 
-                                    |Existing Username Found
-                                    a.ui.button.login_link(href='/login') 
-                                        |Login Here
-                                        i.right.arrow.icon
-                        .required.field
-                            label Email
-                            input#email(type='email')
-                            if email_found
-                                .ui.info.message 
-                                    |Existing Email Found
-                                    a.ui.button.login_link(href='/login') 
-                                        |Login Here
-                                        i.right.arrow.icon
-                            else
-                                .ui.success.message 
-                                    |Existing Available
-                        .required.field
-                            label Customer ID
-                            input#customer_jpid(type='text')
-                        +customer_card customer_jpid=session_customer_jpid                    
-                        .required.field
-                            label Password
-                            input#password_one(type='password')
+                        if customer_selected
+                            .required.field
+                                label Customer ID
+                                input#customer_jpid(type='text')
+                                if jpid_lookup_status
+                                    |#{jpid_lookup_status}
+                            if account_selected
+                                +customer_card customer_jpid=session_customer_jpid                    
+                        if officer_selected
+                            .required.field
+                                label Officer ID
+                                input#officer_jpid(type='text')
+                            if session_office_jpid
+                                +office_card office_jpid=session_office_jpid  
+                        if account_selected
+                            .required.field
+                                label Username
+                                input#username(type='text')
+                                if username_found
+                                    .ui.info.message 
+                                        |Existing Username Found
+                                        a.ui.button.login_link(href='/login') 
+                                            |Login Here
+                                            i.right.arrow.icon
+                            .required.field
+                                label Email
+                                input#email(type='email')
+                                if email_found
+                                    .ui.info.message 
+                                        |Existing Email Found
+                                        a.ui.button.login_link(href='/login') 
+                                            |Login Here
+                                            i.right.arrow.icon
+                                else
+                                    .ui.success.message 
+                                        |Email Available
+                            .required.field
+                                label Password
+                                input#password_one(type='password')
                         // .required.field
                         //     label Repeat Password
                         //     input.password_two(type='password')
