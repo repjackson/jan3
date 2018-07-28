@@ -6,7 +6,7 @@ Docs.before.insert (userId, doc)->
     timestamp = Date.now()
     doc.timestamp = timestamp
     doc.updated = timestamp
-    # console.log moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
+    doc.long_timestamp = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
     date = moment(timestamp).format('Do')
     weekdaynum = moment(timestamp).isoWeekday()
     weekday = moment().isoWeekday(weekdaynum).format('dddd')

@@ -106,6 +106,15 @@ template(name='dashboard_services_widget')
             each services_offered
                 +service_card     
                 
+template(name='dashboard_consumables_widget')
+    .ui.secondary.segment
+        .ui.header 
+            +iconsmall name='toilet paper'
+            |Consumables For Sale through #{currentUser.users_office.ev.MASTER_LICENSEE}
+        .ui.cards
+            each consumables_offered
+                +product_card     
+                
 template(name='my_cleaning_schedule')
     .ui.fluid.accordion
         .active.title

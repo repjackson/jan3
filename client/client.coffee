@@ -35,12 +35,25 @@ Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 Template.registerHelper 'my_office', () -> 
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
-    if user and user.profile and user.profile.office_jpid
-        users_office = Docs.findOne
-            "ev.ID": user.profile.office_jpid
-            type:'office'
-        # console.log users_office
-        users_office
+    if user and user.profile 
+        if user.profile.office_jpid
+            users_office = Docs.findOne
+                "ev.ID": user.profile.office_jpid
+                type:'office'
+            # console.log users_office
+            users_office
+        if user.profile.customer_jpid
+            customer_doc = Docs.findOne
+                "ev.ID": user.profile.customer_jpid
+                type:'customer'
+            # console.log customer_doc
+            if customer_doc
+                users_office = Docs.findOne
+                    "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
+                    type:'office'
+                # console.log users_office
+                users_office
+            else null
     else null
 
 Template.registerHelper 'from_now', (date) -> moment(date).fromNow()

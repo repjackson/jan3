@@ -55,6 +55,8 @@ template(name='service_view')
                     .ui.header Slug: #{slug}
                     .ui.header Price: $#{price}
 
+
+
 template(name='service_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
@@ -73,3 +75,40 @@ template(name='service_edit')
                     +edit_text_field key='slug' label='Slug (lowercase computer version)' icon='code'
                     +edit_number_field key='price' label='Price' icon='money'
                     +edit_image_field
+                    
+                    
+template(name='service_request_view')
+    .ui.padded.stackable.grid
+        .centered.middle.aligned.row
+            .three.wide.column
+                +link_button link='/services' icon='building' label='Services'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header View '#{title}' Service Request
+            .three.wide.right.aligned.column
+                +edit_button
+        .row
+            .sixteen.wide.column
+                .ui.secondary.segment
+                    .ui.header Title: #{title}
+                    // .ui.header Display Name: #{display_name}
+                    .ui.header Slug: #{slug}
+                    .ui.header Price: $#{price}
+                    
+template(name='service_request_edit')
+    .ui.padded.stackable.grid
+        .centered.middle.aligned.row
+            .three.wide.column
+                +link_button link='/services' icon='building' label='Services'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header View '#{title}' Service Request
+            .three.wide.right.aligned.column
+                +edit_button
+        .row
+            .sixteen.wide.column
+                .ui.secondary.segment
+                    .ui.header Title: #{title}
+                    // .ui.header Display Name: #{display_name}
+                    .ui.header Slug: #{slug}
+                    .ui.header Price: $#{price}
+                    
+                    

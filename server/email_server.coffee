@@ -40,9 +40,9 @@ Meteor.startup ->
 
 
 Meteor.methods 
-    sendEmail: (mail_fields) ->
-        console.log 'about to send email...'
-        console.log mail_fields
+    send_email: (mail_fields) ->
+        console.log 'about to send email'
+        console.log 'mail fields', mail_fields
         # check([mail_fields.to, mail_fields.from, mail_fields.subject, mail_fields.text, mail_fields.html], [String]);
         # Let other method calls from the same client start running,
         # without waiting for the email sending to complete.
@@ -54,23 +54,32 @@ Meteor.methods
                 subject: mail_fields.subject
                 text: mail_fields.text
                 html: mail_fields.html
-            console.log 'email sent from prod'
+            console.log 'email sent from production'
         if Meteor.isDevelopment
             console.log 'email sending from dev'
             Docs.insert
                 type:'message'
                 mail_fields: mail_fields
-            # Email.send
-            #     to: mail_fields.to
-            #     from: mail_fields.from
-            #     subject: mail_fields.subject
-            #     text: mail_fields.text
-            #     html: mail_fields.html
+            Meteor.Mailgun.send
+                to: mail_fields.to
+                from: mail_fields.from
+                subject: mail_fields.subject
+                text: mail_fields.text
+                html: mail_fields.html
             # console.log 'email sent from dev'
         else
-            console.log 'not prod or dev'
+            console.log 'not production or dev'
         return
         
+    beta_send_email: (subject, html) ->
+        mail_fields = {
+            to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
+            from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
+            subject: subject
+            html: html
+        }
+        
+        Meteor.call 'send_email', mail_fields
         
     email_about_escalation: (incident_id)->
         incident = Docs.findOne incident_id
@@ -125,7 +134,7 @@ Meteor.methods
         #{escalation_primary_contact_value}
         
         
-        Meteor.call 'sendEmail', mail_fields
+        Meteor.call 'send_email', mail_fields
     #         # html: 
     #         #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
     #         #     #{text} <br>
@@ -188,7 +197,7 @@ Meteor.methods
         #{escalation_primary_contact_value}
         
         
-        Meteor.call 'sendEmail', mail_fields
+        Meteor.call 'send_email', mail_fields
     #         # html: 
     #         #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
     #         #     #{text} <br>

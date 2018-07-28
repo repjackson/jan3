@@ -121,6 +121,9 @@ template(name='bug_card')
         .content
             |#{body}
         .content
+            +author_info
+            |#{when}
+        .content
             +edit_button
             +view_button
         
@@ -133,31 +136,27 @@ template(name='bug_edit')
                 #delete_bug.ui.icon.button
                     i.trash.icon
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit bug #{name}
+                h1.ui.center.aligned.grey.header Edit Bug #{body}
             .three.wide.column
                 +save_button
         .eight.wide.column
             .ui.form
-                +edit_text_field key='name' label='bug Name'
-                +edit_number_field key='number' label='Number'
-                +edit_textarea name='description' label='Description' icon='details'
+                +edit_text_field key='body' label='Body'
         
         
 template(name='bug_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +link_button link='/bugs' icon='bugs' label='bugs'
+                +link_button link='/bugs' icon='bug' label='bugs'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header View '#{name}' Bug 
+                h1.ui.center.aligned.grey.header View Bug 
             .three.wide.column
                 +edit_button
         .row
             .eight.wide.column
-                .ui.header Name: #{name}
-                .ui.header Number: #{number}
-                .ui.header Description: !{description}
-                +associated_users
-                +comments
-                
+                .ui.header Body: 
+                    strong #{body}
+                +author_info
+                .ui.header #{when}
                 

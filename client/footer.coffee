@@ -22,21 +22,28 @@ Template.footer.events
     "click #report_bug": ->
         Session.set 'bug_link', window.location.pathname
         $('.ui.report.modal').modal(
-            inverted: true
+            inverted: false
             # transition: 'vertical flip'
             # observeChanges: true
             duration: 400
             onApprove : ()->
                 val = $("#bug_description").val()
-                Docs.insert
+                timestamp = Date.now()
+                long_timestamp = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
+                
+                new_bug_id = Docs.insert
                     type: 'bug'
                     complete: false
                     body: val
                     link: window.location.pathname
+                link = "https://www.jan.meteorapp.com/view/#{new_bug_id}"
                 $("#bug_description").val('')
+                Meteor.call 'create_event', new_bug_id, 'bug_submit', "submitted a bug: #{val}."
+                Meteor.call 'beta_send_email', "#{Meteor.user().username} submitted a bug on the JP Portal.", "<h3>#{Meteor.user().username} submitted this bug on the JP Portal:</h3> <h3>#{val}</h3><h2> at #{long_timestamp}.</h2> <a href=#{link}>View Bug</a>"
     
                 # $('.ui.confirm.modal').modal('show');
             ).modal('show')
+            
 
 Template.role_switcher.events
     'click .change_role': ->

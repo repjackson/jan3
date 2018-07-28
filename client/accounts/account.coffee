@@ -37,7 +37,7 @@ Template.account_settings.events
     
     
     'click #test_email': ->
-        Meteor.call('sendEmail',{
+        Meteor.call('send_email',{
             to: 'repjackson@gmail.com',
             from: 'no-reply@where-ever.com',
             subject: 'I really like sending emails with Mailgun!',
