@@ -12,11 +12,11 @@ template(name='children_widget')
 template(name='jpid_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/jpids' icon='hashtag' label='JP Ids'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header ##{jpid} JP Id
-            .three.wide.column
+            .three.wide.center.aligned.column
                 .refresh_jpid.ui.icon.button(title='Refresh JP ID Doc')
                     i.refresh.icon
         .centered.row
@@ -27,7 +27,7 @@ template(name='jpid_view')
 template(name='jpids')
     .ui.padded.stackable.grid
         .row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .eight.wide.column
                 .ui.center.aligned.header
@@ -71,7 +71,7 @@ template(name='jpids')
 template(name='history')
     .ui.padded.stackable.grid
         .row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .eight.wide.column
                 .ui.center.aligned.header
@@ -94,7 +94,7 @@ template(name='history')
 template(name='history_view')
     .ui.padded.stackable.grid
         .row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/ev' icon='database' label='EV Dash'
             .eight.wide.column
                 .ui.center.aligned.header
@@ -129,11 +129,11 @@ template(name='history_view')
 template(name='search_history_doc_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/history' icon='calendar' label='history'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Search History Doc View #{ev.ID}
-            .three.wide.column
+            .three.wide.center.aligned.column
                 // +edit_button
         .centered.row
             .sixteen.wide.column
@@ -162,7 +162,7 @@ template(name='franchisee_view')
         // .centered.row
         //     +office_by_franchisee
         .centered.middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 if is_admin
                     +link_button link='/franchisees' icon='collaborator-female' label='Franchisees'
             .ten.wide.column
@@ -202,13 +202,13 @@ template(name='office_by_franchisee')
 template(name='offices')
     .ui.stackable.centered.padded.grid
         .middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
                     +icon name='building'
                     |Offices
-            .three.wide.column
+            .three.wide.center.aligned.column
                 // if is_dev
                 // +call_method name='sync_offices'
         .row

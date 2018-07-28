@@ -1,14 +1,14 @@
 template(name='users') 
     .ui.padded.stackable.grid
         .centered.row
-            .three.wide.column 
+            .three.wide.center.aligned.column 
                 a(href='/user/add' data-content='Add User')
                     +icon name='plus' classes='centered'
             .ten.wide.column 
                 h1.ui.center.aligned.header 
                     +icon name='groups'
                     | Users
-            .three.wide.column 
+            .three.wide.center.aligned.column 
         .centered.row
             .sixteen.wide.column 
                 +reactiveTable settings=settings class="ui celled striped sortable table"

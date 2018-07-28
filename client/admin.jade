@@ -102,13 +102,13 @@ template(name='admin_widget')
 template(name='bugs')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
                     +icon name='bug'
                     | Bugs
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +add_button type='bug'
         .row 
             .ui.sixteen.wide.column
@@ -132,12 +132,12 @@ template(name='bug_card')
 template(name='bug_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 #delete_bug.ui.icon.button
                     i.trash.icon
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit Bug #{body}
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +save_button
         .eight.wide.column
             .ui.form
@@ -147,11 +147,11 @@ template(name='bug_edit')
 template(name='bug_view')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/bugs' icon='bug' label='bugs'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header View Bug 
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +edit_button
         .row
             .eight.wide.column

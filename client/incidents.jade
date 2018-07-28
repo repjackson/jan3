@@ -1,13 +1,13 @@
 template(name='incidents')
     .ui.stackable.padded.centered.grid
         .middle.aligned.centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +add_incident_button
             .ten.wide.column
                 h2.ui.center.aligned.header 
                     +icon name='error'
                     | All Incidents
-            .three.wide.column
+            .three.wide.center.aligned.column
                 unless is_customer
                     +call_method name='update_escalation_statuses' label='Run Escalation Check'
         .row
@@ -255,13 +255,13 @@ template(name='incident_task_view')
 template(name='customer_incidents')
     .ui.stackable.padded.centered.grid
         .middle.aligned.centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +add_incident_button
             .ten.wide.column
                 h2.ui.center.aligned.header 
                     +icon name='error'
                     |#{currentUser.users_customer.ev.CUST_NAME} Incidents
-            .three.wide.column
+            .three.wide.center.aligned.column
         .row
             .sixteen.wide.column
                 +reactiveTable settings=settings collection=customer_incidents class="ui celled striped sortable table"

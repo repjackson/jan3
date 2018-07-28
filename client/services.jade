@@ -1,13 +1,13 @@
 template(name='services')
     .ui.stackable.centered.padded.grid
         .middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
                     +icon name='broom'
                     | Services
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +add_button type='service'
         .row
             .fourteen.wide.column
@@ -23,50 +23,70 @@ template(name='service_card')
         .content
             .right.floated.meta $#{price}
             .header #{title}
-            .meta #{slug}
+            if is_admin
+                .meta #{slug}
             .description
                 p #{description}
         .content
-            .ui.button 
-                i.large.icon
-                    +iconsmall name='service-bell'
-                | Request
+            +request_service_button
             a.ui.button(href="/view/#{_id}") 
                 i.large.icon
                     +iconsmall name='view-details'
                 |Details
     
-                    
+template(name='request_service_button')                    
+    .request_service.ui.button 
+        i.large.icon
+            +iconsmall name='service-bell'
+        | Request
                     
 template(name='service_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/services' icon='building' label='Services'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header View '#{title}' Service
+                h1.ui.center.aligned.grey.header '#{title}' Service
             .three.wide.right.aligned.column
                 +edit_button
-        .row
-            .sixteen.wide.column
+        .centered.row
+            .ten.wide.column
                 .ui.secondary.segment
                     .ui.header Title: #{title}
                     // .ui.header Display Name: #{display_name}
-                    .ui.header Slug: #{slug}
-                    .ui.header Price: $#{price}
-
-
+                    if is_admin
+                        .ui.header Slug: #{slug}
+            .three.wide.column
+                .ui.header Price: $#{price}
+                +request_service_button
+        .row
+            .sixteen.wide.column
+                +service_child_requests
+                
+                
+template(name='service_child_requests')
+    .ui.secondary.segment
+        .ui.header 
+            +icon name='service-bell'
+            |Requests
+        .ui.list
+            each child_requests
+                .item
+                    +author_info
+                    .content
+                        |#{service_title}
+                        strong #{service_date}
 
 template(name='service_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 #delete.ui.basic.button
                     i.trash.icon
                     | Delete
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit '#{title}' Service
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +save_button
         .centered.row
             .ten.wide.column
@@ -80,35 +100,32 @@ template(name='service_edit')
 template(name='service_request_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/services' icon='building' label='Services'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header View '#{title}' Service Request
-            .three.wide.right.aligned.column
+                h1.ui.center.aligned.grey.header View Service Request for #{service_title}
+            .three.wide.center.aligned.column
                 +edit_button
         .row
             .sixteen.wide.column
                 .ui.secondary.segment
-                    .ui.header Title: #{title}
-                    // .ui.header Display Name: #{display_name}
-                    .ui.header Slug: #{slug}
-                    .ui.header Price: $#{price}
+                    .ui.header Date: #{request_date}
+                    .ui.header Details: #{request_details}
                     
 template(name='service_request_edit')
-    .ui.padded.stackable.grid
-        .centered.middle.aligned.row
-            .three.wide.column
-                +link_button link='/services' icon='building' label='Services'
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.center.aligned.column
+                #delete.ui.icon.button
+                    i.trash.icon
             .ten.wide.column
-                h1.ui.center.aligned.grey.header View '#{title}' Service Request
-            .three.wide.right.aligned.column
-                +edit_button
-        .row
-            .sixteen.wide.column
-                .ui.secondary.segment
-                    .ui.header Title: #{title}
-                    // .ui.header Display Name: #{display_name}
-                    .ui.header Slug: #{slug}
-                    .ui.header Price: $#{price}
+                h1.ui.center.aligned.header Edit Service Request for #{service_title}
+            .three.wide.center.aligned.column
+                +save_button
+        .centered.row
+            .ten.wide.column
+                .ui.form
+                    +edit_date_field key='request_date' label='Request Date' icon='calendar'
+                    +edit_textarea key='request_details' label='Request Details' icon='details'
                     
                     

@@ -127,10 +127,10 @@ template(name='conversation_message')
 template(name='conversation_view')
     .ui.stackable.padded.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
             .ten.wide.column
                 h1.ui.center.aligned.header View Conversation 
-            .three.wide.column
+            .three.wide.center.aligned.column
                 if can_edit
                     +edit_button
         .centered.row

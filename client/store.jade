@@ -1,12 +1,12 @@
 template(name='store')
     .ui.stackable.centered.padded.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
             .ten.wide.column
                 h1.ui.center.aligned.header
                     +icon name='small-business'
                     | Store
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +add_button type='product'
         .centered.row
             .twelve.wide.column
@@ -40,12 +40,12 @@ template(name='product_card')
 template(name='product_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 #delete.ui.icon.button
                     i.trash.icon
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit '#{title}' Product
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +save_button
         .eight.wide.column
             .ui.form
@@ -57,11 +57,11 @@ template(name='product_edit')
 template(name='product_view')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/store' icon='small-business' label='Store'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header View '#{title}' Product
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +edit_button
         .row
             .eight.wide.column

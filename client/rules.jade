@@ -1,13 +1,13 @@
 template(name='rules')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
                     +icon name='reviewer-female'
                     | Rules
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +add_button type='rule'
         .row 
             .ui.sixteen.wide.column
@@ -31,12 +31,12 @@ template(name='rule_card')
 template(name='rule_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 #delete.ui.icon.button
                     i.trash.icon
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit Rule #{name}
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +save_button
         .eight.wide.column
             .ui.form
@@ -48,11 +48,11 @@ template(name='rule_edit')
 template(name='rule_view')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/rules' icon='rules' label='Rules'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Rule: #{name}
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +edit_button
         .row
             .eight.wide.column

@@ -1,13 +1,13 @@
 template(name='special_services')
     .ui.stackable.centered.padded.grid
         .middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
                     +icon name='broom'
                     | Special Services
-            .three.wide.column
+            .three.wide.center.aligned.column
                 // .sync_services.ui.icon.button 
                 //     i.refresh.icon
         .row
@@ -18,7 +18,7 @@ template(name='special_services')
 template(name='special_service_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/services' icon='building' label='services'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header #{service_name} service
@@ -53,13 +53,13 @@ template(name='users_by_special_service')
 template(name='special_service_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 #delete.ui.basic.button
                     i.trash.icon
                     | Delete
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit service ##{jan_service_id}
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +save_button
         .five.wide.column
             +service_map
@@ -79,11 +79,11 @@ template(name='special_service_edit')
 // template(name='service_view')
 //     .ui.padded.stackable.centered.grid
 //         .centered.row
-//             .three.wide.column
+//             .three.wide.center.aligned.column
 //                 +link_button link='/services' icon='left chevron' label='services'
 //             .ten.wide.column
 //                 h1.ui.center.aligned.grey.header service ##{jan_service_id}
-//             .three.wide.column
+//             .three.wide.center.aligned.column
 //                 +edit_button
 //         .row
 //             .five.wide.column

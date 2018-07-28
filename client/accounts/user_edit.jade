@@ -2,10 +2,10 @@ template(name='user_edit')
     with user
         .ui.padded.stackable.centered.grid
             .row
-                .three.wide.column    
+                .three.wide.center.aligned.column    
                 .ten.wide.column    
                     h1.ui.center.aligned.grey.header Edit #{profile.first_name} #{profile.last_name}
-                .three.wide.column    
+                .three.wide.center.aligned.column    
                     a.ui.icon.button(href="/user/#{user.username}" title="Save #{currentUser.username}")
                         i.green.large.checkmark.icon
             .row

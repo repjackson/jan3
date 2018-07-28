@@ -1,12 +1,12 @@
 template(name='incident_types')
     .ui.stackable.padded.grid
         .middle.aligned.row 
-            .three.wide.column
+            .three.wide.center.aligned.column
             .ten.wide.column
                 h1.ui.center.aligned.header 
                     i.clone.icon
                     | Incident Types
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +add_button type='incident_type'
         .row 
             .sixteen.wide.column
@@ -29,12 +29,12 @@ template(name='incident_type_card')
 template(name='incident_type_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 #delete.ui.icon.button
                     i.trash.icon
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit Incident Type #{name}
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +save_button
         .eight.wide.column
             .ui.form
@@ -46,11 +46,11 @@ template(name='incident_type_edit')
 template(name='incident_type_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/incident_types' icon='exclamation triangle'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Incident Type: #{name}
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +edit_button
         .row
             .four.wide.column

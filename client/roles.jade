@@ -1,13 +1,13 @@
 template(name='roles')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
                     +icon name='reviewer-female'
                     | Roles
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +add_button type='role'
         .row 
             .ui.sixteen.wide.column
@@ -31,12 +31,12 @@ template(name='role_card')
 template(name='role_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 #delete.ui.icon.button
                     i.trash.icon
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit Role #{name}
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +save_button
         .eight.wide.column
             .ui.form
@@ -48,11 +48,11 @@ template(name='role_edit')
 template(name='role_view')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +link_button link='/roles' icon='reviewer-female' label='Roles'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Role: #{name}
-            .three.wide.column
+            .three.wide.center.aligned.column
                 +edit_button
         .row
             .eight.wide.column
