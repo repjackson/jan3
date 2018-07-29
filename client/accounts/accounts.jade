@@ -1,13 +1,3 @@
-template(name='accounts_nav')
-    #nav.ui.four.item.stackable.large.menu
-        a.item(href='/' isActivePath='/')
-            img.ui.avatar.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
-            | &nbsp; Home
-        +menu_item link='/login' label='Login' icon='password'
-        +menu_item link='/reset_password' label='Reset Password' icon='forgot-password'
-        +menu_item link='/register_user' label='Register User' icon='add-user-group-woman-man'
-
-
 template(name='accounts_layout')
     .context.example
         .ui.bottom.attached.basic.segment.pushable
@@ -17,18 +7,26 @@ template(name='accounts_layout')
                     +accounts_nav
                     +Template.dynamic template=main
 
-
+template(name='accounts_nav')
+    #nav.ui.four.item.stackable.large.inverted.blue.menu
+        a.item(href='/')
+            img.ui.avatar.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
+            | &nbsp; Home
+        +menu_item link='/login' label='Login' icon='password' name='login'
+        +menu_item link='/reset_password' label='Reset Password' icon='forgot-password' name='reset_password'
+        +menu_item link='/register' label='Register' icon='add-user-group-woman-man' name='register'
 
 template(name='menu_item')
-    a.item(href=link isActivePath=link)
+    a.item(href=link class="{{ is_current_route name }}")
         // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-        +icon name=icon
+        i.big.icon
+            +icon name=icon
         | &nbsp; #{label}
 
 
 template(name='reset_password')
     .ui.middle.aligned.centered.padded.grid
-        .eight.wide.column
+        .twelve.wide.column
             h1.ui.center.aligned.header 
                 +icon name='forgot-password'
                 | Reset Password
@@ -39,7 +37,7 @@ template(name='reset_password')
                         input#username(type='text')
                     .field
                         #reset_password_by_username.ui.fluid.button
-                            // +icon name='lock-2'
+                            +iconsmall name='available-updates'
                             | Reset password by Username
                 .ui.form
                     .field
@@ -47,7 +45,7 @@ template(name='reset_password')
                         input#email(type='email')
                     .field
                         #reset_password_by_email.ui.fluid.button
-                            // +icon name='lock-2'
+                            +iconsmall name='available-updates'
                             | Reset password by Email
 
 
@@ -76,19 +74,19 @@ template(name='login')
                 .ui.three.column.stackable.grid
                     .column
                         #login_demo_customer.ui.fluid.large.button
-                            +icon name='online-support' classes='ui inline image'
+                            +iconsmall name='online-support' classes='ui inline image'
                             |Demo Customer
                     .column
                         #login_demo_office.ui.fluid.large.button
-                            +icon name='coach' classes='ui inline image'
+                            +iconsmall name='coach' classes='ui inline image'
                             |Demo Officer
                     .column
                         #login_demo_admin.ui.fluid.large.button
-                            +icon name='user-shield' classes='ui inline image'
+                            +iconsmall name='user-shield' classes='ui inline image'
                             |Demo Admin
                 
                 
-template(name='register_user')
+template(name='register')
     .ui.middle.aligned.centered.padded.grid
         .row
             h1.ui.center.aligned.header 
@@ -107,7 +105,7 @@ template(name='register_user')
                         #select_officer.ui.button(class=officer_button_class) 
                             +iconsmall name='small-business'
                             |Officer
-                    .ui.form
+                    .ui.large.form
                         if customer_selected
                             .required.field
                                 label Customer ID

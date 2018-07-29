@@ -1,13 +1,17 @@
-FlowRouter.route '/login', action: ->
-    BlazeLayout.render 'accounts_layout', 
-        main: 'login'
-FlowRouter.route '/register_user', action: ->
-    BlazeLayout.render 'accounts_layout', 
-        main: 'register_user'
-FlowRouter.route '/reset_password', action: ->
-    BlazeLayout.render 'accounts_layout', 
-        main: 'reset_password'
-
+FlowRouter.route '/login',
+    name: 'login'
+    action: ->
+        BlazeLayout.render 'accounts_layout', main: 'login'
+FlowRouter.route '/register',
+    name: 'register'
+    action: ->
+        BlazeLayout.render 'accounts_layout', main: 'register'
+FlowRouter.route '/reset_password',
+    name: 'reset_password'
+    action: ->
+        BlazeLayout.render 'accounts_layout', main: 'reset_password'
+    
+    
 Template.login.events
     'click .login': (e,t)->
         e.preventDefault()
@@ -58,13 +62,13 @@ Template.login.events
             
         
         
-Template.register_user.onRendered ->
+Template.register.onRendered ->
     Session.setDefault 'customer_jpid', null
     Session.setDefault 'officer_jpid', null
     Session.setDefault 'account_selected', false
     Session.setDefault 'user_type_selection', 'Customer'    
         
-Template.register_user.helpers
+Template.register.helpers
     user_found: -> Session.get 'username_found'
     
     session_customer_jpid: -> Session.get 'customer_jpid'
@@ -91,7 +95,7 @@ Template.register_user.helpers
         session_customer_jpid = Session.get 'customer_jpid'
         if Session.get('session_username') and Session.get('session_password_one') and Session.get('session_email') and Session.get('session_customer_jpid') then true else false
     
-Template.register_user.events
+Template.register.events
     # 'click #register': (e,t)->
     #     login = $('.username').val()
     #     password = $('.password').val()

@@ -3,6 +3,11 @@ Meteor.methods
         child_count = Docs.find(parent_id: doc_id).count()
         Docs.update doc_id, 
             $set: child_count: child_count
+    
+    calculate_request_count: (doc_id)->
+        request_count = Docs.find(service_id: doc_id).count()
+        Docs.update doc_id, 
+            $set: request_count: request_count
 
     create_user: (options)->
         new_id = Accounts.createUser options

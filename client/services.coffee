@@ -9,17 +9,20 @@ Template.services.helpers
 
 Template.request_service_button.events
     'click .request_service': ->
-        console.log @
+        current_customer_jpid = Meteor.user().profile.customer_jpid
+        console.log current_customer_jpid
         new_request_id = 
             Docs.insert 
                 type:'service_request'
                 service_id:@_id
                 service_title:@title
                 service_slug:@slug
+                customer_jpid:current_customer_jpid
         FlowRouter.go "/edit/#{new_request_id}"
+        Meteor.call 'calculate_request_count', @_id
 
 
-Template.services.onCreated ->
+Template.service_view.onCreated ->
     @autorun => Meteor.subscribe 'service_child_requests', FlowRouter.getParam('doc_id')
 
 Template.service_child_requests.helpers

@@ -32,7 +32,7 @@ template(name='toggle_boolean')
             #turn_on.ui.button #{no_label}
 
 template(name='save_button')
-    a.ui.large.icon.button(href="/view/#{_id}") 
+    a.ui.big.icon.button(href="/view/#{_id}") 
         i.large.green.checkmark.icon
         // | Save
         
@@ -449,7 +449,7 @@ template(name='dusk_icon')
 
 template(name='icon')
     unless currentUser
-        img.ui.mini.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes)
+        img.ui.tiny.image(src="https://png.icons8.com/color/96/000000/#{name}.png" class=classes)
     if is_customer
         img.ui.mini.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes)
     if is_admin
@@ -466,7 +466,7 @@ template(name='iconlarge')
 
 template(name='iconsmall')
     unless currentUser
-        img.ui.mini.inline.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes)
+        img.ui.mini.inline.image(src="https://png.icons8.com/color/96/000000/#{name}.png" class=classes)
     if is_customer
         img.ui.mini.inline.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes)
     if is_admin

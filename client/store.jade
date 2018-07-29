@@ -4,7 +4,7 @@ template(name='store')
             .three.wide.center.aligned.column
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    +icon name='small-business'
+                    +iconlarge name='small-business'
                     | Store
             .three.wide.center.aligned.column
                 +add_button type='product'
@@ -21,12 +21,12 @@ template(name='product_card')
                 img.ui.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
         .content
             .right.floated.meta $#{price}
-            .header #{title}
+            a.header(href="/view/#{_id}") #{title}
             // a.author #{author.username}
             .description
                 p #{description}
         .content
-            .ui.buttons
+            .ui.center.aligned.buttons
                 .ui.button 
                     i.large.icon
                         +iconsmall name='add-shopping-cart'

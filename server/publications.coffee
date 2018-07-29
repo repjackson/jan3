@@ -578,6 +578,7 @@ Meteor.publish 'customer_by_id', (customer_jpid)->
 
 
 Meteor.publish 'service_child_requests', (service_id)->
+    console.log service_id
     Docs.find
         type:'service_request'
         service_id:service_id

@@ -2,9 +2,9 @@ template(name='feed')
     .ui.padded.stackable.grid
         .centered.row
             .ten.wide.column
-                h1.ui.header
-                    +iconlarge name='rss'
-                    | Feed
+                h1.ui.center.aligned.header
+                    +icon name='rss'
+                    | Global Feed
         .row
             .sixteen.wide.column
                 +reactiveTable settings=settings class="ui celled striped sortable table"

@@ -194,7 +194,7 @@ template(name='franchisee_view')
 template(name='office_by_franchisee')
     a.ui.center.aligned.button(href="/view/#{parent_office._id}" title="#{ev.FRANCHISEE}'s Office")
         // .ui.dividing.header 
-        i.large.icon
+        i.big.icon
             +icon name='link-company-parent'
         with parent_office
             | #{ev.MASTER_LICENSEE}

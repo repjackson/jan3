@@ -33,27 +33,27 @@ template(name='office_header')
 template(name='office_nav')
     .ui.five.item.stackable.borderless.pointing.menu
         // a.item(href="/view/#{_id}" isActivePath="/view/#{_id}")
-        //     i.large.icon
+        //     i.big.icon
         //         +iconsmall name='link-company-parent'
         //     | &nbsp; #{ev.MASTER_LICENSEE}
         a.item(href="/office/#{_id}/incidents" class="{{ is_current_route 'office_incidents'}}")
-            i.large.icon
+            i.big.icon
                 +iconsmall name='error'
             | &nbsp; Incidents
         a.item(href="/office/#{_id}/employees" class="{{ is_current_route 'office_employees'}}")
-            i.large.icon
+            i.big.icon
                 +iconsmall name='groups'
             | &nbsp; Employees
         a.item(href="/office/#{_id}/franchisees" class="{{ is_current_route 'office_franchisees'}}")
-            i.large.icon
+            i.big.icon
                 +iconsmall name='conference'
             | &nbsp; Franchisees
         a.item(href="/office/#{_id}/customers" class="{{ is_current_route 'office_customers'}}")
-            i.large.icon
+            i.big.icon
                 +iconsmall name='customer-support'
             | &nbsp; Customers
         a.item(href="/office/#{_id}/settings" class="{{ is_current_route 'office_settings'}}")
-            i.large.icon
+            i.big.icon
                 +iconsmall name='settings'
             | &nbsp; Settings
 

@@ -22,17 +22,21 @@ template(name='service_card')
                 img.ui.image.item(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
         .content
             .right.floated.meta $#{price}
-            .header #{title}
+            a.header(href="/view/#{_id}") #{title}
             if is_admin
                 .meta #{slug}
             .description
                 p #{description}
+        if request_count
+            .content
+                | #{request_count} requests
         .content
-            +request_service_button
-            a.ui.button(href="/view/#{_id}") 
-                i.large.icon
-                    +iconsmall name='view-details'
-                |Details
+            .ui.center.aligned.buttons
+                +request_service_button
+                a.ui.button(href="/view/#{_id}") 
+                    i.large.icon
+                        +iconsmall name='view-details'
+                    |Details
     
 template(name='request_service_button')                    
     .request_service.ui.button 
@@ -51,11 +55,11 @@ template(name='service_view')
                 +edit_button
         .centered.row
             .ten.wide.column
-                .ui.secondary.segment
-                    .ui.header Title: #{title}
-                    // .ui.header Display Name: #{display_name}
-                    if is_admin
-                        .ui.header Slug: #{slug}
+                if description
+                    .ui.secondary.segment
+                        .large130 #{description}
+                        if is_admin
+                            .ui.header Slug: #{slug}
             .three.wide.column
                 .ui.header Price: $#{price}
                 +request_service_button
@@ -69,21 +73,26 @@ template(name='service_child_requests')
         .ui.header 
             +icon name='service-bell'
             |Requests
-        .ui.list
+        .ui.cards
             each child_requests
-                .item
-                    +author_info
+                .card
                     .content
-                        |#{service_title}
-                        strong #{service_date}
-
+                        .meta.right.floated 
+                            +author_info
+                        .header #{service_title}
+                        .meta #{service_date}
+                    .content
+                        .meta Requested #{when}
+                        .large130 #{request_details}
+                    .content
+                        +view_button
+                        
 template(name='service_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
-                #delete.ui.basic.button
+                #delete.ui.icon.button
                     i.trash.icon
-                    | Delete
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit '#{title}' Service
             .three.wide.center.aligned.column
@@ -92,9 +101,10 @@ template(name='service_edit')
             .ten.wide.column
                 .ui.form
                     +edit_text_field key='title' label='Title' icon='code'
-                    +edit_text_field key='slug' label='Slug (lowercase computer version)' icon='code'
+                    +edit_text_field key='slug' label='Slug' icon='code'
                     +edit_number_field key='price' label='Price' icon='money'
                     +edit_image_field
+                    +edit_textarea key='description' label='Description' icon='details'
                     
                     
 template(name='service_request_view')
