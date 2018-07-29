@@ -5,6 +5,14 @@ Template.left_sidebar.events
         FlowRouter.go '/login'
 
     
+Template.nav.helpers
+    my_office_doc: ->
+        user = Meteor.user()
+        if user and user.profile and user.profile.office_jpid
+            Docs.find
+                "ev.ID": user.profile.office_jpid
+                type:'office'
+
 Template.nav.events
     'click #logout': (e,t)-> 
         e.preventDefault()

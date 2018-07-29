@@ -1,5 +1,5 @@
 template(name='nav')
-    .nav_bar.ui.inverted.top.attached.borderless.menu
+    .ui.inverted.blue.top.attached.borderless.menu
         a.toggle_left_sidebar.icon.item 
             i.large.bars.icon
         if is_customer
@@ -22,30 +22,31 @@ template(name='nav')
                 | Services
         if is_officer
             // with currentUser.users_customer.parent_franchisee.parent_office
-            a.item(href="/view/#{my_office._id}")
-                i.big.icon
-                    +iconsmall name='link-company-parent'
-                | &nbsp; #{my_office.ev.MASTER_LICENSEE}
-            a.item(href="/office/#{my_office._id}/incidents")
-                i.big.icon
-                    +iconsmall name='error'
-                | &nbsp; Incidents
-            a.item(href="/office/#{my_office._id}/employees")
-                i.big.icon
-                    +iconsmall name='groups'
-                | &nbsp; Employees
-            a.item(href="/office/#{my_office._id}/franchisees")
-                i.big.icon
-                    +iconsmall name='conference'
-                | &nbsp; Franchisees
-            a.item(href="/office/#{my_office._id}/customers")
-                i.big.icon
-                    +iconsmall name='customer-support'
-                | &nbsp; Customers
-            a.item(href="/office/#{my_office._id}/settings")
-                i.big.icon
-                    +iconsmall name='settings'
-                | &nbsp; Settings
+            if my_office_doc
+                a.item(href="/view/#{my_office_doc._id}")
+                    i.big.icon
+                        +iconsmall name='link-company-parent'
+                    | &nbsp; #{my_office_doc.ev.MASTER_LICENSEE}
+            // a.item(href="/office/#{my_office._id}/incidents")
+            //     i.big.icon
+            //         +iconsmall name='error'
+            //     | &nbsp; Incidents
+            // a.item(href="/office/#{my_office._id}/employees")
+            //     i.big.icon
+            //         +iconsmall name='groups'
+            //     | &nbsp; Employees
+            // a.item(href="/office/#{my_office._id}/franchisees")
+            //     i.big.icon
+            //         +iconsmall name='conference'
+            //     | &nbsp; Franchisees
+            // a.item(href="/office/#{my_office._id}/customers")
+            //     i.big.icon
+            //         +iconsmall name='customer-support'
+            //     | &nbsp; Customers
+            // a.item(href="/office/#{my_office._id}/settings")
+            //     i.big.icon
+            //         +iconsmall name='settings'
+            //     | &nbsp; Settings
         if is_admin
             a.mobile.hidden.item(href='/incidents')
                 i.big.icon
@@ -101,7 +102,7 @@ template(name='nav')
                         i.sign.out.icon
             else
                 a.ui.item(href='/login')
-                    i.icon
+                    i.big.icon
                         +iconsmall name='enter-2'
                     // i.sign.in.alternate.icon
                     | &nbsp; Log In
@@ -109,7 +110,7 @@ template(name='nav')
 
 
 template(name='left_sidebar')
-    .nav_bar.ui.left.vertical.sidebar.inverted.menu
+    .ui.left.vertical.sidebar.inverted.blue.menu
         if currentUser
             a.toggle_left_sidebar.header.item(href="/user/#{currentUser.username}")
                 img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")

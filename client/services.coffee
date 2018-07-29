@@ -67,4 +67,21 @@ Template.service_request_edit.events
             # console.log doc
             Docs.remove doc._id, ->
                 FlowRouter.go "/services"
+    
+    'click #submit_request': ->
+        doc_id = FlowRouter.getParam 'doc_id'
+        request = Docs.findOne doc_id
+        
+        service = Docs.findOne request.service_id
+        Docs.update doc_id,
+            $set:
+                submitted:true
+                submitted_datetime: Date.now()
+                last_updated_datetime: Date.now()
+        Meteor.call 'create_event', doc_id, 'submit_service_request', "submitted the service request for #{service.title}."
+        # Meteor.call 'email_about_service_request', request._id
+        FlowRouter.go "/view/#{request._id}"
 
+Template.service_request_edit.helpers
+    can_submit: ->
+        @request_date and @request_details

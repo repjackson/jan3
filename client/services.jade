@@ -63,9 +63,11 @@ template(name='service_view')
             .three.wide.column
                 .ui.header Price: $#{price}
                 +request_service_button
-        .row
-            .sixteen.wide.column
+        .two.column.row
+            .column
                 +service_child_requests
+            .column
+                +full_doc_history
                 
                 
 template(name='service_child_requests')
@@ -121,6 +123,9 @@ template(name='service_request_view')
                 .ui.secondary.segment
                     .ui.header Date: #{request_date}
                     .ui.header Details: #{request_details}
+        .centered.row
+            .twelve.wide.column
+                +full_doc_history
                     
 template(name='service_request_edit')
     .ui.padded.stackable.centered.grid
@@ -131,7 +136,14 @@ template(name='service_request_edit')
             .ten.wide.column
                 h1.ui.center.aligned.header Service Request for #{service_title}
             .three.wide.center.aligned.column
-                +save_button
+                if submitted
+                    .ui.disabled.button Submitted #{submit_date}
+                    +save_button
+                else
+                    if can_submit
+                        #submit_request.ui.button Submit
+                    else
+                        .ui.disabled.button Can't Submit
         .centered.row
             .ten.wide.column
                 .ui.form

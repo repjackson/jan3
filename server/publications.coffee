@@ -291,15 +291,20 @@ Meteor.publish 'my_franchisee', ->
 Meteor.publish 'my_office', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
-    if user and user.profile and user.profile.customer_jpid
-        customer_doc = Docs.findOne
-            "ev.ID": user.profile.customer_jpid
-            type:'customer'
-        # console.log customer_doc
-        Docs.find
-            "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
-            type:'office'
-    
+    if user and user.profile 
+        if user.profile.customer_jpid
+            customer_doc = Docs.findOne
+                "ev.ID": user.profile.customer_jpid
+                type:'customer'
+            # console.log customer_doc
+            Docs.find
+                "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
+                type:'office'
+        if user.profile.office_jpid
+            Docs.find
+                "ev.ID": user.profile.office_jpid
+                type:'office'
+
         
 Meteor.publish 'my_special_services', ->
     user = Meteor.user()
@@ -389,10 +394,16 @@ publishComposite 'me', ()->
                 find: (user)-> 
                     # users customer account
                     # console.log 'current user?', user.profile
-                    if user.profile and user.profile.customer_jpid
-                        Docs.find
-                            "ev.ID": user.profile.customer_jpid
-                            type:'customer'
+                    if user.profile 
+                        if user.profile.customer_jpid
+                            Docs.find
+                                "ev.ID": user.profile.customer_jpid
+                                type:'customer'
+                        if user.profile.office_jpid
+                            Docs.find
+                                "ev.ID": user.profile.office_jpid
+                                type:'office'
+                            
                 # children: [
                 #     # {
                 #     #     find: (customer)-> 

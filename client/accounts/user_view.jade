@@ -104,16 +104,21 @@ template(name='user_view')
                     .ui.header Role
                         each roles
                             .ui.basic.label #{this}
-                    .ui.header future widgets
-                    .ui.list
-                        .item user comments
-                        .item user assigned to incidents
-                        .item if customer then user customer account
-                        .item if customer then user franchisee account
-                        .item if customer then user officer document
-                        .item if customer then incdients created
-                        .item if officer then user office document
-                        .item if officer then user office document
+                    if is_admin
+                        .ui.header 
+                            i.user.shield.icon
+                            |future widgets
+                        .ui.list
+                            .item user comments
+                            .item user assigned to incidents
+                            .ui.list if customer
+                                .item user customer account
+                                .item user franchisee account
+                                .item user officer document
+                                .item incdients created
+                            .ui.list if officer
+                                .item user office document
+                                .item user office document
                 
         
 template(name='users_docs')

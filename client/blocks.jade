@@ -627,7 +627,6 @@ template(name='customer_card')
             .content
                 a(href="/view/#{_id}")
                     h4.ui.header #{ev.CUST_NAME}
-            .content
                 .ui.list
                     .item ##{ev.ID}
                     .item #{ev.CUST_CONT_PERSON}
@@ -654,7 +653,7 @@ template(name='office_card')
             .content
                 a(href="/view/#{_id}")
                     h4.ui.header #{ev.MASTER_LICENSEE}
-            .content
-                | #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-            .content
-                a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
+                div
+                    | #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                div
+                    a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}

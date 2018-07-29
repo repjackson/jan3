@@ -121,9 +121,18 @@ Template.cart.events
                 
 Template.add_to_cart_button.events
     'click .add_to_cart': ->
-        Meteor.call 'add_to_cart', @_id
+        Meteor.call 'add_to_cart', @_id, (err,res)=>
+            if err
+                Bert.alert "Error adding #{@title} to cart: #{err.reason}", 'danger', 'growl-top-right'
+            else
+                Bert.alert "#{@title} added to cart.", 'success', 'growl-top-right'
+
 
 Template.remove_from_cart_button.events
     'click .remove_cart_item': ->
         if confirm 'Remove cart item?'
-            Meteor.call 'remove_from_cart', @_id
+            Meteor.call 'remove_from_cart', @_id, (err,res)=>
+            if err
+                Bert.alert "Error removing #{@title} from cart: #{err.reason}", 'info', 'growl-top-right'
+            else
+                Bert.alert "#{@title} removed from cart.", 'info', 'growl-top-right'
