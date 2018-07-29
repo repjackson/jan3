@@ -264,6 +264,11 @@ template(name='customer_incidents')
             .three.wide.center.aligned.column
         .row
             .sixteen.wide.column
+                .ui.labeled.input
+                    .ui.label Search Customer Name
+                    input#customer_name_query(type='text')
+        .row
+            .sixteen.wide.column
                 +reactiveTable settings=settings collection=customer_incidents class="ui celled striped sortable table"
         
         

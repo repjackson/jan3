@@ -12,6 +12,13 @@ Cloudinary.config
     api_secret: Meteor.settings.cloudinary_secret
 
 
+Meteor.startup(() =>
+  Docs._ensureIndex({ "$**": "text" });
+);
+
+
+
+
 SyncedCron.config
     log: true
     logger: null

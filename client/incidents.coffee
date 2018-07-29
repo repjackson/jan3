@@ -91,7 +91,17 @@ Template.incidents.helpers
         ]
 
 Template.customer_incidents.onCreated ->
-    @autorun -> Meteor.subscribe 'my_customer_incidents'
+    @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('customer_query')
+
+Template.customer_incidents.events
+    'keyup #customer_name_query': (e,t)->
+        e.preventDefault()
+        query = $('#customer_name_query').val().trim()
+        if e.which is 13 #enter
+            # $('#customer_name_query').val ''
+            Session.set 'customer_query', query
+            console.log query
+
 
 Template.customer_incidents.helpers
     customer_incidents: -> Docs.find type:'incident'

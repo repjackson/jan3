@@ -167,13 +167,14 @@ Meteor.publish 'my_conversations', ->
     
     
     
-Meteor.publish 'my_customer_incidents', ()->    
+Meteor.publish 'my_customer_incidents', (query)->    
     user = Meteor.user()
     if user.profile and user.profile.customer_jpid
         # customer_doc = Docs.findOne "ev.ID":user.profile.customer_jpid
         Docs.find {
             customer_jpid: user.profile.customer_jpid
-            type: "incident"
+            type: 'incident'
+            $text: $search: query
         }
 
 publishComposite 'docs', (selected_tags, type)->
