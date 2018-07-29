@@ -92,22 +92,22 @@ if Meteor.isClient
         #                 Bert.alert "You are now enrolled in #{@title}", 'success'
         #                 # FlowRouter.go "/course/#{_id}"
 
-        # 'click .purchase_item': ->
-        #     Session.set 'purchasing_item', @parent_id
-        #     Session.set 'current_cart_item', @_id
-        #     parent_doc = Docs.findOne @parent_id
-        #     if parent_doc.dollar_price > 0
-        #         Template.instance().checkout.open
-        #             name: 'Tori Webster Inspires, LLC'
-        #             description: parent_doc.title
-        #             amount: parent_doc.dollar_price*100
-        #     else
-        #         Meteor.call 'register_transaction', @parent_id, (err,response)=>
-        #             if err then console.error err
-        #             else
-        #                 Bert.alert "You have purchased #{parent_doc.title}.", 'success'
-        #                 Docs.remove @_id
-        #                 FlowRouter.go "/transactions"
+        'click .purchase_item': ->
+            Session.set 'purchasing_item', @parent_id
+            Session.set 'current_cart_item', @_id
+            parent_doc = Docs.findOne @parent_id
+            if parent_doc.dollar_price > 0
+                Template.instance().checkout.open
+                    name: 'Tori Webster Inspires, LLC'
+                    description: parent_doc.title
+                    amount: parent_doc.dollar_price*100
+            else
+                Meteor.call 'register_transaction', @parent_id, (err,response)=>
+                    if err then console.error err
+                    else
+                        Bert.alert "You have purchased #{parent_doc.title}.", 'success'
+                        Docs.remove @_id
+                        FlowRouter.go "/transactions"
                         
                     
 

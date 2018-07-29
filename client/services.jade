@@ -5,13 +5,13 @@ template(name='services')
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    +icon name='broom'
+                    +iconlarge name='broom'
                     | Services
             .three.wide.center.aligned.column
                 +add_button type='service'
         .row
             .fourteen.wide.column
-                .ui.centered.cards
+                .ui.centered.four.cards
                     each services
                         +service_card
                 
@@ -19,7 +19,7 @@ template(name='service_card')
     .ui.card
         if image_id
             .image
-                img.ui.image.item(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                img.ui.fluid.image.item(src="{{c.url image_id width=200 height=200 crop='scale'}}")
         .content
             .right.floated.meta $#{price}
             a.header(href="/view/#{_id}") #{title}
@@ -55,11 +55,12 @@ template(name='service_view')
                 +edit_button
         .centered.row
             .ten.wide.column
-                if description
-                    .ui.secondary.segment
-                        .large130 #{description}
-                        if is_admin
-                            .ui.header Slug: #{slug}
+                .ui.secondary.segment
+                    .large130 #{description}
+                    if is_admin
+                        .ui.header Slug: #{slug}
+                    img.ui.image.item(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+
             .three.wide.column
                 .ui.header Price: $#{price}
                 +request_service_button

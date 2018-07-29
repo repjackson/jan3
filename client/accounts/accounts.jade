@@ -107,7 +107,7 @@ template(name='register')
                             |Officer
                     .ui.large.form
                         if customer_selected
-                            .required.field
+                            .field
                                 label Customer ID
                                 input#customer_jpid(type='text')
                                 if jpid_lookup_status
@@ -115,13 +115,13 @@ template(name='register')
                             if account_selected
                                 +customer_card customer_jpid=session_customer_jpid                    
                         if officer_selected
-                            .required.field
+                            .field
                                 label Officer ID
                                 input#officer_jpid(type='text')
                             if session_office_jpid
                                 +office_card office_jpid=session_office_jpid  
                         if account_selected
-                            .required.field
+                            .field
                                 label Username
                                 input#username(type='text')
                                 if username_found
@@ -130,7 +130,7 @@ template(name='register')
                                         a.ui.button.login_link(href='/login') 
                                             |Login Here
                                             i.right.arrow.icon
-                            .required.field
+                            .field
                                 label Email
                                 input#email(type='email')
                                 if email_found
@@ -142,10 +142,10 @@ template(name='register')
                                 else
                                     .ui.success.message 
                                         |Email Available
-                            .required.field
+                            .field
                                 label Password
                                 input#password_one(type='password')
-                        // .required.field
+                        // .field
                         //     label Repeat Password
                         //     input.password_two(type='password')
                         //     if passwords_match

@@ -27,15 +27,18 @@ template(name='product_card')
                 p #{description}
         .content
             .ui.center.aligned.buttons
-                .ui.button 
-                    i.large.icon
-                        +iconsmall name='add-shopping-cart'
-                    | Add to Cart
+                +add_to_cart_button
                 a.ui.button(href="/view/#{_id}")
                     i.large.icon
                         +iconsmall name='view-details'
                     |Details
     
+
+template(name='add_to_cart_button')
+    .add_to_cart.ui.button 
+        i.large.icon
+            +iconsmall name='add-shopping-cart'
+        | Add to Cart
 
 template(name='product_edit')
     .ui.padded.stackable.centered.grid
@@ -60,13 +63,13 @@ template(name='product_view')
             .three.wide.center.aligned.column
                 +link_button link='/store' icon='small-business' label='Store'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header View '#{title}' Product
+                h1.ui.center.aligned.grey.header '#{title}' Product
             .three.wide.center.aligned.column
                 +edit_button
         .row
             .eight.wide.column
                 img.ui.image.item(src="{{c.url image_id width=500 height=500 gravity='face' crop='fill'}}")
-                .ui.header Title: #{title}
+                // .ui.header Title: #{title}
                 .ui.header Price: $#{price}
                 .ui.header Description: #{description}
                 
