@@ -4,8 +4,24 @@ FlowRouter.route '/user/:username', action: (params) ->
 
 
 Template.user_view.onCreated ->
-    @autorun -> Meteor.subscribe('user', FlowRouter.getParam('username'))
+    @autorun -> Meteor.subscribe 'user', FlowRouter.getParam('username')
+
+Template.users_docs.onCreated ->
+    @autorun -> Meteor.subscribe 'users_docs', FlowRouter.getParam('username')
+Template.user_events.onCreated ->
+    @autorun -> Meteor.subscribe 'user_events', FlowRouter.getParam('username')
     
+Template.users_docs.helpers
+    user_docs: ->
+        page_user = Meteor.users.findOne username:FlowRouter.getParam('username')
+        Docs.find
+            author_id: page_user._id
+Template.user_events.helpers
+    user_events: ->
+        page_user = Meteor.users.findOne username:FlowRouter.getParam('username')
+        Docs.find
+            type:'event'
+            author_id: page_user._id
 
 Template.user_view.helpers
     user: -> Meteor.users.findOne username:FlowRouter.getParam('username') 
@@ -18,7 +34,6 @@ Template.user_view.helpers
 Template.user_view.events
 
 
-# ev users
 Template.users.events
     'click .sync_ev_users': ->
         Meteor.call 'sync_ev_users',(err,res)->

@@ -29,12 +29,11 @@ template(name='product_card')
             .description
                 p #{description}
         .content
-            .ui.center.aligned.buttons
-                +add_to_cart_button
-                a.ui.button(href="/view/#{_id}")
-                    i.large.icon
-                        +iconsmall name='view-details'
-                    |Details
+            +add_to_cart_button
+            a.ui.button(href="/view/#{_id}")
+                i.large.icon
+                    +iconsmall name='view-details'
+                |Details
     
 
 

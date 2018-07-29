@@ -127,7 +127,9 @@ template(name='my_office_card')
                 a(href="/view/#{_id}")
                     h4.ui.header #{ev.MASTER_LICENSEE}
             .content
-                | #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
+                div #{ev.ADDR_CITY} #{ev.ADDR_STATE} 
+                div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
             .content
                 a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
         
