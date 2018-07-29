@@ -479,3 +479,52 @@ Meteor.methods
             return found
         else
             throw new Meteor.Error "Customer not found with JPID #{customer_jpid}."
+            
+            
+            
+    add_to_cart: (doc_id)->
+        product = Docs.findOne doc_id
+        Docs.insert
+            type: 'cart_item'
+            product_id: doc_id
+            product_title:product.title
+            product_price:product.price
+            amount: 1
+    
+    remove_from_cart: (doc_id)->
+        Docs.remove doc_id
+    
+    register_transaction: (product_id)->
+        product = Docs.findOne product_id
+        if product.point_price
+            console.log 'product point price', product.point_price
+            console.log 'purchaser amount before', Meteor.user().points
+            Meteor.users.update Meteor.userId(),
+                $inc: points: -product.point_price
+            console.log 'purchaser amount after', Meteor.user().points
+            
+            console.log 'seller amount before', Meteor.users.findOne(product.author_id).points
+            Meteor.users.update product.author_id,
+                $inc: points: product.point_price
+            console.log 'seller amount after', Meteor.users.findOne(product.author_id).points
+        Docs.insert
+            type: 'transaction'
+            parent_id: product_id
+            sale_dollar_price: product.dollar_price
+            sale_point_price: product.point_price
+            author_id: Meteor.userId()
+            recipient_id: product.author_id
+    
+    
+    publishComposite 'cart', ->
+        {
+            find: ->
+                Docs.find
+                    type: 'cart_item'
+                    author_id: @userId            
+            children: [
+                { find: (cart_item) ->
+                    Docs.find cart_item.parent_id
+                    }
+                ]    
+        }            

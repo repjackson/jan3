@@ -26,16 +26,21 @@ template(name='transactions')
                 table.ui.table
                     thead
                         tr
-                            th Title
-                            th Type
-                            th Price ($)
-                            th Price (points)
+                            th Service Title
+                            th Service Date
+                            th Requested
+                            th Details
                             // th Amount
                             th Actions
                     tbody
-                        each transaction_docs
+                        each service_request_docs
                             tr
-                                td hi
+                                td #{service_title}
+                                td #{service_date}
+                                td #{when}
+                                td #{request_details}
+                                td 
+                                    +view_button
                                 
                                 
                                 

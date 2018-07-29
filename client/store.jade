@@ -7,12 +7,15 @@ template(name='store')
                     +iconlarge name='small-business'
                     | Store
             .three.wide.center.aligned.column
-                +add_button type='product'
+                if is_admin
+                    +add_button type='product' label='Add Product'
         .centered.row
             .twelve.wide.column
                 .ui.centered.cards
                     each products
                         +product_card
+            .four.wide.column
+                +cart_widget
                         
 template(name='product_card')
     .ui.card
@@ -34,11 +37,6 @@ template(name='product_card')
                     |Details
     
 
-template(name='add_to_cart_button')
-    .add_to_cart.ui.button 
-        i.large.icon
-            +iconsmall name='add-shopping-cart'
-        | Add to Cart
 
 template(name='product_edit')
     .ui.padded.stackable.centered.grid

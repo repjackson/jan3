@@ -2,106 +2,66 @@ template(name='cart')
     .ui.container.padded.grid
         .row
             .sixteen.wide.column
-                +cart_checkout
+                h2.ui.header 
+                    +icon name='shopping-cart'
+                    |Cart
+        .row
+            .sixteen.wide.column
+                table.ui.striped.fluid.table
+                    thead
+                        tr
+                            th Title
+                            th Price
+                            th Amount
+                            th Actions
+                    tbody
+                        each cart_items
+                            tr
+                                // td 
+                                //     if parent.image_id
+                                //         img.ui.avatar.image(src="{{c.url parent.image_id}}")
+                                td 
+                                    a.ui.header(href="/view/#{product_id}") 
+                                        |#{product_title}
+                                td $#{product_price}
+                                td
+                                    #increase_amount.ui.basic.icon.disabled.button
+                                        i.plus.icon
+                                    |#{amount}
+                                    #decrease_amount.ui.basic.icon.disabled.button
+                                        i.minus.icon
+                                td 
+                                    .purchase_item.ui.disabled.button 
+                                        | Purchase
+                                    +remove_from_cart_button
 
+template(name='add_to_cart_button')
+    .add_to_cart.ui.button 
+        i.large.icon
+            +iconsmall name='add-shopping-cart'
+        | Add to Cart
 
-template(name='cart_checkout')
-    // .ui.ordered.steps
-    //     .active.step
-    //         .content
-    //             .title Checkout
-    //     .step
-    //         .content
-    //             .title Profile Information
-    h2.ui.header 
+template(name='cart_widget')
+    .ui.header
         +icon name='shopping-cart'
-        |Cart
-    // with cart_item
-    //     .ui.segment
-    //         .ui.centered.grid
-    //             .three.wide.column
-    //                 img.ui.fluid.image(src="{{c.url image_id }}")
-    //             .six.wide.column
-    //                 h2.ui.header #{title}
-    //                 // .meta
-    //                 //     if price
-    //                 //         span $#{price}
-    //                 //     else
-    //                 //         .ui.basic.green.label Free
-    //                 .description #{subtitle}
-    //             .seven.wide.column
-    //                 a.buy_course.ui.teal.big.button
-    //                     |Buy #{title} for $#{price}
-    // .ui.hidden.divider
-    if total_items
-        table.ui.table
-            thead
-                tr
-                    th Title
-                    th Type
-                    th Price ($)
-                    th Price (points)
-                    // th Amount
-                    th Actions
-            tbody
-                each cart_items
-                    tr
-                        td 
-                            if parent.image_id
-                                img.ui.avatar.image(src="{{c.url parent.image_id}}")
-                            if parent.image_url
-                                img.ui.avatar.image(src=parent.image_url)
-                            a.ui.header(href="/#{parent.type}/#{parent._id}/view") 
-                                |#{parent.title}
-                            div
-                                each parent.tags
-                                    .ui.small.basic.label #{this}
-                        td
-                            .ui.basic.label #{parent.type}
-                        td 
-                            if parent.dollar_price
-                                |$#{parent.dollar_price}
-                            else
-                                |$0
-                        td 
-                            if parent.point_price
-                                |#{parent.point_price} points
-                            else
-                                |0 points
-                        // td
-                        //     +number
-                        //     #increase_amount.ui.basic.icon.button
-                        //         i.plus.icon
-                        //     |#{number}
-                        //     #decrease_amount.ui.basic.icon.button
-                        //         i.minus.icon
-                        td 
-                            if can_purchase
-                                .purchase_item.ui.teal.button 
-                                    i.check.icon
-                                    | Purchase
-                            else
-                                .ui.teal.disabled.button 
-                                    | Not Enough Points
-                            +delete_button
-            // tfoot
-            //     tr
-            //         th 
-            //         th 
-            //         th
-            //         th Subtotal (#{total_items} items): $#{subtotal}
-        .ui.message
-            .header My Points
-            p #{currentUser.points}
-    else
-        .ui.message
-            .header 
-                |No cart items
-            // p 
-            //     |Checkout our 
-            //     a(href='/services') Services
-            //     |section to add some.
-
+        | Shopping Cart
+    .ui.cards
+        each cart_docs
+            +cart_item
+            
+template(name='cart_item')
+    .ui.card
+        .content
+            .header #{product_title}
+        .content    
+            div Amount: #{amount}
+            div Price: #{product_price}
+            +remove_from_cart_button
+            
+template(name='remove_from_cart_button')            
+    .remove_cart_item.ui.icon.button
+        i.remove.icon
+            
 
 template(name='cart_profile')
     .ui.text.container

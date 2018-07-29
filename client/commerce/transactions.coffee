@@ -7,6 +7,9 @@ FlowRouter.route '/transactions',
 if Meteor.isClient
     Template.transactions.onCreated ->
         @autorun -> Meteor.subscribe 'type', 'transaction'
+        @autorun -> Meteor.subscribe 'type', 'service_request'
+    Template.transactions.helpers
+        service_request_docs: -> Docs.find type:'service_request'
 
             
     Template.transactions.events

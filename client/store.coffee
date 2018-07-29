@@ -22,15 +22,16 @@ Template.product_card.events
         if confirm 'Delete comment?'
             Docs.remove @_id
 
-Template.add_to_cart_button.events
-    'click .add_to_cart': ->
-        console.log current_customer_jpid
-        new_request_id = 
-            Docs.insert 
-                type:'cart_item'
-                service_id:@_id
-                service_title:@title
-                service_slug:@slug
-                customer_jpid:current_customer_jpid
-        FlowRouter.go "/edit/#{new_request_id}"
-        Meteor.call 'calculate_request_count', @_id
+# Template.add_to_cart_button.events
+#     'click .add_to_cart': ->
+#         current_customer_jpid = Meteor.user().profile.customer_jpid
+#         console.log current_customer_jpid
+#         new_request_id = 
+#             Docs.insert 
+#                 type:'cart_item'
+#                 service_id:@_id
+#                 service_title:@title
+#                 service_slug:@slug
+#                 customer_jpid:current_customer_jpid
+#         FlowRouter.go "/edit/#{new_request_id}"
+#         Meteor.call 'calculate_request_count', @_id
