@@ -13,8 +13,8 @@ Cloudinary.config
 
 
 Meteor.startup(() =>
-  Docs._ensureIndex({ "$**": "text" });
-);
+  Docs._ensureIndex({ "$**": "text" })
+)
 
 
 

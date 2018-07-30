@@ -264,12 +264,45 @@ template(name='customer_incidents')
             .three.wide.center.aligned.column
         .row
             .sixteen.wide.column
-                .ui.labeled.input
-                    .ui.label Search Customer Name
-                    input#customer_name_query(type='text')
+                .ui.icon.input
+                    i.search.icon
+                    input#customer_name_query(type='text' placeholder='Search')
+                table.ui.striped.fluid.table
+                    thead
+                        tr
+                            th Number
+                            th Type
+                            th Logged
+                            th Details
+                            th Level
+                            th Status
+                            th Submitted
+                            th Assigned To
+                            th Last Event
+                            th
+                    tbody
+                        each customer_incidents
+                            tr
+                                td #{incident_number}
+                                td
+                                    +incident_type_label
+                                td #{when}
+                                td #{incident_details}
+                                td #{level}
+                                td 
+                                    +status_template
+                                td
+                                    +submitted_template
+                                td
+                                    +associated_users
+                                td
+                                    +small_doc_history
+                                td
+                                    +view_button
+
         .row
             .sixteen.wide.column
-                +reactiveTable settings=settings collection=customer_incidents class="ui celled striped sortable table"
+                // +reactiveTable settings=settings collection=customer_incidents class="ui celled striped sortable table"
         
         
 template(name='add_incident_button')

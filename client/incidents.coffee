@@ -91,39 +91,39 @@ Template.incidents.helpers
         ]
 
 Template.customer_incidents.onCreated ->
+    Session.setDefault('customer_query',null)
     @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('customer_query')
 
 Template.customer_incidents.events
     'keyup #customer_name_query': (e,t)->
         e.preventDefault()
         query = $('#customer_name_query').val().trim()
-        if e.which is 13 #enter
-            # $('#customer_name_query').val ''
-            Session.set 'customer_query', query
-            console.log query
+        # if e.which is 13 #enter
+        # $('#customer_name_query').val ''
+        Session.set 'customer_query', query
 
 
 Template.customer_incidents.helpers
     customer_incidents: -> Docs.find type:'incident'
-    settings: ->
-        rowsPerPage: 10
-        showFilter: true
-        showRowCount: true
-        # showColumnToggles: true
-        fields: [
-            # { key: 'customer_name', label: 'Customer' }
-            { key: 'incident_number', label: 'Number' }
-            # { key: 'incident_office_name', label: 'Office' }
-            { key: '', label: 'Type', tmpl:Template.incident_type_label }
-            { key: 'when', label: 'Logged' }
-            { key: 'incident_details', label: 'Details' }
-            { key: 'level', label: 'Level' }
-            { key: 'status', label: 'Status', tmpl:Template.status_template}
-            { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
-            # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
-            # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
-            { key: '', label: 'View', tmpl:Template.view_button }
-        ]
+    # settings: ->
+    #     rowsPerPage: 10
+    #     showFilter: true
+    #     showRowCount: true
+    #     # showColumnToggles: true
+    #     fields: [
+    #         # { key: 'customer_name', label: 'Customer' }
+    #         { key: 'incident_number', label: 'Number' }
+    #         # { key: 'incident_office_name', label: 'Office' }
+    #         { key: '', label: 'Type', tmpl:Template.incident_type_label }
+    #         { key: 'when', label: 'Logged' }
+    #         { key: 'incident_details', label: 'Details' }
+    #         { key: 'level', label: 'Level' }
+    #         { key: 'status', label: 'Status', tmpl:Template.status_template}
+    #         { key: 'status', label: 'Submitted', tmpl:Template.submitted_template}
+    #         # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
+    #         # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
+    #         { key: '', label: 'View', tmpl:Template.view_button }
+    #     ]
 
 Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'type','incident_type'

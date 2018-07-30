@@ -501,7 +501,16 @@ template(name='small_doc_history')
     // .ui.header History
     .ui.feed
         each doc_history_events
-            +doc_history_event
+            +small_history_event
+                
+template(name='small_history_event')
+    .event
+        .content
+            .extra.text
+                |#{action} #{text}
+            .summary
+                .date #{when}
+                
                 
 template(name='doc_history_event')
     .event
