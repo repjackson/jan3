@@ -523,9 +523,6 @@ template(name='doc_history_event')
                 .date #{when}
 
 
-
-
-
 template(name='view_telephone_field')
     div
         a(href="tel:#{TELEPHONE}")
@@ -539,6 +536,12 @@ template(name='view_telephone_field')
 //         | Call #{phone_number}
             
             
+            
+template(name='query_input')            
+    .ui.icon.input
+        i.search.icon
+        input#query(type='text' placeholder='Search')
+
 template(name='user_result')
     .ui.item
         .image

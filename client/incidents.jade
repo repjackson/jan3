@@ -12,8 +12,43 @@ template(name='incidents')
                     +call_method name='update_escalation_statuses' label='Run Escalation Check'
         .row
             .sixteen.wide.column
-                // +reactiveTableFilter id='myFilter' label='Filter'
-                +reactiveTable settings=settings class='ui celled striped sortable table'
+                +query_input
+                table.ui.striped.fluid.table
+                    thead
+                        tr
+                            th Number
+                            th Customer
+                            th Office
+                            th Type
+                            th Logged
+                            th Details
+                            th Level
+                            th Status
+                            th Submitted
+                            th Assigned To
+                            th Last Event
+                            th
+                    tbody
+                        each all_incidents
+                            tr
+                                td #{incident_number}
+                                td #{customer_name}
+                                td #{incident_office_name}
+                                td
+                                    +incident_type_label
+                                td #{when}
+                                td #{incident_details}
+                                td #{level}
+                                td 
+                                    +status_template
+                                td
+                                    +submitted_template
+                                td
+                                    +associated_users
+                                td
+                                    +small_doc_history
+                                td
+                                    +view_button
 
 
                 
@@ -264,9 +299,7 @@ template(name='customer_incidents')
             .three.wide.center.aligned.column
         .row
             .sixteen.wide.column
-                .ui.icon.input
-                    i.search.icon
-                    input#customer_name_query(type='text' placeholder='Search')
+                +query_input
                 table.ui.striped.fluid.table
                     thead
                         tr

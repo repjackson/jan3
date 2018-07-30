@@ -42,18 +42,18 @@ Template.registerHelper 'my_office', () ->
                 type:'office'
             console.log users_office
             users_office
-        if user.profile.customer_jpid
-            customer_doc = Docs.findOne
-                "ev.ID": user.profile.customer_jpid
-                type:'customer'
-            console.log customer_doc
-            if customer_doc
-                users_office = Docs.findOne
-                    "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
-                    type:'office'
-                console.log users_office
-                users_office
-            else null
+        # if user.profile.customer_jpid
+        #     customer_doc = Docs.findOne
+        #         "ev.ID": user.profile.customer_jpid
+        #         type:'customer'
+        #     console.log customer_doc
+        #     if customer_doc
+        #         users_office = Docs.findOne
+        #             "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
+        #             type:'office'
+        #         console.log users_office
+        #         users_office
+        #     else null
     else null
 
 Template.registerHelper 'from_now', (date) -> moment(date).fromNow()

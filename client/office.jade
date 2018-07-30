@@ -58,11 +58,8 @@ template(name='office_nav')
             | &nbsp; Settings
 
 
-
 template(name='office_view')
     +office_header
-
-
 
 template(name='office_customers')
     +office_header
@@ -71,6 +68,7 @@ template(name='office_customers')
     //     |Office Customers
     //     i#refresh_ny_customers.refresh.icon
     // +reactiveTable settings=settings class="ui celled striped sortable table"
+    +query_input
     .ui.celled.striped.fluid.table
         thead
             th Customer Name
@@ -130,14 +128,32 @@ template(name='office_incidents')
 template(name='office_employees')
     +office_header
     // h2.ui.center.aligned.header Office Employees
-    +reactiveTable settings=settings collection=collection class="ui celled striped sortable table"
+    
+    .ui.celled.striped.fluid.table
+        thead
+            th Username
+            th Name
+            th Title
+            th Phone
+            th Email
+            th Public
+            th 
+        tbody
+            each office_employees
+                tr
+                    td #{username}
+                    td #{profile.first_name} #{profile.last_name}
+                    td #{profile.title}
+                    td #{ev.WORK_TELEPHONE}
+                    td #{email}
+                    td 
+                        +toggle_user_published
+                    td 
+                        +edit_user_button
+                        +view_user_button
 
 template(name='office_franchisees')
     +office_header
-    // h2.ui.center.aligned.header 
-    //     +icon name='conference'
-    //     |Office Franchisees
-    // +reactiveTable settings=settings class="ui celled striped sortable table"
     .ui.celled.striped.fluid.table
         thead
             th JPID

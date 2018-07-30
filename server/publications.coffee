@@ -129,39 +129,44 @@ Meteor.publish 'has_key_value', (key, value)->
         
 # office subsections
 
-Meteor.publish 'office_customers', (office_doc_id)->    
+Meteor.publish 'office_customers', (office_doc_id, query)->    
     office_doc = Docs.findOne office_doc_id
     Docs.find {
         "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
         type: "customer"
+        $text: $search: query
     }
 # ReactiveTable.publish 'office_customers', Docs, {"ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE, type:"customer"}, {disablePageCountReactivity:true}
 
-Meteor.publish 'office_incidents', (office_doc_id)->    
+Meteor.publish 'office_incidents', (office_doc_id, query)->    
     office_doc = Docs.findOne office_doc_id
     Docs.find {
         incident_office_name: office_doc.ev.MASTER_LICENSEE
         type: "incident"
+        $text: $search: query
     }
     
-Meteor.publish 'office_franchisees', (office_doc_id)->    
+Meteor.publish 'office_franchisees', (office_doc_id, query)->    
     office_doc = Docs.findOne office_doc_id
     Docs.find {
         type: "franchisee"
+        $text: $search: query
         "ev.ACCOUNT_STATUS": 'ACTIVE'
         "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
     }
     
-Meteor.publish 'office_employees', (office_doc_id)->    
+Meteor.publish 'office_employees', (office_doc_id, query)->    
     office_doc = Docs.findOne office_doc_id
     Meteor.users.find {
         "profile.office_name": office_doc.ev.MASTER_LICENSEE
+        $text: $search: query
     }
     
     
-Meteor.publish 'my_conversations', ->
+Meteor.publish 'my_conversations',(query) ->
     Docs.find
         type: 'conversation'
+        $text: $search: query
         participant_ids: $in: [Meteor.userId()]
     
     
@@ -345,9 +350,6 @@ Meteor.publish 'my_office_contacts', ()->
                 }
         
         
-        
-
-
 publishComposite 'doc', (id)->
     {
         find: -> Docs.find id

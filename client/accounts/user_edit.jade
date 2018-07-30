@@ -46,6 +46,7 @@ template(name='user_edit')
                         if user_is_customer
                             +lookup_customer
                             +edit_profile_text_field key='customer_jpid' label='Connected Customer JP ID'
+                            +edit_profile_text_field key='office_jpid' label='Connected Office JP ID'
                             if profile.franchisee_jpid
                                 h5 Franchisee: #{profile.franchisee_jpid}
                             if profile.office_jpid
@@ -63,5 +64,5 @@ template(name='user_edit')
                         +customer_card customer_jpid=profile.customer_jpid                    
                         
                         
-            template(name='lookup_customer')
-                .ui.header Lookup Customer
+template(name='lookup_customer')
+    .ui.header Lookup Customer
