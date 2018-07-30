@@ -57,14 +57,6 @@ Template.office_header.onCreated ->
 
 Template.office_customers.onCreated ->
     @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id'), Session.get('query')
-    # if @subscriptionsReady()
-    #     # Template.filter = new ReactiveTable.Filter('office', ["ev.MASTER_LICENSEE"])
-    #     Template.filter = new ReactiveTable.Filter('office_customers', ["ev.MASTER_LICENSEE"])
-    #     page_office = Docs.findOne FlowRouter.getParam('doc_id')
-    #     console.log FlowRouter.getParam('doc_id')
-    #     console.log Docs.findOne FlowRouter.getParam('doc_id')
-    #     if page_office
-    #         ReactiveTable.Filter('office_customers').set(page_office.ev.MASTER_LICENSEE)
 
 # Template.office_customers.events
     # 'click #refresh_ny_customers': ->
@@ -78,27 +70,6 @@ Template.office_customers.helpers
                 type: "customer"
                 "ev.ACCOUNT_STATUS": 'ACTIVE'
                 "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
-    # settings: ->
-    #     collection:'customers'
-    #     rowsPerPage: 10
-    #     showFilter: true
-    #     showRowCount: true
-    #     showNavigation: 'auto'
-    #     # showColumnToggles: true
-    #     filters: ['office_customers'],
-    #     fields: [
-    #         { key: 'ev.CUST_NAME', label: 'Customer Name' }
-    #         { key: 'ev.ID', label: 'JPID' }
-    #         { key: 'ev.FRANCHISEE', label: 'Franchisee' }
-    #         { key: 'ev.MASTER_LICENSEE', label: 'Master Licensee' }
-    #         { key: 'ev.CUST_CONT_PERSON', label: 'Contact Person' }
-    #         { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
-    #         { key: 'ev.TELEPHONE', label: 'Telephone' }
-    #         { key: 'ev.ADDR_STREET', label: 'Address' }
-    #         # { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
-    #         { key: 'ev.TIMESTAMP', label: 'Timestamp' }
-    #         { key: '', label: 'View', tmpl:Template.view_button }
-    #     ]
 
 
 Template.office_incidents.onCreated ->

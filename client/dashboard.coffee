@@ -108,6 +108,19 @@ Template.dashboard_services_widget.helpers
                 slug: $in: users_office.services
                 
                 
+Template.small_service_list.onCreated ->
+    @autorun -> Meteor.subscribe 'type','service'
+Template.small_service_list.helpers
+    services_offered: -> 
+        # console.log Meteor.user().users_office()
+        users_office = Meteor.user().users_office()
+        if users_office
+            # console.log users_office.services
+            Docs.find
+                type:'service'
+                slug: $in: users_office.services
+                
+                
                 
 Template.dashboard_consumables_widget.onCreated ->
     @autorun -> Meteor.subscribe 'type','product'

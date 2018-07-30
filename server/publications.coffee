@@ -131,42 +131,66 @@ Meteor.publish 'has_key_value', (key, value)->
 
 Meteor.publish 'office_customers', (office_doc_id, query)->    
     office_doc = Docs.findOne office_doc_id
-    Docs.find {
-        "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
-        type: "customer"
-        $text: $search: query
-    }
-# ReactiveTable.publish 'office_customers', Docs, {"ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE, type:"customer"}, {disablePageCountReactivity:true}
+    if query
+        Docs.find {
+            "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
+            type: "customer"
+            $text: $search: query
+        }
+    else
+        Docs.find {
+            "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
+            type: "customer"
+        }
 
-Meteor.publish 'office_incidents', (office_doc_id, query)->    
+
+
+Meteor.publish 'office_incidents', (office_doc_id, query)->
     office_doc = Docs.findOne office_doc_id
-    Docs.find {
-        incident_office_name: office_doc.ev.MASTER_LICENSEE
-        type: "incident"
-        $text: $search: query
-    }
+    if query 
+        Docs.find {
+            incident_office_name: office_doc.ev.MASTER_LICENSEE
+            type: "incident"
+            $text: $search: query
+        }
+    else
+        Docs.find {
+            incident_office_name: office_doc.ev.MASTER_LICENSEE
+            type: "incident"
+        }
     
-Meteor.publish 'office_franchisees', (office_doc_id, query)->    
+Meteor.publish 'office_franchisees', (office_doc_id, query)->
     office_doc = Docs.findOne office_doc_id
-    Docs.find {
-        type: "franchisee"
-        $text: $search: query
-        "ev.ACCOUNT_STATUS": 'ACTIVE'
-        "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
-    }
+    if query 
+        Docs.find {
+            type: "franchisee"
+            $text: $search: query
+            "ev.ACCOUNT_STATUS": 'ACTIVE'
+            "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
+        }
+    else
+        Docs.find {
+            type: "franchisee"
+            "ev.ACCOUNT_STATUS": 'ACTIVE'
+            "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
+        }
     
-Meteor.publish 'office_employees', (office_doc_id, query)->    
+Meteor.publish 'office_employees', (office_doc_id, query)->
     office_doc = Docs.findOne office_doc_id
-    Meteor.users.find {
-        "profile.office_name": office_doc.ev.MASTER_LICENSEE
-        $text: $search: query
-    }
+    if query 
+        Meteor.users.find {
+            "profile.office_name": office_doc.ev.MASTER_LICENSEE
+            $text: $search: query
+        }
+    else
+        Meteor.users.find {
+            "profile.office_name": office_doc.ev.MASTER_LICENSEE
+        }
     
     
-Meteor.publish 'my_conversations',(query) ->
+Meteor.publish 'my_conversations',() ->
     Docs.find
         type: 'conversation'
-        $text: $search: query
         participant_ids: $in: [Meteor.userId()]
     
     

@@ -19,7 +19,7 @@ template(name='service_card')
     .ui.card
         if image_id
             a.image(href="/view/#{_id}")
-                img.ui.fluid.image.item(src="{{c.url image_id width=200 height=150 crop='scale'}}")
+                img(src="{{c.url image_id height=400 crop='scale'}}")
         .content
             .right.floated.meta $#{price}
             a.header(href="/view/#{_id}") #{title}
@@ -41,7 +41,7 @@ template(name='request_service_button')
     .request_service.ui.button 
         i.large.icon
             +iconsmall name='service-bell'
-        | Request
+        | Request 
                     
 template(name='service_view')
     .ui.padded.stackable.grid

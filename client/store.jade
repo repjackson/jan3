@@ -21,7 +21,7 @@ template(name='product_card')
     .ui.card
         if image_id
             .image
-                img.ui.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                img.ui.medium.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
         .content
             .right.floated.meta $#{price}
             a.header(href="/view/#{_id}") #{title}

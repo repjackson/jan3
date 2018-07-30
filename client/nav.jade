@@ -22,11 +22,11 @@ template(name='nav')
                 | Services
         if is_officer
             // with currentUser.users_customer.parent_franchisee.parent_office
-            if my_office_doc
-                a.item(href="/view/#{my_office_doc._id}")
+            if my_office
+                a.item(href="/view/#{my_office._id}")
                     i.big.icon
                         +iconsmall name='link-company-parent'
-                    | &nbsp; #{my_office_doc.ev.MASTER_LICENSEE}
+                    | &nbsp; #{my_office.ev.MASTER_LICENSEE}
             // a.item(href="/office/#{my_office._id}/incidents")
             //     i.big.icon
             //         +iconsmall name='error'

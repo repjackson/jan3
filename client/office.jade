@@ -27,8 +27,9 @@ template(name='office_header')
                             a(href=office_map_address target='_blank')
                                 i.external.icon
             .centered.row
-                unless is_customer
-                    +office_nav
+                .sixteen.wide.column
+                    unless is_customer
+                        +office_nav
 
 template(name='office_nav')
     .ui.five.item.stackable.borderless.pointing.menu
@@ -63,115 +64,126 @@ template(name='office_view')
 
 template(name='office_customers')
     +office_header
-    // h2.ui.center.aligned.header 
-    //     +icon name='customer-support'
-    //     |Office Customers
-    //     i#refresh_ny_customers.refresh.icon
-    // +reactiveTable settings=settings class="ui celled striped sortable table"
     +query_input
-    .ui.celled.striped.fluid.table
-        thead
-            th Customer Name
-            th JPID
-            th Franchisee
-            th Contact Person
-            th Contact Email
-            th Telephone
-            th Address
-            th Timestamp
-            th 
-        tbody
-            each office_customers
-                tr
-                    td #{ev.CUST_NAME}
-                    td #{ev.ID}
-                    td #{ev.FRANCHISEE}
-                    td #{ev.CUST_CONT_PERSON}
-                    td #{ev.CUST_CONTACT_EMAIL}
-                    td #{ev.TELEPHONE}
-                    td #{ev.ADDR_STREET}
-                    td #{ev.TIMESTAMP}
-                    td 
-                        +view_button
+    .ui.padded.grid
+        .centered.row
+            .sixteen.wide.column
+                table.ui.celled.striped.fluid.table
+                    thead
+                        th Customer Name
+                        th JPID
+                        th Franchisee
+                        th Contact Person
+                        th Contact Email
+                        th Telephone
+                        th Address
+                        th Timestamp
+                        th 
+                    tbody
+                        each office_customers
+                            tr
+                                td #{ev.CUST_NAME}
+                                td #{ev.ID}
+                                td #{ev.FRANCHISEE}
+                                td #{ev.CUST_CONT_PERSON}
+                                td #{ev.CUST_CONTACT_EMAIL}
+                                td #{ev.TELEPHONE}
+                                td #{ev.ADDR_STREET}
+                                td #{ev.TIMESTAMP}
+                                td 
+                                    +view_button
+
 
 template(name='office_incidents')
     +office_header
-    // h2.ui.center.aligned.header Office Incidents
-    .ui.celled.striped.fluid.table
-        thead
-            th Number
-            th Office
-            th Customer
-            th Logged
-            th Type
-            th Details
-            th Level
-            th Submitted
-            th 
-        tbody
-            each office_incidents
-                tr
-                    td #{incident_number}
-                    td #{incident_office_name}
-                    td #{customer_name}
-                    td #{timestamp}
-                    td 
-                        +incident_type_label
-                    td #{incident_details}
-                    td #{level}
-                    td
-                        +submitted_template
-                    td 
-                        +view_button
+    +query_input
+    .ui.padded.grid
+        .centered.row
+            .sixteen.wide.column
+                table.ui.celled.striped.fluid.table
+                    thead
+                        th Number
+                        th Office
+                        th Customer
+                        th Logged
+                        th Type
+                        th Details
+                        th Level
+                        th Submitted
+                        th 
+                    tbody
+                        each office_incidents
+                            tr
+                                td #{incident_number}
+                                td #{incident_office_name}
+                                td #{customer_name}
+                                td #{timestamp}
+                                td 
+                                    +incident_type_label
+                                td #{incident_details}
+                                td #{level}
+                                td
+                                    +submitted_template
+                                td 
+                                    +view_button
+    
 
 
 template(name='office_employees')
     +office_header
-    // h2.ui.center.aligned.header Office Employees
-    
-    .ui.celled.striped.fluid.table
-        thead
-            th Username
-            th Name
-            th Title
-            th Phone
-            th Email
-            th Public
-            th 
-        tbody
-            each office_employees
-                tr
-                    td #{username}
-                    td #{profile.first_name} #{profile.last_name}
-                    td #{profile.title}
-                    td #{ev.WORK_TELEPHONE}
-                    td #{email}
-                    td 
-                        +toggle_user_published
-                    td 
-                        +edit_user_button
-                        +view_user_button
+    +query_input
+    .ui.padded.grid
+        .centered.row
+            .sixteen.wide.column
+                table.ui.celled.striped.fluid.table
+                    thead
+                        th Username
+                        th Name
+                        th Title
+                        th Phone
+                        th Email
+                        th Public
+                        th 
+                    tbody
+                        each office_employees
+                            tr
+                                td #{username}
+                                td #{profile.first_name} #{profile.last_name}
+                                td #{profile.title}
+                                td #{ev.WORK_TELEPHONE}
+                                td #{email}
+                                td 
+                                    +toggle_user_published
+                                td 
+                                    +edit_user_button
+                                    +view_user_button
+
 
 template(name='office_franchisees')
     +office_header
-    .ui.celled.striped.fluid.table
-        thead
-            th JPID
-            th Name
-            th Email
-            th Short Name
-            th Phone
-            th 
-        tbody
-            each office_franchisees
-                tr
-                    td #{ev.ID}
-                    td #{ev.FRANCHISEE}
-                    td #{ev.FRANCH_EMAIL}
-                    td #{ev.FRANCH_NAME}
-                    td #{ev.TELE_CELL}
-                    td 
-                        +view_button
+    +query_input
+    .ui.padded.grid
+        .centered.row
+            .sixteen.wide.column
+                table.ui.celled.striped.fluid.table
+                    thead
+                        th JPID
+                        th Name
+                        th Email
+                        th Short Name
+                        th Phone
+                        th 
+                    tbody
+                        each office_franchisees
+                            tr
+                                td #{ev.ID}
+                                td #{ev.FRANCHISEE}
+                                td #{ev.FRANCH_EMAIL}
+                                td #{ev.FRANCH_NAME}
+                                td #{ev.TELE_CELL}
+                                td 
+                                    +view_button
+    
                     
                     
 

@@ -27,11 +27,8 @@ template(name='dashboard')
                                 .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Promotions
                                 p #{currentUser.users_customer.parent_franchisee.parent_office.customer_promotions}
                     .column
-                        .ui.info.icon.floating.message
-                            i.paint.brush.icon
-                            .content
-                                .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Special Services
-                                p #{currentUser.users_customer.parent_franchisee.parent_office.customer_special_services}
+                        +small_service_list
+
             .row
                 with currentUser.users_customer.parent_franchisee
                     .sixteen.wide.column
@@ -53,14 +50,14 @@ template(name='dashboard')
                                                 +icon name='send'
             .row
                 .sixteen.wide.column
-                    +dashboard_services_widget
-            .row
-                .sixteen.wide.column
-                    +dashboard_consumables_widget
-            .row
-                .sixteen.wide.column
                     .ui.secondary.segment
                         +customer_incidents_widget
+            .row
+                .sixteen.wide.column
+                    +dashboard_services_widget
+            // .row
+            //     .sixteen.wide.column
+            //         +dashboard_consumables_widget
             .row
                 .sixteen.wide.column
                     .ui.secondary.segment
@@ -244,3 +241,12 @@ template(name='dashboard_office_contacts_list')
                             +icon name='send'
                     // td 
                     //     +view_user_button
+
+template(name='small_service_list')
+    .ui.secondary.segment
+        .ui.header 
+            +iconsmall name='broom'
+            |Services Offered
+        .ui.list
+            each services_offered
+                a.item(href="/view/#{_id}") #{title}
