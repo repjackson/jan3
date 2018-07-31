@@ -123,11 +123,11 @@ Template.register.events
         }
             
         
-        Accounts.createUser(options, (err,res)->
+        Accounts.createUser(options, (err,res)=>
             if err
-                Bert.alert "Error Registering in #{username}: #{err.reason}", 'info', 'growl-top-right'
+                Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
             else
-                Bert.alert "Registered #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                Bert.alert "Registered new #{current_role}: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
                 FlowRouter.go '/'                
         )
     

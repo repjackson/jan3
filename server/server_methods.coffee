@@ -242,12 +242,20 @@ Meteor.methods
         
         
     create_event: (parent_id, event_type, action)->
-        console.log "creating event with parent_id #{parent_id} of type: #{event_type} and action #{action}"
-        Docs.insert
-            type:'event'
-            parent_id: parent_id
-            event_type: event_type
-            action:action
+        if parent_id
+            console.log "creating event with parent_id #{parent_id} of type: #{event_type} and action #{action}"
+            Docs.insert
+                type:'event'
+                parent_id: parent_id
+                event_type: event_type
+                action:action
+        else
+            console.log "creating event with type: #{event_type} and action #{action}"
+            Docs.insert
+                type:'event'
+                parent_id: parent_id
+                event_type: event_type
+                action:action
 
     set_incident_level: (target_id, event_type, level)->
         doc = Docs.findOne target_id
@@ -361,8 +369,10 @@ Meteor.methods
       
       
     update_escalation_statuses: ->
-        open_incidents = Docs.find({type:'incident', open:true}, limit:1)
-        console.log open_incidents.count()
+        open_incidents = Docs.find({type:'incident', open:true})
+        open_incidents_count = open_incidents.count()
+        Meteor.call 'create_event',null, 'start_escalation_check', "Starting esclation check now."
+        Meteor.call 'create_event',null, 'incident_count', "Found #{open_incidents_count} open incidents, checking escalation status."
         for incident in open_incidents.fetch()
             Meteor.call 'single_escalation_check', incident._id
          

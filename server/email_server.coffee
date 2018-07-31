@@ -60,13 +60,13 @@ Meteor.methods
             Docs.insert
                 type:'message'
                 mail_fields: mail_fields
-            Meteor.Mailgun.send
-                to: mail_fields.to
-                from: mail_fields.from
-                subject: mail_fields.subject
-                text: mail_fields.text
-                html: mail_fields.html
-            # console.log 'email sent from dev'
+            # Meteor.Mailgun.send
+            #     to: mail_fields.to
+            #     from: mail_fields.from
+            #     subject: mail_fields.subject
+            #     text: mail_fields.text
+            #     html: mail_fields.html
+            console.log 'email sent from dev'
         else
             console.log 'not production or dev'
         return
