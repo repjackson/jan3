@@ -574,3 +574,18 @@ Meteor.methods
     #                 }
     #             ]    
     #     }            
+    
+    
+    Accounts.onCreateUser (options, user)=>
+        console.log 'trying to update new user with options', options
+        edited_user = Object.assign({
+            customer_jpid:options.customer_jpid
+            franchisee_jpid:options.franchisee_jpid
+            office_jpid:options.office_jpid
+        }, user)
+    
+        if options.profile
+            edited_user.profile = options.profile
+        console.log 'updated user doc', edited_user          
+    
+        return edited_user
