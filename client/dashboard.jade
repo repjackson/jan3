@@ -106,7 +106,7 @@ template(name='dashboard_services_widget')
         .ui.header 
             +iconsmall name='broom'
             |Services Offered by #{currentUser.users_office.ev.MASTER_LICENSEE}
-        .ui.cards
+        .ui.six.cards
             each services_offered
                 +service_card     
                 
@@ -249,4 +249,6 @@ template(name='small_service_list')
             |Services Offered
         .ui.list
             each services_offered
-                a.item(href="/view/#{_id}") #{title}
+                a.item(href="/view/#{_id}")
+                    img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
+                    |#{title}

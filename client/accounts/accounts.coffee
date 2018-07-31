@@ -64,9 +64,9 @@ Template.login.events
         
 Template.register.onRendered ->
     Session.setDefault 'customer_jpid', null
-    Session.setDefault 'officer_jpid', null
+    Session.setDefault 'office_jpid', null
     Session.setDefault 'account_selected', false
-    Session.setDefault 'user_type_selection', 'Customer'    
+    Session.setDefault 'user_type_selection', 'customer'    
         
 Template.register.helpers
     user_found: -> Session.get 'username_found'
@@ -77,13 +77,14 @@ Template.register.helpers
     
     current_user_type_selection: -> Session.get 'user_type_selection'
     
-    customer_button_class: -> if Session.equals('user_type_selection', 'Customer') then 'blue' else ''
-    officer_button_class: -> if Session.equals('user_type_selection', 'Officer') then 'blue' else ''
+    customer_button_class: -> if Session.equals('user_type_selection', 'customer') then 'blue' else ''
+    office_button_class: -> if Session.equals('user_type_selection', 'office') then 'blue' else ''
     
-    customer_selected: -> if Session.equals('user_type_selection', 'Customer') then true else false
-    officer_selected: -> if Session.equals('user_type_selection', 'Officer') then true else false
+    customer_selected: -> if Session.equals('user_type_selection', 'customer') then true else false
+    office_selected: -> if Session.equals('user_type_selection', 'office') then true else false
     
-    account_selected: -> Session.get('account_selected')
+    # account_selected: -> Session.get('account_selected')
+    account_selected:  -> true
     
     passwords_match: ->
         password_one = Session.get 'password_one'
@@ -91,24 +92,47 @@ Template.register.helpers
         if password_one.length and password_one is password_two then true else false
         
     can_submit: ->
-        # password_two = Session.get 'password_two'
-        session_customer_jpid = Session.get 'customer_jpid'
-        if Session.get('session_username') and Session.get('session_password_one') and Session.get('session_email') and Session.get('session_customer_jpid') then true else false
+        true
+        # # password_two = Session.get 'password_two'
+        # session_customer_jpid = Session.get 'customer_jpid'
+        # if Session.get('session_username') and Session.get('session_password_one') and Session.get('session_email') and Session.get('session_customer_jpid') then true else false
     
 Template.register.events
-    # 'click #register': (e,t)->
-    #     login = $('.username').val()
-    #     password = $('.password').val()
-    #     Meteor.createUser login, password, (err,res)->
-    #         if err
-    #             console.log err
-    #         else
-    #             Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-    #             FlowRouter.go '/'                
+    'click #register': (e,t)->
+        username = $('#username').val()
+        password = $('#password').val()
+        email = $('#email').val()
+        office_id = $('#office_id').val()
+        customer_jpid = $('#customer_jpid').val()
+        
+        current_role = Session.get 'user_type_selection'
+        
+        
+        console.log username
+        console.log password
+        console.log email
+        console.log customer_jpid
+
+        
+        options = {
+            username:username
+            password:password
+            email:email
+            customer_jpid:customer_jpid
+            roles: [current_role]
+        }
+            
+        
+        Accounts.createUser(options, (err,res)->
+            if err
+                Bert.alert "Error Registering in #{username}: #{err.reason}", 'info', 'growl-top-right'
+            else
+                Bert.alert "Registered #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                FlowRouter.go '/'                
+        )
     
-    
-    'click #select_customer': -> Session.set 'user_type_selection', 'Customer'
-    'click #select_officer': -> Session.set 'user_type_selection', 'Officer'
+    'click #select_customer': -> Session.set 'user_type_selection', 'customer'
+    'click #select_office': -> Session.set 'user_type_selection', 'office'
     
     'keyup #username': (e,t)->
         username = $('#username').val()

@@ -65,8 +65,11 @@ Template.incident_type_label.helpers
             when 'other' then 'grey'
 
 
+Template.incidents.onCreated ->
+    Session.setDefault('query',null)
+    @autorun -> Meteor.subscribe 'incidents', Session.get('query')
 Template.incidents.helpers
-    all_incidents: -> Meteor.subscribe 'my_customer_incidents', Session.get('query')
+    all_incidents: -> Docs.find type:'incident'
 
 Template.customer_incidents.onCreated ->
     Session.setDefault('query',null)

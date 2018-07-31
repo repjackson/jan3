@@ -1,6 +1,12 @@
-Meteor.publish 'type', (type)->
-    Docs.find {type:type}, limit:100
-        
+Meteor.publish 'type', (type, query)->
+    if query
+        Docs.find {
+            type: type
+            $text: $search: query
+        }
+    else
+        Docs.find {type:type}, limit:100
+
         
 # Meteor.publish 'my_customer_account_doc', ->
 #     if Meteor.user()
@@ -25,7 +31,7 @@ ReactiveTable.publish 'users', Meteor.users,'', {disablePageCountReactivity:true
 ReactiveTable.publish 'customers', Docs, {type:'customer',"ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'events', Docs, {type:'event'}, {disablePageCountReactivity:false}
 ReactiveTable.publish 'franchisees', Docs, {type:'franchisee', "ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
-ReactiveTable.publish 'incidents', Docs, {type:'incident'}, {disablePageCountReactivity:true}
+# ReactiveTable.publish 'incidents', Docs, {type:'incident'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'offices', Docs, {type:'office'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'special_services', Docs, {type:'special_service'}, {disablePageCountReactivity:true}
 ReactiveTable.publish 'services', Docs, {type:'service'}, {disablePageCountReactivity:true}
@@ -145,6 +151,20 @@ Meteor.publish 'office_customers', (office_doc_id, query)->
 
 
 
+Meteor.publish 'office_incidents', (office_doc_id, query)->
+    office_doc = Docs.findOne office_doc_id
+    if query 
+        Docs.find {
+            incident_office_name: office_doc.ev.MASTER_LICENSEE
+            type: "incident"
+            $text: $search: query
+        }
+    else
+        Docs.find {
+            incident_office_name: office_doc.ev.MASTER_LICENSEE
+            type: "incident"
+        }
+    
 Meteor.publish 'office_incidents', (office_doc_id, query)->
     office_doc = Docs.findOne office_doc_id
     if query 

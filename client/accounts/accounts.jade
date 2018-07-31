@@ -52,7 +52,7 @@ template(name='reset_password')
 template(name='login')
     .ui.middle.aligned.centered.padded.grid
         .row
-            .ten.wide.column
+            .twelve.wide.column
                 // img.ui.large.center.aligned.image(src="{{c.url 'white_logo' gravity='face' crop='fill'}}")
                 h1.ui.center.aligned.header 
                     // +icon name='password'
@@ -102,7 +102,7 @@ template(name='register')
                         #select_customer.ui.button(class=customer_button_class) 
                             +iconsmall name='customer-support'
                             |Customer
-                        #select_officer.ui.button(class=officer_button_class) 
+                        #select_office.ui.button(class=office_button_class) 
                             +iconsmall name='small-business'
                             |Officer
                     .ui.large.form
@@ -131,6 +131,9 @@ template(name='register')
                                             |Login Here
                                             i.right.arrow.icon
                             .field
+                                label Password
+                                input#password(type='password')
+                            .field
                                 label Email
                                 input#email(type='email')
                                 if email_found
@@ -142,9 +145,6 @@ template(name='register')
                                 else
                                     .ui.success.message 
                                         |Email Available
-                            .field
-                                label Password
-                                input#password_one(type='password')
                         // .field
                         //     label Repeat Password
                         //     input.password_two(type='password')

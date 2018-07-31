@@ -11,7 +11,7 @@ template(name='services')
                 +add_button type='service'
         .row
             .fourteen.wide.column
-                .ui.centered.four.cards
+                .ui.centered.six.cards
                     each services
                         +service_card
                 
@@ -19,7 +19,7 @@ template(name='service_card')
     .ui.card
         if image_id
             a.image(href="/view/#{_id}")
-                img(src="{{c.url image_id height=400 crop='scale'}}")
+                img.ui.image(src="{{c.url image_id height=200 width=200 crop='scale'}}")
         .content
             .right.floated.meta $#{price}
             a.header(href="/view/#{_id}") #{title}
