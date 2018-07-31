@@ -10,7 +10,7 @@ template(name='dashboard')
                     i.right.arrow.icon
         if currentUser
             +customer_menu
-    if currentUser
+    if is_customer
         .ui.padded.stackable.grid
             if currentUser.users_customer.parent_franchisee.parent_office.customer_message
                 .three.column.row
@@ -165,7 +165,41 @@ template(name='customer_incidents_widget')
         // i.exclamation.circle.icon
         +icon name='error'
         | #{currentUser.users_customer.ev.CUST_NAME}'s Incidents
-    +reactiveTable settings=settings collection=customer_incidents class="ui celled striped sortable table"
+    table.ui.sortable.striped.table
+        thead
+            tr
+                th Number
+                th Customer
+                th Office
+                th Type
+                th Logged
+                th Details
+                th Level
+                th Status
+                th Submitted
+                th Assigned To
+                th Last Event
+                th
+        tbody
+            each customer_incidents
+                tr
+                    td #{incident_number}
+                    td
+                        +incident_type_label
+                    td #{when}
+                    td #{incident_details}
+                    td #{level}
+                    td 
+                        +status_template
+                    td
+                        +submitted_template
+                    td
+                        +associated_users
+                    td
+                        +small_doc_history
+                    td
+                        +view_button
+    
         
 
 template(name='status_template')

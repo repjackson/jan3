@@ -14,7 +14,33 @@ template(name='customers')
 
         .row
             .sixteen.wide.column
-                +reactiveTable settings=settings class="ui celled striped sortable table"
+                +query_input
+                table.ui.celled.striped.fluid.table
+                    thead
+                        th Customer Name
+                        th JPID
+                        th Master Licensee
+                        th Franchisee
+                        th Contact Person
+                        th Contact Email
+                        th Telephone
+                        th Address
+                        th Timestamp
+                        th 
+                    tbody
+                        each all_customers
+                            tr
+                                td #{ev.CUST_NAME}
+                                td #{ev.ID}
+                                td #{ev.FRANCHISEE}
+                                td #{ev.MASTER_LICENSEE}
+                                td #{ev.CUST_CONT_PERSON}
+                                td #{ev.CUST_CONTACT_EMAIL}
+                                td #{ev.TELEPHONE}
+                                td #{ev.ADDR_STREET}
+                                td #{ev.TIMESTAMP}
+                                td 
+                                    +view_button
 
 
 template(name='customer_view')

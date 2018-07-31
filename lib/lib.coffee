@@ -20,7 +20,7 @@ Docs.before.insert (userId, doc)->
     # console.log date_array
     doc.timestamp_tags = date_array
     doc.author_id = Meteor.userId()
-    doc.points = 0
+    # doc.points = 0
     doc.read_by = [Meteor.userId()]
     # doc.upvoters = []
     # doc.downvoters = []
@@ -37,34 +37,33 @@ Meteor.users.helpers
 
     users_customer: ->
         # console.log @
-        if @profile and @profile.customer_jpid
+        if @customer_jpid
             found = Docs.findOne
                 type:'customer'
-                "ev.ID": @profile.customer_jpid
+                "ev.ID": @customer_jpid
             # console.log found
             found
         
     users_office: ->
         # console.log @
-        if @profile
-            if @profile.office_jpid
-                officers_office = Docs.findOne
-                    type:'office'
-                    "ev.ID": @profile.office_jpid
-                return officers_office
-            else if @profile.customer_jpid
-                users_customer = Docs.findOne
-                    type:'customer'
-                    "ev.ID": @profile.customer_jpid
-                if users_customer
-                    customers_franchisee = Docs.findOne
-                        type: 'franchisee'
-                        "ev.FRANCHISEE": users_customer.ev.FRANCHISEE
-                    if customers_franchisee
-                        customers_office = Docs.findOne
-                            type:'office'
-                            "ev.MASTER_LICENSEE": customers_franchisee.ev.MASTER_LICENSEE
-                        return customers_office
+        if @office_jpid
+            office_doc = Docs.findOne
+                type:'office'
+                "ev.ID": @office_jpid
+            return office_doc
+            # else if @customer_jpid
+            #     users_customer = Docs.findOne
+            #         type:'customer'
+            #         "ev.ID": @customer_jpid
+            #     if users_customer
+            #         customers_franchisee = Docs.findOne
+            #             type: 'franchisee'
+            #             "ev.FRANCHISEE": users_customer.ev.FRANCHISEE
+            #         if customers_franchisee
+            #             customers_office = Docs.findOne
+            #                 type:'office'
+            #                 "ev.MASTER_LICENSEE": customers_franchisee.ev.MASTER_LICENSEE
+            #             return customers_office
 
         
     email: -> 

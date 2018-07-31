@@ -5,7 +5,7 @@ Meteor.publish 'type', (type, query)->
             $text: $search: query
         }
     else
-        Docs.find {type:type}, limit:100
+        Docs.find {type:type}, limit:10
 
         
 # Meteor.publish 'my_customer_account_doc', ->

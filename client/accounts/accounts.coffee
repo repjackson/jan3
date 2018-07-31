@@ -79,12 +79,14 @@ Template.register.helpers
     
     customer_button_class: -> if Session.equals('user_type_selection', 'customer') then 'blue' else ''
     office_button_class: -> if Session.equals('user_type_selection', 'office') then 'blue' else ''
+    franchisee_button_class: -> if Session.equals('user_type_selection', 'franchisee') then 'blue' else ''
     
     customer_selected: -> if Session.equals('user_type_selection', 'customer') then true else false
+    franchiseere_selected: -> if Session.equals('user_type_selection', 'franchisee') then true else false
     office_selected: -> if Session.equals('user_type_selection', 'office') then true else false
     
-    # account_selected: -> Session.get('account_selected')
-    account_selected:  -> true
+    account_selected: -> Session.get('account_selected')
+    # account_selected:  -> true
     
     passwords_match: ->
         password_one = Session.get 'password_one'
@@ -112,6 +114,7 @@ Template.register.events
         console.log password
         console.log email
         console.log customer_jpid
+        console.log current_role
 
         
         options = {
@@ -121,18 +124,19 @@ Template.register.events
             customer_jpid:customer_jpid
             roles: [current_role]
         }
-            
+        console.dir 'options', options
         
-        Accounts.createUser(options, (err,res)=>
-            if err
-                Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
-            else
-                Bert.alert "Registered new #{current_role}: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                FlowRouter.go '/'                
-        )
+        # Accounts.createUser(options, (err,res)=>
+        #     if err
+        #         Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
+        #     else
+        #         Bert.alert "Registered new #{current_role}: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+        #         FlowRouter.go '/'                
+        # )
     
     'click #select_customer': -> Session.set 'user_type_selection', 'customer'
     'click #select_office': -> Session.set 'user_type_selection', 'office'
+    'click #select_franchisee': -> Session.set 'user_type_selection', 'franchisee'
     
     'keyup #username': (e,t)->
         username = $('#username').val()
@@ -193,11 +197,11 @@ Template.register.events
                 type:'customer'
                 "ev.ID": customer_jpid
             
-        # if found_customer_doc
-        #     console.log 'account selected'
-        # else 
-        #     Session.set 'account_selected', false
-        #     console.log 'no account selected'
+        if found_customer_doc
+            console.log 'account selected'
+        else 
+            Session.set 'account_selected', false
+            console.log 'no account selected'
     
     'keyup #office_jpid': (e,t)->
         office_jpid = $('#office_jpid').val()

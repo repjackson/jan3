@@ -102,22 +102,31 @@ template(name='register')
                         #select_customer.ui.button(class=customer_button_class) 
                             +iconsmall name='customer-support'
                             |Customer
+                        #select_franchisee.ui.button(class=franchisee_button_class) 
+                            +iconsmall name='collaborator-female'
+                            | Franchisee
                         #select_office.ui.button(class=office_button_class) 
                             +iconsmall name='small-business'
                             |Office
                     .ui.large.form
                         if customer_selected
                             .field
-                                label Customer ID
+                                label Customer JPID
                                 input#customer_jpid(type='text')
-                                if jpid_lookup_status
-                                    |#{jpid_lookup_status}
+                                if customer_jpid_lookup_status
+                                    |#{customer_jpid_lookup_status}
                             if account_selected
                                 +customer_card customer_jpid=session_customer_jpid                    
-                        if officer_selected
+                        if franchisee_selected
                             .field
-                                label Officer ID
-                                input#officer_jpid(type='text')
+                                label Franchisee JPID
+                                input#franchisee_jpid(type='text')
+                            if session_franchisee_jpid
+                                +franchisee_card franchisee_jpid=session_franchisee_jpid  
+                        if office_selected
+                            .field
+                                label Office JPID
+                                input#office_jpid(type='text')
                             if session_office_jpid
                                 +office_card office_jpid=session_office_jpid  
                         if account_selected
