@@ -9,7 +9,7 @@ Template.services.helpers
 
 Template.request_service_button.events
     'click .request_service': ->
-        current_customer_jpid = Meteor.user().profile.customer_jpid
+        current_customer_jpid = Meteor.user().customer_jpid
         console.log current_customer_jpid
         new_request_id = 
             Docs.insert 

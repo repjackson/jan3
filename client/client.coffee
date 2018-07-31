@@ -36,15 +36,15 @@ Template.registerHelper 'my_office', () ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
     if user and user.profile 
-        if user.profile.office_jpid
+        if user.office_jpid
             users_office = Docs.findOne
-                "ev.ID": user.profile.office_jpid
+                "ev.ID": user.office_jpid
                 type:'office'
             console.log users_office
             users_office
-        # if user.profile.customer_jpid
+        # if user.customer_jpid
         #     customer_doc = Docs.findOne
-        #         "ev.ID": user.profile.customer_jpid
+        #         "ev.ID": user.customer_jpid
         #         type:'customer'
         #     console.log customer_doc
         #     if customer_doc
@@ -70,7 +70,7 @@ Template.registerHelper 'is_admin', () ->
 Template.registerHelper 'is_dev', () -> 
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles
-Template.registerHelper 'is_officer', () -> 
+Template.registerHelper 'is_office', () -> 
     if Meteor.user() and Meteor.user().roles
         'office' in Meteor.user().roles
 Template.registerHelper 'is_customer', () -> 
@@ -78,10 +78,10 @@ Template.registerHelper 'is_customer', () ->
         'customer' in Meteor.user().roles
         
 Template.registerHelper 'user_is_customer', () -> @roles and 'customer' in @roles
-Template.registerHelper 'user_is_officer', () -> @roles and 'office' in @roles
+Template.registerHelper 'user_is_office', () -> @roles and 'office' in @roles
         
 Template.registerHelper 'has_user_customer_jpid', () -> 
-    Meteor.user() and Meteor.user().profile and Meteor.user().profile.customer_jpid
+    Meteor.user() and Meteor.user() and Meteor.user().customer_jpid
 
 Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 

@@ -6,7 +6,8 @@ template(name='user_view')
                     if is_admin
                         +link_button link='/users' icon='groups' label='Users' classes='centered'
                 .eight.wide.center.aligned.column
-                    h1.header.item #{profile.first_name} #{profile.last_name}
+                    h1.ui.header #{profile.first_name} #{profile.last_name} 
+                    h3.ui.header #{username}
                 .four.wide.center.aligned.column
                     // .get_user_info.ui.icon.button(title='Refresh User Info')
                     //     i.refresh.icon
@@ -24,10 +25,10 @@ template(name='user_view')
                 .eight.wide.column
                     // +edit_profile_text_field key='customer_jpid' label='Connected Customer Account'
                     .ui.list
-                        if profile.customer_jpid
+                        if customer_jpid
                             .item
                                 strong Customer JPID 
-                                | #{profile.customer_jpid}
+                                | #{customer_jpid}
                         // +jsonView json=ev
                     .ui.list
                         with ev

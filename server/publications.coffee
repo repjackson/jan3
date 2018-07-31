@@ -10,7 +10,7 @@ Meteor.publish 'type', (type, query)->
         
 # Meteor.publish 'my_customer_account_doc', ->
 #     if Meteor.user()
-#         cust_id = Meteor.user().profile.customer_jpid
+#         cust_id = Meteor.user().customer_jpid
 #         cursor = Docs.find jpid:cust_id
 #         # console.log cursor.count()
 #         cursor
@@ -217,17 +217,17 @@ Meteor.publish 'my_conversations',() ->
     
 Meteor.publish 'my_customer_incidents', (query)->    
     user = Meteor.user()
-    if user.profile and user.profile.customer_jpid
-        # customer_doc = Docs.findOne "ev.ID":user.profile.customer_jpid
+    if user.profile and user.customer_jpid
+        # customer_doc = Docs.findOne "ev.ID":user.customer_jpid
         if query
             Docs.find {
-                customer_jpid: user.profile.customer_jpid
+                customer_jpid: user.customer_jpid
                 type: 'incident'
                 $text: $search: query
             }
         else
             Docs.find {
-                customer_jpid: user.profile.customer_jpid
+                customer_jpid: user.customer_jpid
                 type: 'incident'
             }, {
                 limit:10
@@ -295,6 +295,9 @@ Meteor.publish 'my_profile', ->
             username: 1
             published: 1
             image_id: 1
+            customer_jpid:1
+            franchisee_jpid:1
+            office_jpid:1
 
 
 Meteor.publish 'user', (username)->
@@ -304,6 +307,10 @@ Meteor.publish 'user', (username)->
             username: 1
             ev:1
             published:1
+            customer_jpid:1
+            franchisee_jpid:1
+            office_jpid:1
+            
 Meteor.publish 'user_profile', (user_id)->
     Meteor.users.find user_id,
         fields:
@@ -311,6 +318,10 @@ Meteor.publish 'user_profile', (user_id)->
             username: 1
             ev:1
             published:1
+            customer_jpid:1
+            franchisee_jpid:1
+            office_jpid:1
+            
 
 Meteor.publish 'office_by_franchisee', (franch_id)->
     franch_doc = Docs.findOne franch_id
@@ -329,17 +340,17 @@ Meteor.publish 'office_by_franchisee', (franch_id)->
 Meteor.publish 'my_customer_account', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
-    if user and user.profile and user.profile.customer_jpid
+    if user and user.profile and user.customer_jpid
         Docs.find
-            "ev.ID": user.profile.customer_jpid
+            "ev.ID": user.customer_jpid
             type:'customer'
         
 Meteor.publish 'my_franchisee', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
-    if user and user.profile and user.profile.customer_jpid
+    if user and user.profile and user.customer_jpid
         customer_doc = Docs.findOne
-            "ev.ID": user.profile.customer_jpid
+            "ev.ID": user.customer_jpid
             type:'customer'
         Docs.find
             "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
@@ -349,26 +360,26 @@ Meteor.publish 'my_office', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
     if user and user.profile 
-        if user.profile.customer_jpid
+        if user.customer_jpid
             customer_doc = Docs.findOne
-                "ev.ID": user.profile.customer_jpid
+                "ev.ID": user.customer_jpid
                 type:'customer'
             # console.log customer_doc
             Docs.find
                 "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                 type:'office'
-        if user.profile.office_jpid
+        if user.office_jpid
             Docs.find
-                "ev.ID": user.profile.office_jpid
+                "ev.ID": user.office_jpid
                 type:'office'
 
         
 Meteor.publish 'my_special_services', ->
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
-    if user.profile.customer_jpid
+    if user.customer_jpid
         customer_doc = Docs.findOne
-            "ev.ID": user.profile.customer_jpid
+            "ev.ID": user.customer_jpid
             type:'customer'
             # grandparent office
         # console.log 'ss cust doc', customer_doc
@@ -382,9 +393,9 @@ Meteor.publish 'my_office_contacts', ()->
     # console.log 'franch_doc', franch_doc
     if user
         if 'customer' in user.roles
-            if user.profile.customer_jpid
+            if user.customer_jpid
                 customer_doc = Docs.findOne
-                    "ev.ID": user.profile.customer_jpid
+                    "ev.ID": user.customer_jpid
                     type:'customer'
                     # grandparent office
                 # console.log 'ss cust doc', customer_doc
@@ -449,13 +460,13 @@ publishComposite 'me', ()->
                     # users customer account
                     # console.log 'current user?', user.profile
                     if user.profile 
-                        if user.profile.customer_jpid
+                        if user.customer_jpid
                             Docs.find
-                                "ev.ID": user.profile.customer_jpid
+                                "ev.ID": user.customer_jpid
                                 type:'customer'
-                        if user.profile.office_jpid
+                        if user.office_jpid
                             Docs.find
-                                "ev.ID": user.profile.office_jpid
+                                "ev.ID": user.office_jpid
                                 type:'office'
                             
                 # children: [
@@ -525,122 +536,122 @@ Meteor.publish 'people_list', (conversation_id) ->
 #         conversation_id: conversation_id
 
 
-publishComposite 'participant_ids', (selected_theme_tags, selected_participant_ids)->
+# publishComposite 'participant_ids', (selected_theme_tags, selected_participant_ids)->
     
-    {
-        find: ->
-            self = @
-            match = {}
-            # console.log selected_participant_ids
-            # console.log selected_theme_tags
-            match.type = 'conversation'
-            if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
-            if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
-            match.published = true
+#     {
+#         find: ->
+#             self = @
+#             match = {}
+#             # console.log selected_participant_ids
+#             # console.log selected_theme_tags
+#             match.type = 'conversation'
+#             if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+#             if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
+#             match.published = true
             
-            cloud = Docs.aggregate [
-                { $match: match }
-                { $project: participant_ids: 1 }
-                { $unwind: "$participant_ids" }
-                { $group: _id: '$participant_ids', count: $sum: 1 }
-                { $match: _id: $nin: selected_participant_ids }
-                { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
-                { $project: _id: 0, text: '$_id', count: 1 }
-                ]
+#             cloud = Docs.aggregate [
+#                 { $match: match }
+#                 { $project: participant_ids: 1 }
+#                 { $unwind: "$participant_ids" }
+#                 { $group: _id: '$participant_ids', count: $sum: 1 }
+#                 { $match: _id: $nin: selected_participant_ids }
+#                 { $sort: count: -1, _id: 1 }
+#                 { $limit: 20 }
+#                 { $project: _id: 0, text: '$_id', count: 1 }
+#                 ]
         
         
-            # console.log cloud
+#             # console.log cloud
             
-            # author_objects = []
-            # Meteor.users.find _id: $in: cloud.
+#             # author_objects = []
+#             # Meteor.users.find _id: $in: cloud.
         
-            cloud.forEach (participant_ids) ->
-                self.added 'participant_ids', Random.id(),
-                    text: participant_ids.text
-                    count: participant_ids.count
-            self.ready()
+#             cloud.forEach (participant_ids) ->
+#                 self.added 'participant_ids', Random.id(),
+#                     text: participant_ids.text
+#                     count: participant_ids.count
+#             self.ready()
         
-        # children: [
-        #     { find: (doc) ->
-        #         Meteor.users.find 
-        #             _id: doc.participant_ids
-        #         }
-        #     ]    
-    }            
+#         # children: [
+#         #     { find: (doc) ->
+#         #         Meteor.users.find 
+#         #             _id: doc.participant_ids
+#         #         }
+#         #     ]    
+#     }            
     
     
-Meteor.publish 'conversations', (selected_theme_tags, selected_participant_ids, view_published)->
+# Meteor.publish 'conversations', (selected_theme_tags, selected_participant_ids, view_published)->
 
-    self = @
-    match = {}
-    # console.log selected_participant_ids
-    if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
-    if view_published is true
-        match.published = 1
-        if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
-    else if view_published = false
-        match.published = -1
-        selected_participant_ids.push Meteor.userId()
-        match.participant_ids = $in: selected_participant_ids
-    # if view_mode
-    #     if view_mode is 'mine'
-    #         match
-    #         match.participant_ids = $in: [Meteor.userId()]
-    # else
-        # if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
+#     self = @
+#     match = {}
+#     # console.log selected_participant_ids
+#     if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+#     if view_published is true
+#         match.published = 1
+#         if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
+#     else if view_published = false
+#         match.published = -1
+#         selected_participant_ids.push Meteor.userId()
+#         match.participant_ids = $in: selected_participant_ids
+#     # if view_mode
+#     #     if view_mode is 'mine'
+#     #         match
+#     #         match.participant_ids = $in: [Meteor.userId()]
+#     # else
+#         # if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
             
             
-    match.type = 'conversation'
-    # console.log match
+#     match.type = 'conversation'
+#     # console.log match
     
-    cursor = Docs.find match
-    # console.log cursor.count()
-    return cursor
+#     cursor = Docs.find match
+#     # console.log cursor.count()
+#     return cursor
 
-publishComposite 'group_docs', (group_id)->
-    {
-        find: -> Docs.find group_id: group_id
-        children: [
-            {
-                find: (doc)-> Docs.find _id: doc.parent_id
-                children: [
-                    { 
-                        find: (doc)-> Docs.find _id: doc.parent_id 
-                        children: [
-                            { find: (doc)-> Docs.find _id: doc.parent_id }
-                        ]
-                    }
-                    {
-                        find: (doc)->
-                            Meteor.users.find
-                                _id: doc.author_id
-                    }
-                ]
-            }
-            {
-                find: (doc)->
-                    Meteor.users.find
-                        _id: doc.author_id
-            }
+# publishComposite 'group_docs', (group_id)->
+#     {
+#         find: -> Docs.find group_id: group_id
+#         children: [
+#             {
+#                 find: (doc)-> Docs.find _id: doc.parent_id
+#                 children: [
+#                     { 
+#                         find: (doc)-> Docs.find _id: doc.parent_id 
+#                         children: [
+#                             { find: (doc)-> Docs.find _id: doc.parent_id }
+#                         ]
+#                     }
+#                     {
+#                         find: (doc)->
+#                             Meteor.users.find
+#                                 _id: doc.author_id
+#                     }
+#                 ]
+#             }
+#             {
+#                 find: (doc)->
+#                     Meteor.users.find
+#                         _id: doc.author_id
+#             }
 
-        ]
-    }
+#         ]
+#     }
     
-Meteor.publish 'userStatus', ->
-    Meteor.users.find { 'status.online': true }, 
-        fields: 
-            points: 1
-            tags: 1
+# Meteor.publish 'userStatus', ->
+#     Meteor.users.find { 'status.online': true }, 
+#         fields: 
+#             points: 1
+#             tags: 1
             
             
             
-Meteor.publish 'user_status_notification', ->
-    Meteor.users.find('status.online': true).observe
-        added: (id) ->
-            console.log "#{id} just logged in"
-        removed: (id) ->
-            console.log "#{id} just logged out"
+# Meteor.publish 'user_status_notification', ->
+#     Meteor.users.find('status.online': true).observe
+#         added: (id) ->
+#             console.log "#{id} just logged in"
+#         removed: (id) ->
+#             console.log "#{id} just logged out"
 
 
 Meteor.publish 'office_by_id', (office_jpid)->

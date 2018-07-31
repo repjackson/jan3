@@ -6,9 +6,9 @@ Template.office_contact_cards.helpers
     office_contacts: -> 
         user = Meteor.user()
         # console.log 'franch_doc', franch_doc
-        if user and user.profile and user.profile.customer_jpid
+        if user and user.profile and user.customer_jpid
             customer_doc = Docs.findOne
-                "ev.ID": user.profile.customer_jpid
+                "ev.ID": user.customer_jpid
                 type:'customer'
                 # grandparent office
             # console.log 'ss cust doc', customer_doc
@@ -42,9 +42,9 @@ Template.dashboard_office_contacts_list.helpers
     office_contacts: -> 
         user = Meteor.user()
         # console.log 'franch_doc', franch_doc
-        if user and user.profile and user.profile.customer_jpid
+        if user and user.profile and user.customer_jpid
             customer_doc = Docs.findOne
-                "ev.ID": user.profile.customer_jpid
+                "ev.ID": user.customer_jpid
                 type:'customer'
                 # grandparent office
             if customer_doc
@@ -64,10 +64,10 @@ Template.customer_incidents_widget.onCreated ->
 Template.customer_incidents_widget.helpers    
     # customer_incidents: ->  
     #     user = Meteor.user()
-    #     if user and user.profile and user.profile.customer_jpid
-    #         # customer_doc = Docs.findOne "ev.ID":user.profile.customer_jpid
+    #     if user and user.profile and user.customer_jpid
+    #         # customer_doc = Docs.findOne "ev.ID":user.customer_jpid
     #         Docs.find {
-    #             customer_jpid: user.profile.customer_jpid
+    #             customer_jpid: user.customer_jpid
     #             type: "incident"
     #         }, limit:20
 

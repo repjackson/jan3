@@ -99,7 +99,7 @@ Docs.helpers
     #     user = Meteor.user()
     #     found = Docs.findOne
     #         type:'customer'
-    #         "ev.ID": user.profile.customer_jpid
+    #         "ev.ID": user.customer_jpid
     #     console.log found, 'hi'
     #     found
     

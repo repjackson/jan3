@@ -20,7 +20,7 @@ template(name='nav')
                 i.large.icon
                     +iconsmall name='broom'
                 | Services
-        if is_officer
+        if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
             if my_office
                 a.item(href="/view/#{my_office._id}")

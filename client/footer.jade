@@ -25,8 +25,8 @@ template(name='footer')
                 .four.wide.column
                     if is_customer
                         +my_office_card
-                    if is_officer
-                        +office_card office_jpid=currentUser.profile.office_jpid
+                    if is_office
+                        +office_card office_jpid=currentUser.office_jpid
             .centered.row
                 .ui.center.aligned.inverted.grey.header
                     +icon name='copyright'

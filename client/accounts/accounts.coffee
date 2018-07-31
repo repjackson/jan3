@@ -82,7 +82,7 @@ Template.register.helpers
     franchisee_button_class: -> if Session.equals('user_type_selection', 'franchisee') then 'blue' else ''
     
     customer_selected: -> if Session.equals('user_type_selection', 'customer') then true else false
-    franchiseere_selected: -> if Session.equals('user_type_selection', 'franchisee') then true else false
+    franchisee_selected: -> if Session.equals('user_type_selection', 'franchisee') then true else false
     office_selected: -> if Session.equals('user_type_selection', 'office') then true else false
     
     account_selected: -> Session.get('account_selected')
@@ -124,15 +124,15 @@ Template.register.events
             customer_jpid:customer_jpid
             roles: [current_role]
         }
-        console.dir 'options', options
+        console.dir options
         
-        # Accounts.createUser(options, (err,res)=>
-        #     if err
-        #         Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
-        #     else
-        #         Bert.alert "Registered new #{current_role}: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-        #         FlowRouter.go '/'                
-        # )
+        Accounts.createUser(options, (err,res)=>
+            if err
+                Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
+            else
+                Bert.alert "Registered new #{current_role}: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                FlowRouter.go '/'                
+        )
     
     'click #select_customer': -> Session.set 'user_type_selection', 'customer'
     'click #select_office': -> Session.set 'user_type_selection', 'office'

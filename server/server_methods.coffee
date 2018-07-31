@@ -290,82 +290,82 @@ Meteor.methods
     # mark_unread: (doc_id)-> Docs.update doc_id, $pull: read_by: Meteor.userId()
           
           
-    create_conversation: (tags=[])->
-        Docs.insert
-            tags: tags
-            type: 'conversation'
-            subscribers: [Meteor.userId()]
-            participant_ids: [Meteor.userId()]
-        # FlowRouter.go "/conversation/#{id}"
+    # create_conversation: (tags=[])->
+    #     Docs.insert
+    #         tags: tags
+    #         type: 'conversation'
+    #         subscribers: [Meteor.userId()]
+    #         participant_ids: [Meteor.userId()]
+    #     # FlowRouter.go "/conversation/#{id}"
 
-    close_conversation: (conversation_id)->
-        Docs.remove conversation_id
-        Docs.remove 
-            type: 'message'
-            group_id: conversation_id
+    # close_conversation: (conversation_id)->
+    #     Docs.remove conversation_id
+    #     Docs.remove 
+    #         type: 'message'
+    #         group_id: conversation_id
 
-    join_conversation: (conversation_id)->
-        Docs.update conversation_id,
-            $addToSet: participant_ids: Meteor.userId()
+    # join_conversation: (conversation_id)->
+    #     Docs.update conversation_id,
+    #         $addToSet: participant_ids: Meteor.userId()
 
-    leave_conversation: (conversation_id)->
-        Docs.update conversation_id,
-            $pull: participant_ids: Meteor.userId()
+    # leave_conversation: (conversation_id)->
+    #     Docs.update conversation_id,
+    #         $pull: participant_ids: Meteor.userId()
             
             
-    add_message: (body,group_id)->
-        new_message_id = Docs.insert
-            body: body
-            type: 'message'
-            group_id: group_id
-            tags: ['conversation', 'message']
+    # add_message: (body,group_id)->
+    #     new_message_id = Docs.insert
+    #         body: body
+    #         type: 'message'
+    #         group_id: group_id
+    #         tags: ['conversation', 'message']
         
-        conversation_doc = Docs.findOne _id: group_id
-        message_doc = Docs.findOne new_message_id
-        message_author = Meteor.users.findOne message_doc.author_id
+    #     conversation_doc = Docs.findOne _id: group_id
+    #     message_doc = Docs.findOne new_message_id
+    #     message_author = Meteor.users.findOne message_doc.author_id
         
-        message_link = "https://www.jan.meteorapp.com/view/#{conversation_doc._id}"
-        # console.log 'message author', message_author
-        # console.log 'message_doc', message_doc
+    #     message_link = "https://www.jan.meteorapp.com/view/#{conversation_doc._id}"
+    #     # console.log 'message author', message_author
+    #     # console.log 'message_doc', message_doc
         
-        this.unblock()
+    #     this.unblock()
         
-        offline_ids = []
-        for participant_id in conversation_doc.participant_ids
-            user = Meteor.users.findOne participant_id
-            console.log participant_id
-            if user.status.online is true
-                console.log 'user online:', user.profile.first_name
-            else
-                offline_ids.push user._id
-                console.log 'user offline:', user.profile.first_name
+    #     offline_ids = []
+    #     for participant_id in conversation_doc.participant_ids
+    #         user = Meteor.users.findOne participant_id
+    #         console.log participant_id
+    #         if user.status.online is true
+    #             console.log 'user online:', user.profile.first_name
+    #         else
+    #             offline_ids.push user._id
+    #             console.log 'user offline:', user.profile.first_name
         
         
-        for offline_id in offline_ids
-            console.log 'offline id', offline_id
-            offline_user = Meteor.users.findOne offline_id
+    #     for offline_id in offline_ids
+    #         console.log 'offline id', offline_id
+    #         offline_user = Meteor.users.findOne offline_id
             
-            Email.send
-                to: " #{offline_user.profile.first_name} #{offline_user.profile.last_name} <#{offline_user.emails[0].address}>",
-                from: "Jan-Pro Customer Portal Admin <no-reply@jan-pro.com>",
-                subject: "New Message from #{message_author.profile.first_name} #{message_author.profile.last_name}",
-                html: 
-                    "<h4>#{message_author.profile.first_name} just sent the following message while you were offline: </h4>
-                    #{text} <br><br>
+    #         Email.send
+    #             to: " #{offline_user.profile.first_name} #{offline_user.profile.last_name} <#{offline_user.emails[0].address}>",
+    #             from: "Jan-Pro Customer Portal Admin <no-reply@jan-pro.com>",
+    #             subject: "New Message from #{message_author.profile.first_name} #{message_author.profile.last_name}",
+    #             html: 
+    #                 "<h4>#{message_author.profile.first_name} just sent the following message while you were offline: </h4>
+    #                 #{text} <br><br>
                     
-                    Click <a href=#{message_link}> here to view.</a><br><br>
-                    You can unsubscribe from this conversation in the Actions panel.
-                    "
+    #                 Click <a href=#{message_link}> here to view.</a><br><br>
+    #                 You can unsubscribe from this conversation in the Actions panel.
+    #                 "
                 
-                # html: 
-                #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
-                #     #{text} <br>
-                #     In conversation with tags: #{conversation_doc.tags}. \n
-                #     In conversation with description: #{conversation_doc.description}. \n
-                #     \n
-                #     Click <a href="/view/#{_id}"
-                # "
-        return new_message_id
+    #             # html: 
+    #             #     "<h4>#{message_author.profile.first_name} just sent the following message: </h4>
+    #             #     #{text} <br>
+    #             #     In conversation with tags: #{conversation_doc.tags}. \n
+    #             #     In conversation with description: #{conversation_doc.description}. \n
+    #             #     \n
+    #             #     Click <a href="/view/#{_id}"
+    #             # "
+    #     return new_message_id
       
       
     update_escalation_statuses: ->
@@ -490,51 +490,87 @@ Meteor.methods
         else
             throw new Meteor.Error "Customer not found with JPID #{customer_jpid}."
             
+    find_office_from_customer_jpid: (customer_jpid)->     
+        customer_doc = Docs.findOne
+            "ev.ID": customer_jpid
+            type:'customer'
+        console.log 'found customer, finding office', customer_doc
+        if customer_doc
+            found_office = Docs.findOne
+                "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
+                type:'office'
+            console.log 'found office from customer:', found_office
+            return found_office
+        else 
+            console.log 'couldnt find office from customer:', customer_jpid
+            
+         
+         
+    find_franchisee_from_customer_jpid: (customer_jpid)->
+        customer_doc = Docs.findOne
+            "ev.ID": customer_jpid
+            type:'customer'
+        console.log 'found customer, finding franchisee', customer_doc
+        
+        found_franchisee = Docs.findOne
+            type: 'franchisee'
+            "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
+        console.log 'found franchisee', found_franchisee
+        return found_franchisee
+        
+
+         
+    find_office_from_jpid: (office_jpid)->     
+        users_office = Docs.findOne
+            "ev.ID": user.office_jpid
+            type:'office'
+        console.log users_office
+        users_office
             
             
-    add_to_cart: (doc_id)->
-        product = Docs.findOne doc_id
-        Docs.insert
-            type: 'cart_item'
-            product_id: doc_id
-            product_title:product.title
-            product_price:product.price
-            amount: 1
+    # add_to_cart: (doc_id)->
+    #     product = Docs.findOne doc_id
+    #     Docs.insert
+    #         type: 'cart_item'
+    #         product_id: doc_id
+    #         product_title:product.title
+    #         product_price:product.price
+    #         amount: 1
     
-    remove_from_cart: (doc_id)->
-        Docs.remove doc_id
+    # remove_from_cart: (doc_id)->
+    #     Docs.remove doc_id
     
-    register_transaction: (product_id)->
-        product = Docs.findOne product_id
-        if product.point_price
-            console.log 'product point price', product.point_price
-            console.log 'purchaser amount before', Meteor.user().points
-            Meteor.users.update Meteor.userId(),
-                $inc: points: -product.point_price
-            console.log 'purchaser amount after', Meteor.user().points
+    # register_transaction: (product_id)->
+    #     product = Docs.findOne product_id
+    #     if product.point_price
+    #         console.log 'product point price', product.point_price
+    #         console.log 'purchaser amount before', Meteor.user().points
+    #         Meteor.users.update Meteor.userId(),
+    #             $inc: points: -product.point_price
+    #         console.log 'purchaser amount after', Meteor.user().points
             
-            console.log 'seller amount before', Meteor.users.findOne(product.author_id).points
-            Meteor.users.update product.author_id,
-                $inc: points: product.point_price
-            console.log 'seller amount after', Meteor.users.findOne(product.author_id).points
-        Docs.insert
-            type: 'transaction'
-            parent_id: product_id
-            sale_dollar_price: product.dollar_price
-            sale_point_price: product.point_price
-            author_id: Meteor.userId()
-            recipient_id: product.author_id
+    #         console.log 'seller amount before', Meteor.users.findOne(product.author_id).points
+    #         Meteor.users.update product.author_id,
+    #             $inc: points: product.point_price
+    #         console.log 'seller amount after', Meteor.users.findOne(product.author_id).points
+    #     Docs.insert
+    #         type: 'transaction'
+    #         parent_id: product_id
+    #         sale_dollar_price: product.dollar_price
+    #         sale_point_price: product.point_price
+    #         author_id: Meteor.userId()
+    #         recipient_id: product.author_id
     
     
-    publishComposite 'cart', ->
-        {
-            find: ->
-                Docs.find
-                    type: 'cart_item'
-                    author_id: @userId            
-            children: [
-                { find: (cart_item) ->
-                    Docs.find cart_item.parent_id
-                    }
-                ]    
-        }            
+    # publishComposite 'cart', ->
+    #     {
+    #         find: ->
+    #             Docs.find
+    #                 type: 'cart_item'
+    #                 author_id: @userId            
+    #         children: [
+    #             { find: (cart_item) ->
+    #                 Docs.find cart_item.parent_id
+    #                 }
+    #             ]    
+    #     }            

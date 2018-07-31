@@ -8,9 +8,9 @@ Template.left_sidebar.events
 Template.nav.helpers
     my_office_doc: ->
         user = Meteor.user()
-        if user and user.profile and user.profile.office_jpid
+        if user and user.profile and user.office_jpid
             Docs.find
-                "ev.ID": user.profile.office_jpid
+                "ev.ID": user.office_jpid
                 type:'office'
 
 Template.nav.events
