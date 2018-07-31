@@ -1,0 +1,24 @@
+template(name='office_by_franchisee')
+    a.ui.center.aligned.button(href="/view/#{parent_office._id}" title="#{ev.FRANCHISEE}'s Office")
+        // .ui.dividing.header 
+        i.big.icon
+            +icon name='link-company-parent'
+        with parent_office
+            | #{ev.MASTER_LICENSEE}
+            
+template(name='offices')
+    .ui.stackable.centered.padded.grid
+        .middle.aligned.row
+            .three.wide.center.aligned.column
+                +link_button link='/admin' icon='user-shield' label='Admin'
+            .ten.wide.column
+                h1.ui.center.aligned.header
+                    +icon name='building'
+                    |Offices
+            .three.wide.center.aligned.column
+                // if is_dev
+                // +call_method name='sync_offices'
+        .row
+            .sixteen.wide.column
+                // +reactiveTable settings=settings class="ui celled striped sortable table"
+

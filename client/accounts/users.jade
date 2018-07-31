@@ -11,4 +11,26 @@ template(name='users')
             .three.wide.center.aligned.column 
         .centered.row
             .sixteen.wide.column 
-                +reactiveTable settings=settings class="ui celled striped sortable table"
+                +query_input
+                table.ui.celled.striped.fluid.table
+                    thead
+                        th Username
+                        th Name
+                        th Title
+                        th Phone
+                        th Email
+                        th Office
+                        th 
+                    tbody
+                        each all_users
+                            tr
+                                td #{username}
+                                td #{profile.first_name} #{profile.last_name}
+                                td #{profile.title} #{ev.JOB_TITLE}
+                                td #{ev.WORK_TELEPHONE}
+                                td #{email}
+                                td #{profile.office_name}
+                                td 
+                                    +edit_user_button
+                                    +view_user_button
+                

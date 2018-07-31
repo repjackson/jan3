@@ -36,17 +36,13 @@ reywood:publish-composite
 tomwasd:flow-router-autoscroll
 http@1.4.1
 underscore@1.0.10
-yasinuslu:json-view
 peerlibrary:xml2js
 cunneen:mailgun
-email
 ecmascript
 pacreach:jade
 standard-minifier-js
 coffeescript
 juliancwirko:postcss
 tmeasday:publish-counts
-aslagle:reactive-table
-mizzao:user-status
 percolate:synced-cron
 okgrow:analytics

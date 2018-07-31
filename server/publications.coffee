@@ -22,31 +22,30 @@ Meteor.publish 'users_feed', (username)->
         author_id: user._id
     }, limit:20
     
-# Meteor.publish 'all_users', ()->
-#     Meteor.users.find {},
-#         limit: 20
-
-ReactiveTable.publish 'users', Meteor.users,'', {disablePageCountReactivity:true}
-# ReactiveTable.publish 'customers', Docs, {type:'customer', "ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
-ReactiveTable.publish 'customers', Docs, {type:'customer',"ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
-ReactiveTable.publish 'events', Docs, {type:'event'}, {disablePageCountReactivity:false}
-ReactiveTable.publish 'franchisees', Docs, {type:'franchisee', "ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
-# ReactiveTable.publish 'incidents', Docs, {type:'incident'}, {disablePageCountReactivity:true}
-ReactiveTable.publish 'offices', Docs, {type:'office'}, {disablePageCountReactivity:true}
-ReactiveTable.publish 'special_services', Docs, {type:'special_service'}, {disablePageCountReactivity:true}
-ReactiveTable.publish 'services', Docs, {type:'service'}, {disablePageCountReactivity:true}
-ReactiveTable.publish 'jpids', Docs, {type:'jpid'}, {disablePageCountReactivity:true}
-ReactiveTable.publish 'search_history_docs', Docs, {type:'search_history_doc'}, {disablePageCountReactivity:true}
-
-
-ReactiveTable.publish 'office_employees', (input)->
-    console.log 'input', input
-    # page_office = Docs.findOne FlowRouter.getParam('doc_id')
-    # # console.log page_office
-    # Meteor.users.find
-    #     "profile.office_name": page_office.ev.MASTER_LICENSEE
+Meteor.publish 'all_users', (query)->
+    if query 
+        Meteor.users.find {
+            $text: $search: query
+        }, limit:20
+    else
+        Meteor.users.find {}, limit:10
     
     
+    
+
+# ReactiveTable.publish 'users', Meteor.users,'', {disablePageCountReactivity:true}
+# # ReactiveTable.publish 'customers', Docs, {type:'customer', "ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
+# # ReactiveTable.publish 'customers', Docs, {type:'customer',"ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
+# ReactiveTable.publish 'events', Docs, {type:'event'}, {disablePageCountReactivity:false}
+# ReactiveTable.publish 'franchisees', Docs, {type:'franchisee', "ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
+# # ReactiveTable.publish 'incidents', Docs, {type:'incident'}, {disablePageCountReactivity:true}
+# ReactiveTable.publish 'offices', Docs, {type:'office'}, {disablePageCountReactivity:true}
+# ReactiveTable.publish 'special_services', Docs, {type:'special_service'}, {disablePageCountReactivity:true}
+# ReactiveTable.publish 'services', Docs, {type:'service'}, {disablePageCountReactivity:true}
+# ReactiveTable.publish 'jpids', Docs, {type:'jpid'}, {disablePageCountReactivity:true}
+# ReactiveTable.publish 'search_history_docs', Docs, {type:'search_history_doc'}, {disablePageCountReactivity:true}
+
+
 Meteor.publish 'child_docs', (doc_id, limit)->
     if limit
         Docs.find {parent_id:doc_id}, {limit:limit, sort:timestamp:-1}
@@ -115,21 +114,21 @@ Meteor.publish 'has_key_value', (key, value)->
         
 # admin counters        
         
-# Meteor.publish 'office_counter_publication', ->
-#     Counts.publish this, 'office_counter', Docs.find({type:'office'})
-#     return undefined
+Meteor.publish 'office_counter_publication', ->
+    Counts.publish this, 'office_counter', Docs.find({type:'office'})
+    return undefined
     
-# Meteor.publish 'incident_counter_publication', ->
-#     Counts.publish this, 'incident_counter', Docs.find({type:'incident'})
-#     return undefined
+Meteor.publish 'incident_counter_publication', ->
+    Counts.publish this, 'incident_counter', Docs.find({type:'incident'})
+    return undefined
         
-# Meteor.publish 'franchisee_counter_publication', ->
-#     Counts.publish this, 'franchisee_counter', Docs.find({type:'franchisee'})
-#     return undefined
+Meteor.publish 'franchisee_counter_publication', ->
+    Counts.publish this, 'franchisee_counter', Docs.find({type:'franchisee'})
+    return undefined
         
-# Meteor.publish 'customer_counter_publication', ->
-#     Counts.publish this, 'customer_counter', Docs.find({type:'customer'})
-#     return undefined
+Meteor.publish 'customer_counter_publication', ->
+    Counts.publish this, 'customer_counter', Docs.find({type:'customer'})
+    return undefined
         
         
         

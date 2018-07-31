@@ -9,212 +9,136 @@ template(name='children_widget')
                 each children
                     a.item(href="/view/#{_id}") #{name} #{title} !{html}
     
-template(name='jpid_view')
-    .ui.padded.stackable.centered.grid
-        .centered.middle.aligned.row
-            .three.wide.center.aligned.column
-                +link_button link='/jpids' icon='hashtag' label='JP Ids'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header ##{jpid} JP Id
-            .three.wide.center.aligned.column
-                .refresh_jpid.ui.icon.button(title='Refresh JP ID Doc')
-                    i.refresh.icon
-        .centered.row
-            .sixteen.wide.column
-                +jsonView json=ev
+// template(name='jpid_view')
+//     .ui.padded.stackable.centered.grid
+//         .centered.middle.aligned.row
+//             .three.wide.center.aligned.column
+//                 +link_button link='/jpids' icon='hashtag' label='JP Ids'
+//             .ten.wide.column
+//                 h1.ui.center.aligned.grey.header ##{jpid} JP Id
+//             .three.wide.center.aligned.column
+//                 .refresh_jpid.ui.icon.button(title='Refresh JP ID Doc')
+//                     i.refresh.icon
+//         .centered.row
+//             .sixteen.wide.column
+//                 +jsonView json=ev
             
             
-template(name='jpids')
-    .ui.padded.stackable.grid
-        .row
-            .three.wide.center.aligned.column
-                +link_button link='/admin' icon='user-shield' label='Admin'
-            .eight.wide.column
-                .ui.center.aligned.header
-                    i.hashtag.icon
-                    | JP Id's
-            .four.wide.column
-                .ui.icon.input
-                    i.search.icon  
-                    input#jp_lookup(type='text' placeholder='Lookup Jan-Pro Id')
-                // .ui.icon.input
-                //     i.search.icon  
-                //     input#ev_search(type='text' placeholder='Search EV')
-        .row
-            .sixteen.wide.column
-                +reactiveTable settings=settings class="ui celled striped sortable table"
-                // table.ui.celled.very.basic.table
-                //     thead
-                //         tr
-                //             th jpid
-                //             th Customer
-                //             th Franchisee
-                //             th Assigned To
-                //             th Office
-                //             th Status
-                //             th Area
-                //             th
-                //     tbody
-                //         each jpid_docs
-                //             tr
-                //                 td #{jpid}
-                //                 td #{ev.CUSTOMER}
-                //                 td #{ev.FRANCHISEE}
-                //                 td #{ev.ASSIGNED_TO}
-                //                 td #{ev.MASTER_LICENSEE}
-                //                 td #{ev.ACCOUNT_STATUS}
-                //                 td #{ev.AREA}
-                //                 td 
-                //                     +view_button
+// template(name='jpids')
+//     .ui.padded.stackable.grid
+//         .row
+//             .three.wide.center.aligned.column
+//                 +link_button link='/admin' icon='user-shield' label='Admin'
+//             .eight.wide.column
+//                 .ui.center.aligned.header
+//                     i.hashtag.icon
+//                     | JP Id's
+//             .four.wide.column
+//                 .ui.icon.input
+//                     i.search.icon  
+//                     input#jp_lookup(type='text' placeholder='Lookup Jan-Pro Id')
+//                 // .ui.icon.input
+//                 //     i.search.icon  
+//                 //     input#ev_search(type='text' placeholder='Search EV')
+//         .row
+//             .sixteen.wide.column
+//                 // +reactiveTable settings=settings class="ui celled striped sortable table"
+//                 // table.ui.celled.very.basic.table
+//                 //     thead
+//                 //         tr
+//                 //             th jpid
+//                 //             th Customer
+//                 //             th Franchisee
+//                 //             th Assigned To
+//                 //             th Office
+//                 //             th Status
+//                 //             th Area
+//                 //             th
+//                 //     tbody
+//                 //         each jpid_docs
+//                 //             tr
+//                 //                 td #{jpid}
+//                 //                 td #{ev.CUSTOMER}
+//                 //                 td #{ev.FRANCHISEE}
+//                 //                 td #{ev.ASSIGNED_TO}
+//                 //                 td #{ev.MASTER_LICENSEE}
+//                 //                 td #{ev.ACCOUNT_STATUS}
+//                 //                 td #{ev.AREA}
+//                 //                 td 
+//                 //                     +view_button
 
                     
-template(name='history')
-    .ui.padded.stackable.grid
-        .row
-            .three.wide.center.aligned.column
-                +link_button link='/admin' icon='user-shield' label='Admin'
-            .eight.wide.column
-                .ui.center.aligned.header
-                    i.hashtag.icon
-                    | EV History
-            .four.wide.column
-                // .refresh_history.ui.icon.button(title='Run History API Call')
-                //     i.refresh.icon
-                .run_timestamp_search.ui.icon.button(title='Run Search Update')
-                    i.refresh.icon
+// template(name='history')
+//     .ui.padded.stackable.grid
+//         .row
+//             .three.wide.center.aligned.column
+//                 +link_button link='/admin' icon='user-shield' label='Admin'
+//             .eight.wide.column
+//                 .ui.center.aligned.header
+//                     i.hashtag.icon
+//                     | EV History
+//             .four.wide.column
+//                 // .refresh_history.ui.icon.button(title='Run History API Call')
+//                 //     i.refresh.icon
+//                 .run_timestamp_search.ui.icon.button(title='Run Search Update')
+//                     i.refresh.icon
             
-        .row
-            .sixteen.wide.column
-                .ui.header Search API Results
-                +reactiveTable settings=settings class="ui celled striped sortable table"
+//         .row
+//             .sixteen.wide.column
+//                 .ui.header Search API Results
+//                 // +reactiveTable settings=settings class="ui celled striped sortable table"
 
-                // +tabular table=TabularTables.Search_history selector=search_history_selector class="ui sortable fluid striped table"
+//                 // +tabular table=TabularTables.Search_history selector=search_history_selector class="ui sortable fluid striped table"
 
                     
-template(name='history_view')
-    .ui.padded.stackable.grid
-        .row
-            .three.wide.center.aligned.column
-                +link_button link='/ev' icon='database' label='EV Dash'
-            .eight.wide.column
-                .ui.center.aligned.header
-                    i.hashtag.icon
-                    | EV History
-            .four.wide.column
-                .refresh_history.ui.icon.button(title='Refresh History')
-                    i.refresh.icon
+// template(name='history_view')
+//     .ui.padded.stackable.grid
+//         .row
+//             .three.wide.center.aligned.column
+//                 +link_button link='/ev' icon='database' label='EV Dash'
+//             .eight.wide.column
+//                 .ui.center.aligned.header
+//                     i.hashtag.icon
+//                     | EV History
+//             .four.wide.column
+//                 .refresh_history.ui.icon.button(title='Refresh History')
+//                     i.refresh.icon
             
-        .row
-            .sixteen.wide.column
-                .ui.list
-                    with ev
-                        .item ID: #{ID}
-                        .item AREA: #{AREA}
-                        .item PROJECT: #{PROJECT}
-                        .item TIMESTAMP: #{TIMESTAMP}
-                        .item LAST_CHANGE_USER: #{LAST_CHANGE_USER}
-                        .item DATE_CREATED: #{DATE_CREATED}
-                        .item ORIGINATOR: #{ORIGINATOR}
-                        .item MASTER_LICENSEE: #{MASTER_LICENSEE}
-                        .item MASTER_COUNTRY: #{MASTER_COUNTRY}
-                        .item CUSTOMER: #{CUSTOMER}
-                        .item FRANCHISEE: #{FRANCHISEE}
-                        .item SUBCONTRACTOR: #{SUBCONTRACTOR}
-                        .item SERV_TYPE: #{SERV_TYPE}
-                        .item EXTRA_PRICE: #{EXTRA_PRICE}
-                        .item EXTRA_TAX: #{EXTRA_TAX}
-                        .item EXTRA_SERV_DESC: #{EXTRA_SERV_DESC}
-                        .item FULL_TIMESTAMP: #{FULL_TIMESTAMP}
+//         .row
+//             .sixteen.wide.column
+//                 .ui.list
+//                     with ev
+//                         .item ID: #{ID}
+//                         .item AREA: #{AREA}
+//                         .item PROJECT: #{PROJECT}
+//                         .item TIMESTAMP: #{TIMESTAMP}
+//                         .item LAST_CHANGE_USER: #{LAST_CHANGE_USER}
+//                         .item DATE_CREATED: #{DATE_CREATED}
+//                         .item ORIGINATOR: #{ORIGINATOR}
+//                         .item MASTER_LICENSEE: #{MASTER_LICENSEE}
+//                         .item MASTER_COUNTRY: #{MASTER_COUNTRY}
+//                         .item CUSTOMER: #{CUSTOMER}
+//                         .item FRANCHISEE: #{FRANCHISEE}
+//                         .item SUBCONTRACTOR: #{SUBCONTRACTOR}
+//                         .item SERV_TYPE: #{SERV_TYPE}
+//                         .item EXTRA_PRICE: #{EXTRA_PRICE}
+//                         .item EXTRA_TAX: #{EXTRA_TAX}
+//                         .item EXTRA_SERV_DESC: #{EXTRA_SERV_DESC}
+//                         .item FULL_TIMESTAMP: #{FULL_TIMESTAMP}
 
-template(name='search_history_doc_view')
-    .ui.padded.stackable.centered.grid
-        .centered.middle.aligned.row
-            .three.wide.center.aligned.column
-                +link_button link='/history' icon='calendar' label='history'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header Search History Doc View #{ev.ID}
-            .three.wide.center.aligned.column
-                // +edit_button
-        .centered.row
-            .sixteen.wide.column
-                +jsonView json=ev
+// template(name='search_history_doc_view')
+//     .ui.padded.stackable.centered.grid
+//         .centered.middle.aligned.row
+//             .three.wide.center.aligned.column
+//                 +link_button link='/history' icon='calendar' label='history'
+//             .ten.wide.column
+//                 h1.ui.center.aligned.grey.header Search History Doc View #{ev.ID}
+//             .three.wide.center.aligned.column
+//                 // +edit_button
+//         .centered.row
+//             .sixteen.wide.column
+//                 +jsonView json=ev
             
-template(name='franchisees')
-    .ui.padded.stackable.grid
-        .middle.aligned.row
-            .four.wide.column
-                +link_button link='/admin' label='Admin' icon='user-shield'
-            .eight.wide.column
-                h1.ui.center.aligned.header
-                    +icon name='collaborator-female'
-                    | Franchisees
-            .four.wide.column
-                // if is_dev
-                // .ui.icon.button.get_all_franchisees
-                //     i.refresh.icon
-        .row
-            .sixteen.wide.column
-                +reactiveTable settings=settings class="ui celled striped sortable table"
-                    
-                    
-template(name='franchisee_view')
-    .ui.padded.stackable.grid
-        // .centered.row
-        //     +office_by_franchisee
-        .centered.middle.aligned.row
-            .three.wide.center.aligned.column
-                if is_admin
-                    +link_button link='/franchisees' icon='collaborator-female' label='Franchisees'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header #{ev.FRANCHISEE} Franchisee
-            .three.wide.right.aligned.column
-                // +edit_button
-        .centered.row
-            .twelve.wide.column
-                .ui.secondary.segment
-                    .ui.large.list
-                        .item JPID #
-                            strong #{ev.ID}
-                        .item Email: 
-                            strong #{ev.FRANCH_EMAIL}
-                        .item Short Name: 
-                            strong #{ev.FRANCH_NAME}
-                        .item Cell: 
-                            strong #{ev.TELE_CELL}
-                        // .item Master Licensee: 
-                        //     strong #{ev.MASTER_LICENSEE}
-        .centered.row
-            .fifteen.wide.column
-                .ui.center.aligned.header 
-                    +icon name='customer-support'
-                    |#{ev.FRANCHISEE}'s Customers
-                +franchisee_customers
-
-    
-template(name='office_by_franchisee')
-    a.ui.center.aligned.button(href="/view/#{parent_office._id}" title="#{ev.FRANCHISEE}'s Office")
-        // .ui.dividing.header 
-        i.big.icon
-            +icon name='link-company-parent'
-        with parent_office
-            | #{ev.MASTER_LICENSEE}
-            
-template(name='offices')
-    .ui.stackable.centered.padded.grid
-        .middle.aligned.row
-            .three.wide.center.aligned.column
-                +link_button link='/admin' icon='user-shield' label='Admin'
-            .ten.wide.column
-                h1.ui.center.aligned.header
-                    +icon name='building'
-                    |Offices
-            .three.wide.center.aligned.column
-                // if is_dev
-                // +call_method name='sync_offices'
-        .row
-            .sixteen.wide.column
-                +reactiveTable settings=settings class="ui celled striped sortable table"
-
 
                     
 

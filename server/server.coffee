@@ -13,8 +13,13 @@ Cloudinary.config
 
 
 Meteor.startup(() =>
-  Docs._ensureIndex({ "$**": "text" });
-  Meteor.users._ensureIndex({ "$**": "text" });
+    Docs._ensureIndex({ "$**": "text" })
+)
+Meteor.startup(() =>
+    Meteor.users._ensureIndex({ "$**": "text" })
+)
+Meteor.startup(() =>
+    Meteor.users._ensureIndex( { "username": 1 }, { unique: true } )
 )
 
 
