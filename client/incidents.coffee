@@ -292,7 +292,7 @@ Template.sla_rule_doc.helpers
         incident = Docs.findOne doc_id
         if incident and incident.office_jpid
             incident_office = Docs.findOne
-                "ev.ID": customer_doc.office_jpid
+                "ev.ID": incident.office_jpid
                 type:'office'
             incident_office["escalation_#{@number}_#{incident.incident_type}_hours"]
 
@@ -301,7 +301,7 @@ Template.sla_rule_doc.helpers
         incident = Docs.findOne doc_id
         if incident and incident.office_jpid
             incident_office = Docs.findOne
-                "ev.ID": customer_doc.office_jpid
+                "ev.ID": incident.office_jpid
                 type:'office'
             incident_office["escalation_#{@number}_#{incident.incident_type}_contact_franchisee"]
     
@@ -310,7 +310,7 @@ Template.sla_rule_doc.helpers
         incident = Docs.findOne doc_id
         if incident and incident.office_jpid
             incident_office = Docs.findOne
-                "ev.ID": customer_doc.office_jpid
+                "ev.ID": incident.office_jpid
                 type:'office'
             incident_office["escalation_#{@number}_#{incident.incident_type}_primary_contact"]
 
@@ -320,7 +320,7 @@ Template.sla_rule_doc.helpers
         incident = Docs.findOne doc_id
         if incident and incident.office_jpid
             incident_office = Docs.findOne
-                "ev.ID": customer_doc.office_jpid
+                "ev.ID": incident.office_jpid
                 type:'office'
             incident_office["escalation_#{@number}_#{incident.incident_type}_secondary_contact"]
 
