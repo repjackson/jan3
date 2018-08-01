@@ -146,7 +146,7 @@ Meteor.publish 'office_customers', (office_doc_id, query)->
         Docs.find {
             "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
             type: "customer"
-        }
+        }, limit:10
 
 
 
@@ -162,7 +162,7 @@ Meteor.publish 'office_incidents', (office_doc_id, query)->
         Docs.find {
             incident_office_name: office_doc.ev.MASTER_LICENSEE
             type: "incident"
-        }
+        }, limit:10
     
 # Meteor.publish 'office_incidents', (office_doc_id, query)->
 #     office_doc = Docs.findOne office_doc_id
@@ -192,7 +192,7 @@ Meteor.publish 'office_franchisees', (office_doc_id, query)->
             type: "franchisee"
             "ev.ACCOUNT_STATUS": 'ACTIVE'
             "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
-        }
+        }, limit:10
     
 Meteor.publish 'office_employees', (office_doc_id, query)->
     office_doc = Docs.findOne office_doc_id
@@ -204,13 +204,13 @@ Meteor.publish 'office_employees', (office_doc_id, query)->
     else
         Meteor.users.find {
             "profile.office_name": office_doc.ev.MASTER_LICENSEE
-        }
+        }, limit:10
     
     
-Meteor.publish 'my_conversations',() ->
-    Docs.find
-        type: 'conversation'
-        participant_ids: $in: [Meteor.userId()]
+# Meteor.publish 'my_conversations',() ->
+#     Docs.find
+#         type: 'conversation'
+#         participant_ids: $in: [Meteor.userId()]
     
     
     

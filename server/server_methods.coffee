@@ -576,12 +576,18 @@ Meteor.methods
     #     }            
     
     
-    refresh_user_jpids: (username)->
+    refresh_customer_jpids: (username)->
         user = Meteor.users.findOne username:username
         console.log user
-        customer_doc = Docs.findOne
-            "ev.ID": user.customer_jpid
-            type:'customer'
+        if user.profile.customer_jpid
+            customer_doc = Docs.findOne
+                "ev.ID": user.profile.customer_jpid
+                type:'customer'
+        else if user.customer_jpid
+            customer_doc = Docs.findOne
+                "ev.ID": user.customer_jpid
+                type:'customer'
+        
         console.log 'found customer, finding franchisee', customer_doc
         
         found_franchisee = Docs.findOne
@@ -596,6 +602,7 @@ Meteor.methods
 
         Meteor.users.update user._id,
             $set:
+                customer_jpid: customer_doc.ev.ID
                 franchisee_jpid: found_franchisee.ev.ID
                 office_jpid: found_office.ev.ID
                 

@@ -23,7 +23,8 @@ template(name='user_view')
                             |Account Settings
                         
                 .eight.wide.column
-                    #refresh_user_jpids.ui.button Refresh Franchisee and Office Connections
+                    if user_is_customer
+                        #refresh_user_jpids.ui.button Refresh Franchisee and Office Connections
                     .ui.list
                         if customer_jpid
                             .item
