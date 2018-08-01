@@ -325,7 +325,7 @@ Template.sla_rule_doc.helpers
 
 Template.sla_rule_doc.events
     'click .set_level': (e,t)->
-        console.log @
+        # console.log @
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
         type = incident.incident_type
@@ -336,8 +336,8 @@ Template.sla_rule_doc.events
                 # office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
                 primary_contact_string =  "escalation_#{@number}_#{type}_primary_contact"
                 secondary_contact_string =  "escalation_#{@number}_#{type}_secondary_contact"
-                console.log primary_contact_string
-                console.log secondary_contact_string
+                # console.log primary_contact_string
+                # console.log secondary_contact_string
                 if primary_contact_string
                     primary_contact_target =
                         Meteor.users.findOne

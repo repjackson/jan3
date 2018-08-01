@@ -439,8 +439,7 @@ publishComposite 'incident', (id)->
             }
             {
                 find: (incident)-> 
-                    # customer doc
-                    # console.log incident
+                    console.log incident
                     Docs.find
                         "ev.ID": incident.office_jpid
                         type:'office'

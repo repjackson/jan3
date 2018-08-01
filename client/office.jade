@@ -222,7 +222,7 @@ template(name='office_settings')
                                 .ui.equal.width.grid
                                     unless is_initial
                                         .column
-                                            +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
+                                            +edit_number_field key=hours_key label='Escalation Minutes' field_class='inline' min=0 max=24
                                     .column
                                         +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
                                     .column

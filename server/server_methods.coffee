@@ -379,7 +379,8 @@ Meteor.methods
     single_escalation_check: (incident_id)->
         incident = Docs.findOne incident_id
         if incident.level is 4
-            Meteor.call 'create_event', incident_id, 'max_level_notice', "Incident is at max level 4, not escalating."
+            return
+            # Meteor.call 'create_event', incident_id, 'max_level_notice', "Incident is at max level 4, not escalating."
         else
             # console.log 'first',incident_id
             incident_office =
@@ -391,18 +392,28 @@ Meteor.methods
 
             # console.log incident._id
             last_updated = incident.updated
-            hours_value = incident_office["escalation_#{next_level}_#{incident.incident_type}_hours"]
-            now = Date.now()
+            existing_hours_value = incident_office["escalation_#{next_level}_#{incident.incident_type}_hours"]
+            if existing_hours_value 
+                hours_value = existing_hours_value
+                console.log 'found existing hours value', existing_hours_value
+            else 
+                hours_value = 10
+                Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation minutes found, using 10 as the default."
+                
+                console.log 'NOT found existing hours, using 10'
             console.log 'hours value',hours_value
+            
+            
+            now = Date.now()
             console.log 'last_updated value', last_updated
             updated_now_difference = now-last_updated
-            console.log 'difference between last updated and now', updated_now_difference
+            # console.log 'difference between last updated and now', updated_now_difference
             seconds_elapsed = Math.floor(updated_now_difference/1000)
-            console.log 'seconds elapsed =', seconds_elapsed
+            # console.log 'seconds elapsed =', seconds_elapsed
             minutes_elapsed = Math.floor(seconds_elapsed/60)
-            console.log 'minutes elapsed =', minutes_elapsed
+            # console.log 'minutes elapsed =', minutes_elapsed
             escalation_calculation = minutes_elapsed - hours_value
-            console.log 'escalation_calculation', escalation_calculation
+            # console.log 'escalation_calculation', escalation_calculation
             if minutes_elapsed < hours_value
                 Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
                 # continue

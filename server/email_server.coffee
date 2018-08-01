@@ -131,10 +131,10 @@ Meteor.methods
                 </ul>
             "
         }
-        Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{escalation_primary_contact_value} has been emailed as the primary contact for escalation to level #{incident.level}."
-        Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{escalation_secondary_contact_value} has been emailed as the secondary contact for escalation to level #{incident.level}."
+        Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{escalation_primary_contact_value} has been emailed as the primary contact for a #{incident.incident_type} escalation to level #{incident.level}."
+        Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{escalation_secondary_contact_value} has been emailed as the secondary contact for a #{incident.incident_type} escalation to level #{incident.level}."
         if escalation_franchisee_value
-            Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} has been emailed for escalation to level #{incident.level}."
+            Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} has been emailed for a #{incident.incident_type} escalation to level #{incident.level}."
 
         #{escalation_primary_contact_value}
         
@@ -194,7 +194,7 @@ Meteor.methods
                 <h5>Franchisee: #{initial_franchisee_value}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
             "
         }
-        Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{initial_primary_contact_value} has been emailed as the primary contact for initial submission}."
+        Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{initial_primary_contact_value} has been emailed as the primary contact for initial submission."
         Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{initial_secondary_contact_value} has been emailed as the secondary contact for initial submission."
         if initial_franchisee_value
             Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} has been emailed for incident submission."

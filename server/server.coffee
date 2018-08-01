@@ -52,7 +52,7 @@ SyncedCron.add
     name: 'Update incident escalations'
     schedule: (parser) ->
         # parser is a later.parse object
-        parser.text 'every 1 hour'
+        parser.text 'every 1 minute'
     job: -> 
         Meteor.call 'update_escalation_statuses', (err,res)->
             if err then console.log err
