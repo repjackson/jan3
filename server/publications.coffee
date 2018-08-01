@@ -258,13 +258,38 @@ publishComposite 'incidents', (level)->
         find: ->
             self = @
             # match.current_level = parseInt(level)
-            Docs.find({type:'incident'}, limit:10)
+            Docs.find {type:'incident'}, 
+                { 
+                    limit:10,
+                    sort:timestamp:-1
+                }
         children: [
             {
                 find: (doc)-> Meteor.users.find _id:doc.author_id
             }
             {
                 find: (doc)-> Docs.find _id:doc.parent_id
+            }
+        ]
+    }
+    
+    
+publishComposite 'incident', (doc_id)->
+    {
+        find: ->
+            Docs.find doc_id 
+        children: [
+            {
+                find: (incident)-> Meteor.users.find _id:incident.author_id
+            }
+            {
+                find: (incident)-> Docs.find _id:incident.parent_id
+            }
+            {
+                find: (incident)-> 
+                    Docs.find 
+                        "ev.ID": incident.office_jpid
+                        type:'office'
             }
         ]
     }

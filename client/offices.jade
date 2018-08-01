@@ -20,5 +20,25 @@ template(name='offices')
                 // +call_method name='sync_offices'
         .row
             .sixteen.wide.column
-                // +reactiveTable settings=settings class="ui celled striped sortable table"
-
+                +query_input
+                table.ui.striped.fluid.table
+                    thead
+                        tr
+                            th JPID
+                            th Name
+                            th Manager
+                            th Owner
+                            th Phone
+                            th Address
+                            th
+                    tbody
+                        each all_offices
+                            tr
+                                td #{ev.ID}
+                                td #{ev.MASTER_LICENSEE}
+                                td #{ev.MASTER_OFFICE_MANAGER}
+                                td #{ev.MASTER_OFFICE_OWNER}
+                                td #{ev.TELEPHONE}
+                                td #{ev.ADDR_STREET}
+                                td
+                                    +view_button

@@ -23,21 +23,13 @@ template(name='user_view')
                             |Account Settings
                         
                 .eight.wide.column
-                    if user_is_customer
-                        #refresh_user_jpids.ui.button Refresh Franchisee and Office Connections
+                    // +edit_profile_text_field key='customer_jpid' label='Connected Customer Account'
                     .ui.list
                         if customer_jpid
                             .item
                                 strong Customer JPID 
                                 | #{customer_jpid}
-                        if franchisee_jpid
-                            .item
-                                strong Franchisee JPID 
-                                | #{franchisee_jpid}
-                        if office_jpid
-                            .item
-                                strong Office JPID 
-                                | #{office_jpid}
+                        // +jsonView json=ev
                     .ui.list
                         with ev
                             if LOGIN_ID

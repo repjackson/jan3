@@ -10,6 +10,7 @@ Template.incident_view.onCreated ->
 
 Template.add_incident_button.events
     'click #add_incident': ->
+        user = Meteor.user()
         my_customer_ob = Meteor.user().users_customer()
         console.log my_customer_ob
         if my_customer_ob
@@ -23,7 +24,9 @@ Template.add_incident_button.events
                         Docs.insert
                             type: 'incident'
                             incident_number: next_incident_number
-                            customer_jpid: my_customer_ob.ev.ID
+                            franchisee_jpid: user.franchisee_jpid
+                            office_jpid: user.office_jpid
+                            customer_jpid: user.customer_jpid
                             customer_name: my_customer_ob.ev.CUST_NAME
                             incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
                             incident_franchisee: my_customer_ob.ev.FRANCHISEE
@@ -69,8 +72,10 @@ Template.incidents.onCreated ->
     Session.setDefault('query',null)
     @autorun -> Meteor.subscribe 'incidents', Session.get('query')
 Template.incidents.helpers
-    all_incidents: -> Docs.find type:'incident'
-
+    all_incidents: -> 
+        Docs.find {
+            type:'incident'
+        }, sort:timestamp:-1
 Template.customer_incidents.onCreated ->
     Session.setDefault('query',null)
     @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('query')
@@ -109,7 +114,7 @@ Template.customer_incidents.helpers
 Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'type','incident_type'
     @autorun -> Meteor.subscribe 'type','rule'
-    @autorun -> Meteor.subscribe 'my_office_contacts'
+    @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
 
 
 Template.incident_view.helpers
@@ -144,10 +149,10 @@ Template.incident_view.events
                 "ev.MASTER_LICENSEE": incident.incident_office_name
                 type:'office'
         if incidents_office
-            escalation_minutes = incidents_office.escalation_1_hours
-            console.log incidents_office.escalation_1_hours
-            Meteor.call 'create_event', doc_id, 'submit', "submitted incident.  It will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} escalation 1 rules."
-            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office.escalation_0_primary_contact} and #{incidents_office.escalation_0_secondary_contact} have been notified per #{incident.incident_office_name} rules."
+            escalation_minutes = incidents_office["escalation_0_#{incident.incident_type}_hours"]
+            console.log escalation_minutes
+            Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} initial rules."
+            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_0_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_0_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
         Docs.update doc_id,
             $set:
                 submitted:true
@@ -223,6 +228,7 @@ Template.incident_view.events
         }, =>
             doc_id = FlowRouter.getParam('doc_id')
             Docs.remove doc_id
+            Meteor.call 'clear_incident_events', doc_id, ->
             FlowRouter.go '/incidents'
 
         
@@ -249,15 +255,16 @@ Template.incident_sla_widget.helpers
         incident = Docs.findOne doc_id
 
 Template.sla_rule_doc.helpers
-    is_initial: -> @number is 0    
+    is_initial: -> @number is 1   
 
     can_escalate: -> 
         doc_id = FlowRouter.getParam 'doc_id'
         incident = Docs.findOne doc_id
         console.log @number
         console.log incident.level
-        console.log incident.level is (@number+1)
-        return incident.level is (@number+1)
+        console.log incident.level is (@number-1)
+        return incident.level is (@number-1)
+        
     is_level: -> 
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
@@ -265,7 +272,7 @@ Template.sla_rule_doc.helpers
         # console.log incident.level
         # console.log incident.level is @number
         if incident
-            incident.level is (@number+1)
+            incident.level is (@number)
     escalation_level_card_class: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
@@ -280,59 +287,42 @@ Template.sla_rule_doc.helpers
     incident_doc: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-    next_level_from_escalation: -> @number+1
     hours_value: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-        if incident and incident.customer_jpid
-            customer_doc = Docs.findOne
-                "ev.ID": incident.customer_jpid
-                type:'customer'
-            if customer_doc
-                incident_office = Docs.findOne
-                    "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
-                    type:'office'
-                incident_office["escalation_#{@number}_#{incident.incident_type}_hours"]
+        if incident and incident.office_jpid
+            incident_office = Docs.findOne
+                "ev.ID": customer_doc.office_jpid
+                type:'office'
+            incident_office["escalation_#{@number}_#{incident.incident_type}_hours"]
 
     franchisee_toggle_value: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-        if incident and incident.customer_jpid
-            customer_doc = Docs.findOne
-                "ev.ID": incident.customer_jpid
-                type:'customer'
-            if customer_doc
-                incident_office = Docs.findOne
-                    "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
-                    type:'office'
-                incident_office["escalation_#{@number}_#{incident.incident_type}_contact_franchisee"]
+        if incident and incident.office_jpid
+            incident_office = Docs.findOne
+                "ev.ID": customer_doc.office_jpid
+                type:'office'
+            incident_office["escalation_#{@number}_#{incident.incident_type}_contact_franchisee"]
     
     primary_contact_value: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-        if incident and incident.customer_jpid
-            customer_doc = Docs.findOne
-                "ev.ID": incident.customer_jpid
-                type:'customer'
-            if customer_doc 
-                incident_office = Docs.findOne
-                    "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
-                    type:'office'
-                incident_office["escalation_#{@number}_#{incident.incident_type}_primary_contact"]
+        if incident and incident.office_jpid
+            incident_office = Docs.findOne
+                "ev.ID": customer_doc.office_jpid
+                type:'office'
+            incident_office["escalation_#{@number}_#{incident.incident_type}_primary_contact"]
 
     
     secondary_contact_value: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-        if incident and incident.customer_jpid
-            customer_doc = Docs.findOne
-                "ev.ID": incident.customer_jpid
-                type:'customer'
-            if customer_doc
-                incident_office = Docs.findOne
-                    "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
-                    type:'office'
-                incident_office["escalation_#{@number}_#{incident.incident_type}_secondary_contact"]
+        if incident and incident.office_jpid
+            incident_office = Docs.findOne
+                "ev.ID": customer_doc.office_jpid
+                type:'office'
+            incident_office["escalation_#{@number}_#{incident.incident_type}_secondary_contact"]
 
 
 Template.sla_rule_doc.events

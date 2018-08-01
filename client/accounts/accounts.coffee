@@ -108,34 +108,46 @@ Template.register.events
         franchisee_jpid = $('#franchisee_jpid').val()
         
         current_role = Session.get 'user_type_selection'
+        options = {}
         
-        
-        console.log username
-        console.log password
-        console.log email
-        console.log customer_jpid
-        console.log franchisee_jpid
-        console.log office_jpid
-        console.log current_role
+        if username        
+            options.username = username
+            console.log username
+        if password        
+            options.password = password
+            console.log password
+        if email
+            options.email = email
+            console.log email
+        if customer_jpid        
+            options.customer_jpid = customer_jpid
+            console.log customer_jpid
+        if franchisee_jpid        
+            options.franchisee_jpid = franchisee_jpid
+            console.log franchisee_jpid
+        if office_jpid        
+            options.office_jpid = office_jpid
+            console.log office_jpid
+        if current_role 
+            options.roles = [current_role]
+            console.log current_role
 
         
-        options = {
-            username:username
-            password:password
-            email:email
-            customer_jpid:customer_jpid
-            franchisee_jpid:franchisee_jpid
-            office_jpid:office_jpid
-            roles: [current_role]
-        }
         console.dir options
         
         Accounts.createUser(options, (err,res)=>
             if err
                 Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
             else
-                Bert.alert "Registered new #{current_role}: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                FlowRouter.go '/'                
+                if current_role is 'customer'
+                    Bert.alert "Registered new #{current_role}: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                    FlowRouter.go '/'                
+                if current_role is 'office'
+                    office_doc = 
+                        Docs.findOne
+                            type:'office'
+                            "ev.ID": office_jpid
+                    console.log office_doc
         )
     
     'click #select_customer': -> Session.set 'user_type_selection', 'customer'

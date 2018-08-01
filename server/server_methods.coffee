@@ -369,7 +369,7 @@ Meteor.methods
       
       
     update_escalation_statuses: ->
-        open_incidents = Docs.find({type:'incident', open:true})
+        open_incidents = Docs.find({type:'incident', open:true, submitted:true})
         open_incidents_count = open_incidents.count()
         Meteor.call 'create_event',null, 'start_escalation_check', "Starting esclation check now."
         Meteor.call 'create_event',null, 'incident_count', "Found #{open_incidents_count} open incidents, checking escalation status."
@@ -434,8 +434,9 @@ Meteor.methods
             parent_id: incident_id
             type:'event'
         for event_doc in cursor.fetch()
-            # console.log event_doc
             Docs.remove event_doc._id
+            console.log 'removed', event_doc._id
+            
 
     check_username: (username)->
         found_user = Accounts.findUserByUsername username

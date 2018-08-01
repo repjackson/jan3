@@ -26,22 +26,17 @@ FlowRouter.route '/office/:doc_id/settings',
     action: ->
         BlazeLayout.render 'layout', main: 'office_settings'
 
+Template.offices.onCreated ->
+    Session.setDefault('query',null)
+    @autorun -> Meteor.subscribe 'type', 'office', Session.get('query')
+
 Template.offices.helpers
-    settings: ->
-        collection: 'offices'
-        rowsPerPage: 10
-        showFilter: true
-        showRowCount: true
-        # showColumnToggles: true
-        fields: [
-            { key: 'ev.ID', label: 'JPID' }
-            { key: 'ev.MASTER_LICENSEE', label: 'Name' }
-            { key: 'ev.MASTER_OFFICE_MANAGER', label: 'Manager' }
-            { key: 'ev.MASTER_OFFICE_OWNER', label: 'Owner' }
-            { key: 'ev.ev.TELEPHONE', label: 'Phone' }
-            { key: 'ev.ADDR_STREET', label: 'Address' }
-            { key: '', label: 'View', tmpl:Template.view_button }
-        ]
+    all_offices: -> 
+        Docs.find {
+            type:'office'
+        }, sort:timestamp:-1
+
+
 
 Template.office_header.helpers
     office_doc: -> Docs.findOne FlowRouter.getParam('doc_id')

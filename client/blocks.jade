@@ -487,9 +487,9 @@ template(name='user_pill')
 
 template(name='full_doc_history')
     .ui.secondary.segment
-        if is_admin
-            #clear_events.ui.top.right.attached.label
-                i.remove.icon(title='Clear')
+        // if is_admin
+        #clear_events.ui.top.right.attached.label
+            i.remove.icon(title='Clear')
         .ui.header 
             +icon name='clock'
             |History

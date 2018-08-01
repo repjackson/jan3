@@ -154,14 +154,14 @@ template(name='incident_view')
                         i.green.checkmark.icon
                         |Submit
                 unless is_customer
-                    if submitted
-                        .ui.secondary.segment
-                            +incident_tasks
-                    +notify_button
-                    +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
-                    +incident_sla_widget
+                    // if submitted
+                    //     .ui.secondary.segment
+                    //         +incident_tasks
+                    // +notify_button
+                    // +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
                     .ui.secondary.segment
                         .ui.header Level: #{level}
+                +incident_sla_widget
 
     .ui.confirm_close.modal
         h3.ui.center.aligned.header
@@ -229,8 +229,6 @@ template(name='incident_tasks')
                         if complete
                             i.green.checkmark.icon
                         |#{title}
-                    
-                    
 
 template(name='incident_task_edit')
     .ui.padded.stackable.centered.grid
@@ -304,8 +302,6 @@ template(name='customer_incidents')
                     thead
                         tr
                             th Number
-                            th Customer
-                            th Office
                             th Type
                             th Logged
                             th Details
@@ -358,10 +354,10 @@ template(name='incident_sla_widget')
             
 template(name='sla_rule_doc')            
     .ui.dividing.header 
-        if is_level
-            i.green.checkmark.icon(title="Current Level: #{incident_doc.level}")
+        // if is_level
+        //     i.green.checkmark.icon(title="Current Level: #{incident_doc.level}")
         unless is_level
-            .set_level.ui.small.compact.button(title="Simulate Escalation #{number} to set incident level to #{next_level_from_escalation}") Set Level #{next_level_from_escalation}
+            .set_level.ui.small.compact.button(title="Simulate Escalation to #{number}.") Set Level #{number}
         |#{name}
     .content
         unless is_initial
