@@ -391,7 +391,7 @@ Meteor.methods
 
             # console.log incident._id
             last_updated = incident.updated
-            hours_value = incident_office["escalation_#{next_level}_hours"]
+            hours_value = incident_office["escalation_#{next_level}_#{incident.incident_type}_hours"]
             now = Date.now()
             console.log 'hours value',hours_value
             console.log 'last_updated value', last_updated
@@ -404,10 +404,10 @@ Meteor.methods
             escalation_calculation = minutes_elapsed - hours_value
             console.log 'escalation_calculation', escalation_calculation
             if minutes_elapsed < hours_value
-                Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{next_level} rules, not escalating."
+                Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
                 # continue
             else    
-                Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{next_level} rules, escalating."
+                Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, escalating."
                 Meteor.call 'escalate_incident', incident._id, ->
             
     escalate_incident: (doc_id)-> 

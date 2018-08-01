@@ -352,7 +352,7 @@ template(name='incident_sla_widget')
     .ui.secondary.segment
         .ui.header 
             i.user.shield.icon
-            |SLA Rules List 
+            |SLA Rules List for #{incident_doc.incident_type}
         each sla_rule_docs
             +sla_rule_doc
             

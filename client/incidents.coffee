@@ -244,6 +244,9 @@ Template.incident_view.events
 
 Template.incident_sla_widget.helpers
     sla_rule_docs: -> Docs.find {type:'rule'}, sort:number:1
+    incident_doc: ->
+        doc_id = FlowRouter.getParam('doc_id')
+        incident = Docs.findOne doc_id
 
 Template.sla_rule_doc.helpers
     is_initial: -> @number is 0    
@@ -289,7 +292,7 @@ Template.sla_rule_doc.helpers
                 incident_office = Docs.findOne
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
-                incident_office["escalation_#{@number}_hours"]
+                incident_office["escalation_#{@number}_#{incident.incident_type}_hours"]
 
     franchisee_toggle_value: ->
         doc_id = FlowRouter.getParam('doc_id')
@@ -302,7 +305,7 @@ Template.sla_rule_doc.helpers
                 incident_office = Docs.findOne
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
-                incident_office["escalation_#{@number}_contact_franchisee"]
+                incident_office["escalation_#{@number}_#{incident.incident_type}_contact_franchisee"]
     
     primary_contact_value: ->
         doc_id = FlowRouter.getParam('doc_id')
@@ -315,7 +318,7 @@ Template.sla_rule_doc.helpers
                 incident_office = Docs.findOne
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
-                incident_office["escalation_#{@number}_primary_contact"]
+                incident_office["escalation_#{@number}_#{incident.incident_type}_primary_contact"]
 
     
     secondary_contact_value: ->
@@ -329,56 +332,60 @@ Template.sla_rule_doc.helpers
                 incident_office = Docs.findOne
                     "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                     type:'office'
-                incident_office["escalation_#{@number}_secondary_contact"]
+                incident_office["escalation_#{@number}_#{incident.incident_type}_secondary_contact"]
 
 
 Template.sla_rule_doc.events
     'click .set_level': (e,t)->
-        # console.log @
+        console.log @
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-        
-        office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
-        primary_contact_type =  office_doc.escalation_one_primary_contact
-        secondary_contact_type =  office_doc.escalation_one_secondary_contact
-        # console.log parent_doc["#{context.key}"]
-        # console.log parent_doc[parent_doc["#{context.key}"]]
-        if primary_contact_type
-            primary_contact_target =
-                Meteor.users.findOne
-                    username: office_doc["#{primary_contact_type}"]
-            primary_username = if primary_contact_target and primary_contact_target.username then primary_contact_target.username else ''
-        if secondary_contact_type
-            secondary_contact_target =
-                Meteor.users.findOne( username: office_doc["#{secondary_contact_type}"] )
-            secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
-        sla = @
-        Docs.update doc_id,
-            $set: level:sla.number
-        Meteor.call 'email_about_escalation', doc_id
-        Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
-        # $(e.currentTarget).closest('.ui.incident.modal').modal(
-        #     inverted: false
-        #     # transition: 'vertical flip'
-        #     # observeChanges: true
-        #     duration: 400
-        #     onApprove : ()=>
-        #     ).modal('show')
-        
-        # swal {
-        #     title: "Change Incident to Level #{@number}?"
-        #     text: "This will alert the office primary contact #{primary_contact_type} #{primary_username} and secondary contact #{secondary_contact_type} #{secondary_username}."
-        #     type: 'info'
-        #     animation: false
-        #     showCancelButton: true
-        #     closeOnConfirm: true
-        #     cancelButtonText: 'Cancel'
-        #     confirmButtonText: 'Change'
-        #     confirmButtonColor: '#da5347'
-        # }, =>
-        #     Docs.update doc_id,
-        #         $set: level:@number
-        #     Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
+        type = incident.incident_type
+        Meteor.call 'find_office_from_customer_jpid', incident.customer_jpid, (err,res)=>
+            if err then console.error err
+            else
+                office_doc = res 
+                # office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
+                primary_contact_string =  "escalation_#{@number}_#{type}_primary_contact"
+                secondary_contact_string =  "escalation_#{@number}_#{type}_secondary_contact"
+                console.log primary_contact_string
+                console.log secondary_contact_string
+                if primary_contact_string
+                    primary_contact_target =
+                        Meteor.users.findOne
+                            username: office_doc["#{primary_contact_string}"]
+                    primary_username = if primary_contact_target and primary_contact_target.username then primary_contact_target.username else ''
+                if secondary_contact_string
+                    secondary_contact_target =
+                        Meteor.users.findOne( username: office_doc["#{secondary_contact_string}"] )
+                    secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
+                sla = @
+                Docs.update doc_id,
+                    $set: level:sla.number
+                Meteor.call 'email_about_escalation', doc_id
+                Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
+                # $(e.currentTarget).closest('.ui.incident.modal').modal(
+                #     inverted: false
+                #     # transition: 'vertical flip'
+                #     # observeChanges: true
+                #     duration: 400
+                #     onApprove : ()=>
+                #     ).modal('show')
+                
+                # swal {
+                #     title: "Change Incident to Level #{@number}?"
+                #     text: "This will alert the office primary contact #{primary_contact_string} #{primary_username} and secondary contact #{secondary_contact_string} #{secondary_username}."
+                #     type: 'info'
+                #     animation: false
+                #     showCancelButton: true
+                #     closeOnConfirm: true
+                #     cancelButtonText: 'Cancel'
+                #     confirmButtonText: 'Change'
+                #     confirmButtonColor: '#da5347'
+                # }, =>
+                #     Docs.update doc_id,
+                #         $set: level:@number
+                #     Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
             
             
 Template.full_doc_history.onCreated ->

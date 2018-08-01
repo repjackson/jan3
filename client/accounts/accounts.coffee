@@ -1,15 +1,12 @@
 FlowRouter.route '/login',
     name: 'login'
-    action: ->
-        BlazeLayout.render 'accounts_layout', main: 'login'
+    action: -> BlazeLayout.render 'accounts_layout', main: 'login'
 FlowRouter.route '/register',
     name: 'register'
-    action: ->
-        BlazeLayout.render 'accounts_layout', main: 'register'
+    action: -> BlazeLayout.render 'accounts_layout', main: 'register'
 FlowRouter.route '/reset_password',
     name: 'reset_password'
-    action: ->
-        BlazeLayout.render 'accounts_layout', main: 'reset_password'
+    action: -> BlazeLayout.render 'accounts_layout', main: 'reset_password'
     
     
 Template.login.events
@@ -72,7 +69,9 @@ Template.register.helpers
     user_found: -> Session.get 'username_found'
     
     session_customer_jpid: -> Session.get 'customer_jpid'
+    session_franchisee_jpid: -> Session.get 'franchisee_jpid'
     session_office_jpid: -> Session.get 'office_jpid'
+
     jpid_lookup_status: -> Session.get 'jpid_lookup_status'
     
     current_user_type_selection: -> Session.get 'user_type_selection'
@@ -106,6 +105,7 @@ Template.register.events
         email = $('#email').val()
         office_id = $('#office_id').val()
         customer_jpid = $('#customer_jpid').val()
+        franchisee_jpid = $('#franchisee_jpid').val()
         
         current_role = Session.get 'user_type_selection'
         
@@ -114,6 +114,8 @@ Template.register.events
         console.log password
         console.log email
         console.log customer_jpid
+        console.log franchisee_jpid
+        console.log office_jpid
         console.log current_role
 
         
@@ -122,6 +124,8 @@ Template.register.events
             password:password
             email:email
             customer_jpid:customer_jpid
+            franchisee_jpid:franchisee_jpid
+            office_jpid:office_jpid
             roles: [current_role]
         }
         console.dir options

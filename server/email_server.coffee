@@ -98,10 +98,10 @@ Meteor.methods
             type:'office'
         }
         # escalation_1_primary_contact_franchisee: true,
-        escalation_primary_contact_value = office_doc["escalation_#{incident.level}_primary_contact"]
-        escalation_secondary_contact_value = office_doc["escalation_#{incident.level}_secondary_contact"]
+        escalation_primary_contact_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_primary_contact"]
+        escalation_secondary_contact_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_secondary_contact"]
         
-        escalation_franchisee_value = office_doc["escalation_#{incident.level}_contact_franchisee"]
+        escalation_franchisee_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_contact_franchisee"]
         
         
         console.log escalation_franchisee_value
@@ -115,15 +115,20 @@ Meteor.methods
             subject: "Incident from #{incident.customer_name} has been escalated to #{incident.level}."
             text: ''
             html: "<h4>Incident from #{incident.customer_name} escalated to #{incident.level}.</h4>
-                <h5>Type: #{incident.incident_type}</h5>
-                <h5>Details: #{incident.incident_details}</h5>
-                <h5>Office: #{incident.incident_office_name}</h5>
-                <h5>Status: #{incident.status}</h5>
-                <h5>Service Date: #{incident.service_date}</h5>
+                <ul>
+                    <li>Type: #{incident.incident_type}</li>
+                    <li>Details: #{incident.incident_details}</li>
+                    <li>Office: #{incident.incident_office_name}</li>
+                    <li>Open: #{incident.open}</li>
+                    <li>Submitted: #{incident.submitted}</li>
+                    <li>Service Date: #{incident.service_date}</li>
+                </ul>
                 <h4>This will notify</h4>
-                <h5>Primary Office Contact: #{escalation_primary_contact_value}</h5>
-                <h5>Secondary Office Contact: #{escalation_secondary_contact_value}</h5>
-                <h5>Franchisee: #{escalation_franchisee_value}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
+                <ul>
+                    <li>Primary Office Contact: #{escalation_primary_contact_value}</li>
+                    <li>Secondary Office Contact: #{escalation_secondary_contact_value}</li>
+                    <li>Franchisee: #{escalation_franchisee_value}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</li>
+                </ul>
             "
         }
         Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{escalation_primary_contact_value} has been emailed as the primary contact for escalation to level #{incident.level}."

@@ -40,7 +40,7 @@ Template.registerHelper 'my_office', () ->
             users_office = Docs.findOne
                 "ev.ID": user.office_jpid
                 type:'office'
-            console.log users_office
+            # console.log users_office
             users_office
         # if user.customer_jpid
         #     customer_doc = Docs.findOne
