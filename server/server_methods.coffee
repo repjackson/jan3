@@ -576,16 +576,26 @@ Meteor.methods
     #     }            
     
     
-    Accounts.onCreateUser (options, user)=>
-        console.log 'trying to update new user with options', options
-        edited_user = Object.assign({
-            customer_jpid:options.customer_jpid
-            franchisee_jpid:options.franchisee_jpid
-            office_jpid:options.office_jpid
-        }, user)
-    
-        if options.profile
-            edited_user.profile = options.profile
-        console.log 'updated user doc', edited_user          
-    
-        return edited_user
+    refresh_user_jpids: (username)->
+        user = Meteor.users.findOne username:username
+        console.log user
+        customer_doc = Docs.findOne
+            "ev.ID": user.customer_jpid
+            type:'customer'
+        console.log 'found customer, finding franchisee', customer_doc
+        
+        found_franchisee = Docs.findOne
+            type: 'franchisee'
+            "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
+        # console.log 'found franchisee', found_franchisee
+        
+        found_office = Docs.findOne
+            type: 'office'
+            "ev.MASTER_LICENSEE": found_franchisee.ev.MASTER_LICENSEE
+        # console.log 'found office', found_office
+
+        Meteor.users.update user._id,
+            $set:
+                franchisee_jpid: found_franchisee.ev.ID
+                office_jpid: found_office.ev.ID
+                

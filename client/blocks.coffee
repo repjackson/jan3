@@ -808,3 +808,22 @@ Template.customer_card.helpers
                 "ev.ID": context.customer_jpid
         # console.log doc
         doc
+
+
+Template.franchisee_card.onCreated ->
+    console.log @data.franchisee_jpid
+    @autorun =>  Meteor.subscribe 'franchisee_by_id', @data.franchisee_jpid
+Template.franchisee_card.helpers
+    franchisee_doc: ->
+        context = Template.currentData(0)
+        doc = 
+            Docs.findOne 
+                type:'franchisee'
+                "ev.ID": context.franchisee_jpid
+        # console.log doc
+        doc
+
+
+
+                
+                

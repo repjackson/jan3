@@ -1,5 +1,5 @@
 template(name='footer')
-    .ui.fluid.inverted.blue.segment.footer
+    .footer_area.ui.fluid.segment.footer
         .ui.stackable.equal.height.centered.padded.grid
             .row
                 .four.wide.inverted.column
@@ -18,14 +18,12 @@ template(name='footer')
                         i.bug.icon
                 .four.wide.column
                     if is_customer
-                        +my_customer_account_card
+                        +customer_card customer_jpid=currentUser.customer_jpid
                 .four.wide.column
                     if is_customer
-                        +my_franchisee_card
+                        +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
                 .four.wide.column
-                    if is_customer
-                        +my_office_card
-                    if is_office
+                    unless is_admin
                         +office_card office_jpid=currentUser.office_jpid
             .centered.row
                 .ui.center.aligned.inverted.grey.header

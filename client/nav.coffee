@@ -23,8 +23,8 @@ Template.nav.events
 Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'my_customer_account'
     @autorun -> Meteor.subscribe 'my_franchisee'
-    @autorun -> Meteor.subscribe 'me'
     @autorun -> Meteor.subscribe 'my_office'
+    @autorun -> Meteor.subscribe 'me'
     
 Template.dashboard.onRendered ->
     # Meteor.setTimeout ->

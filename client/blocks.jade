@@ -669,3 +669,23 @@ template(name='office_card')
                     | #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                 div
                     a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
+
+
+        
+template(name='franchisee_card')
+    .ui.card
+        with franchisee_doc
+            .content
+                a(href="/view/#{_id}")
+                    .ui.header 
+                        +icon name='conference'
+                        |Franchisee
+            .content
+                a(href="/view/#{_id}")
+                    h4.ui.header #{franchisee}
+                .ui.list
+                    .item(title='Short Name') #{ev.FRANCH_NAME}
+                    .item(title='Call Number')
+                        a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
+                    .item #{franchisee_email}
+                
