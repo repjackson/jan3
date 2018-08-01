@@ -397,8 +397,8 @@ Meteor.methods
                 hours_value = existing_hours_value
                 console.log 'found existing hours value', existing_hours_value
             else 
-                hours_value = 10
-                Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation minutes found, using 10 as the default."
+                hours_value = 2
+                Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation minutes found, using 2 as the default."
                 
                 console.log 'NOT found existing hours, using 10'
             console.log 'hours value',hours_value
@@ -589,13 +589,10 @@ Meteor.methods
     
     
     refresh_customer_jpids: (username)->
+        console.log username
         user = Meteor.users.findOne username:username
         console.log user
-        if user.profile.customer_jpid
-            customer_doc = Docs.findOne
-                "ev.ID": user.profile.customer_jpid
-                type:'customer'
-        else if user.customer_jpid
+        if user and user.customer_jpid
             customer_doc = Docs.findOne
                 "ev.ID": user.customer_jpid
                 type:'customer'

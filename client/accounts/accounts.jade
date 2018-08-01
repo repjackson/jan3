@@ -90,24 +90,25 @@ template(name='register')
     .ui.middle.aligned.centered.padded.grid
         .row
             h1.ui.center.aligned.header 
-                if customer_selected
-                    +icon name='customer-support'
-                if officer_selected
-                    +icon name='small-business'
-                |Register #{current_user_type_selection}
+                // if customer_selected
+                //     +icon name='customer-support'
+                // if officer_selected
+                //     +icon name='small-business'
+                // |Register #{current_user_type_selection}
+                |Register
         .row
             .ten.wide.column
                 .ui.segment
-                    .ui.basic.center.aligned.segment
-                        #select_customer.ui.button(class=customer_button_class) 
-                            +iconsmall name='customer-support'
-                            |Customer
-                        // #selec   t_franchisee.ui.button(class=franchisee_button_class) 
-                        //     +iconsmall name='collaborator-female'
-                        //     | Franchisee
-                        #select_office.ui.button(class=office_button_class) 
-                            +iconsmall name='small-business'
-                            |Office
+                    // .ui.basic.center.aligned.segment
+                    //     #select_customer.ui.button(class=customer_button_class) 
+                    //         +iconsmall name='customer-support'
+                    //         |Customer
+                    //     // #selec   t_franchisee.ui.button(class=franchisee_button_class) 
+                    //     //     +iconsmall name='collaborator-female'
+                    //     //     | Franchisee
+                    //     #select_office.ui.button(class=office_button_class) 
+                    //         +iconsmall name='small-business'
+                    //         |Office
                     .ui.large.form
                         if customer_selected
                             .field
@@ -117,22 +118,22 @@ template(name='register')
                                     |#{customer_jpid_lookup_status}
                             if account_selected
                                 +customer_card customer_jpid=session_customer_jpid                    
-                        if franchisee_selected
-                            .field
-                                label Franchisee JPID
-                                input#franchisee_jpid(type='text')
-                            if session_franchisee_jpid
-                                +franchisee_card franchisee_jpid=session_franchisee_jpid  
-                        if office_selected
-                            .field
-                                label Office JPID
-                                input#office_jpid(type='text')
-                            if session_office_jpid
-                                +office_card office_jpid=session_office_jpid  
+                        // if franchisee_selected
+                        //     .field
+                        //         label Franchisee JPID
+                        //         input#franchisee_jpid(type='text')
+                        //     if session_franchisee_jpid
+                        //         +franchisee_card franchisee_jpid=session_franchisee_jpid  
+                        // if office_selected
+                        //     .field
+                        //         label Office JPID
+                        //         input#office_jpid(type='text')
+                        //     if session_office_jpid
+                        //         +office_card office_jpid=session_office_jpid  
                         if account_selected
                             .field
                                 label Username
-                                input#username(type='text')
+                                input#username(type='text' name="username")
                                 if username_found
                                     .ui.info.message 
                                         |Existing Username Found
@@ -141,7 +142,7 @@ template(name='register')
                                             i.right.arrow.icon
                             .field
                                 label Password
-                                input#password(type='password')
+                                input#password(type='password' name="password")
                             .field
                                 label Email
                                 input#email(type='email')

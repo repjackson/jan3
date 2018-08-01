@@ -117,7 +117,7 @@ template(name='office_incidents')
                                 td #{incident_number}
                                 td #{incident_office_name}
                                 td #{customer_name}
-                                td #{timestamp}
+                                td #{when}
                                 td 
                                     +incident_type_label
                                 td #{incident_details}
@@ -188,24 +188,21 @@ template(name='office_franchisees')
                     
 
 template(name='office_settings')
-    .ui.stackable.divided.grid
+    .ui.stackable.padded.grid
         .row
             +office_header
         .row
             .eight.wide.column
-                .ui.secondary.segment
-                    h3.ui.header
-                        +icon name='sms'
-                        | &nbsp; Notices
-                    +edit_textarea key='customer_message' label='Customer Dashboard Message'
-                    +edit_text_field key='customer_promotions' label='Customer Dashboard Promotions Message'
-                    +edit_text_field key='customer_special_services' label='Customer Dashboard Special Services'
+                +edit_textarea key='customer_message' label='Customer Dashboard Message'
+                // +edit_text_field key='customer_special_services' label='Customer Dashboard Special Services'
             .eight.wide.column
-                .ui.secondary.segment
-                    h3.ui.header
-                        +icon name='broom'
-                        | &nbsp; Offered Services
-                    +office_service_settings
+                +edit_textarea key='customer_promotions' label='Customer Dashboard Promotions Message'
+        .row
+            .sixteen.wide.column
+                h3.ui.header
+                    +icon name='broom'
+                    | &nbsp; Offered Services
+                +office_service_settings
         .row
             .sixteen.wide.column
                 .ui.secondary.segment
@@ -220,10 +217,10 @@ template(name='office_settings')
                             .ui.secondary.segment
                                 h4.ui.header #{name} for #{selected_incident_type} Rules
                                 .ui.equal.width.grid
-                                    unless is_initial
-                                        .column
-                                            +edit_number_field key=hours_key label='Escalation Minutes' field_class='inline' min=0 max=24
                                     .column
+                                        unless is_initial
+                                            +edit_number_field key=hours_key label='Escalation Minutes' field_class='inline' min=0 max=24
+                                            .ui.hidden.divider
                                         +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
                                     .column
                                         // h4.ui.dividing.header Primary Contact

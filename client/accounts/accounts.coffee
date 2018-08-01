@@ -80,9 +80,12 @@ Template.register.helpers
     office_button_class: -> if Session.equals('user_type_selection', 'office') then 'blue' else ''
     franchisee_button_class: -> if Session.equals('user_type_selection', 'franchisee') then 'blue' else ''
     
-    customer_selected: -> if Session.equals('user_type_selection', 'customer') then true else false
+    customer_selected: -> true
+        # if Session.equals('user_type_selection', 'customer') then true else false
     franchisee_selected: -> if Session.equals('user_type_selection', 'franchisee') then true else false
-    office_selected: -> if Session.equals('user_type_selection', 'office') then true else false
+    office_selected: -> true 
+        
+        # if Session.equals('user_type_selection', 'office') then true else false
     
     # account_selected: -> Session.get('account_selected')
     account_selected:  -> true
@@ -103,7 +106,7 @@ Template.register.events
         username = $('#username').val()
         password = $('#password').val()
         email = $('#email').val()
-        office_id = $('#office_id').val()
+        # office_id = $('#office_id').val()
         customer_jpid = $('#customer_jpid').val()
         franchisee_jpid = $('#franchisee_jpid').val()
         
@@ -125,9 +128,9 @@ Template.register.events
         if franchisee_jpid        
             options.franchisee_jpid = franchisee_jpid
             console.log franchisee_jpid
-        if office_jpid        
-            options.office_jpid = office_jpid
-            console.log office_jpid
+        # if office_jpid        
+        #     options.office_jpid = office_jpid
+        #     console.log office_jpid
         if current_role 
             options.roles = [current_role]
             console.log current_role
@@ -139,15 +142,17 @@ Template.register.events
             if err
                 Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
             else
-                if current_role is 'customer'
-                    Bert.alert "Registered new #{current_role}: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                    FlowRouter.go '/'                
-                if current_role is 'office'
-                    office_doc = 
-                        Docs.findOne
-                            type:'office'
-                            "ev.ID": office_jpid
-                    console.log office_doc
+                Bert.alert "Registered new #{current_role}: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                Meteor.call 'refresh_customer_jpids', username
+                FlowRouter.go '/'                
+                # if current_role is 'customer'
+                #     Meteor.call 'refresh_customer_jpids', user.username
+                # if current_role is 'office'
+                #     office_doc = 
+                #         Docs.findOne
+                #             type:'office'
+                #             "ev.ID": office_jpid
+                #     console.log office_doc
         )
     
     'click #select_customer': -> Session.set 'user_type_selection', 'customer'
