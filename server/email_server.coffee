@@ -168,10 +168,10 @@ Meteor.methods
             type:'office'
         }
         # escalation_1_primary_contact_franchisee: true,
-        initial_primary_contact_value = office_doc["escalation_0_primary_contact"]
-        initial_secondary_contact_value = office_doc["escalation_0_secondary_contact"]
+        initial_primary_contact_value = office_doc["escalation_1_#{incident.incident_type}_primary_contact"]
+        initial_secondary_contact_value = office_doc["escalation_1_#{incident.incident_type}_secondary_contact"]
         
-        initial_franchisee_value = office_doc["escalation_0_contact_franchisee"]
+        initial_franchisee_value = office_doc["escalation_1_#{incident.incident_type}_contact_franchisee"]
         
         console.log 'initial_primary_contact_value', initial_primary_contact_value
         console.log 'initial_secondary_contact_value', initial_secondary_contact_value
@@ -194,8 +194,8 @@ Meteor.methods
                 <h5>Franchisee: #{initial_franchisee_value}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
             "
         }
-        Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{initial_primary_contact_value} has been emailed as the primary contact for escalation to level #{incident.level}."
-        Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{initial_secondary_contact_value} has been emailed as the secondary contact for escalation to level #{incident.level}."
+        Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{initial_primary_contact_value} has been emailed as the primary contact for initial submission}."
+        Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{initial_secondary_contact_value} has been emailed as the secondary contact for initial submission."
         if initial_franchisee_value
             Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} has been emailed for incident submission."
 

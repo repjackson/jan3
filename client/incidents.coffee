@@ -4,8 +4,6 @@ FlowRouter.route '/incidents',
 FlowRouter.route '/customer_incidents', 
     action: -> BlazeLayout.render 'layout', main:'customer_incidents'
 
-Template.incident_view.onCreated ->
-    @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam 'doc_id'
     
 
 Template.add_incident_button.events
@@ -115,7 +113,7 @@ Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'type','incident_type'
     @autorun -> Meteor.subscribe 'type','rule'
     @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
-
+    # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getParam('doc_id')
 
 Template.incident_view.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
@@ -149,10 +147,10 @@ Template.incident_view.events
                 "ev.MASTER_LICENSEE": incident.incident_office_name
                 type:'office'
         if incidents_office
-            escalation_minutes = incidents_office["escalation_0_#{incident.incident_type}_hours"]
+            escalation_minutes = incidents_office["escalation_1_#{incident.incident_type}_hours"]
             console.log escalation_minutes
             Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} initial rules."
-            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_0_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_0_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
+            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_1_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_1_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
         Docs.update doc_id,
             $set:
                 submitted:true

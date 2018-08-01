@@ -153,7 +153,7 @@ Template.office_settings.helpers
     incident_types: -> Docs.find {type:'incident_type'}
     select_incident_type_button_class: -> if Session.equals('incident_type_selection', @slug) then 'blue' else 'basic'
     selected_incident_type: -> Session.get 'incident_type_selection'
-    is_initial: -> @number is 0    
+    is_initial: -> @number is 1    
     rule_docs: -> Docs.find {type:'rule'}, sort:number:1
     hours_key: -> 
         current_incident_type = Session.get 'incident_type_selection'

@@ -274,27 +274,6 @@ publishComposite 'incidents', (level)->
     }
     
     
-publishComposite 'incident', (doc_id)->
-    {
-        find: ->
-            Docs.find doc_id 
-        children: [
-            {
-                find: (incident)-> Meteor.users.find _id:incident.author_id
-            }
-            {
-                find: (incident)-> Docs.find _id:incident.parent_id
-            }
-            {
-                find: (incident)-> 
-                    Docs.find 
-                        "ev.ID": incident.office_jpid
-                        type:'office'
-            }
-        ]
-    }
-    
-    
     
     
 
@@ -456,6 +435,15 @@ publishComposite 'incident', (id)->
                     Docs.find
                         type:'customer'
                         "ev.ID": incident.customer_jpid
+
+            }
+            {
+                find: (incident)-> 
+                    # customer doc
+                    # console.log incident
+                    Docs.find
+                        "ev.ID": incident.office_jpid
+                        type:'office'
 
             }
             # {

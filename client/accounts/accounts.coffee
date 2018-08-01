@@ -84,8 +84,8 @@ Template.register.helpers
     franchisee_selected: -> if Session.equals('user_type_selection', 'franchisee') then true else false
     office_selected: -> if Session.equals('user_type_selection', 'office') then true else false
     
-    account_selected: -> Session.get('account_selected')
-    # account_selected:  -> true
+    # account_selected: -> Session.get('account_selected')
+    account_selected:  -> true
     
     passwords_match: ->
         password_one = Session.get 'password_one'
