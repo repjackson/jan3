@@ -92,7 +92,7 @@ template(name='office_customers')
                                 td #{ev.TIMESTAMP}
                                 td 
                                     +view_button
-                    +table_footer                
+                    +table_footer columns='8'                
 
 
 template(name='office_incidents')
@@ -104,7 +104,6 @@ template(name='office_incidents')
                 table.ui.celled.striped.sortable.fluid.table
                     thead
                         +sort_column_header key='incident_number' label='Number'
-                        +sort_column_header key='incident_office_name' label='Office'
                         +sort_column_header key='customer_name' label='Customer'
                         +sort_column_header key='timestamp' label='Logged'
                         +sort_column_header key='incident_type' label='Type'
@@ -116,7 +115,6 @@ template(name='office_incidents')
                         each office_incidents
                             tr
                                 td #{incident_number}
-                                td #{incident_office_name}
                                 td #{customer_name}
                                 td {{reg_format timestamp}}
                                 td 
@@ -127,7 +125,7 @@ template(name='office_incidents')
                                     +submitted_template
                                 td 
                                     +view_button
-                    +table_footer                
+                    +table_footer columns='8'                
 
 
 
@@ -160,7 +158,7 @@ template(name='office_employees')
                                 td 
                                     +edit_user_button
                                     +view_user_button
-                    +table_footer                
+                    +table_footer columns='7'                
 
 
 template(name='office_franchisees')
@@ -187,7 +185,7 @@ template(name='office_franchisees')
                                 td #{ev.TELE_CELL}
                                 td 
                                     +view_button
-                    +table_footer                
+                    +table_footer columns='7'                
 
                     
                     

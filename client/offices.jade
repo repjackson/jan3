@@ -42,41 +42,6 @@ template(name='offices')
                                 td #{ev.ADDR_STREET}
                                 td
                                     +view_button
-                    +table_footer                
+                    +table_footer columns='7'                
                                     
                                     
-template(name='table_footer')                                    
-    tfoot
-        tr
-            th(colspan='7')
-                +pagination
-                .ui.header Total: #{office_counter}
-                +page_size_input
-                                
-template(name='pagination')
-    .ui.right.floated.pagination.menu
-        a.page_1_link.item 1
-        a.page_2_link.item 2
-        a.page_3_link.item 3
-        a.page_4_link.item 4
-        a.page_5_link.item 5
-        a.page_6_link.item 6
-        a.page_7_link.item 7
-                                
-template(name='page_size_input')   
-    .set_10.ui.button 10
-    .set_20.ui.button 20
-    .set_50.ui.button 50
-    .set_100.ui.button 100
-    // .ui.input
-    //     label Page Size
-    //     input#page_size(type='number' value=page_size min='0')
-                                
-                                
-template(name='sort_column_header')    
-    th.sort_by
-        if sort_descending
-            i.down.arrow.icon
-        if sort_ascending
-            i.up.arrow.icon
-        |#{label}

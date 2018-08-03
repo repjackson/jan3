@@ -25,18 +25,26 @@ Meteor.publish 'type', (type, query, limit, sort_key, sort_direction, skip)->
 #         # console.log cursor.count()
 #         cursor
         
-Meteor.publish 'users_feed', (username)->
+Meteor.publish 'users_feed', (username, limit, sort_key, sort_direction, skip)->
     user = Meteor.users.findOne username:username
     Docs.find {
         type: 'event'
         author_id: user._id
-    }, limit:20
+    },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
     
-Meteor.publish 'all_users', (query)->
+Meteor.publish 'all_users', (query, limit, sort_key, sort_direction, skip)->
     if query 
         Meteor.users.find {
             $text: $search: query
-        }, limit:20
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
     else
         Meteor.users.find {}, limit:10
     
@@ -144,37 +152,53 @@ Meteor.publish 'customer_counter_publication', ->
         
 # office subsections
 
-Meteor.publish 'office_customers', (office_doc_id, query)->    
+Meteor.publish 'office_customers', (office_doc_id, query, limit, sort_key, sort_direction, skip)->    
     office_doc = Docs.findOne office_doc_id
     if query
         Docs.find {
             "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
             type: "customer"
             $text: $search: query
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     else
         Docs.find {
             "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
             type: "customer"
-        }, limit:10
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
 
 
 
-Meteor.publish 'office_incidents', (office_doc_id, query)->
+Meteor.publish 'office_incidents', (office_doc_id, query, limit, sort_key, sort_direction, skip)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Docs.find {
             incident_office_name: office_doc.ev.MASTER_LICENSEE
             type: "incident"
             $text: $search: query
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     else
         Docs.find {
             incident_office_name: office_doc.ev.MASTER_LICENSEE
             type: "incident"
-        }, limit:10
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
     
-# Meteor.publish 'office_incidents', (office_doc_id, query)->
+# Meteor.publish 'office_incidents', (office_doc_id, query, limit, sort_key, sort_direction, skip)->
 #     office_doc = Docs.findOne office_doc_id
 #     if query 
 #         Docs.find {
@@ -188,7 +212,7 @@ Meteor.publish 'office_incidents', (office_doc_id, query)->
 #             type: "incident"
 #         }
     
-Meteor.publish 'office_franchisees', (office_doc_id, query)->
+Meteor.publish 'office_franchisees', (office_doc_id, query, limit, sort_key, sort_direction, skip)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Docs.find {
@@ -196,25 +220,41 @@ Meteor.publish 'office_franchisees', (office_doc_id, query)->
             $text: $search: query
             "ev.ACCOUNT_STATUS": 'ACTIVE'
             "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     else
         Docs.find {
             type: "franchisee"
             "ev.ACCOUNT_STATUS": 'ACTIVE'
             "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
-        }, limit:10
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
     
-Meteor.publish 'office_employees', (office_doc_id, query)->
+Meteor.publish 'office_employees', (office_doc_id, query, limit, sort_key, sort_direction, skip)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Meteor.users.find {
             "profile.office_name": office_doc.ev.MASTER_LICENSEE
             $text: $search: query
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     else
         Meteor.users.find {
             "profile.office_name": office_doc.ev.MASTER_LICENSEE
-        }, limit:10
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
     
     
 # Meteor.publish 'my_conversations',() ->
@@ -225,7 +265,7 @@ Meteor.publish 'office_employees', (office_doc_id, query)->
     
     
     
-Meteor.publish 'my_customer_incidents', (query)->    
+Meteor.publish 'my_customer_incidents', (query, limit, sort_key, sort_direction, skip)->    
     user = Meteor.user()
     if user.customer_jpid
         # customer_doc = Docs.findOne "ev.ID":user.customer_jpid
@@ -234,16 +274,21 @@ Meteor.publish 'my_customer_incidents', (query)->
                 customer_jpid: user.customer_jpid
                 type: 'incident'
                 $text: $search: query
+            },{
+                skip: skip
+                limit:limit
+                sort:"#{sort_key}":parseInt("#{sort_direction}")
             }
         else
             Docs.find {
                 customer_jpid: user.customer_jpid
                 type: 'incident'
-            }, {
-                limit:10
-                sort:timestamp:-1
-                }
-publishComposite 'docs', (selected_tags, type)->
+            },{
+                skip: skip
+                limit:limit
+                sort:"#{sort_key}":parseInt("#{sort_direction}")
+            }
+publishComposite 'docs', (selected_tags, type, limit, sort_key, sort_direction, skip)->
     {
         find: ->
             self = @
@@ -263,16 +308,18 @@ publishComposite 'docs', (selected_tags, type)->
     }
 
 
-publishComposite 'incidents', (level)->
+publishComposite 'incidents', (level, limit, sort_key, sort_direction, skip)->
     {
         find: ->
             self = @
             # match.current_level = parseInt(level)
-            Docs.find {type:'incident'}, 
-                { 
-                    limit:10,
-                    sort:timestamp:-1
-                }
+            Docs.find {
+                type:'incident' 
+            },{
+                skip: skip
+                limit:limit
+                sort:"#{sort_key}":parseInt("#{sort_direction}")
+            }
         children: [
             {
                 find: (doc)-> Meteor.users.find _id:doc.author_id
@@ -393,7 +440,11 @@ Meteor.publish 'my_special_services', ->
         Docs.find {
             type:'special_service'
             "ev.CUSTOMER": customer_doc.ev.CUST_NAME
-        },limit:20
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
     
 Meteor.publish 'my_office_contacts', ()->    
     user = Meteor.user()

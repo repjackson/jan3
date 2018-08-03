@@ -11,6 +11,13 @@ FlowRouter.notFound =
 #         libraries: 'places'
 # )
 
+
+Session.setDefault('query',null)
+Session.setDefault('sort_direction','-1')
+Session.setDefault('sort_key','timestamp')
+
+
+
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
 
