@@ -15,6 +15,7 @@ FlowRouter.notFound =
 Session.setDefault('query',null)
 Session.setDefault('sort_direction','-1')
 Session.setDefault('sort_key','timestamp')
+Session.setDefault('page_size',10)
 
 Bert.defaults =
     hideDelay: 2000

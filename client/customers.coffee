@@ -5,7 +5,13 @@ Template.customers.onCreated ->
     Session.setDefault('query',null)
     @autorun -> Meteor.subscribe 'type','customer', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
 Template.customers.helpers
-    all_customers: -> Docs.find type:'customer'
+    all_customers: -> 
+        Docs.find {
+            type:'customer'
+        },{ 
+            sort:
+                "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")
+        }
 
 
 Template.customers.events

@@ -165,14 +165,11 @@ template(name='customer_incidents_widget')
         // i.exclamation.circle.icon
         +icon name='error'
         | #{currentUser.users_customer.ev.CUST_NAME}'s Incidents
-    table.ui.sortable.striped.table
+    table.ui.striped.table
         thead
             tr
                 th Number
-                th Customer
-                th Office
                 th Type
-                th Logged
                 th Details
                 th Level
                 th Status
@@ -186,7 +183,6 @@ template(name='customer_incidents_widget')
                     td #{incident_number}
                     td
                         +incident_type_label
-                    td #{when}
                     td #{incident_details}
                     td #{level}
                     td 

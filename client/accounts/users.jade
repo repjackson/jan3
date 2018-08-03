@@ -12,20 +12,23 @@ template(name='users')
         .centered.row
             .sixteen.wide.column 
                 +query_input
-                table.ui.celled.striped.fluid.table
+                table.ui.celled.striped.fluid.sortable.table
                     thead
-                        th Username
-                        th Name
-                        th Title
-                        th Phone
-                        th Email
-                        th Office
+                    
+                        +sort_column_header key='username' label='Username'
+                        +sort_column_header key='profile.first_name' label='First Name'
+                        +sort_column_header key='profile.last_name' label='Last Name'
+                        +sort_column_header key='profile.title' label='Title'
+                        +sort_column_header key='ev.WORK_TELEPHONE' label='Phone'
+                        +sort_column_header key='email' label='Email'
+                        +sort_column_header key='profile.office_name' label='Office'
                         th 
                     tbody
                         each all_users
                             tr
                                 td #{username}
-                                td #{profile.first_name} #{profile.last_name}
+                                td #{profile.first_name} 
+                                td #{profile.last_name}
                                 td #{profile.title} #{ev.JOB_TITLE}
                                 td #{ev.WORK_TELEPHONE}
                                 td #{email}
@@ -33,4 +36,4 @@ template(name='users')
                                 td 
                                     +edit_user_button
                                     +view_user_button
-                
+                    +table_footer columns='8'

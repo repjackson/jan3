@@ -440,10 +440,6 @@ Meteor.publish 'my_special_services', ->
         Docs.find {
             type:'special_service'
             "ev.CUSTOMER": customer_doc.ev.CUST_NAME
-        },{
-            skip: skip
-            limit:limit
-            sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     
 Meteor.publish 'my_office_contacts', ()->    
