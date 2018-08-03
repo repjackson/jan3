@@ -13,7 +13,7 @@ template(name='incidents')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.striped.fluid.table
+                table.ui.striped.fluid.sortable.table
                     thead
                         tr
                             +sort_column_header key='number' label='Number'
@@ -21,6 +21,7 @@ template(name='incidents')
                             +sort_column_header key='incident_office_name' label='Office'
                             +sort_column_header key='incident_type' label='Type'
                             +sort_column_header key='when' label='Logged'
+                            +sort_column_header key='service_date' label='Incident Date'
                             +sort_column_header key='incident_details' label='Details'
                             +sort_column_header key='level' label='Level'
                             +sort_column_header key='open' label='Status'
@@ -37,6 +38,7 @@ template(name='incidents')
                                 td
                                     +incident_type_label
                                 td #{when}
+                                td #{service_date}
                                 td #{incident_details}
                                 td #{level}
                                 td 
@@ -299,18 +301,18 @@ template(name='customer_incidents')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.striped.fluid.table
+                table.ui.striped.fluid.sortable.table
                     thead
                         tr
-                            th Number
-                            th Type
-                            th Logged
-                            th Details
-                            th Level
-                            th Status
-                            th Submitted
-                            th Assigned To
-                            th Last Event
+                            +sort_column_header key='number' label='Number'
+                            +sort_column_header key='incident_type' label='Type'
+                            +sort_column_header key='service_date' label='Service Date'
+                            +sort_column_header key='incident_details' label='Details'
+                            +sort_column_header key='level' label='Level'
+                            +sort_column_header key='open' label='Status'
+                            +sort_column_header key='submitted' label='Submitted'
+                            +sort_column_header key='' label='Assigned To'
+                            +sort_column_header key='' label='Last Event'
                             th
                     tbody
                         each customer_incidents
@@ -318,7 +320,7 @@ template(name='customer_incidents')
                                 td #{incident_number}
                                 td
                                     +incident_type_label
-                                td #{when}
+                                td #{service_date}
                                 td #{incident_details}
                                 td #{level}
                                 td 
@@ -331,11 +333,7 @@ template(name='customer_incidents')
                                     +small_doc_history
                                 td
                                     +view_button
-
-        .row
-            .sixteen.wide.column
-                // +reactiveTable settings=settings collection=customer_incidents class="ui celled striped sortable table"
-        
+                    +table_footer columns='11'        
         
 template(name='add_incident_button')
     if has_user_customer_jpid

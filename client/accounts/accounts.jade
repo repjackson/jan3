@@ -102,7 +102,7 @@ template(name='register_customer')
                             //     |#{jpid_lookup_status}
                         if account_selected
                             .ui.cards        
-                                .ui.card
+                                .ui.green.card
                                     with customer_doc
                                         .content
                                             .ui.header 
@@ -116,16 +116,16 @@ template(name='register_customer')
                                                 .item #{ev.ADDR_STREET}
                                                 .item #{ev.ADDR_STREET_2}
                                                 .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                                .ui.card
-                                    with office_doc
-                                        .content
-                                            .ui.header 
-                                                |Office
-                                            h4.ui.header #{ev.MASTER_LICENSEE}
-                                            div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
-                                            div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                                            div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-                                            div #{ev.TELEPHONE}
+                                // .ui.card
+                                //     with office_doc
+                                //         .content
+                                //             .ui.header 
+                                //                 |Office
+                                //             h4.ui.header #{ev.MASTER_LICENSEE}
+                                //             div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
+                                //             div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                                //             div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                                //             div #{ev.TELEPHONE}
 
                         if account_selected
                             .field

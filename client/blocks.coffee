@@ -797,7 +797,7 @@ Template.office_card.helpers
         doc
         
 Template.customer_card.onCreated ->
-    console.log @data.customer_jpid
+    # console.log @data.customer_jpid
     @autorun =>  Meteor.subscribe 'customer_by_id', @data.customer_jpid
 Template.customer_card.helpers
     customer_doc: ->
@@ -811,7 +811,7 @@ Template.customer_card.helpers
 
 
 Template.franchisee_card.onCreated ->
-    console.log @data.franchisee_jpid
+    # console.log @data.franchisee_jpid
     @autorun =>  Meteor.subscribe 'franchisee_by_id', @data.franchisee_jpid
 Template.franchisee_card.helpers
     franchisee_doc: ->
@@ -826,4 +826,6 @@ Template.franchisee_card.helpers
 
 
                 
-                
+Template.page_size_input.helpers
+    page_size_button_class: (string_size)->
+        console.log string_size

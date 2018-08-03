@@ -105,7 +105,7 @@ template(name='office_incidents')
                     thead
                         +sort_column_header key='incident_number' label='Number'
                         +sort_column_header key='customer_name' label='Customer'
-                        +sort_column_header key='timestamp' label='Logged'
+                        +sort_column_header key='service_date' label='Service Date'
                         +sort_column_header key='incident_type' label='Type'
                         +sort_column_header key='incident_details' label='Details'
                         +sort_column_header key='level' label='Level'
@@ -116,7 +116,7 @@ template(name='office_incidents')
                             tr
                                 td #{incident_number}
                                 td #{customer_name}
-                                td {{reg_format timestamp}}
+                                td #{service_date}
                                 td 
                                     +incident_type_label
                                 td #{incident_details}

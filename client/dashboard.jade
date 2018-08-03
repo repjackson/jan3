@@ -79,7 +79,7 @@ template(name='dashboard')
 
     
 template(name='customer_menu')
-    .ui.five.item.stackable.large.menu
+    .ui.four.item.stackable.large.menu
         a.item(href='/account/settings') 
             i.big.icon
                 +icon name='settings'
@@ -96,10 +96,10 @@ template(name='customer_menu')
             i.big.icon
                 +icon name='service-bell'
             | &nbsp; Request Service
-        a.item(href='/help') 
-            i.big.icon
-                +icon name='help'
-            | &nbsp; Help
+        // a.item(href='/help') 
+        //     i.big.icon
+        //         +icon name='help'
+        //     | &nbsp; Help
 
 template(name='dashboard_services_widget')
     .ui.secondary.segment
@@ -201,18 +201,6 @@ template(name='customer_incidents_widget')
                         +view_button
     
         
-
-template(name='status_template')
-    if open
-        .ui.basic.label Open
-    else
-        .ui.label Closed
-
-template(name='submitted_template')
-    if submitted
-        .ui.basic.label Submitted
-    else
-        .ui.label Not Submitted
 
 
 

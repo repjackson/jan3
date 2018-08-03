@@ -1,4 +1,4 @@
-Meteor.publish 'type', (type, query, limit, sort_key, sort_direction, skip)->
+Meteor.publish 'type', (type, query=null, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
     if query
         Docs.find {
             type: type
@@ -25,7 +25,7 @@ Meteor.publish 'type', (type, query, limit, sort_key, sort_direction, skip)->
 #         # console.log cursor.count()
 #         cursor
         
-Meteor.publish 'users_feed', (username, limit, sort_key, sort_direction, skip)->
+Meteor.publish 'users_feed', (username, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
     user = Meteor.users.findOne username:username
     Docs.find {
         type: 'event'
@@ -36,7 +36,7 @@ Meteor.publish 'users_feed', (username, limit, sort_key, sort_direction, skip)->
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     
-Meteor.publish 'all_users', (query, limit, sort_key, sort_direction, skip)->
+Meteor.publish 'all_users', (query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
     if query 
         Meteor.users.find {
             $text: $search: query
@@ -152,7 +152,7 @@ Meteor.publish 'customer_counter_publication', ->
         
 # office subsections
 
-Meteor.publish 'office_customers', (office_doc_id, query, limit, sort_key, sort_direction, skip)->    
+Meteor.publish 'office_customers', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->    
     office_doc = Docs.findOne office_doc_id
     if query
         Docs.find {
@@ -176,7 +176,7 @@ Meteor.publish 'office_customers', (office_doc_id, query, limit, sort_key, sort_
 
 
 
-Meteor.publish 'office_incidents', (office_doc_id, query, limit, sort_key, sort_direction, skip)->
+Meteor.publish 'office_incidents', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Docs.find {
@@ -198,7 +198,7 @@ Meteor.publish 'office_incidents', (office_doc_id, query, limit, sort_key, sort_
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     
-# Meteor.publish 'office_incidents', (office_doc_id, query, limit, sort_key, sort_direction, skip)->
+# Meteor.publish 'office_incidents', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
 #     office_doc = Docs.findOne office_doc_id
 #     if query 
 #         Docs.find {
@@ -212,7 +212,7 @@ Meteor.publish 'office_incidents', (office_doc_id, query, limit, sort_key, sort_
 #             type: "incident"
 #         }
     
-Meteor.publish 'office_franchisees', (office_doc_id, query, limit, sort_key, sort_direction, skip)->
+Meteor.publish 'office_franchisees', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Docs.find {
@@ -236,7 +236,7 @@ Meteor.publish 'office_franchisees', (office_doc_id, query, limit, sort_key, sor
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     
-Meteor.publish 'office_employees', (office_doc_id, query, limit, sort_key, sort_direction, skip)->
+Meteor.publish 'office_employees', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Meteor.users.find {
@@ -265,7 +265,7 @@ Meteor.publish 'office_employees', (office_doc_id, query, limit, sort_key, sort_
     
     
     
-Meteor.publish 'my_customer_incidents', (query, limit, sort_key, sort_direction, skip)->    
+Meteor.publish 'my_customer_incidents', (query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->    
     user = Meteor.user()
     if user.customer_jpid
         # customer_doc = Docs.findOne "ev.ID":user.customer_jpid
@@ -288,7 +288,7 @@ Meteor.publish 'my_customer_incidents', (query, limit, sort_key, sort_direction,
                 limit:limit
                 sort:"#{sort_key}":parseInt("#{sort_direction}")
             }
-publishComposite 'docs', (selected_tags, type, limit, sort_key, sort_direction, skip)->
+publishComposite 'docs', (selected_tags, type, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
     {
         find: ->
             self = @
@@ -308,7 +308,7 @@ publishComposite 'docs', (selected_tags, type, limit, sort_key, sort_direction, 
     }
 
 
-publishComposite 'incidents', (level, limit, sort_key, sort_direction, skip)->
+publishComposite 'incidents', (level, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
     {
         find: ->
             self = @

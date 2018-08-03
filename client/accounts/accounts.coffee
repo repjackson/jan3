@@ -296,7 +296,7 @@ Template.register_office.events
             if err
                 Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
             else
-                Bert.alert "Registered new office user: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                Bert.alert "Registered new office user: #{username}. Redirecting to dashboard.", 'success', 'growl-bottom-right'
                 FlowRouter.go '/'                
                 # if current_role is 'customer'
                 #     Meteor.call 'refresh_customer_jpids', user.username
@@ -325,7 +325,7 @@ Template.register_office.events
                     if err
                         console.log err
                     else
-                        Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                        Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-bottom-right'
                         FlowRouter.go '/'                
             
                 
