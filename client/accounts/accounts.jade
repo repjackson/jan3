@@ -8,13 +8,14 @@ template(name='accounts_layout')
                     +Template.dynamic template=main
 
 template(name='accounts_nav')
-    #nav.ui.four.item.stackable.large.inverted.blue.menu
+    #nav.ui.five.item.stackable.inverted.blue.menu
         a.item(href='/')
             img.ui.avatar.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
             | &nbsp; Home
         +menu_item link='/login' label='Login' icon='password' name='login'
         +menu_item link='/reset_password' label='Reset Password' icon='forgot-password' name='reset_password'
-        +menu_item link='/register' label='Register' icon='add-user-group-woman-man' name='register'
+        +menu_item link='/register_customer' label='Register Customer' icon='add-user-group-woman-man' name='register'
+        +menu_item link='/register_office' label='Register Office' icon='add-user-group-woman-man' name='register'
 
 template(name='menu_item')
     a.item(href=link class="{{ is_current_route name }}")
@@ -22,7 +23,6 @@ template(name='menu_item')
         i.big.icon
             +icon name=icon
         | &nbsp; #{label}
-
 
 template(name='reset_password')
     .ui.middle.aligned.centered.padded.grid
@@ -47,7 +47,6 @@ template(name='reset_password')
                         #reset_password_by_email.ui.fluid.button
                             +iconsmall name='available-updates'
                             | Reset password by Email
-
 
 template(name='login')
     .ui.middle.aligned.centered.padded.grid
@@ -84,52 +83,50 @@ template(name='login')
                         #login_demo_admin.ui.fluid.large.button
                             +iconsmall name='user-shield' classes='ui inline image'
                             |Demo Admin
+               
                 
-                
-template(name='register')
+template(name='register_customer')
     .ui.middle.aligned.centered.padded.grid
         .row
             h1.ui.center.aligned.header 
-                // if customer_selected
-                //     +icon name='customer-support'
-                // if officer_selected
-                //     +icon name='small-business'
-                // |Register #{current_user_type_selection}
-                |Register
+                +icon name='customer-support'
+                |Register Customer
         .row
             .ten.wide.column
                 .ui.segment
-                    // .ui.basic.center.aligned.segment
-                    //     #select_customer.ui.button(class=customer_button_class) 
-                    //         +iconsmall name='customer-support'
-                    //         |Customer
-                    //     // #selec   t_franchisee.ui.button(class=franchisee_button_class) 
-                    //     //     +iconsmall name='collaborator-female'
-                    //     //     | Franchisee
-                    //     #select_office.ui.button(class=office_button_class) 
-                    //         +iconsmall name='small-business'
-                    //         |Office
                     .ui.large.form
-                        if customer_selected
-                            .field
-                                label Customer JPID
-                                input#customer_jpid(type='text')
-                                if customer_jpid_lookup_status
-                                    |#{customer_jpid_lookup_status}
-                            if account_selected
-                                +customer_card customer_jpid=session_customer_jpid                    
-                        // if franchisee_selected
-                        //     .field
-                        //         label Franchisee JPID
-                        //         input#franchisee_jpid(type='text')
-                        //     if session_franchisee_jpid
-                        //         +franchisee_card franchisee_jpid=session_franchisee_jpid  
-                        // if office_selected
-                        //     .field
-                        //         label Office JPID
-                        //         input#office_jpid(type='text')
-                        //     if session_office_jpid
-                        //         +office_card office_jpid=session_office_jpid  
+                        .field
+                            label Customer JPID
+                            input#customer_jpid(type='text' value=session_customer_jpid)
+                            // if jpid_lookup_status
+                            //     |#{jpid_lookup_status}
+                        if account_selected
+                            .ui.cards        
+                                .ui.card
+                                    with customer_doc
+                                        .content
+                                            .ui.header 
+                                                |Customer
+                                            h4.ui.header #{ev.CUST_NAME}
+                                            .ui.list
+                                                .item ##{ev.ID}
+                                                .item #{ev.CUST_CONT_PERSON}
+                                                .item #{ev.CUST_CONTACT_EMAIL}
+                                                .item #{ev.TELEPHONE}
+                                                .item #{ev.ADDR_STREET}
+                                                .item #{ev.ADDR_STREET_2}
+                                                .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                                .ui.card
+                                    with office_doc
+                                        .content
+                                            .ui.header 
+                                                |Office
+                                            h4.ui.header #{ev.MASTER_LICENSEE}
+                                            div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
+                                            div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                                            div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                                            div #{ev.TELEPHONE}
+
                         if account_selected
                             .field
                                 label Username
@@ -167,4 +164,79 @@ template(name='register')
                             
                     if can_submit
                         #register.ui.fluid.button
-                            |Register
+                            |Register                
+
+
+
+
+template(name='register_office')
+    .ui.middle.aligned.centered.padded.grid
+        .row
+            h1.ui.center.aligned.header 
+                +icon name='small-business'
+                |Register Office
+        .row
+            .ten.wide.column
+                .ui.segment
+                    .ui.large.form
+                        .field
+                            label Office JPID
+                            input#office_jpid(type='text' value=session_office_jpid)
+                        if session_office_jpid
+                            .ui.card
+                                with office_doc
+                                    .content
+                                        a(href="/view/#{_id}")
+                                            .ui.header 
+                                                +icon name='building'
+                                                |Office
+                                    .content
+                                        a(href="/view/#{_id}")
+                                            h4.ui.header #{ev.MASTER_LICENSEE}
+                                        div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
+                                        div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                                        div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                                        div
+                                            a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
+                        if account_selected
+                            .field
+                                label Username
+                                input#username(type='text' name="username")
+                                if username_found
+                                    .ui.info.message 
+                                        |Existing Username Found
+                                        a.ui.button.login_link(href='/login') 
+                                            |Login Here
+                                            i.right.arrow.icon
+                            .field
+                                label Password
+                                input#password(type='password' name="password")
+                            .field
+                                label Email
+                                input#email(type='email')
+                                if email_found
+                                    .ui.info.message 
+                                        |Existing Email Found
+                                        a.ui.button.login_link(href='/login') 
+                                            |Login Here
+                                            i.right.arrow.icon
+                                else
+                                    .ui.success.message 
+                                        |Email Available
+                        // .field
+                        //     label Repeat Password
+                        //     input.password_two(type='password')
+                        //     if passwords_match
+                        //         i.green.checkmark.icon
+                        //         |Passwords Match
+                        //     else
+                        //         i.red.remove.icon
+                        //         |Passwords Don't Match
+                            
+                    if can_submit
+                        #register.ui.fluid.button
+                            |Register Office
+                            
+                            
+                            
+                            

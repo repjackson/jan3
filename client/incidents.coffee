@@ -74,6 +74,8 @@ Template.incidents.helpers
         Docs.find {
             type:'incident'
         }, sort:timestamp:-1
+        
+        
 Template.customer_incidents.onCreated ->
     Session.setDefault('query',null)
     @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('query')
@@ -381,10 +383,10 @@ Template.full_doc_history.onCreated ->
 
 Template.incident_tasks.helpers
     incident_tasks: ->
-        Docs.find
+        Docs.find {
             type: 'incident_task'
             parent_id: FlowRouter.getParam 'doc_id'
-
+        }, sort:timestamp:-1
 Template.incident_tasks.events
     'click #add_incident_task': ->
         new_incident_task_id = 

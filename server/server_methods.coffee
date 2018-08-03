@@ -500,8 +500,8 @@ Meteor.methods
         if found
             return found
         else
-            throw new Meteor.Error "Customer not found with JPID #{customer_jpid}."
-            
+            throw new Meteor.Error 'customer_not_found', "Customer not found with JPID #{customer_jpid}."
+
     find_office_from_customer_jpid: (customer_jpid)->     
         customer_doc = Docs.findOne
             "ev.ID": customer_jpid

@@ -46,8 +46,8 @@ Template.user_view.events
                 Bert.alert "#{err.reason}", 'danger', 'growl-top-right'
             # else
                 # console.dir res
-    'click #refresh_user_jpids': ->
-        Meteor.call 'refresh_user_jpids', FlowRouter.getParam('username'), (err,res)->
+    'click #refresh_customer_jpids': ->
+        Meteor.call 'refresh_customer_jpids', FlowRouter.getParam('username'), (err,res)->
             if err 
                 Bert.alert "#{err.reason}", 'danger', 'growl-top-right'
             # else

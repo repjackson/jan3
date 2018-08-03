@@ -24,17 +24,18 @@ Meteor.startup(() =>
 
 
 Accounts.onCreateUser (options, user)=>
-    # console.log 'trying to update new user with options', options
+    console.log 'trying to update new user with options', options
+    console.log 'trying to update new user ', user
+    
     edited_user = Object.assign({
         customer_jpid:options.customer_jpid
-        # franchisee_jpid:options.franchisee_jpid
-        # office_jpid:options.office_jpid
+        franchisee_jpid:options.franchisee_jpid
+        office_jpid:options.office_jpid
         roles:options.roles
     }, user)
 
     if options.profile
         edited_user.profile = options.profile
-    # console.log 'updated user doc', edited_user          
     return edited_user
 
 
@@ -51,7 +52,7 @@ SyncedCron.add
     name: 'Update incident escalations'
     schedule: (parser) ->
         # parser is a later.parse object
-        parser.text 'every 1 minute'
+        parser.text 'every 1 hour'
     job: -> 
         Meteor.call 'update_escalation_statuses', (err,res)->
             if err then console.log err
@@ -72,7 +73,7 @@ SyncedCron.add
             
             
 
-SyncedCron.start()
+# SyncedCron.start()
 
     
     
