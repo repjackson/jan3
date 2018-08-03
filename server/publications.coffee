@@ -217,7 +217,7 @@ Meteor.publish 'office_employees', (office_doc_id, query)->
     
 Meteor.publish 'my_customer_incidents', (query)->    
     user = Meteor.user()
-    if user.profile and user.customer_jpid
+    if user.customer_jpid
         # customer_doc = Docs.findOne "ev.ID":user.customer_jpid
         if query
             Docs.find {

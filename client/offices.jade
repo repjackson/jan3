@@ -21,15 +21,15 @@ template(name='offices')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.striped.fluid.table
+                table.ui.striped.fluid.sortable.table
                     thead
                         tr
-                            th JPID
-                            th Name
-                            th Manager
-                            th Owner
-                            th Phone
-                            th Address
+                            +sort_column_header key='ev.ID' label='JPID'
+                            +sort_column_header key='ev.MASTER_LICENSEE' label='Name'
+                            +sort_column_header key='ev.MASTER_OFFICE_MANAGER' label='Manager'
+                            +sort_column_header key='ev.MASTER_OFFICE_OWNER' label='Owner'
+                            +sort_column_header key='ev.TELEPHONE' label='Phone'
+                            +sort_column_header key='ev.ADDR_STREET' label='Address'
                             th
                     tbody
                         each all_offices
@@ -42,3 +42,19 @@ template(name='offices')
                                 td #{ev.ADDR_STREET}
                                 td
                                     +view_button
+                    tfoot
+                        tr
+                            th(colspan='7')
+                                .ui.right.floated.pagination.menu
+                                    each pages
+                                        a.item #{number}
+                                .ui.header Total: #{office_counter}
+                                
+                                
+template(name='sort_column_header')    
+    th.sort_by
+        if sort_descending
+            i.down.arrow.icon
+        if sort_ascending
+            i.up.arrow.icon
+        |#{label}
