@@ -533,11 +533,11 @@ Meteor.methods
 
          
     find_office_from_jpid: (office_jpid)->     
-        users_office = Docs.findOne
-            "ev.ID": user.office_jpid
+        office_doc = Docs.findOne
+            "ev.ID": office_jpid
             type:'office'
-        console.log users_office
-        users_office
+        console.log office_doc
+        office_doc
             
             
     # add_to_cart: (doc_id)->

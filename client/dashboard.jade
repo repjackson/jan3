@@ -79,21 +79,25 @@ template(name='dashboard')
 
     
 template(name='customer_menu')
-    .ui.four.item.stackable.large.menu
+    .ui.five.item.stackable.large.menu
         a.item(href='/account/settings') 
-            i.big.icon
+            i.large.icon
                 +icon name='settings'
             | &nbsp; Account
         a.log_ticket.item(href='#') 
-            i.big.icon
+            i.large.icon
                 +icon name='add-ticket'
             | &nbsp; Log a Ticket
+        a.item(href='/customer_incidents')
+            i.large.icon
+                +iconsmall name='error'
+            | &nbsp; My Incidents
         a.item(href='/store') 
-            i.big.icon
+            i.large.icon
                 +icon name='toilet-paper'
             | &nbsp; Consumables
         a.item(href='/services') 
-            i.big.icon
+            i.large.icon
                 +icon name='service-bell'
             | &nbsp; Request Service
         // a.item(href='/help') 
@@ -106,9 +110,9 @@ template(name='dashboard_services_widget')
         .ui.header 
             +iconsmall name='broom'
             |Services Offered by #{currentUser.users_office.ev.MASTER_LICENSEE}
-        .ui.six.cards
+        .ui.divided.items
             each services_offered
-                +service_card     
+                +service_item     
                 
 template(name='dashboard_consumables_widget')
     .ui.secondary.segment
@@ -195,9 +199,6 @@ template(name='customer_incidents_widget')
                         +small_doc_history
                     td
                         +view_button
-    
-        
-
 
 
 template(name='customer_special_services')
@@ -211,7 +212,7 @@ template(name='customer_special_services')
             if customer_contact_email
                 .item #{customer_contact_email}
             .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
-            .item Days of Service: #{ev.CUST_DAYS_SERVICE} #{customer_days_service_formatted}
+            .item Days of Service: #{customer_days_service_formatted}
             .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
     .ui.header Special Services
     table.ui.sortable.striped.table

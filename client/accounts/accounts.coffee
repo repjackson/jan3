@@ -43,21 +43,24 @@ Template.login.events
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->
             if err then console.error err
             else
-                Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                FlowRouter.go '/'                
+                Bert.alert "Logged in as Demo Admin. Redirecting to dashboard.", 'success', 'growl-top-right'
+                FlowRouter.go '/admin'                
             
     'click #login_demo_office': ->
         Meteor.loginWithPassword 'demo_office', 'demoofficepassword', (err,res)->
             if err then console.error err
             else
                 Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                FlowRouter.go '/'                
+                Meteor.call 'find_office_from_jpid', '15793131',(err,res)->
+                    if err then console.error err
+                        # console.log res
+                FlowRouter.go "/view/L93szwF2nsqvANnre/incidents"                
             
     'click #login_demo_customer': ->
         Meteor.loginWithPassword 'demo_customer', 'democustomerpassword', (err,res)->
             if err then console.error err
             else
-                Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
+                Bert.alert "Logged in as Demo Customer. Redirecting to dashboard.", 'success', 'growl-top-right'
                 FlowRouter.go '/'                
             
         

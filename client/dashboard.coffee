@@ -42,7 +42,7 @@ Template.dashboard_office_contacts_list.helpers
     office_contacts: -> 
         user = Meteor.user()
         # console.log 'franch_doc', franch_doc
-        if user and user.profile and user.customer_jpid
+        if user and user.customer_jpid
             customer_doc = Docs.findOne
                 "ev.ID": user.customer_jpid
                 type:'customer'
@@ -59,6 +59,19 @@ Template.customer_special_services.onCreated ->
 Template.customer_special_services.helpers
     my_special_services: -> Docs.find type:'special_service'
 
+    customer_days_service_formatted: ->
+        split_days = @ev.CUST_DAYS_SERVICE.split(/\|/)
+        console.log split_days
+        result_list = []
+        for abbrev_day in split_days
+            switch abbrev_day
+                when 'Mon' then result_list.push 'Monday'
+                when 'Th' then result_list.push 'Thursday'
+                when 'T' then result_list.push 'Tuesday'
+                when 'Fri' then result_list.push 'Friday'
+                when 'Sat' then result_list.push 'Saturday'
+        return result_list
+    
 Template.customer_incidents_widget.onCreated ->
     @autorun -> Meteor.subscribe 'my_customer_incidents'
 Template.customer_incidents_widget.helpers    
@@ -74,26 +87,6 @@ Template.customer_incidents_widget.helpers
 Template.customer_incidents_widget.helpers
     customer_incidents: -> Docs.find type:'incident'
     
-    # settings: ->
-    #     rowsPerPage: 5
-    #     showFilter: true
-    #     showRowCount: true
-    #     # showColumnToggles: true
-    #     fields: [
-    #         { key: 'customer_name', label: 'Customer' }
-    #         { key: 'incident_number', label: 'Number', sortOrder:1, sortDirection:'descending'}
-    #         { key: 'incident_office_name', label: 'Office' }
-    #         { key: '', label: 'Type', tmpl:Template.incident_type_label }
-    #         { key: 'when', label: 'Logged' }
-    #         { key: 'incident_details', label: 'Details' }
-    #         { key: 'level', label: 'Level' }
-    #         { key: 'status', label: 'Status', tmpl:Template.status_template}
-    #         { key: 'submitted', label: 'Submitted', tmpl:Template.submitted_template}
-    #         # { key: '', label: 'Assigned To', tmpl:Template.associated_users }
-    #         # { key: '', label: 'Actions Taken', tmpl:Template.small_doc_history }
-    #         { key: '', label: 'View', tmpl:Template.view_button }
-    #     ]
-        
         
 Template.dashboard_services_widget.onCreated ->
     @autorun -> Meteor.subscribe 'type','service'

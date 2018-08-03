@@ -28,7 +28,7 @@ template(name='incidents')
                             +sort_column_header key='submitted' label='Submitted'
                             +sort_column_header key='' label='Assigned To'
                             +sort_column_header key='' label='Last Event'
-                            
+                            th
                     tbody
                         each all_incidents
                             tr
@@ -51,7 +51,7 @@ template(name='incidents')
                                     +small_doc_history
                                 td
                                     +view_button
-                    +table_footer columns='7'                
+                    +table_footer columns='13'                
 
 
                 

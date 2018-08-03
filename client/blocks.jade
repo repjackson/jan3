@@ -658,12 +658,12 @@ template(name='office_card')
     .ui.card
         with office_doc
             .content
-                a(href="/view/#{_id}")
+                a(href="/view/#{_id}/incidents")
                     .ui.header 
                         +icon name='building'
                         |Office
             .content
-                a(href="/view/#{_id}")
+                a(href="/view/#{_id}/incidents")
                     h4.ui.header #{ev.MASTER_LICENSEE}
                 div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
                 div #{ev.ADDR_CITY} #{ev.ADDR_STATE}

@@ -828,6 +828,6 @@ Template.franchisee_card.helpers
                 
 Template.page_size_input.helpers
     page_size_button_class: (string_size)->
-        console.log string_size
+        # console.log string_size
         number = parseInt string_size
         if Session.equals('page_size', number) then 'blue' else ''

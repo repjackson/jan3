@@ -11,9 +11,9 @@ template(name='services')
                 +add_button type='service'
         .row
             .fourteen.wide.column
-                .ui.centered.six.cards
+                .ui.items
                     each services
-                        +service_card
+                        +service_item
                 
 template(name='service_card')
     .ui.card
@@ -30,6 +30,28 @@ template(name='service_card')
         if request_count
             .content
                 | #{request_count} requests
+        .content
+            +request_service_button
+            a.ui.button(href="/view/#{_id}") 
+                i.large.icon
+                    +iconsmall name='view-details'
+                |Details
+    
+template(name='service_item')
+    .item
+        if image_id
+            a.image(href="/view/#{_id}")
+                img.ui.tiny.image(src="{{c.url image_id height=200 width=200 crop='scale'}}")
+        .content
+            .right.floated.meta $#{price}
+            a.header(href="/view/#{_id}") #{title}
+            if is_admin
+                .meta #{slug}
+            .description
+                p #{description}
+        // if request_count
+        //     .content
+        //         | #{request_count} requests
         .content
             +request_service_button
             a.ui.button(href="/view/#{_id}") 

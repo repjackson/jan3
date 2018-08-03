@@ -15,7 +15,7 @@ template(name='customers')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.celled.striped.fluid.table
+                table.ui.celled.striped.fluid.sortable.table
                     thead
                         +sort_column_header key='ev.CUST_NAME' label='Customer Name'
                         +sort_column_header key='ev.ID' label='JPID'
@@ -41,7 +41,7 @@ template(name='customers')
                                 td #{ev.TIMESTAMP}
                                 td 
                                     +view_button
-                    +table_footer columns='7'                
+                    +table_footer columns='10'
 
 
 template(name='customer_view')
