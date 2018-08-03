@@ -13,8 +13,29 @@ template(name='franchisees')
                 //     i.refresh.icon
         .row
             .sixteen.wide.column
-                // +reactiveTable settings=settings class="ui celled striped sortable table"
-               +table_footer                
+                +query_input
+                table.ui.striped.fluid.sortable.table
+                    thead
+                        tr
+                            +sort_column_header key='ev.ID' label='JPID'
+                            +sort_column_header key='ev.FRANCHISEE' label='Name'
+                            +sort_column_header key='ev.FRANCH_EMAIL' label='Email'
+                            +sort_column_header key='ev.FRANCH_NAME' label='Short Name'
+                            +sort_column_header key='ev.TELEPHONE' label='Phone'
+                            +sort_column_header key='ev.ADDR_STREET' label='Office'
+                            th
+                    tbody
+                        each all_franchisees
+                            tr
+                                td #{ev.ID}
+                                td #{ev.FRANCHISEE}
+                                td #{ev.FRANCH_EMAIL}
+                                td #{ev.FRANCH_NAME}
+                                td #{ev.TELE_CELL}
+                                td #{ev.MASTER_LICENSEE}
+                                td
+                                    +view_button
+                   +table_footer                
      
                     
 template(name='franchisee_view')

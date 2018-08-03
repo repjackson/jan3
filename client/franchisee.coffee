@@ -1,23 +1,29 @@
 FlowRouter.route '/franchisees', 
     action: -> BlazeLayout.render 'layout', main: 'franchisees'
-    
+
+
+Template.franchisees.onCreated ->
+    Session.setDefault('query',null)
+    Session.setDefault('sort_direction','-1')
+    sort_object = {
+        "#{}": parseInt("#{Session.get('sort_direction')}")
+        }
+
+    @autorun -> Meteor.subscribe 'type', 'franchisee', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+
 Template.franchisees.helpers
-    settings: ->
-        collection: 'franchisees'
-        rowsPerPage: 10
-        showFilter: true
-        showRowCount: true
-        # showColumnToggles: true
-        fields: [
-            { key: 'ev.ID', label: 'JPID' }
-            { key: 'ev.FRANCHISEE', label: 'Name' }
-            { key: 'ev.FRANCH_EMAIL', label: 'Email' }
-            { key: 'ev.FRANCH_NAME', label: 'Short Name' }
-            { key: 'ev.TELE_CELL', label: 'Phone' }
-            { key: 'ev.MASTER_LICENSEE', label: 'Office' }
-            # { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
-            { key: '', label: 'View', tmpl:Template.view_button }
-        ]
+    all_franchisees: ->
+        sort_object ={
+            "#{Session.get('sort_key')}": "#{Session.get('sort_direction')}"
+            }
+        # console.log sort_object
+        Session.get('sort_key')
+        Docs.find {
+            type:'franchisee'
+            },{ 
+                sort:
+                    "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")
+            }
 
 Template.franchisees.events
     'click .get_all_franchisees': ->
