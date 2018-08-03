@@ -55,10 +55,13 @@ template(name='pagination')
         a.page_2_link.item 2
         a.page_3_link.item 3
                                 
-template(name='page_size_input')                                
-    .ui.input
-        label Page Size
-        input#page_size(type='number' value=page_size min='0')
+template(name='page_size_input')   
+    .set_10.ui.button 10
+    .set_20.ui.button 20
+    .set_50.ui.button 50
+    // .ui.input
+    //     label Page Size
+    //     input#page_size(type='number' value=page_size min='0')
                                 
                                 
 template(name='sort_column_header')    

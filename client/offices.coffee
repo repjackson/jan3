@@ -24,7 +24,7 @@ FlowRouter.route '/office/:doc_id/settings',
 Template.offices.onCreated ->
     Session.setDefault('query',null)
     Session.setDefault('sort_direction','-1')
-    sort_object ={
+    sort_object = {
         "#{Session.get('sort_key')}": parseInt("#{Session.get('sort_direction')}")
         }
 
@@ -58,6 +58,11 @@ Template.sort_column_header.events
 Template.page_size_input.events
     'change #page_size': (e,t)->
         Session.set 'page_size',$('#page_size').val()
+
+    'click .set_10': ()->Session.set 'page_size',10
+    'click .set_20': ()->Session.set 'page_size',20
+    'click .set_50': ()->Session.set 'page_size',50
+
 
 
 Template.sort_column_header.helpers
