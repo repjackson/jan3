@@ -122,19 +122,19 @@ Template.register_customer.events
         
         if username        
             options.username = username
-            console.log username
+            # console.log username
         if password        
             options.password = password
-            console.log password
+            # console.log password
         if email
             options.email = email
-            console.log email
+            # console.log email
         options.customer_jpid = customer_jpid
         options.franchisee_jpid = franchisee_jpid
         options.office_jpid = office_jpid
         options.roles = ['customer']
         
-        console.log options
+        # console.log options
         
         Accounts.createUser(options, (err,res)=>
             if err
@@ -210,12 +210,12 @@ Template.register_customer.events
                 Meteor.call 'find_franchisee_from_customer_jpid', customer_jpid, (err,res)=>
                     if err then console.error err
                     else
-                        console.log 'franchisee?', res
+                        # console.log 'franchisee?', res
                         Session.set 'franchisee_jpid', res.ev.ID
                 Meteor.call 'find_office_from_customer_jpid', customer_jpid, (err,res)=>
                     if err then console.error err
                     else
-                        console.log 'office?', res
+                        # console.log 'office?', res
                         Session.set 'office_jpid', res.ev.ID
         found_customer_doc = 
             Docs.findOne 
@@ -229,9 +229,11 @@ Template.register_customer.events
             console.log 'no account selected'
     
 
+Template.register_office.onCreated ->
+    @autorun =>  Meteor.subscribe 'office_by_id', Session.get('office_jpid')
+
 
 Template.register_office.onRendered ->
-    Session.setDefault 'office_jpid', null
     Session.setDefault 'account_selected', false
         
 Template.register_office.helpers
@@ -243,7 +245,7 @@ Template.register_office.helpers
         doc = 
             Docs.findOne 
                 type:'office'
-                "ev.ID": Session.get('office_jpid')
+                # "ev.ID": Session.get('office_jpid')
         # console.log doc
         doc
 
@@ -268,7 +270,7 @@ Template.register_office.events
         username = $('#username').val()
         password = $('#password').val()
         email = $('#email').val()
-        office_id = Session.get('office_jpid')
+        office_jpid = Session.get('office_jpid')
         
         
         options = {}
@@ -294,8 +296,7 @@ Template.register_office.events
             if err
                 Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
             else
-                Bert.alert "Registered new #{current_role}: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                Meteor.call 'refresh_customer_jpids', username
+                Bert.alert "Registered new office user: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
                 FlowRouter.go '/'                
                 # if current_role is 'customer'
                 #     Meteor.call 'refresh_customer_jpids', user.username
@@ -357,7 +358,7 @@ Template.register_office.events
         found_office_doc = 
             Docs.findOne 
                 type:'office'
-                "ev.ID": office_jpid
+                # "ev.ID": office_jpid
             
         if found_office_doc
             Session.set 'account_selected', true

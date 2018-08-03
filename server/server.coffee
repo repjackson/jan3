@@ -24,8 +24,8 @@ Meteor.startup(() =>
 
 
 Accounts.onCreateUser (options, user)=>
-    console.log 'trying to update new user with options', options
-    console.log 'trying to update new user ', user
+    # console.log 'trying to update new user with options', options
+    # console.log 'trying to update new user ', user
     
     edited_user = Object.assign({
         customer_jpid:options.customer_jpid

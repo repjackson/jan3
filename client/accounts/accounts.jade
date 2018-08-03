@@ -182,23 +182,19 @@ template(name='register_office')
                         .field
                             label Office JPID
                             input#office_jpid(type='text' value=session_office_jpid)
-                        if session_office_jpid
+                        // if account_selected
+                        with office_doc
                             .ui.card
-                                with office_doc
-                                    .content
-                                        a(href="/view/#{_id}")
-                                            .ui.header 
-                                                +icon name='building'
-                                                |Office
-                                    .content
-                                        a(href="/view/#{_id}")
-                                            h4.ui.header #{ev.MASTER_LICENSEE}
-                                        div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
-                                        div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                                        div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-                                        div
-                                            a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
-                        if account_selected
+                                .content
+                                    .ui.header 
+                                        +icon name='building'
+                                        |Office
+                                    h4.ui.header #{ev.MASTER_LICENSEE}
+                                    div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
+                                    div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                                    div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                                    div #{ev.TELEPHONE}
+                        if office_doc
                             .field
                                 label Username
                                 input#username(type='text' name="username")
@@ -223,20 +219,20 @@ template(name='register_office')
                                 else
                                     .ui.success.message 
                                         |Email Available
-                        // .field
-                        //     label Repeat Password
-                        //     input.password_two(type='password')
-                        //     if passwords_match
-                        //         i.green.checkmark.icon
-                        //         |Passwords Match
-                        //     else
-                        //         i.red.remove.icon
-                        //         |Passwords Don't Match
-                            
-                    if can_submit
-                        #register.ui.fluid.button
-                            |Register Office
-                            
-                            
-                            
-                            
+                            // .field
+                            //     label Repeat Password
+                            //     input.password_two(type='password')
+                            //     if passwords_match
+                            //         i.green.checkmark.icon
+                            //         |Passwords Match
+                            //     else
+                            //         i.red.remove.icon
+                            //         |Passwords Don't Match
+                                    
+                            if can_submit
+                                #register_office.ui.fluid.button
+                                    |Register Office
+                                
+                                
+                                
+                                

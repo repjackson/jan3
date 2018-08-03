@@ -506,15 +506,15 @@ Meteor.methods
         customer_doc = Docs.findOne
             "ev.ID": customer_jpid
             type:'customer'
-        console.log 'found customer, finding office', customer_doc
+        # console.log 'found customer, finding office', customer_doc
         if customer_doc
             found_office = Docs.findOne
                 "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                 type:'office'
-            console.log 'found office from customer:', found_office
+            # console.log 'found office from customer:', found_office
             return found_office
         else 
-            console.log 'couldnt find office from customer:', customer_jpid
+            throw new Meteor.Error 'no_office_from_customer_jpid', "couldnt find office from customer #{customer_jpid}"
             
          
          
@@ -522,12 +522,12 @@ Meteor.methods
         customer_doc = Docs.findOne
             "ev.ID": customer_jpid
             type:'customer'
-        console.log 'found customer, finding franchisee', customer_doc
+        # console.log 'found customer, finding franchisee', customer_doc
         
         found_franchisee = Docs.findOne
             type: 'franchisee'
             "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
-        console.log 'found franchisee', found_franchisee
+        # console.log 'found franchisee', found_franchisee
         return found_franchisee
         
 
