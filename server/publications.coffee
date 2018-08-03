@@ -1,11 +1,20 @@
-Meteor.publish 'type', (type, query)->
+Meteor.publish 'type', (type, query, limit, sort, skip)->
     if query
         Docs.find {
             type: type
             $text: $search: query
+        },{
+            skip: skip
+            limit:limit
+            sort:sort
         }
     else
-        Docs.find {type:type}, limit:10
+        Docs.find {type:type},
+            {
+                skip: skip
+                limit:limit
+                sort:sort
+            }
 
         
 # Meteor.publish 'my_customer_account_doc', ->

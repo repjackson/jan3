@@ -45,10 +45,20 @@ template(name='offices')
                     tfoot
                         tr
                             th(colspan='7')
-                                .ui.right.floated.pagination.menu
-                                    each pages
-                                        a.item #{number}
+                                +pagination
                                 .ui.header Total: #{office_counter}
+                                +page_size_input
+                                
+template(name='pagination')
+    .ui.right.floated.pagination.menu
+        a.page_1_link.item 1
+        a.page_2_link.item 2
+        a.page_3_link.item 3
+                                
+template(name='page_size_input')                                
+    .ui.input
+        label Page Size
+        input#page_size(type='number' value=page_size min='0')
                                 
                                 
 template(name='sort_column_header')    

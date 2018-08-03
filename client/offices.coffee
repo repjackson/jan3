@@ -24,7 +24,11 @@ FlowRouter.route '/office/:doc_id/settings',
 Template.offices.onCreated ->
     Session.setDefault('query',null)
     Session.setDefault('sort_direction','-1')
-    @autorun -> Meteor.subscribe 'type', 'office', Session.get('query')
+    sort_object ={
+        "#{Session.get('sort_key')}": parseInt("#{Session.get('sort_direction')}")
+        }
+
+    @autorun -> Meteor.subscribe 'type', 'office', Session.get('query'), parseInt(Session.get('page_size')),sort_object, parseInt(Session.get('skip'))
     @autorun -> Meteor.subscribe 'office_counter_publication'
 
 Template.offices.helpers
@@ -32,14 +36,14 @@ Template.offices.helpers
         sort_object ={
             "#{Session.get('sort_key')}": "#{Session.get('sort_direction')}"
             }
-        console.log sort_object
-        Docs.find {
-            type:'office'
-        }, sort:sort_object
-
+        # console.log sort_object
+        Docs.find type:'office'
     office_counter: -> Counts.get 'office_counter'
     
-    
+Template.pagination.events
+    'click .page_1_link': -> Session.set 'skip', 0
+    'click .page_2_link': -> Session.set 'skip', 10
+    'click .page_3_link': -> Session.set 'skip', 20
     
 Template.sort_column_header.events
     'click .sort_by': (e,t)->
@@ -49,6 +53,12 @@ Template.sort_column_header.events
         else if Session.equals 'sort_direction', '1'
             Session.set 'sort_direction', '-1'
         console.log @
+
+
+Template.page_size_input.events
+    'change #page_size': (e,t)->
+        Session.set 'page_size',$('#page_size').val()
+
 
 Template.sort_column_header.helpers
     sort_descending: ->
