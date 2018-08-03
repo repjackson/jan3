@@ -68,16 +68,16 @@ template(name='office_customers')
     .ui.padded.grid
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.fluid.table
+                table.ui.celled.striped.sortable.fluid.table
                     thead
-                        th Customer Name
-                        th JPID
-                        th Franchisee
-                        th Contact Person
-                        th Contact Email
-                        th Telephone
-                        th Address
-                        th Timestamp
+                        +sort_column_header key='ev.CUST_NAME' label='Customer Name'
+                        +sort_column_header key='ev.ID' label='JPID'
+                        +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
+                        +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
+                        +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
+                        +sort_column_header key='ev.TELEPHONE' label='Telephone'
+                        +sort_column_header key='ev.ADDR_STREET' label='Address'
+                        +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
                         th 
                     tbody
                         each office_customers
@@ -92,6 +92,7 @@ template(name='office_customers')
                                 td #{ev.TIMESTAMP}
                                 td 
                                     +view_button
+                    +table_footer                
 
 
 template(name='office_incidents')
@@ -100,16 +101,16 @@ template(name='office_incidents')
     .ui.padded.grid
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.fluid.table
+                table.ui.celled.striped.sortable.fluid.table
                     thead
-                        th Number
-                        th Office
-                        th Customer
-                        th Logged
-                        th Type
-                        th Details
-                        th Level
-                        th Submitted
+                        +sort_column_header key='incident_number' label='Number'
+                        +sort_column_header key='incident_office_name' label='Office'
+                        +sort_column_header key='customer_name' label='Customer'
+                        +sort_column_header key='timestamp' label='Logged'
+                        +sort_column_header key='incident_type' label='Type'
+                        +sort_column_header key='incident_details' label='Details'
+                        +sort_column_header key='level' label='Level'
+                        +sort_column_header key='submitted' label='Submitted'
                         th 
                     tbody
                         each office_incidents
@@ -117,7 +118,7 @@ template(name='office_incidents')
                                 td #{incident_number}
                                 td #{incident_office_name}
                                 td #{customer_name}
-                                td #{when}
+                                td {{reg_format timestamp}}
                                 td 
                                     +incident_type_label
                                 td #{incident_details}
@@ -126,7 +127,8 @@ template(name='office_incidents')
                                     +submitted_template
                                 td 
                                     +view_button
-    
+                    +table_footer                
+
 
 
 template(name='office_employees')
@@ -135,14 +137,15 @@ template(name='office_employees')
     .ui.padded.grid
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.fluid.table
+                table.ui.celled.striped.sortable.fluid.table
                     thead
-                        th Username
-                        th Name
-                        th Title
-                        th Phone
-                        th Email
-                        th Public
+                        +sort_column_header key='username' label='Username'
+                        +sort_column_header key='profile.first_name' label='First Name'
+                        +sort_column_header key='profile.last_name' label='Last Name'
+                        +sort_column_header key='profile.title' label='Title'
+                        +sort_column_header key='ev.WORK_TELEPHONE' label='Phone'
+                        +sort_column_header key='email' label='Email'
+                        +sort_column_header key='' label='Public'
                         th 
                     tbody
                         each office_employees
@@ -157,6 +160,7 @@ template(name='office_employees')
                                 td 
                                     +edit_user_button
                                     +view_user_button
+                    +table_footer                
 
 
 template(name='office_franchisees')
@@ -165,13 +169,13 @@ template(name='office_franchisees')
     .ui.padded.grid
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.fluid.table
+                table.ui.celled.striped.sortable.fluid.table
                     thead
-                        th JPID
-                        th Name
-                        th Email
-                        th Short Name
-                        th Phone
+                        +sort_column_header key='ev.ID' label='JPID'
+                        +sort_column_header key='ev.FRANCHISEE' label='Name'
+                        +sort_column_header key='ev.FRANCH_EMAIL' label='Email'
+                        +sort_column_header key='ev.FRANCH_NAME' label='Short Name'
+                        +sort_column_header key='ev.TELE_CELL' label='Phone'
                         th 
                     tbody
                         each office_franchisees
@@ -183,7 +187,8 @@ template(name='office_franchisees')
                                 td #{ev.TELE_CELL}
                                 td 
                                     +view_button
-    
+                    +table_footer                
+
                     
                     
 

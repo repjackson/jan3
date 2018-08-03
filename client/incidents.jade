@@ -16,18 +16,18 @@ template(name='incidents')
                 table.ui.striped.fluid.table
                     thead
                         tr
-                            th Number
-                            th Customer
-                            th Office
-                            th Type
-                            th Logged
-                            th Details
-                            th Level
-                            th Status
-                            th Submitted
-                            th Assigned To
-                            th Last Event
-                            th
+                            +sort_column_header key='number' label='Number'
+                            +sort_column_header key='customer_name' label='Customer'
+                            +sort_column_header key='incident_office_name' label='Office'
+                            +sort_column_header key='incident_type' label='Type'
+                            +sort_column_header key='when' label='Logged'
+                            +sort_column_header key='incident_details' label='Details'
+                            +sort_column_header key='level' label='Level'
+                            +sort_column_header key='open' label='Status'
+                            +sort_column_header key='submitted' label='Submitted'
+                            +sort_column_header key='' label='Assigned To'
+                            +sort_column_header key='' label='Last Event'
+                            
                     tbody
                         each all_incidents
                             tr
@@ -49,6 +49,7 @@ template(name='incidents')
                                     +small_doc_history
                                 td
                                     +view_button
+                    +table_footer                
 
 
                 

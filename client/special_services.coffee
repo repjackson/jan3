@@ -2,6 +2,7 @@ FlowRouter.route '/special_services', action: ->
     BlazeLayout.render 'layout', main: 'services'
 
 Template.special_services.onCreated () ->
+    @autorun => Meteor.subscribe 'type', 'special_service', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
 Template.special_services.helpers
     settings: ->
         collection: 'special_services'

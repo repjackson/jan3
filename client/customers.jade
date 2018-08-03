@@ -17,15 +17,15 @@ template(name='customers')
                 +query_input
                 table.ui.celled.striped.fluid.table
                     thead
-                        th Customer Name
-                        th JPID
-                        th Master Licensee
-                        th Franchisee
-                        th Contact Person
-                        th Contact Email
-                        th Telephone
-                        th Address
-                        th Timestamp
+                        +sort_column_header key='ev.CUST_NAME' label='Customer Name'
+                        +sort_column_header key='ev.ID' label='JPID'
+                        +sort_column_header key='ev.FRANCHISEE' label='Master Licensee'
+                        +sort_column_header key='ev.MASTER_LICENSEE' label='Franchisee'
+                        +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
+                        +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
+                        +sort_column_header key='ev.TELEPHONE' label='Telephone'
+                        +sort_column_header key='ev.ADDR_STREET' label='Address'
+                        +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
                         th 
                     tbody
                         each all_customers
@@ -41,6 +41,7 @@ template(name='customers')
                                 td #{ev.TIMESTAMP}
                                 td 
                                     +view_button
+                    +table_footer                
 
 
 template(name='customer_view')

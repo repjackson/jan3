@@ -3,29 +3,10 @@ FlowRouter.route '/customers',
     
 Template.customers.onCreated ->
     Session.setDefault('query',null)
-    @autorun -> Meteor.subscribe 'type','customer', Session.get('query')
+    @autorun -> Meteor.subscribe 'type','customer', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
 Template.customers.helpers
     all_customers: -> Docs.find type:'customer'
 
-    # settings: ->
-    #     collection: 'customers'
-    #     rowsPerPage: 10
-    #     showFilter: true
-    #     showRowCount: true
-    #     # noDataTmpl: 'no_data'
-    #     # showColumnToggles: true
-    #     fields: [
-    #         { key: 'ev.CUST_NAME', label: 'Customer Name' }
-    #         { key: 'ev.ID', label: 'JPID' }
-    #         { key: 'ev.FRANCHISEE', label: 'Franchisee' }
-    #         { key: 'ev.MASTER_LICENSEE', label: 'Master Licensee' }
-    #         { key: 'ev.CUST_CONT_PERSON', label: 'Contact Person' }
-    #         { key: 'ev.CUST_CONTACT_EMAIL', label: 'Contact Email' }
-    #         { key: 'ev.TELEPHONE', label: 'Telephone' }
-    #         { key: 'ev.ADDR_STREET', label: 'Address' }
-    #         # { key: 'ev.ACCOUNT_STATUS', label: 'Status' }
-    #         { key: '', label: 'View', tmpl:Template.view_button }
-    #     ]
 
 Template.customers.events
     # 'click .sync_customers': ->

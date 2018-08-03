@@ -1,4 +1,4 @@
-Meteor.publish 'type', (type, query, limit, sort, skip)->
+Meteor.publish 'type', (type, query, limit, sort_key, sort_direction, skip)->
     if query
         Docs.find {
             type: type
@@ -6,15 +6,16 @@ Meteor.publish 'type', (type, query, limit, sort, skip)->
         },{
             skip: skip
             limit:limit
-            sort:sort
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     else
-        Docs.find {type:type},
-            {
-                skip: skip
-                limit:limit
-                sort:sort
-            }
+        Docs.find {
+            type:type
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
 
         
 # Meteor.publish 'my_customer_account_doc', ->
