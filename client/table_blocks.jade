@@ -10,7 +10,7 @@ template(name='table_footer')
 template(name='pagination')
     .ui.right.floated.pagination.menu
         each pages
-            a.set_skip.item(class=pagination_item_class) #{number}
+            a.set_page_number.item(class=pagination_item_class) #{number}
                                 
 template(name='page_size_input')   
     |View &nbsp;

@@ -1,30 +1,35 @@
 Template.pagination.helpers
     pagination_item_class: ->
-        console.log @
+        # console.log @
+        if Session.equals('current_page_number', @number) then 'active' else ''
         
     pages: ->
         stat_doc = Stats.findOne()
         if stat_doc
             count_amount = stat_doc.amount
-            console.log count_amount
+            # console.log count_amount
             current_page_size = parseInt Session.get('page_size')
             number_of_pages = Math.ceil(count_amount/current_page_size)
-            console.log 'number of pages', number_of_pages
+            # console.log 'number of pages', number_of_pages
             pages = []
             page = 0
             
             while page<number_of_pages
                 pages.push {number:page}
-                console.log page
+                # console.log page
                 page++
-            console.log pages
+            # console.log pages
             return pages
         
         
 Template.pagination.events
-    'click .set_skip': -> 
-        Session.set 'skip', @number
+    'click .set_page_number': -> 
         console.log @
+        Session.set 'current_page_number', @number
+        skip_amount = @number*parseInt(Session.get('page_size'))
+        Session.set 'skip', skip_amount
+        console.log skip_amount
+    
     
 Template.sort_column_header.events
     'click .sort_by': (e,t)->
