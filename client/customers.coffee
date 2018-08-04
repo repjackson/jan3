@@ -4,6 +4,8 @@ FlowRouter.route '/customers',
 Template.customers.onCreated ->
     Session.setDefault('query',null)
     @autorun -> Meteor.subscribe 'type','customer', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    Meteor.subscribe 'count', 'customer'
+
 Template.customers.helpers
     all_customers: -> 
         Docs.find {
@@ -50,7 +52,7 @@ Template.customers_franchisee.helpers
         found = Docs.findOne
             franchisee: page_doc.franchisee
             # type: "franchisee"
-        console.log found
+        # console.log found
         return found
         
         

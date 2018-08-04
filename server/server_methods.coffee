@@ -536,7 +536,7 @@ Meteor.methods
         office_doc = Docs.findOne
             "ev.ID": office_jpid
             type:'office'
-        console.log office_doc
+        # console.log office_doc
         office_doc
             
             

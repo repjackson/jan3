@@ -11,15 +11,15 @@ template(name='services')
                 +add_button type='service'
         .row
             .fourteen.wide.column
-                .ui.items
+                .ui.centered.cards
                     each services
-                        +service_item
+                        +service_card
                 
 template(name='service_card')
     .ui.card
-        if image_id
-            a.image(href="/view/#{_id}")
-                img.ui.image(src="{{c.url image_id height=200 width=200 crop='scale'}}")
+        // if image_id
+        //     a.image(href="/view/#{_id}")
+        //         img.ui.image(src="{{c.url image_id height=200 width=200 crop='scale'}}")
         .content
             .right.floated.meta $#{price}
             a.header(href="/view/#{_id}") #{title}

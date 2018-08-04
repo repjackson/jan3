@@ -16,6 +16,7 @@ Session.setDefault('query',null)
 Session.setDefault('sort_direction','-1')
 Session.setDefault('sort_key','timestamp')
 Session.setDefault('page_size',10)
+Session.setDefault('skip',0)
 
 Bert.defaults =
     hideDelay: 2000

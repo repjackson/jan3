@@ -60,7 +60,7 @@ template(name='edit_user_button')
         i.pencil.icon
         
 template(name='add_button')
-    #add.ui.icon.large.circular.button(title='Add')
+    #add.ui.icon.large.button(title='Add')
         i.large.plus.icon
         // +icon name='plus-math'
 
@@ -509,7 +509,7 @@ template(name='small_history_event')
             .extra.text
                 |#{action} #{text}
             .summary
-                .date #{when}
+                .date {{reg_format timestamp}}
                 
                 
 template(name='doc_history_event')
@@ -658,12 +658,12 @@ template(name='office_card')
     .ui.card
         with office_doc
             .content
-                a(href="/view/#{_id}/incidents")
+                a(href="/office/#{_id}/incidents")
                     .ui.header 
                         +icon name='building'
                         |Office
             .content
-                a(href="/view/#{_id}/incidents")
+                a(href="/office/#{_id}/incidents")
                     h4.ui.header #{ev.MASTER_LICENSEE}
                 div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
                 div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
@@ -689,58 +689,3 @@ template(name='franchisee_card')
                     .item(title='Call Number')
                         a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
                     .item #{franchisee_email}
-                
-                
-                
-template(name='table_footer')                                    
-    tfoot
-        tr
-            th(colspan=columns)
-                +pagination
-                if office_counter
-                    .ui.header Total: #{office_counter}
-                +page_size_input
-                                
-template(name='pagination')
-    .ui.right.floated.pagination.menu
-        a.page_1_link.item 1
-        a.page_2_link.item 2
-        a.page_3_link.item 3
-        a.page_4_link.item 4
-        a.page_5_link.item 5
-        a.page_6_link.item 6
-        a.page_7_link.item 7
-                                
-template(name='page_size_input')   
-    |View &nbsp;
-    .set_10.ui.compact.button(class="{{page_size_button_class '10'}}") 10
-    .set_20.ui.compact.button(class="{{page_size_button_class '20'}}") 20
-    .set_50.ui.compact.button(class="{{page_size_button_class '50'}}") 50
-    // .set_100.ui.button 100
-    // .ui.input
-    //     label Page Size
-    //     input#page_size(type='number' value=page_size min='0')
-                                
-                                
-template(name='sort_column_header')    
-    th.sort_by
-        |#{label}
-        if sort_descending
-            i.sort.amount.down.icon
-        if sort_ascending
-            i.sort.amount.up.icon
-                
-                
-template(name='status_template')
-    if open
-        .ui.basic.label Open
-    else
-        .ui.label Closed
-
-template(name='submitted_template')
-    if submitted
-        .ui.basic.label Submitted
-        div {{ reg_format submitted_datetime }}
-    else
-        .ui.label Not Submitted
-

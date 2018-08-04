@@ -69,9 +69,9 @@ template(name='dashboard')
                 .eight.wide.column
                     .ui.secondary.segment
                         +customer_special_services
-            // .centered.row
-            //     .five.wide.column
-            //         +my_customer_account_card
+            .centered.row
+                .five.wide.column
+                    +customer_finance_widget
             //     .five.wide.column
             //         +user_franchise_card
             //     .five.wide.column
@@ -110,9 +110,9 @@ template(name='dashboard_services_widget')
         .ui.header 
             +iconsmall name='broom'
             |Services Offered by #{currentUser.users_office.ev.MASTER_LICENSEE}
-        .ui.divided.items
+        .ui.centered.cards
             each services_offered
-                +service_item     
+                +service_card     
                 
 template(name='dashboard_consumables_widget')
     .ui.secondary.segment
@@ -141,7 +141,7 @@ template(name='office_contact_cards')
         //     i.users.icon
         //     i.corner.building.icon
         |Office Contacts
-    .ui.stackable.centered.five.cards
+    .ui.stackable.centered.six.cards
         each office_contacts
             +office_contact_card
 
@@ -271,3 +271,15 @@ template(name='small_service_list')
                 a.item(href="/view/#{_id}")
                     img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
                     |#{title}
+
+
+template(name='customer_finance_widget')
+    .ui.secondary.segment
+        .ui.header 
+            +iconsmall name='money'
+            |Finances
+        .ui.header Account Status
+        .ui.header Invoices
+        .ui.header Statements
+        .ui.header Work History
+        

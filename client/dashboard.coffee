@@ -61,7 +61,7 @@ Template.customer_special_services.helpers
 
     customer_days_service_formatted: ->
         split_days = @ev.CUST_DAYS_SERVICE.split(/\|/)
-        console.log split_days
+        # console.log split_days
         result_list = []
         for abbrev_day in split_days
             switch abbrev_day

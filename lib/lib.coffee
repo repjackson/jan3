@@ -1,5 +1,6 @@
 @Docs = new Meteor.Collection 'docs'
 @Settings = new Meteor.Collection 'settings'
+@Stats = new Meteor.Collection 'stats'
 
 
 Docs.before.insert (userId, doc)->

@@ -22,20 +22,12 @@ FlowRouter.route '/office/:doc_id/settings',
     action: -> BlazeLayout.render 'layout', main: 'office_settings'
 
 Template.offices.onCreated ->
-    sort_object = {
-        "#{}": parseInt("#{Session.get('sort_direction')}")
-        }
-
     @autorun -> Meteor.subscribe 'type', 'office', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun -> Meteor.subscribe 'office_counter_publication'
+    Meteor.subscribe 'count', 'office'
 
 Template.offices.helpers
     all_offices: ->
-        sort_object ={
-            "#{Session.get('sort_key')}": "#{Session.get('sort_direction')}"
-            }
-        # console.log sort_object
-        Session.get('sort_key')
         Docs.find {
             type:'office'
             },{ 
@@ -45,48 +37,6 @@ Template.offices.helpers
             
     office_counter: -> Counts.get 'office_counter'
     
-Template.pagination.events
-    'click .page_1_link': -> Session.set 'skip', 0
-    'click .page_2_link': -> Session.set 'skip', 10
-    'click .page_3_link': -> Session.set 'skip', 20
-    'click .page_4_link': -> Session.set 'skip', 30
-    'click .page_5_link': -> Session.set 'skip', 40
-    'click .page_6_link': -> Session.set 'skip', 50
-    'click .page_7_link': -> Session.set 'skip', 60
-    
-Template.sort_column_header.events
-    'click .sort_by': (e,t)->
-        Session.set 'sort_key', @key
-        if Session.equals 'sort_direction', '-1'
-            Session.set 'sort_direction', '1'
-        else if Session.equals 'sort_direction', '1'
-            Session.set 'sort_direction', '-1'
-        console.log @
-
-
-Template.page_size_input.events
-    'change #page_size': (e,t)->
-        Session.set 'page_size',$('#page_size').val()
-
-    'click .set_10': ()->Session.set 'page_size',10
-    'click .set_20': ()->Session.set 'page_size',20
-    'click .set_50': ()->Session.set 'page_size',50
-    'click .set_100': ()->Session.set 'page_size',100
-
-
-
-Template.sort_column_header.helpers
-    sort_descending: ->
-        # console.log @
-        if Session.equals('sort_direction', '1') and Session.equals('sort_key', @key) 
-            # console.log '1'
-            return true
-    sort_ascending: ->
-        # console.log @
-        if Session.equals('sort_direction', '-1') and Session.equals('sort_key', @key)
-            # console.log '-1'
-            return true
-
 
 
 

@@ -5,9 +5,6 @@ FlowRouter.route '/franchisees',
 Template.franchisees.onCreated ->
     Session.setDefault('query',null)
     Session.setDefault('sort_direction','-1')
-    sort_object = {
-        "#{}": parseInt("#{Session.get('sort_direction')}")
-        }
 
     @autorun -> Meteor.subscribe 'type', 'franchisee', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
 
@@ -26,9 +23,9 @@ Template.franchisees.helpers
             }
 
 Template.franchisees.events
-    'click .get_all_franchisees': ->
-        Meteor.call 'get_all_franchisees',(err,res)->
-            if err then console.error err
+    # 'click .get_all_franchisees': ->
+    #     Meteor.call 'get_all_franchisees',(err,res)->
+    #         if err then console.error err
 Template.franchisee_view.onCreated ->
     @autorun => Meteor.subscribe 'office_by_franchisee', FlowRouter.getParam('doc_id')
 

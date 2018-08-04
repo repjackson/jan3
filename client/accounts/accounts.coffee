@@ -54,7 +54,7 @@ Template.login.events
                 Meteor.call 'find_office_from_jpid', '15793131',(err,res)->
                     if err then console.error err
                         # console.log res
-                FlowRouter.go "/view/L93szwF2nsqvANnre/incidents"                
+                FlowRouter.go "/office/L93szwF2nsqvANnre/incidents"                
             
     'click #login_demo_customer': ->
         Meteor.loginWithPassword 'demo_customer', 'democustomerpassword', (err,res)->
