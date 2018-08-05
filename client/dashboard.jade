@@ -8,7 +8,7 @@ template(name='dashboard')
                 a.ui.center.aligned.big.inverted.blue.button(href='/login')
                     |Login to see Dashboard
                     i.right.arrow.icon
-        if currentUser
+        if is_customer
             +customer_menu
     if is_customer
         .ui.padded.stackable.grid
@@ -169,7 +169,7 @@ template(name='customer_incidents_widget')
         // i.exclamation.circle.icon
         +icon name='error'
         | #{currentUser.users_customer.ev.CUST_NAME}'s Incidents
-    table.ui.striped.table
+    table.ui.striped.selectable.fixed.table
         thead
             tr
                 th Number

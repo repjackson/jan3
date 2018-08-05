@@ -13,7 +13,7 @@ template(name='incidents')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.striped.fluid.sortable.table
+                table.ui.striped.selectable.fixed.fluid.sortable.table
                     thead
                         tr
                             +sort_column_header key='number' label='Number'
@@ -301,7 +301,7 @@ template(name='customer_incidents')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.striped.fluid.sortable.table
+                table.ui.striped.selectable.fixed.fluid.sortable.table
                     thead
                         tr
                             +sort_column_header key='number' label='Number'
@@ -341,7 +341,8 @@ template(name='add_incident_button')
             i.large.green.plus.icon
             |Log New Incident
     else
-        .ui.secondary.segment Add Office to Profile to Add Incident
+        if is_customer
+            .ui.secondary.segment Add Office to Profile to Add Incident
 
 
 template(name='incident_sla_widget')

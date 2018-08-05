@@ -747,19 +747,15 @@ Meteor.publish 'query', (query)->
     
     
     
-Meteor.publish 'offices', (name_filter='off', limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
-    console.log name_filter
-    console.log limit
-    console.log sort_key
-    console.log sort_direction
-    console.log skip
-    filter_value = "/#{name_filter}/i"
-    console.log filter_value
-    # Docs.find {
-    #     "ev.MASTER_LICENSEE": $regex: /^ABC/i
-    # },{
-    #     skip: skip
-    #     limit:limit
-    #     sort:"#{sort_key}":parseInt("#{sort_direction}")
-    # }
-    Docs.find({type: /Off/i})
+Meteor.publish 'offices', (name_filter='', limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+    int_direction = parseInt sort_direction
+    int_skip = parseInt skip
+    int_limit = parseInt limit
+    Docs.find({
+        type: 'office'
+        "ev.MASTER_LICENSEE": {$regex:"#{name_filter}", $options: 'i'}
+        },{
+            skip: int_skip
+            limit:int_limit
+            sort:"#{sort_key}":int_direction
+        })

@@ -22,7 +22,7 @@ FlowRouter.route '/office/:doc_id/settings',
     action: -> BlazeLayout.render 'layout', main: 'office_settings'
 
 Template.offices.onCreated ->
-    @autorun -> Meteor.subscribe 'offices', Session.get('query'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    @autorun -> Meteor.subscribe 'offices', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     # @autorun -> Meteor.subscribe 'office_counter_publication'
     Meteor.subscribe 'count', 'office'
 

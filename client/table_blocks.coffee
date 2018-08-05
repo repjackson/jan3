@@ -13,7 +13,8 @@ Template.pagination.helpers
             # console.log 'number of pages', number_of_pages
             pages = []
             page = 0
-            
+            if number_of_pages>5
+                number_of_pages = 5
             while page<number_of_pages
                 pages.push {number:page}
                 # console.log page

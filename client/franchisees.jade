@@ -14,7 +14,7 @@ template(name='franchisees')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.striped.fluid.sortable.table
+                table.ui.striped.selectable.fixed.fluid.sortable.table
                     thead
                         tr
                             +sort_column_header key='ev.ID' label='JPID'
