@@ -615,3 +615,14 @@ Meteor.methods
                 franchisee_jpid: found_franchisee.ev.ID
                 office_jpid: found_office.ev.ID
                 
+                
+                
+                
+    query_db: (query)->
+        console.log query
+        query_count = Docs.find(query).count()
+        console.log 'query count', query_count
+        result = Docs.find(query).fetch()
+        console.log result
+        return result
+        

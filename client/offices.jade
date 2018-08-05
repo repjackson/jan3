@@ -21,11 +21,12 @@ template(name='offices')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.striped.fluid.sortable.table
+                +search_key key='ev.MASTER_LICENSEE'
+                table.ui.striped.fluid.table
                     thead
                         tr
                             +sort_column_header key='ev.ID' label='JPID'
-                            +sort_column_header key='ev.MASTER_LICENSEE' label='Name'
+                            +sort_column_header key='ev.MASTER_LICENSEE' label='Name' show_search=true
                             +sort_column_header key='ev.MASTER_OFFICE_MANAGER' label='Manager'
                             +sort_column_header key='ev.MASTER_OFFICE_OWNER' label='Owner'
                             +sort_column_header key='ev.TELEPHONE' label='Phone'
@@ -42,6 +43,4 @@ template(name='offices')
                                 td #{ev.ADDR_STREET}
                                 td
                                     +view_button
-                    +table_footer columns='7'                
-                                    
-                                    
+                    +table_footer columns='7'

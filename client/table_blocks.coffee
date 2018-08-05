@@ -31,14 +31,6 @@ Template.pagination.events
         console.log skip_amount
     
     
-Template.sort_column_header.events
-    'click .sort_by': (e,t)->
-        Session.set 'sort_key', @key
-        if Session.equals 'sort_direction', '-1'
-            Session.set 'sort_direction', '1'
-        else if Session.equals 'sort_direction', '1'
-            Session.set 'sort_direction', '-1'
-        console.log @
 
 Template.page_size_input.helpers
     count_amount: ->
@@ -70,4 +62,17 @@ Template.sort_column_header.helpers
             # console.log '-1'
             return true
 
+Template.sort_column_header.events
+    'click .sort_by': (e,t)->
+        Session.set 'sort_key', @key
+        if Session.equals 'sort_direction', '-1'
+            Session.set 'sort_direction', '1'
+        else if Session.equals 'sort_direction', '1'
+            Session.set 'sort_direction', '-1'
+
+
+Template.search_key.events
+    'keyup .search_key': ->
+        console.log @
+        
         

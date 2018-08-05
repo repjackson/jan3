@@ -21,25 +21,34 @@ FlowRouter.route '/office/:doc_id/settings',
     name: 'office_settings'
     action: -> BlazeLayout.render 'layout', main: 'office_settings'
 
-Template.offices.onCreated ->
-    @autorun -> Meteor.subscribe 'type', 'office', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    @autorun -> Meteor.subscribe 'office_counter_publication'
-    Meteor.subscribe 'count', 'office'
+Template.offices.onCreated =>
+    query = {}
+    query.type = 'office'
+    # if Session.get 'page_size'
+    #     query
+    # console.log query
+    # Meteor.subscribe 'query', query
+        
+        # console.log res
+        # @results = res
+        # console.log @data.results
+        # console.log @
+        # return @
+
 
 Template.offices.helpers
     all_offices: ->
-        Docs.find {
-            type:'office'
-            },{ 
-                sort:
-                    "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")
-            }
-            
-    office_counter: -> Counts.get 'office_counter'
-    
-
-
-
+        result = []
+        console.log Template.currentData()
+        console.log Template.currentData().results
+        console.log Meteor.call('query_db', {type:'office'})
+        # (err,res)=>
+        #     if err then console.error err
+        #     else
+        #         console.log res
+        #         result = res
+        #     result
+        # result
 Template.office_header.helpers
     office_doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     office_map_address: ->

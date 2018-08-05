@@ -738,3 +738,9 @@ Meteor.publish 'service_child_requests', (service_id)->
     Docs.find
         type:'service_request'
         service_id:service_id
+        
+        
+Meteor.publish 'query', (query)->
+    result = Meteor.call 'query_db', query
+    console.log result
+    return result

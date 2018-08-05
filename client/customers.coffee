@@ -10,10 +10,7 @@ Template.customers.helpers
     all_customers: -> 
         Docs.find {
             type:'customer'
-        },{ 
-            sort:
-                "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")
-        }
+        },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
 
 Template.customers.events

@@ -72,8 +72,8 @@ SyncedCron.add
                 console.log 'res:',res
             
             
-
-SyncedCron.start()
+if Meteor.isProduction
+    SyncedCron.start()
 
     
     

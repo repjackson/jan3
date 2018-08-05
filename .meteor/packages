@@ -10,7 +10,6 @@ session@1.1.7                 # Client-side reactive dictionary for your app
 tracker@1.2.0                 # Meteor's client-side reactive programming library
 
 
-random@1.1.0
 babrahams:constellation
 mobile-experience@1.0.5
 
@@ -30,7 +29,6 @@ kevohagan:sweetalert
 raix:handlebar-helpers
 matb33:collection-hooks
 themeteorchef:bert
-mizzao:autocomplete
 less@2.7.12
 reywood:publish-composite
 tomwasd:flow-router-autoscroll
@@ -40,9 +38,7 @@ peerlibrary:xml2js
 cunneen:mailgun
 ecmascript
 pacreach:jade
-standard-minifier-js
 coffeescript
 juliancwirko:postcss
-tmeasday:publish-counts
 percolate:synced-cron
 okgrow:analytics

@@ -83,13 +83,6 @@ Template.customer_incidents.onCreated ->
     Session.setDefault('query',null)
     @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
 
-Template.query_input.events
-    'keyup #query': (e,t)->
-        e.preventDefault()
-        query = $('#query').val().trim()
-        # if e.which is 13 #enter
-        # $('#query').val ''
-        Session.set 'query', query
 
 
 Template.customer_incidents.helpers
