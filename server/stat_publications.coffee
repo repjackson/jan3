@@ -7,7 +7,7 @@ Meteor.publish 'count', (type)->
 Meteor.methods
     'calculate_doc_type_count': (type)->
         count = Docs.find(type:type).count()
-        console.log count
+        # console.log count
         
         Stats.update {
             doc_type: type

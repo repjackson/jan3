@@ -132,21 +132,21 @@ Meteor.publish 'has_key_value', (key, value)->
         
 # admin counters        
         
-Meteor.publish 'office_counter_publication', ->
-    Counts.publish this, 'office_counter', Docs.find({type:'office'})
-    return undefined
+# Meteor.publish 'office_counter_publication', ->
+#     Counts.publish this, 'office_counter', Docs.find({type:'office'})
+#     return undefined
     
-Meteor.publish 'incident_counter_publication', ->
-    Counts.publish this, 'incident_counter', Docs.find({type:'incident'})
-    return undefined
+# Meteor.publish 'incident_counter_publication', ->
+#     Counts.publish this, 'incident_counter', Docs.find({type:'incident'})
+#     return undefined
         
-Meteor.publish 'franchisee_counter_publication', ->
-    Counts.publish this, 'franchisee_counter', Docs.find({type:'franchisee'})
-    return undefined
+# Meteor.publish 'franchisee_counter_publication', ->
+#     Counts.publish this, 'franchisee_counter', Docs.find({type:'franchisee'})
+#     return undefined
         
-Meteor.publish 'customer_counter_publication', ->
-    Counts.publish this, 'customer_counter', Docs.find({type:'customer'})
-    return undefined
+# Meteor.publish 'customer_counter_publication', ->
+#     Counts.publish this, 'customer_counter', Docs.find({type:'customer'})
+#     return undefined
         
         
         
@@ -744,3 +744,22 @@ Meteor.publish 'query', (query)->
     result = Meteor.call 'query_db', query
     console.log result
     return result
+    
+    
+    
+Meteor.publish 'offices', (name_filter='off', limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+    console.log name_filter
+    console.log limit
+    console.log sort_key
+    console.log sort_direction
+    console.log skip
+    filter_value = "/#{name_filter}/i"
+    console.log filter_value
+    # Docs.find {
+    #     "ev.MASTER_LICENSEE": $regex: /^ABC/i
+    # },{
+    #     skip: skip
+    #     limit:limit
+    #     sort:"#{sort_key}":parseInt("#{sort_direction}")
+    # }
+    Docs.find({type: /Off/i})
