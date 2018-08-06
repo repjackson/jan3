@@ -485,7 +485,8 @@ Template.multiple_user_select.events
         # $('#office_username_query').val ''
         # Session.set 'office_username_query', office_username_query
         current_incident = Docs.findOne FlowRouter.getParam('doc_id')
-        Meteor.call 'lookup_office_user_by_username_and_office_jpid', current_incident.office_jpid, office_username_query, (err,res)=>
+        console.log current_incident
+        Meteor.call 'lookup_office_user_by_username_and_office_name', current_incident.incident_office_name, office_username_query, (err,res)=>
             if err then console.error err
             else
                 t.user_results.set res

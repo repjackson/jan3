@@ -140,7 +140,7 @@ template(name='office_contact_cards')
         //     i.users.icon
         //     i.corner.building.icon
         |Office Contacts
-    .ui.stackable.centered.six.cards
+    .ui.stackable.centered.seven.cards
         each office_contacts
             +office_contact_card
 
@@ -148,7 +148,7 @@ template(name='office_contact_card')
     .ui.card
         .image
             a(href="/user/#{username}")
-                img.ui.fluid.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
+                img.ui.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
         .content
             a(href="/user/#{username}")
                 .ui.header #{profile.first_name} #{profile.last_name}

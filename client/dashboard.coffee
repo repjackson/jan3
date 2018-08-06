@@ -6,7 +6,7 @@ Template.office_contact_cards.helpers
     office_contacts: -> 
         user = Meteor.user()
         # console.log 'franch_doc', franch_doc
-        if user and user.profile and user.customer_jpid
+        if user and user.customer_jpid
             customer_doc = Docs.findOne
                 "ev.ID": user.customer_jpid
                 type:'customer'
