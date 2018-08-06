@@ -23,7 +23,7 @@ template(name='nav')
         if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
             if my_office
-                a.item(href="/view/#{my_office._id}")
+                a.item(href="/office/#{my_office._id}/incidents")
                     i.large.icon
                         +iconsmall name='link-company-parent'
                     | &nbsp; #{my_office.ev.MASTER_LICENSEE}

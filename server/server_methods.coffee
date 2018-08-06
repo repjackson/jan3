@@ -29,11 +29,9 @@ Meteor.methods
         return "Updated Email to #{new_email}"
         
     tagify_timestamp: (doc_id)->
-        console.log 'doc_id', doc_id
         doc = Docs.findOne doc_id
         if doc
             timestamp = doc.timestamp
-            # console.log moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
             # minute = moment(timestamp).minute()
             # hour = moment(timestamp).format('h')
             date = moment(timestamp).format('Do')
@@ -46,8 +44,6 @@ Meteor.methods
     
             date_array = [ampm, weekday, month, date, year]
             date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
-            # date_array = _.each(date_array, (el)-> console.log(typeof el))
-            # console.log date_array
             Docs.update doc_id,
                 $set: timestamp_tags: date_array
             return date_array
@@ -64,21 +60,14 @@ Meteor.methods
         geocode = {}
         for part in parts
             geocode["#{part.types[0]}"] = part.short_name 
-                # console.log part.types[0]
-                # console.log part.short_name
         geocode['formatted_address'] = result.formatted_address
-        console.log result.lat
-        console.log result.lng
-        # console.log parts[0].types
         # # street_address = _.where(parts, {types:[ 'street_number' ]})
         # street_address = parts[0].short_name
-        # console.log 'street address', street_address
 
         lowered_location_tags = _.map(location_tags, (tag)->
             tag.toLowerCase()
             )
 
-        # console.log location_tags
 
         doc = Docs.findOne doc_id
         tags_without_address = _.difference(doc.tags, doc.location_tags)
@@ -95,21 +84,18 @@ Meteor.methods
                 
                 
     create_message: (recipient_id, text, parent_id)->
-        # console.log 'recipient_id', recipient_id
         
         found_conversation = Docs.findOne
             type: 'conversation'
             participant_ids: $all: [Meteor.userId(), recipient_id]
             
         if found_conversation 
-            # console.log 'found conversation with id:', found_conversation._id
             convo_id = found_conversation._id
         else
             new_conversation_id = 
                 Docs.insert
                     type: 'conversation'
                     participant_ids: [Meteor.userId(), recipient_id]
-            # console.log 'convo NOT found, created new one with id:', new_conversation_id
             convo_id = new_conversation_id
         new_message_id = 
             new_message_id = Docs.insert
@@ -156,7 +142,6 @@ Meteor.methods
         if notification 
             Docs.remove notification._id
         else
-            console.log 'trying to remove unknown notification'
                 
         return
         
@@ -184,7 +169,6 @@ Meteor.methods
         
     user_array_pull: (doc_id, key, user)->
         doc = Docs.findOne doc_id
-        # console.log 'key', key
         Docs.update doc_id,
             $pull: "#{key}": user._id
         Docs.insert
@@ -196,12 +180,7 @@ Meteor.methods
         
     link_doc: (doc_id, key, doc)->
         # doc = Docs.findOne doc_id
-        # console.log 'linking doc', key
-        # console.log 'linking doc_id', doc_id
-        # console.log 'linking doc', doc
         if key is 'customer_id'
-            console.log doc.cust_name
-            console.log doc.jpid
             Docs.update doc_id,
                 $set: 
                     "#{key}": doc._id
@@ -219,7 +198,6 @@ Meteor.methods
         
     unlink_doc: (doc_id, key, doc)->
         doc = Docs.findOne doc_id
-        # console.log 'key', key
         Docs.update doc_id,
             $unset: "#{key}": 1
         Docs.insert
@@ -243,14 +221,12 @@ Meteor.methods
         
     create_event: (parent_id, event_type, action)->
         if parent_id
-            console.log "creating event with parent_id #{parent_id} of type: #{event_type} and action #{action}"
             Docs.insert
                 type:'event'
                 parent_id: parent_id
                 event_type: event_type
                 action:action
         else
-            console.log "creating event with type: #{event_type} and action #{action}"
             Docs.insert
                 type:'event'
                 parent_id: parent_id
@@ -260,7 +236,6 @@ Meteor.methods
     set_incident_level: (target_id, event_type, level)->
         doc = Docs.findOne target_id
         current_user = Meteor.users.findOne @userId
-        # console.log doc
         if doc
             Docs.update { target_id },
                 $set: level: level
@@ -325,15 +300,12 @@ Meteor.methods
     #     message_author = Meteor.users.findOne message_doc.author_id
         
     #     message_link = "https://www.jan.meteorapp.com/view/#{conversation_doc._id}"
-    #     # console.log 'message author', message_author
-    #     # console.log 'message_doc', message_doc
         
     #     this.unblock()
         
     #     offline_ids = []
     #     for participant_id in conversation_doc.participant_ids
     #         user = Meteor.users.findOne participant_id
-    #         console.log participant_id
     #         if user.status.online is true
     #             console.log 'user online:', user.profile.first_name
     #         else
@@ -540,17 +512,17 @@ Meteor.methods
         office_doc
             
             
-    # add_to_cart: (doc_id)->
-    #     product = Docs.findOne doc_id
-    #     Docs.insert
-    #         type: 'cart_item'
-    #         product_id: doc_id
-    #         product_title:product.title
-    #         product_price:product.price
-    #         amount: 1
+    add_to_cart: (doc_id)->
+        product = Docs.findOne doc_id
+        Docs.insert
+            type: 'cart_item'
+            product_id: doc_id
+            product_title:product.title
+            product_price:product.price
+            amount: 1
     
-    # remove_from_cart: (doc_id)->
-    #     Docs.remove doc_id
+    remove_from_cart: (doc_id)->
+        Docs.remove doc_id
     
     # register_transaction: (product_id)->
     #     product = Docs.findOne product_id
@@ -574,18 +546,18 @@ Meteor.methods
     #         recipient_id: product.author_id
     
     
-    # publishComposite 'cart', ->
-    #     {
-    #         find: ->
-    #             Docs.find
-    #                 type: 'cart_item'
-    #                 author_id: @userId            
-    #         children: [
-    #             { find: (cart_item) ->
-    #                 Docs.find cart_item.parent_id
-    #                 }
-    #             ]    
-    #     }            
+    publishComposite 'cart', ->
+        {
+            find: ->
+                Docs.find
+                    type: 'cart_item'
+                    author_id: @userId            
+            children: [
+                { find: (cart_item) ->
+                    Docs.find cart_item.parent_id
+                    }
+                ]    
+        }            
     
     
     refresh_customer_jpids: (username)->
@@ -626,6 +598,16 @@ Meteor.methods
         console.log result
         return result
         
+    # lookup_office_user: (office_name, username_query)->
+    #     office_doc = Docs.findOne 
+    #         type:'office'
+    #         "ev.MASTER_LICENSEE":office_name
+    #     found_users = 
+    #         Meteor.users.find({
+    #             "ev.COMPANY_NAME":office_doc.ev.MASTER_LICENSEE
+    #             username: {$regex:"#{username_query}", $options: 'i'}
+    #             }).fetch()
+    #     found_users
         
     lookup_office_user_by_username: (office_id, username_query)->
         console.log username_query, office_id
@@ -635,21 +617,18 @@ Meteor.methods
                 "ev.COMPANY_NAME":office_doc.ev.MASTER_LICENSEE
                 username: {$regex:"#{username_query}", $options: 'i'}
                 }).fetch()
-        console.log 'found user count', found_users.length
         found_users
     
     
-    lookup_office_user_by_username_and_office_name: (office_name, username_query)->
-        console.log username_query, office_name
-        office_doc = Docs.findOne 
-            type:'office'
-            "ev.MASTER_LICENSEE":office_name
-        console.log office_doc
+    lookup_office_user_by_username2: (office_id, username_query)->
+        console.log username_query, office_id
+        office_doc = Docs.findOne office_id
         found_users = 
             Meteor.users.find({
                 "ev.COMPANY_NAME":office_doc.ev.MASTER_LICENSEE
                 username: {$regex:"#{username_query}", $options: 'i'}
                 }).fetch()
-        console.log 'found user count', found_users.length
         found_users
+    
+    
         

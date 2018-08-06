@@ -132,7 +132,7 @@ Template.remove_from_cart_button.events
     'click .remove_cart_item': ->
         if confirm 'Remove cart item?'
             Meteor.call 'remove_from_cart', @_id, (err,res)=>
-            if err
-                Bert.alert "Error removing #{@title} from cart: #{err.reason}", 'info', 'growl-top-right'
-            else
-                Bert.alert "#{@title} removed from cart.", 'info', 'growl-top-right'
+                if err
+                    Bert.alert "Error removing #{@title} from cart: #{err.reason}", 'info', 'growl-top-right'
+                else
+                    Bert.alert "#{@title} removed from cart.", 'info', 'growl-top-right'

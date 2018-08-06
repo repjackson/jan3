@@ -26,7 +26,6 @@ Template.reference_type_multiple.onCreated ->
 #     @autorun =>  Meteor.subscribe 'users'
 Template.associated_users.helpers
     associated_users: -> 
-        # console.log @
         if @assigned_to
             Meteor.users.find 
                 _id: $in: @assigned_to
@@ -38,61 +37,53 @@ Template.associated_incidents.helpers
 
 
 Template.reference_type_single.helpers
-    settings: -> 
-        # console.log @
-        {
-            position: 'bottom'
-            limit: 10
-            rules: [
-                {
-                    collection: Docs
-                    field: "#{@search_field}"
-                    matchAll: true
-                    filter: { type: "#{@type}" }
-                    template: Template.office_result
-                }
-            ]
-        }
+    # settings: -> 
+    #     {
+    #         position: 'bottom'
+    #         limit: 10
+    #         rules: [
+    #             {
+    #                 collection: Docs
+    #                 field: "#{@search_field}"
+    #                 matchAll: true
+    #                 filter: { type: "#{@type}" }
+    #                 template: Template.office_result
+    #             }
+    #         ]
+    #     }
 
 Template.reference_type_multiple.helpers
-    settings: -> 
-        # console.log @
-        {
-            position: 'bottom'
-            limit: 10
-            rules: [
-                {
-                    collection: Docs
-                    field: "#{@search_field}"
-                    matchAll: true
-                    filter: { type: "#{@type}" }
-                    template: Template.customer_result
-                }
-            ]
-        }
+    # settings: -> 
+    #     {
+    #         position: 'bottom'
+    #         limit: 10
+    #         rules: [
+    #             {
+    #                 collection: Docs
+    #                 field: "#{@search_field}"
+    #                 matchAll: true
+    #                 filter: { type: "#{@type}" }
+    #                 template: Template.customer_result
+    #             }
+    #         ]
+    #     }
 
 
 Template.reference_type_single.events
-    'autocompleteselect #search': (event, template, doc) ->
-        # console.log 'selected ', doc
-        searched_value = doc["#{template.data.key}"]
-        # console.log 'template ', template
-        # console.log 'search value ', searched_value
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: "#{template.data.key}": "#{doc._id}"
-        $('#search').val ''
+    # 'autocompleteselect #search': (event, template, doc) ->
+    #     searched_value = doc["#{template.data.key}"]
+    #     Docs.update FlowRouter.getParam('doc_id'),
+    #         $set: "#{template.data.key}": "#{doc._id}"
+    #     $('#search').val ''
 
 
 
 Template.reference_type_multiple.events
-    'autocompleteselect #search': (event, template, doc) ->
-        # console.log 'selected ', doc
-        searched_value = doc["#{template.data.key}"]
-        # console.log 'template ', template
-        # console.log 'search value ', searched_value
-        Docs.update FlowRouter.getParam('doc_id'),
-            $addToSet: "#{template.data.key}": "#{doc._id}"
-        $('#search').val ''
+    # 'autocompleteselect #search': (event, template, doc) ->
+    #     searched_value = doc["#{template.data.key}"]
+    #     Docs.update FlowRouter.getParam('doc_id'),
+    #         $addToSet: "#{template.data.key}": "#{doc._id}"
+    #     $('#search').val ''
 
 
 
@@ -142,7 +133,6 @@ Template.delete_button.events
             # doc = Docs.findOne FlowRouter.getParam('doc_id')
             # Docs.remove doc._id, ->
             #     FlowRouter.go "/docs"
-            console.log template
 
 
 
@@ -165,11 +155,8 @@ Template.publish_button.events
             
 Template.call_method.events
     'click .call_method': -> 
-        # console.log Template.parentData(1)
         Meteor.call @name, Template.parentData(1)._id, (err,res)->
-            # if err then console.log err
             # else
-                # console.log 'res', res
                 
                 
 # Template.html_create.onCreated ->
@@ -208,12 +195,10 @@ Template.call_method.events
     #     # componentRestrictions: {country: 'fr'}
     # }
     # @autocomplete = new google.maps.places.Autocomplete(input, options);
-    # # console.log @autocomplete.getPlace
     # @autorun(() =>
     #     if GoogleMaps.loaded()
     #         # $('#google_places_field').geocomplete();
     #         $("#google_places_field").geocomplete().bind("geocode:result", (event, result)->
-    #             console.log(result)
     #             lat = result.geometry.location.lat()
     #             long = result.geometry.location.lng()
     #             result.lat = lat
@@ -226,7 +211,6 @@ Template.call_method.events
 
 # Template.google_places_input.events
     # 'change #google_places_field': (e,t)->
-    #     console.log $('#google_places_field').geocomplete();
 
         # result = t.autocomplete.gm_accessors_.place.jd.w3
         # console.dir result
@@ -239,7 +223,6 @@ Template.call_method.events
         
 # Template.office_map.onRendered ->
 #     doc = Docs.findOne FlowRouter.getParam('doc_id')
-#     # console.log doc.location_ob.geometry
 #     mymap = L.map('map').setView([doc.location_lat, doc.location_lng], 15);
 #     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 #         # attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -254,35 +237,33 @@ Template.edit_author.onCreated ->
     Meteor.subscribe 'usernames'
 
 Template.edit_author.events
-    "autocompleteselect input": (event, template, doc) ->
-        # console.log("selected ", doc)
-        if confirm 'Change author?'
-            Docs.update FlowRouter.getParam('doc_id'),
-                $set: author_id: doc._id
-            $('#author_select').val("")
+    # "autocompleteselect input": (event, template, doc) ->
+    #     if confirm 'Change author?'
+    #         Docs.update FlowRouter.getParam('doc_id'),
+    #             $set: author_id: doc._id
+    #         $('#author_select').val("")
 
 
 
 Template.edit_author.helpers
-    author_edit_settings: -> {
-        position: 'bottom'
-        limit: 10
-        rules: [
-            {
-                collection: Meteor.users
-                field: 'username'
-                matchAll: true
-                template: Template.user_pill
-            }
-            ]
-    }
+    # author_edit_settings: -> {
+    #     position: 'bottom'
+    #     limit: 10
+    #     rules: [
+    #         {
+    #             collection: Meteor.users
+    #             field: 'username'
+    #             matchAll: true
+    #             template: Template.user_pill
+    #         }
+    #         ]
+    # }
 
 
 Template.small_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', @data._id, 1
 Template.small_doc_history.helpers
     doc_history_events: ->
-        # console.log Template.currentData()
         cursor = 
             Docs.find {
                 parent_id: Template.currentData()._id
@@ -295,7 +276,6 @@ Template.parent_link.onCreated ->
     @autorun =>  Meteor.subscribe 'parent_doc', @data._id
 Template.parent_link.helpers
     parent_doc: ->
-        # console.log Template.currentData()
         Docs.find 
             _id: Template.currentData().parent_id
         
@@ -308,11 +288,11 @@ Template.full_doc_history.helpers
             parent_id: Template.currentData()._id
             type:'event'
         }, sort:timestamp:-1
+        
+        
 Template.full_doc_history.events
     'click #clear_events': ->
         doc_id = FlowRouter.getParam('doc_id')
-        # console.log Template.parentData()
-        # console.log @
         if confirm 'Clear all events? Irriversible.'
             Meteor.call 'clear_incident_events', doc_id
             
@@ -331,10 +311,6 @@ Template.incidents_by_type.helpers
 Template.toggle_key.helpers
     toggle_key_button_class: -> 
         current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log current_doc["#{@key}"]
-        # console.log @key
-        # console.log Template.parentData()
-        # console.log Template.parentData()["#{@key}"]
         
         if @value
             if current_doc["#{@key}"] is @value then 'primary'
@@ -344,8 +320,6 @@ Template.toggle_key.helpers
 Template.toggle_key.events
     'click .toggle_key': ->
         doc_id = FlowRouter.getParam('doc_id')
-        # console.log Template.parentData()
-        # console.log @
         if @value
             Docs.update {_id:doc_id}, 
                 { $set: "#{@key}": "#{@value}" },
@@ -379,10 +353,6 @@ Template.toggle_boolean_checkbox.onRendered ->
 # Template.toggle_boolean_checkbox.helpers
 #     toggle_key_button_class: -> 
 #         current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-#         # console.log current_doc["#{@key}"]
-#         # console.log @key
-#         # console.log Template.parentData()
-#         # console.log Template.parentData()["#{@key}"]
         
 #         if @value
 #             if current_doc["#{@key}"] is @value then 'primary'
@@ -391,13 +361,8 @@ Template.toggle_boolean_checkbox.onRendered ->
 
 Template.toggle_boolean_checkbox.events
     'click .ui.toggle.checkbox': (e,t)->
-        # console.log t.find('.ui.slider.checkbox')
         doc_id = FlowRouter.getParam('doc_id')
-        console.log Template.parentData()
         checkbox_value = $("input[name=#{@key}]").is(":checked")
-        console.log @key
-        console.log checkbox_value
-        console.log Docs.findOne doc_id
         # if @value
         #     Docs.update {_id:doc_id}, 
         #         { $set: "#{@key}": "#{@value}" },
@@ -415,10 +380,7 @@ Template.toggle_boolean_checkbox.events
                         
 Template.toggle_user_published.events
     'click #toggle_button': (e,t)->
-        # console.log t.find('.ui.slider.checkbox')
         doc_id = FlowRouter.getParam('doc_id')
-        console.log Template.parentData()
-        console.log @
         # if @value
         #     Docs.update {_id:doc_id}, 
         #         { $set: "#{@key}": "#{@value}" },
@@ -439,10 +401,7 @@ Template.toggle_user_published.events
         
 Template.radio_item.events
     'click .ui.toggle.checkbox': (e,t)->
-        # console.log t.find('.ui.slider.checkbox')
         doc_id = FlowRouter.getParam('doc_id')
-        # console.log Template.parentData()
-        # console.log @
         # checkbox_value = $("input[name=#{@key}]").is(":checked")
         element = t.find("input:radio[name=#{@key}]:checked");
         radio_item_value = ($(element).val());
@@ -481,12 +440,9 @@ Template.multiple_user_select.onCreated ()->
     
 Template.multiple_user_select.events
     'keyup #multiple_user_select_input': (e,t)->
-        office_username_query = $(e.currentTarget).closest('#multiple_user_select_input').val().trim()
-        # $('#office_username_query').val ''
-        # Session.set 'office_username_query', office_username_query
+        multiple_user_select_input_value = $(e.currentTarget).closest('#multiple_user_select_input').val().trim()
         current_incident = Docs.findOne FlowRouter.getParam('doc_id')
-        console.log current_incident
-        Meteor.call 'lookup_office_user_by_username_and_office_name', current_incident.incident_office_name, office_username_query, (err,res)=>
+        Meteor.call 'lookup_office_user_by_username2', current_incident.incident_office_name, multiple_user_select_input_value, (err,res)=>
             if err then console.error err
             else
                 t.user_results.set res
@@ -494,11 +450,8 @@ Template.multiple_user_select.events
 
     'click .select_user': (e,t) ->
         key = Template.parentData(0).key
-        # console.log 'selected ', doc
         page_doc = Docs.findOne FlowRouter.getParam('doc_id')
         # searched_value = doc["#{template.data.key}"]
-        # console.log 'template ', template
-        # console.log 'search value ', searched_value
         Meteor.call 'user_array_add', page_doc._id, key, @, (err,res)=>
             if err
                 Bert.alert "Error Assigning #{selected_user.username}: #{err.reason}", 'danger', 'growl-top-right'
@@ -509,7 +462,6 @@ Template.multiple_user_select.events
 
     'click .pull_user': ->
         context = Template.currentData(0)
-        console.log context
         swal {
             title: "Remove #{@username}?"
             # text: 'Confirm delete?'
@@ -529,25 +481,12 @@ Template.multiple_user_select.events
                     Bert.alert "Removed #{@username}.", 'success', 'growl-top-right'
     
 Template.multiple_user_select.helpers
-    # settings: -> 
-    #     # console.log @
-    #     {
-    #         position: 'bottom'
-    #         limit: 10
-    #         rules: [
-    #             {
-    #                 collection: Meteor.users
-    #                 field: 'username'
-    #                 matchAll: true
-    #                 # filter: { type: "#{@type}" }
-    #                 template: Template.user_result
-    #             }
-    #         ]
-    #     }
+    user_results: ->
+        user_results = Template.instance().user_results.get()
+        user_results
 
     user_array_users: ->
         context = Template.currentData(0)
-        # console.log context.key
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         list = Meteor.users.find(_id: $in: parent_doc["#{context.key}"]).fetch()
     
@@ -563,11 +502,8 @@ Template.office_username_query.onCreated ()->
 Template.office_username_query.events
     'click .select_office_user': (e,t) ->
         key = Template.parentData(0).key
-        # console.log 'selected ', doc
         page_doc = Docs.findOne FlowRouter.getParam('doc_id')
         # searched_value = doc["#{template.data.key}"]
-        # console.log 'template ', template
-        # console.log 'search value ', searched_value
         Docs.update page_doc._id,
             $set: "#{key}": @.username
         $('#office_username_query').val ''
@@ -585,7 +521,6 @@ Template.office_username_query.events
 
     'click .pull_user': ->
         context = Template.currentData(0)
-        # console.log context
         swal {
             title: "Remove #{@username}?"
             # text: 'Confirm delete?'
@@ -604,14 +539,11 @@ Template.office_username_query.events
 Template.office_username_query.helpers
     user_results: ->
         user_results = Template.instance().user_results.get()
-        console.log user_results
         user_results
 
     selected_user: ->
         context = Template.currentData(0)
-        # console.log context.key
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log parent_doc["#{context.key}"]
         if parent_doc["#{context.key}"]
             Meteor.users.findOne
                 username: parent_doc["#{context.key}"]
@@ -633,10 +565,7 @@ Template.office_username_query.helpers
 Template.view_sla_contact.helpers
     selected_contact: ->
         context = Template.currentData(0)
-        # console.log context.key
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log parent_doc["#{context.key}"]
-        # console.log parent_doc[parent_doc["#{context.key}"]]
         if parent_doc["#{context.key}"]
             Meteor.users.findOne
                 username: parent_doc[parent_doc["#{context.key}"]]
@@ -651,11 +580,8 @@ Template.many_doc_select.onCreated ->
 Template.many_doc_select.events
     'autocompleteselect #search': (event, template, selected_doc) ->
         key = Template.parentData(0).key
-        # console.log 'selected ', doc
         page_doc = Docs.findOne FlowRouter.getParam('doc_id')
         # searched_value = doc["#{template.data.key}"]
-        # console.log 'template ', template
-        # console.log 'search value ', searched_value
         Meteor.call 'doc_array_add', page_doc._id, key, selected_doc, (err,res)=>
             if err
                 Bert.alert "Error Assigning #{selected_doc.text}: #{err.reason}", 'danger', 'growl-top-right'
@@ -665,7 +591,6 @@ Template.many_doc_select.events
 
     'click .pull_doc': ->
         context = Template.currentData(0)
-        console.log context
         swal {
             title: "Remove #{@title} #{@text}?"
             # text: 'Confirm delete?'
@@ -689,11 +614,8 @@ Template.single_doc_select.onCreated ->
 Template.single_doc_select.events
     'autocompleteselect #search': (event, template, selected_doc) ->
         save_key = Template.parentData(0).save_key
-        # console.log 'selected ', selected_doc
         page_doc = Docs.findOne FlowRouter.getParam('doc_id')
         # searched_value = doc["#{template.data.key}"]
-        # console.log 'template ', template
-        # console.log 'search value ', searched_value
         Meteor.call 'link_doc', page_doc._id, save_key, selected_doc, (err,res)=>
             if err
                 Bert.alert "Error Assigning #{selected_doc.cust_name}: #{err.reason}", 'danger', 'growl-top-right'
@@ -703,7 +625,6 @@ Template.single_doc_select.events
 
     'click .remove_doc': ->
         context = Template.currentData(0)
-        console.log context
         swal {
             title: "Remove #{@cust_name}?"
             # text: 'Confirm delete?'
@@ -724,7 +645,6 @@ Template.single_doc_select.events
     
 Template.single_doc_select.helpers
     settings: -> 
-        # console.log @
         {
             position: 'bottom'
             limit: 10
@@ -741,27 +661,20 @@ Template.single_doc_select.helpers
 
     selected_doc: ->
         context = Template.currentData(0)
-        # console.log context.save_key
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log parent_doc["#{context.save_key}"]
         doc = 
             Docs.findOne _id: parent_doc["#{context.save_key}"]
-        # console.log doc
         doc
         
 Template.single_doc_view.onCreated ->
-    # console.log @data
     @autorun =>  Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
 Template.single_doc_view.helpers
     selected_doc: ->
         context = Template.currentData(0)
-        # console.log context.save_key
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log parent_doc["#{context.key}"]
         doc = 
             Docs.findOne 
                 "ev.ID": parent_doc["#{context.key}"]
-        # console.log doc
         doc
 Template.view_multiple_user.onCreated ->
     @autorun =>  Meteor.subscribe 'users'
@@ -769,7 +682,6 @@ Template.view_multiple_user.onCreated ->
 Template.view_multiple_user.helpers
     user_array_users: ->
         context = Template.parentData(1)
-        # console.log context
         parent_doc = Docs.findOne context._id
         Meteor.users.find
             _id: $in: parent_doc["#{@key}"]
@@ -781,10 +693,8 @@ Template.doc_result.onCreated ->
 Template.doc_result.helpers
     doc_context: ->
         context = Template.currentData(0)
-        # console.log context.key
         # parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         found = Docs.findOne context._id
-        # console.log found
         found
         
 Template.delete_button.onCreated ->
@@ -822,7 +732,6 @@ Template.session_delete_button.events
 
 
 Template.office_card.onCreated ->
-    # console.log @data
     @autorun =>  Meteor.subscribe 'office_by_id', @data.office_jpid
 Template.office_card.helpers
     office_doc: ->
@@ -831,11 +740,9 @@ Template.office_card.helpers
             Docs.findOne 
                 type:'office'
                 "ev.ID": context.office_jpid
-        # console.log doc
         doc
         
 Template.customer_card.onCreated ->
-    # console.log @data.customer_jpid
     @autorun =>  Meteor.subscribe 'customer_by_id', @data.customer_jpid
 Template.customer_card.helpers
     customer_doc: ->
@@ -844,12 +751,10 @@ Template.customer_card.helpers
             Docs.findOne 
                 type:'customer'
                 "ev.ID": context.customer_jpid
-        # console.log doc
         doc
 
 
 Template.franchisee_card.onCreated ->
-    # console.log @data.franchisee_jpid
     @autorun =>  Meteor.subscribe 'franchisee_by_id', @data.franchisee_jpid
 Template.franchisee_card.helpers
     franchisee_doc: ->
@@ -858,7 +763,6 @@ Template.franchisee_card.helpers
             Docs.findOne 
                 type:'franchisee'
                 "ev.ID": context.franchisee_jpid
-        # console.log doc
         doc
 
 
