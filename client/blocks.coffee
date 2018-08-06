@@ -508,36 +508,6 @@ Template.multiple_user_select.events
                 else
                     Bert.alert "Removed #{@username}.", 'success', 'growl-top-right'
     
-    
-Template.single_user_select.events
-    'autocompleteselect #search': (event, template, selected_user) ->
-        key = Template.parentData(0).key
-        # console.log 'selected ', doc
-        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # searched_value = doc["#{template.data.key}"]
-        # console.log 'template ', template
-        # console.log 'search value ', searched_value
-        Docs.update page_doc._id,
-            $set: "#{key}": selected_user.username
-        $('#search').val ''
-
-    'click .pull_user': ->
-        context = Template.currentData(0)
-        # console.log context
-        swal {
-            title: "Remove #{@username}?"
-            # text: 'Confirm delete?'
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Unassign'
-            confirmButtonColor: '#da5347'
-        }, =>
-            page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-            Docs.update page_doc._id,
-                $unset: "#{context.key}": 1
 
     
 Template.multiple_user_select.helpers
@@ -562,23 +532,62 @@ Template.multiple_user_select.helpers
         # console.log context.key
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         list = Meteor.users.find(_id: $in: parent_doc["#{context.key}"]).fetch()
+    
+    
+    
 
-Template.single_user_select.helpers
-    settings: -> 
-        # console.log @
-        {
-            position: 'bottom'
-            limit: 10
-            rules: [
-                {
-                    collection: Meteor.users
-                    field: 'username'
-                    matchAll: true
-                    # filter: { type: "#{@type}" }
-                    template: Template.user_result
-                }
-            ]
-        }
+    
+    
+Template.office_username_query.onCreated ()->
+    @user_results = new ReactiveVar( [] )
+    
+    
+Template.office_username_query.events
+    'click .select_office_user': (e,t) ->
+        key = Template.parentData(0).key
+        # console.log 'selected ', doc
+        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # searched_value = doc["#{template.data.key}"]
+        # console.log 'template ', template
+        # console.log 'search value ', searched_value
+        Docs.update page_doc._id,
+            $set: "#{key}": selected_user.username
+        $('#office_username_query').val ''
+
+    'keyup #office_username_query': (e,t)->
+        office_username_query = $(e.currentTarget).closest('#office_username_query').val().trim()
+        # $('#office_username_query').val ''
+        Session.set 'office_username_query', office_username_query
+        current_office_id = FlowRouter.getParam('doc_id')
+        Meteor.call 'lookup_office_user_by_username', current_office_id, office_username_query, (err,res)=>
+            if err then console.error err
+            else
+                t.user_results.set res
+
+
+    'click .pull_user': ->
+        context = Template.currentData(0)
+        # console.log context
+        swal {
+            title: "Remove #{@username}?"
+            # text: 'Confirm delete?'
+            type: 'info'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Unassign'
+            confirmButtonColor: '#da5347'
+        }, =>
+            page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+            Docs.update page_doc._id,
+                $unset: "#{context.key}": 1
+
+Template.office_username_query.helpers
+    user_results: ->
+        user_results = Template.instance().user_results.get()
+        console.log user_results
+        user_results
 
     selected_user: ->
         context = Template.currentData(0)
@@ -590,6 +599,17 @@ Template.single_user_select.helpers
                 username: parent_doc["#{context.key}"]
         else
             false
+
+
+
+
+
+
+
+
+
+
+
 
 
 Template.view_sla_contact.helpers

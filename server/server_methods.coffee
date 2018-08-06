@@ -626,3 +626,15 @@ Meteor.methods
         console.log result
         return result
         
+        
+    lookup_office_user_by_username: (office_id, username_query)->
+        console.log username_query, office_id
+        office_doc = Docs.findOne office_id
+        found_users = 
+            Meteor.users.find({
+                "ev.COMPANY_NAME":office_doc.ev.MASTER_LICENSEE
+                username: {$regex:"#{username_query}", $options: 'i'}
+                }).fetch()
+        console.log 'found user count', found_users.length
+        found_users
+        

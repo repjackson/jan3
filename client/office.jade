@@ -32,7 +32,7 @@ template(name='office_header')
                         +office_nav
 
 template(name='office_nav')
-    .ui.five.item.stackable.borderless.pointing.menu
+    .ui.five.item.stackable.borderless.menu
         // a.item(href="/view/#{_id}" isActivePath="/view/#{_id}")
         //     i.big.icon
         //         +iconsmall name='link-company-parent'
@@ -214,7 +214,7 @@ template(name='office_settings')
                         | &nbsp; SLA Settings
                     h5.ui.header Select Incident Types
                     each incident_types
-                        .select_incident_type.ui.small.compact.button(class=select_incident_type_button_class) #{name}
+                        .select_incident_type.ui.compact.button(class=select_incident_type_button_class) #{name}
                     if selected_incident_type
                         each rule_docs
                             .ui.secondary.segment
@@ -226,15 +226,17 @@ template(name='office_settings')
                                             .ui.hidden.divider
                                         +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
                                     .column
-                                        +toggle_boolean_checkbox key=primary_email_key label='Send Email'
-                                        +toggle_boolean_checkbox key=primary_sms_key label='Send SMS'
-                                        // h4.ui.dividing.header Primary Contact
-                                        +single_user_select key=primary_contact_key label="Primary Contact Employee Select"
+                                        h4.ui.dividing.header Primary
+                                        +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'
+                                        .ui.hidden.fitted.divider
+                                        +toggle_boolean_checkbox key=primary_sms_key label='Send SMS' icon='comment'
+                                        +office_username_query key=primary_contact_key label='Contact'
                                     .column
-                                        // h4.ui.dividing.header Secondary Contact
-                                        +toggle_boolean_checkbox key=secondary_email_key label='Send Email'
-                                        +toggle_boolean_checkbox key=secondary_sms_key label='Send SMS'
-                                        +single_user_select key=secondary_contact_key label='Secondary Contact Employee Select'
+                                        h4.ui.dividing.header Secondary
+                                        +toggle_boolean_checkbox key=secondary_email_key label='Send Email' icon='envelope'
+                                        .ui.hidden.fitted.divider
+                                        +toggle_boolean_checkbox key=secondary_sms_key label='Send SMS' icon='comment'
+                                        +office_username_query key=secondary_contact_key label='Contact'
             
 template(name='office_service_settings')
     // h5.ui.header Select which to offer customers.
