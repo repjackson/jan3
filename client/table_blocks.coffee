@@ -1,8 +1,26 @@
-Template.pagination.helpers
+Template.table_footer.onCreated ->
+    console.log @data
+    Meteor.subscribe 'count', @data.type
+
+
+
+Template.table_footer.helpers
     pagination_item_class: ->
         # console.log @
         if Session.equals('current_page_number', @number) then 'active' else ''
         
+    count_amount: ->
+        console.log Template.currentData()
+        count_stat = Stats.findOne()
+        if count_stat
+            # console.log count_stat
+            count_stat.amount
+            
+    page_size_button_class: (string_size)->
+        # console.log string_size
+        number = parseInt string_size
+        if Session.equals('page_size', number) then 'blue' else ''
+    
     pages: ->
         stat_doc = Stats.findOne()
         if stat_doc
@@ -23,7 +41,7 @@ Template.pagination.helpers
             return pages
         
         
-Template.pagination.events
+Template.table_footer.events
     'click .set_page_number': -> 
         console.log @
         Session.set 'current_page_number', @number
@@ -31,25 +49,13 @@ Template.pagination.events
         Session.set 'skip', skip_amount
         console.log skip_amount
     
-    
-
-Template.page_size_input.helpers
-    count_amount: ->
-        count_stat = Stats.findOne()
-        if count_stat
-            # console.log count_stat
-            count_stat.amount
-
-Template.page_size_input.events
     'change #page_size': (e,t)->
         Session.set 'page_size',$('#page_size').val()
 
-    'click .set_10': ()->Session.set 'page_size',10
-    'click .set_20': ()->Session.set 'page_size',20
-    'click .set_50': ()->Session.set 'page_size',50
-    'click .set_100': ()->Session.set 'page_size',100
-
-
+    'click .set_10': ()-> Session.set 'page_size',10
+    'click .set_20': ()-> Session.set 'page_size',20
+    'click .set_50': ()-> Session.set 'page_size',50
+    'click .set_100': ()-> Session.set 'page_size',100
 
 Template.sort_column_header.helpers
     sort_descending: ->
@@ -77,3 +83,12 @@ Template.search_key.events
         console.log @
         
         
+        
+        
+Template.query_input.events
+    'keyup #query': (e,t)->
+        e.preventDefault()
+        query = $('#query').val().trim()
+        # if e.which is 13 #enter
+        # $('#query').val ''
+        Session.set 'query', query

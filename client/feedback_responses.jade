@@ -1,0 +1,66 @@
+template(name='feedback_responses')
+    .ui.stackable.padded.grid
+        .middle.aligned.row 
+            .three.wide.center.aligned.column
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    i.clone.icon
+                    | Incident Types
+            .three.wide.center.aligned.column
+                +add_button type='feedback_response'
+        .row 
+            .sixteen.wide.column
+                .ui.centered.stackable.cards
+                    each feedback_responses
+                        +feedback_response_card
+
+template(name='feedback_response_card')
+    .card
+        .content
+            a.grey.header(href="/view/#{_id}")
+                |#{name} 
+        .content
+            |!{html}
+            +edit_button
+            +view_button
+        
+        
+        
+template(name='feedback_response_edit')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.center.aligned.column
+                #delete.ui.icon.button
+                    i.trash.icon
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Edit Incident Type #{name}
+            .three.wide.center.aligned.column
+                +save_button
+        .eight.wide.column
+            .ui.form
+                +edit_text_field key='name' label='Incident Type Name'
+                +edit_text_field key='slug' label='Slug (machine readable)'
+                // +edit_html
+        
+        
+template(name='feedback_response_view')
+    .ui.padded.stackable.centered.grid
+        .centered.middle.aligned.row
+            .three.wide.center.aligned.column
+                +link_button link='/feedback_responses' icon='exclamation triangle'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Incident Type: #{name}
+            .three.wide.center.aligned.column
+                +edit_button
+        .row
+            .four.wide.column
+                .ui.header Name: #{name}
+                .ui.header Description: !{html}
+                +incidents_by_type type=slug
+            .twelve.wide.column
+                +comments
+                
+                
+// template(name='feedback_response_selector')
+//     each user_feedback_responses
+//         .toggle_feedback_response.ui.button #{name}            

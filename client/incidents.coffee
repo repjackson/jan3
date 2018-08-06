@@ -69,19 +69,20 @@ Template.incident_type_label.helpers
 Template.incidents.onCreated ->
     Session.setDefault('query',null)
     @autorun -> Meteor.subscribe 'incidents', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    Meteor.subscribe 'count', 'incident'
+
+
+
 Template.incidents.helpers
     all_incidents: -> 
         Docs.find {
             type:'incident'
-        },{ 
-            sort:
-                "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")
-        }
+        },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
         
         
 Template.customer_incidents.onCreated ->
     Session.setDefault('query',null)
-    @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
 
 
 
@@ -90,10 +91,7 @@ Template.customer_incidents.helpers
         
         Docs.find {
             type:'incident'
-        },{ 
-            sort:
-                "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")
-        }
+        },{ sort: "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
 
 Template.incident_view.onCreated ->

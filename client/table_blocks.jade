@@ -2,26 +2,14 @@ template(name='table_footer')
     tfoot
         tr
             th(colspan=columns)
-                +pagination
-                if office_counter
-                    .ui.header Total: #{office_counter}
-                +page_size_input
-                                
-template(name='pagination')
-    .ui.right.floated.pagination.menu
-        each pages
-            a.set_page_number.item(class=pagination_item_class) #{number}
-                                
-template(name='page_size_input')   
-    |View &nbsp;
-    .set_10.ui.compact.button(class="{{page_size_button_class '10'}}") 10
-    .set_20.ui.compact.button(class="{{page_size_button_class '20'}}") 20
-    .set_50.ui.compact.button(class="{{page_size_button_class '50'}}") 50
-    |of #{count_amount}
-    // .set_100.ui.button 100
-    // .ui.input
-    //     label Page Size
-    //     input#page_size(type='number' value=page_size min='0')
+                .ui.right.floated.pagination.menu
+                    each pages
+                        a.set_page_number.item(class=pagination_item_class) #{number}
+                |View &nbsp;
+                .set_10.ui.compact.button(class="{{page_size_button_class '10'}}") 10
+                .set_20.ui.compact.button(class="{{page_size_button_class '20'}}") 20
+                .set_50.ui.compact.button(class="{{page_size_button_class '50'}}") 50
+                |of #{count_amount}
                                 
                                 
 template(name='sort_column_header')    

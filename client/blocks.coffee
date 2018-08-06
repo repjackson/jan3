@@ -826,16 +826,3 @@ Template.franchisee_card.helpers
 
 
                 
-Template.page_size_input.helpers
-    page_size_button_class: (string_size)->
-        # console.log string_size
-        number = parseInt string_size
-        if Session.equals('page_size', number) then 'blue' else ''
-        
-Template.query_input.events
-    'keyup #query': (e,t)->
-        e.preventDefault()
-        query = $('#query').val().trim()
-        # if e.which is 13 #enter
-        # $('#query').val ''
-        Session.set 'query', query

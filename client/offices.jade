@@ -20,7 +20,7 @@ template(name='offices')
                 // +call_method name='sync_offices'
         .row
             .sixteen.wide.column
-                +query_input
+                +query_input placeholder='Filter Office Name'
                 table.ui.striped.selectable.fixed.fluid.sortable.table
                     thead
                         tr
@@ -42,4 +42,4 @@ template(name='offices')
                                 td #{ev.ADDR_STREET}
                                 td
                                     +view_button
-                    +table_footer columns='7'
+                    +table_footer columns='7' type='office'

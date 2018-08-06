@@ -250,8 +250,9 @@ template(name='single_user_select')
             .ui.form
                 .field
                     .ui.input
-                        // i.search.icon
-                        +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder="Select Users..."
+                        i.search.icon
+                        input(type='text' placeholder='Search Office User')
+                        // +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder="Select Users..."
         with selected_user
             h5
                 |#{profile.first_name} #{profile.last_name} @#{username}
@@ -540,7 +541,7 @@ template(name='view_telephone_field')
 template(name='query_input')            
     .ui.icon.input
         i.search.icon
-        input#query(type='text' placeholder='Search')
+        input#query(type='text' placeholder=placeholder)
 
 template(name='user_result')
     .ui.item

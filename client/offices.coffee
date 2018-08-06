@@ -24,7 +24,6 @@ FlowRouter.route '/office/:doc_id/settings',
 Template.offices.onCreated ->
     @autorun -> Meteor.subscribe 'offices', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     # @autorun -> Meteor.subscribe 'office_counter_publication'
-    Meteor.subscribe 'count', 'office'
 
 Template.offices.helpers
     all_offices: ->
@@ -77,10 +76,7 @@ Template.office_incidents.helpers
             Docs.find {
                 incident_office_name: page_office.ev.MASTER_LICENSEE
                 type: "incident"
-            },{ 
-                sort:
-                    "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")
-            }
+            },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
 Template.office_employees.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
@@ -177,6 +173,22 @@ Template.office_settings.helpers
         current_incident_type = Session.get 'incident_type_selection'
         # console.log "escalation_#{@number}_primary_contact"
         "escalation_#{@number}_#{current_incident_type}_primary_contact"
+    primary_email_key: -> 
+        current_incident_type = Session.get 'incident_type_selection'
+        # console.log "escalation_#{@number}_primary_contact"
+        "escalation_#{@number}_#{current_incident_type}_primary_email_option"
+    primary_sms_key: -> 
+        current_incident_type = Session.get 'incident_type_selection'
+        # console.log "escalation_#{@number}_primary_contact"
+        "escalation_#{@number}_#{current_incident_type}_primary_sms_option"
     secondary_contact_key: -> 
         current_incident_type = Session.get 'incident_type_selection'
         "escalation_#{@number}_#{current_incident_type}_secondary_contact"
+    secondary_email_key: -> 
+        current_incident_type = Session.get 'incident_type_selection'
+        # console.log "escalation_#{@number}_secondary_contact"
+        "escalation_#{@number}_#{current_incident_type}_secondary_email_option"
+    secondary_sms_key: -> 
+        current_incident_type = Session.get 'incident_type_selection'
+        # console.log "escalation_#{@number}_secondary_contact"
+        "escalation_#{@number}_#{current_incident_type}_secondary_sms_option"
