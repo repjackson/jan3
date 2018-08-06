@@ -272,11 +272,11 @@ Template.read_by_list.helpers
     
 
 Template.notify_button.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.ui.accordion').accordion()
-            , 500
+    # @autorun =>
+    #     if @subscriptionsReady()
+    #         Meteor.setTimeout ->
+    #             $('.ui.accordion').accordion()
+    #         , 500
 
 
 

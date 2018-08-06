@@ -470,16 +470,35 @@ Template.radio_item.events
 #         Docs.find
 #             parent_id:FlowRouter.getParam('doc_id')
 #             type:'event'
-       
+ 
+ 
+ 
+ 
+ 
+ 
+Template.multiple_user_select.onCreated ()->
+    @user_results = new ReactiveVar( [] )
+    
 Template.multiple_user_select.events
-    'autocompleteselect #search': (event, template, selected_user) ->
+    'keyup #multiple_user_select_input': (e,t)->
+        office_username_query = $(e.currentTarget).closest('#multiple_user_select_input').val().trim()
+        # $('#office_username_query').val ''
+        # Session.set 'office_username_query', office_username_query
+        current_incident = Docs.findOne FlowRouter.getParam('doc_id')
+        Meteor.call 'lookup_office_user_by_username_and_office_jpid', current_incident.office_jpid, office_username_query, (err,res)=>
+            if err then console.error err
+            else
+                t.user_results.set res
+
+
+    'click .select_user': (e,t) ->
         key = Template.parentData(0).key
         # console.log 'selected ', doc
         page_doc = Docs.findOne FlowRouter.getParam('doc_id')
         # searched_value = doc["#{template.data.key}"]
         # console.log 'template ', template
         # console.log 'search value ', searched_value
-        Meteor.call 'user_array_add', page_doc._id, key, selected_user, (err,res)=>
+        Meteor.call 'user_array_add', page_doc._id, key, @, (err,res)=>
             if err
                 Bert.alert "Error Assigning #{selected_user.username}: #{err.reason}", 'danger', 'growl-top-right'
             else
@@ -508,24 +527,22 @@ Template.multiple_user_select.events
                 else
                     Bert.alert "Removed #{@username}.", 'success', 'growl-top-right'
     
-
-    
 Template.multiple_user_select.helpers
-    settings: -> 
-        # console.log @
-        {
-            position: 'bottom'
-            limit: 10
-            rules: [
-                {
-                    collection: Meteor.users
-                    field: 'username'
-                    matchAll: true
-                    # filter: { type: "#{@type}" }
-                    template: Template.user_result
-                }
-            ]
-        }
+    # settings: -> 
+    #     # console.log @
+    #     {
+    #         position: 'bottom'
+    #         limit: 10
+    #         rules: [
+    #             {
+    #                 collection: Meteor.users
+    #                 field: 'username'
+    #                 matchAll: true
+    #                 # filter: { type: "#{@type}" }
+    #                 template: Template.user_result
+    #             }
+    #         ]
+    #     }
 
     user_array_users: ->
         context = Template.currentData(0)
@@ -551,7 +568,7 @@ Template.office_username_query.events
         # console.log 'template ', template
         # console.log 'search value ', searched_value
         Docs.update page_doc._id,
-            $set: "#{key}": selected_user.username
+            $set: "#{key}": @.username
         $('#office_username_query').val ''
 
     'keyup #office_username_query': (e,t)->

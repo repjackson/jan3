@@ -23,7 +23,7 @@ template(name='incidents')
                             +sort_column_header key='timestamp' label='Logged'
                             +sort_column_header key='service_date' label='Incident Date'
                             +sort_column_header key='incident_details' label='Details'
-                            +sort_column_header key='level' label='Level'
+                            // +sort_column_header key='level' label='Level'
                             +sort_column_header key='open' label='Status'
                             +sort_column_header key='submitted' label='Submitted'
                             th Assigned To
@@ -40,7 +40,7 @@ template(name='incidents')
                                 td #{when}
                                 td #{service_date}
                                 td #{incident_details}
-                                td #{level}
+                                // td #{level}
                                 td 
                                     +status_template
                                 td
@@ -51,7 +51,7 @@ template(name='incidents')
                                     +small_doc_history
                                 td
                                     +view_button
-                    +table_footer columns='13'                
+                    +table_footer columns='12'                
 
 
                 
@@ -160,7 +160,7 @@ template(name='incident_view')
                     if submitted
                         .ui.secondary.segment
                             +incident_tasks
-                    +notify_button
+                    // +notify_button
                     +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
                     .ui.secondary.segment
                         .ui.header Level: #{level}

@@ -92,7 +92,7 @@ template(name='office_customers')
                                 td #{ev.TIMESTAMP}
                                 td 
                                     +view_button
-                    +table_footer columns='8'                
+                    +table_footer columns='9'                
 
 
 template(name='office_incidents')
@@ -149,7 +149,8 @@ template(name='office_employees')
                         each office_employees
                             tr
                                 td #{username}
-                                td #{profile.first_name} #{profile.last_name}
+                                td #{profile.first_name} 
+                                td #{profile.last_name}
                                 td #{profile.title}
                                 td #{ev.WORK_TELEPHONE}
                                 td #{email}
@@ -158,7 +159,7 @@ template(name='office_employees')
                                 td 
                                     +edit_user_button
                                     +view_user_button
-                    +table_footer columns='7'                
+                    +table_footer columns='8'                
 
 
 template(name='office_franchisees')
@@ -230,12 +231,14 @@ template(name='office_settings')
                                         +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'
                                         .ui.hidden.fitted.divider
                                         +toggle_boolean_checkbox key=primary_sms_key label='Send SMS' icon='comment'
+                                        .ui.hidden.fitted.divider
                                         +office_username_query key=primary_contact_key label='Contact'
                                     .column
                                         h4.ui.dividing.header Secondary
                                         +toggle_boolean_checkbox key=secondary_email_key label='Send Email' icon='envelope'
                                         .ui.hidden.fitted.divider
                                         +toggle_boolean_checkbox key=secondary_sms_key label='Send SMS' icon='comment'
+                                        .ui.hidden.fitted.divider
                                         +office_username_query key=secondary_contact_key label='Contact'
             
 template(name='office_service_settings')

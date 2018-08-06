@@ -44,7 +44,7 @@ template(name='edit_button')
         // | Edit
 
 template(name='view_button')
-    a.ui.icon.large.button(href="/view/#{_id}" data-content='View Details') 
+    a.ui.icon.button(href="/view/#{_id}" data-content='View Details') 
         // +icon name='details-pane'
         i.right.chevron.large.green.icon
         
@@ -70,7 +70,7 @@ template(name='reference_type_single')
             label #{label}
             .ui.left.icon.input
                 i.search.icon
-                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='search...'
+                // +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='search...'
 
 template(name='reference_type_multiple')
     .ui.form
@@ -78,7 +78,7 @@ template(name='reference_type_multiple')
             label #{label}
             .ui.left.icon.input
                 i.search.icon
-                +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder="add..."
+                // +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder="add..."
 
 
 
@@ -137,8 +137,6 @@ template(name='parent_link')
             |#{text}
                     
 
-
-
 template(name='view_full_button')
     a.floated.right(href="/view/#{_id}")
         // i.right.chevron.link.icon
@@ -187,10 +185,6 @@ template(name='incidents_by_type')
                         a.header(href="/view/#{_id}") ##{incident_number} 
                         .description
                             |#{when}
-        
-            
-            
-            
             
 template(name='associated_users')
     .ui.list
@@ -213,9 +207,14 @@ template(name='multiple_user_select')
             |#{label}
         .ui.form
             .field
-                .ui.icon.input
+                .ui.icon.transparent.input
                     i.search.icon
-                    +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder="Select Users..."
+                    input#multiple_user_select_input(type='text' placeholder='Search Office User')
+            .ui.middle.aligned.selection.animated.list
+                each user_results
+                    .select_user.item 
+                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        |#{username}
             .field
                 .ui.list
                     each user_array_users
@@ -239,49 +238,25 @@ template(name='view_sla_contact')
             | @#{username}
             div #{ev.EMAIL}
 
-
-
-
-
-
-
-
-
-
 template(name='office_username_query')
-    .ui.secondary.segment
-        h5.ui.header 
-            i.user.grey.icon
-            |#{label}
-        unless selected_user
-            .ui.form
-                .field
-                    .ui.icon.transparent.input
-                        i.search.icon
-                        input#office_username_query(type='text' placeholder='Search Office User')
-                .ui.middle.aligned.selection.animated.list
-                    each user_results
-                        .select_office_user.item 
-                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            |#{username}
-        with selected_user
-            h5
-                |#{profile.first_name} #{profile.last_name} @#{username}
-                i.pull_user.remove.red.link.icon
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
+    h5.ui.header 
+        i.user.grey.icon
+        |#{label}
+    unless selected_user
+        .ui.form
+            .field
+                .ui.icon.transparent.input
+                    i.search.icon
+                    input#office_username_query(type='text' placeholder='Search Office User')
+            .ui.middle.aligned.selection.animated.list
+                each user_results
+                    .select_office_user.item 
+                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        |#{username}
+    with selected_user
+        h5
+            |#{profile.first_name} #{profile.last_name} @#{username}
+            i.pull_user.remove.red.link.icon
           
 template(name='many_doc_select')
     .ui.dividing.header #{label}
@@ -304,9 +279,9 @@ template(name='single_doc_select')
     unless selected_doc
         .ui.form
             .field
-                .ui.icon.input
+                .ui.icon.transparent.input
                     i.handshake.icon
-                    +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off" placeholder='Customer Name...'
+                    input#multiple_user_select_input(type='text' placeholder='Search Office User')
     with selected_doc
         .ui.fluid.card
             .content
@@ -378,8 +353,8 @@ template(name='edit_author')
     with author
         img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
         |#{username}
-    .ui.input
-        +inputAutocomplete settings=author_edit_settings id="author_select" class="" autocomplete="off" placeholder='Lookup...'
+    // .ui.input
+        // +inputAutocomplete settings=author_edit_settings id="author_select" class="" autocomplete="off" placeholder='Lookup...'
                     
 
 
@@ -546,7 +521,7 @@ template(name='doc_history_event')
             .summary
                 a.user #{author.username}
                 |#{action} #{text}
-                .date #{when}
+                .date {{ reg_format timestamp }}
 
 
 template(name='view_telephone_field')
@@ -689,13 +664,21 @@ template(name='office_card')
     .ui.card
         with office_doc
             .content
-                a(href="/office/#{_id}/incidents")
+                if is_customer
                     .ui.header 
                         +icon name='building'
                         |Office
+                if is_office
+                    a(href="/office/#{_id}/incidents")
+                        .ui.header 
+                            +icon name='building'
+                            |Office
             .content
-                a(href="/office/#{_id}/incidents")
+                if is_customer
                     h4.ui.header #{ev.MASTER_LICENSEE}
+                if is_office
+                    a(href="/office/#{_id}/incidents")
+                        h4.ui.header #{ev.MASTER_LICENSEE}
                 div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
                 div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
                 div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}

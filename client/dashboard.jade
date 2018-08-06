@@ -53,8 +53,10 @@ template(name='dashboard')
                     .ui.secondary.segment
                         +customer_incidents_widget
             .row
-                .sixteen.wide.column
+                .eight.wide.column
                     +dashboard_services_widget
+                .eight.wide.column
+                    +customer_finance_widget
             // .row
             //     .sixteen.wide.column
             //         +dashboard_consumables_widget
@@ -69,7 +71,6 @@ template(name='dashboard')
                 .eight.wide.column
                     .ui.secondary.segment
                         +customer_special_services
-                    +customer_finance_widget
             //     .five.wide.column
             //         +user_franchise_card
             //     .five.wide.column
@@ -108,7 +109,7 @@ template(name='dashboard_services_widget')
         .ui.header 
             +iconsmall name='broom'
             |Services Offered by #{currentUser.users_office.ev.MASTER_LICENSEE}
-        .ui.centered.cards
+        .ui.three.cards
             each services_offered
                 +service_card     
                 
@@ -276,8 +277,8 @@ template(name='customer_finance_widget')
         .ui.header 
             +iconsmall name='money'
             |Finances
-        .ui.header Account Status
-        .ui.header Invoices
-        .ui.header Statements
-        .ui.header Work History
+        h4.ui.header Account Status
+        h4.ui.header Invoices
+        h4.ui.header Statements
+        h4.ui.header Work History
         
