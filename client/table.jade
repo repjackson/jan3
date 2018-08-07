@@ -56,7 +56,7 @@ template(name='search_key')
         
         
 template(name='sort_column_header')    
-    th.sort_by
+    th.sort_by(class=classes)
         |#{label}
         if sort_descending
             i.sort.amount.down.icon

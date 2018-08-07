@@ -436,13 +436,14 @@ Template.radio_item.events
  
  
 Template.multiple_user_select.onCreated ()->
+    @autorun => Meteor.subscribe 'selected_users', FlowRouter.getParam('doc_id'), @data.key
     @user_results = new ReactiveVar( [] )
     
 Template.multiple_user_select.events
     'keyup #multiple_user_select_input': (e,t)->
         multiple_user_select_input_value = $(e.currentTarget).closest('#multiple_user_select_input').val().trim()
         current_incident = Docs.findOne FlowRouter.getParam('doc_id')
-        Meteor.call 'lookup_office_user_by_username2', current_incident.incident_office_name, multiple_user_select_input_value, (err,res)=>
+        Meteor.call 'lookup_office_user_by_username_and_officename', current_incident.incident_office_name, multiple_user_select_input_value, (err,res)=>
             if err then console.error err
             else
                 t.user_results.set res
@@ -454,12 +455,13 @@ Template.multiple_user_select.events
         # searched_value = doc["#{template.data.key}"]
         Meteor.call 'user_array_add', page_doc._id, key, @, (err,res)=>
             if err
-                Bert.alert "Error Assigning #{selected_user.username}: #{err.reason}", 'danger', 'growl-top-right'
+                Bert.alert "Error Assigning #{@username}: #{err.reason}", 'danger', 'growl-top-right'
             else
-                Bert.alert "Assigned #{selected_user.username}.", 'success', 'growl-top-right'
-
-        $('#search').val ''
-
+                Bert.alert "Assigned #{@username}.", 'success', 'growl-top-right'
+        $('#multiple_user_select_input').val ''
+        t.user_results.set null
+        location.reload()
+        
     'click .pull_user': ->
         context = Template.currentData(0)
         swal {
@@ -487,8 +489,9 @@ Template.multiple_user_select.helpers
 
     user_array_users: ->
         context = Template.currentData(0)
+        # console.log context
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        list = Meteor.users.find(_id: $in: parent_doc["#{context.key}"]).fetch()
+        Meteor.users.find(_id: $in: parent_doc["#{context.key}"])
     
     
     

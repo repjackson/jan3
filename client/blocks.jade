@@ -127,14 +127,17 @@ template(name='parent_segment')
         +view_button
 
 template(name='parent_link')
-    with parent_doc
-        a.ui.button(href="/view/#{_id}") 
-            i.chevron.up.icon
-            if image_url
-                img.ui.medium.centered.image(src=image_url)
-            if icon
-                i.icon(class=icon)
-            |#{text}
+    // with parent_doc
+    //     a.ui.button(href="/view/#{_id}") 
+    //         i.chevron.up.icon
+    //         if image_url
+    //             img.ui.medium.centered.image(src=image_url)
+    //         if icon
+    //             i.icon(class=icon)
+    //         |#{text}
+    a.ui.button(href="/view/#{parent_id}") 
+        i.chevron.up.icon
+        |Incident
                     
 
 template(name='view_full_button')

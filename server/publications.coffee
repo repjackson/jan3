@@ -335,6 +335,9 @@ publishComposite 'incidents', (level, limit=100, sort_key='timestamp', sort_dire
             {
                 find: (doc)-> Docs.find _id:doc.parent_id
             }
+            {
+                find: (doc)-> Meteor.users.find _id:$in:doc.assigned_to
+            }
         ]
     }
     
@@ -753,3 +756,9 @@ Meteor.publish 'offices', (name_filter='', limit=100, sort_key='timestamp', sort
 #             ]    
 #     }            
     
+
+Meteor.publish 'selected_users', (doc_id, key)->
+    # console.log doc_id
+    # console.log key
+    doc = Docs.findOne doc_id
+    Meteor.users.find(_id: $in: doc["#{key}"])

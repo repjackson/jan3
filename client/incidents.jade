@@ -13,10 +13,10 @@ template(name='incidents')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.striped.selectable.fixed.celled.sortable.table
+                table.ui.striped.selectable.fixed.sortable.table
                     thead
                         tr
-                            +sort_column_header key='number' label='Number'
+                            +sort_column_header key='number' label='#' classes='collapsing'
                             +sort_column_header key='customer_name' label='Customer'
                             +sort_column_header key='incident_office_name' label='Office'
                             +sort_column_header key='incident_type' label='Type'
@@ -24,10 +24,10 @@ template(name='incidents')
                             +sort_column_header key='service_date' label='Incident Date'
                             +sort_column_header key='incident_details' label='Details'
                             // +sort_column_header key='level' label='Level'
-                            +sort_column_header key='open' label='Status'
+                            +sort_column_header key='open' label='Status' classes='one wide'
                             +sort_column_header key='submitted' label='Submitted'
                             th Assigned To
-                            th Last Event
+                            th.three.wide Last Event
                             th Details
                     tbody
                         each all_incidents
@@ -75,7 +75,7 @@ template(name='incident_view')
                     i.user.shield.icon
                     |Run Escalation Check
         .row
-            .four.wide.column
+            .three.wide.column
                 // if is_dev
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
@@ -100,7 +100,7 @@ template(name='incident_view')
                     .ui.header Last Updated
                     |{{ reg_format updated }}
 
-            .eight.wide.column
+            .nine.wide.column
                 if can_edit_core
                     +edit_textarea label='Details' key='incident_details' icon='view-details'
                 else
@@ -251,7 +251,7 @@ template(name='incident_task_edit')
             .four.wide.column
                 +edit_date_field label='Due Date' key='due_date'
                 // +edit_array_field key='tags' label='Tags'
-                +multiple_user_select
+                +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
                 .ui.secondary.segment
                     .ui.header Action Type
                     each action_docs
@@ -312,7 +312,7 @@ template(name='customer_incidents')
                             +sort_column_header key='open' label='Status'
                             +sort_column_header key='submitted' label='Submitted'
                             th Assigned To
-                            th Last Event
+                            th.three.wide Last Event
                             th
                     tbody
                         each customer_incidents

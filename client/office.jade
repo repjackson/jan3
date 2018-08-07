@@ -231,7 +231,8 @@ template(name='office_settings')
                                             .ui.hidden.divider
                                         else 
                                             +toggle_boolean_checkbox key=customer_toggle_key label='Customer'
-                                        +toggle_boolean_checkbox key=customer_toggle_key label='Franchisee'
+                                            .ui.hidden.divider
+                                        +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
                                     .column
                                         h4.ui.dividing.header Primary
                                         +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'

@@ -596,12 +596,15 @@ Meteor.methods
                 }).fetch()
         found_users
         
-    lookup_office_user_by_username: (office_id, username_query)->
-        console.log username_query, office_id
-        office_doc = Docs.findOne office_id
+    lookup_office_user_by_username_and_officename: (office_name, username_query)->
+        console.log username_query, office_name
+        office_doc = Docs.findOne 
+            type:'office'
+            "ev.MASTER_LICENSEE":office_name
+        console.log 'office doc', office_doc
         found_users = 
             Meteor.users.find({
-                "ev.COMPANY_NAME":office_doc.ev.MASTER_LICENSEE
+                "ev.COMPANY_NAME":office_name
                 username: {$regex:"#{username_query}", $options: 'i'}
                 }).fetch()
         found_users
