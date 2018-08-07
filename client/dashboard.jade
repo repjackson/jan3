@@ -174,12 +174,12 @@ template(name='customer_incidents_widget')
                 th Number
                 th Type
                 th Details
-                th Level
+                th Service Date
                 th Status
                 th Submitted
                 th Assigned To
                 th Last Event
-                th
+                th View
         tbody
             each customer_incidents
                 tr
@@ -187,7 +187,7 @@ template(name='customer_incidents_widget')
                     td
                         +incident_type_label
                     td #{incident_details}
-                    td #{level}
+                    td #{service_date}
                     td 
                         +status_template
                     td

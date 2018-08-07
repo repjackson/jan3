@@ -28,7 +28,7 @@ template(name='incidents')
                             +sort_column_header key='submitted' label='Submitted'
                             th Assigned To
                             th Last Event
-                            th
+                            th Details
                     tbody
                         each all_incidents
                             tr
@@ -37,7 +37,7 @@ template(name='incidents')
                                 td #{incident_office_name}
                                 td
                                     +incident_type_label
-                                td #{when}
+                                td {{ reg_format timestamp }}
                                 td #{service_date}
                                 td #{incident_details}
                                 // td #{level}

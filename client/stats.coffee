@@ -14,10 +14,17 @@ if Meteor.isClient
             {
                 key:'doc_type'
                 label:'Doc Type'
+                sortable:true
             }
             {
                 key:'stat_type'
                 label:'Stat Type'
+                sortable:false
+            }
+            {
+                key:'amount'
+                label:'Amount'
+                sortable:true
             }
         ]
             

@@ -108,9 +108,10 @@ template(name='office_incidents')
                         +sort_column_header key='service_date' label='Service Date'
                         +sort_column_header key='incident_type' label='Type'
                         +sort_column_header key='incident_details' label='Details'
-                        // +sort_column_header key='level' label='Level'
                         +sort_column_header key='submitted' label='Submitted'
-                        th 
+                        +sort_column_header key='open' label='Status'
+                        th Assigned To
+                        th View
                     tbody
                         each office_incidents
                             tr
@@ -120,9 +121,12 @@ template(name='office_incidents')
                                 td 
                                     +incident_type_label
                                 td #{incident_details}
-                                // td #{level}
                                 td
                                     +submitted_template
+                                td 
+                                    +status_template
+                                td
+                                    +associated_users
                                 td 
                                     +view_button
                     +table_footer columns='8'                

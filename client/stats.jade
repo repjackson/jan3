@@ -9,7 +9,7 @@ template(name='stats')
             .three.wide.center.aligned.column
                 +add_button type='stat'
         .row 
-            .eight.wide.column
+            .four.wide.column
                 .ui.header Run
                 +call_method name='calculate_user_count'
                 +call_method name='calculate_active_customers'
@@ -18,6 +18,6 @@ template(name='stats')
                 +call_method name='calculate_doc_type_count' label='all franchisees' argument='franchisee'
                 +call_method name='calculate_doc_type_count' label='all offices' argumesnt='office'
                 +call_method name='calculate_doc_type_count' label='all special services' argument='spcial_service'
-            .eight.wide.column
+            .twelve.wide.column
                 .ui.header Totals
                 +table collection='Stats' fields=fields

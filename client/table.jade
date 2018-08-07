@@ -1,0 +1,66 @@
+template(name='table')
+    // +query_input placeholder='Filter Office Name'
+    table.ui.striped.selectable.fixed.table
+        thead
+            tr
+                each fields
+                    if sortable
+                        th.sort_by
+                            |#{label}
+                            if sort_descending
+                                i.sort.amount.down.icon
+                            if sort_ascending
+                                i.sort.amount.up.icon
+                    else
+                        th
+                            |#{label}
+                th
+        tbody
+            each table_docs
+                tr
+                    each values
+                        td #{this}
+        +table_footer columns=fields.length                        
+                                
+template(name='table_footer')   
+    tfoot
+        tr
+            th(colspan=columns)
+                .ui.right.floated.pagination.menu
+                    each pages
+                        a.set_page_number.item(class=pagination_item_class) #{number}
+                |View &nbsp;
+                .set_10.ui.compact.button(class="{{page_size_button_class '10'}}") 10
+                .set_20.ui.compact.button(class="{{page_size_button_class '20'}}") 20
+                .set_50.ui.compact.button(class="{{page_size_button_class '50'}}") 50
+                |of #{count_amount}
+
+
+template(name='status_template')
+    if open
+        .ui.basic.label Open
+    else
+        .ui.label Closed
+
+template(name='submitted_template')
+    if submitted
+        // .ui.basic.label Submitted
+        div {{ reg_format submitted_datetime }}
+    // else
+        // .ui.label Not Submitted
+
+template(name='search_key')
+    .ui.small.icon.input
+        i.small.search.icon
+        input.search_key(type='text')
+        
+        
+template(name='sort_column_header')    
+    th.sort_by
+        |#{label}
+        if sort_descending
+            i.sort.amount.down.icon
+        if sort_ascending
+            i.sort.amount.up.icon
+                
+        
