@@ -45,7 +45,7 @@
     "sticky": true,
     "tab": false,
     "table": true,
-    "transition": false,
+    "transition": true,
     "visibility": true
   },
   "themes": {

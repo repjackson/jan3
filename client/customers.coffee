@@ -47,7 +47,6 @@ Template.customers_franchisee.helpers
         found = Docs.findOne
             franchisee: page_doc.franchisee
             # type: "franchisee"
-        console.log found
         return found
         
         

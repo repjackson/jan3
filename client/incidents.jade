@@ -16,7 +16,7 @@ template(name='incidents')
                 table.ui.striped.selectable.fixed.sortable.table
                     thead
                         tr
-                            +sort_column_header key='number' label='#' classes='collapsing'
+                            +sort_column_header key='number' label='Number' classes='collapsing'
                             +sort_column_header key='customer_name' label='Customer'
                             +sort_column_header key='incident_office_name' label='Office'
                             +sort_column_header key='incident_type' label='Type'
@@ -75,11 +75,15 @@ template(name='incident_view')
                     i.user.shield.icon
                     |Run Escalation Check
         .row
-            .three.wide.column
+            .four.wide.column
                 // if is_dev
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
-                h4.ui.header Incident ##{incident_number}    
+                h4.ui.header Incident #
+                    if incident_number
+                        |#{incident_number}
+                    else
+                        +call_method name='update_incident_number' argument=_id                
                 if can_edit_core
                     // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
                     +edit_datetime_field key='service_date' label='Service Time'
@@ -100,7 +104,18 @@ template(name='incident_view')
                     .ui.header Last Updated
                     |{{ reg_format updated }}
 
-            .nine.wide.column
+            .eight.wide.column
+                unless open
+                    if feedback_doc
+                        with feedback_doc
+                            .ui.header Feedback
+                            if positive
+                                i.green.thumbs.up.icon
+                            else
+                                i.red.thumbs.down.icon
+                            |#{text}
+                    else
+                        #submit_feedback.ui.button Submit Feedback
                 if can_edit_core
                     +edit_textarea label='Details' key='incident_details' icon='view-details'
                 else

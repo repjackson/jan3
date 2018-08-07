@@ -282,6 +282,8 @@ Template.parent_link.helpers
             
 Template.full_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', @data._id
+Template.doc_history_event.onCreated ->
+    @autorun =>  Meteor.subscribe 'user_profile', @data.author_id
 Template.full_doc_history.helpers
     doc_history_events: (e,t) ->
         Docs.find {

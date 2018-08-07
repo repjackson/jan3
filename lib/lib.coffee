@@ -144,7 +144,7 @@ Meteor.methods
                 $inc: points: 1
             Meteor.users.update doc.author_id, $inc: points: 1
             # Meteor.users.update Meteor.userId(), $inc: points: -1
-        Meteor.call 'generate_upvoted_cloud', Meteor.userId()
+        # Meteor.call 'generate_upvoted_cloud', Meteor.userId()
 
     vote_down: (id)->
         doc = Docs.findOne id
@@ -173,7 +173,7 @@ Meteor.methods
                 $inc: points: -1
             # Meteor.users.update doc.author_id, $inc: points: -1
             # Meteor.users.update Meteor.userId(), $inc: points: -1
-        Meteor.call 'generate_downvoted_cloud', Meteor.userId()
+        # Meteor.call 'generate_downvoted_cloud', Meteor.userId()
 
     # favorite: (doc)->
     #     if doc.favoriters and Meteor.userId() in doc.favoriters

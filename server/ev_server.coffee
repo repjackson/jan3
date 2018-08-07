@@ -50,24 +50,16 @@ Meteor.methods
                 statevar:'get_user_info'
                 login_id: username
                 # console.log 'new id', new_id
-        # console.log res.content
-        # console.log 'doesnt include'
         if res.content.includes("denied")
-            console.log 'no'
             throw new Meteor.Error('permission denied', "Permission denied to get user")
         else
-            console.log 'doesnt include'
         split_res = res.content.split '\r\n'
-        # console.log typeof split_res
         save_json = {}
         for key_value_string in split_res
             split_key_value = key_value_string.split '|'
-            # console.log split_key_value
             save_json["#{split_key_value[0]}"] = split_key_value[1]
-        # console.log save_json
         Meteor.users.update user_doc._id,
             $set: ev: save_json
-        # console.log 'updated', user_doc.username 
 
     get_history: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -85,23 +77,19 @@ Meteor.methods
                 # dd_name_n=value 
                 # show_attributes=YES | NO
 
-        # console.log res
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
                 # console.dir json_result.HISTORY.PROBLEM_RECORD
                 # new_id = Docs.insert 
-                # console.log 'new id', new_id
             if json_result.HISTORY.PROBLEM_RECORD
                 for doc in json_result.HISTORY.PROBLEM_RECORD
-                    # console.log doc
                     existing_history_doc = 
                         Docs.findOne 
                             type: 'history'
                             "ev.TIMESTAMP": doc.TIMESTAMP
                     if existing_history_doc
-                        console.log "existing history #{existing_history_doc.ev.TIMESTAMP}"
                         # Docs.update existing_history_doc._id,
                         #     $set: ev: doc
                     else
@@ -111,10 +99,8 @@ Meteor.methods
         
         
         # split_res = res.content.split '\r\n'
-        # console.log typeof split_res
         # for area_string in split_res
         #     split_report = area_string.split '|'
-        #     console.log split_report
             # Docs.insert
             #     type:'meta'
             #     area: split_report[0]
@@ -129,7 +115,6 @@ Meteor.methods
                 password:'j@NhU8'
                 statevar:'get'
                 id:jp_id
-        # console.log res
         includes_boolean = res.content.includes("does not exist")
         if includes_boolean
             throw new Meteor.Error('no user', "JP Id #{jp_id} does not exist")
@@ -171,14 +156,12 @@ Meteor.methods
                 area: 'Customer'
                 # DATE_CREATED: "'2018-07-23'-'2018-07-30'"
                 # timestamp: "'2018-07-23'-'2018-07-30'"
-        console.log res
         # xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
         #     if err then console.error('errors',err)
         #     else
         #         result = json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
         #         # console.dir result
         #         for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-        #             # console.log doc
         #             # if doc.AREA is 'Customer'
         #             # if doc.AREA in ['Franchisee','Customer']
         #             # if (doc.MASTER_LICENSEE is "Jan-Pro of Upstate New York") or (doc.AREA is 'Customer')
@@ -188,19 +171,15 @@ Meteor.methods
         #                     type: 'search_history_doc'
         #                     "ev.ID": doc.ID
         #             if existing_search_history_doc
-        #                 console.log "existing search history doc #{existing_search_history_doc.ev.ID}"
-        #                 # console.log doc
         #                 # Docs.update existing_search_history_doc._id,
         #                 #     $set: ev: doc
         #             else                    
         #                 new_search_history_doc = Docs.insert 
         #                     type:'search_history_doc'
         #                     ev: doc
-        #                 console.log "added #{doc.ID} #{doc.AREA}"
         #             # else continue
     
     get_all_franchisees: () ->
-        console.log 'starting franchisee sync'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
@@ -214,25 +193,20 @@ Meteor.methods
                 record_start:'55000'
                 record_count:'10000'
         # return res.content
-        # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
                 # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
                 # new_id = Docs.insert 
-                # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # console.log doc
                     # doc.type = 'customer'
                     existing_franchisee = 
                         Docs.findOne 
                             type: 'franchisee'
                             "ev.ID": doc.ID
                     if existing_franchisee
-                        console.log "existing franchisee #{existing_franchisee.ev.FRANCHISEE}"
-                        # console.log doc
                         Docs.update existing_franchisee._id,
                             $set:
                                 ev: doc
@@ -240,7 +214,6 @@ Meteor.methods
                         new_franchisee_doc = Docs.insert 
                             type:'franchisee'
                             ev: doc
-                        console.log "added #{doc.SHORT_NAME}"
     
     sync_services: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -256,17 +229,14 @@ Meteor.methods
                 record_start:'1'
                 record_count:'7500'
         # return res.content
-        # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
         #         # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
         #         # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
         #         # new_id = Docs.insert 
-        #         # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    console.log doc
                     # doc.type = 'customer'
                     existing_service_doc = 
                         Docs.findOne 

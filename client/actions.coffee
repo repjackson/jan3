@@ -1,6 +1,5 @@
 Template.action.helpers
     action_doc: -> 
-        # console.log @
         action_doc = Docs.findOne @valueOf()
         
 Template.vote_button.helpers
@@ -18,7 +17,6 @@ Template.vote_button.events
     'click .vote_up': (e,t)-> 
         if Meteor.userId()
             Meteor.call 'vote_up', @_id
-            # $(e.currentTarget).closest('.vote_up').transition('pulse')
         else FlowRouter.go '/sign-in'
 
     'click .vote_down': -> 
@@ -62,7 +60,6 @@ Template.vote_button.events
 #             # if Meteor.userId() not in @upvoters
 #                 # $('#thanks_modal').modal('show')
 #             Meteor.call 'vote_up', @_id
-#             $(e.currentTarget).closest('.vote_up').transition('pulse')
 #         else FlowRouter.go '/sign-in'
 
 
@@ -78,7 +75,6 @@ Template.favorite_button.events
     'click .favorite_item': (e,t)-> 
         if Meteor.userId()
             Meteor.call 'favorite', Template.parentData(0)
-            $(e.currentTarget).closest('.favorite_item').transition('pulse')
 
         else FlowRouter.go '/sign-in'
 
@@ -101,10 +97,8 @@ Template.mark_complete_button.helpers
 
 Template.mark_complete_button.events
     'click .mark_complete': (e,t)-> 
-        # console.log Template.parentData(0)
         if Meteor.userId() 
             Meteor.call 'mark_complete', Template.parentData(0)
-            $(e.currentTarget).closest('.mark_complete').transition('pulse')
         else FlowRouter.go '/sign-in'
 
 
@@ -139,7 +133,6 @@ Template.bookmark_button.events
     'click .bookmark_button': (e,t)-> 
         if Meteor.userId() 
             Meteor.call 'bookmark', Template.parentData(0)
-            $(e.currentTarget).closest('.bookmark_button').transition('pulse')
         else FlowRouter.go '/sign-in'
 
 
@@ -158,7 +151,6 @@ Template.bookmark_button.events
 #     'click .pin_button': (e,t)-> 
 #         if Meteor.userId() 
 #             Meteor.call 'pin', Template.parentData(0)
-#             $(e.currentTarget).closest('.pin_button').transition('pulse')
 #         else FlowRouter.go '/sign-in'
 
 # Template.pin_corner_button.helpers
@@ -174,7 +166,6 @@ Template.bookmark_button.events
 #     'click .pin_button': (e,t)-> 
 #         if Meteor.userId() 
 #             Meteor.call 'pin', Template.parentData(0)
-#             $(e.currentTarget).closest('.pin_button').transition('pulse')
 #         else FlowRouter.go '/sign-in'
 
 
@@ -208,7 +199,6 @@ Template.resonate_button.events
     'click .resonate_button': (e,t)-> 
         if Meteor.userId() 
             Meteor.call 'favorite', Template.parentData(0)
-            $(e.currentTarget).closest('.resonate_button').transition('pulse')
         else FlowRouter.go '/sign-in'
 
 
@@ -250,7 +240,6 @@ Template.read_by_list.helpers
     read_by: ->
         if @read_by
             if @read_by.length > 0
-        # console.log @read_by
                 Meteor.users.find _id: $in: @read_by
         else 
             false
@@ -285,7 +274,6 @@ Template.notify_button.onRendered ->
 
 Template.notify_button.events
     "autocompleteselect input": (event, template, selected_user) ->
-        # console.log("selected ", doc)
         context_doc = Template.parentData(4)
         Meteor.call 'notify_user_about_document', context_doc._id, selected_user._id, =>
             Bert.alert "#{selected_user.name()} was notified.", 'info', 'growl-top-right'
@@ -321,7 +309,6 @@ Template.notify_button.helpers
     notified_users: ->
         if @notified_ids
             if @notified_ids.length > 0
-        # console.log @read_by
                 Meteor.users.find _id: $in: @notified_ids
         else 
             false

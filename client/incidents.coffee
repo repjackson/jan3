@@ -10,14 +10,11 @@ Template.add_incident_button.events
     'click #add_incident': ->
         user = Meteor.user()
         my_customer_ob = Meteor.user().users_customer()
-        console.log my_customer_ob
         if my_customer_ob
             Meteor.call 'count_current_incident_number', (err,incident_count)=>
                 if err then console.error err
                 else
-                    console.log incident_count
                     next_incident_number = incident_count + 1
-                    console.log next_incident_number
                     new_incident_id = 
                         Docs.insert
                             type: 'incident'
@@ -44,7 +41,6 @@ Template.incident_view.onRendered ->
     # , 500
     
     # $('.step').on('click', () ->
-    #     console.log 'hi'
     #     $.tab('change tab', 'two')
     #     )
             
@@ -112,17 +108,24 @@ Template.incident_view.helpers
         doc_id = FlowRouter.getParam 'doc_id'
         incident = Docs.findOne doc_id
         if user and user.roles and 'customer' in user.roles
-            # console.log 'right type o guy'
             if incident.submitted is true
                 return false
-                # console.log 'incident submitted, user is customer'
             else
-                # console.log 'incident isnt submitted'
                 return true
         else
             return false
+            
+            
+    feedback_doc: ->
+        Docs.findOne
+            type:'feedback_response'
+            
     
 Template.incident_view.events
+    'click #submit_feedback': ->
+        new_response_id = Docs.insert({type:'feedback_response', parent_id:FlowRouter.getParam('doc_id')})
+        FlowRouter.go("/edit/#{new_response_id}")
+
     'click .submit': -> 
         doc_id = FlowRouter.getParam 'doc_id'
         incident = Docs.findOne doc_id
@@ -133,7 +136,6 @@ Template.incident_view.events
                 type:'office'
         if incidents_office
             escalation_minutes = incidents_office["escalation_1_#{incident.incident_type}_hours"]
-            console.log escalation_minutes
             Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} initial rules."
             Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_1_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_1_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
         Docs.update doc_id,
@@ -165,7 +167,6 @@ Template.incident_view.events
             # observeChanges: true
             duration: 400
             onApprove : ()->
-                console.log 'update', Date.now()
                 Docs.update doc_id,
                     $set:
                         open:false
@@ -243,25 +244,16 @@ Template.sla_rule_doc.helpers
     can_escalate: -> 
         doc_id = FlowRouter.getParam 'doc_id'
         incident = Docs.findOne doc_id
-        console.log @number
-        console.log incident.level
-        console.log incident.level is (@number-1)
         return incident.level is (@number-1)
         
     is_level: -> 
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-        # console.log @number
-        # console.log incident.level
-        # console.log incident.level is @number
         if incident
             incident.level is (@number)
     escalation_level_card_class: ->
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
-        # console.log @number
-        # console.log incident.level
-        # console.log incident.level is @number
         if incident
             if incident.level is @number 
                 'raised green' 
@@ -310,7 +302,6 @@ Template.sla_rule_doc.helpers
 
 Template.sla_rule_doc.events
     'click .set_level': (e,t)->
-        # console.log @
         doc_id = FlowRouter.getParam('doc_id')
         incident = Docs.findOne doc_id
         type = incident.incident_type
@@ -321,8 +312,6 @@ Template.sla_rule_doc.events
                 # office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
                 primary_contact_string =  "escalation_#{@number}_#{type}_primary_contact"
                 secondary_contact_string =  "escalation_#{@number}_#{type}_secondary_contact"
-                # console.log primary_contact_string
-                # console.log secondary_contact_string
                 if primary_contact_string
                     primary_contact_target =
                         Meteor.users.findOne

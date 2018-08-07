@@ -38,9 +38,9 @@ template(name='table_footer')
 
 template(name='status_template')
     if open
-        .ui.basic.label Open
+        | Open
     else
-        .ui.label Closed
+        | Closed
 
 template(name='submitted_template')
     if submitted

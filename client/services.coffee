@@ -10,7 +10,6 @@ Template.services.helpers
 Template.request_service_button.events
     'click .request_service': ->
         current_customer_jpid = Meteor.user().customer_jpid
-        console.log current_customer_jpid
         new_request_id = 
             Docs.insert 
                 type:'service_request'
@@ -44,7 +43,6 @@ Template.service_edit.events
             confirmButtonColor: '#da5347'
         }, =>
             doc = Docs.findOne FlowRouter.getParam('doc_id')
-            # console.log doc
             Docs.remove doc._id, ->
                 FlowRouter.go "/services"
 
@@ -64,7 +62,6 @@ Template.service_request_edit.events
             confirmButtonColor: '#da5347'
         }, =>
             doc = Docs.findOne FlowRouter.getParam('doc_id')
-            # console.log doc
             Docs.remove doc._id, ->
                 FlowRouter.go "/services"
     

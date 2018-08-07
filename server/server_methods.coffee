@@ -307,14 +307,11 @@ Meteor.methods
     #     for participant_id in conversation_doc.participant_ids
     #         user = Meteor.users.findOne participant_id
     #         if user.status.online is true
-    #             console.log 'user online:', user.profile.first_name
     #         else
     #             offline_ids.push user._id
-    #             console.log 'user offline:', user.profile.first_name
         
         
     #     for offline_id in offline_ids
-    #         console.log 'offline id', offline_id
     #         offline_user = Meteor.users.findOne offline_id
             
     #         Email.send
@@ -354,7 +351,6 @@ Meteor.methods
             return
             # Meteor.call 'create_event', incident_id, 'max_level_notice', "Incident is at max level 4, not escalating."
         else
-            # console.log 'first',incident_id
             incident_office =
                 Docs.findOne
                     "ev.MASTER_LICENSEE": incident.incident_office_name
@@ -362,30 +358,21 @@ Meteor.methods
             current_level = incident.level
             next_level = current_level + 1
 
-            # console.log incident._id
             last_updated = incident.updated
             existing_hours_value = incident_office["escalation_#{next_level}_#{incident.incident_type}_hours"]
             if existing_hours_value 
                 hours_value = existing_hours_value
-                console.log 'found existing hours value', existing_hours_value
             else 
                 hours_value = 2
                 Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation minutes found, using 2 as the default."
                 
-                console.log 'NOT found existing hours, using 10'
-            console.log 'hours value',hours_value
             
             
             now = Date.now()
-            console.log 'last_updated value', last_updated
             updated_now_difference = now-last_updated
-            # console.log 'difference between last updated and now', updated_now_difference
             seconds_elapsed = Math.floor(updated_now_difference/1000)
-            # console.log 'seconds elapsed =', seconds_elapsed
             minutes_elapsed = Math.floor(seconds_elapsed/60)
-            # console.log 'minutes elapsed =', minutes_elapsed
             escalation_calculation = minutes_elapsed - hours_value
-            # console.log 'escalation_calculation', escalation_calculation
             if minutes_elapsed < hours_value
                 Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
                 # continue
@@ -396,14 +383,11 @@ Meteor.methods
     escalate_incident: (doc_id)-> 
         incident = Docs.findOne doc_id
         current_level = incident.level
-        # console.log current_level
         if current_level > 3
-            console.log "current level is 4, cant escalate beyond"
             Docs.update doc_id,
                 $set:level:current_level-1
         else
             next_level = current_level + 1
-            console.log 'escalating doc id', doc_id
             Docs.update doc_id,
                 $set:
                     level:next_level
@@ -418,17 +402,14 @@ Meteor.methods
             type:'event'
         for event_doc in cursor.fetch()
             Docs.remove event_doc._id
-            console.log 'removed', event_doc._id
             
 
     check_username: (username)->
         found_user = Accounts.findUserByUsername username
-        console.log found_user
         found_user
     
     check_email: (email)->
         found_user = Accounts.findUserByEmail email
-        console.log found_user
         found_user
 
 
@@ -436,31 +417,23 @@ Meteor.methods
         Meteor.users.update userid,
             $addToSet: roles: role
         user = Meteor.users.findOne userid
-        console.log "added role #{role} to user #{user.username}" 
         Meteor.call 'create_event', userid, 'add role to user', "#{role} was added to #{user.username}."
 
 
     send_password_reset_email_by_username: (username)->
-        console.log username
         found_user = Accounts.findUserByUsername(username)
-        console.log found_user
         sent = Accounts.sendResetPasswordEmail(found_user._id)
-        console.log sent
         return sent
         
     send_password_reset_email_by_email: (email)->
-        console.log email
         found_user = Accounts.findUserByEmail(email)
-        console.log found_user
         sent = Accounts.sendResetPasswordEmail(found_user._id)
-        console.log sent
         return sent
         
         
         
     count_current_incident_number: ->
         incident_count = Docs.find(type:'incident').count()
-        console.log 'incident count', incident_count
         return incident_count
         
         
@@ -478,12 +451,10 @@ Meteor.methods
         customer_doc = Docs.findOne
             "ev.ID": customer_jpid
             type:'customer'
-        # console.log 'found customer, finding office', customer_doc
         if customer_doc
             found_office = Docs.findOne
                 "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                 type:'office'
-            # console.log 'found office from customer:', found_office
             return found_office
         else 
             throw new Meteor.Error 'no_office_from_customer_jpid', "couldnt find office from customer #{customer_jpid}"
@@ -494,7 +465,6 @@ Meteor.methods
         customer_doc = Docs.findOne
             "ev.ID": customer_jpid
             type:'customer'
-        # console.log 'found customer, finding franchisee', customer_doc
         
         found_franchisee = Docs.findOne
             type: 'franchisee'
@@ -527,7 +497,6 @@ Meteor.methods
     # register_transaction: (product_id)->
     #     product = Docs.findOne product_id
     #     if product.point_price
-    #         console.log 'product point price', product.point_price
     #         console.log 'purchaser amount before', Meteor.user().points
     #         Meteor.users.update Meteor.userId(),
     #             $inc: points: -product.point_price
@@ -550,13 +519,11 @@ Meteor.methods
     refresh_customer_jpids: (username)->
         console.log username
         user = Meteor.users.findOne username:username
-        console.log user
         if user and user.customer_jpid
             customer_doc = Docs.findOne
                 "ev.ID": user.customer_jpid
                 type:'customer'
         
-        console.log 'found customer, finding franchisee', customer_doc
         
         found_franchisee = Docs.findOne
             type: 'franchisee'
@@ -578,11 +545,8 @@ Meteor.methods
                 
                 
     query_db: (query)->
-        console.log query
         query_count = Docs.find(query).count()
-        console.log 'query count', query_count
         result = Docs.find(query).fetch()
-        console.log result
         return result
         
     lookup_office_user: (office_name, username_query)->
@@ -597,11 +561,9 @@ Meteor.methods
         found_users
         
     lookup_office_user_by_username_and_officename: (office_name, username_query)->
-        console.log username_query, office_name
         office_doc = Docs.findOne 
             type:'office'
             "ev.MASTER_LICENSEE":office_name
-        console.log 'office doc', office_doc
         found_users = 
             Meteor.users.find({
                 "ev.COMPANY_NAME":office_name
@@ -616,5 +578,11 @@ Meteor.methods
             type:'incident', 
             incident_number: $exists:false
         }).count()
-        console.log unnumbered_count
         
+        
+    update_incident_number: (doc_id)->
+        incident = Docs.findOne doc_id
+        unnumbered_incidents = Docs.find({type:'incident', incident_number:{$exists:false}}).count()
+        console.log unnumbered_incidents
+        Docs.update doc_id,
+            $set:incident_number:unnumbered_incidents

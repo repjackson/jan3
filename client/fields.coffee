@@ -11,7 +11,6 @@ Template.edit_image_field.events
             # folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
             # type:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
             (err,res) -> #optional callback, you can catch with the Cloudinary collection as well
-                # console.log "Upload Error: #{err}"
                 # console.dir res
                 if err
                     console.error 'Error uploading', err
@@ -51,30 +50,24 @@ Template.edit_image_field.events
             Meteor.call "c.delete_by_public_id", @image_id, (err,res) ->
                 if not err
                     # Do Stuff with res
-                    # console.log res
                     Docs.update FlowRouter.getParam('doc_id'), 
                         $unset: image_id: 1
 
                 else
                     throw new Meteor.Error "it failed"
 
-    #         console.log Cloudinary
     # 		Cloudinary.delete "37hr", (err,res) ->
     # 		    if err 
-    # 		        console.log "Upload Error: #{err}"
     # 		    else
-    #     			console.log "Upload Result: #{res}"
     #                 # Docs.update FlowRouter.getParam('doc_id'), 
     #                 #     $unset: image_id: 1
 
     # Template.edit_image.helpers
-    #     log: -> console.log @
 
 
 
 Template.edit_number_field.events
     'change #number_field': (e,t)->
-        # console.log @
         number_value = parseInt e.currentTarget.value
         Docs.update FlowRouter.getParam('doc_id'),
             { $set: "#{@key}": number_value }
@@ -100,7 +93,6 @@ Template.edit_textarea.helpers
     'key_value': () -> 
         doc_field = Template.parentData(0)
         current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log Template.parentData(0)
         if current_doc
             if doc_field.key
                 current_doc["#{doc_field.key}"]
@@ -129,7 +121,6 @@ Template.edit_timerange_field.onRendered ->
 Template.edit_timerange_field.events
     'blur #time_start': (e,t)->
         value = $('#time_start').calendar('get date')
-        # console.log value
         Docs.update FlowRouter.getParam('doc_id'),
             {$set: time_start: value}
             , (err,res)=>
@@ -139,7 +130,6 @@ Template.edit_timerange_field.events
                     Bert.alert "Updated Start Time", 'success', 'growl-top-right'
     'blur #time_end': (e,t)->
         value = $('#time_end').calendar('get date')
-        # console.log value
         Docs.update FlowRouter.getParam('doc_id'),
             {$set: time_end: value}
             , (err,res)=>
@@ -165,9 +155,7 @@ Template.edit_datetime_field.onRendered ->
 Template.edit_datetime_field.events
     'blur #datetime_field': (e,t)->
         datetime_value = e.currentTarget.value
-        # console.log 'hi'
         value = $('#datetime_field').calendar('get date')
-        # console.log value
         Docs.update FlowRouter.getParam('doc_id'),
             { $set: "#{@key}": datetime_value } 
             , (err,res)=>
@@ -180,7 +168,6 @@ Template.edit_datetime_field.events
 Template.edit_date_field.events
     'blur #date_field': (e,t)->
         date_value = e.currentTarget.value
-        console.log date_value
         Docs.update FlowRouter.getParam('doc_id'),
             { $set: "#{@key}": date_value } 
             , (err,res)=>
@@ -218,9 +205,6 @@ Template.edit_profile_text_field.events
 #         # doc_field = Template.parentData(2)
 #         current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
 #         if current_user
-#             # console.log current_user.profile["#{key}"]
-#             console.log current_user.profile
-#             console.log current_user
 
 
 Template.complete.events
@@ -257,8 +241,6 @@ Template.toggle_follow.events
         
 #         doc_id = FlowRouter.getParam('doc_id')
 #         # short = truncate(html, 5, { byWords: true })
-#         # console.log html
-#         # console.log truncate
 #         Docs.update doc_id,
 #             $set: 
 #                 html: html
@@ -316,16 +298,11 @@ Template.toggle_boolean.events
 
 Template.edit_array_field.events
     # "autocompleteselect input": (event, template, doc) ->
-    #     # console.log("selected ", doc)
     #     Docs.update @doc_id,
     #         $addToSet: tags: doc.name
     #     $('.new_entry').val('')
    
     'keyup .new_entry': (e,t)->
-        # console.log Template.parentData(0)
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
         
 
         e.preventDefault()
@@ -349,11 +326,6 @@ Template.edit_array_field.events
 
 
     'click .doc_tag': (e,t)->
-        # console.log @valueOf()
-        # console.log Template.parentData(0).key
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
 
         tag = @valueOf()
         Docs.update FlowRouter.getParam('doc_id'),
@@ -362,7 +334,6 @@ Template.edit_array_field.events
         
 Template.edit_array_field.helpers
     # editing_mode: -> 
-    #     console.log Session.get 'editing'
     #     if Session.equals 'editing', true then true else false
     # theme_select_settings: -> {
     #     position: 'top'

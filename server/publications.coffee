@@ -504,9 +504,13 @@ publishComposite 'incident', (id)->
             # {
             #     find: (incident)-> Docs.find _id:doc.referenced_customer_id
             # }
-            # {
-            #     find: (incident)-> Docs.find _id:doc.parent_id
-            # }
+            {
+                find: (incident)-> 
+                    Docs.find 
+                        type:'feedback_response'
+                        parent_id:incident._id
+                        
+            }
         ]
     }
 
@@ -717,7 +721,6 @@ Meteor.publish 'franchisee_by_id', (franchisee_jpid)->
 
 
 Meteor.publish 'service_child_requests', (service_id)->
-    console.log service_id
     Docs.find
         type:'service_request'
         service_id:service_id
@@ -725,7 +728,6 @@ Meteor.publish 'service_child_requests', (service_id)->
         
 Meteor.publish 'query', (query)->
     result = Meteor.call 'query_db', query
-    console.log result
     return result
     
     
@@ -758,7 +760,5 @@ Meteor.publish 'offices', (name_filter='', limit=100, sort_key='timestamp', sort
     
 
 Meteor.publish 'selected_users', (doc_id, key)->
-    # console.log doc_id
-    # console.log key
     doc = Docs.findOne doc_id
     Meteor.users.find(_id: $in: doc["#{key}"])
