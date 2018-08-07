@@ -60,9 +60,13 @@ template(name='incident_view')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 if is_customer
-                    a.ui.button(href='/customer_incidents' title='Save')
+                    a.ui.button(href='/customer_incidents')
                         i.left.chevron.icon
                         | My Incidents    
+                if is_office
+                    a.ui.button(href="/office/#{my_office._id}/incidents")
+                        i.left.chevron.icon
+                        | Office Incidents    
                 else
                     +link_button link='/incidents' icon='user-shield' label='All Incidents'
             .nine.wide.column
@@ -73,7 +77,7 @@ template(name='incident_view')
                 // if is_admin
                 #run_single_escalation_check.ui.button 
                     i.user.shield.icon
-                    |Run Escalation Check
+                    |Check Escalation
         .row
             .four.wide.column
                 // if is_dev

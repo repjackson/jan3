@@ -87,7 +87,7 @@ Template.customer_incidents.helpers
         
         Docs.find {
             type:'incident'
-        },{ sort: "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
+        },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
 
 Template.incident_view.onCreated ->
