@@ -155,7 +155,7 @@ Template.publish_button.events
             
 Template.call_method.events
     'click .call_method': -> 
-        Meteor.call @name, Template.parentData(1)._id, (err,res)->
+        Meteor.call @name, @argument, (err,res)->
             # else
                 
                 

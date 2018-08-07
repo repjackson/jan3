@@ -53,17 +53,17 @@ template(name='dashboard')
                     .ui.secondary.segment
                         +customer_incidents_widget
             .row
-                .eight.wide.column
-                    +dashboard_services_widget
-                .eight.wide.column
+                // .eight.wide.column
+                //     +dashboard_services_widget
+                .sixteen.wide.column
                     +customer_finance_widget
             // .row
             //     .sixteen.wide.column
             //         +dashboard_consumables_widget
-            .row
-                .sixteen.wide.column
-                    .ui.secondary.segment
-                        +office_contact_cards
+            // .row
+            //     .sixteen.wide.column
+            //         .ui.secondary.segment
+            //             +office_contact_cards
             .centered.row
                 .eight.wide.column
                     .ui.secondary.segment
@@ -265,11 +265,12 @@ template(name='small_service_list')
         .ui.header 
             +iconsmall name='broom'
             |Services Offered
-        .ui.list
+        .ui.three.column.grid
             each services_offered
-                a.item(href="/view/#{_id}")
-                    img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
-                    |#{title}
+                .column
+                    a.ui.item(href="/view/#{_id}")
+                        img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
+                        |#{title}
 
 
 template(name='customer_finance_widget')

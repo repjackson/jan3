@@ -169,6 +169,9 @@ Template.office_settings.helpers
     franchisee_toggle_key: -> 
         current_incident_type = Session.get 'incident_type_selection'
         "escalation_#{@number}_#{current_incident_type}_contact_franchisee"
+    customer_toggle_key: -> 
+        current_incident_type = Session.get 'incident_type_selection'
+        "escalation_#{@number}_#{current_incident_type}_contact_customer"
     primary_contact_key: -> 
         current_incident_type = Session.get 'incident_type_selection'
         # console.log "escalation_#{@number}_primary_contact"

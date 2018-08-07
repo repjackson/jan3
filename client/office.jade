@@ -225,7 +225,9 @@ template(name='office_settings')
                                         unless is_initial
                                             +edit_number_field key=hours_key label='Escalation Minutes' field_class='inline' min=0 max=24
                                             .ui.hidden.divider
-                                        +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
+                                        else 
+                                            +toggle_boolean_checkbox key=customer_toggle_key label='Customer'
+                                        +toggle_boolean_checkbox key=customer_toggle_key label='Franchisee'
                                     .column
                                         h4.ui.dividing.header Primary
                                         +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'

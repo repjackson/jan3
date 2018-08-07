@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.inverted.blue.top.attached.borderless.menu
+    .ui.inverted.blue.top.attached.menu
         a.toggle_left_sidebar.icon.item 
             i.large.bars.icon
         if is_customer
@@ -74,6 +74,9 @@ template(name='nav')
                 | Services
         .right.menu
             if is_admin
+                a.item(href='/stats')
+                    i.large.icon
+                        +icon name='bar-chart'
                 a.item(href='/admin')
                     i.large.icon
                         +icon name='user-shield'

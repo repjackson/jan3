@@ -18,11 +18,24 @@ Meteor.publish 'type', (type, query=null, limit=100, sort_key='timestamp', sort_
         }
 
         
+Meteor.publish 'active_customers', (limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+    Docs.find {
+        type:'customer'
+    },{
+        skip: skip
+        limit:limit
+        sort:"#{sort_key}":parseInt("#{sort_direction}")
+    }
+
+        
+
+
+
+        
 # Meteor.publish 'my_customer_account_doc', ->
 #     if Meteor.user()
 #         cust_id = Meteor.user().customer_jpid
 #         cursor = Docs.find jpid:cust_id
-#         # console.log cursor.count()
 #         cursor
         
 Meteor.publish 'users_feed', (username, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
@@ -91,17 +104,14 @@ publishComposite 'office', (office_id)->
         #     #             Docs.find 
         #     #                 "ev.MASTER_LICENSEE":office.office_name
         #     #                 type:'customer'
-        #     #         # console.log "found #{cursor.count()} customers"
         #     #         cursor
         #     #     children: [
         #     #         {
         #     #             find: (customer)-> 
-        #     #                 # console.log "finding incidents for customer #{customer.cust_name}"
         #     #                 cursor = 
         #     #                     Docs.find 
         #     #                         customer_jpid:customer.ev.ID
         #     #                         type:'incident'
-        #     #                 # console.log "found #{cursor.count()} incidents"
         #     #                 cursor
             
         #     #         }
@@ -125,7 +135,6 @@ Meteor.publish 'has_key', (key)->
         
         
 Meteor.publish 'has_key_value', (key, value)->
-    # console.log key, value
     Docs.find "ev.#{key}": value
     # Docs.find "ev.FRANCH_NAME": $exists: true
         
@@ -294,7 +303,6 @@ publishComposite 'docs', (selected_tags, type, limit=100, sort_key='timestamp', 
             self = @
             match = {}
             if type then match.type = type
-            # console.log match
             Docs.find match,
                 limit:20
         children: [
@@ -383,12 +391,10 @@ Meteor.publish 'user_profile', (user_id)->
 
 Meteor.publish 'office_by_franchisee', (franch_id)->
     franch_doc = Docs.findOne franch_id
-    # console.log 'franch_doc', franch_doc
     if franch_doc.ev
         found = Docs.find
             type:'office'
             "ev.MASTER_OFFICE_NAME":franch_doc.ev.MASTER_LICENSEE
-        # console.log found.count()
         return found
         
         
@@ -396,7 +402,6 @@ Meteor.publish 'office_by_franchisee', (franch_id)->
 # user connected accounts 
 Meteor.publish 'my_customer_account', ->
     user = Meteor.user()
-    # console.log 'franch_doc', franch_doc
     if user and user.customer_jpid
         Docs.find
             "ev.ID": user.customer_jpid
@@ -404,7 +409,6 @@ Meteor.publish 'my_customer_account', ->
         
 Meteor.publish 'my_franchisee', ->
     user = Meteor.user()
-    # console.log 'franch_doc', franch_doc
     if user and user.franchisee_jpid
         Docs.find
             "ev.ID": user.franchisee_jpid
@@ -412,13 +416,11 @@ Meteor.publish 'my_franchisee', ->
         
 Meteor.publish 'my_office', ->
     user = Meteor.user()
-    # console.log 'franch_doc', franch_doc
     if user 
         if user.customer_jpid
             customer_doc = Docs.findOne
                 "ev.ID": user.customer_jpid
                 type:'customer'
-            # console.log customer_doc
             Docs.find
                 "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
                 type:'office'
@@ -430,13 +432,11 @@ Meteor.publish 'my_office', ->
         
 Meteor.publish 'my_special_services', ->
     user = Meteor.user()
-    # console.log 'franch_doc', franch_doc
     if user.customer_jpid
         customer_doc = Docs.findOne
             "ev.ID": user.customer_jpid
             type:'customer'
             # grandparent office
-        # console.log 'ss cust doc', customer_doc
         Docs.find {
             type:'special_service'
             "ev.CUSTOMER": customer_doc.ev.CUST_NAME
@@ -444,7 +444,6 @@ Meteor.publish 'my_special_services', ->
     
 Meteor.publish 'my_office_contacts', ()->    
     user = Meteor.user()
-    # console.log 'franch_doc', franch_doc
     if user
         if 'customer' in user.roles
             if user.customer_jpid
@@ -452,7 +451,6 @@ Meteor.publish 'my_office_contacts', ()->
                     "ev.ID": user.customer_jpid
                     type:'customer'
                     # grandparent office
-                # console.log 'ss cust doc', customer_doc
                 Meteor.users.find {
                     "profile.office_name": customer_doc.ev.MASTER_LICENSEE
                 }
@@ -488,7 +486,6 @@ publishComposite 'incident', (id)->
             {
                 find: (incident)-> 
                     # customer doc
-                    # console.log incident
                     Docs.find
                         type:'customer'
                         "ev.ID": incident.customer_jpid
@@ -496,7 +493,6 @@ publishComposite 'incident', (id)->
             }
             {
                 find: (incident)-> 
-                    console.log incident
                     Docs.find
                         "ev.ID": incident.office_jpid
                         type:'office'
@@ -514,13 +510,11 @@ publishComposite 'incident', (id)->
 publishComposite 'me', ()->
     {
         find: -> 
-            # console.log @userId
             Meteor.users.find @userId
         children: [
             {
                 find: (user)-> 
                     # users customer account
-                    # console.log 'current user?', user.profile
                     if user.profile 
                         if user.customer_jpid
                             Docs.find
@@ -534,7 +528,6 @@ publishComposite 'me', ()->
                 # children: [
                 #     # {
                 #     #     find: (customer)-> 
-                #     #         # console.log 'finding franchisees for', customer
                 #     #         # parent incidents
                 #     #         Docs.find
                 #     #             customer_jpid: customer.jpid
@@ -542,7 +535,6 @@ publishComposite 'me', ()->
                 #     # }
                 #     # {
                 #     #     find: (customer)-> 
-                #     #         # console.log 'finding franchisees for', customer
                 #     #         # parent franchisee
                 #     #         Docs.find
                 #     #             franchisee: customer.franchisee
@@ -550,7 +542,6 @@ publishComposite 'me', ()->
                 #     # }
                 #     # {
                 #     #     find: (customer)-> 
-                #     #         # console.log 'finding special services for', customer
                 #     #         # special services
                 #     #         Docs.find
                 #     #             "ev.CUSTOMER": customer.cust_name
@@ -559,7 +550,6 @@ publishComposite 'me', ()->
                 #     # {
                 #     #     find: (customer)-> 
                 #     #         # grandparent office
-                #     #         console.log 'customer', customer
                 #     #         Docs.find
                 #     #             # "ev.MASTER_LICENSEE": customer.ev.MASTER_LICENSEE
                 #     #             type:'office'
@@ -567,7 +557,6 @@ publishComposite 'me', ()->
                 #     #     #     {
                 #     #     #         find: (office)-> 
                 #     #     #             # offices users
-                #     #     #             # console.log 'query users from office doc', office
                 #     #     #             # Meteor.users.find
                 #     #     #             #     "profile.office_name": office.ev.MASTER_OFFICE_NAME
                 #     #     #     }
@@ -585,7 +574,6 @@ Meteor.publish 'comments', (doc_id)->
 
 
 Meteor.publish 'people_list', (conversation_id) ->
-    # console.log conversation_id
     conversation = Docs.findOne conversation_id
     Meteor.users.find
         _id: $in: conversation.participant_ids
@@ -604,8 +592,6 @@ Meteor.publish 'people_list', (conversation_id) ->
 #         find: ->
 #             self = @
 #             match = {}
-#             # console.log selected_participant_ids
-#             # console.log selected_theme_tags
 #             match.type = 'conversation'
 #             if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
 #             if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
@@ -623,7 +609,6 @@ Meteor.publish 'people_list', (conversation_id) ->
 #                 ]
         
         
-#             # console.log cloud
             
 #             # author_objects = []
 #             # Meteor.users.find _id: $in: cloud.
@@ -647,7 +632,6 @@ Meteor.publish 'people_list', (conversation_id) ->
 
 #     self = @
 #     match = {}
-#     # console.log selected_participant_ids
 #     if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
 #     if view_published is true
 #         match.published = 1
@@ -665,10 +649,8 @@ Meteor.publish 'people_list', (conversation_id) ->
             
             
 #     match.type = 'conversation'
-#     # console.log match
     
 #     cursor = Docs.find match
-#     # console.log cursor.count()
 #     return cursor
 
 # publishComposite 'group_docs', (group_id)->
@@ -711,9 +693,7 @@ Meteor.publish 'people_list', (conversation_id) ->
 # Meteor.publish 'user_status_notification', ->
 #     Meteor.users.find('status.online': true).observe
 #         added: (id) ->
-#             console.log "#{id} just logged in"
 #         removed: (id) ->
-#             console.log "#{id} just logged out"
 
 
 Meteor.publish 'office_by_id', (office_jpid)->
@@ -759,3 +739,17 @@ Meteor.publish 'offices', (name_filter='', limit=100, sort_key='timestamp', sort
             limit:int_limit
             sort:"#{sort_key}":int_direction
         })
+        
+# publishComposite 'cart', ->
+#     {
+#         find: ->
+#             Docs.find
+#                 type: 'cart_item'
+#                 author_id: @userId            
+#         children: [
+#             { find: (cart_item) ->
+#                 Docs.find cart_item.parent_id
+#                 }
+#             ]    
+#     }            
+    

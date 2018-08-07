@@ -546,19 +546,6 @@ Meteor.methods
     #         recipient_id: product.author_id
     
     
-    publishComposite 'cart', ->
-        {
-            find: ->
-                Docs.find
-                    type: 'cart_item'
-                    author_id: @userId            
-            children: [
-                { find: (cart_item) ->
-                    Docs.find cart_item.parent_id
-                    }
-                ]    
-        }            
-    
     
     refresh_customer_jpids: (username)->
         console.log username
@@ -598,16 +585,16 @@ Meteor.methods
         console.log result
         return result
         
-    # lookup_office_user: (office_name, username_query)->
-    #     office_doc = Docs.findOne 
-    #         type:'office'
-    #         "ev.MASTER_LICENSEE":office_name
-    #     found_users = 
-    #         Meteor.users.find({
-    #             "ev.COMPANY_NAME":office_doc.ev.MASTER_LICENSEE
-    #             username: {$regex:"#{username_query}", $options: 'i'}
-    #             }).fetch()
-    #     found_users
+    lookup_office_user: (office_name, username_query)->
+        office_doc = Docs.findOne 
+            type:'office'
+            "ev.MASTER_LICENSEE":office_name
+        found_users = 
+            Meteor.users.find({
+                "ev.COMPANY_NAME":office_doc.ev.MASTER_LICENSEE
+                username: {$regex:"#{username_query}", $options: 'i'}
+                }).fetch()
+        found_users
         
     lookup_office_user_by_username: (office_id, username_query)->
         console.log username_query, office_id
@@ -620,15 +607,11 @@ Meteor.methods
         found_users
     
     
-    lookup_office_user_by_username2: (office_id, username_query)->
-        console.log username_query, office_id
-        office_doc = Docs.findOne office_id
-        found_users = 
-            Meteor.users.find({
-                "ev.COMPANY_NAME":office_doc.ev.MASTER_LICENSEE
-                username: {$regex:"#{username_query}", $options: 'i'}
-                }).fetch()
-        found_users
     
-    
+    update_incident_numbers: ->
+        unnumbered_count = Docs.find({
+            type:'incident', 
+            incident_number: $exists:false
+        }).count()
+        console.log unnumbered_count
         

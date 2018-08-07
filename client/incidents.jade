@@ -13,7 +13,7 @@ template(name='incidents')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.striped.selectable.fixed.fluid.sortable.table
+                table.ui.striped.selectable.fixed.celled.sortable.table
                     thead
                         tr
                             +sort_column_header key='number' label='Number'
@@ -210,7 +210,7 @@ template(name='incident_level_set')
                         
 template(name='incident_type_label')      
     if incident_type_label
-        .ui.basic.label(class=type_label_class) #{incident_type_label}
+        .ui.label(class=type_label_class) #{incident_type_label}
 
 
 template(name='incident_status')

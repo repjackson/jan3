@@ -40,7 +40,7 @@
     "shape": false,
     "sidebar": true,
     "site": true,
-    "statistic": false,
+    "statistic": true,
     "step": false,
     "sticky": true,
     "tab": false,

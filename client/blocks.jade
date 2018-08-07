@@ -384,8 +384,11 @@ template(name='publish_button')
 
 
 template(name='call_method')
-    .call_method.ui.button #{label}
-    
+    .call_method.ui.button 
+        if label
+            |#{label}
+        else
+            |#{name}
     
 template(name='small_comment_count')
     .ui.mini.statistic

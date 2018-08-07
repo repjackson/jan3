@@ -1,10 +1,21 @@
-Template.table_footer.onCreated ->
+Template.table.onCreated ->
     console.log @data
     Meteor.subscribe 'count', @data.type
 
 
 
-Template.table_footer.helpers
+Template.table.helpers
+    sort_descending: ->
+        # console.log @
+        if Session.equals('sort_direction', '1') and Session.equals('sort_key', @key) 
+            # console.log '1'
+            return true
+    sort_ascending: ->
+        # console.log @
+        if Session.equals('sort_direction', '-1') and Session.equals('sort_key', @key)
+            # console.log '-1'
+            return true
+
     pagination_item_class: ->
         # console.log @
         if Session.equals('current_page_number', @number) then 'active' else ''
@@ -40,8 +51,21 @@ Template.table_footer.helpers
             # console.log pages
             return pages
         
-        
-Template.table_footer.events
+    fields: -> Template.currentData().fields
+    table_docs: -> 
+        Stats.find()
+    values: ->
+        fields = Template.parentData().fields
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log @
+        values = []
+        for field in fields
+            # console.log @["#{field.key}"]
+            values.push @["#{field.key}"]
+        console.log values
+        values
+Template.table.events
     'click .set_page_number': -> 
         console.log @
         Session.set 'current_page_number', @number
@@ -57,19 +81,6 @@ Template.table_footer.events
     'click .set_50': ()-> Session.set 'page_size',50
     'click .set_100': ()-> Session.set 'page_size',100
 
-Template.sort_column_header.helpers
-    sort_descending: ->
-        # console.log @
-        if Session.equals('sort_direction', '1') and Session.equals('sort_key', @key) 
-            # console.log '1'
-            return true
-    sort_ascending: ->
-        # console.log @
-        if Session.equals('sort_direction', '-1') and Session.equals('sort_key', @key)
-            # console.log '-1'
-            return true
-
-Template.sort_column_header.events
     'click .sort_by': (e,t)->
         Session.set 'sort_key', @key
         if Session.equals 'sort_direction', '-1'
@@ -81,8 +92,6 @@ Template.sort_column_header.events
 Template.search_key.events
     'keyup .search_key': ->
         console.log @
-        
-        
         
         
 Template.query_input.events
