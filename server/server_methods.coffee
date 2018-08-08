@@ -572,6 +572,20 @@ Meteor.methods
         found_users
     
     
+    lookup_office_user_by_username_and_office_jpid: (office_jpid, username_query)->
+        console.log office_jpid
+        console.log username_query
+        office_doc = Docs.findOne 
+            type:'office'
+            "ev.ID":office_jpid
+        found_users = 
+            Meteor.users.find({
+                "ev.COMPANY_NAME":office_doc.ev.MASTER_LICENSEE
+                username: {$regex:"#{username_query}", $options: 'i'}
+                }).fetch()
+        found_users
+    
+    
     
     update_incident_numbers: ->
         unnumbered_count = Docs.find({

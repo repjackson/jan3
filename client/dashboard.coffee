@@ -85,7 +85,7 @@ Template.customer_incidents_widget.helpers
     #         }, limit:20
 
 Template.customer_incidents_widget.helpers
-    customer_incidents: -> Docs.find type:'incident'
+    customer_incidents: -> Docs.find {type:'incident'}, limit:3
     
         
 Template.dashboard_services_widget.onCreated ->

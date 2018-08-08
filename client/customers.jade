@@ -15,7 +15,7 @@ template(name='customers')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.celled.striped.fluid.sortable.table
+                table.ui.celled.striped.fluid.sortable.fixed.table
                     thead
                         +sort_column_header key='ev.CUST_NAME' label='Customer Name'
                         +sort_column_header key='ev.ID' label='JPID'

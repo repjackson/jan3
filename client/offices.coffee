@@ -44,13 +44,15 @@ Template.office_header.helpers
 Template.office_header.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
+
+
 Template.office_customers.onCreated ->
     @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    Meteor.subscribe 'office_customer_count', FlowRouter.getParam('doc_id')
 
 # Template.office_customers.events
     # 'click #refresh_ny_customers': ->
     #     Meteor.call 'sync_ny_customers', ->
-
 Template.office_customers.helpers    
     office_customers: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
@@ -59,10 +61,9 @@ Template.office_customers.helpers
                 type: "customer"
                 "ev.ACCOUNT_STATUS": 'ACTIVE'
                 "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
-            },{ 
-                sort:
-                    "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")
-            }
+            },{ sort: "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
+
+
 
 
 Template.office_incidents.onCreated ->
@@ -88,10 +89,7 @@ Template.office_employees.helpers
         # console.log page_office
         Meteor.users.find {
             "profile.office_name": page_office.ev.MASTER_LICENSEE
-        },{ 
-            sort:
-                "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")
-        }
+        },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
 Template.office_franchisees.onCreated ->
     @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
@@ -104,16 +102,15 @@ Template.office_franchisees.helpers
             Docs.find {
                 type: "franchisee"
                 "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
-            },{ 
-                sort:
-                    "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")
-            }
+            },{ sort: "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
 
 Template.office_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'rule'
     @autorun -> Meteor.subscribe 'type', 'incident_type'
-    @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    @autorun -> Meteor.subscribe 'static_office_employees', FlowRouter.getParam('doc_id')
+    Session.setDefault 'incident_type_selection', 'change_service'
+
 
 Template.office_service_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'service'

@@ -507,18 +507,22 @@ Template.office_username_query.onCreated ()->
 Template.office_username_query.events
     'click .select_office_user': (e,t) ->
         key = Template.parentData(0).key
-        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
         # searched_value = doc["#{template.data.key}"]
-        Docs.update page_doc._id,
-            $set: "#{key}": @.username
-        $('#office_username_query').val ''
+        office_doc_id = FlowRouter.getParam('doc_id')
+        console.log key
+        console.log @username
+        
+        Docs.update office_doc_id,
+            $set: "#{key}": @username
+        console.log Docs.findOne(office_doc_id)["#{key}"]
+        # $(e.currentTarget).closest('#office_username_query').val ''
 
     'keyup #office_username_query': (e,t)->
         office_username_query = $(e.currentTarget).closest('#office_username_query').val().trim()
         # $('#office_username_query').val ''
         Session.set 'office_username_query', office_username_query
-        current_office_id = FlowRouter.getParam('doc_id')
-        Meteor.call 'lookup_office_user_by_username', current_office_id, office_username_query, (err,res)=>
+        current_office_id = Docs.findOne(FlowRouter.getParam('doc_id')).ev.ID
+        Meteor.call 'lookup_office_user_by_username_and_office_jpid', current_office_id, office_username_query, (err,res)=>
             if err then console.error err
             else
                 t.user_results.set res

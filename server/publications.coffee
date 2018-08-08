@@ -245,7 +245,7 @@ Meteor.publish 'office_franchisees', (office_doc_id, query, limit=100, sort_key=
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     
-Meteor.publish 'office_employees', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+Meteor.publish 'office_employees', (office_doc_id, query, limit=100, sort_key='public', sort_direction=-1, skip=0)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Meteor.users.find {
@@ -266,6 +266,12 @@ Meteor.publish 'office_employees', (office_doc_id, query, limit=100, sort_key='t
         }
     
     
+Meteor.publish 'static_office_employees', (office_doc_id)->
+    office_doc = Docs.findOne office_doc_id
+    Meteor.users.find
+        "profile.office_name": office_doc.ev.MASTER_LICENSEE
+    
+    
 # Meteor.publish 'my_conversations',() ->
 #     Docs.find
 #         type: 'conversation'
@@ -276,7 +282,7 @@ Meteor.publish 'office_employees', (office_doc_id, query, limit=100, sort_key='t
     
 Meteor.publish 'my_customer_incidents', (query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->    
     user = Meteor.user()
-    if user.customer_jpid
+    if user and user.customer_jpid
         # customer_doc = Docs.findOne "ev.ID":user.customer_jpid
         if query
             Docs.find {

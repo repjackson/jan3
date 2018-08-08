@@ -68,7 +68,7 @@ template(name='office_customers')
     .ui.padded.grid
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.sortable.fluid.table
+                table.ui.celled.striped.sortable.fluid.fixed.table
                     thead
                         +sort_column_header key='ev.CUST_NAME' label='Customer Name'
                         +sort_column_header key='ev.ID' label='JPID'
@@ -101,9 +101,9 @@ template(name='office_incidents')
     .ui.padded.grid
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.sortable.fluid.table
+                table.ui.celled.striped.sortable.fluid.fixed.table
                     thead
-                        +sort_column_header key='incident_number' label='Number'
+                        +sort_column_header key='incident_number' label='Num' classes='collapsable'
                         +sort_column_header key='customer_name' label='Customer'
                         +sort_column_header key='service_date' label='Service Date'
                         +sort_column_header key='incident_type' label='Type'
@@ -139,7 +139,7 @@ template(name='office_employees')
     .ui.padded.grid
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.sortable.fluid.table
+                table.ui.celled.striped.sortable.fluid.fixed.table
                     thead
                         +sort_column_header key='username' label='Username'
                         +sort_column_header key='profile.first_name' label='First Name'
@@ -147,7 +147,7 @@ template(name='office_employees')
                         +sort_column_header key='profile.title' label='Title'
                         +sort_column_header key='ev.WORK_TELEPHONE' label='Phone'
                         +sort_column_header key='email' label='Email'
-                        +sort_column_header key='' label='Public'
+                        th Public
                         th 
                     tbody
                         each office_employees
@@ -172,7 +172,7 @@ template(name='office_franchisees')
     .ui.padded.grid
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.sortable.fluid.table
+                table.ui.celled.striped.sortable.fluid.fixed.table
                     thead
                         +sort_column_header key='ev.ID' label='JPID'
                         +sort_column_header key='ev.FRANCHISEE' label='Name'
@@ -190,63 +190,67 @@ template(name='office_franchisees')
                                 td #{ev.TELE_CELL}
                                 td 
                                     +view_button
-                    +table_footer columns='7'                
+                    +table_footer columns='6'                
 
                     
                     
 
 template(name='office_settings')
     .ui.stackable.padded.grid
-        .row
-            +office_header
-        .row
-            .eight.wide.column
-                +edit_textarea key='customer_message' label='Customer Dashboard Message'
-                // +edit_text_field key='customer_special_services' label='Customer Dashboard Special Services'
-            .eight.wide.column
-                +edit_textarea key='customer_promotions' label='Customer Dashboard Promotions Message'
-        .row
-            .sixteen.wide.column
-                h3.ui.header
-                    +icon name='broom'
-                    | &nbsp; Offered Services
-                +office_service_settings
-        .row
-            .sixteen.wide.column
-                .ui.secondary.segment
-                    h3.ui.header
-                        +icon name='administrative-tools'
-                        | &nbsp; SLA Settings
-                    h5.ui.header Select Incident Types
-                    each incident_types
-                        .select_incident_type.ui.compact.button(class=select_incident_type_button_class) #{name}
-                    if selected_incident_type
-                        each rule_docs
-                            .ui.secondary.segment
-                                h4.ui.header #{name} for #{selected_incident_type} Rules
-                                .ui.equal.width.grid
-                                    .column
-                                        unless is_initial
-                                            +edit_number_field key=hours_key label='Escalation Minutes' field_class='inline' min=0 max=24
-                                            .ui.hidden.divider
-                                        else 
-                                            +toggle_boolean_checkbox key=customer_toggle_key label='Customer'
-                                            .ui.hidden.divider
-                                        +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
-                                    .column
-                                        h4.ui.dividing.header Primary
-                                        +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'
-                                        .ui.hidden.fitted.divider
-                                        +toggle_boolean_checkbox key=primary_sms_key label='Send SMS' icon='comment'
-                                        .ui.hidden.fitted.divider
-                                        +office_username_query key=primary_contact_key label='Contact'
-                                    .column
-                                        h4.ui.dividing.header Secondary
-                                        +toggle_boolean_checkbox key=secondary_email_key label='Send Email' icon='envelope'
-                                        .ui.hidden.fitted.divider
-                                        +toggle_boolean_checkbox key=secondary_sms_key label='Send SMS' icon='comment'
-                                        .ui.hidden.fitted.divider
-                                        +office_username_query key=secondary_contact_key label='Contact'
+        .sixteen.wide.column
+            .row
+                +office_header
+            .row.ui.secondary.segment
+                .ui.grid
+                    .eight.wide.column
+                        +edit_textarea key='customer_message' label='Customer Dashboard Message' icon='dashboard'
+                        // +edit_text_field key='customer_special_services' label='Customer Dashboard Special Services'
+                    .eight.wide.column
+                        +edit_textarea key='customer_promotions' label='Customer Dashboard Promotions Message' icon='megaphone'
+            .row
+                .sixteen.wide.column
+                    .ui.secondary.segment
+                        h3.ui.header
+                            +icon name='broom'
+                            | &nbsp; Offered Services
+                        +office_service_settings
+            .ui.fitted.hidden.divider
+            .row
+                .sixteen.wide.column
+                    .ui.secondary.segment
+                        h3.ui.header
+                            +icon name='administrative-tools'
+                            | &nbsp; SLA Settings
+                        h5.ui.header Select Incident Types
+                        each incident_types
+                            .select_incident_type.ui.compact.button(class=select_incident_type_button_class) #{name}
+                        if selected_incident_type
+                            each rule_docs
+                                .ui.secondary.segment
+                                    h4.ui.header #{name} for #{selected_incident_type} Rules
+                                    .ui.equal.width.grid
+                                        .column
+                                            unless is_initial
+                                                +edit_number_field key=hours_key label='Escalation Minutes' field_class='inline' min=0 max=24
+                                                .ui.hidden.divider
+                                            else 
+                                                +toggle_boolean_checkbox key=customer_toggle_key label='Customer'
+                                                .ui.hidden.divider
+                                            +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
+                                        .column
+                                            h4.ui.dividing.header Primary
+                                            +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'
+                                            .ui.hidden.fitted.divider
+                                            +toggle_boolean_checkbox key=primary_sms_key label='Send SMS' icon='comment'
+                                            .ui.hidden.fitted.divider
+                                            +office_username_query key=primary_contact_key label='Select Contact'
+                                        .column
+                                            h4.ui.dividing.header Secondary
+                                            +toggle_boolean_checkbox key=secondary_email_key label='Send Email' icon='envelope'
+                                            .ui.hidden.fitted.divider
+                                            +toggle_boolean_checkbox key=secondary_sms_key label='Send SMS' icon='comment'
+                                            .ui.hidden.fitted.divider
+                                            +office_username_query key=secondary_contact_key label='Contact'
             
 template(name='office_service_settings')
     // h5.ui.header Select which to offer customers.

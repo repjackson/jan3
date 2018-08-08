@@ -67,17 +67,17 @@ template(name='incident_view')
                     a.ui.button(href="/office/#{my_office._id}/incidents")
                         i.left.chevron.icon
                         | Office Incidents    
-                else
+                if is_admin
                     +link_button link='/incidents' icon='user-shield' label='All Incidents'
             .nine.wide.column
                 h1.ui.center.aligned.grey.header #{customer_name} Incident #{incident_number}
             .four.wide.column
                 .ui.icon.remove_incident.button(title='Delete Incident')
                     i.remove.icon
-                // if is_admin
-                #run_single_escalation_check.ui.button 
-                    i.user.shield.icon
-                    |Check Escalation
+                unless is_customer
+                    #run_single_escalation_check.ui.button 
+                        i.user.shield.icon
+                        |Check Escalation
         .row
             .four.wide.column
                 // if is_dev

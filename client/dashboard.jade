@@ -65,10 +65,11 @@ template(name='dashboard')
             //         .ui.secondary.segment
             //             +office_contact_cards
             .centered.row
-                .eight.wide.column
+                .sixteen.wide.column
                     .ui.secondary.segment
                         +dashboard_office_contacts_list
-                .eight.wide.column
+            .centered.row
+                .sixteen.wide.column
                     .ui.secondary.segment
                         +customer_special_services
             //     .five.wide.column
@@ -198,7 +199,7 @@ template(name='customer_incidents_widget')
                         +small_doc_history
                     td
                         +view_button
-
+        +table_footer columns='9'
 
 template(name='customer_special_services')
     h3.ui.header 
