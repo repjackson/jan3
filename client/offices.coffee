@@ -24,7 +24,7 @@ FlowRouter.route '/office/:doc_id/settings',
 Template.offices.onCreated ->
     @autorun -> Meteor.subscribe 'offices', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     # @autorun -> Meteor.subscribe 'office_counter_publication'
-
+    @autorun => Meteor.subscribe 'count', 'office'
 Template.offices.helpers
     all_offices: ->
         Docs.find {
@@ -46,9 +46,11 @@ Template.office_header.onCreated ->
 
 
 
+
+
 Template.office_customers.onCreated ->
     @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    Meteor.subscribe 'office_customer_count', FlowRouter.getParam('doc_id')
+    @autorun => Meteor.subscribe 'office_customer_count', FlowRouter.getParam('doc_id')
 
 # Template.office_customers.events
     # 'click #refresh_ny_customers': ->
@@ -68,8 +70,7 @@ Template.office_customers.helpers
 
 Template.office_incidents.onCreated ->
     @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    
-
+    @autorun => Meteor.subscribe 'office_incident_count', FlowRouter.getParam('doc_id')
 Template.office_incidents.helpers    
     office_incidents: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
@@ -79,20 +80,25 @@ Template.office_incidents.helpers
                 type: "incident"
             },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
+
+
 Template.office_employees.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    @autorun => Meteor.subscribe 'office_employee_count', FlowRouter.getParam('doc_id')
 
 Template.office_employees.helpers    
     office_employees: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
         # console.log page_office
-        Meteor.users.find {
-            "profile.office_name": page_office.ev.MASTER_LICENSEE
-        },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
+        if page_office
+            Meteor.users.find {
+                "profile.office_name": page_office.ev.MASTER_LICENSEE
+            },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
 Template.office_franchisees.onCreated ->
     @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    @autorun => Meteor.subscribe 'office_franchisee_count', FlowRouter.getParam('doc_id')
     
 
 Template.office_franchisees.helpers  

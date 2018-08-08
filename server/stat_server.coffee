@@ -1,3 +1,6 @@
+Meteor.publish 'stats', ->
+    Stats.find()
+
 Meteor.publish 'count', (type)->
     Meteor.call 'calculate_doc_type_count', type
     Stats.find {
@@ -15,15 +18,40 @@ Meteor.publish 'my_incident_count', ()->
     }
 
 
-Meteor.publish 'stats', ->
-    Stats.find()
-
-
+Meteor.publish 'office_employee_count', (office_doc_id)->
+    user = Meteor.user()
+    Meteor.call 'calculate_office_employee_count', office_doc_id
+    office_doc = Docs.findOne office_doc_id
+    Stats.find {
+        collection: 'users'
+        stat_type: 'office_employees'
+        office_jpid:office_doc.ev.ID
+    }
+    
+Meteor.publish 'office_franchisee_count', (office_doc_id)->
+    user = Meteor.user()
+    Meteor.call 'calculate_office_franchisee_count', office_doc_id
+    office_doc = Docs.findOne office_doc_id
+    Stats.find {
+        doc_type: 'franchisee'
+        stat_type: 'office_franchisees'
+        office_jpid:office_doc.ev.ID
+    }
+    
+Meteor.publish 'office_incident_count', (office_doc_id)->
+    user = Meteor.user()
+    Meteor.call 'calculate_office_incident_count', office_doc_id
+    office_doc = Docs.findOne office_doc_id
+    Stats.find {
+        doc_type: 'incident'
+        stat_type: 'office_incidents'
+        office_jpid:office_doc.ev.ID
+    }
 
 Meteor.publish 'office_customer_count', (office_doc_id)->
-    console.log 'office customers', office_doc_id
     Meteor.call 'calculate_office_customer_count', office_doc_id
-
+    office_doc = Docs.findOne office_doc_id
+    
     Stats.find {
         doc_type: 'customer'
         stat_type: 'office_customers'
@@ -33,37 +61,70 @@ Meteor.publish 'office_customer_count', (office_doc_id)->
 
 
 Meteor.methods
+    calculate_office_incident_count: (office_doc_id)->
+        office_doc = Docs.findOne office_doc_id
+        if office_doc
+            office_incident_count = 
+                Docs.find({
+                    incident_office_name: office_doc.ev.MASTER_LICENSEE
+                    type: "incident"
+                }).count()
+            Stats.update {
+                doc_type: 'incident'
+                stat_type: 'office_incidents'
+                office_jpid:office_doc.ev.ID
+            }, { $set:amount:office_incident_count },{upsert:true }
+
+
+    calculate_office_franchisee_count: (office_doc_id)->
+        office_doc = Docs.findOne office_doc_id
+        if office_doc
+            office_franchisee_count = 
+                Docs.find({
+                    "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
+                    type: "franchisee"
+                }).count()
+            Stats.update {
+                doc_type: 'franchisee'
+                stat_type: 'office_franchisees'
+                office_jpid:office_doc.ev.ID
+            }, { $set:amount:office_franchisee_count },{upsert:true }
+        
     calculate_office_customer_count: (office_doc_id)->
         office_doc = Docs.findOne office_doc_id
-        office_customer_count = 
-            Docs.find({
-                type:'customer'
-                "ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE
-            }).count()
-        console.log 'count', office_customer_count
-        Stats.update {
-            doc_type: 'customer'
-            stat_type: 'office_customers'
-            office_jpid:office_doc.ev.ID
-        }, {
-            $set:amount:count
-        },{
-            upsert:true
-        }
-
+        if office_doc
+            office_customer_count = 
+                Docs.find({
+                    "ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE
+                    type:'customer'
+                }).count()
+            Stats.update({
+                doc_type: 'customer'
+                stat_type: 'office_customers'
+                office_jpid:office_doc.ev.ID
+            },{ $set:amount:office_customer_count },{upsert:true})
+        
+        
+    calculate_office_employee_count: (office_doc_id)->
+        office_doc = Docs.findOne office_doc_id
+        if office_doc
+            office_employee_count = 
+                Meteor.users.find({"profile.office_name": office_doc.ev.MASTER_LICENSEE}).count()
+            Stats.update({
+                collection: 'users'
+                stat_type: 'office_employees'
+                office_jpid:office_doc.ev.ID
+            },{ $set:amount:office_employee_count },{upsert:true})
+        
+        
         
     calculate_doc_type_count: (type)->
         count = Docs.find(type:type).count()
-        # console.log count
         
-        Stats.update {
+        Stats.update({
             doc_type: type
             stat_type: 'total'
-        }, {
-            $set:amount:count
-        },{
-            upsert:true
-        }
+        }, { $set:amount:count },{ upsert:true })
     
     calculate_my_incidents_count: ()->
         user = Meteor.user()
@@ -73,70 +134,41 @@ Meteor.methods
                     customer_jpid: user.customer_jpid
                     type: 'incident'
                 }).count()
-            console.log count
         
-            Stats.update {
+            Stats.update({
                 doc_type: 'incident'
                 stat_type: 'customer'
                 customer_jpid: user.customer_jpid
-            }, {
-                $set:amount:count
-            },{ upsert:true }
+            }, { $set:amount:count },{ upsert:true })
         
-        
-    calculate_office_customer_count: (type)->
-        count = Docs.find(type:type).count()
-        # console.log count
-        
-        Stats.update {
-            doc_type: type
-            stat_type: 'total'
-        }, {
-            $set:amount:count
-        },{ upsert:true }
         
         
     calculate_active_customers: ()->
         count = Docs.find(type:'customer', "ev.ACCOUNT_STATUS":'active').count()
-        # console.log count
         
-        Stats.update {
+        Stats.update({
             doc_type: 'customer'
             stat_type: 'active'
-        }, {
-            $set:amount:count
-        },{
-            upsert:true
-        }
+        }, { $set:amount:count },{ upsert:true })
         
         
     calculate_active_franchisees: ()->
         count = Docs.find(type:'franchisee', "ev.ACCOUNT_STATUS":'active').count()
-        # console.log count
         
-        Stats.update {
+        Stats.update({
             doc_type: 'franchisee'
             stat_type: 'active'
-        }, {
-            $set:amount:count
-        },{
-            upsert:true
-        }
+        }, { $set:amount:count },{ upsert:true })
         
         
         
     calculate_user_count: ()->
         count = Meteor.users().count()
-        # console.log count
         
         Stats.update {
             collection:'users'
             stat_type: 'total'
-        }, {
-            $set:amount:count
-        },{
-            upsert:true
-        }
+        }, { $set:amount:count },{ upsert:true }
         
         
         

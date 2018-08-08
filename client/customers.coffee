@@ -4,6 +4,7 @@ FlowRouter.route '/customers',
 Template.customers.onCreated ->
     Session.setDefault('query',null)
     @autorun -> Meteor.subscribe 'active_customers', parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    Meteor.subscribe 'count', 'customer'
 
 Template.customers.helpers
     all_customers: -> 

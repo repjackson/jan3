@@ -64,19 +64,6 @@ Meteor.publish 'all_users', (query, limit=100, sort_key='timestamp', sort_direct
     
     
 
-# ReactiveTable.publish 'users', Meteor.users,'', {disablePageCountReactivity:true}
-# # ReactiveTable.publish 'customers', Docs, {type:'customer', "ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
-# # ReactiveTable.publish 'customers', Docs, {type:'customer',"ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
-# ReactiveTable.publish 'events', Docs, {type:'event'}, {disablePageCountReactivity:false}
-# ReactiveTable.publish 'franchisees', Docs, {type:'franchisee', "ev.ACCOUNT_STATUS":'ACTIVE'}, {disablePageCountReactivity:true}
-# # ReactiveTable.publish 'incidents', Docs, {type:'incident'}, {disablePageCountReactivity:true}
-# ReactiveTable.publish 'offices', Docs, {type:'office'}, {disablePageCountReactivity:true}
-# ReactiveTable.publish 'special_services', Docs, {type:'special_service'}, {disablePageCountReactivity:true}
-# ReactiveTable.publish 'services', Docs, {type:'service'}, {disablePageCountReactivity:true}
-# ReactiveTable.publish 'jpids', Docs, {type:'jpid'}, {disablePageCountReactivity:true}
-# ReactiveTable.publish 'search_history_docs', Docs, {type:'search_history_doc'}, {disablePageCountReactivity:true}
-
-
 Meteor.publish 'child_docs', (doc_id, limit)->
     if limit
         Docs.find {parent_id:doc_id}, {limit:limit, sort:timestamp:-1}
@@ -441,7 +428,7 @@ Meteor.publish 'my_office', ->
         
 Meteor.publish 'my_special_services', ->
     user = Meteor.user()
-    if user.customer_jpid
+    if user and user.customer_jpid
         customer_doc = Docs.findOne
             "ev.ID": user.customer_jpid
             type:'customer'
