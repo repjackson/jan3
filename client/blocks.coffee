@@ -22,8 +22,9 @@ Template.reference_type_single.onCreated ->
 Template.reference_type_multiple.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], @data.type
 
-# Template.associated_users.onCreated ->
-#     @autorun =>  Meteor.subscribe 'users'
+Template.associated_users.onCreated ->
+    @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
+    
 Template.associated_users.helpers
     associated_users: -> 
         if @assigned_to

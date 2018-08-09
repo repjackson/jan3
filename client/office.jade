@@ -77,8 +77,8 @@ template(name='office_customers')
                         +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
                         +sort_column_header key='ev.TELEPHONE' label='Telephone'
                         +sort_column_header key='ev.ADDR_STREET' label='Address'
-                        +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
-                        th 
+                        // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
+                        th.one.wide View
                     tbody
                         each office_customers
                             tr
@@ -89,10 +89,10 @@ template(name='office_customers')
                                 td #{ev.CUST_CONTACT_EMAIL}
                                 td #{ev.TELEPHONE}
                                 td #{ev.ADDR_STREET}
-                                td #{ev.TIMESTAMP}
+                                // td #{ev.TIMESTAMP}
                                 td 
                                     +view_button
-                    +table_footer columns='9'                
+                    +table_footer columns='8'                
 
 
 template(name='office_incidents')
@@ -110,9 +110,9 @@ template(name='office_incidents')
                         th Details
                         +sort_column_header key='level' label='Level' classes='one wide'
                         +sort_column_header key='submitted' label='Submitted'
-                        +sort_column_header key='open' label='Status'
+                        +sort_column_header key='open' label='Status' classes='one wide'
                         th Assigned To
-                        th View
+                        th.one.wide View
                     tbody
                         each office_incidents
                             tr
@@ -131,7 +131,7 @@ template(name='office_incidents')
                                     +associated_users
                                 td 
                                     +view_button
-                    +table_footer columns='8'                
+                    +table_footer columns='10'                
 
 
 
@@ -149,8 +149,8 @@ template(name='office_employees')
                         +sort_column_header key='profile.title' label='Title'
                         +sort_column_header key='ev.WORK_TELEPHONE' label='Phone'
                         +sort_column_header key='email' label='Email'
-                        th Public
-                        th View Details
+                        th.one.wide Public
+                        th.one.wide View
                     tbody
                         each office_employees
                             tr

@@ -91,10 +91,10 @@ Template.table_footer.helpers
             current_page_size = parseInt Session.get('page_size')
             number_of_pages = Math.ceil(count_amount/current_page_size)
             pages = []
-            page = 1
-            if number_of_pages>7
-                number_of_pages = 7
+            page = 0
+            if number_of_pages>15
+                number_of_pages = 15
             while page<number_of_pages
-                pages.push {number:page}
+                pages.push {number:page+1}
                 page++
             return pages

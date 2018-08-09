@@ -28,7 +28,7 @@ template(name='table_footer')
             th(colspan=columns)
                 if pages
                     .ui.right.floated
-                        |Starting at result ##{skip_amount}
+                        |Starting at result #{skip_amount}
                     .ui.right.floated.pagination.menu
                         each pages
                             a.set_page_number.item(class=pagination_item_class) #{number}
@@ -59,7 +59,7 @@ template(name='search_key')
         
         
 template(name='sort_column_header')    
-    th.sort_by
+    th.sort_by(class=classes)
         |#{label}
         if sort_descending
             i.sort.amount.down.icon

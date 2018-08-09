@@ -84,6 +84,9 @@ Template.customer_special_services.helpers
     
 Template.customer_incidents_widget.onCreated ->
     @autorun -> Meteor.subscribe 'my_customer_incidents'
+    @autorun => Meteor.subscribe 'my_incident_count'
+    Session.set 'page_size', 3
+
 Template.customer_incidents_widget.helpers    
     # customer_incidents: ->  
     #     user = Meteor.user()

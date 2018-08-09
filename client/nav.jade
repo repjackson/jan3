@@ -121,46 +121,35 @@ template(name='left_sidebar')
     
         a.header.toggle_left_sidebar.item(href='/') 
             |Dashboard
-            i.home.icon
         // a.toggle_left_sidebar.item(href='/front')
         //     i.globe.icon
         //     | Sales Page
         a.toggle_left_sidebar.item(href='/users') 
-            i.users.icon
             |Users
         a.toggle_left_sidebar.item(href='/incidents') 
-            i.exclamation.icon
             |Incidents
         a.toggle_left_sidebar.item(href='/offices') 
-            i.building.icon
             |Offices
         // a.toggle_left_sidebar.item(href='/schedule')
         //     | Schedule
         a.toggle_left_sidebar.item(href='/services')
-            i.clock.icon
             // +tiny_sprite name='duster'
             | Services
         a.toggle_left_sidebar.item(href='/special_services')
-            i.paint.brush.icon
             // +tiny_sprite name='duster'
             | Special Services
         a.toggle_left_sidebar.item(href='/franchisees') 
-            i.street.view.icon
             |Franchisees
         a.toggle_left_sidebar.item(href='/customers') 
-            i.money.icon
             |Customers
         if is_admin
             .divider
             a.toggle_left_sidebar.item(href='/admin') 
-                i.user.shield.icon
                 |Admin
             a.toggle_left_sidebar.item(href='/feed') 
-                i.rss.icon
                 |Feed
             .ui.divider
             a.toggle_left_sidebar.item(href='/roles') 
-                i.rules.icon
                 |Roles
             a.toggle_left_sidebar.item(href='/rules') SLA Rules
     

@@ -295,21 +295,18 @@ Template.register_office.events
         
         console.dir options
         
+        office_doc = 
+            Docs.findOne
+                type:'office'
+                "ev.ID": office_jpid
+        console.log office_doc
         Accounts.createUser(options, (err,res)=>
             if err
                 Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
             else
-                Bert.alert "Registered new office user: #{username}. Redirecting to dashboard.", 'success', 'growl-bottom-right'
+                Bert.alert "Registered new office user: #{username}. Redirecting to office page.", 'success', 'growl-bottom-right'
                 # Meteor.call 
-                FlowRouter.go '/'                
-                # if current_role is 'customer'
-                #     Meteor.call 'refresh_customer_jpids', user.username
-                # if current_role is 'office'
-                #     office_doc = 
-                #         Docs.findOne
-                #             type:'office'
-                #             "ev.ID": office_jpid
-                #     console.log office_doc
+                FlowRouter.go "/office/#{office_doc._id}/incidents"                
         )
     
     'keyup #username': (e,t)->

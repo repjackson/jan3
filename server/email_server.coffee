@@ -102,7 +102,7 @@ Meteor.methods
         escalation_secondary_contact_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_secondary_contact"]
         
         escalation_franchisee_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_contact_franchisee"]
-        
+        console.log 
         
         console.log escalation_franchisee_value
         

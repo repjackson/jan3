@@ -199,7 +199,7 @@ template(name='customer_incidents_widget')
                         +small_doc_history
                     td
                         +view_button
-        +table_footer columns='9'
+        // +table_footer columns='9'
 
 template(name='customer_special_services')
     h3.ui.header 
@@ -263,9 +263,9 @@ template(name='dashboard_office_contacts_list')
 
 template(name='small_service_list')
     .ui.secondary.segment
-        .ui.header 
+        h3.ui.header 
             +iconsmall name='broom'
-            |Services Offered
+            |Other Jan-Pro Services Offered
         .ui.three.column.grid
             each services_offered
                 .column

@@ -30,7 +30,15 @@ Meteor.publish 'active_customers', (limit=100, sort_key='timestamp', sort_direct
         
 
 
-
+Meteor.publish 'assigned_to_users', (incident_doc_id)->
+    incident_doc = Docs.findOne incident_doc_id
+    if incident_doc.assigned_to
+        Meteor.users.find 
+            _id: $in: incident_doc.assigned_to
+        
+        
+        
+        
         
 # Meteor.publish 'my_customer_account_doc', ->
 #     if Meteor.user()
@@ -126,23 +134,6 @@ Meteor.publish 'has_key_value', (key, value)->
     # Docs.find "ev.FRANCH_NAME": $exists: true
         
         
-# admin counters        
-        
-# Meteor.publish 'office_counter_publication', ->
-#     Counts.publish this, 'office_counter', Docs.find({type:'office'})
-#     return undefined
-    
-# Meteor.publish 'incident_counter_publication', ->
-#     Counts.publish this, 'incident_counter', Docs.find({type:'incident'})
-#     return undefined
-        
-# Meteor.publish 'franchisee_counter_publication', ->
-#     Counts.publish this, 'franchisee_counter', Docs.find({type:'franchisee'})
-#     return undefined
-        
-# Meteor.publish 'customer_counter_publication', ->
-#     Counts.publish this, 'customer_counter', Docs.find({type:'customer'})
-#     return undefined
         
         
         
