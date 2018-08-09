@@ -24,13 +24,13 @@ template(name='offices')
                 table.ui.striped.selectable.fixed.fluid.sortable.table
                     thead
                         tr
-                            +sort_column_header key='ev.ID' label='JPID'
+                            +sort_column_header key='ev.ID' label='JPID' classes='one wide'
                             +sort_column_header key='ev.MASTER_LICENSEE' label='Name' show_search=true
                             +sort_column_header key='ev.MASTER_OFFICE_MANAGER' label='Manager'
                             +sort_column_header key='ev.MASTER_OFFICE_OWNER' label='Owner'
                             +sort_column_header key='ev.TELEPHONE' label='Phone'
                             +sort_column_header key='ev.ADDR_STREET' label='Address'
-                            th View Details
+                            th.one.wide View
                     tbody
                         each all_offices
                             tr

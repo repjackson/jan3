@@ -548,10 +548,6 @@ template(name='view_telephone_field')
             
             
             
-template(name='query_input')            
-    .ui.icon.input
-        i.search.icon
-        input#query(type='text' placeholder=placeholder)
 
 template(name='user_result')
     .ui.item
@@ -689,6 +685,7 @@ template(name='office_card')
                 if is_office
                     a(href="/office/#{_id}/incidents")
                         h4.ui.header #{ev.MASTER_LICENSEE}
+                div ##{ev.ID} 
                 div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
                 div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
                 div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
@@ -709,6 +706,7 @@ template(name='franchisee_card')
                 a(href="/view/#{_id}")
                     h4.ui.header #{franchisee}
                 .ui.list
+                    .item(title='JPID') ##{ev.ID}
                     .item(title='Short Name') #{ev.FRANCH_NAME}
                     .item(title='Call Number')
                         a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}

@@ -10,12 +10,13 @@ Meteor.publish 'count', (type)->
 
 Meteor.publish 'my_incident_count', ()->
     user = Meteor.user()
-    Meteor.call 'calculate_my_incidents_count'
-    Stats.find {
-        doc_type: 'incident'
-        stat_type: 'customer'
-        customer_jpid: user.customer_jpid
-    }
+    if user
+        Meteor.call 'calculate_my_incidents_count'
+        Stats.find {
+            doc_type: 'incident'
+            stat_type: 'customer'
+            customer_jpid: user.customer_jpid
+        }
 
 
 Meteor.publish 'office_employee_count', (office_doc_id)->

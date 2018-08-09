@@ -14,6 +14,7 @@ Template.add_incident_button.events
             Meteor.call 'count_current_incident_number', (err,incident_count)=>
                 if err then console.error err
                 else
+                    console.log incident_count
                     next_incident_number = incident_count + 1
                     new_incident_id = 
                         Docs.insert
@@ -356,6 +357,8 @@ Template.incident_tasks.helpers
             type: 'incident_task'
             parent_id: FlowRouter.getParam 'doc_id'
         }, sort:timestamp:-1
+
+
 Template.incident_tasks.events
     'click #add_incident_task': ->
         new_incident_task_id = 

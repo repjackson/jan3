@@ -27,6 +27,8 @@ template(name='table_footer')
         tr
             th(colspan=columns)
                 if pages
+                    .ui.right.floated
+                        |Starting at result ##{skip_amount}
                     .ui.right.floated.pagination.menu
                         each pages
                             a.set_page_number.item(class=pagination_item_class) #{number}
@@ -39,9 +41,9 @@ template(name='table_footer')
 
 template(name='status_template')
     if open
-        .ui.basic.label Open
+        | Open
     else
-        .ui.label Closed
+        | Closed
 
 template(name='submitted_template')
     if submitted
@@ -64,4 +66,7 @@ template(name='sort_column_header')
         if sort_ascending
             i.sort.amount.up.icon
                 
-        
+template(name='query_input')            
+    .ui.icon.input
+        i.search.icon
+        input#query(type='text' placeholder=placeholder value=current_query)

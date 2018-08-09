@@ -31,7 +31,8 @@ Template.table.helpers
 Template.table_footer.events
     'click .set_page_number': -> 
         Session.set 'current_page_number', @number
-        skip_amount = @number*parseInt(Session.get('page_size'))
+        int_page_size = parseInt(Session.get('page_size'))
+        skip_amount = @number*int_page_size-int_page_size
         Session.set 'skip', skip_amount
     
     'change #page_size': (e,t)->
@@ -54,25 +55,23 @@ Template.sort_column_header.events
 Template.search_key.events
     'keyup .search_key': ->
         
+Template.query_input.helpers
+    current_query: -> Session.get('query')
         
 Template.query_input.events
     'keyup #query': (e,t)->
         e.preventDefault()
         query = $('#query').val().trim()
         # if e.which is 13 #enter
+        Session.set 'skip', 0
         # $('#query').val ''
         Session.set 'query', query
 
 
 
-Template.sort_column_header.events
-    'click .sort_by': (e,t)->
-        Session.set 'sort_key', @key
-        if Session.equals 'sort_direction', '-1'
-            Session.set 'sort_direction', '1'
-        else if Session.equals 'sort_direction', '1'
-            Session.set 'sort_direction', '-1'
 Template.table_footer.helpers
+    skip_amount: -> Session.get 'skip'
+
     pagination_item_class: ->
         if Session.equals('current_page_number', @number) then 'active' else ''
         
