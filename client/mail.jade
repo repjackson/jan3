@@ -2,23 +2,25 @@ template(name='mail')
     .ui.stackable.padded.grid
         .row
             .five.wide.center.aligned.column
-                if currentUser
-                    #create_conversation.ui.circular.icon.button
-                        +icon name='plus' classes='ui mini inline image'
-                        // |New Conversation
+                // if currentUser
+                //     #create_conversation.ui.circular.icon.button
+                //         +icon name='plus' classes='ui mini inline image'
+                //         // |New Conversation
             .eight.wide.center.aligned.column
                 h1.ui.header 
-                    +icon name='chat'
-                    |Communication
+                    +icon name='new-post'
+                    |Mail
             .three.wide.center.aligned.column
-                .ui.large.circular.label(data-tooltip='Unread Messages' data-position='bottom center')
-                    +icon name='new-message' classes='ui mini inline image'
-                    |#{unread_message_count}
+                // .ui.large.circular.label(data-tooltip='Unread Messages' data-position='bottom center')
+                //     +icon name='new-message' classes='ui mini inline image'
+                //     |#{unread_message_count}
         .row
-            .four.wide.column
+            .sixteen.wide.column
+                +table collection='Docs' type='message' fields=message_table_fields
+            // .four.wide.column
                 // +theme_tag_filter type='conversation'
                 // +participant_filter type='conversation'
-                +conversation_list
+                // +conversation_list
                 // .ui.dividing.header Viewing: 
                 //     if viewing_published
                 //         #view_private_conversations.ui.basic.button 
@@ -28,9 +30,10 @@ template(name='mail')
                 //         #view_published_conversations.ui.basic.button 
                 //             i.lock.icon
                 //             |Private
-            .twelve.wide.column
-                with selected_conversation
-                    +full_conversation_view
+            // .twelve.wide.column
+                
+                // with selected_conversation
+                //     +full_conversation_view
                 // .ui.cards
                 //     each conversations
 

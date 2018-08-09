@@ -2,8 +2,9 @@ FlowRouter.route '/mail',
     action: -> BlazeLayout.render 'layout', main:'mail'
 
 Template.mail.onCreated ->
-    @autorun -> Meteor.subscribe('type', 'conversation')
+    @autorun -> Meteor.subscribe('type', 'message')
     @view_published = new ReactiveVar(true)
+    @autorun -> Meteor.subscribe 'type','message', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
 
 Template.mail.helpers
     conversations: -> 
@@ -18,6 +19,33 @@ Template.mail.helpers
                 type: 'conversation'
                 published: -1
             }, sort: timestamp: -1
+        
+        
+    message_table_fields: -> [
+            {   
+                key:'to_username'
+                label:'To'
+                sortable:false
+            }
+            {
+                key:'from_username'
+                label:'From'
+                sortable:false
+            }
+            {
+                key:'long_timestamp'
+                label:'When'
+                sortable:false
+                
+            }
+            {
+                key:'text'
+                label:'Text'
+                sortable:false
+            }
+        ]
+
+        
         
     selected_conversation: ->
         Docs.findOne Session.get 'current_conversation_id'

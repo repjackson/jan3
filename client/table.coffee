@@ -20,7 +20,7 @@ Template.table.helpers
             return true
     fields: -> Template.currentData().fields
     table_docs: -> 
-        Stats.find()
+        if Template.currentData().collection is 'Stats' then Stats.find() else Docs.find(type:Template.currentData().type)
     values: ->
         fields = Template.parentData().fields
         values = []

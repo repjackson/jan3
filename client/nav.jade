@@ -1,7 +1,7 @@
 template(name='nav')
     .ui.inverted.blue.top.attached.menu
-        a.toggle_left_sidebar.icon.item 
-            i.large.bars.icon
+        // a.toggle_left_sidebar.icon.item 
+        //     i.large.bars.icon
         if is_customer
             a.item(href='/')
                 // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
@@ -85,9 +85,8 @@ template(name='nav')
                 // a.item(href='/feed')
                 //     i.large.icon
                 //         +icon name='appointment-reminders'
-                // a.item(href='/mail')
-                //     i.large.icon
-                //         +icon name='topic'
+                a.icon.item(href='/mail')
+                    i.large.envelope.icon
                 // a.item(href='/transactions')
                 //     i.large.icon
                 //         +icon name='data-in-both-directions'
@@ -101,8 +100,7 @@ template(name='nav')
                         i.user.icon
                     | #{currentUser.username}
                 a#logout.ui.icon.item(href='#' title='Log Out') 
-                    i.icon
-                        i.sign.out.icon
+                    i.large.sign.out.icon
             else
                 a.ui.item(href='/login')
                     i.large.icon

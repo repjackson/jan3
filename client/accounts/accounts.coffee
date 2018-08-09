@@ -22,9 +22,13 @@ Template.login.events
             if err
                 console.log err
             else
-                Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                FlowRouter.go '/'                
-        # if e.which is 13 #enter
+                Meteor.call 'redirect_office_after_login', (err,res)->
+                    console.log res
+                    if 'office' in res.user.roles
+                        FlowRouter.go "/office/#{res.office._id}/incidents"        
+                    else if 'customer' in res.user.roles
+                        Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                        FlowRouter.go "/"        
     
     'keyup .password': (e,t)->
         if e.which is 13 #enter
@@ -36,8 +40,13 @@ Template.login.events
                 if err
                     console.log err
                 else
-                    Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                    FlowRouter.go '/'                
+                    Meteor.call 'redirect_office_after_login', (err,res)->
+                        console.log res
+                        if 'office' in res.user.roles
+                            FlowRouter.go "/office/#{res.office._id}/incidents"        
+                        else if 'customer' in res.user.roles
+                            Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                            FlowRouter.go "/"        
             
     'click #login_demo_admin': ->
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->
@@ -166,15 +175,6 @@ Template.register_customer.events
                     Session.set 'username_found', true
                 else
                     Session.set 'username_found', false
-        if e.which is 13 #enter
-            password = $('#password').val()
-            if username.length > 0 and password.length > 0
-                Meteor.loginWithPassword login, password, (err,res)->
-                    if err
-                        console.log err
-                    else
-                        Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                        FlowRouter.go '/'                
                 
     'keyup #email': (e,t)->
         email = $('#email').val()
@@ -319,15 +319,6 @@ Template.register_office.events
                     Session.set 'username_found', true
                 else
                     Session.set 'username_found', false
-        if e.which is 13 #enter
-            password = $('#password').val()
-            if username.length > 0 and password.length > 0
-                Meteor.loginWithPassword login, password, (err,res)->
-                    if err
-                        console.log err
-                    else
-                        Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-bottom-right'
-                        FlowRouter.go '/'                
             
                 
     'keyup #email': (e,t)->

@@ -57,9 +57,7 @@ Meteor.methods
             console.log 'email sent from production'
         if Meteor.isDevelopment
             console.log 'email sending from dev'
-            Docs.insert
-                type:'message'
-                mail_fields: mail_fields
+            
             # Meteor.Mailgun.send
             #     to: mail_fields.to
             #     from: mail_fields.from
@@ -67,9 +65,14 @@ Meteor.methods
             #     text: mail_fields.text
             #     html: mail_fields.html
             console.log 'email sent from dev'
-        else
-            console.log 'not production or dev'
         return
+        
+    send_message: (to_username, from_username, message_text)->    
+        Docs.insert
+            type:'message'
+            from_username:from_username
+            to_username: to_username
+            text: message_text
         
     beta_send_email: (subject, html) ->
         mail_fields = {
@@ -102,13 +105,13 @@ Meteor.methods
         escalation_secondary_contact_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_secondary_contact"]
         
         escalation_franchisee_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_contact_franchisee"]
-        console.log 
+        escalation_customer_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_contact_customer"]
         
         console.log escalation_franchisee_value
         
         console.log "escalation_#{incident.level}_secondary_contact"
-        console.log escalation_primary_contact_value
-        console.log escalation_secondary_contact_value
+        console.log 'escalation_primary_contact_value',escalation_primary_contact_value
+        console.log 'escalation_secondary_contact_value',escalation_secondary_contact_value
         mail_fields = {
             to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
@@ -131,10 +134,20 @@ Meteor.methods
                 </ul>
             "
         }
+        
+        Meteor.call 'send_message', escalation_primary_contact_value, 'system_escalation_bot', "You have been notified as the primary contact for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
+        Meteor.call 'send_message', escalation_secondary_contact_value, 'system_escalation_bot', "You have been notified as the secondary contact for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
+        
+        
+        
         Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{escalation_primary_contact_value} has been emailed as the primary contact for a #{incident.incident_type} escalation to level #{incident.level}."
         Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{escalation_secondary_contact_value} has been emailed as the secondary contact for a #{incident.incident_type} escalation to level #{incident.level}."
         if escalation_franchisee_value
             Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} has been emailed for a #{incident.incident_type} escalation to level #{incident.level}."
+            Meteor.call 'send_message', franchisee.ev.FRANCHISEE, 'system_escalation_bot', "You have been notified as the franchisee for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
+        if escalation_customer_value
+            Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} has been emailed for a #{incident.incident_type} escalation to level #{incident.level}."
+            Meteor.call 'send_message', incident.customer_name, 'system_escalation_bot', "You have been notified as the customer for an incident submission."
 
         #{escalation_primary_contact_value}
         

@@ -481,6 +481,17 @@ Meteor.methods
         # console.log office_doc
         office_doc
             
+    redirect_office_after_login: ()->     
+        res = {}
+        user = Meteor.user()
+        if user
+            office_doc = Docs.findOne
+                "ev.ID": user.office_jpid
+                type:'office'
+            console.log office_doc
+            res.office = office_doc
+            res.user = user
+            return res            
             
     add_to_cart: (doc_id)->
         product = Docs.findOne doc_id
