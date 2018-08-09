@@ -7,19 +7,19 @@ template(name='nav')
                 // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                 i.large.icon
                     +iconsmall name='dashboard'
-                | &nbsp; Dashboard
+                .mobile.hidden &nbsp; Dashboard
             a.mobile.hidden.item(href='/customer_incidents')
                 i.large.icon
                     +iconsmall name='error'
-                | &nbsp; My Incidents
+                .mobile.hidden &nbsp; My Incidents
             a.mobile.hidden.item(href='/store')
                 i.large.icon
                     +iconsmall name='small-business'
-                | &nbsp; Consumables
+                .mobile.hidden &nbsp; Consumables
             a.mobile.hidden.item(href='/services')
                 i.large.icon
                     +iconsmall name='broom'
-                | Services
+                .mobile.hidden Services
         if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
             if my_office

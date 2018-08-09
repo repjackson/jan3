@@ -66,7 +66,7 @@ Template.incident_type_label.helpers
 Template.incidents.onCreated ->
     Session.setDefault('query',null)
     @autorun -> Meteor.subscribe 'incidents', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    Meteor.subscribe 'count', 'incident'
+    @autorun => Meteor.subscribe 'count', 'incident'
 
 
 

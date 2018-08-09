@@ -18,15 +18,25 @@ Meteor.publish 'type', (type, query=null, limit=100, sort_key='timestamp', sort_
         }
 
         
-Meteor.publish 'active_customers', (limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
-    Docs.find {
-        type:'customer'
-    },{
-        skip: skip
-        limit:limit
-        sort:"#{sort_key}":parseInt("#{sort_direction}")
-    }
-
+Meteor.publish 'active_customers', (query=null, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+    if query
+        Docs.find {
+            type:'customer'
+            $text: $search: query
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
+    else
+        Docs.find {
+            type:'customer'
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
+        
         
 
 
@@ -426,8 +436,8 @@ Meteor.publish 'my_special_services', ->
             # grandparent office
         Docs.find {
             type:'special_service'
-            "ev.CUSTOMER": customer_doc.ev.CUST_NAME
-        }
+            # "ev.CUSTOMER": customer_doc.ev.CUST_NAME
+        }, limit: 5
     
 Meteor.publish 'my_office_contacts', ()->    
     user = Meteor.user()

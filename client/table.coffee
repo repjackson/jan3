@@ -1,5 +1,5 @@
 Template.table.onCreated ->
-    Meteor.subscribe 'count', @data.type
+    @autorun => Meteor.subscribe 'count', @data.type
 
 
 
@@ -67,7 +67,7 @@ Template.query_input.events
         # $('#query').val ''
         Session.set 'query', query
 
-
+    'click .clear_search': -> Session.set('query', null)
 
 Template.table_footer.helpers
     skip_amount: -> Session.get 'skip'

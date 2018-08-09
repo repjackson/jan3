@@ -67,5 +67,8 @@ template(name='sort_column_header')
                 
 template(name='query_input')            
     .ui.icon.input
-        i.search.icon
+        if current_query
+            i.clear_search.link.remove.icon
+        else
+            i.link.search.icon
         input#query(type='text' placeholder=placeholder value=current_query)

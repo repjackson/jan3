@@ -3,9 +3,9 @@ FlowRouter.route '/franchisees',
 
 
 Template.franchisees.onCreated ->
-    Session.setDefault('query',null)
-    Session.setDefault('sort_direction',-1)
-    Meteor.subscribe 'count', 'franchisee'
+    Session.set('query',null)
+    Session.set('sort_direction',-1)
+    @autorun => Meteor.subscribe 'count', 'franchisee'
     @autorun -> Meteor.subscribe 'type', 'franchisee', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
 
 Template.franchisees.helpers
