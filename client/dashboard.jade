@@ -199,7 +199,15 @@ template(name='customer_incidents_widget')
                         +small_doc_history
                     td
                         +view_button
-        // +table_footer columns='9'
+        tfoot
+            tr
+                th(colspan='9')
+                    if pages
+                        .ui.right.floated
+                        .ui.right.floated.pagination.menu
+                            each pages
+                                a.set_page_number.item(class=pagination_item_class) #{number}
+                    |Starting at result #{skip_amount} of #{count_amount}.
 
 template(name='customer_special_services')
     h3.ui.header 

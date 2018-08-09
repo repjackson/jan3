@@ -83,24 +83,45 @@ Template.customer_special_services.helpers
         return result_list
     
 Template.customer_incidents_widget.onCreated ->
-    @autorun -> Meteor.subscribe 'my_customer_incidents'
+    @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('query'), 3, Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'my_incident_count'
-    Session.set 'page_size', 3
 
-Template.customer_incidents_widget.helpers    
-    # customer_incidents: ->  
-    #     user = Meteor.user()
-    #     if user and user.profile and user.customer_jpid
-    #         # customer_doc = Docs.findOne "ev.ID":user.customer_jpid
-    #         Docs.find {
-    #             customer_jpid: user.customer_jpid
-    #             type: "incident"
-    #         }, limit:20
+Template.customer_incidents_widget.events
+    'click .set_page_number': -> 
+        Session.set 'current_page_number', @number
+        int_page_size = 3
+        skip_amount = @number*int_page_size-int_page_size
+        Session.set 'skip', skip_amount
+
 
 Template.customer_incidents_widget.helpers
-    customer_incidents: -> Docs.find {type:'incident'}, limit:3
+    customer_incidents: -> Docs.find {type:'incident'}, sort:timestamp:-1
     
+    skip_amount: -> Session.get 'skip'
+
+    pagination_item_class: ->
+        if Session.equals('current_page_number', @number) then 'active' else ''
         
+    count_amount: ->
+        count_stat = Stats.findOne()
+        if count_stat
+            count_stat.amount
+            
+    pages: ->
+        stat_doc = Stats.findOne()
+        if stat_doc
+            count_amount = stat_doc.amount
+            current_page_size = 3
+            number_of_pages = Math.ceil(count_amount/current_page_size)
+            pages = []
+            page = 0
+            if number_of_pages>10
+                number_of_pages = 10
+            while page<number_of_pages
+                pages.push {number:page+1}
+                page++
+            return pages
+    
 Template.dashboard_services_widget.onCreated ->
     @autorun -> Meteor.subscribe 'type','service'
 Template.dashboard_services_widget.helpers

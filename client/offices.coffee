@@ -25,6 +25,8 @@ Template.offices.onCreated ->
     @autorun -> Meteor.subscribe 'offices', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     # @autorun -> Meteor.subscribe 'office_counter_publication'
     @autorun => Meteor.subscribe 'count', 'office'
+    Session.set 'page_size', 10
+
 Template.offices.helpers
     all_offices: ->
         Docs.find {
@@ -51,6 +53,7 @@ Template.office_header.onCreated ->
 Template.office_customers.onCreated ->
     @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_customer_count', FlowRouter.getParam('doc_id')
+    Session.set 'page_size', 10
 
 # Template.office_customers.events
     # 'click #refresh_ny_customers': ->
@@ -71,6 +74,8 @@ Template.office_customers.helpers
 Template.office_incidents.onCreated ->
     @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_incident_count', FlowRouter.getParam('doc_id')
+    Session.set 'page_size', 10
+
 Template.office_incidents.helpers    
     office_incidents: ->  
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
