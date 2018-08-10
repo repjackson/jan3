@@ -80,9 +80,6 @@ Template.favorite_button.events
 
 
 
-
-
-
 Template.mark_complete_button.helpers
     complete_button_class: -> 
         if Meteor.user()
@@ -101,12 +98,6 @@ Template.mark_complete_button.events
             Meteor.call 'mark_complete', Template.parentData(0)
         else FlowRouter.go '/sign-in'
 
-
-Template.mark_doc_complete_button.helpers
-    # complete_button_class: -> if @complete then 'blue' else ''
-Template.mark_doc_complete_button.events
-    'click .mark_complete': (e,t)-> 
-        if @complete is true then Docs.update @_id, $set: complete: false else  Docs.update @_id, $set:complete: true
 
 
 Template.mark_doc_approved_button.helpers

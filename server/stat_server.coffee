@@ -1,22 +1,39 @@
 Meteor.publish 'stats', ->
     Stats.find()
 
+Meteor.publish 'stat', (doc_type, stat_type)->
+    Stats.find
+        doc_type: doc_type
+        stat_type: stat_type
+
 Meteor.publish 'count', (type)->
     Meteor.call 'calculate_doc_type_count', type
-    Stats.find {
+    Stats.find
         doc_type: type
         stat_type: 'total'
-    }
 
 Meteor.publish 'my_incident_count', ()->
     user = Meteor.user()
     if user
         Meteor.call 'calculate_my_incidents_count'
-        Stats.find {
+        Stats.find
             doc_type: 'incident'
             stat_type: 'customer'
             customer_jpid: user.customer_jpid
-        }
+
+
+Meteor.publish 'all_users_count', ()->
+    Meteor.call 'calculate_all_users_count'
+    Stats.find
+        collection: 'users'
+        stat_type: 'total'
+
+Meteor.publish 'incomplete_task_count', ()->
+    Meteor.call 'calculate_incomplete_task_count'
+    Stats.find
+        collection: 'doc'
+        doc_type: 'task'
+        stat_type: 'incomplete'
 
 
 Meteor.publish 'office_employee_count', (office_doc_id)->
@@ -116,6 +133,15 @@ Meteor.methods
                 stat_type: 'office_employees'
                 office_jpid:office_doc.ev.ID
             },{ $set:amount:office_employee_count },{upsert:true})
+        
+        
+    calculate_all_users_count: ()->
+        all_user_count = 
+            Meteor.users.find({}).count()
+        Stats.update({
+            collection: 'users'
+            stat_type: 'total'
+        },{ $set:amount:all_user_count },{upsert:true})
         
         
         

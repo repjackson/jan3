@@ -1,4 +1,4 @@
-Meteor.publish 'type', (type, query=null, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+Meteor.publish 'type', (type, query=null, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     if query
         Docs.find {
             type: type
@@ -18,7 +18,7 @@ Meteor.publish 'type', (type, query=null, limit=100, sort_key='timestamp', sort_
         }
 
         
-Meteor.publish 'active_customers', (query=null, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+Meteor.publish 'active_customers', (query=null, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     if query
         Docs.find {
             type:'customer'
@@ -56,7 +56,7 @@ Meteor.publish 'assigned_to_users', (incident_doc_id)->
 #         cursor = Docs.find jpid:cust_id
 #         cursor
         
-Meteor.publish 'users_feed', (username, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+Meteor.publish 'users_feed', (username, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     user = Meteor.users.findOne username:username
     Docs.find {
         type: 'event'
@@ -67,7 +67,7 @@ Meteor.publish 'users_feed', (username, limit=100, sort_key='timestamp', sort_di
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     
-Meteor.publish 'all_users', (query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+Meteor.publish 'all_users', (query, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     if query 
         Meteor.users.find {
             $text: $search: query
@@ -77,7 +77,12 @@ Meteor.publish 'all_users', (query, limit=100, sort_key='timestamp', sort_direct
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     else
-        Meteor.users.find {}, limit:10
+        Meteor.users.find {
+        },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
     
     
     
@@ -149,7 +154,7 @@ Meteor.publish 'has_key_value', (key, value)->
         
 # office subsections
 
-Meteor.publish 'office_customers', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->    
+Meteor.publish 'office_customers', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->    
     office_doc = Docs.findOne office_doc_id
     if query
         Docs.find {
@@ -173,7 +178,7 @@ Meteor.publish 'office_customers', (office_doc_id, query, limit=100, sort_key='t
 
 
 
-Meteor.publish 'office_incidents', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+Meteor.publish 'office_incidents', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Docs.find {
@@ -195,7 +200,7 @@ Meteor.publish 'office_incidents', (office_doc_id, query, limit=100, sort_key='t
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     
-# Meteor.publish 'office_incidents', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+# Meteor.publish 'office_incidents', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
 #     office_doc = Docs.findOne office_doc_id
 #     if query 
 #         Docs.find {
@@ -209,7 +214,7 @@ Meteor.publish 'office_incidents', (office_doc_id, query, limit=100, sort_key='t
 #             type: "incident"
 #         }
     
-Meteor.publish 'office_franchisees', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+Meteor.publish 'office_franchisees', (office_doc_id, query, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Docs.find {
@@ -233,7 +238,7 @@ Meteor.publish 'office_franchisees', (office_doc_id, query, limit=100, sort_key=
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     
-Meteor.publish 'office_employees', (office_doc_id, query, limit=100, sort_key='public', sort_direction=-1, skip=0)->
+Meteor.publish 'office_employees', (office_doc_id, query, limit=100, sort_key='public', sort_direction=1, skip=0)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Meteor.users.find {
@@ -268,7 +273,7 @@ Meteor.publish 'static_office_employees', (office_doc_id)->
     
     
     
-Meteor.publish 'my_customer_incidents', (query, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->    
+Meteor.publish 'my_customer_incidents', (query, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->    
     user = Meteor.user()
     if user and user.customer_jpid
         # customer_doc = Docs.findOne "ev.ID":user.customer_jpid
@@ -291,7 +296,7 @@ Meteor.publish 'my_customer_incidents', (query, limit=100, sort_key='timestamp',
                 limit:limit
                 sort:"#{sort_key}":parseInt("#{sort_direction}")
             }
-publishComposite 'docs', (selected_tags, type, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+publishComposite 'docs', (selected_tags, type, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     {
         find: ->
             self = @
@@ -310,7 +315,7 @@ publishComposite 'docs', (selected_tags, type, limit=100, sort_key='timestamp', 
     }
 
 
-publishComposite 'incidents', (level, limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+publishComposite 'incidents', (level, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     {
         find: ->
             self = @
@@ -726,7 +731,7 @@ Meteor.publish 'query', (query)->
     
     
     
-Meteor.publish 'offices', (name_filter='', limit=100, sort_key='timestamp', sort_direction=-1, skip=0)->
+Meteor.publish 'offices', (name_filter='', limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     int_direction = parseInt sort_direction
     int_skip = parseInt skip
     int_limit = parseInt limit

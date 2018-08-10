@@ -35,9 +35,9 @@ Template.nav.onRendered ->
     # Meteor.setTimeout ->
     #     $('.ui.dropdown').dropdown()
     # , 1000
-    # Meteor.setTimeout ->
-    #     $('.item').popup()
-    # , 400
+    Meteor.setTimeout ->
+        $('.item').popup()
+    , 400
     
     
     

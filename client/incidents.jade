@@ -27,7 +27,7 @@ template(name='incidents')
                             +sort_column_header key='open' label='Status' classes='one wide'
                             +sort_column_header key='submitted' label='Submitted'
                             th Assigned To
-                            th.four.wide Last Event
+                            th.three.wide Last Event
                             th Details
                     tbody
                         each all_incidents
@@ -72,9 +72,8 @@ template(name='incident_view')
             .nine.wide.column
                 h1.ui.center.aligned.grey.header #{customer_name} Incident #{incident_number}
             .four.wide.column
-                unless submitted
-                    .ui.icon.remove_incident.button(title='Delete Incident')
-                        i.remove.icon
+                .ui.icon.remove_incident.button(title='Delete Incident')
+                    i.remove.icon
                 unless is_customer
                     #run_single_escalation_check.ui.button 
                         i.user.shield.icon
@@ -89,6 +88,15 @@ template(name='incident_view')
                         |#{incident_number}
                     else
                         +call_method name='update_incident_number' argument=_id                
+                if can_edit_core
+                    // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
+                    +edit_datetime_field key='service_date' label='Service Time'
+                else
+                    .ui.secondary.segment
+                        .ui.header 
+                            +icon name='leave'
+                            |Date
+                        h4 #{service_date}
                 unless is_customer
                     +single_doc_view type='customer' key='customer_jpid' label='Customer' icon='customer-support'
                     +user_card
@@ -133,15 +141,6 @@ template(name='incident_view')
                             |Type
                         each incident_type_docs
                             +toggle_key key='incident_type' value=slug label=name
-                if can_edit_core
-                    // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
-                    +edit_datetime_field key='service_date' label='Service Date/Time'
-                else
-                    .ui.secondary.segment
-                        .ui.header 
-                            +icon name='leave'
-                            |Date
-                        h4 #{service_date}
             .four.wide.column
                 if submitted
                     .ui.secondary.segment
@@ -324,16 +323,16 @@ template(name='customer_incidents')
                 table.ui.striped.selectable.fixed.fluid.sortable.table
                     thead
                         tr
-                            +sort_column_header key='number' label='Num' classes='one wide'
+                            +sort_column_header key='number' label='Number'
                             +sort_column_header key='incident_type' label='Type'
                             +sort_column_header key='service_date' label='Service Date'
-                            th Details
+                            +sort_column_header key='incident_details' label='Details'
                             // +sort_column_header key='level' label='Level'
                             +sort_column_header key='open' label='Status'
                             +sort_column_header key='submitted' label='Submitted'
                             th Assigned To
-                            th.four.wide Last Event
-                            th.one.wide View 
+                            th.three.wide Last Event
+                            th
                     tbody
                         each customer_incidents
                             tr

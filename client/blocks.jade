@@ -37,25 +37,25 @@ template(name='save_button')
         // | Save
         
 template(name='edit_button')
-    a.ui.icon.button(href="/edit/#{_id}" title='Edit') 
+    a.ui.icon.button(href="/edit/#{_id}" title='Edit' class=classes) 
         i.pencil.icon
             // +icon name='pencil'
         // i.pencil.icon
         // | Edit
 
 template(name='view_button')
-    a.ui.icon.button(href="/view/#{_id}" data-content='View Details') 
+    a.ui.icon.button(href="/view/#{_id}" data-content='View Details' class=classes) 
         // +icon name='details-pane'
-        i.right.chevron.large.green.icon
+        i.right.chevron.green.icon
         
 template(name='view_user_button')
-    a.ui.icon.button(href="/user/#{username}" title="View #{username}") 
+    a.ui.icon.button(href="/user/#{username}" title="View #{username}" class=classes) 
         // +avatar_sprite name='chevron-right'
         // +icon name='circled-chevron-right'
         i.right.chevron.green.icon
         
 template(name='edit_user_button')
-    a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}") 
+    a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}" class=classes) 
         // +icon name='circled-chevron-right'
         i.pencil.icon
         
@@ -210,14 +210,15 @@ template(name='multiple_user_select')
             |#{label}
         .ui.form
             .field
-                .ui.icon.transparent.input
+                .ui.icon.input
                     i.search.icon
                     input#multiple_user_select_input(type='text' placeholder='Search Office User')
             .ui.middle.aligned.selection.animated.list
                 each user_results
-                    .select_user.item 
-                        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        |#{username}
+                    .select_user.item
+                        h4.ui.header
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            |#{username}
             .field
                 .ui.list
                     each user_array_users
@@ -227,9 +228,8 @@ template(name='multiple_user_select')
                             .image
                                 img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                             .content
-                                .header
+                                .ui.header
                                     |#{profile.first_name} #{profile.last_name}
-                                .description
                                     | @#{username}
 
 template(name='view_sla_contact')
@@ -586,7 +586,7 @@ template(name='toggle_boolean_checkbox')
 
 
 template(name='toggle_user_published')
-    #toggle_button.ui.icon.button
+    #toggle_button.ui.icon.button(class=classes)
         if published
             i.green.circle.icon
         else
@@ -711,3 +711,8 @@ template(name='franchisee_card')
                     .item(title='Call Number')
                         a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
                     .item #{franchisee_email}
+
+
+
+template(name='view_stat')
+    |#{stat_value}

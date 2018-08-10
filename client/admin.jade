@@ -84,6 +84,12 @@ template(name='admin')
                         +icon name='bug'
                         | Bugs
         .column
+            a.ui.card(href='/tasks')
+                .content
+                    .ui.header
+                        +icon name='realtime-protection'
+                        | Tasks
+        .column
             a.ui.card(href='/incident_types')
                 .content
                     .ui.header

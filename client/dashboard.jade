@@ -13,7 +13,7 @@ template(name='dashboard')
     if is_customer
         .ui.padded.stackable.grid
             if currentUser.users_customer.parent_franchisee.parent_office.customer_message
-                .three.column.row
+                .four.column.row
                     .column
                         .ui.info.icon.floating.message
                             i.info.icon
@@ -26,6 +26,12 @@ template(name='dashboard')
                             .content
                                 .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Promotions
                                 p #{currentUser.users_customer.parent_franchisee.parent_office.customer_promotions}
+                    .column
+                        .ui.info.icon.floating.message
+                            i.info.icon
+                            .content
+                                .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Help Policy
+                                p #{currentUser.users_customer.parent_franchisee.parent_office.help_policy}
                     .column
                         +small_service_list
 

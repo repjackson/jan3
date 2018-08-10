@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.inverted.blue.top.attached.menu
+    .ui.inverted.blue.top.attached.borderless.menu
         // a.toggle_left_sidebar.icon.item 
         //     i.large.bars.icon
         if is_customer
@@ -48,39 +48,42 @@ template(name='nav')
             //         +iconsmall name='settings'
             //     | &nbsp; Settings
         if is_admin
-            a.mobile.hidden.item(href='/incidents')
+            a.mobile.hidden.item(href='/incidents' data-content='Incidents')
                 i.large.icon
                     +iconsmall name='error'
-                | &nbsp; Incidents
-            a.mobile.hidden.item(href='/users')
+                // | &nbsp; Incidents
+            a.mobile.hidden.item(href='/users' data-content='Users')
                 i.large.icon
                     +iconsmall name='groups'
-                | &nbsp; Users
-            a.mobile.hidden.item(href='/offices')
+                // | &nbsp; Users
+            a.mobile.hidden.item(href='/offices' data-content='Offices')
                 i.large.icon
                     +iconsmall name='link-company-parent'
-                | Offices
-            a.mobile.hidden.item(href='/franchisees')
+                // | Offices
+            a.mobile.hidden.item(href='/franchisees' data-content='Franchisees')
                 i.large.icon
                     +iconsmall name='collaborator-female'
-                | Franchisees
-            a.mobile.hidden.item(href='/customers')
+                // | Franchisees
+            a.mobile.hidden.item(href='/customers' data-content='Customers')
                 i.large.icon
                     +iconsmall name='customer-support'
-                | Customers
-            a.mobile.hidden.item(href='/services')
+                // | Customers
+            a.mobile.hidden.item(href='/services' data-content='Services')
                 i.large.icon
                     +iconsmall name='broom'
-                | Services
+                // | Services
         .right.menu
             if is_admin
+                a.item(href='/tasks')
+                    i.large.icon
+                        +icon name='realtime-protection'
                 a.item(href='/stats')
                     i.large.icon
                         +icon name='bar-chart'
-                a.item(href='/admin')
+                a.item(href='/admin' title='Admin')
                     i.large.icon
                         +icon name='user-shield'
-                    | &nbsp; Admin
+                    // .mobile.hidden &nbsp; Admin
             if currentUser
                 // a.item(href='/feed')
                 //     i.large.icon
@@ -98,6 +101,7 @@ template(name='nav')
                         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
+                    | &nbsp;
                     | #{currentUser.username}
                 a#logout.ui.icon.item(href='#' title='Log Out') 
                     i.large.sign.out.icon

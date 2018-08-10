@@ -64,14 +64,15 @@ template(name='office_view')
 
 template(name='office_customers')
     +office_header
-    +query_input
     .ui.padded.grid
+        .row
+            +query_input
         .centered.row
             .sixteen.wide.column
                 table.ui.celled.striped.sortable.fluid.fixed.table
                     thead
                         +sort_column_header key='ev.CUST_NAME' label='Customer Name'
-                        +sort_column_header key='ev.ID' label='JPID'
+                        +sort_column_header key='ev.ID' label='JPID' classes='two wide'
                         +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
                         +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
                         +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
@@ -97,8 +98,9 @@ template(name='office_customers')
 
 template(name='office_incidents')
     +office_header
-    +query_input
     .ui.padded.grid
+        .row
+            +query_input
         .centered.row
             .sixteen.wide.column
                 table.ui.celled.striped.fluid.fixed.table
@@ -137,8 +139,9 @@ template(name='office_incidents')
 
 template(name='office_employees')
     +office_header
-    +query_input
     .ui.padded.grid
+        .row
+            +query_input
         .centered.row
             .sixteen.wide.column
                 table.ui.celled.striped.sortable.fluid.fixed.table
@@ -150,6 +153,7 @@ template(name='office_employees')
                         +sort_column_header key='ev.WORK_TELEPHONE' label='Phone'
                         +sort_column_header key='email' label='Email'
                         th.one.wide Public
+                        th.one.wide Edit
                         th.one.wide View
                     tbody
                         each office_employees
@@ -163,15 +167,17 @@ template(name='office_employees')
                                 td 
                                     +toggle_user_published
                                 td 
-                                    +edit_user_button
+                                    +edit_user_button 
+                                td 
                                     +view_user_button
-                    +table_footer columns='8'                
+                    +table_footer columns='9'                
 
 
 template(name='office_franchisees')
     +office_header
-    +query_input
     .ui.padded.grid
+        .row
+            +query_input
         .centered.row
             .sixteen.wide.column
                 table.ui.celled.striped.sortable.fluid.fixed.table
@@ -181,7 +187,7 @@ template(name='office_franchisees')
                         +sort_column_header key='ev.FRANCH_EMAIL' label='Email'
                         +sort_column_header key='ev.FRANCH_NAME' label='Short Name'
                         +sort_column_header key='ev.TELE_CELL' label='Phone'
-                        th View Details
+                        th.one.wide View
                     tbody
                         each office_franchisees
                             tr
@@ -204,11 +210,13 @@ template(name='office_settings')
                 +office_header
             .row.ui.secondary.segment
                 .ui.grid
-                    .eight.wide.column
+                    .five.wide.column
                         +edit_textarea key='customer_message' label='Customer Dashboard Message' icon='dashboard'
                         // +edit_text_field key='customer_special_services' label='Customer Dashboard Special Services'
-                    .eight.wide.column
+                    .five.wide.column
                         +edit_textarea key='customer_promotions' label='Customer Dashboard Promotions Message' icon='megaphone'
+                    .five.wide.column
+                        +edit_textarea key='help_policy' label='Customer Dashboard Help Policy' icon='info'
             .row
                 .sixteen.wide.column
                     .ui.secondary.segment

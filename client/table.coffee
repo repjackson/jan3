@@ -70,7 +70,7 @@ Template.query_input.events
     'click .clear_search': -> Session.set('query', null)
 
 Template.table_footer.helpers
-    skip_amount: -> Session.get 'skip'
+    skip_amount: -> parseInt(Session.get('skip'))+1
 
     pagination_item_class: ->
         if Session.equals('current_page_number', @number) then 'active' else ''
@@ -92,8 +92,8 @@ Template.table_footer.helpers
             number_of_pages = Math.ceil(count_amount/current_page_size)
             pages = []
             page = 0
-            if number_of_pages>15
-                number_of_pages = 15
+            if number_of_pages > 10
+                number_of_pages = 10
             while page<number_of_pages
                 pages.push {number:page+1}
                 page++

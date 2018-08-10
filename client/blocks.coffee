@@ -496,14 +496,8 @@ Template.multiple_user_select.helpers
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         Meteor.users.find(_id: $in: parent_doc["#{context.key}"])
     
-    
-    
-
-    
-    
 Template.office_username_query.onCreated ()->
     @user_results = new ReactiveVar( [] )
-    
     
 Template.office_username_query.events
     'click .select_office_user': (e,t) ->
@@ -774,6 +768,20 @@ Template.franchisee_card.helpers
                 type:'franchisee'
                 "ev.ID": context.franchisee_jpid
         doc
+
+
+
+Template.view_stat.onCreated ->
+    @autorun =>  Meteor.subscribe 'stat', @data.doc_type, @data.stat_type
+Template.view_stat.helpers
+    stat_value: ->
+        inputs = Template.currentData(0)
+        doc = 
+            Stats.findOne 
+                doc_type:inputs.doc_type
+                stat_type:inputs.stat_type
+        if doc
+            doc.amount
 
 
 
