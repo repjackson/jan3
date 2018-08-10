@@ -48,30 +48,30 @@ template(name='nav')
             //         +iconsmall name='settings'
             //     | &nbsp; Settings
         if is_admin
-            a.mobile.hidden.item(href='/incidents' data-content='Incidents')
+            a.mobile.hidden.item(href='/incidents' title='Incidents')
                 i.large.icon
                     +iconsmall name='error'
-                // | &nbsp; Incidents
-            a.mobile.hidden.item(href='/users' data-content='Users')
+                .mobile.hidden &nbsp; Incidents
+            a.mobile.hidden.item(href='/users' title='Users')
                 i.large.icon
                     +iconsmall name='groups'
-                // | &nbsp; Users
-            a.mobile.hidden.item(href='/offices' data-content='Offices')
+                .mobile.hidden &nbsp; Users
+            a.mobile.hidden.item(href='/offices' title='Offices')
                 i.large.icon
                     +iconsmall name='link-company-parent'
-                // | Offices
-            a.mobile.hidden.item(href='/franchisees' data-content='Franchisees')
+                .mobile.hidden Offices
+            a.mobile.hidden.item(href='/franchisees' title='Franchisees')
                 i.large.icon
                     +iconsmall name='collaborator-female'
-                // | Franchisees
-            a.mobile.hidden.item(href='/customers' data-content='Customers')
+                .mobile.hidden Franchisees
+            a.mobile.hidden.item(href='/customers' title='Customers')
                 i.large.icon
                     +iconsmall name='customer-support'
-                // | Customers
-            a.mobile.hidden.item(href='/services' data-content='Services')
+                .mobile.hidden Customers
+            a.mobile.hidden.item(href='/services' title='Services')
                 i.large.icon
                     +iconsmall name='broom'
-                // | Services
+                .mobile.hidden Services
         .right.menu
             if is_admin
                 a.item(href='/tasks' title='Tasks')

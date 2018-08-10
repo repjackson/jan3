@@ -1,7 +1,19 @@
 @Docs = new Meteor.Collection 'docs'
 @Settings = new Meteor.Collection 'settings'
 @Stats = new Meteor.Collection 'stats'
+@Tags = new Meteor.Collection 'tags'
 
+@People_tags = new Meteor.Collection 'people_tags'
+
+# @Ancestor_ids = new Meteor.Collection 'ancestor_ids'
+@Location_tags = new Meteor.Collection 'location_tags'
+# @Intention_tags = new Meteor.Collection 'intention_tags'
+@Timestamp_tags = new Meteor.Collection 'timestamp_tags'
+# @Watson_keywords = new Meteor.Collection 'watson_keywords'
+# @Watson_concepts = new Meteor.Collection 'watson_concepts'
+@Author_ids = new Meteor.Collection 'author_ids'
+# @Participant_ids = new Meteor.Collection 'participant_ids'
+# @Upvoter_ids = new Meteor.Collection 'upvoter_ids'
 
 Docs.before.insert (userId, doc)->
     timestamp = Date.now()

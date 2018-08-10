@@ -5,9 +5,18 @@ FlowRouter.route '/tasks', action: ->
 
 
 Template.tasks.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'task'
+    # @autorun => Meteor.subscribe 'type', 'task'
     @autorun => Meteor.subscribe 'count', 'task'
     @autorun => Meteor.subscribe 'incomplete_task_count'
+    @autorun => Meteor.subscribe 'facet', 
+        selected_tags.array()
+        selected_author_ids.array()
+        selected_location_tags.array()
+        selected_timestamp_tags.array()
+        type='task'
+        author_id=null
+
+
     
 Template.tasks.onRendered ->
     $('.indicating.progress').progress();
