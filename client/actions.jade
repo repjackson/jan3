@@ -83,14 +83,6 @@ template(name='mark_complete_button')
             +mini_sprite name='unchecked-checkbox' classes='ui mini inline image'
             | Mark Complete
         
-template(name='mark_doc_complete_button')
-    .mark_complete.ui.icon.basic.button(class=complete_button_class) 
-        if complete
-            +mini_sprite name='checkmark' classes='ui mini inline image'
-            // | Completed
-        else
-            +mini_sprite name='unchecked-checkbox' classes='ui mini inline image'
-            // | Complete
         
 template(name='mark_doc_approved_button')
     if approved

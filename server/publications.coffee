@@ -67,6 +67,16 @@ Meteor.publish 'users_feed', (username, limit=100, sort_key='timestamp', sort_di
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     
+Meteor.publish 'events', (doc_type, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
+    Docs.find {
+        type: 'event'
+        doc_type:doc_type
+    },{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
+    
 Meteor.publish 'all_users', (query, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     if query 
         Meteor.users.find {

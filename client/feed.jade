@@ -1,4 +1,4 @@
-template(name='feed')
+template(name='global_feed')
     .ui.padded.stackable.grid
         .centered.row
             .ten.wide.column
@@ -61,4 +61,27 @@ template(name='users_feed_event')
                     i.remove_event.remove.link.icon
                     
                     
-                    
+template(name='feed')
+    .ui.header
+        +icon name=icon
+        | #{title}
+    .ui.feed
+        each event_docs
+            +event
+                        
+                        
+
+template(name='event')
+    .event
+        .label
+            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .content
+            .summary
+                a.user #{author.username}
+                |#{action} #{text}
+                a(href="/view/#{parent._id}") #{parent.title}
+                .date #{when}
+            .meta
+                +mark_read_link
+                if is_dev
+                    i.remove_event.remove.link.icon

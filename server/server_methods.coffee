@@ -469,7 +469,6 @@ Meteor.methods
         found_franchisee = Docs.findOne
             type: 'franchisee'
             "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
-        # console.log 'found franchisee', found_franchisee
         return found_franchisee
         
 
@@ -478,7 +477,6 @@ Meteor.methods
         office_doc = Docs.findOne
             "ev.ID": office_jpid
             type:'office'
-        # console.log office_doc
         office_doc
             
     redirect_office_after_login: ()->     
@@ -488,7 +486,6 @@ Meteor.methods
             office_doc = Docs.findOne
                 "ev.ID": user.office_jpid
                 type:'office'
-            console.log office_doc
             res.office = office_doc
             res.user = user
             return res            
@@ -508,15 +505,11 @@ Meteor.methods
     # register_transaction: (product_id)->
     #     product = Docs.findOne product_id
     #     if product.point_price
-    #         console.log 'purchaser amount before', Meteor.user().points
     #         Meteor.users.update Meteor.userId(),
     #             $inc: points: -product.point_price
-    #         console.log 'purchaser amount after', Meteor.user().points
             
-    #         console.log 'seller amount before', Meteor.users.findOne(product.author_id).points
     #         Meteor.users.update product.author_id,
     #             $inc: points: product.point_price
-    #         console.log 'seller amount after', Meteor.users.findOne(product.author_id).points
     #     Docs.insert
     #         type: 'transaction'
     #         parent_id: product_id
@@ -528,7 +521,6 @@ Meteor.methods
     
     
     refresh_customer_jpids: (username)->
-        console.log username
         user = Meteor.users.findOne username:username
         if user and user.customer_jpid
             customer_doc = Docs.findOne
@@ -539,12 +531,10 @@ Meteor.methods
         found_franchisee = Docs.findOne
             type: 'franchisee'
             "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
-        # console.log 'found franchisee', found_franchisee
         
         found_office = Docs.findOne
             type: 'office'
             "ev.MASTER_LICENSEE": found_franchisee.ev.MASTER_LICENSEE
-        # console.log 'found office', found_office
 
         Meteor.users.update user._id,
             $set:
@@ -584,8 +574,6 @@ Meteor.methods
     
     
     lookup_office_user_by_username_and_office_jpid: (office_jpid, username_query)->
-        console.log office_jpid
-        console.log username_query
         office_doc = Docs.findOne 
             type:'office'
             "ev.ID":office_jpid
@@ -608,6 +596,22 @@ Meteor.methods
     update_incident_number: (doc_id)->
         incident = Docs.findOne doc_id
         unnumbered_incidents = Docs.find({type:'incident', incident_number:{$exists:false}}).count()
-        console.log unnumbered_incidents
         Docs.update doc_id,
             $set:incident_number:unnumbered_incidents
+            
+    create_complete_task_event: (task_id)->
+        Docs.insert
+            type:'event'
+            event_type:'mark_complete'
+            doc_type:'task'
+            parent_id:task_id
+            text:"Task was marked complete by #{Meteor.user().username}."
+            
+    create_incomplete_task_event: (task_id)->
+        Docs.insert
+            type:'event'
+            event_type:'mark_incomplete'
+            doc_type:'task'
+            parent_id:task_id
+            text:"Task was marked incomplete by #{Meteor.user().username}."
+    

@@ -17,27 +17,37 @@ template(name='tasks')
                 .ui.indicating.progress
                     .bar
                     .label Completion
-            .thirteen.wide.column
+            .ten.wide.column
                 .ui.divided.cards
                     each tasks
                         +task_card
+            .three.wide.column
+                +feed doc_type='task' icon='overview-pages-4' title='Task Events'
 
 template(name='task_card')
     .ui.card
         .content
-            .header
-                a(href="/view/#{_id}")
-                    if complete
-                        i.green.checkmark.icon
-                    |#{title} 
-            .content
-                |by 
-                +author_info
-                div
-                |#{when} {{ reg_format timestamp }}
-            .extra.content
-                +edit_button
-                +view_button
+            a(href="/view/#{_id}")
+                if complete
+                    i.green.checkmark.icon
+                |#{title} 
+        .content
+            h4.ui.header Assigned To
+        .content
+            each tags
+                .ui.small.basic.label #{this}
+        .content
+            |Due Date: #{due_date}
+        .content
+            |by 
+            +author_info
+            div
+            |#{when} {{ reg_format timestamp }}
+        .extra.content
+            +vote_button
+            +mark_doc_complete_button
+            +edit_button
+            +view_button
         
         
         
@@ -55,7 +65,7 @@ template(name='task_edit')
             .ui.form
                 +edit_text_field key='title' label='title'
                 +edit_textarea label='Details' key='incident_details' icon='view-details'
-        
+                +edit_array_field label='Tags' key='tags'
         
 template(name='task_view')
     .ui.padded.stackable.centered.grid
@@ -69,7 +79,21 @@ template(name='task_view')
             .three.wide.center.aligned.column
                 +edit_button
         .row
-            .twelve.wide.column
-                .ui.header Title: #{title}
+            .four.wide.column
+                +mark_doc_complete_button
                 +notify_button
                 +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
+            .eight.wide.column
+                .ui.header Title: #{title}
+                +full_doc_history
+            .four.wide.column
+                +edit_date_field label='Due Date' key='due_date'
+
+template(name='mark_doc_complete_button')
+    .mark_complete.ui.icon.basic.button(class=complete_button_class) 
+        if complete
+            +mini_sprite name='checkmark' classes='ui mini inline image'
+            // | Completed
+        else
+            +mini_sprite name='unchecked-checkbox' classes='ui mini inline image'
+            // | Complete
