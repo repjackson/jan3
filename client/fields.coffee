@@ -235,15 +235,15 @@ Template.toggle_follow.events
         # Meteor.call 'add_notification', @_id, 'unfriended', Meteor.userId()
 
 
-# Template.edit_html.events
-#     'blur .froala-container': (e,t)->
-#         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
+Template.edit_html.events
+    'blur .froala-container': (e,t)->
+        html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-#         doc_id = FlowRouter.getParam('doc_id')
-#         # short = truncate(html, 5, { byWords: true })
-#         Docs.update doc_id,
-#             $set: 
-#                 html: html
+        doc_id = FlowRouter.getParam('doc_id')
+        # short = truncate(html, 5, { byWords: true })
+        Docs.update doc_id,
+            $set: 
+                html: html
 
 
 # Template.edit_html_field.events
@@ -271,20 +271,20 @@ Template.toggle_follow.events
 #             height: 300
 #         }
 
-# Template.edit_html.helpers
-#     getFEContext: ->
-#         @current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-#         self = @
-#         {
-#             _value: self.current_doc.html
-#             _keepMarkers: true
-#             _className: 'froala-reactive-meteorized-override'
-#             toolbarInline: false
-#             initOnClick: false
-#             # imageInsertButtons: ['imageBack', '|', 'imageByURL']
-#             tabSpaces: false
-#             height: 300
-#         }
+Template.edit_html.helpers
+    getFEContext: ->
+        @current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        self = @
+        {
+            _value: self.current_doc.html
+            _keepMarkers: true
+            _className: 'froala-reactive-meteorized-override'
+            toolbarInline: false
+            initOnClick: false
+            # imageInsertButtons: ['imageBack', '|', 'imageByURL']
+            tabSpaces: false
+            height: 300
+        }
 
 
 Template.toggle_boolean.events

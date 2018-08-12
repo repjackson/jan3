@@ -74,6 +74,9 @@ template(name='nav')
                 // .mobile.hidden Services
         .right.menu
             if is_admin
+                a.item(href='/databank' title='Databank')
+                    i.large.icon
+                        +icon name='database'
                 a.item(href='/tasks' title='Tasks')
                     i.large.icon
                         +icon name='realtime-protection'

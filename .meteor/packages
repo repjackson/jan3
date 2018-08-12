@@ -44,3 +44,4 @@ percolate:synced-cron
 meteorhacks:aggregate
 manuel:reactivearray
 random
+froala:editor-reactive@=2.4.2
