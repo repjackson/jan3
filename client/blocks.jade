@@ -716,3 +716,13 @@ template(name='franchisee_card')
 
 template(name='view_stat')
     |#{stat_value}
+
+
+template(name='view_single_user_key')
+    with single_user
+        if profile.image_id
+            img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        |&nbsp;
+        a(href="/user/#{username}") #{username} 
+        // +staus_indicator
+    // .ui.sub.header #{when}

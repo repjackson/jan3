@@ -1,5 +1,5 @@
 template(name='action')
-    .ui.basic.icon.button.toggle_action(class=action_button_class data-tooltip=action_doc.title)
+    .ui.icon.button.toggle_action(class=action_button_class data-tooltip=action_doc.title)
         +avatar_sprite name=action_doc.icon_class classes='ui mini inline image'
 
 
@@ -9,10 +9,10 @@ template(name='action')
 //             // img(src="https://png.icons8.com/small/50/000000/pray.png")
 //             img(src="https://png.icons8.com/ios/50/000000/pray.png")
 //     else
-//         .ui.icon.basic.compact.button.vote_up
+//         .ui.icon.compact.button.vote_up
 //             img(src="https://png.icons8.com/ios/50/000000/pray.png")
             // img(src="https://png.icons8.com/small/50/000000/pray.png")
-    // .ui.icon.basic.mini.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
+    // .ui.icon.mini.compact.button.vote_up(data-tooltip="Thank #{author.profile.first_name} for Sharing")
         // img.ui.mini.image(src="https://png.icons8.com/pray-filled/ios7/50" width="50" height="50")
         // if said_thanks
         //     |Thanks #{author.profile.first_name}
@@ -26,7 +26,7 @@ template(name='action')
     //         .ui.fluid.input
     //             input#thanks_message_text(type='text')
     //     .actions
-    //         .ui.cancel.basic.button
+    //         .ui.cancel.button
     //             // i.ban.icon
     //             | No Thanks
     //         .ui.teal.approve.labeled.icon.button 
@@ -43,19 +43,19 @@ template(name='action')
 
 template(name='respond_button')
     if currentUser
-        #respond.ui.basic.icon.button(data-tooltip='Respond')
+        #respond.ui.icon.button(data-tooltip='Respond')
             +mini_sprite name='response' classes='ui inline image'
     else
-        .ui.basic.disabled.icon.button(data-tooltip='Respond')
+        .ui.disabled.icon.button(data-tooltip='Respond')
             +mini_sprite name='response' classes='ui inline image'
 
 
 template(name='reflect_button')
     if currentUser
-        #reflect.ui.basic.icon.button(data-tooltip='Reflect in Journal')
+        #reflect.ui.icon.button(data-tooltip='Reflect in Journal')
             +mini_sprite name='mirror' classes='ui mini inline image'
     else
-        .ui.basic.disabled.icon.button(data-tooltip='Reflect in Journal')
+        .ui.disabled.icon.button(data-tooltip='Reflect in Journal')
             +mini_sprite name='mirror' classes='ui mini inline image'
 
 template(name='vote_button')
@@ -64,18 +64,24 @@ template(name='vote_button')
     .ui.icon.button(title='Vote Down')
         i.thumbs.down.link.icon.vote_down(class=vote_down_button_class)
     if points
-        .ui.basic.label #{points}
+        .ui.label #{points}
+
+template(name='vote_up_button')
+    .ui.icon.button(title='Vote Up')
+        i.thumbs.up.link.icon.vote_up(class=vote_up_button_class)
+    if points
+        .ui.label #{points}
 
 
 
 template(name='favorite_button')
-    .ui.basic.icon.button.favorite_item(class=favorite_item_class)
+    .ui.icon.button.favorite_item(class=favorite_item_class)
         +avatar_sprite name='hearts' classes='ui mini inline image'
         if favorite_count
             | #{favorite_count}
 
 template(name='mark_complete_button')
-    .mark_complete.ui.white.button(class=complete_button_class) 
+    .mark_complete.ui.button(class=complete_button_class) 
         if completed
             +mini_sprite name='checked-checkbox' classes='ui mini inline image'
             | Completed
@@ -86,10 +92,10 @@ template(name='mark_complete_button')
         
 template(name='mark_doc_approved_button')
     if approved
-        .unapprove.ui.icon.basic.button(data-tooltip='Unapprove')
+        .unapprove.ui.icon.button(data-tooltip='Unapprove')
             +ultraviolet_icon40 name='approval' classes='ui mini inline image'
     else
-        .approve.ui.icon.basic.button(data-tooltip='Approve')
+        .approve.ui.icon.button(data-tooltip='Approve')
             +mini_sprite name='approval' classes='ui mini inline image'
          
 template(name='bookmark_button')
@@ -174,7 +180,7 @@ template(name='read_by_list')
                             |#{name}
                         .description
                             // each five_tags
-                            //     .ui.basic.label #{this}
+                            //     .ui.label #{this}
                 
                 
                 
@@ -193,6 +199,6 @@ template(name='resonates_list')
                             .description
                                 +tiny_color_dots
                                 // each five_tags
-                                //     .ui.basic.label #{this}
+                                //     .ui.label #{this}
 
                 

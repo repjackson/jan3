@@ -555,17 +555,6 @@ Template.office_username_query.helpers
             false
 
 
-
-
-
-
-
-
-
-
-
-
-
 Template.view_sla_contact.helpers
     selected_contact: ->
         context = Template.currentData(0)
@@ -575,8 +564,6 @@ Template.view_sla_contact.helpers
                 username: parent_doc[parent_doc["#{context.key}"]]
         else
             false
-
-
 
 
 Template.many_doc_select.onCreated ->
@@ -774,6 +761,20 @@ Template.franchisee_card.helpers
 Template.view_stat.onCreated ->
     @autorun =>  Meteor.subscribe 'stat', @data.doc_type, @data.stat_type
 Template.view_stat.helpers
+    stat_value: ->
+        inputs = Template.currentData(0)
+        doc = 
+            Stats.findOne 
+                doc_type:inputs.doc_type
+                stat_type:inputs.stat_type
+        if doc
+            doc.amount
+
+
+
+Template.view_single_user_key.onCreated ->
+    @autorun =>  Meteor.subscribe 'sing_user_key', @data.doc_id, @data.key
+Template.view_single_user_key.helpers
     stat_value: ->
         inputs = Template.currentData(0)
         doc = 

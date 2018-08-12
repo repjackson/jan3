@@ -86,6 +86,9 @@ Meteor.users.helpers
 
 Docs.helpers
     author: -> Meteor.users.findOne @author_id
+    assigned_to_user: -> 
+        if @assigned_to
+            Meteor.users.findOne _id:$in:@assigned_to
     when: -> moment(@timestamp).fromNow()
     parent: -> Docs.findOne @parent_id
     customer: -> Docs.findOne @customer_id

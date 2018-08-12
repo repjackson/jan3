@@ -44,6 +44,15 @@ template(name='edit_date_field')
                 i.icon(class=icon)
             input#date_field(type='date' value=key_value)        
 
+template(name='view_date_field')            
+    .ui.dividing.header 
+        +icon name='calendar'
+        |#{label}
+    h4.ui.header
+        if icon
+            i.icon(class=icon)
+        |#{key_value}
+
 
 template(name='edit_datetime_field')       
     h3 

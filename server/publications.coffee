@@ -522,6 +522,20 @@ publishComposite 'incident', (id)->
             }
         ]
     }
+    
+    
+publishComposite 'task', (id)->
+    {
+        find: -> Docs.find id
+        children: [
+            {
+                find: (task)-> Meteor.users.find _id:task.author_id
+            }
+            {
+                find: (task)-> Meteor.users.find _id:$in:task.assigned_to
+            }
+        ]
+    }
 
 publishComposite 'me', ()->
     {

@@ -21,6 +21,11 @@ Template.tasks.onCreated ->
 Template.tasks.onRendered ->
     $('.indicating.progress').progress();
     
+
+Template.task_segment.onCreated ->
+    # @autorun => Meteor.subscribe 'type', 'task'
+    @autorun => Meteor.subscribe 'task', @data._id
+
     
     
 Template.tasks.helpers
