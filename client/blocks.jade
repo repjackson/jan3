@@ -60,7 +60,7 @@ template(name='edit_user_button')
         i.pencil.icon
         
 template(name='add_button')
-    #add.ui.icon.large.button(title='Add')
+    #add.ui.icon.button(title='Add')
         i.large.plus.icon
         // +icon name='plus-math'
 
@@ -498,12 +498,11 @@ template(name='user_pill')
 
 template(name='full_doc_history')
     .ui.secondary.segment
-        // if is_admin
-        #clear_events.ui.top.right.attached.label
-            i.remove.icon(title='Clear')
         .ui.header 
             +icon name='clock'
             |History
+            if is_admin
+                small#clear_events clear
         .ui.feed
             each doc_history_events
                 +doc_history_event

@@ -6,71 +6,71 @@ template(name='nav')
             a.item(href='/')
                 // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                 i.large.icon
-                    +iconsmall name='dashboard'
+                    +icon name='dashboard'
                 .mobile.hidden &nbsp; Dashboard
             a.mobile.hidden.item(href='/customer_incidents')
                 i.large.icon
-                    +iconsmall name='error'
+                    +icon name='error'
                 .mobile.hidden &nbsp; My Incidents
             a.mobile.hidden.item(href='/store')
                 i.large.icon
-                    +iconsmall name='small-business'
+                    +icon name='small-business'
                 .mobile.hidden &nbsp; Consumables
             a.mobile.hidden.item(href='/services')
                 i.large.icon
-                    +iconsmall name='broom'
+                    +icon name='broom'
                 .mobile.hidden Services
         if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
             if my_office
                 a.item(href="/office/#{my_office._id}/incidents")
                     i.large.icon
-                        +iconsmall name='link-company-parent'
+                        +icon name='link-company-parent'
                     | &nbsp; #{my_office.ev.MASTER_LICENSEE}
             // a.item(href="/office/#{my_office._id}/incidents")
             //     i.large.icon
-            //         +iconsmall name='error'
+            //         +icon name='error'
             //     | &nbsp; Incidents
             // a.item(href="/office/#{my_office._id}/employees")
             //     i.large.icon
-            //         +iconsmall name='groups'
+            //         +icon name='groups'
             //     | &nbsp; Employees
             // a.item(href="/office/#{my_office._id}/franchisees")
             //     i.large.icon
-            //         +iconsmall name='conference'
+            //         +icon name='conference'
             //     | &nbsp; Franchisees
             // a.item(href="/office/#{my_office._id}/customers")
             //     i.large.icon
-            //         +iconsmall name='customer-support'
+            //         +icon name='customer-support'
             //     | &nbsp; Customers
             // a.item(href="/office/#{my_office._id}/settings")
             //     i.large.icon
-            //         +iconsmall name='settings'
+            //         +icon name='settings'
             //     | &nbsp; Settings
         if is_admin
             a.mobile.hidden.item(href='/incidents' title='Incidents')
                 i.large.icon
-                    +iconsmall name='error'
+                    +icon name='error'
                 // .mobile.hidden &nbsp; Incidents
             a.mobile.hidden.item(href='/users' title='Users')
                 i.large.icon
-                    +iconsmall name='groups'
+                    +icon name='groups'
                 // .mobile.hidden &nbsp; Users
             a.mobile.hidden.item(href='/offices' title='Offices')
                 i.large.icon
-                    +iconsmall name='link-company-parent'
+                    +icon name='link-company-parent'
                 // .mobile.hidden Offices
             a.mobile.hidden.item(href='/franchisees' title='Franchisees')
                 i.large.icon
-                    +iconsmall name='collaborator-female'
+                    +icon name='collaborator-female'
                 // .mobile.hidden Franchisees
             a.mobile.hidden.item(href='/customers' title='Customers')
                 i.large.icon
-                    +iconsmall name='customer-support'
+                    +icon name='customer-support'
                 // .mobile.hidden Customers
             a.mobile.hidden.item(href='/services' title='Services')
                 i.large.icon
-                    +iconsmall name='broom'
+                    +icon name='broom'
                 // .mobile.hidden Services
         .right.menu
             if is_admin
@@ -107,7 +107,7 @@ template(name='nav')
             else
                 a.ui.item(href='/login')
                     i.large.icon
-                        +iconsmall name='enter-2'
+                        +icon name='enter-2'
                     // i.sign.in.alternate.icon
                     | &nbsp; Log In
 

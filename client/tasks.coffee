@@ -24,6 +24,16 @@ Template.tasks.onRendered ->
 
 Template.task_segment.onCreated ->
     # @autorun => Meteor.subscribe 'type', 'task'
+    # @autorun => Meteor.subscribe 'task', @data._id
+
+    
+Template.task_edit.onCreated ->
+    # @autorun => Meteor.subscribe 'type', 'task'
+    @autorun => Meteor.subscribe 'task', @data._id
+
+    
+Template.task_view.onCreated ->
+    # @autorun => Meteor.subscribe 'type', 'task'
     @autorun => Meteor.subscribe 'task', @data._id
 
     

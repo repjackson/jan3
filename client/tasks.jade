@@ -10,6 +10,10 @@ template(name='tasks')
                 +add_button type='task'
         .row 
             .four.wide.column
+                +tag_facet
+                +timestamp_facet
+                
+                +username_facet
                 .ui.header Total
                     +view_stat doc_type='task' stat_type='total' 
                 .ui.header Complete #{complete_task_count}
@@ -17,7 +21,6 @@ template(name='tasks')
                 .ui.indicating.progress
                     .bar
                     .label Completion
-                +tag_facet
             .eight.wide.column
                 each tasks
                     +task_segment
@@ -40,14 +43,14 @@ template(name='task_segment')
                 a(href="/user/#{username}") #{username} 
         div
         each tags
-            .ui.small.basic.label #{this}
+            .ui.small.label(class=tag_class) #{this}
         div
         if due_date
-            |Due Date: #{due_date}
+            |Due #{due_date} ({{ from_now due_date }})
             div
         |created by 
-        +author_info
-        div #{when} {{ reg_format timestamp }}
+        +author_info 
+        |#{when} {{ reg_format timestamp }}
         div
         +mark_doc_complete_button
         +vote_up_button
@@ -83,7 +86,7 @@ template(name='task_view')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 a.ui.button(href="/tasks")
-                    i.up.chevron.icon
+                    i.left.chevron.icon
                     | Tasks
             .ten.wide.column
                 h1.ui.center.aligned.grey.header View Task
@@ -91,14 +94,33 @@ template(name='task_view')
                 +edit_button
         .row
             .four.wide.column
-                +mark_doc_complete_button
-                +notify_button
-                +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
+                if complete
+                    .ui.green.label Complete
+                else
+                    .ui.basic.label Incomplete
+                div
+                if assigned_to_user
+                    .ui.header Assigned To
+                    with assigned_to_user
+                        if profile.image_id
+                            img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        |&nbsp;
+                        a(href="/user/#{username}") #{username} 
             .eight.wide.column
                 .ui.header #{title}
+                +comments
                 +full_doc_history
             .four.wide.column
+                |created by 
+                +author_info 
+                div #{when} {{ reg_format timestamp }}
                 +view_date_field label='Due Date' key='due_date'
+                .ui.header 
+                    i.tags.icon
+                    |Tags
+                each tags
+                    .ui.label #{this}
+
 
 template(name='mark_doc_complete_button')
     .mark_complete.ui.icon.button(class=complete_button_class) 

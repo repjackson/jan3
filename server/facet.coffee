@@ -106,7 +106,7 @@ Meteor.publish 'facet', (
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
-        timestamp_tags_cloud.forEach (timestamp_tag, i) ->
+        timestamp_tags_cloud.forEach (timestamp_tag, i)->
             self.added 'timestamp_tags', Random.id(),
                 name: timestamp_tag.name
                 count: timestamp_tag.count
@@ -156,7 +156,7 @@ Meteor.publish 'facet', (
                 count: author_id.count
 
         # found_docs = Docs.find(match).fetch()
-        # console.log 'match', match
+        # console.log 'match before docs', match
         # console.log 'found_docs', found_docs
         # found_docs.forEach (found_doc) ->
         #     self.added 'docs', doc._id, fields
@@ -164,7 +164,7 @@ Meteor.publish 'facet', (
         #         count: author_id.count
         
         # doc_results = []
-        subHandle = Docs.find(match, {limit:20, sort: timestamp:-1}).observeChanges(
+        subHandle = Docs.find(match, {limit:10, sort: timestamp:-1}).observeChanges(
             added: (id, fields) ->
                 # console.log 'added doc', id, fields
                 # doc_results.push id

@@ -463,8 +463,7 @@ Template.multiple_user_select.events
                 Bert.alert "Assigned #{@username}.", 'success', 'growl-top-right'
         $('#multiple_user_select_input').val ''
         t.user_results.set null
-        location.reload()
-        
+
     'click .pull_user': ->
         context = Template.currentData(0)
         swal {
