@@ -42,7 +42,7 @@ Meteor.publish 'active_customers', (query=null, limit=100, sort_key='timestamp',
 
 Meteor.publish 'assigned_to_users', (incident_doc_id)->
     incident_doc = Docs.findOne incident_doc_id
-    if incident_doc.assigned_to
+    if incident_doc and incident_doc.assigned_to
         Meteor.users.find 
             _id: $in: incident_doc.assigned_to
         

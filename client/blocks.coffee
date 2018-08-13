@@ -463,7 +463,10 @@ Template.multiple_user_select.events
                 Bert.alert "Assigned #{@username}.", 'success', 'growl-top-right'
         $('#multiple_user_select_input').val ''
         t.user_results.set null
-
+        if key is 'assigned_to'
+            Meteor.call 'send_message', @username, Meteor.user().ussername, "You have been assigned to #{page_doc.type} #{page_doc.title}."
+            Meteor.call 'send_email_about_task_assignment', page_doc._id, @username
+    
     'click .pull_user': ->
         context = Template.currentData(0)
         swal {

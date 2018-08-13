@@ -48,8 +48,12 @@ Template.footer.events
 Template.role_switcher.events
     'click .change_role': ->
         cursor = Docs.find(type:'role').fetch()
-        # console.log @
-        
-        Meteor.users.update Meteor.userId(),
-            $set: roles: [@name]
-        # location.reload()
+        console.log @
+        user = Meteor.user()
+        if user
+            if @name in user.roles
+                Meteor.users.update Meteor.userId(),
+                    $pull: roles:@name
+            else
+                Meteor.users.update Meteor.userId(),
+                    $addToSet: roles: @name

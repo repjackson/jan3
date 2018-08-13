@@ -614,4 +614,3 @@ Meteor.methods
             doc_type:'task'
             parent_id:task_id
             text:"Task was marked incomplete by #{Meteor.user().username}."
-    

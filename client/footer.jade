@@ -12,10 +12,11 @@ template(name='footer')
                             .sitemap_list.item Contact Us
                             .sitemap_list.item Legal/ Privacy Policy
                             // .sitemap_list.item demo login: demo/password
-                    // +role_switcher
+                    if is_dev
+                        +role_switcher
                     .ui.hidden.divider
-                    // #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
-                    //     i.bug.icon
+                    #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
+                        i.bug.icon
                 .four.wide.column
                     if is_customer
                         +customer_card customer_jpid=currentUser.customer_jpid
@@ -47,7 +48,7 @@ template(name='footer')
         
 template(name='role_switcher')
     .ui.inverted.header 
-        +icon name='user-shield'
+        i.code.icon
         |Role Switcher
     // h5.ui.inverted.header Switching reloads the page
     each role_docs

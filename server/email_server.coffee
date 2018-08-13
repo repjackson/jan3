@@ -164,6 +164,27 @@ Meteor.methods
     
     
     
+    send_email_about_task_assignment:(task_doc_id, username)->
+        task_doc = Docs.findOne task_doc_id
+        
+        assigned_to_user = Meteor.users.findOne username:username
+        
+        mail_fields = {
+            to: ["<#{assigned_to_user.emails[0].address}>"]
+            from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
+            subject: "Task Assignment"
+            html: "<h4>You have been assigned to task #{task_doc.title}..</h4>
+                <ul>
+                    <li>Completed: #{task_doc.completed}</li>
+                    <li>Due Date: #{task_doc.due_date}</li>
+                    <li>Tags: #{task_doc.tags}</li>
+                </ul>
+            "
+        }
+        Meteor.call 'send_email', mail_fields
+
+    
+    
     email_about_incident_submission: (incident_id)->
         incident = Docs.findOne incident_id
         customer = Docs.findOne {

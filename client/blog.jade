@@ -1,31 +1,20 @@
-template(name='databank')
+template(name='blog')
     .ui.stackable.padded.grid
         .middle.aligned.row 
             .three.wide.center.aligned.column
             .ten.wide.column
                 h1.ui.center.aligned.header 
                     +icon name='realtime-protection'
-                    | databank
+                    | blog
             .three.wide.center.aligned.column
-                +add_button type='item'
+                +add_button type='post'
         .row 
-            .four.wide.column
-                +tag_facet
-                +timestamp_facet
-                
-                +username_facet
-                .ui.header Total
-                    +view_stat doc_type='item' stat_type='total' 
-                .ui.header Complete #{complete_item_count}
-                .ui.header Incomplete #{incomplete_item_count}
-                .ui.indicating.progress
-                    .bar
-                    .label Completion
-            .twelve.wide.column
-                each databank
-                    +item_segment
+            .sixteen.wide.column
+                .ui.input
+                    input(type='text' placeholder='ask')
 
-template(name='item_segment')
+
+template(name='post_segment')
     .ui.segment
         h5.ui.header
             a(href="/view/#{_id}")
@@ -48,14 +37,14 @@ template(name='item_segment')
         
         
         
-template(name='item_edit')
+template(name='post_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 #delete.ui.icon.button
                     i.trash.icon
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit item
+                h1.ui.center.aligned.grey.header Edit post
             .three.wide.center.aligned.column
                 +save_button
         .eight.wide.column
@@ -67,15 +56,15 @@ template(name='item_edit')
             +edit_author
     
         
-template(name='item_view')
+template(name='post_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
-                a.ui.button(href="/databank")
+                a.ui.button(href="/blog")
                     i.left.chevron.icon
-                    | databank
+                    | blog
             .ten.wide.column
-                h1.ui.center.aligned.grey.header View item
+                h1.ui.center.aligned.grey.header View post
             .three.wide.center.aligned.column
                 +edit_button
         .row

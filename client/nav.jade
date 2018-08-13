@@ -73,6 +73,11 @@ template(name='nav')
                     +icon name='broom'
                 // .mobile.hidden Services
         .right.menu
+            if is_dev
+                a.item(href='/alfred' title='alfred')
+                    i.large.code.black.icon
+                a.item(href='/blog' title='blog')
+                    i.large.newspaper.black.icon
             if is_admin
                 a.item(href='/databank' title='Databank')
                     i.large.icon
