@@ -145,10 +145,14 @@ Meteor.publish 'facet', (
             ]
     
     
-        # console.log author_tag_cloud
+        # array_of_user_ids = []
+        # author_tag_cloud.forEach (author_id) ->
+        #     console.log author_id.text
+            # if author_id
+            #     array_of_user_ids.push author_id.text                
         
-        # author_objects = []
-        # Meteor.users.find _id: $in: author_tag_cloud.
+        # console.log author_tag_cloud.count()   
+        # Meteor.users.find _id: $in: array_of_user_ids
     
         author_tag_cloud.forEach (author_id) ->
             self.added 'author_ids', Random.id(),

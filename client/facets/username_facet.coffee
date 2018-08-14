@@ -11,8 +11,14 @@ Template.username_facet.onCreated ->
         #     selected_timestamp_tags.array()
         #     type=@data.type
         #     )
-        Meteor.subscribe 'usernames'
-
+        author_array = []
+        for author_id in Author_ids.find().fetch()
+            author_array.push author_id.text
+        
+        if author_array.length > 0
+            Meteor.subscribe 'author_array', author_array
+        
+        
 Template.username_facet.helpers
     author_tags: ->
         author_usernames = []
@@ -29,7 +35,7 @@ Template.username_facet.helpers
     selected_author_ids: ->
         selected_author_usernames = []
         for selected_author_id in selected_author_ids.array()
-            selected_author_usernames.push Meteor.users.findOne(selected_author_id).username
+            selected_author_usernames.push Meteor.users.findOne(selected_author_id)?.username
         selected_author_usernames
     
 Template.username_facet.events
