@@ -93,6 +93,14 @@ Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'type','incident_type'
     @autorun -> Meteor.subscribe 'type','rule'
     @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
+
+
+Template.incident_view.onRendered ->
+    mark_complete = FlowRouter.getQueryParam 'mark_complete'
+    console.log 'mark complete?',mark_complete
+    if mark_complete
+        Bert.alert "Found mark_complete in address, updating incident.", 'info', 'growl-top-right'
+        
     # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getParam('doc_id')
 
 Template.incident_view.helpers

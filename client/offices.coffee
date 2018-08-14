@@ -171,6 +171,9 @@ Template.office_settings.helpers
     selected_incident_type: -> Session.get 'incident_type_selection'
     is_initial: -> @number is 1    
     rule_docs: -> Docs.find {type:'rule'}, sort:number:1
+    default_contact_key: -> 
+        current_incident_type = Session.get 'incident_type_selection'
+        "escalation_#{current_incident_type}_default_contact"
     hours_key: -> 
         current_incident_type = Session.get 'incident_type_selection'
         "escalation_#{@number}_#{current_incident_type}_hours"

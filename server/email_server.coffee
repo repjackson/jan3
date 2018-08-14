@@ -168,6 +168,7 @@ Meteor.methods
         task_doc = Docs.findOne task_doc_id
         
         assigned_to_user = Meteor.users.findOne username:username
+        task_link = "https://www.jan.meteorapp.com/view/#{task_doc._id}"
         
         mail_fields = {
             to: ["<#{assigned_to_user.emails[0].address}>"]
@@ -175,10 +176,37 @@ Meteor.methods
             subject: "Task Assignment"
             html: "<h4>You have been assigned to task #{task_doc.title}..</h4>
                 <ul>
-                    <li>Completed: #{task_doc.completed}</li>
+                    <li>Completed: #{task_doc.complete}</li>
                     <li>Due Date: #{task_doc.due_date}</li>
                     <li>Tags: #{task_doc.tags}</li>
                 </ul>
+                <p>view the task <a href=#{task_link}>here</a>.
+            "
+        }
+        Meteor.call 'send_email', mail_fields
+
+    
+    send_email_about_incident_assignment:(incident_doc_id, username)->
+        incident_doc = Docs.findOne incident_doc_id
+        
+        assigned_to_user = Meteor.users.findOne username:username
+        incident_link = "https://www.jan.meteorapp.com/view/#{incident_doc._id}"
+        complete_incident_link = "https://www.jan.meteorapp.com/view/#{incident_doc._id}?mark_complete=true"
+        
+        mail_fields = {
+            to: ["<#{assigned_to_user.emails[0].address}>"]
+            from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
+            subject: "Incident Assignment"
+            html: "<h4>You have been assigned to incident ##{incident_doc.incident_number} from customer: #{incident_doc.customer_name}.</h4>
+                <h5>Type: #{incident_doc.incident_type}</h5>
+                <h5>Number: #{incident_doc.incident_number}</h5>
+                <h5>Details: #{incident_doc.incident_details}</h5>
+                <h5>Timestamp: #{incident_doc.timestamp}</h5>
+                <h5>Office: #{incident_doc.incident_office_name}</h5>
+                <h5>Status: #{incident_doc.status}</h5>
+                <h5>Service Date: #{incident_doc.service_date}</h5>
+                <p>View the incident <a href=#{incident_link}>here</a>.</p>
+                <p>Mark task complete <a href=#{complete_incident_link}>here</a>.</p>
             "
         }
         Meteor.call 'send_email', mail_fields

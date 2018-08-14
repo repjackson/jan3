@@ -235,6 +235,8 @@ template(name='office_settings')
                         each incident_types
                             .select_incident_type.ui.compact.button(class=select_incident_type_button_class) #{name}
                         if selected_incident_type
+                            .ui.header Default Contact for #{selected_incident_type}
+                            +office_username_query key=default_contact_key label='Select Default Contact'
                             each rule_docs
                                 .ui.secondary.segment
                                     h4.ui.header #{name} for #{selected_incident_type} Rules
@@ -253,14 +255,14 @@ template(name='office_settings')
                                             .ui.hidden.fitted.divider
                                             +toggle_boolean_checkbox key=primary_sms_key label='Send SMS' icon='comment'
                                             .ui.hidden.fitted.divider
-                                            +office_username_query key=primary_contact_key label='Select Contact'
+                                            +office_username_query key=primary_contact_key label='Select Primary Contact'
                                         .column
                                             h4.ui.dividing.header Secondary
                                             +toggle_boolean_checkbox key=secondary_email_key label='Send Email' icon='envelope'
                                             .ui.hidden.fitted.divider
                                             +toggle_boolean_checkbox key=secondary_sms_key label='Send SMS' icon='comment'
                                             .ui.hidden.fitted.divider
-                                            +office_username_query key=secondary_contact_key label='Contact'
+                                            +office_username_query key=secondary_contact_key label='Select Secondary Contact'
             
 template(name='office_service_settings')
     // h5.ui.header Select which to offer customers.

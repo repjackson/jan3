@@ -464,8 +464,13 @@ Template.multiple_user_select.events
         $('#multiple_user_select_input').val ''
         t.user_results.set null
         if key is 'assigned_to'
-            Meteor.call 'send_message', @username, Meteor.user().ussername, "You have been assigned to #{page_doc.type} #{page_doc.title}."
-            Meteor.call 'send_email_about_task_assignment', page_doc._id, @username
+            if page_doc.type is 'task'
+                Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to task: #{page_doc.title}."
+                Meteor.call 'send_email_about_task_assignment', page_doc._id, @username
+            else if page_doc.type is 'incident'
+                Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to incident: #{page_doc.title}."
+                Meteor.call 'send_email_about_incident_assignment', page_doc._id, @username
+                
     
     'click .pull_user': ->
         context = Template.currentData(0)
@@ -513,6 +518,8 @@ Template.office_username_query.events
             $set: "#{key}": @username
         console.log Docs.findOne(office_doc_id)["#{key}"]
         # $(e.currentTarget).closest('#office_username_query').val ''
+        t.user_results.set null
+
 
     'keyup #office_username_query': (e,t)->
         office_username_query = $(e.currentTarget).closest('#office_username_query').val().trim()

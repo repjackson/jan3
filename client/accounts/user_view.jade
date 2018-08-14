@@ -9,8 +9,9 @@ template(name='user_view')
                     h1.ui.header #{profile.first_name} #{profile.last_name} 
                     h3.ui.header #{username}
                 .four.wide.center.aligned.column
-                    // .get_user_info.ui.icon.button(title='Refresh User Info')
-                    //     i.refresh.icon
+                    if is_admin
+                        .get_user_info.ui.icon.button(title='Refresh User Info')
+                            i.refresh.icon
                     a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}")
                         i.pencil.large.icon
             .row
@@ -29,7 +30,6 @@ template(name='user_view')
                             .item
                                 strong Customer JPID 
                                 | #{customer_jpid}
-                        // +jsonView json=ev
                     .ui.list
                         with ev
                             if LOGIN_ID

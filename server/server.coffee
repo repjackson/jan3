@@ -60,18 +60,40 @@ SyncedCron.add
                 # console.log 'res:',res
 
 
-SyncedCron.add
-    name: 'Update ny customers'
-    schedule: (parser) ->
-        # parser is a later.parse object
-        parser.text 'every 6 hours'
-    job: -> 
-        Meteor.call 'sync_ny_customers', (err, res)->
-            if err then console.log err
-            else
-                console.log 'res:',res
-            
-            
+SyncedCron.add({
+        name: 'Update customers'
+        schedule: (parser) ->
+            # parser is a later.parse object
+            parser.text 'every 6 hours'
+        job: -> 
+            Meteor.call 'get_recent_customers', (err, res)->
+                if err then console.log err
+                else
+                    console.log 'res:',res
+    },{
+        name: 'Update franchisee'
+        schedule: (parser) ->
+            # parser is a later.parse object
+            parser.text 'every 8 hours'
+        job: -> 
+            Meteor.call 'get_recent_franchisees', (err, res)->
+                if err then console.log err
+                else
+                    console.log 'res:',res
+    },{
+        name: 'Update office'
+        schedule: (parser) ->
+            # parser is a later.parse object
+            parser.text 'every 6 hours'
+        job: -> 
+            Meteor.call 'get_recent_offices', (err, res)->
+                if err then console.log err
+                else
+                    console.log 'res:',res
+    }
+)
+
+
 if Meteor.isProduction
     SyncedCron.start()
 

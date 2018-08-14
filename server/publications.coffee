@@ -360,10 +360,11 @@ Meteor.publish 'users_docs',(username) ->
     
 Meteor.publish 'user_events',(username) ->
     user = Meteor.users.findOne username:username
-    Docs.find({
-        author_id: user._id
-        type:'event'
-        }, {limit:20})
+    if user
+        Docs.find({
+            author_id: user._id
+            type:'event'
+            }, {limit:20})
     
 Meteor.publish 'my_profile', ->
     Meteor.users.find @userId,

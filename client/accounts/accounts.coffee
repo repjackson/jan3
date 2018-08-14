@@ -28,7 +28,10 @@ Template.login.events
                         FlowRouter.go "/office/#{res.office._id}/incidents"        
                     else if 'customer' in res.user.roles
                         Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                        FlowRouter.go "/"        
+                        FlowRouter.go "/"    
+                    else    
+                        Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                        FlowRouter.go "/"    
     
     'keyup .password': (e,t)->
         if e.which is 13 #enter
