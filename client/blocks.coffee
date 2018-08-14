@@ -511,12 +511,12 @@ Template.office_username_query.events
         key = Template.parentData(0).key
         # searched_value = doc["#{template.data.key}"]
         office_doc_id = FlowRouter.getParam('doc_id')
-        console.log key
-        console.log @username
+        # console.log key
+        # console.log @username
         
         Docs.update office_doc_id,
             $set: "#{key}": @username
-        console.log Docs.findOne(office_doc_id)["#{key}"]
+        # console.log Docs.findOne(office_doc_id)["#{key}"]
         # $(e.currentTarget).closest('#office_username_query').val ''
         t.user_results.set null
 

@@ -16,15 +16,15 @@ Template.login.events
     'click .login': (e,t)->
         e.preventDefault()
         # comment = $('#register_comment').val().trim()
-        login = $('.username').val()
+        username = $('.username').val()
         password = $('.password').val()
-        Meteor.loginWithPassword login, password, (err,res)->
+        Meteor.loginWithPassword username, password, (err,res)->
             if err
-                console.log err
+                Bert.alert "Error Logging in #{username}: #{err.reason}", 'info', 'growl-top-right'
             else
                 Meteor.call 'redirect_office_after_login', (err,res)->
-                    console.log res
                     if 'office' in res.user.roles
+                        Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
                         FlowRouter.go "/office/#{res.office._id}/incidents"        
                     else if 'customer' in res.user.roles
                         Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
@@ -37,11 +37,11 @@ Template.login.events
         if e.which is 13 #enter
             e.preventDefault()
             # comment = $('#register_comment').val().trim()
-            login = $('.username').val()
+            username = $('.username').val()
             password = $('.password').val()
-            Meteor.loginWithPassword login, password, (err,res)->
+            Meteor.loginWithPassword username, password, (err,res)->
                 if err
-                    console.log err
+                    Bert.alert "Error Logging in #{username}: #{err.reason}", 'info', 'growl-top-right'
                 else
                     Meteor.call 'redirect_office_after_login', (err,res)->
                         console.log res
