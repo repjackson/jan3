@@ -19,7 +19,7 @@ Template.blog.onCreated ->
 
     
 Template.blog.onRendered ->
-    $('.indicating.progress').progress();
+    # $('.indicating.progress').progress();
     
 
 Template.post_segment.onCreated ->
@@ -39,7 +39,7 @@ Template.post_view.onCreated ->
     
     
 Template.blog.helpers
-    blog: ->  Docs.find { type:'post'}
+    post_docs: ->  Docs.find { type:'post' }
 
 Template.post_edit.helpers
     post: -> Doc.findOne FlowRouter.getParam('doc_id')
@@ -63,17 +63,3 @@ Template.post_edit.events
             Docs.remove doc._id, ->
                 FlowRouter.go "/blog"
 
-
-
-Template.mark_doc_complete_button.helpers
-    # complete_button_class: -> if @complete then 'blue' else ''
-Template.mark_doc_complete_button.events
-    'click .mark_complete': (e,t)-> 
-        if @complete is true
-            Docs.update @_id, 
-                $set: complete: false
-            Meteor.call 'create_complete_post_event', @_id, 
-        else  
-            Docs.update @_id, 
-                $set:complete: true
-            Meteor.call 'create_incomplete_post_event', @_id, 

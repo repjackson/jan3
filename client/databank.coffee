@@ -65,15 +65,3 @@ Template.item_edit.events
 
 
 
-Template.mark_doc_complete_button.helpers
-    # complete_button_class: -> if @complete then 'blue' else ''
-Template.mark_doc_complete_button.events
-    'click .mark_complete': (e,t)-> 
-        if @complete is true
-            Docs.update @_id, 
-                $set: complete: false
-            Meteor.call 'create_complete_item_event', @_id, 
-        else  
-            Docs.update @_id, 
-                $set:complete: true
-            Meteor.call 'create_incomplete_item_event', @_id, 

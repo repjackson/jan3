@@ -33,6 +33,8 @@ template(name='user_edit')
                         .field
                             +edit_profile_text_field key='title' label='Job Title'
                         .field
+                            +edit_profile_text_field key='function' label='Job Function'
+                        .field
                             label Email
                             each emails
                                 .ui.basic.label #{address}

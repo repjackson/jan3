@@ -14,13 +14,14 @@ template(name='accounts_nav')
             | &nbsp; Home
         +menu_item link='/login' label='Login' icon='password' name='login'
         +menu_item link='/reset_password' label='Reset Password' icon='forgot-password' name='reset_password'
-        +menu_item link='/register_customer' label='Register Customer' icon='add-user-group-woman-man' name='register'
-        +menu_item link='/register_office' label='Register Office' icon='add-user-group-woman-man' name='register'
+        +menu_item link='/register_customer' label='Register Customer' icon='add-user-group-woman-man' name='register_customer'
+        +menu_item link='/register_office' label='Register Office' icon='add-user-group-woman-man' name='register_office'
 
 template(name='menu_item')
-    a.item(href=link class="{{ is_current_route name }}")
+    // a.item(href=link class="{{ is_current_route name }}")
+    a.item(href=link)
         // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-        i.big.icon
+        i.large.icon
             +icon name=icon
         | &nbsp; #{label}
 
@@ -66,9 +67,11 @@ template(name='login')
                             label Password
                             input.password(type='password')
                         .field
-                            .login.ui.fluid.large.button
+                            .login.ui.fluid.large.button(class=login_button_class)
                                 // +icon name='checkmark' classes='ui inline image'
                                 | Login
+                            if currentUser
+                                |You are logged in as #{currentUser.username}
                 .ui.horizontal.divider or login as
                 .ui.three.column.stackable.grid
                     .column

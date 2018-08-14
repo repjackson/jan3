@@ -75,6 +75,13 @@ Template.login.events
                 Bert.alert "Logged in as Demo Customer. Redirecting to dashboard.", 'success', 'growl-top-right'
                 FlowRouter.go '/'                
             
+            
+Template.login.helpers
+    login_button_class: ->
+        if Meteor.loggingIn()
+            'loading'
+        else if Meteor.user()
+            'disabled'
         
         
 Template.register_customer.onRendered ->

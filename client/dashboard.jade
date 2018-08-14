@@ -129,43 +129,43 @@ template(name='dashboard_consumables_widget')
             each products_available
                 +product_card     
                 
-template(name='my_cleaning_schedule')
-    .ui.fluid.accordion
-        .active.title
-            h3.ui.header 
-                |Cleaning Schedule
-                i.dropdown.icon
-        .active.content
-            #cleaning_schedule
-                +fullcalendar cal_options
+// template(name='my_cleaning_schedule')
+//     .ui.fluid.accordion
+//         .active.title
+//             h3.ui.header 
+//                 |Cleaning Schedule
+//                 i.dropdown.icon
+//         .active.content
+//             #cleaning_schedule
+//                 +fullcalendar cal_options
             
         
-template(name='office_contact_cards')
-    h3.ui.header 
-        +icon name='contacts'
-        // i.big.icons
-        //     i.users.icon
-        //     i.corner.building.icon
-        |Office Contacts
-    .ui.stackable.centered.seven.cards
-        each office_contacts
-            +office_contact_card
+// template(name='office_contact_cards')
+//     h3.ui.header 
+//         +icon name='contacts'
+//         // i.big.icons
+//         //     i.users.icon
+//         //     i.corner.building.icon
+//         |Office Contacts
+//     .ui.stackable.centered.seven.cards
+//         each office_contacts
+//             +office_contact_card
 
-template(name='office_contact_card')
-    .ui.card
-        .image
-            a(href="/user/#{username}")
-                img.ui.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
-        .content
-            a(href="/user/#{username}")
-                .ui.header #{profile.first_name} #{profile.last_name}
-                .meta #{username}
-        .content
-            .ui.small.list
-                a.item(href="mailto:#{email}" target='_window' title="Email #{name}")
-                    |#{email}
-                .item #{ev.JOB_TITLE}
-                .item #{ev.TELE_CELL} #{profile.phone}
+// template(name='office_contact_card')
+//     .ui.card
+//         .image
+//             a(href="/user/#{username}")
+//                 img.ui.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
+//         .content
+//             a(href="/user/#{username}")
+//                 .ui.header #{profile.first_name} #{profile.last_name}
+//                 .meta #{username}
+//         .content
+//             .ui.small.list
+//                 a.item(href="mailto:#{email}" target='_window' title="Email #{name}")
+//                     |#{email}
+//                 .item #{ev.JOB_TITLE}
+//                 .item #{ev.TELE_CELL} #{profile.phone}
                 
         // +view_button
 
@@ -178,15 +178,15 @@ template(name='customer_incidents_widget')
     table.ui.striped.selectable.fixed.table
         thead
             tr
-                th Number
+                th.one.wide Number
                 th Type
                 th Details
                 th Service Date
                 th Status
                 th Submitted
                 th Assigned To
-                th.four.wide Last Event
-                th View 
+                // th.four.wide Last Event
+                th.one.wide View 
         tbody
             each customer_incidents
                 tr
@@ -201,13 +201,13 @@ template(name='customer_incidents_widget')
                         +submitted_template
                     td
                         +associated_users
-                    td
-                        +small_doc_history
+                    // td
+                    //     +small_doc_history
                     td
                         +view_button
         tfoot
             tr
-                th(colspan='9')
+                th(colspan='8')
                     if pages
                         .ui.right.floated
                         .ui.right.floated.pagination.menu
@@ -263,7 +263,10 @@ template(name='dashboard_office_contacts_list')
                     td 
                         img.ui.avatar.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
                         |#{profile.first_name} #{profile.last_name}
-                    td #{profile.title}
+                    td 
+                        div #{profile.title}
+                        div 
+                            strong #{profile.function}
                     td 
                         div #{ev.JOB_TITLE}
                         div #{ev.WORK_TELEPHONE} #{ev.TELE_CELL} #{profile.phone}

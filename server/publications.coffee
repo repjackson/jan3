@@ -456,15 +456,18 @@ Meteor.publish 'my_special_services', ->
         }, limit: 5
     
 Meteor.publish 'my_office_contacts', ()->    
+    console.log 'looking for office contacts'
     user = Meteor.user()
     if user
         if 'customer' in user.roles
+            console.log 'good?'
             if user.customer_jpid
                 customer_doc = Docs.findOne
                     "ev.ID": user.customer_jpid
                     type:'customer'
-                    # grandparent office
+                console.log customer_doc
                 Meteor.users.find {
+                    published: true
                     "profile.office_name": customer_doc.ev.MASTER_LICENSEE
                 }
         

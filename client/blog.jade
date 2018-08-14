@@ -4,14 +4,14 @@ template(name='blog')
             .three.wide.center.aligned.column
             .ten.wide.column
                 h1.ui.center.aligned.header 
-                    +icon name='realtime-protection'
-                    | blog
+                    +icon name='typewriter-with-paper'
+                    | Development Blog
             .three.wide.center.aligned.column
                 +add_button type='post'
         .row 
             .sixteen.wide.column
-                .ui.input
-                    input(type='text' placeholder='ask')
+                each post_docs
+                    +post_segment
 
 
 template(name='post_segment')
@@ -44,10 +44,10 @@ template(name='post_edit')
                 #delete.ui.icon.button
                     i.trash.icon
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit post
+                h1.ui.center.aligned.grey.header Edit Post
             .three.wide.center.aligned.column
                 +save_button
-        .eight.wide.column
+        .twelve.wide.column
             .ui.form
                 +edit_text_field key='title' label='title'
                 +edit_array_field label='Tags' key='tags'
@@ -64,23 +64,14 @@ template(name='post_view')
                     i.left.chevron.icon
                     | blog
             .ten.wide.column
-                h1.ui.center.aligned.grey.header View post
+                h1.ui.center.aligned.grey.header View Post
             .three.wide.center.aligned.column
                 +edit_button
         .row
-            .four.wide.column
-                if assigned_to_user
-                    .ui.header Assigned To
-                    with assigned_to_user
-                        if profile.image_id
-                            img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        |&nbsp;
-                        a(href="/user/#{username}") #{username} 
-            .eight.wide.column
+            .twelve.wide.column
                 .ui.header #{title}
                 |!{html}
                 +comments
-                +full_doc_history
             .four.wide.column
                 |created by 
                 +author_info 
