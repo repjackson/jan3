@@ -90,6 +90,12 @@ Docs.helpers
         if @assigned_to
             Meteor.users.findOne _id:$in:@assigned_to
     when: -> moment(@timestamp).fromNow()
+    response: -> 
+        now = Date.now()
+        response = @timestamp - now
+        calc = moment.duration(response).humanize()
+        console.log calc
+        calc
     parent: -> Docs.findOne @parent_id
     customer: -> Docs.findOne @customer_id
     comment_count: -> Docs.find({type:'comment', parent_id:@_id}).count()

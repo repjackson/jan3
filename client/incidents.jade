@@ -23,6 +23,7 @@ template(name='incidents')
                             +sort_column_header key='timestamp' label='Logged'
                             +sort_column_header key='service_date' label='Incident Date'
                             +sort_column_header key='incident_details' label='Details' classes='two wide'
+                            th.two.wide Response
                             // +sort_column_header key='level' label='Level'
                             +sort_column_header key='open' label='Status' classes='one wide'
                             +sort_column_header key='submitted' label='Submitted'
@@ -40,6 +41,7 @@ template(name='incidents')
                                 td {{ reg_format timestamp }}
                                 td #{service_date}
                                 td #{incident_details}
+                                td #{response}
                                 // td #{level}
                                 td 
                                     +status_template
