@@ -6,6 +6,18 @@ Meteor.publish 'stat', (doc_type, stat_type)->
         doc_type: doc_type
         stat_type: stat_type
 
+Meteor.publish 'admin_total_stats', ()->
+    Stats.find 
+        stat_type:'total'
+
+Meteor.publish 'active_customers', (type)->
+    Meteor.call 'calculate_active_customers'
+    Stats.find
+        doc_type: 'customer'
+        stat_type: 'active'
+
+
+
 Meteor.publish 'count', (type)->
     Meteor.call 'calculate_doc_type_count', type
     Stats.find

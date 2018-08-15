@@ -3,6 +3,8 @@ FlowRouter.route '/admin',
 FlowRouter.route '/bugs', 
     action: -> BlazeLayout.render 'layout', main: 'bugs'
             
+Template.admin.onCreated ->
+    @autorun -> Meteor.subscribe 'admin_total_stats'
 Template.bugs.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'bug'
             

@@ -19,8 +19,8 @@ template(name='customers')
                     thead
                         +sort_column_header key='ev.CUST_NAME' label='Customer Name'
                         +sort_column_header key='ev.ID' label='JPID'
-                        +sort_column_header key='ev.FRANCHISEE' label='Master Licensee'
-                        +sort_column_header key='ev.MASTER_LICENSEE' label='Franchisee'
+                        +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
+                        +sort_column_header key='ev.MASTER_LICENSEE' label='Master Licensee'
                         +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
                         +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
                         +sort_column_header key='ev.TELEPHONE' label='Telephone'
@@ -48,11 +48,13 @@ template(name='customer_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
-                +link_button link='/customers' icon='customer-support' label='Customers'
+                if is_admin
+                    +link_button link='/customers' icon='customer-support' label='Customers'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header ##{jpid} #{cust_name} Customer
             .three.wide.right.aligned.column
-                +edit_button
+                if is_admin
+                    +edit_button
         // unless is_customer
         .centered.row
             .twelve.wide.column
@@ -125,6 +127,10 @@ template(name='my_customer_account_card')
                     +icon name='customer-support'
                     |Customer Account
             .content
+                div Customer Owner: #{customer_owner}
+                div Billing Contact: #{customer_billing_contact}
+                div HR Contact: #{customer_hr_contact}
+            .content
                 a(href="/view/#{_id}")
                     h4.ui.header #{ev.CUST_NAME}
             .content
@@ -142,3 +148,31 @@ template(name='my_customer_account_card')
             //     div Office
             //         strong #{ev.MASTER_LICENSEE}
 
+template(name='customer_edit')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.center.aligned.column
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Edit Customer #{ev.CUST_NAME}
+            .three.wide.center.aligned.column
+        .sixteen.wide.column
+            +office_username_query key='customer_owner' label='Customer Owner'
+            +office_username_query key='customer_billing_contact' label='Billing Contact'
+            +office_username_query key='customer_hr_contact' label='HR Contact'
+                    
+        
+// template(name='role_view')
+//     .ui.padded.stackable.centered.grid
+//         .centered.row
+//             .three.wide.center.aligned.column
+//                 +link_button link='/roles' icon='reviewer-female' label='Roles'
+//             .ten.wide.column
+//                 h1.ui.center.aligned.grey.header Role: #{name}
+//             .three.wide.center.aligned.column
+//                 +edit_button
+//         .row
+//             .eight.wide.column
+//                 .ui.header Name: #{name}
+//                 .ui.header Description: !{description}
+//                 +associated_users
+//                 +comments

@@ -10,89 +10,103 @@ template(name='admin')
                 .content
                     .ui.header
                         +icon name='fingerprint'
+                        +view_stat stat_type='total' doc_type='jpid'
                         | JP Ids
-        .column
-            a.ui.card(href='/history')
-                .content
-                    .ui.header
-                        +icon name='clock'
-                        | EV History
+        // .column
+        //     a.ui.card(href='/history')
+        //         .content
+        //             .ui.header
+        //                 +icon name='clock'
+        //                 | EV History
         .column
             a.ui.card(href='/offices')
                 .content
                     .ui.header
                         +icon name='building'
+                        +view_stat stat_type='total' doc_type='office'
                         | Offices
         .column
             a.ui.card(href='/franchisees')
                 .content
                     .ui.header
                         +icon name='conference'
+                        +view_stat stat_type='total' doc_type='franchisee'
                         | Franchisees
         .column
             a.ui.card(href='/customers')
                 .content
                     .ui.header
                         +icon name='customer-support'
+                        +view_stat stat_type='total' doc_type='customer'
                         | Customers
         .column
             a.ui.card(href='/special_services')
                 .content
                     .ui.header
                         +icon name='invoice'
+                        +view_stat stat_type='total' doc_type='special_service'
                         | Special Services
         .column
             a.ui.card(href='/services')
                 .content
                     .ui.header
                         +icon name='broom'
+                        +view_stat stat_type='total' doc_type='service'
                         | Services
         .column
             a.ui.card(href='/stats')
                 .content
                     .ui.header
                         +icon name='bar-chart'
+                        +view_stat stat_type='total' doc_type='stat'
                         | Stats
         .column
             a.ui.card(href='/store')
                 .content
                     .ui.header
                         +icon name='small-business'
+                        +view_stat stat_type='total' doc_type='product'
                         | Store
         .column
             a.ui.card(href='/feed')
                 .content
                     .ui.header
                         +icon name='rss'
+                        +view_stat stat_type='total' doc_type='event'
                         | Global Feed
         .column
             a.ui.card(href='/roles')
                 .content
                     .ui.header
                         +icon name='checked-user-male'
+                        +view_stat stat_type='total' doc_type='role'
                         | Roles
         .column
             a.ui.card(href='/rules')
                 .content
                     .ui.header
                         +icon name='rules'
+                        +view_stat stat_type='total' doc_type='rule'
                         | Rules
         .column
             a.ui.card(href='/bugs')
                 .content
                     .ui.header
                         +icon name='bug'
+                        +view_stat stat_type='total' doc_type='bug'
                         | Bugs
         .column
             a.ui.card(href='/tasks')
                 .content
                     .ui.header
                         +icon name='realtime-protection'
+                        +view_stat stat_type='total' doc_type='task'
                         | Tasks
         .column
             a.ui.card(href='/incident_types')
                 .content
                     .ui.header
+                        +view_stat stat_type='total' doc_type='incident_type'
                         +icon name='clone'
                         | Incident Types
                     
