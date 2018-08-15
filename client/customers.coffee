@@ -17,12 +17,15 @@ Template.customers.events
     #     Meteor.call 'sync_customers',(err,res)->
     #         if err then console.error err
 
+Template.franchisee_customers.onCreated ->
+    @autorun => Meteor.subscribe 'franchisee_customers', FlowRouter.getParam('doc_id')
 
 Template.franchisee_customers.helpers
     franchisee_customers_docs: ->  
         page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        Docs.find type:"customer"
-            # franchisee: page_doc.franchisee
+        Docs.find
+            type: 'customer'
+            "ev.FRANCHISEE": page_doc.ev.FRANCHISEE
 
     # settings: ->
     #     rowsPerPage: 10

@@ -1,6 +1,5 @@
 Meteor.methods
     sync_ev_users: ()->
-        console.log 'starting user sync'
         self = @
         
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -33,20 +32,6 @@ Meteor.methods
                     console.log 'added user doc id:', new_user_id
                 else
                     console.log 'existing user doc:', found_user._id
-    get_user_fields: ()->
-        console.log 'getting user fields'
-        self = @
-        
-        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
-            headers: "User-Agent": "Meteor/1.0"
-            params:
-                user_id:'JAN-HUB'
-                password:'j@NhU8'
-                statevar: 'get_user_field_list'
-                # disabled: [Y|N|
-                # filter: pattern 
-                # filter_type: "ID"
-        console.dir res.content
 
     get_user_info: (username)->
         # users_cursor = Meteor.users.find({}).fetch()
@@ -65,16 +50,17 @@ Meteor.methods
                 statevar:'get_user_info'
                 login_id: username
                 # console.log 'new id', new_id
+        console.log res
         if res.content.includes("denied")
             throw new Meteor.Error('permission denied', "Permission denied to get user")
         else
-        split_res = res.content.split '\r\n'
-        save_json = {}
-        for key_value_string in split_res
-            split_key_value = key_value_string.split '|'
-            save_json["#{split_key_value[0]}"] = split_key_value[1]
-        Meteor.users.update user_doc._id,
-            $set: ev: save_json
+            split_res = res.content.split '\r\n'
+            save_json = {}
+            for key_value_string in split_res
+                split_key_value = key_value_string.split '|'
+                save_json["#{split_key_value[0]}"] = split_key_value[1]
+            Meteor.users.update user_doc._id,
+                $set: ev: save_json
 
     get_history: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -195,7 +181,6 @@ Meteor.methods
         #             # else continue
     
     get_all_franchisees: () ->
-        console.log 'getting all franchisees'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
@@ -231,47 +216,7 @@ Meteor.methods
                             type:'franchisee'
                             ev: doc
     
-    get_recent_franchisees: () ->
-        console.log 'getting recent franchisees'
-        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
-            headers:"User-Agent": "Meteor/1.0"
-            params:
-                user_id:'JAN-HUB'
-                password:'j@NhU8'
-                statevar:'run_report'
-                username_display:'ID'
-                api_reverse_lookup:'NO'
-                id:'49352'
-                page_length:'10000'
-                record_start:'55000'
-                record_count:'10000'
-        # return res.content
-        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
-            if err then console.error('errors',err)
-            else
-                # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
-                # new_id = Docs.insert 
-            if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # doc.type = 'customer'
-                    existing_franchisee = 
-                        Docs.findOne 
-                            type: 'franchisee'
-                            "ev.ID": doc.ID
-                    if existing_franchisee
-                        Docs.update existing_franchisee._id,
-                            $set:
-                                ev: doc
-                        console.log 'existing franchisee', existing_franchisee.ev.ID
-                    else                    
-                        new_franchisee_doc = Docs.insert 
-                            type:'franchisee'
-                            ev: doc
-                        console.log 'added new franchisee', new_franchisee_doc
-    
     sync_services: () ->
-        console.log 'running sync services'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
@@ -312,7 +257,6 @@ Meteor.methods
                         console.log "added #{doc.ID}"
     
     sync_offices: () ->
-        console.log 'running sync offices'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
@@ -337,48 +281,6 @@ Meteor.methods
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                     console.log doc
-                    # doc.type = 'customer'
-                    existing_office_doc = 
-                        Docs.findOne 
-                            type: 'office'
-                            "ev.ID": doc.ID
-                    if existing_office_doc
-                        console.log "existing office #{existing_office_doc.ev.MASTER_LICENSEE}"
-                        # console.log doc
-                        Docs.update existing_office_doc._id,
-                            $set: ev: doc
-                    else                    
-                        new_office_doc = Docs.insert 
-                            type:'office'
-                            ev: doc
-                        console.log "added #{doc.ID}"
-    
-    get_recent_offices: () ->
-        console.log 'getting recent offices'
-        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
-            headers:"User-Agent": "Meteor/1.0"
-            params:
-                user_id:'JAN-HUB'
-                password:'j@NhU8'
-                statevar:'run_report'
-                username_display:'ID'
-                api_reverse_lookup:'NO'
-                id:'48307'
-                page_length:'250'
-                record_start:'1'
-                record_count:'250'
-        # return res.content
-        # console.log res.content
-        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
-            if err then console.error('errors',err)
-            else
-        #         # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-        #         # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
-        #         # new_id = Docs.insert 
-        #         # console.log 'new id', new_id
-            if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # console.log doc
                     # doc.type = 'customer'
                     existing_office_doc = 
                         Docs.findOne 

@@ -793,3 +793,13 @@ Meteor.publish 'selected_users', (doc_id, key)->
 Meteor.publish 'author_array', (author_array)->
     Meteor.users.find(_id: $in: author_array)
 
+Meteor.publish 'franchisee_customers', (franchisee_doc_id)->
+    franchisee_doc = Docs.findOne franchisee_doc_id
+    # console.log franchisee_doc
+    if franchisee_doc
+        if franchisee_doc.ev.FRANCHISEE.length > 0
+            cursor = Docs.find
+                "ev.FRANCHISEE": franchisee_doc.ev.FRANCHISEE
+                type: 'customer'
+            # console.log 'found customers', cursor.count()
+            return cursor

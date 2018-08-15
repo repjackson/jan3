@@ -68,5 +68,9 @@ template(name='franchisee_view')
             .fifteen.wide.column
                 .ui.center.aligned.header 
                     +icon name='customer-support'
-                    |#{ev.FRANCHISEE}'s Customers
-                // +franchisee_customers
+                    if ev.FRANCH_NAME
+                        |#{ev.FRANCH_NAME}
+                    else if ev.FRANCHISEE
+                        |#{ev.FRANCHISEE}
+                    |Customers
+                +franchisee_customers

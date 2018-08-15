@@ -96,7 +96,30 @@ template(name='customer_view')
                 
                 
 template(name='franchisee_customers')
-    // +reactiveTable settings=settings collection=franchisee_customers_docs class="ui celled striped sortable table"
+    table.ui.celled.striped.sortable.fluid.fixed.table
+        thead
+            +sort_column_header key='ev.CUST_NAME' label='Customer Name'
+            +sort_column_header key='ev.ID' label='JPID' classes='two wide'
+            +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
+            +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
+            +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
+            +sort_column_header key='ev.TELEPHONE' label='Telephone'
+            +sort_column_header key='ev.ADDR_STREET' label='Address'
+            // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
+            th.one.wide View
+        tbody
+            each franchisee_customers_docs
+                tr
+                    td #{ev.CUST_NAME}
+                    td #{ev.ID}
+                    td #{ev.FRANCHISEE}
+                    td #{ev.CUST_CONT_PERSON}
+                    td #{ev.CUST_CONTACT_EMAIL}
+                    td #{ev.TELEPHONE}
+                    td #{ev.ADDR_STREET}
+                    // td #{ev.TIMESTAMP}
+                    td 
+                        +view_button
 
 
 template(name='customers_franchisee')    

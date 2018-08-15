@@ -10,7 +10,7 @@ Meteor.publish 'admin_total_stats', ()->
     Stats.find 
         stat_type:'total'
 
-Meteor.publish 'active_customers', (type)->
+Meteor.publish 'active_customers_stat', (type)->
     Meteor.call 'calculate_active_customers'
     Stats.find
         doc_type: 'customer'
