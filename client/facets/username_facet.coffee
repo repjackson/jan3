@@ -22,9 +22,7 @@ Template.username_facet.onCreated ->
 Template.username_facet.helpers
     author_tags: ->
         author_usernames = []
-        
         for author_id in Author_ids.find().fetch()
-            
             found_user = Meteor.users.findOne(author_id.text)
             # if found_user
             #     console.log Meteor.users.findOne(author_id.text).username

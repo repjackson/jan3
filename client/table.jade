@@ -27,15 +27,17 @@ template(name='table_footer')
             th(colspan=columns)
                 if pages
                     .ui.right.floated
-                        |Starting at result #{skip_amount}
+                        |Starting at result #{skip_amount} of #{count_amount}
                     .ui.right.floated.pagination.menu
                         each pages
                             a.set_page_number.item(class=pagination_item_class) #{number}
                 |View &nbsp;
-                .set_10.ui.compact.button(class="{{page_size_button_class '10'}}") 10
-                .set_20.ui.compact.button(class="{{page_size_button_class '20'}}") 20
-                .set_50.ui.compact.button(class="{{page_size_button_class '50'}}") 50
-                |of #{count_amount}
+                if show_10
+                    .set_10.ui.compact.button(class="{{page_size_button_class '10'}}") 10
+                if show_20
+                    .set_20.ui.compact.button(class="{{page_size_button_class '20'}}") 20
+                if show_50
+                    .set_50.ui.compact.button(class="{{page_size_button_class '50'}}") 50
 
 
 template(name='status_template')

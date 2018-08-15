@@ -325,7 +325,7 @@ template(name='customer_incidents')
                 table.ui.striped.selectable.fixed.fluid.sortable.table
                     thead
                         tr
-                            +sort_column_header key='number' label='Number'
+                            +sort_column_header key='number' label='Number' classes='one wide'
                             +sort_column_header key='incident_type' label='Type'
                             +sort_column_header key='service_date' label='Service Date'
                             +sort_column_header key='incident_details' label='Details' classes='three wide'

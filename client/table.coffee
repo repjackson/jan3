@@ -84,6 +84,35 @@ Template.table_footer.helpers
         number = parseInt string_size
         if Session.equals('page_size', number) then 'blue' else ''
     
+    show_10: ->
+        count_stat = Stats.findOne()
+        if count_stat
+            if count_stat.amount > 10
+                true
+            else
+                false
+        else
+            false
+    show_20: ->
+        count_stat = Stats.findOne()
+        if count_stat
+            if count_stat.amount > 20
+                true
+            else
+                false
+        else
+            false
+    show_50: ->
+        count_stat = Stats.findOne()
+        if count_stat
+            if count_stat.amount > 50
+                true
+            else
+                false
+        else
+            false
+            
+    
     pages: ->
         stat_doc = Stats.findOne()
         if stat_doc
