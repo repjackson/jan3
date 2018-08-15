@@ -90,57 +90,41 @@ template(name='customer_view')
         if ev.FRANCHISEE
             .centered.row
                 .fifteen.wide.column
-                    +customers_franchisee
+                    .ui.secondary.segment
+                        .ui.header #{ev.CUST_NAME}'s Franchisee
+                        +customers_franchisee
 
                 
-                
-                
-template(name='franchisee_customers')
-    table.ui.celled.striped.sortable.fluid.fixed.table
-        thead
-            +sort_column_header key='ev.CUST_NAME' label='Customer Name'
-            +sort_column_header key='ev.ID' label='JPID' classes='two wide'
-            +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
-            +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
-            +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
-            +sort_column_header key='ev.TELEPHONE' label='Telephone'
-            +sort_column_header key='ev.ADDR_STREET' label='Address'
-            // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
-            th.one.wide View
-        tbody
-            each franchisee_customers_docs
-                tr
-                    td #{ev.CUST_NAME}
-                    td #{ev.ID}
-                    td #{ev.FRANCHISEE}
-                    td #{ev.CUST_CONT_PERSON}
-                    td #{ev.CUST_CONTACT_EMAIL}
-                    td #{ev.TELEPHONE}
-                    td #{ev.ADDR_STREET}
-                    // td #{ev.TIMESTAMP}
-                    td 
-                        +view_button
 
+                
 
 template(name='customers_franchisee')    
     with customers_franchisee_doc
-        .ui.secondary.segment
-            .ui.header 
-                |#{ev.CUST_NAME}'s Franchisee
-            .ui.list
-                .item ID
-                    strong #{jpid}
-                    // strong #{ev.ID}
+        .ui.list
+            with ev
                 .item Name
-                    strong #{franchisee}
-                .item 
-                    #{franchisee_email}
-                // .item Cell:
-                //     strong #{ev.TELE_CELL}
-                .item 
-                    +view_button
-                
-                
+                    strong #{FRANCHISEE}
+                .item ID
+                    strong #{ID}
+                .item Email
+                    strong #{FRANCH_EMAIL}
+                .item Cell #
+                    strong #{TELE_CELL}
+                .item Home #
+                    strong #{TELE_HOME}
+                .item Office
+                    strong #{MASTER_LICENSEE}
+                .item Franchisee Short Name
+                    strong #{SHORT_NAME}
+                .item Franch Name
+                    strong #{FRANCH_NAME}
+                .item Status
+                    strong #{ACCOUNT_STATUS}
+            .item 
+                +view_button
+    
+
+
                 
 template(name='my_customer_account_card')
     .ui.card

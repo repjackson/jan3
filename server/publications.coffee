@@ -803,3 +803,21 @@ Meteor.publish 'franchisee_customers', (franchisee_doc_id)->
                 type: 'customer'
             # console.log 'found customers', cursor.count()
             return cursor
+            
+            
+Meteor.publish 'customers_franchisee', (customer_doc_id)->
+    customer_doc = Docs.findOne customer_doc_id
+    # console.log customer_doc
+    if customer_doc
+        if customer_doc.ev.FRANCHISEE.length > 0
+            cursor = Docs.find
+                "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
+                type: "franchisee"
+            # console.log 'found customers', cursor.count()
+            return cursor
+            
+            
+            
+            
+            
+            
