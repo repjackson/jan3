@@ -332,6 +332,7 @@ template(name='customer_incidents')
                             // +sort_column_header key='level' label='Level'
                             +sort_column_header key='open' label='Status'
                             +sort_column_header key='submitted' label='Submitted'
+                            th.one.wide Response
                             th Assigned To
                             // th.three.wide Last Event
                             th.one.wide View
@@ -348,6 +349,8 @@ template(name='customer_incidents')
                                     +status_template
                                 td
                                     +submitted_template
+                                td
+                                    |#{response}
                                 td
                                     +associated_users
                                 // td

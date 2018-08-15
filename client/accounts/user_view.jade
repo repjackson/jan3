@@ -105,6 +105,14 @@ template(name='user_view')
                     .ui.header Role
                         each roles
                             .ui.basic.label #{this}
+                    +user_comments
+                    +user_assigned_to
+                    if customer_jpid
+                        +customer_card
+                    if franchisee_jpid
+                        +franchisee_card
+                    if office_jpid
+                        +office_card
                     if is_admin
                         .ui.header 
                             i.user.shield.icon
@@ -142,3 +150,19 @@ template(name='user_events')
         .ui.feed
             each user_events
                 +doc_history_event
+
+template(name='user_comments')
+    .ui.secondary.segment
+        .ui.header 
+            +icon name='chat'
+            | Comments
+            
+template(name='user_assigned_to')
+    .ui.secondary.segment
+        .ui.header 
+            +icon name='tasks'
+            | Assigned To
+            
+            
+            
+            

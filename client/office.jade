@@ -8,7 +8,7 @@ template(name='office_header')
                 .ten.wide.column
                     h1.ui.center.aligned.header #{ev.MASTER_LICENSEE} Office
                 .three.wide.right.aligned.column
-                    // +edit_button
+                    // #calc_office_stats.ui.button Calc Office Stats
             .centered.row
                 .sixteen.wide.center.aligned.column
                     .ui.horizontal.list
@@ -32,35 +32,40 @@ template(name='office_header')
                         +office_nav
 
 template(name='office_nav')
-    .ui.five.item.stackable.borderless.menu
-        // a.item(href="/view/#{_id}" isActivePath="/view/#{_id}")
-        //     i.big.icon
-        //         +iconsmall name='link-company-parent'
-        //     | &nbsp; #{ev.MASTER_LICENSEE}
+    .ui.six.item.stackable.borderless.menu
+        a.item(href="/view/#{_id}" isActivePath="/view/#{_id}")
+            i.large.icon
+                +iconsmall name='dashboard'
+            | &nbsp; Dashboard
         a.item(href="/office/#{_id}/incidents" class="{{ is_current_route 'office_incidents'}}")
-            i.big.icon
+            i.large.icon
                 +iconsmall name='error'
-            | &nbsp; Incidents
+            +view_stat doc_type='incident' stat_type='office_incidents'
+            | Incidents
         a.item(href="/office/#{_id}/employees" class="{{ is_current_route 'office_employees'}}")
-            i.big.icon
+            i.large.icon
                 +iconsmall name='groups'
-            | &nbsp; Employees
+            +view_stat stat_type='office_employees'
+            | Employees
         a.item(href="/office/#{_id}/franchisees" class="{{ is_current_route 'office_franchisees'}}")
-            i.big.icon
+            i.large.icon
                 +iconsmall name='conference'
-            | &nbsp; Franchisees
+            +view_stat stat_type='office_franchisees' doc_type='franchisee'
+            | Franchisees
         a.item(href="/office/#{_id}/customers" class="{{ is_current_route 'office_customers'}}")
-            i.big.icon
+            i.large.icon
                 +iconsmall name='customer-support'
-            | &nbsp; Customers
+            +view_stat stat_type='office_customers' doc_type='customer'
+            | Customers
         a.item(href="/office/#{_id}/settings" class="{{ is_current_route 'office_settings'}}")
-            i.big.icon
+            i.large.icon
                 +iconsmall name='settings'
             | &nbsp; Settings
 
 
 template(name='office_view')
     +office_header
+    .ui.header office feed
 
 template(name='office_customers')
     +office_header

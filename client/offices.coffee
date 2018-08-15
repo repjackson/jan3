@@ -1,6 +1,10 @@
 FlowRouter.route '/offices', action: ->
     BlazeLayout.render 'layout', main: 'offices'
 
+FlowRouter.route '/office/:doc_id', 
+    name: 'office_dashboard'
+    action: -> BlazeLayout.render 'layout', main: 'office_dashboard'
+
 FlowRouter.route '/office/:doc_id/incidents', 
     name: 'office_incidents'
     action: -> BlazeLayout.render 'layout', main: 'office_incidents'
@@ -34,6 +38,18 @@ Template.offices.helpers
             },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")}
             
 
+Template.office_header.onCreated ->
+    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
+    @autorun -> Meteor.subscribe 'office_stats', FlowRouter.getParam('doc_id')
+    
+    
+    
+Template.office_header.events
+    'click #calc_office_stats': ->
+        Meteor.call 'calc_office_stats', FlowRouter.getParam('doc_id'), (err,res)->
+            if err then console.error err
+            else
+                console.log res
 Template.office_header.helpers
     office_doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     office_map_address: ->
@@ -43,8 +59,6 @@ Template.office_header.helpers
         "https://www.google.com/maps/search/?api=1&query=#{encoded_address}"
 
 
-Template.office_header.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
 
 

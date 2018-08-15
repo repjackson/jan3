@@ -35,6 +35,13 @@ Meteor.publish 'incomplete_task_count', ()->
         doc_type: 'task'
         stat_type: 'incomplete'
 
+Meteor.publish 'office_stats', (office_doc_id)->
+    office_doc = Docs.findOne office_doc_id
+    Stats.find {
+        office_jpid:office_doc.ev.ID
+    }
+    
+
 
 Meteor.publish 'office_employee_count', (office_doc_id)->
     user = Meteor.user()
@@ -200,4 +207,27 @@ Meteor.methods
         
         
         
-        
+    calc_office_stats: (office_doc_id)->
+        office_doc = Docs.findOne office_doc_id
+        if office_doc
+            office_incident_count = 
+                Docs.find({
+                    incident_office_name: office_doc.ev.MASTER_LICENSEE
+                    type: "incident"
+                }).count()
+            Stats.update {
+                doc_type: 'incident'
+                stat_type: 'office_incidents'
+                office_jpid:office_doc.ev.ID
+            }, { $set:amount:office_incident_count },{upsert:true }
+            office_incident_count = 
+                Docs.find({
+                    incident_office_name: office_doc.ev.MASTER_LICENSEE
+                    type: "incident"
+                }).count()
+            Stats.update {
+                doc_type: 'incident'
+                stat_type: 'office_incidents'
+                office_jpid:office_doc.ev.ID
+            }, { $set:amount:office_incident_count },{upsert:true }
+
