@@ -1,4 +1,4 @@
-FlowRouter.route '/global_feed', 
+FlowRouter.route '/feed', 
     action: ->
         BlazeLayout.render 'layout', 
             main: 'global_feed'

@@ -23,7 +23,7 @@ template(name='franchisees')
                             +sort_column_header key='ev.FRANCH_NAME' label='Short Name'
                             +sort_column_header key='ev.TELEPHONE' label='Phone'
                             +sort_column_header key='ev.ADDR_STREET' label='Office'
-                            th
+                            th.one.wide View
                     tbody
                         each all_franchisees
                             tr

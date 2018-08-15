@@ -72,6 +72,16 @@ template(name='post_view')
                 .ui.header #{title}
                 |!{html}
                 +comments
+                +call_visual_analysis
+                +keywords
+                +doc_emotion
+                +entities
+                +concepts
+                +categories
+                +relations
+                +personality
+                +consumption_preferences
+                +tone
             .four.wide.column
                 |created by 
                 +author_info 
