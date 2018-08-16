@@ -150,6 +150,7 @@ Template.incident_view.events
                 submitted:true
                 submitted_datetime: Date.now()
                 last_updated_datetime: Date.now()
+        Meteor.call 'incident_assign_user_after_submission', doc_id
         Meteor.call 'create_event', doc_id, 'submit', "submitted the incident."
         Meteor.call 'email_about_incident_submission', incident._id
 

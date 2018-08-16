@@ -130,30 +130,10 @@ Template.office_franchisees.helpers
             },{ sort: "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
 
-Template.office_settings.onCreated ->
-    @autorun -> Meteor.subscribe 'type', 'rule'
-    @autorun -> Meteor.subscribe 'type', 'incident_type'
-    @autorun -> Meteor.subscribe 'static_office_employees', FlowRouter.getParam('doc_id')
-    Session.setDefault 'incident_type_selection', 'change_service'
-
 
 Template.office_service_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'service'
     
-# Template.office_settings.onRendered ->
-#     Meteor.setTimeout =>
-#         console.log '1'
-#         $('.office_tab_menu .item').tab()
-#         console.log '2'
-#     , 1000
-#     console.log '3'
-    
-    
-Template.office_settings.events
-    'click .select_incident_type': ->
-        Session.set 'incident_type_selection', @slug
-
-
 Template.office_service_settings.helpers
     services: -> Docs.find {type:'service'}
     select_service_button_class: ->
@@ -175,6 +155,21 @@ Template.office_service_settings.events
                 Docs.update page_office._id,
                     $set: services: [@slug]
     
+    
+    
+    
+
+Template.office_settings.onCreated ->
+    @autorun -> Meteor.subscribe 'type', 'rule'
+    @autorun -> Meteor.subscribe 'type', 'incident_type'
+    @autorun -> Meteor.subscribe 'static_office_employees', FlowRouter.getParam('doc_id')
+    Session.setDefault 'incident_type_selection', 'change_service'
+
+Template.office_settings.events
+    'click .select_incident_type': ->
+        Session.set 'incident_type_selection', @slug
+
+    
 Template.office_settings.helpers
     current_office: ->
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
@@ -188,6 +183,7 @@ Template.office_settings.helpers
     default_contact_key: -> 
         current_incident_type = Session.get 'incident_type_selection'
         "escalation_#{current_incident_type}_default_contact"
+
     hours_key: -> 
         current_incident_type = Session.get 'incident_type_selection'
         "escalation_#{@number}_#{current_incident_type}_hours"
@@ -220,3 +216,11 @@ Template.office_settings.helpers
         current_incident_type = Session.get 'incident_type_selection'
         # console.log "escalation_#{@number}_secondary_contact"
         "escalation_#{@number}_#{current_incident_type}_secondary_sms_option"
+        
+        
+    default_primary_contact: ->
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        current_incident_type = Session.get 'incident_type_selection'
+        default_value = page_office["escalation_#{current_incident_type}_default_contact"]
+        console.log default_value
+        return default_value

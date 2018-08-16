@@ -460,12 +460,12 @@ Meteor.publish 'my_office_contacts', ()->
     user = Meteor.user()
     if user
         if 'customer' in user.roles
-            console.log 'good?'
+            # console.log 'good?'
             if user.customer_jpid
                 customer_doc = Docs.findOne
                     "ev.ID": user.customer_jpid
                     type:'customer'
-                console.log customer_doc
+                # console.log customer_doc
                 Meteor.users.find {
                     published: true
                     "profile.office_name": customer_doc.ev.MASTER_LICENSEE
@@ -522,7 +522,6 @@ publishComposite 'incident', (id)->
                     Docs.find 
                         type:'feedback_response'
                         parent_id:incident._id
-                        
             }
         ]
     }
