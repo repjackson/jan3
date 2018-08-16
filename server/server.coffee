@@ -69,7 +69,18 @@ SyncedCron.add({
             Meteor.call 'get_recent_customers', (err, res)->
                 if err then console.log err
                 else
-                    console.log 'res:',res
+                    console.log 'update customers res:',res
+    },{
+        name: 'Update users'
+        schedule: (parser) ->
+            # parser is a later.parse object
+            parser.text 'every 3 hours'
+        job: -> 
+            Meteor.call 'sync_ev_users', (err, res)->
+                if err then console.log err
+                else
+                    console.log 'user sync res:',res
+    },{
     },{
         name: 'Update franchisee'
         schedule: (parser) ->
@@ -79,7 +90,7 @@ SyncedCron.add({
             Meteor.call 'get_recent_franchisees', (err, res)->
                 if err then console.log err
                 else
-                    console.log 'res:',res
+                    console.log 'update franchisees res:',res
     },{
         name: 'Update office'
         schedule: (parser) ->
@@ -89,7 +100,7 @@ SyncedCron.add({
             Meteor.call 'get_recent_offices', (err, res)->
                 if err then console.log err
                 else
-                    console.log 'res:',res
+                    console.log 'update offices res:',res
     }
 )
 

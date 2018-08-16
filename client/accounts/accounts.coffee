@@ -79,7 +79,7 @@ Template.login.events
 Template.login.helpers
     login_button_class: ->
         if Meteor.loggingIn()
-            'loading'
+            'loading disabled'
         else if Meteor.user()
             'disabled'
         

@@ -85,11 +85,12 @@ template(name='office_customers')
                         +sort_column_header key='ev.TELEPHONE' label='Telephone'
                         +sort_column_header key='ev.ADDR_STREET' label='Address'
                         // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
-                        th.one.wide View
+                        // th.one.wide View
                     tbody
                         each office_customers
                             tr
-                                td #{ev.CUST_NAME}
+                                td 
+                                    a(href="/view/#{_id}") #{ev.CUST_NAME}
                                 td #{ev.ID}
                                 td #{ev.FRANCHISEE}
                                 td #{ev.CUST_CONT_PERSON}
@@ -97,9 +98,9 @@ template(name='office_customers')
                                 td #{ev.TELEPHONE}
                                 td #{ev.ADDR_STREET}
                                 // td #{ev.TIMESTAMP}
-                                td 
-                                    +view_button
-                    +table_footer columns='8'                
+                                // td 
+                                //     +view_button
+                    +table_footer columns='7'                
 
 
 template(name='office_incidents')
@@ -121,6 +122,7 @@ template(name='office_incidents')
                         +sort_column_header key='submitted' label='Submitted'
                         +sort_column_header key='open' label='Status' classes='one wide'
                         th Assigned To
+                        th.three.wide Last Event
                         th.one.wide View
                     tbody
                         each office_incidents
@@ -138,9 +140,12 @@ template(name='office_incidents')
                                     +status_template
                                 td
                                     +associated_users
+                                td
+                                    +small_doc_history
+
                                 td 
                                     +view_button
-                    +table_footer columns='10'                
+                    +table_footer columns='9'                
 
 
 
@@ -161,13 +166,17 @@ template(name='office_employees')
                         +sort_column_header key='profile.function' label='Function'
                         +sort_column_header key='ev.WORK_TELEPHONE' label='Phone'
                         +sort_column_header key='email' label='Email'
-                        th.one.wide Public
-                        th.one.wide Edit
-                        th.one.wide View
+                        th.one.wide(title="Show profile on customer's Dashboard") Public
+                        // th.one.wide Edit
+                        // th.one.wide View
                     tbody
                         each office_employees
                             tr
-                                td #{username}
+                                td 
+                                    a(href="/user/#{username}") 
+                                        if profile.image_id
+                                            img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                        |#{username}
                                 td #{profile.first_name} 
                                 td #{profile.last_name}
                                 td #{profile.title}
@@ -176,11 +185,11 @@ template(name='office_employees')
                                 td #{email}
                                 td 
                                     +toggle_user_published
-                                td 
-                                    +edit_user_button 
-                                td 
-                                    +view_user_button
-                    +table_footer columns='9'                
+                                // td 
+                                //     +edit_user_button 
+                                // td 
+                                //     +view_user_button
+                    +table_footer columns='8'                
 
 
 template(name='office_franchisees')
@@ -198,18 +207,19 @@ template(name='office_franchisees')
                         +sort_column_header key='ev.FRANCH_EMAIL' label='Email'
                         +sort_column_header key='ev.FRANCH_NAME' label='Short Name'
                         +sort_column_header key='ev.TELE_CELL' label='Phone'
-                        th.one.wide View
+                        // th.one.wide View
                     tbody
                         each office_franchisees
                             tr
                                 td #{ev.ID}
-                                td #{ev.FRANCHISEE}
+                                td 
+                                    a(href="/view/#{_id}") #{ev.FRANCHISEE}
                                 td #{ev.FRANCH_EMAIL}
                                 td #{ev.FRANCH_NAME}
                                 td #{ev.TELE_CELL}
-                                td 
-                                    +view_button
-                    +table_footer columns='6'                
+                                // td 
+                                //     +view_button
+                    +table_footer columns='5'                
 
                     
                     

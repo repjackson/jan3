@@ -42,9 +42,11 @@ template(name='table_footer')
 
 template(name='status_template')
     if open
-        | Open
+        i.blue.unlock.icon
+        // | Open
     else
-        | Closed
+        i.lock.icon
+        // | Closed
 
 template(name='submitted_template')
     if submitted

@@ -30,8 +30,9 @@ Meteor.methods
                         user_first_name:split_user[1]
                         user_last_name:split_user[2]
                     console.log 'added user doc id:', new_user_id
-                else
-                    console.log 'existing user doc:', found_user._id
+                # else
+                #     console.log 'existing user doc:', found_user._id
+                Meteor.call 'get_user_info', split_user[0]
 
     get_user_info: (username)->
         # users_cursor = Meteor.users.find({}).fetch()
@@ -50,7 +51,7 @@ Meteor.methods
                 statevar:'get_user_info'
                 login_id: username
                 # console.log 'new id', new_id
-        console.log res
+        # console.log res
         if res.content.includes("denied")
             throw new Meteor.Error('permission denied', "Permission denied to get user")
         else
@@ -59,8 +60,9 @@ Meteor.methods
             for key_value_string in split_res
                 split_key_value = key_value_string.split '|'
                 save_json["#{split_key_value[0]}"] = split_key_value[1]
-            Meteor.users.update user_doc._id,
-                $set: ev: save_json
+            if user_doc
+                Meteor.users.update user_doc._id,
+                    $set: ev: save_json
 
     get_history: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",

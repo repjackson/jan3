@@ -234,8 +234,6 @@ template(name='incident_type_label')
         .ui.label(class=type_label_class) #{incident_type_label}
 
 
-template(name='incident_status')
-
 
 template(name='incident_tasks')
     .ui.header
@@ -334,7 +332,6 @@ template(name='customer_incidents')
                             +sort_column_header key='submitted' label='Submitted'
                             th.one.wide Response
                             th Assigned To
-                            // th.three.wide Last Event
                             th.one.wide View
                     tbody
                         each customer_incidents
@@ -353,8 +350,6 @@ template(name='customer_incidents')
                                     |#{response}
                                 td
                                     +associated_users
-                                // td
-                                //     +small_doc_history
                                 td
                                     +view_button
                     +table_footer columns='9'        
