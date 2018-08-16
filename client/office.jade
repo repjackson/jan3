@@ -257,7 +257,6 @@ template(name='office_settings')
                             .select_incident_type.ui.compact.button(class=select_incident_type_button_class) #{name}
                         if selected_incident_type
                             .ui.header Default Contact for #{selected_incident_type}
-                            +office_username_query key=default_contact_key label='Select Default Contact'
                             each rule_docs
                                 .ui.secondary.segment
                                     h4.ui.header #{name} for #{selected_incident_type} Rules
@@ -271,16 +270,18 @@ template(name='office_settings')
                                                 .ui.hidden.divider
                                             +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee'
                                         .column
-                                            h4.ui.dividing.header Primary
-                                            if default_primary_contact
-                                                h5.ui.header Using Default Primary Contact
-                                                |#{default_primary_contact}
+                                            h4.ui.dividing.header Incident Owner
+                                            if is_initial
+                                                +office_username_query key=incident_type_owner_key label='Select Incident Type Owner'
                                             else
-                                                +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'
-                                                .ui.hidden.fitted.divider
-                                                +toggle_boolean_checkbox key=primary_sms_key label='Send SMS' icon='comment'
-                                                .ui.hidden.fitted.divider
-                                                +office_username_query key=primary_contact_key label='Select Primary Contact'
+                                                |#{incident_type_owner_value}
+                                            //     h5.ui.header Using Default Primary Contact
+                                            // else
+                                            //     +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'
+                                            //     .ui.hidden.fitted.divider
+                                            //     +toggle_boolean_checkbox key=primary_sms_key label='Send SMS' icon='comment'
+                                            //     .ui.hidden.fitted.divider
+                                            //     +office_username_query key=primary_contact_key label='Select Primary Contact'
                                         .column
                                             h4.ui.dividing.header Secondary
                                             +toggle_boolean_checkbox key=secondary_email_key label='Send Email' icon='envelope'

@@ -180,9 +180,16 @@ Template.office_settings.helpers
     selected_incident_type: -> Session.get 'incident_type_selection'
     is_initial: -> @number is 1    
     rule_docs: -> Docs.find {type:'rule'}, sort:number:1
-    default_contact_key: -> 
+    incident_type_owner_key: -> 
         current_incident_type = Session.get 'incident_type_selection'
-        "escalation_#{current_incident_type}_default_contact"
+        "#{current_incident_type}_incident_owner"
+
+    incident_type_owner_value: ->
+        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        current_incident_type = Session.get 'incident_type_selection'
+        incident_type_owner_value = page_office["#{current_incident_type}_incident_owner"]
+        console.log incident_type_owner_value
+        return incident_type_owner_value
 
     hours_key: -> 
         current_incident_type = Session.get 'incident_type_selection'
@@ -218,9 +225,3 @@ Template.office_settings.helpers
         "escalation_#{@number}_#{current_incident_type}_secondary_sms_option"
         
         
-    default_primary_contact: ->
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        current_incident_type = Session.get 'incident_type_selection'
-        default_value = page_office["escalation_#{current_incident_type}_default_contact"]
-        console.log default_value
-        return default_value
