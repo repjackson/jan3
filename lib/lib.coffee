@@ -92,7 +92,7 @@ Docs.helpers
     when: -> moment(@timestamp).fromNow()
     response: -> 
         now = Date.now()
-        response = @timestamp - now
+        response = @assignment_timestamp - now
         calc = moment.duration(response).humanize()
         console.log calc
         calc

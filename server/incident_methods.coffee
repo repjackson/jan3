@@ -17,7 +17,7 @@ Meteor.methods
                 Docs.update incident_doc_id,
                     $addToSet: 
                         assigned_to: assigned_user._id
-
+                    $set: assignment_timestamp:Date.now()
             # escalation_minutes = incidents_office["escalation_1_#{incident.incident_type}_hours"]
             # Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} initial rules."
         else
@@ -28,3 +28,4 @@ Meteor.methods
         Docs.update incident_doc_id,
             $pull: 
                 assigned_to: assigned_user._id
+            $set: assignment_timestamp:Date.now()

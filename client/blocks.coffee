@@ -31,6 +31,16 @@ Template.associated_users.helpers
             Meteor.users.find 
                 _id: $in: @assigned_to
 
+
+Template.incident_assigment_cell.onCreated ->
+    @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
+    
+Template.incident_assigment_cell.helpers
+    associated_users: -> 
+        if @assigned_to
+            Meteor.users.find 
+                _id: $in: @assigned_to
+
 Template.associated_incidents.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], 'incident'
 Template.associated_incidents.helpers
@@ -468,6 +478,8 @@ Template.multiple_user_select.events
                 Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to task: #{page_doc.title}."
                 Meteor.call 'send_email_about_task_assignment', page_doc._id, @username
             else if page_doc.type is 'incident'
+                Docs.update page_doc._id,
+                    $set: assignment_timestamp:Date.now()
                 Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to incident: #{page_doc.title}."
                 Meteor.call 'send_email_about_incident_assignment', page_doc._id, @username
                 
