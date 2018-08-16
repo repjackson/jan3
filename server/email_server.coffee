@@ -191,7 +191,7 @@ Meteor.methods
         
         assigned_to_user = Meteor.users.findOne username:username
         incident_link = "https://www.jan.meteorapp.com/view/#{incident_doc._id}"
-        complete_incident_link = "https://www.jan.meteorapp.com/view/#{incident_doc._id}?mark_complete=true"
+        unnassign_self_link = "https://www.jan.meteorapp.com/view/#{incident_doc._id}?username=#{assigned_to_user.username}"
         
         mail_fields = {
             to: ["<#{assigned_to_user.emails[0].address}>"]
@@ -206,7 +206,7 @@ Meteor.methods
                 <h5>Status: #{incident_doc.status}</h5>
                 <h5>Service Date: #{incident_doc.service_date}</h5>
                 <p>View the incident <a href=#{incident_link}>here</a>.</p>
-                <p>Mark task complete <a href=#{complete_incident_link}>here</a>.</p>
+                <p>Mark task complete <a href=#{unnassign_self_link}>here</a>.</p>
             "
         }
         Meteor.call 'send_email', mail_fields

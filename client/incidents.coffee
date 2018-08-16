@@ -96,11 +96,11 @@ Template.incident_view.onCreated ->
 
 
 Template.incident_view.onRendered ->
-    mark_complete = FlowRouter.getQueryParam 'mark_complete'
-    console.log 'mark complete?',mark_complete
-    if mark_complete
-        Bert.alert "Found mark_complete in address, updating incident.", 'info', 'growl-top-right'
-        
+    target_username = FlowRouter.getQueryParam 'username'
+    console.log 'target username?',target_username
+    if target_username
+        Bert.alert "Unassigning user: #{target_username}", 'info', 'growl-top-right'
+        Meteor.call 'unassign_user_from_incident', FlowRouter.getParam('doc_id'), target_username
     # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getParam('doc_id')
 
 Template.incident_view.helpers
