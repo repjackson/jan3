@@ -258,6 +258,47 @@ Meteor.methods
                             ev: doc
                         console.log "added #{doc.ID}"
     
+    get_ev_finance: () ->
+        res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
+            headers:"User-Agent": "Meteor/1.0"
+            params:
+                user_id:'JAN-HUB'
+                password:'j@NhU8'
+                statevar:'run_report'
+                username_display:'ID'
+                api_reverse_lookup:'NO'
+                id:'49467'
+                page_length:'100'
+                record_start:'1'
+                record_count:'100'
+        # return res.content
+        xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
+            if err then console.error('errors',err)
+            else
+        #         # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+        #         # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+        #         # new_id = Docs.insert 
+            if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                    # doc.type = 'customer'
+                    console.log doc
+                    # existing_service_doc = 
+                    #     Docs.findOne 
+                    #         type: 'special_service'
+                    #         jpid: doc.ID
+                    # if existing_service_doc
+                    #     console.log "existing special_service #{existing_service_doc.ev.FRANCHISEE}"
+                    #     # console.log doc
+                    #     Docs.update existing_service_doc._id,
+                    #         $set:
+                    #             ev: doc
+                    # else                    
+                    #     new_special_service_doc = Docs.insert 
+                    #         type:'special_service'
+                    #         jpid: doc.ID
+                    #         ev: doc
+                    #     console.log "added #{doc.ID}"
+    
     sync_offices: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"

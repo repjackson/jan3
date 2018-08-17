@@ -79,8 +79,8 @@ Template.table_footer.helpers
         count_stat = Stats.findOne
             doc_type:@doc_type
             stat_type:@stat_type
-        console.log 'count_stat', count_stat
-        console.log 'this', @
+        # console.log 'count_stat', count_stat
+        # console.log 'this', @
             
         if count_stat
             count_stat.amount
@@ -140,3 +140,6 @@ Template.table_footer.helpers
                 pages.push {number:page+1}
                 page++
             return pages
+
+
+

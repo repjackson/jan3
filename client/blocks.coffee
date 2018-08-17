@@ -36,6 +36,14 @@ Template.incident_assigment_cell.onCreated ->
     @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
     
 Template.incident_assigment_cell.helpers
+    incident_assignment_cell_class: ->
+        if @assignment_timestamp
+            now = Date.now()
+            response = @assignment_timestamp - now
+            calc = moment.duration(response).humanize()
+            hour_amount = moment.duration(response).asHours()
+            if hour_amount<-5 then 'negative' else 'positive'
+
     associated_users: -> 
         if @assigned_to
             Meteor.users.find 

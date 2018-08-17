@@ -95,7 +95,7 @@ Docs.helpers
             now = Date.now()
             response = @assignment_timestamp - now
             calc = moment.duration(response).humanize()
-            console.log calc
+            # console.log calc
             calc
     parent: -> Docs.findOne @parent_id
     customer: -> Docs.findOne @customer_id
