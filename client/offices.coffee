@@ -41,9 +41,6 @@ Template.offices.helpers
 Template.office_header.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     @autorun -> Meteor.subscribe 'office_stats', FlowRouter.getParam('doc_id')
-    
-    
-    
 Template.office_header.events
     'click #calc_office_stats': ->
         Meteor.call 'calc_office_stats', FlowRouter.getParam('doc_id'), (err,res)->
@@ -99,6 +96,13 @@ Template.office_incidents.helpers
                 type: "incident"
             },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
+    level_cell_class: ->
+        switch @level
+            when 1 then 'positive'
+            when 2 then 'warning'
+            when 3 then 'warning'
+            when 4 then 'negative'
+
 
 
 Template.office_employees.onCreated ->
@@ -112,13 +116,14 @@ Template.office_employees.helpers
         # console.log page_office
         if page_office
             Meteor.users.find {
-                "profile.office_name": page_office.ev.MASTER_LICENSEE
-            },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
+                "profile.office_name": page_office.ev.MASTER_LICENSEE }
+            # },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
+
+
 
 Template.office_franchisees.onCreated ->
     @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_franchisee_count', FlowRouter.getParam('doc_id')
-    
 
 Template.office_franchisees.helpers  
     office_franchisees: ->

@@ -76,7 +76,12 @@ Template.table_footer.helpers
         if Session.equals('current_page_number', @number) then 'active' else ''
         
     count_amount: ->
-        count_stat = Stats.findOne()
+        count_stat = Stats.findOne
+            doc_type:@doc_type
+            stat_type:@stat_type
+        console.log 'count_stat', count_stat
+        console.log 'this', @
+            
         if count_stat
             count_stat.amount
             
@@ -85,7 +90,9 @@ Template.table_footer.helpers
         if Session.equals('page_size', number) then 'blue' else ''
     
     show_10: ->
-        count_stat = Stats.findOne()
+        count_stat = Stats.findOne
+            doc_type:@doc_type
+            stat_type:@stat_type
         if count_stat
             if count_stat.amount > 10
                 true
@@ -94,7 +101,9 @@ Template.table_footer.helpers
         else
             false
     show_20: ->
-        count_stat = Stats.findOne()
+        count_stat = Stats.findOne
+            doc_type:@doc_type
+            stat_type:@stat_type
         if count_stat
             if count_stat.amount > 20
                 true
@@ -103,7 +112,9 @@ Template.table_footer.helpers
         else
             false
     show_50: ->
-        count_stat = Stats.findOne()
+        count_stat = Stats.findOne
+            doc_type:@doc_type
+            stat_type:@stat_type
         if count_stat
             if count_stat.amount > 50
                 true
@@ -114,7 +125,9 @@ Template.table_footer.helpers
             
     
     pages: ->
-        stat_doc = Stats.findOne()
+        stat_doc = Stats.findOne
+            doc_type:@doc_type
+            stat_type:@stat_type
         if stat_doc
             count_amount = stat_doc.amount
             current_page_size = parseInt Session.get('page_size')

@@ -77,27 +77,26 @@ template(name='franchisee_view')
 
 
 template(name='franchisee_customers')
-    table.ui.celled.striped.sortable.fluid.fixed.table
+    table.ui.celled.striped.fluid.fixed.table
         thead
             +sort_column_header key='ev.CUST_NAME' label='Customer Name'
             +sort_column_header key='ev.ID' label='JPID' classes='two wide'
-            +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
+            // +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
             +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
             +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
             +sort_column_header key='ev.TELEPHONE' label='Telephone'
-            +sort_column_header key='ev.ADDR_STREET' label='Address'
+            +sort_column_header key='ev.ADDR_STREET' label='Address' classes='three wide'
             // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
-            th.one.wide View
         tbody
             each franchisee_customers_docs
                 tr
-                    td #{ev.CUST_NAME}
-                    td #{ev.ID}
-                    td #{ev.FRANCHISEE}
+                    td.selectable 
+                        a(href="/view/#{_id}") #{ev.CUST_NAME}
+                    td.selectable
+                        a(href="/view/#{_id}") #{ev.ID}
+                    // td #{ev.FRANCHISEE}
                     td #{ev.CUST_CONT_PERSON}
                     td #{ev.CUST_CONTACT_EMAIL}
                     td #{ev.TELEPHONE}
-                    td #{ev.ADDR_STREET}
+                    td #{ev.ADDR_STREET} #{ev.ADDR_CITY} #{ADDR_STATE}
                     // td #{ev.TIMESTAMP}
-                    td 
-                        +view_button

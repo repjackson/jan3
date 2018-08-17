@@ -21,7 +21,7 @@ template(name='offices')
         .row
             .sixteen.wide.column
                 +query_input placeholder='Filter Office Name'
-                table.ui.striped.selectable.fixed.fluid.sortable.table
+                table.ui.striped.fixed.fluid.sortable.table
                     thead
                         tr
                             +sort_column_header key='ev.ID' label='JPID' classes='one wide'
@@ -35,7 +35,7 @@ template(name='offices')
                         each all_offices
                             tr
                                 td #{ev.ID}
-                                td 
+                                td.selectable
                                     a(href="/view/#{_id}") #{ev.MASTER_LICENSEE}
                                 td #{ev.MASTER_OFFICE_MANAGER}
                                 td #{ev.MASTER_OFFICE_OWNER}
@@ -43,4 +43,4 @@ template(name='offices')
                                 td #{ev.ADDR_STREET}
                                 // td
                                 //     +view_button
-                    +table_footer columns='7' type='office'
+                    +table_footer columns='6' type='office'
