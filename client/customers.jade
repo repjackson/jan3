@@ -103,7 +103,9 @@ template(name='customer_view')
             if ev.FRANCHISEE
                 .column
                     .ui.secondary.segment
-                        .ui.header #{ev.CUST_NAME}'s Franchisee
+                        .ui.header 
+                            +icon name='collaborator-female'
+                            |Franchisee
                         +customers_franchisee
             .column
                 .ui.secondary.segment
@@ -118,7 +120,6 @@ template(name='customers_franchisee')
     with customers_franchisee_doc
         .ui.list
             with ev
-                +icon name='collaborator-female'
                 .item Name
                     strong #{FRANCHISEE}
                 .item ID
