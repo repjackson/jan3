@@ -36,7 +36,7 @@ Template.nav.onRendered ->
     #     $('.ui.dropdown').dropdown()
     # , 1000
     Meteor.setTimeout ->
-        $('.item').popup()
+        $('img').popup()
     , 400
     
     

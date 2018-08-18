@@ -74,7 +74,7 @@ template(name='incident_view')
             .nine.wide.column
                 h1.ui.center.aligned.grey.header #{customer_name} Incident #{incident_number}
             .four.wide.column
-                .ui.icon.remove_incident.button(title='Delete Incident')
+                .ui.icon.remove_incident.button(data-content='Delete Incident')
                     i.remove.icon
                 unless is_customer
                     #run_single_escalation_check.ui.button 
@@ -223,15 +223,16 @@ template(name='edit_priority_field')
         +toggle_key key='priority' value='emergency' label='Emergency'
 
                             
-template(name='incident_level_set')
-    .set_level.ui.compact.button(title='Set Level')
-        // i.checkmark.icon
-        |#{level}
-                        
+template(name='level_icon')
+    if is_level_one
+        img.ui.mini.image(src="/level1icon.png" data-content='Level 1')
+    if is_level_two
+        img.ui.mini.image(src="/level2icon.png" data-content='Level 2')
                         
 template(name='incident_type_label')      
     if incident_type_label
-        .ui.label(class=type_label_class) #{incident_type_label}
+        +icon name=incident_type_icon popup=incident_type_label
+        // .ui.label(class=type_label_class) #{incident_type_label}
 
 
 
@@ -356,7 +357,7 @@ template(name='customer_incidents')
         
 template(name='add_incident_button')
     if has_user_customer_jpid
-        a.ui.button#add_incident(href='#' title='Create New Incident')
+        a.ui.button#add_incident(href='#' data-content='Create New Incident')
             i.large.green.plus.icon
             |Log New Incident
     else
@@ -375,9 +376,9 @@ template(name='incident_sla_widget')
 template(name='sla_rule_doc')            
     .ui.dividing.header 
         // if is_level
-        //     i.green.checkmark.icon(title="Current Level: #{incident_doc.level}")
+        //     i.green.checkmark.icon(data-content="Current Level: #{incident_doc.level}")
         unless is_level
-            .set_level.ui.small.compact.button(title="Simulate Escalation to #{number}.") Set Level #{number}
+            .set_level.ui.small.compact.button(data-content="Simulate Escalation to #{number}.") Set Level #{number}
         |#{name}
     .content
         unless is_initial

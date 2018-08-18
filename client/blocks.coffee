@@ -313,13 +313,14 @@ Template.full_doc_history.helpers
         
 Template.doc_history_event.helpers
     event_icon_name: ->
-        console.log @event_type
+        # console.log @event_type
         switch @event_type
             when 'escalate' then 'positive-dynamic'
             when 'close' then 'close-sign'
             when 'setting_default_escalation_time' then 'sort-by-modified-date'
             when 'emailed_primary_contact' then 'sent'
             when 'emailed_secondary_contact' then 'sent'
+            when 'submit' then 'submit-progress'
             else 'commit-git'
         
 Template.full_doc_history.events

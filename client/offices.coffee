@@ -86,6 +86,11 @@ Template.office_incidents.onCreated ->
     @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_incident_count', FlowRouter.getParam('doc_id')
     Session.set 'page_size', 10
+Template.office_incidents.onRendered ->
+    Meteor.setTimeout ->
+        $('img').popup()
+    , 2000
+
 
 Template.office_incidents.helpers    
     office_incidents: ->  

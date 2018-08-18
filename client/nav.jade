@@ -25,7 +25,7 @@ template(name='nav')
             if my_office
                 a.item(href="/office/#{my_office._id}/incidents")
                     i.large.icon
-                        +icon name='link-company-parent'
+                        +icon name='building'
                     | &nbsp; #{my_office.ev.MASTER_LICENSEE}
             a.item(href="/office/#{my_office._id}/incidents" title='Office Incidents')
                 i.large.icon

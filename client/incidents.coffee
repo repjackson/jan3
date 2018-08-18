@@ -32,19 +32,11 @@ Template.add_incident_button.events
                     FlowRouter.go "/view/#{new_incident_id}"
 
 
-Template.incident_view.onRendered ->
-    # Meteor.setTimeout ->
-    #     $('.ui.checkbox').checkbox()
-    # #     $('.ui.tabular.menu .item').tab()
-    # , 400
-    # Meteor.setTimeout ->
-    #     $('.ui.tabular.menu .item').tab()
-    # , 500
-    
-    # $('.step').on('click', () ->
-    #     $.tab('change tab', 'two')
-    #     )
-            
+Template.incident_type_label.onRendered ->
+    Meteor.setTimeout ->
+        $('img').popup()
+    , 2000
+
 Template.incident_type_label.helpers
     incident_type_label: ->
         switch @incident_type
@@ -63,6 +55,29 @@ Template.incident_type_label.helpers
             when 'problem' then 'yellow'
             when 'special_request' then 'orange'
             when 'other' then 'grey'
+    
+    incident_type_icon: ->
+        switch @incident_type
+            when 'missed_service' then 'leave'
+            when 'team_member_infraction' then 'unfriend-male'
+            when 'change_service' then 'transfer-between-users'
+            when 'problem' then 'box-important'
+            when 'special_request' then 'carpet-cleaning'
+            when 'other' then 'grey'
+
+Template.level_icon.helpers
+    level_icon_name: ->
+        # console.log @
+        switch @level
+            when 1 then '1-c'
+            when 2 then '2-c'
+            when 3 then '3-c'
+            when 4 then '4-c'
+
+    is_level_one: -> @level is 1
+    is_level_two: -> @level is 2
+    is_level_three: -> @level is 3
+    is_level_four: -> @level is 4
 
 
 Template.incidents.onCreated ->
@@ -99,7 +114,7 @@ Template.incident_view.onCreated ->
 
 Template.incident_view.onRendered ->
     target_username = FlowRouter.getQueryParam 'username'
-    console.log 'target username?',target_username
+    # console.log 'target username?',target_username
     if target_username
         Bert.alert "Unassigning user: #{target_username}", 'info', 'growl-top-right'
         Meteor.call 'unassign_user_from_incident', FlowRouter.getParam('doc_id'), target_username

@@ -118,7 +118,7 @@ template(name='office_incidents')
                         +sort_column_header key='incident_number' label='Num' classes='one wide'
                         +sort_column_header key='customer_name' label='Customer'
                         +sort_column_header key='service_date' label='Service Date'
-                        +sort_column_header key='incident_type' label='Type'
+                        +sort_column_header key='incident_type' label='Type' classes='one wide'
                         th Details
                         +sort_column_header key='level' label='Level' classes='one wide'
                         +sort_column_header key='submitted' label='Submitted'
@@ -136,7 +136,7 @@ template(name='office_incidents')
                                     +incident_type_label
                                 td #{incident_details}
                                 td.one.wide(class=level_cell_class) 
-                                    .ui.header #{level}
+                                    +level_icon
                                 td
                                     +submitted_template
                                 td 

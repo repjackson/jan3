@@ -44,9 +44,11 @@ template(name='table_footer')
 
 template(name='status_template')
     if open
-        i.lock.open.large.icon(title='Open')
+        +icon name='open-sign'
+        // i.lock.open.large.icon(title='Open')
     else
-        i.lock.large.icon(title='Closed')
+        +icon name='closed-sign'
+        // i.lock.large.icon(title='Closed')
 
 template(name='submitted_template')
     if submitted
