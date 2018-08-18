@@ -248,7 +248,7 @@ Meteor.publish 'office_franchisees', (office_doc_id, query, limit=100, sort_key=
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
     
-Meteor.publish 'office_employees', (office_doc_id, query, limit=100, sort_key='public', sort_direction=1, skip=0)->
+Meteor.publish 'office_employees', (office_doc_id, query, limit=1000, sort_key='public', sort_direction=1, skip=0)->
     office_doc = Docs.findOne office_doc_id
     if query 
         Meteor.users.find {

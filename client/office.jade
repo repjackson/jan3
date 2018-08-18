@@ -195,7 +195,7 @@ template(name='office_employees')
                                 //     +edit_user_button 
                                 // td 
                                 //     +view_user_button
-                    +table_footer columns='8'        
+                    +table_footer columns='8' stat_type='office_employees'   
 
 
 template(name='office_franchisees')
@@ -218,7 +218,7 @@ template(name='office_franchisees')
                         each office_franchisees
                             tr
                                 td #{ev.ID}
-                                td.selectable 
+                                td.selectable(title='View Franchisee')
                                     a(href="/view/#{_id}") #{ev.FRANCHISEE}
                                 td #{ev.FRANCH_EMAIL}
                                 td #{ev.FRANCH_NAME}

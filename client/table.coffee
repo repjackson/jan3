@@ -94,7 +94,7 @@ Template.table_footer.helpers
             doc_type:@doc_type
             stat_type:@stat_type
         if count_stat
-            if count_stat.amount > 10
+            if count_stat.amount > 0
                 true
             else
                 false
@@ -105,7 +105,7 @@ Template.table_footer.helpers
             doc_type:@doc_type
             stat_type:@stat_type
         if count_stat
-            if count_stat.amount > 20
+            if count_stat.amount > 10
                 true
             else
                 false
@@ -116,7 +116,7 @@ Template.table_footer.helpers
             doc_type:@doc_type
             stat_type:@stat_type
         if count_stat
-            if count_stat.amount > 50
+            if count_stat.amount > 20
                 true
             else
                 false
@@ -128,7 +128,7 @@ Template.table_footer.helpers
             doc_type:@doc_type
             stat_type:@stat_type
         if count_stat
-            if count_stat.amount > 100
+            if count_stat.amount > 50
                 true
             else
                 false
