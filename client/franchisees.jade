@@ -14,28 +14,31 @@ template(name='franchisees')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.striped.selectable.fixed.fluid.sortable.table
+                table.ui.striped.fixed.table
                     thead
                         tr
-                            +sort_column_header key='ev.ID' label='JPID'
+                            +sort_column_header key='ev.ID' label='JPID' classes='two wide'
                             +sort_column_header key='ev.FRANCHISEE' label='Name'
-                            +sort_column_header key='ev.FRANCH_EMAIL' label='Email'
                             +sort_column_header key='ev.FRANCH_NAME' label='Short Name'
-                            +sort_column_header key='ev.TELEPHONE' label='Phone'
+                            th Contact
                             +sort_column_header key='ev.ADDR_STREET' label='Office'
-                            th.one.wide View
+                            // th.one.wide View
                     tbody
                         each all_franchisees
                             tr
-                                td #{ev.ID}
-                                td #{ev.FRANCHISEE}
-                                td #{ev.FRANCH_EMAIL}
-                                td #{ev.FRANCH_NAME}
-                                td #{ev.TELE_CELL}
-                                td #{ev.MASTER_LICENSEE}
+                                td.selectable 
+                                    a(href="/view/#{_id}") #{ev.ID}
+                                td.selectable 
+                                    a(href="/view/#{_id}") #{ev.FRANCHISEE}
+                                td.selectable 
+                                    a(href="view/#{_id}") #{ev.FRANCH_NAME}
                                 td
-                                    +view_button
-                    +table_footer columns='7'
+                                    div #{ev.FRANCH_EMAIL}
+                                    div #{ev.TELE_CELL}
+                                td #{ev.MASTER_LICENSEE}
+                                // td
+                                //     +view_button
+                    +table_footer columns='5' doc_type='franchisee' stat_type='total'
      
                     
 template(name='franchisee_view')
@@ -51,16 +54,16 @@ template(name='franchisee_view')
             .three.wide.right.aligned.column
                 // +edit_button
         .centered.row
-            .twelve.wide.column
+            .fifteen.wide.column
                 .ui.secondary.segment
-                    .ui.large.list
+                    .ui.horizontal.large.list
                         .item JPID #
                             strong #{ev.ID}
-                        .item Email: 
+                        .item email 
                             strong #{ev.FRANCH_EMAIL}
-                        .item Short Name: 
+                        .item short name 
                             strong #{ev.FRANCH_NAME}
-                        .item Cell: 
+                        .item cell
                             strong #{ev.TELE_CELL}
                         // .item Master Licensee: 
                         //     strong #{ev.MASTER_LICENSEE}

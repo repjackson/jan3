@@ -487,10 +487,11 @@ template(name='icon')
 
 
 template(name='iconlarge')
-    if is_customer
-        img.ui.image(src="https://png.icons8.com/office/60/000000/#{name}.png")
-    else
-        img.ui.image(src="https://png.icons8.com/ultraviolet/60/000000/#{name}.png")
+    img.ui.image(src="https://png.icons8.com/color/80/000000/#{name}.png")
+    // if is_customer
+    //     img.ui.image(src="https://png.icons8.com/office/60/000000/#{name}.png")
+    // else
+    //     img.ui.image(src="https://png.icons8.com/ultraviolet/60/000000/#{name}.png")
 
 template(name='iconsmall')
     img.ui.mini.inline.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes)

@@ -15,33 +15,29 @@ template(name='customers')
         .row
             .sixteen.wide.column
                 +query_input
-                table.ui.celled.striped.fluid.sortable.fixed.table
+                table.ui.striped.fixed.table
                     thead
                         +sort_column_header key='ev.CUST_NAME' label='Customer Name'
                         +sort_column_header key='ev.ID' label='JPID'
                         +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
                         +sort_column_header key='ev.MASTER_LICENSEE' label='Master Licensee'
-                        +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
-                        +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
-                        +sort_column_header key='ev.TELEPHONE' label='Telephone'
+                        th Contact
                         +sort_column_header key='ev.ADDR_STREET' label='Address'
-                        +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
-                        th.one.wide View
                     tbody
                         each all_customers
                             tr
-                                td #{ev.CUST_NAME}
-                                td #{ev.ID}
+                                td.selectable(title='View')
+                                    a(href="/view/#{_id}") #{ev.CUST_NAME}
+                                td.selectable(title='View')
+                                    a(href="/view/#{_id}") #{ev.ID}
                                 td #{ev.FRANCHISEE}
                                 td #{ev.MASTER_LICENSEE}
-                                td #{ev.CUST_CONT_PERSON}
-                                td #{ev.CUST_CONTACT_EMAIL}
-                                td #{ev.TELEPHONE}
-                                td #{ev.ADDR_STREET}
-                                td #{ev.TIMESTAMP}
                                 td 
-                                    +view_button
-                    +table_footer columns='10' type='customer'
+                                    div #{ev.CUST_CONT_PERSON}
+                                    div #{ev.CUST_CONTACT_EMAIL}
+                                    div #{ev.TELEPHONE}
+                                td #{ev.ADDR_STREET} #{ADDR_CITY} #{ADDR_STATE}
+                    +table_footer columns='6' doc_type='customer' stat_type='total'
 
 
 template(name='customer_view')
@@ -53,7 +49,12 @@ template(name='customer_view')
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
                     +icon name='customer-support'
-                    ##{jpid} #{cust_name} Customer
+                    |##{ev.ID}
+                    if ev.CUST_NAME
+                        |#{ev.CUST_NAME} 
+                    else
+                        |#{cust_name} 
+                    |Customer
             .three.wide.right.aligned.column
                 if is_admin
                     +edit_button

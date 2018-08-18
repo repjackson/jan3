@@ -19,17 +19,16 @@ template(name='incidents')
                             +sort_column_header key='number' label='Number' classes='collapsing'
                             +sort_column_header key='customer_name' label='Customer'
                             +sort_column_header key='incident_office_name' label='Office'
-                            +sort_column_header key='incident_type' label='Type'
+                            +sort_column_header key='incident_type' label='Type' classes='one wide'
                             +sort_column_header key='timestamp' label='Logged'
                             +sort_column_header key='service_date' label='Incident Date'
                             +sort_column_header key='incident_details' label='Details' classes='two wide'
-                            th.two.wide Response
                             // +sort_column_header key='level' label='Level'
                             +sort_column_header key='open' label='Status' classes='one wide'
                             +sort_column_header key='submitted' label='Submitted'
-                            th Assigned To
-                            th.three.wide Last Event
-                            th.one.wide Details
+                            th Assignment
+                            th.two.wide Last Event
+                            th.one.wide View
                     tbody
                         each all_incidents
                             tr
@@ -41,19 +40,17 @@ template(name='incidents')
                                 td {{ reg_format timestamp }}
                                 td #{service_date}
                                 td #{incident_details}
-                                td #{response}
                                 // td #{level}
                                 td 
                                     +status_template
                                 td
                                     +submitted_template
-                                td
-                                    +associated_users
+                                +incident_assigment_cell
                                 td
                                     +small_doc_history
                                 td
                                     +view_button
-                    +table_footer columns='12'                
+                    +table_footer columns='12' doc_type='incident' stat_type='total'            
 
 
                 
@@ -81,7 +78,7 @@ template(name='incident_view')
                         i.user.shield.icon
                         |Check Escalation
         .row
-            .four.wide.column
+            .three.wide.column
                 // if is_dev
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
@@ -110,16 +107,19 @@ template(name='incident_view')
                     .ui.header Last Updated
                     |{{ reg_format updated }}
 
-            .eight.wide.column
+            .nine.wide.column
                 unless open
                     if feedback_doc
                         with feedback_doc
-                            .ui.header Feedback
-                            if positive
-                                i.green.thumbs.up.icon
-                            else
-                                i.red.thumbs.down.icon
-                            |#{text}
+                            .ui.secondary.segment
+                                .ui.header 
+                                    +icon name='feedback'
+                                    |Feedback
+                                if positive
+                                    i.green.thumbs.up.icon
+                                else
+                                    i.red.thumbs.down.icon
+                                |#{text}
                     else
                         #submit_feedback.ui.button Submit Feedback
                 if can_edit_core
@@ -228,6 +228,10 @@ template(name='level_icon')
         img.ui.mini.image(src="/level1icon.png" data-content='Level 1')
     if is_level_two
         img.ui.mini.image(src="/level2icon.png" data-content='Level 2')
+    if is_level_three
+        img.ui.mini.image(src="/level3icon.png" data-content='Level 3')
+    if is_level_four
+        img.ui.mini.image(src="/level4icon.png" data-content='Level 4')
                         
 template(name='incident_type_label')      
     if incident_type_label
@@ -324,15 +328,14 @@ template(name='customer_incidents')
                 table.ui.striped.selectable.fixed.fluid.sortable.table
                     thead
                         tr
-                            +sort_column_header key='number' label='Number' classes='one wide'
-                            +sort_column_header key='incident_type' label='Type'
+                            +sort_column_header key='number' label='#' classes='one wide'
+                            +sort_column_header key='incident_type' label='Type' classes='one wide'
                             +sort_column_header key='service_date' label='Service Date'
                             +sort_column_header key='incident_details' label='Details' classes='three wide'
                             // +sort_column_header key='level' label='Level'
-                            +sort_column_header key='open' label='Status'
+                            +sort_column_header key='open' label='Status' classes='one wide'
                             +sort_column_header key='submitted' label='Submitted'
-                            th.one.wide Response
-                            th Assigned To
+                            th.two.wide Assignment
                             th.one.wide View
                     tbody
                         each customer_incidents
@@ -347,13 +350,10 @@ template(name='customer_incidents')
                                     +status_template
                                 td
                                     +submitted_template
-                                td
-                                    |#{response}
-                                td
-                                    +associated_users
+                                +incident_assigment_cell
                                 td
                                     +view_button
-                    +table_footer columns='9'        
+                    +table_footer columns='8'        
         
 template(name='add_incident_button')
     if has_user_customer_jpid

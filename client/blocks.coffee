@@ -301,6 +301,8 @@ Template.parent_link.helpers
             
 Template.full_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', @data._id
+
+
 Template.doc_history_event.onCreated ->
     @autorun =>  Meteor.subscribe 'user_profile', @data.author_id
 Template.full_doc_history.helpers
@@ -314,14 +316,25 @@ Template.full_doc_history.helpers
 Template.doc_history_event.helpers
     event_icon_name: ->
         # console.log @event_type
-        switch @event_type
-            when 'escalate' then 'positive-dynamic'
-            when 'close' then 'close-sign'
-            when 'setting_default_escalation_time' then 'sort-by-modified-date'
-            when 'emailed_primary_contact' then 'sent'
-            when 'emailed_secondary_contact' then 'sent'
-            when 'submit' then 'submit-progress'
-            else 'commit-git'
+        icon = ""
+        if @event_type
+            switch @event_type
+                when 'escalate' then icon.concat 'positive-dynamic'
+                when 'close' then icon.concat 'close-sign'
+                when 'setting_default_escalation_time' then icon.concat 'sort-by-modified-date'
+                when 'emailed_primary_contact' then icon.concat 'sent'
+                when 'emailed_secondary_contact' then icon.concat 'sent'
+                when 'emailed_franchisee_contact' then icon.concat 'user-engagement-male'
+                when 'submit' then icon.concat 'submit-progress'
+                when 'unsubmit' then icon.concat 'undo'
+                when 'not-escalate' then icon.concat 'do-not-disturb'
+                when 'level_change' then icon.concat 'positive-dynamic'
+                else 'commit-git'
+        else if @event_key
+            switch @event_key
+                when 'assigned_to' then icon.concat 'add-user-male'
+            
+            
         
 Template.full_doc_history.events
     'click #clear_events': ->
@@ -457,16 +470,6 @@ Template.radio_item.events
 
         
         
-# Template.view_telephone_field.helpers
-#     doc_history_events: ->
-#         Docs.find
-#             parent_id:FlowRouter.getParam('doc_id')
-#             type:'event'
- 
- 
- 
- 
- 
  
 Template.multiple_user_select.onCreated ()->
     @autorun => Meteor.subscribe 'selected_users', FlowRouter.getParam('doc_id'), @data.key

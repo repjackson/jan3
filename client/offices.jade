@@ -24,8 +24,8 @@ template(name='offices')
                 table.ui.striped.fixed.fluid.sortable.table
                     thead
                         tr
-                            +sort_column_header key='ev.ID' label='JPID' classes='one wide'
-                            +sort_column_header key='ev.MASTER_LICENSEE' label='Name' show_search=true
+                            +sort_column_header key='ev.ID' label='JPID' classes='two wide'
+                            +sort_column_header key='ev.MASTER_LICENSEE' label='Name' show_search=true classes='three wide'
                             +sort_column_header key='ev.MASTER_OFFICE_MANAGER' label='Manager'
                             +sort_column_header key='ev.MASTER_OFFICE_OWNER' label='Owner'
                             +sort_column_header key='ev.TELEPHONE' label='Phone'
@@ -43,4 +43,4 @@ template(name='offices')
                                 td #{ev.ADDR_STREET}
                                 // td
                                 //     +view_button
-                    +table_footer columns='6' type='office'
+                    +table_footer columns='6' doc_type='office' stat_type='total'

@@ -26,10 +26,10 @@ template(name='office_header')
                             |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                             a(href=office_map_address target='_blank')
                                 i.external.icon
-            .centered.row
-                .sixteen.wide.column
-                    unless is_customer
-                        +office_nav
+            // .centered.row
+            //     .sixteen.wide.column
+            //         unless is_customer
+            //             +office_nav
 
 template(name='office_nav')
     .ui.five.item.stackable.borderless.menu
@@ -75,9 +75,9 @@ template(name='office_customers')
                 +query_input
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.sortable.fluid.fixed.table
+                table.ui.striped.fixed.table
                     thead
-                        +sort_column_header key='ev.ID' label='JPID' classes='two wide'
+                        +sort_column_header key='ev.ID' label='JPID' classes='one wide'
                         +sort_column_header key='ev.CUST_NAME' label='Customer Name'
                         +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
                         th Contact
@@ -102,7 +102,7 @@ template(name='office_customers')
                                 // td #{ev.TIMESTAMP}
                                 // td 
                                 //     +view_button
-                    +table_footer columns='5' doc_type='customer' stat_type='office_customers'
+                    +table_footer columns='6' doc_type='customer' stat_type='office_customers'
 
 
 template(name='office_incidents')
@@ -113,7 +113,7 @@ template(name='office_incidents')
                 +query_input
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.fluid.fixed.table
+                table.ui.striped.fixed.table
                     thead
                         +sort_column_header key='incident_number' label='Num' classes='one wide'
                         +sort_column_header key='customer_name' label='Customer'
@@ -135,7 +135,8 @@ template(name='office_incidents')
                                 td 
                                     +incident_type_label
                                 td #{incident_details}
-                                td.one.wide(class=level_cell_class) 
+                                // td.one.wide(class=level_cell_class) 
+                                td.one.wide
                                     +level_icon
                                 td
                                     +submitted_template

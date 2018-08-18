@@ -21,25 +21,26 @@ template(name='table')
                         td #{this}
         +table_footer columns=fields.length                        
                                 
-template(name='table_footer')   
-    tfoot
-        tr
-            th(colspan=columns)
-                if pages
-                    .ui.right.floated
-                        |Starting at result #{skip_amount} of #{count_amount}
-                    .ui.right.floated.pagination.menu
-                        each pages
-                            a.set_page_number.item(class=pagination_item_class) #{number}
-                if show_10
-                    |View &nbsp;
-                    .set_10.ui.compact.button(class="{{page_size_button_class '10'}}") 10
-                if show_20
-                    .set_20.ui.compact.button(class="{{page_size_button_class '20'}}") 20
-                if show_50
-                    .set_50.ui.compact.button(class="{{page_size_button_class '50'}}") 50
-                if show_100
-                    .set_100.ui.compact.button(class="{{page_size_button_class '100'}}") 100
+template(name='table_footer')
+    unless is_querying
+        tfoot
+            tr
+                th(colspan=columns)
+                    if pages
+                        .ui.right.floated
+                            |From #{skip_amount} of #{count_amount}
+                        .ui.right.floated.pagination.menu
+                            each pages
+                                a.set_page_number.item(class=pagination_item_class) #{number}
+                    if show_10
+                        |View &nbsp;
+                        .set_10.ui.small.compact.button(class="{{page_size_button_class '10'}}") 10
+                    if show_20
+                        .set_20.ui.small.compact.button(class="{{page_size_button_class '20'}}") 20
+                    if show_50
+                        .set_50.ui.small.compact.button(class="{{page_size_button_class '50'}}") 50
+                    if show_100
+                        .set_100.ui.small.compact.button(class="{{page_size_button_class '100'}}") 100
 
 
 template(name='status_template')
@@ -66,11 +67,12 @@ template(name='search_key')
 template(name='sort_column_header')    
     th.sort_by(class=classes)
         |#{label}
-        i.sort.icon
         if sort_descending
-            i.sort.amount.down.icon
-        if sort_ascending
-            i.sort.amount.up.icon
+            i.chevron.down.link.blue.icon
+        else if sort_ascending
+            i.chevron.up.link.blue.icon
+        else
+            i.sort.link.grey.icon
                 
 template(name='query_input')            
     .ui.icon.input
