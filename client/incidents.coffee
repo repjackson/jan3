@@ -57,9 +57,11 @@ Template.incident_type_label.helpers
     
     type_label_class: ->
         switch @incident_type
-            when 'missed_service' then 'basic'
-            when 'poor_service' then 'basic'
-            when 'employee_issue' then 'basic'
+            when 'missed_service' then 'blue'
+            when 'team_member_infraction' then 'green'
+            when 'change_service' then 'teal'
+            when 'problem' then 'yellow'
+            when 'special_request' then 'orange'
             when 'other' then 'grey'
 
 

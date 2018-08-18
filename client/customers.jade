@@ -51,49 +51,65 @@ template(name='customer_view')
                 if is_admin
                     +link_button link='/customers' icon='customer-support' label='Customers'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header ##{jpid} #{cust_name} Customer
+                h1.ui.center.aligned.grey.header 
+                    +icon name='customer-support'
+                    ##{jpid} #{cust_name} Customer
             .three.wide.right.aligned.column
                 if is_admin
                     +edit_button
-        // unless is_customer
         .centered.row
             .twelve.wide.column
                 .ui.secondary.segment
-                    // h4.ui.header Name: #{cust_name}
-                    // h4.ui.header Master Licensee: #{master_licensee}
-                    // h4.ui.header Contact Person: #{customer_contact_person}
-                    // h4.ui.header Contact Email: #{customer_contact_email}
-                    // h4.ui.header Tel: #{telephone}
-                    // h4.ui.header Franchisee: #{franchisee}
-                    with ev
-                        .ui.header #{CUST_NAME}
-                        div Master Licensee
-                            strong #{MASTER_LICENSEE}
-                        div JPID
-                            strong #{ID}
-                        div Customer Contact Person
-                            strong #{CUST_CONT_PERSON}
-                        div Customer Contact Email
-                            strong #{CUST_CONTACT_EMAIL}
-                        div Tel
-                            strong #{TELEPHONE}
-                        div Address
-                            strong #{ADDR_STREET} #{ADDR_STREET_2} #{ADDR_CITY} #{ADDR_STATE}
-                        div Franchisee
-                            strong #{FRANCHISEE}
-                        div Number of Days of Service
-                            strong #{CUST_NUM_DAYS_SERVICE}
-                        div Days Service
-                            strong #{CUST_DAYS_SERVICE}
-                        div Regular Service Amount
-                            strong #{CUST_REG_SERVICE_AMT}
-        if ev.FRANCHISEE
-            .centered.row
-                .fifteen.wide.column
+                    .ui.horizontal.list
+                        with ev
+                            .item 
+                                |#{CUST_NAME}
+                            .item Master Licensee
+                                strong #{MASTER_LICENSEE}
+                            .item JPID
+                                strong #{ID}
+                            .item Customer Contact Person
+                                strong #{CUST_CONT_PERSON}
+                            .item Customer Contact Email
+                                strong #{CUST_CONTACT_EMAIL}
+                            .item Tel
+                                strong #{TELEPHONE}
+                            .item Address
+                                strong #{ADDR_STREET} #{ADDR_STREET_2} #{ADDR_CITY} #{ADDR_STATE}
+                            .item Franchisee
+                                strong #{FRANCHISEE}
+                            .item Number of Days of Service
+                                strong #{CUST_NUM_DAYS_SERVICE}
+                            .item Days Service
+                                strong #{CUST_DAYS_SERVICE}
+                            .item Regular Service Amount
+                                strong #{CUST_REG_SERVICE_AMT}
+        
+        .three.column.row
+            .column
+                +customers_incidents_panel
+            .column
+                +customers_events_panel
+            .column
+                +customers_service_requests_panel
+        .three.column.row
+            .column
+                +customers_consumables_panel
+            .column
+                +customers_users_panel
+            .column
+                +customers_quickbooks_panel
+        .three.column.row
+            if ev.FRANCHISEE
+                .column
                     .ui.secondary.segment
                         .ui.header #{ev.CUST_NAME}'s Franchisee
                         +customers_franchisee
-
+            .column
+                .ui.secondary.segment
+                    .ui.header
+                        +icon name='settings'
+                        |Settings
                 
 
                 
@@ -102,6 +118,7 @@ template(name='customers_franchisee')
     with customers_franchisee_doc
         .ui.list
             with ev
+                +icon name='collaborator-female'
                 .item Name
                     strong #{FRANCHISEE}
                 .item ID

@@ -123,6 +123,18 @@ Template.table_footer.helpers
         else
             false
             
+    show_100: ->
+        count_stat = Stats.findOne
+            doc_type:@doc_type
+            stat_type:@stat_type
+        if count_stat
+            if count_stat.amount > 100
+                true
+            else
+                false
+        else
+            false
+            
     
     pages: ->
         stat_doc = Stats.findOne

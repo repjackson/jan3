@@ -77,31 +77,32 @@ template(name='office_customers')
             .sixteen.wide.column
                 table.ui.celled.striped.sortable.fluid.fixed.table
                     thead
-                        +sort_column_header key='ev.CUST_NAME' label='Customer Name'
                         +sort_column_header key='ev.ID' label='JPID' classes='two wide'
-                        +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
+                        +sort_column_header key='ev.CUST_NAME' label='Customer Name'
                         +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
-                        +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
-                        +sort_column_header key='ev.TELEPHONE' label='Telephone'
+                        th Contact
+                        +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
                         +sort_column_header key='ev.ADDR_STREET' label='Address'
                         // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
                         // th.one.wide View
                     tbody
                         each office_customers
                             tr
-                                td.selectable 
-                                    a(href="/view/#{_id}") #{ev.CUST_NAME}
-                                td.selectable 
+                                td.selectable(title='View Customer')
                                     a(href="/view/#{_id}") #{ev.ID}
+                                td.selectable(title='View Customer')
+                                    a(href="/view/#{_id}") #{ev.CUST_NAME}
+                                td 
+                                    div #{ev.CUST_CONT_PERSON}
+                                td 
+                                    div #{ev.CUST_CONTACT_EMAIL}
+                                    div #{ev.TELEPHONE}
                                 td #{ev.FRANCHISEE}
-                                td #{ev.CUST_CONT_PERSON}
-                                td #{ev.CUST_CONTACT_EMAIL}
-                                td #{ev.TELEPHONE}
                                 td #{ev.ADDR_STREET}
                                 // td #{ev.TIMESTAMP}
                                 // td 
                                 //     +view_button
-                    +table_footer columns='7' doc_type='customer' stat_type='office_customers'
+                    +table_footer columns='5' doc_type='customer' stat_type='office_customers'
 
 
 template(name='office_incidents')
@@ -134,7 +135,8 @@ template(name='office_incidents')
                                 td 
                                     +incident_type_label
                                 td #{incident_details}
-                                td(class=level_cell_class) #{level}
+                                td.one.wide(class=level_cell_class) 
+                                    .ui.header #{level}
                                 td
                                     +submitted_template
                                 td 
@@ -172,15 +174,15 @@ template(name='office_employees')
                     tbody
                         each office_employees
                             tr
-                                td.selectable 
-                                    a(href="/user/#{username}") 
+                                td.selectable
+                                    a(href="/user/#{username}" title='View Profile') 
                                         if profile.image_id
                                             img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                                         |#{username}
-                                td.selectable 
+                                td.selectable(title='View Profile') 
                                     a(href="/user/#{username}") 
                                         |#{profile.first_name} 
-                                td.selectable 
+                                td.selectable(title='View Profile')
                                     a(href="/user/#{username}") 
                                         |#{profile.last_name}
                                 td #{profile.title}

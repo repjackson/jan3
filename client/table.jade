@@ -38,11 +38,13 @@ template(name='table_footer')
                     .set_20.ui.compact.button(class="{{page_size_button_class '20'}}") 20
                 if show_50
                     .set_50.ui.compact.button(class="{{page_size_button_class '50'}}") 50
+                if show_100
+                    .set_100.ui.compact.button(class="{{page_size_button_class '100'}}") 100
 
 
 template(name='status_template')
     if open
-        i.unlock.large.icon(title='Open')
+        i.lock.open.large.icon(title='Open')
     else
         i.lock.large.icon(title='Closed')
 
@@ -62,6 +64,7 @@ template(name='search_key')
 template(name='sort_column_header')    
     th.sort_by(class=classes)
         |#{label}
+        i.sort.icon
         if sort_descending
             i.sort.amount.down.icon
         if sort_ascending
