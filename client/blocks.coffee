@@ -332,7 +332,7 @@ Template.doc_history_event.helpers
                 when 'emailed_primary_contact' then icon.concat 'sent'
                 when 'emailed_secondary_contact' then icon.concat 'sent'
                 when 'emailed_franchisee_contact' then icon.concat 'housekeeper-male'
-                when 'submit' then icon.concat 'submit-resume'
+                when 'submit' then icon.concat 'internal'
                 when 'unsubmit' then icon.concat 'undo'
                 when 'not-escalate' then icon.concat 'do-not-disturb'
                 when 'level_change' then icon.concat 'positive-dynamic'

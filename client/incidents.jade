@@ -59,17 +59,19 @@ template(name='incident_view')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 if is_customer
-                    a.ui.button(href='/customer_incidents')
-                        i.left.chevron.icon
-                        | My Incidents    
+                    +link_button link='/customer_incidents' icon='error' label='My Incidents'
                 if is_office
-                    a.ui.button(href="/office/#{my_office._id}/incidents")
-                        i.left.chevron.icon
-                        | Office Incidents    
+                    +link_button link="/office/#{my_office._id}/incidents" icon='error' label='Office Incidents'
+                    // a.ui.button(href="/office/#{my_office._id}/incidents")
+                    //     +icon name='error'
+                    //     | Office Incidents    
                 if is_admin
                     +link_button link='/incidents' icon='user-shield' label='All Incidents'
             .nine.wide.column
-                h1.ui.center.aligned.grey.header #{customer_name} Incident #{incident_number}
+                h1.ui.center.aligned.header 
+                    |##{incident_number} #{customer_name} Incident 
+                    unless is_customer
+                        +level_icon
             .four.wide.column
                 .ui.icon.remove_incident.button(data-content='Delete Incident')
                     i.remove.icon
@@ -78,15 +80,15 @@ template(name='incident_view')
                         i.user.shield.icon
                         |Check Escalation
         .row
-            .three.wide.column
+            .four.wide.column
                 // if is_dev
                 //     +edit_author
                     // +edit_number_field key='incident_number' label='Number' icon='hashtag'
-                h4.ui.header Incident #
-                    if incident_number
-                        |#{incident_number}
-                    else
-                        +call_method name='update_incident_number' argument=_id                
+                // h4.ui.header Incident #
+                //     if incident_number
+                //         |#{incident_number}
+                //     else
+                //         +call_method name='update_incident_number' argument=_id                
                 if can_edit_core
                     // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
                     +edit_datetime_field key='service_date' label='Service Time'
@@ -107,7 +109,7 @@ template(name='incident_view')
                     .ui.header Last Updated
                     |{{ reg_format updated }}
 
-            .nine.wide.column
+            .eight.wide.column
                 unless open
                     if feedback_doc
                         with feedback_doc
@@ -146,26 +148,30 @@ template(name='incident_view')
             .four.wide.column
                 if submitted
                     .ui.secondary.segment
-                        .ui.header Status
+                        .ui.header 
+                            +status_template
                             if open
-                                .ui.basic.label Open
+                                |Open
                             else
-                                .ui.label Closed
+                                |Closed
                         unless is_customer
                             if open
                                 .close_incident.ui.fluid.button
                                     i.calendar.times.icon
                                     | Close Incident
                             else
-                                .reopen_incident.ui.fluid.button
-                                    i.user.shield.icon
-                                    | Reopen Incident
+                                // .reopen_incident.ui.fluid.button
+                                //     i.user.shield.icon
+                                //     | Reopen Incident
                                 .ui.button 
                                     i.reply.icon
                                     |Create Related Ticket
                 if submitted
-                    .ui.disabled.button
-                        | Submitted {{reg_format submitted_datetime}}
+                    .ui.secondary.segment
+                        .ui.header
+                            +icon name='internal'
+                            | Submitted 
+                        |{{reg_format submitted_datetime}}
                     // unless is_customer
                     //     .unsubmit.ui.fluid.button
                     //         i.user.shield.icon
@@ -183,8 +189,6 @@ template(name='incident_view')
                             +incident_tasks
                     // +notify_button
                     +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
-                    .ui.secondary.segment
-                        .ui.header Level: #{level}
                 // +incident_sla_widget
 
     .ui.confirm_close.modal
@@ -419,8 +423,10 @@ template(name='incident_table')
             tr
                 +sort_column_header key='number' label='#' classes='one wide'
                 +sort_column_header key='incident_type' label='Type' classes='one wide'
+                if show_customer
+                    +sort_column_header key='customer_name' label='Customer'
                 +sort_column_header key='service_date' label='Service Date'
-                +sort_column_header key='incident_details' label='Details' classes='three wide'
+                th.three.wide Details
                 // +sort_column_header key='level' label='Level'
                 +sort_column_header key='open' label='Status' classes='one wide'
                 +sort_column_header key='submitted' label='Submitted'
@@ -432,8 +438,11 @@ template(name='incident_table')
                     td #{incident_number}
                     td
                         +incident_type_label
+                    if show_customer
+                        td #{customer_name}
                     td #{service_date}
-                    td #{incident_details}
+                    td.selectable
+                        a(href="/view/#{_id}") #{incident_details}
                     // td #{level}
                     td 
                         +status_template

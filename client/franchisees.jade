@@ -56,9 +56,14 @@ template(name='franchisee_view')
             .three.wide.right.aligned.column
                 // +edit_button
         .centered.row
-            .fifteen.wide.column
+            .four.wide.column
+                .ui.button
+                    i.envelope.icon
+                    |Message
                 .ui.secondary.segment
-                    .ui.horizontal.large.list
+                    .ui.header Office 
+                .ui.secondary.segment
+                    .ui.large.list
                         .item #
                             strong #{ev.ID}
                         .item 
@@ -71,19 +76,11 @@ template(name='franchisee_view')
                             strong #{ev.TELE_CELL}
                         // .item Master Licensee: 
                         //     strong #{ev.MASTER_LICENSEE}
-        .centered.row
-            .fifteen.wide.column
+            .twelve.wide.column
                 .ui.header 
                     +icon name='error'
                     |Incidents
                 +incident_table franchisee_jpid=ev.ID
-        // +customers_events_panel
-        // +customers_service_requests_panel
-        // +customers_consumables_panel
-        // +customers_users_panel
-        // +customers_quickbooks_panel
-        .centered.row
-            .fifteen.wide.column
                 .ui.header 
                     +icon name='customer-support'
                     if ev.FRANCH_NAME
@@ -92,6 +89,11 @@ template(name='franchisee_view')
                         |#{ev.FRANCHISEE}
                     |Customers
                 +franchisee_customers
+        // +customers_events_panel
+        // +customers_service_requests_panel
+        // +customers_consumables_panel
+        // +customers_users_panel
+        // +customers_quickbooks_panel
 
 
 template(name='franchisee_customers')

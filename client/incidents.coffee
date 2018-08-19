@@ -414,4 +414,7 @@ Template.incident_table.helpers
         Docs.find {
             type:'incident'
         }
-    
+    show_customer: ->
+        context_franchisee_jpid = Template.currentData().franchisee_jpid
+        console.log context_franchisee_jpid
+        if context_franchisee_jpid then true else false

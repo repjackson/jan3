@@ -7,7 +7,7 @@ template(name='global_feed')
                     | Global Feed
         .row
             .sixteen.wide.column
-                // +reactiveTable settings=settings class="ui celled striped sortable table"
+                +feed
                         
                         
 template(name='event_view')
@@ -65,6 +65,21 @@ template(name='feed')
     .ui.header
         +icon name=icon
         | #{title}
+    .ui.feed
+        each event_docs
+            +event
+                        
+                        
+template(name='office_feed')
+    .ui.header
+        +icon name='activity-feed'
+        | Activity
+    .ui.button escalation    
+    .ui.button message    
+    .ui.button assignment    
+    .ui.button alert    
+    .ui.button submission    
+    
     .ui.feed
         each event_docs
             +event

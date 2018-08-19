@@ -35,7 +35,7 @@ template(name='office_header')
 
 template(name='office_nav')
     .ui.six.item.stackable.menu
-        a.item(href="/view/#{_id}" isActivePath="/view/#{_id}")
+        a.item(href="/view/#{_id}" class="{{ is_current_route 'office_view'}}")
             i.large.icon
                 +iconsmall name='dashboard'
             | &nbsp; Dashboard
@@ -67,7 +67,18 @@ template(name='office_nav')
 
 template(name='office_view')
     +office_header
-    +feed
+    .ui.padded.grid
+        .row
+            .four.wide.column
+                .ui.secondary.segment
+                    .ui.header
+                        +icon name='bar-chart'
+                        |Stats
+                    h4.ui.header Incidents
+                    h4.ui.header Franchisees
+                    h4.ui.header Customers
+            .twelve.wide.column
+                +office_feed
 
 template(name='office_customers')
     +office_header
@@ -121,7 +132,7 @@ template(name='office_incidents')
                         +sort_column_header key='customer_name' label='Customer'
                         +sort_column_header key='service_date' label='Service Date'
                         +sort_column_header key='incident_type' label='Type' classes='one wide'
-                        th Details
+                        th.three.wide Details
                         +sort_column_header key='level' label='Level' classes='one wide'
                         +sort_column_header key='submitted' label='Submitted'
                         +sort_column_header key='open' label='Open' classes='one wide'
@@ -163,7 +174,7 @@ template(name='office_employees')
                 +query_input
         .centered.row
             .sixteen.wide.column
-                table.ui.striped.fixed.table
+                table.ui.striped.fixed.single.line.table
                     thead
                         +sort_column_header key='username' label='Username'
                         +sort_column_header key='profile.first_name' label='First Name'
@@ -171,7 +182,7 @@ template(name='office_employees')
                         +sort_column_header key='profile.title' label='Title'
                         +sort_column_header key='profile.function' label='Function'
                         +sort_column_header key='ev.WORK_TELEPHONE' label='Phone'
-                        +sort_column_header key='email' label='Email'
+                        +sort_column_header key='email' label='Email' classes='three wide'
                         th.one.wide(title="Show profile on customer's Dashboard") Public
                         // th.one.wide Edit
                         // th.one.wide View

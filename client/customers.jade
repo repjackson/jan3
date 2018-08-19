@@ -60,9 +60,9 @@ template(name='customer_view')
                 if is_admin
                     +edit_button
         .centered.row
-            .sixteen.wide.column
+            .four.wide.column
                 .ui.secondary.segment
-                    .ui.horizontal.list
+                    .ui.list
                         with ev
                             .item 
                                 |#{CUST_NAME}
@@ -86,19 +86,15 @@ template(name='customer_view')
                                 strong #{CUST_DAYS_SERVICE}
                             .item Regular Service Amount
                                 strong #{CUST_REG_SERVICE_AMT}
-        
-        .row
-            .column
+            .twelve.wide.column
                 .ui.header 
                     +icon name='error'
                     | Incidents
                 +incident_table customer_jpid=ev.ID
-
-        .row
-            if ev.FRANCHISEE
-                .three.wide.column
-                    .ui.secondary.segment
-                        +customers_franchisee
+                if ev.FRANCHISEE
+                    .three.wide.column
+                        .ui.secondary.segment
+                            +customers_franchisee
                 
 
                 

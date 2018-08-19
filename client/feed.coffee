@@ -56,5 +56,18 @@ Template.feed.events
         if confirm 'Delete Event?'
             Docs.remove @_id
 
+
+Template.office_feed.onCreated ->
+    @autorun => Meteor.subscribe 'office_events', FlowRouter.getParam('doc_id')
+
+Template.office_feed.helpers
+    event_docs: -> 
+        context = Template.currentData()
+        Docs.find {type:'event', doc_type:context.doc_type}, sort:timestamp:-1
+Template.office_feed.events
+    'click .remove_event': -> 
+        if confirm 'Delete Event?'
+            Docs.remove @_id
+
             
     
