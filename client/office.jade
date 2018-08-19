@@ -6,7 +6,9 @@ template(name='office_header')
                     if is_admin
                         +link_button link='/offices' icon='building' label='Offices'
                 .ten.wide.column
-                    h1.ui.center.aligned.header #{ev.MASTER_LICENSEE} Office
+                    h1.ui.center.aligned.header 
+                        +icon name='building'
+                        |#{ev.MASTER_LICENSEE} #{current_name}
                 .three.wide.right.aligned.column
                     // #calc_office_stats.ui.button Calc Office Stats
             .centered.row
@@ -26,17 +28,17 @@ template(name='office_header')
                             |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                             a(href=office_map_address target='_blank')
                                 i.external.icon
-            // .centered.row
-            //     .sixteen.wide.column
-            //         unless is_customer
-            //             +office_nav
+            .centered.row
+                .sixteen.wide.column
+                    unless is_customer
+                        +office_nav
 
 template(name='office_nav')
-    .ui.five.item.stackable.borderless.menu
-        // a.item(href="/view/#{_id}" isActivePath="/view/#{_id}")
-        //     i.large.icon
-        //         +iconsmall name='dashboard'
-        //     | &nbsp; Dashboard
+    .ui.six.item.stackable.menu
+        a.item(href="/view/#{_id}" isActivePath="/view/#{_id}")
+            i.large.icon
+                +iconsmall name='dashboard'
+            | &nbsp; Dashboard
         a.item(href="/office/#{_id}/incidents" class="{{ is_current_route 'office_incidents'}}")
             i.large.icon
                 +iconsmall name='error'
@@ -88,9 +90,9 @@ template(name='office_customers')
                     tbody
                         each office_customers
                             tr
-                                td.selectable(title='View Customer')
+                                td.selectable(title="View #{ev.CUST_NAME} Customer")
                                     a(href="/view/#{_id}") #{ev.ID}
-                                td.selectable(title='View Customer')
+                                td.selectable(title="View #{ev.CUST_NAME} Customer")
                                     a(href="/view/#{_id}") #{ev.CUST_NAME}
                                 td 
                                     div #{ev.CUST_CONT_PERSON}
@@ -122,8 +124,8 @@ template(name='office_incidents')
                         th Details
                         +sort_column_header key='level' label='Level' classes='one wide'
                         +sort_column_header key='submitted' label='Submitted'
-                        +sort_column_header key='open' label='Status' classes='one wide'
-                        th Assignment
+                        +sort_column_header key='open' label='Open' classes='one wide'
+                        th.two.wide Assignment
                         th.three.wide Last Event
                         th.one.wide View
                     tbody
@@ -160,7 +162,7 @@ template(name='office_employees')
                 +query_input
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.sortable.fluid.fixed.table
+                table.ui.striped.fixed.table
                     thead
                         +sort_column_header key='username' label='Username'
                         +sort_column_header key='profile.first_name' label='First Name'
@@ -176,11 +178,11 @@ template(name='office_employees')
                         each office_employees
                             tr
                                 td.selectable
-                                    a(href="/user/#{username}" title='View Profile') 
+                                    a(href="/user/#{username}" title="View #{username} Profile") 
                                         if profile.image_id
                                             img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                                         |#{username}
-                                td.selectable(title='View Profile') 
+                                td.selectable(title="View #{username} Profile") 
                                     a(href="/user/#{username}") 
                                         |#{profile.first_name} 
                                 td.selectable(title='View Profile')
@@ -207,9 +209,9 @@ template(name='office_franchisees')
                 +query_input
         .centered.row
             .sixteen.wide.column
-                table.ui.celled.striped.sortable.fluid.fixed.table
+                table.ui.striped.fixed.table
                     thead
-                        +sort_column_header key='ev.ID' label='JPID'
+                        +sort_column_header key='ev.ID' label='JPID' classes='two wide'
                         +sort_column_header key='ev.FRANCHISEE' label='Name'
                         +sort_column_header key='ev.FRANCH_EMAIL' label='Email'
                         +sort_column_header key='ev.FRANCH_NAME' label='Short Name'
@@ -218,8 +220,9 @@ template(name='office_franchisees')
                     tbody
                         each office_franchisees
                             tr
-                                td #{ev.ID}
-                                td.selectable(title='View Franchisee')
+                                td.selectable(title="View #{ev.FRANCHISEE} Franchisee")
+                                    a(href="/view/#{_id}") #{ev.ID}
+                                td.selectable(title="View #{ev.FRANCHISEE} Franchisee")
                                     a(href="/view/#{_id}") #{ev.FRANCHISEE}
                                 td #{ev.FRANCH_EMAIL}
                                 td #{ev.FRANCH_NAME}

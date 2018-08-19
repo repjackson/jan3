@@ -37,7 +37,7 @@ Template.nav.onRendered ->
     # , 1000
     Meteor.setTimeout ->
         $('.item').popup()
-    , 800
+    , 1500
     
     
     

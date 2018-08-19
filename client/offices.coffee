@@ -44,7 +44,6 @@ Template.office_header.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     @autorun -> Meteor.subscribe 'office_stats', FlowRouter.getParam('doc_id')
 
-
 Template.office_header.events
     'click #calc_office_stats': ->
         Meteor.call 'calc_office_stats', FlowRouter.getParam('doc_id'), (err,res)->
@@ -52,6 +51,7 @@ Template.office_header.events
             else
                 console.log res
 Template.office_header.helpers
+    current_name: -> console.log FlowRouter.getRouteName()
     office_doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     office_map_address: ->
         page_office = Docs.findOne FlowRouter.getParam('doc_id')

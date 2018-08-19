@@ -166,10 +166,10 @@ template(name='incident_view')
                 if submitted
                     .ui.disabled.button
                         | Submitted {{reg_format submitted_datetime}}
-                    unless is_customer
-                        .unsubmit.ui.fluid.button
-                            i.user.shield.icon
-                            |Unsubmit
+                    // unless is_customer
+                    //     .unsubmit.ui.fluid.button
+                    //         i.user.shield.icon
+                    //         |Unsubmit
                 else
                     if is_customer
                         .ui.secondary.segment Fill Date, Details, and Type to Submit

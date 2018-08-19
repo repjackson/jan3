@@ -57,7 +57,7 @@ template(name='franchisee_view')
             .fifteen.wide.column
                 .ui.secondary.segment
                     .ui.horizontal.large.list
-                        .item JPID #
+                        .item jpid
                             strong #{ev.ID}
                         .item email 
                             strong #{ev.FRANCH_EMAIL}
@@ -94,23 +94,22 @@ template(name='franchisee_view')
 
 
 template(name='franchisee_customers')
-    table.ui.celled.striped.fluid.fixed.table
+    table.ui.striped.fixed.table
         thead
-            +sort_column_header key='ev.CUST_NAME' label='Customer Name'
-            +sort_column_header key='ev.ID' label='JPID' classes='two wide'
-            // +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
-            +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
-            +sort_column_header key='ev.CUST_CONTACT_EMAIL' label='Contact Email'
-            +sort_column_header key='ev.TELEPHONE' label='Telephone'
-            +sort_column_header key='ev.ADDR_STREET' label='Address' classes='three wide'
+            th.two.wide JPID
+            th Customer Name
+            th Contact Person
+            th Contact Email
+            th Telephone
+            th.three.wide Address
             // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
         tbody
             each franchisee_customers_docs
                 tr
-                    td.selectable 
-                        a(href="/view/#{_id}") #{ev.CUST_NAME}
-                    td.selectable
+                    td.selectable(title='View')
                         a(href="/view/#{_id}") #{ev.ID}
+                    td.selectable(title='View')
+                        a(href="/view/#{_id}") #{ev.CUST_NAME}
                     // td #{ev.FRANCHISEE}
                     td #{ev.CUST_CONT_PERSON}
                     td #{ev.CUST_CONTACT_EMAIL}

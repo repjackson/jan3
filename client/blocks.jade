@@ -202,11 +202,13 @@ template(name='associated_users')
                         | @#{username}
             
 template(name='incident_assigment_cell')
-    td(class=incident_assignment_cell_class)
+    // td(class=incident_assignment_cell_class)
+    td
+        if overdue
+            +icon name='expired' classes='inline' title='Over 5 Hours'
         if response
-            div #{response} elapsed
+            |#{response}
         .ui.list
-            |Current:
             each associated_users
                 .item
                     // .image
@@ -475,7 +477,7 @@ template(name='dusk_icon')
     img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
 template(name='icon')
-    img.ui.mini.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes data-content=popup)
+    img.ui.mini.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes data-content=popup title=title)
     // unless currentUser
     //     img.ui.tiny.image(src="https://png.icons8.com/color/96/000000/#{name}.png" class=classes)
     // if is_customer

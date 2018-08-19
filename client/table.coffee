@@ -70,7 +70,7 @@ Template.query_input.events
     'click .clear_search': -> Session.set('query', null)
 
 Template.table_footer.helpers
-    is_querying: -> Session.get('query')
+    is_querying: -> Session.get('query', null)
 
     skip_amount: -> parseInt(Session.get('skip'))+1
 

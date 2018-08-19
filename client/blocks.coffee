@@ -36,13 +36,20 @@ Template.incident_assigment_cell.onCreated ->
     @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
     
 Template.incident_assigment_cell.helpers
-    incident_assignment_cell_class: ->
+    # incident_assignment_cell_class: ->
+    #     if @assignment_timestamp
+    #         now = Date.now()
+    #         response = @assignment_timestamp - now
+    #         calc = moment.duration(response).humanize()
+    #         hour_amount = moment.duration(response).asHours()
+    #         if hour_amount<-5 then 'negative' else 'positive'
+    overdue: ->
         if @assignment_timestamp
             now = Date.now()
             response = @assignment_timestamp - now
             calc = moment.duration(response).humanize()
             hour_amount = moment.duration(response).asHours()
-            if hour_amount<-5 then 'negative' else 'positive'
+            if hour_amount<-5 then true else false
 
     associated_users: -> 
         if @assigned_to
@@ -318,7 +325,7 @@ Template.doc_history_event.helpers
         # console.log @event_type
         icon = ""
         if @event_type
-            switch @event_type
+            result = switch @event_type
                 when 'escalate' then icon.concat 'positive-dynamic'
                 when 'close' then icon.concat 'close-sign'
                 when 'setting_default_escalation_time' then icon.concat 'sort-by-modified-date'
@@ -330,10 +337,8 @@ Template.doc_history_event.helpers
                 when 'not-escalate' then icon.concat 'do-not-disturb'
                 when 'level_change' then icon.concat 'positive-dynamic'
                 else 'commit-git'
-        else if @event_key
-            switch @event_key
-                when 'assigned_to' then icon.concat 'add-user-male'
-            
+        else if @event_key 
+            result = ' add-user-male'
             
         
 Template.full_doc_history.events

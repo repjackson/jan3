@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.inverted.blue.top.attached.borderless.large.menu
+    .ui.inverted.blue.top.attached.large.menu
         // a.toggle_left_sidebar.icon.item 
         //     i.big.bars.icon
         if is_customer
@@ -27,48 +27,48 @@ template(name='nav')
                     i.big.icon
                         +icon name='building'
                     | &nbsp; #{my_office.ev.MASTER_LICENSEE}
-            a.item(href="/office/#{my_office._id}/incidents" data-content='Incidents' class="{{ is_current_route 'office_incidents' }}")
+            a.item(href="/office/#{my_office._id}/incidents" data-content="#{my_office.ev.MASTER_LICENSEE} Incidents")
                 i.big.icon
                     +icon name='error'
                 // | &nbsp; Incidents
-            a.item(href="/office/#{my_office._id}/employees" data-content='Employees' class="{{ is_current_route 'office_employees' }}")
+            a.item(href="/office/#{my_office._id}/employees" data-content="#{my_office.ev.MASTER_LICENSEE} Employees")
                 i.big.icon
                     +icon name='groups'
                 // | &nbsp; Employees
-            a.item(href="/office/#{my_office._id}/franchisees" data-content='Franchisees' class="{{ is_current_route 'office_franchisees' }}")
+            a.item(href="/office/#{my_office._id}/franchisees" data-content="#{my_office.ev.MASTER_LICENSEE} Franchisees")
                 i.big.icon
                     +icon name='conference'
                 // | &nbsp; Franchisees
-            a.item(href="/office/#{my_office._id}/customers" data-content='Customers' class="{{ is_current_route 'office_customers' }}")
+            a.item(href="/office/#{my_office._id}/customers" data-content="#{my_office.ev.MASTER_LICENSEE} Customers")
                 i.big.icon
                     +icon name='customer-support'
                 // | &nbsp; Customers
-            a.item(href="/office/#{my_office._id}/settings" data-content='Settings' class="{{ is_current_route 'office_settings' }}")
+            a.item(href="/office/#{my_office._id}/settings" data-content="#{my_office.ev.MASTER_LICENSEE} Settings")
                 i.big.icon
                     +icon name='settings'
                 // | &nbsp; Settings
         if is_admin
-            a.mobile.hidden.item(href='/incidents' data-content='Incidents')
+            a.mobile.hidden.item(href='/incidents' data-content='All Incidents')
                 i.big.icon
                     +icon name='error'
                 // .mobile.hidden &nbsp; Incidents
-            a.mobile.hidden.item(href='/users' data-content='Users')
+            a.mobile.hidden.item(href='/users' data-content='All Users')
                 i.big.icon
                     +icon name='groups'
                 // .mobile.hidden &nbsp; Users
-            a.mobile.hidden.item(href='/offices' data-content='Offices')
+            a.mobile.hidden.item(href='/offices' data-content='All Offices')
                 i.big.icon
                     +icon name='skyscrapers'
                 // .mobile.hidden Offices
-            a.mobile.hidden.item(href='/franchisees' data-content='Franchisees')
+            a.mobile.hidden.item(href='/franchisees' data-content='All Franchisees')
                 i.big.icon
                     +icon name='collaborator-female'
                 // .mobile.hidden Franchisees
-            a.mobile.hidden.item(href='/customers' data-content='Customers')
+            a.mobile.hidden.item(href='/customers' data-content='All Customers')
                 i.big.icon
                     +icon name='customer-support'
                 // .mobile.hidden Customers
-            a.mobile.hidden.item(href='/services' data-content='Services')
+            a.mobile.hidden.item(href='/services' data-content='All Services')
                 i.big.icon
                     +icon name='broom'
                 // .mobile.hidden Services
@@ -87,16 +87,16 @@ template(name='nav')
                 a.item(href='/stats' data-content='Stats')
                     i.big.icon
                         +icon name='bar-chart'
+                a.icon.item(href='/feed' data-content='Site Events')
+                    i.big.icon
+                        +icon name='appointment-reminders'
             if is_admin
                 a.item(href='/admin' data-content='Admin')
                     i.big.icon
                         +icon name='user-shield'
                     // .mobile.hidden &nbsp; Admin
             if currentUser
-                a.icon.item(href='/feed')
-                    i.big.icon
-                        +icon name='appointment-reminders'
-                a.icon.item(href='/mail')
+                a.icon.item(href='/mail' data-content='Messages')
                     i.large.envelope.icon
                 // a.item(href='/transactions')
                 //     i.big.icon
