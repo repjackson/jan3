@@ -403,3 +403,16 @@ Template.incident_task_edit.helpers
     incident: -> Doc.findOne FlowRouter.getParam 'doc_id'
     action_docs: -> Docs.find type:'action'
     
+    
+    
+    
+Template.incident_table.onCreated ->
+    Session.set('query',null)
+    Session.set('page_size',10)
+    @autorun => Meteor.subscribe 'static_incidents', @data.customer_jpid, @data.franchisee_jpid, @data.office_jpid
+Template.incident_table.helpers
+    incident_docs: -> 
+        Docs.find {
+            type:'incident'
+        }
+    

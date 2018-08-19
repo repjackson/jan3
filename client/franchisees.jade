@@ -67,20 +67,12 @@ template(name='franchisee_view')
                             strong #{ev.TELE_CELL}
                         // .item Master Licensee: 
                         //     strong #{ev.MASTER_LICENSEE}
-        .three.column.row
-            .column
-                +customers_incidents_panel
-            .column
-                +customers_events_panel
-            .column
-                +customers_service_requests_panel
-        .three.column.row
-            .column
-                +customers_consumables_panel
-            .column
-                +customers_users_panel
-            .column
-                +customers_quickbooks_panel
+        +incident_table franchisee_jpid=ev.ID
+        +customers_events_panel
+        +customers_service_requests_panel
+        +customers_consumables_panel
+        +customers_users_panel
+        +customers_quickbooks_panel
         .centered.row
             .fifteen.wide.column
                 .ui.center.aligned.header 

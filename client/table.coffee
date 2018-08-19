@@ -3,14 +3,6 @@ Template.table.onCreated ->
 
 
 
-Template.sort_column_header.helpers
-    sort_descending: ->
-        if Session.equals('sort_direction', '1') and Session.equals('sort_key', @key) 
-            return true
-    sort_ascending: ->
-        if Session.equals('sort_direction', '-1') and Session.equals('sort_key', @key)
-            return true
-        
 Template.table.helpers
     sort_descending: ->
         if Session.equals('sort_direction', '1') and Session.equals('sort_key', @key) 
@@ -46,11 +38,19 @@ Template.table_footer.events
 Template.sort_column_header.events
     'click .sort_by': (e,t)->
         Session.set 'sort_key', @key
-        if Session.equals 'sort_direction', '-1'
-            Session.set 'sort_direction', '1'
-        else if Session.equals 'sort_direction', '1'
-            Session.set 'sort_direction', '-1'
+        if Session.equals 'sort_direction', -1
+            Session.set 'sort_direction', 1
+        else if Session.equals 'sort_direction', 1
+            Session.set 'sort_direction', -1
 
+Template.sort_column_header.helpers
+    sort_descending: ->
+        if Session.equals('sort_direction', 1) and Session.equals('sort_key', @key) 
+            return true
+    sort_ascending: ->
+        if Session.equals('sort_direction', -1) and Session.equals('sort_key', @key)
+            return true
+        
 
 Template.search_key.events
     'keyup .search_key': ->

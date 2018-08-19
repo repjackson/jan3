@@ -8,8 +8,8 @@ template(name='incidents')
                     +icon name='error'
                     | All Incidents
             .three.wide.center.aligned.column
-                unless is_customer
-                    +call_method name='update_escalation_statuses' label='Run Escalation Check'
+                // unless is_customer
+                //     +call_method name='update_escalation_statuses' label='Run Escalation Check'
         .row
             .sixteen.wide.column
                 +query_input
@@ -353,7 +353,7 @@ template(name='customer_incidents')
                                 +incident_assigment_cell
                                 td
                                     +view_button
-                    +table_footer columns='8'        
+                    +table_footer columns='8' doc_type='incident' stat_type='customer'
         
 template(name='add_incident_button')
     if has_user_customer_jpid
@@ -411,3 +411,34 @@ template(name='sla_rule_doc')
     //             // i.checkmark.icon
     //             // +icon24 name='checkmark' classes='ui avatar image'
     //             | Confirm
+
+
+template(name='incident_table')
+    table.ui.striped.selectable.fixed.fluid.sortable.table
+        thead
+            tr
+                +sort_column_header key='number' label='#' classes='one wide'
+                +sort_column_header key='incident_type' label='Type' classes='one wide'
+                +sort_column_header key='service_date' label='Service Date'
+                +sort_column_header key='incident_details' label='Details' classes='three wide'
+                // +sort_column_header key='level' label='Level'
+                +sort_column_header key='open' label='Status' classes='one wide'
+                +sort_column_header key='submitted' label='Submitted'
+                th.two.wide Assignment
+                th.one.wide View
+        tbody
+            each incident_docs
+                tr
+                    td #{incident_number}
+                    td
+                        +incident_type_label
+                    td #{service_date}
+                    td #{incident_details}
+                    // td #{level}
+                    td 
+                        +status_template
+                    td
+                        +submitted_template
+                    +incident_assigment_cell
+                    td
+                        +view_button

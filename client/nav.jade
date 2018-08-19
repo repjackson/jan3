@@ -48,6 +48,10 @@ template(name='nav')
                     +icon name='settings'
                 // | &nbsp; Settings
         if is_admin
+            a.item(href='/admin' data-content='Admin Dashboard')
+                i.big.icon
+                    +icon name='user-shield'
+                // .mobile.hidden &nbsp; Admin
             a.mobile.hidden.item(href='/incidents' data-content='All Incidents')
                 i.big.icon
                     +icon name='error'
@@ -90,11 +94,6 @@ template(name='nav')
                 a.icon.item(href='/feed' data-content='Site Events')
                     i.big.icon
                         +icon name='appointment-reminders'
-            if is_admin
-                a.item(href='/admin' data-content='Admin')
-                    i.big.icon
-                        +icon name='user-shield'
-                    // .mobile.hidden &nbsp; Admin
             if currentUser
                 a.icon.item(href='/mail' data-content='Messages')
                     i.large.envelope.icon

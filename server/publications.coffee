@@ -351,6 +351,34 @@ publishComposite 'incidents', (level, limit=100, sort_key='timestamp', sort_dire
     }
     
     
+publishComposite 'static_incidents', (customer_jpid='', franchisee_jpid='', office_jpid='')->
+    {
+        find: ->
+            console.log customer_jpid
+            console.log franchisee_jpid
+            console.log office_jpid
+            self = @
+            cursor = Docs.find 
+                type:'incident' 
+                # customer_jpid:customer_jpid
+                franchisee_jpid:franchisee_jpid
+                # office_jpid:office_jpid
+            console.log cursor.count()
+            cursor
+        # children: [
+        #     {
+        #         find: (doc)-> Meteor.users.find _id:doc.author_id
+        #     }
+        #     {
+        #         find: (doc)-> Docs.find _id:doc.parent_id
+        #     }
+        #     {
+        #         find: (doc)-> Meteor.users.find _id:$in:doc.assigned_to
+        #     }
+        # ]
+    }
+    
+    
     
     
 

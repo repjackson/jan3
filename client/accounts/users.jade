@@ -1,14 +1,14 @@
 template(name='users') 
     .ui.padded.stackable.grid
         .centered.row
-            .three.wide.center.aligned.column 
-                a(href='/user/add' data-content='Add User')
-                    +icon name='plus' classes='centered'
-            .ten.wide.column 
+            .four.wide.center.aligned.column 
+                +link_button link='/admin' label='Admin' icon='user-shield'
+            .eight.wide.column 
                 h1.ui.center.aligned.header 
                     +icon name='groups'
                     | Users
-            .three.wide.center.aligned.column 
+            .four.wide.center.aligned.column 
+                +link_button link='/user/add' label='Add User' icon='plus'
         .centered.row
             .sixteen.wide.column 
                 +query_input
@@ -19,21 +19,33 @@ template(name='users')
                         +sort_column_header key='profile.first_name' label='First Name'
                         +sort_column_header key='profile.last_name' label='Last Name'
                         +sort_column_header key='profile.title' label='Title'
-                        +sort_column_header key='ev.WORK_TELEPHONE' label='Phone'
-                        +sort_column_header key='email' label='Email'
+                        th Role
+                        th Contact
                         +sort_column_header key='profile.office_name' label='Office'
-                        th 
+                        // th 
                     tbody
                         each all_users
                             tr
-                                td #{username}
-                                td #{profile.first_name} 
-                                td #{profile.last_name}
+                                td.selectable
+                                    a(href="/user/#{username}" title="View #{username} Profile") 
+                                        if profile.image_id
+                                            img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                        |#{username}
+                                td.selectable(title="View #{username} Profile") 
+                                    a(href="/user/#{username}") 
+                                        |#{profile.first_name} 
+                                td.selectable(title='View Profile')
+                                    a(href="/user/#{username}") 
+                                        |#{profile.last_name}
                                 td #{profile.title} #{ev.JOB_TITLE}
-                                td #{ev.WORK_TELEPHONE}
-                                td #{email}
-                                td #{profile.office_name}
                                 td 
-                                    +edit_user_button
-                                    +view_user_button
-                    +table_footer columns='8'
+                                    each roles
+                                        .ui.basic.small.label #{this}
+                                td 
+                                    div #{email}
+                                    div #{ev.WORK_TELEPHONE}
+                                td #{profile.office_name}
+                                // td 
+                                //     +edit_user_button
+                                //     +view_user_button
+                    +table_footer columns='8' stat_type='total'

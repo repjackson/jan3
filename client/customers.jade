@@ -17,8 +17,8 @@ template(name='customers')
                 +query_input
                 table.ui.striped.fixed.table
                     thead
-                        +sort_column_header key='ev.CUST_NAME' label='Customer Name'
                         +sort_column_header key='ev.ID' label='JPID'
+                        +sort_column_header key='ev.CUST_NAME' label='Customer Name'
                         +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
                         +sort_column_header key='ev.MASTER_LICENSEE' label='Master Licensee'
                         th Contact
@@ -27,16 +27,17 @@ template(name='customers')
                         each all_customers
                             tr
                                 td.selectable(title='View')
-                                    a(href="/view/#{_id}") #{ev.CUST_NAME}
-                                td.selectable(title='View')
                                     a(href="/view/#{_id}") #{ev.ID}
+                                td.selectable(title='View')
+                                    a(href="/view/#{_id}") #{ev.CUST_NAME}
                                 td #{ev.FRANCHISEE}
                                 td #{ev.MASTER_LICENSEE}
                                 td 
-                                    div #{ev.CUST_CONT_PERSON}
+                                    div 
+                                        strong #{ev.CUST_CONT_PERSON}
                                     div #{ev.CUST_CONTACT_EMAIL}
                                     div #{ev.TELEPHONE}
-                                td #{ev.ADDR_STREET} #{ADDR_CITY} #{ADDR_STATE}
+                                td #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE}
                     +table_footer columns='6' doc_type='customer' stat_type='total'
 
 
