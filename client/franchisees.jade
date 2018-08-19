@@ -5,7 +5,7 @@ template(name='franchisees')
                 +link_button link='/admin' label='Admin' icon='user-shield'
             .eight.wide.column
                 h1.ui.center.aligned.header
-                    +icon name='collaborator-female'
+                    +icon name='housekeeper-male'
                     | Franchisees
             .four.wide.column
                 // if is_dev
@@ -48,34 +48,43 @@ template(name='franchisee_view')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 if is_admin
-                    +link_button link='/franchisees' icon='collaborator-female' label='Franchisees'
+                    +link_button link='/franchisees' icon='housekeeper-male' label='Franchisees'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header #{ev.FRANCHISEE} Franchisee
+                h1.ui.center.aligned.grey.header 
+                    +icon name='housekeeper-male'
+                    |#{ev.FRANCHISEE} Franchisee
             .three.wide.right.aligned.column
                 // +edit_button
         .centered.row
             .fifteen.wide.column
                 .ui.secondary.segment
                     .ui.horizontal.large.list
-                        .item jpid
+                        .item #
                             strong #{ev.ID}
-                        .item email 
+                        .item 
+                            i.grey.message.icon
                             strong #{ev.FRANCH_EMAIL}
-                        .item short name 
+                        .item Short Name
                             strong #{ev.FRANCH_NAME}
-                        .item cell
+                        .item 
+                            i.grey.phone.icon
                             strong #{ev.TELE_CELL}
                         // .item Master Licensee: 
                         //     strong #{ev.MASTER_LICENSEE}
-        +incident_table franchisee_jpid=ev.ID
-        +customers_events_panel
-        +customers_service_requests_panel
-        +customers_consumables_panel
-        +customers_users_panel
-        +customers_quickbooks_panel
         .centered.row
             .fifteen.wide.column
-                .ui.center.aligned.header 
+                .ui.header 
+                    +icon name='error'
+                    |Incidents
+                +incident_table franchisee_jpid=ev.ID
+        // +customers_events_panel
+        // +customers_service_requests_panel
+        // +customers_consumables_panel
+        // +customers_users_panel
+        // +customers_quickbooks_panel
+        .centered.row
+            .fifteen.wide.column
+                .ui.header 
                     +icon name='customer-support'
                     if ev.FRANCH_NAME
                         |#{ev.FRANCH_NAME}

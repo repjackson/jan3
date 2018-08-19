@@ -30,3 +30,7 @@ Template.customers_franchisee.helpers
         return found
         
         
+
+Template.customer_view.onCreated ->
+    Session.setDefault('query',null)
+    @autorun => Meteor.subscribe 'customer_incidents', @data.customer_jpid

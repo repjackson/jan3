@@ -23,6 +23,7 @@ Template.franchisees.events
     #         if err then console.error err
 Template.franchisee_view.onCreated ->
     @autorun => Meteor.subscribe 'office_by_franchisee', FlowRouter.getParam('doc_id')
+    @autorun => Meteor.subscribe 'franchisee_incidents', @data.franchisee_jpid
 
 
 Template.franchisee_customers.onCreated ->

@@ -68,11 +68,11 @@ template(name='customer_view')
                                 |#{CUST_NAME}
                             .item Master Licensee
                                 strong #{MASTER_LICENSEE}
-                            .item JPID
+                            .item #
                                 strong #{ID}
-                            .item Customer Contact Person
+                            .item Contact Person
                                 strong #{CUST_CONT_PERSON}
-                            .item Customer Contact Email
+                            .item Contact Email
                                 strong #{CUST_CONTACT_EMAIL}
                             .item Tel
                                 strong #{TELEPHONE}
@@ -87,39 +87,27 @@ template(name='customer_view')
                             .item Regular Service Amount
                                 strong #{CUST_REG_SERVICE_AMT}
         
-        .three.column.row
+        .row
             .column
-                +customers_incidents_panel
-            .column
-                +customers_events_panel
-            .column
-                +customers_service_requests_panel
-        .three.column.row
-            .column
-                +customers_consumables_panel
-            .column
-                +customers_users_panel
-            .column
-                +customers_quickbooks_panel
-        .three.column.row
+                .ui.header 
+                    +icon name='error'
+                    | Incidents
+                +incident_table customer_jpid=ev.ID
+
+        .row
             if ev.FRANCHISEE
-                .column
+                .three.wide.column
                     .ui.secondary.segment
-                        .ui.header 
-                            +icon name='collaborator-female'
-                            |Franchisee
                         +customers_franchisee
-            .column
-                .ui.secondary.segment
-                    .ui.header
-                        +icon name='settings'
-                        |Settings
                 
 
                 
 
-template(name='customers_franchisee')    
+template(name='customers_franchisee')
     with customers_franchisee_doc
+        a.ui.header(href="/view/#{_id}") 
+            +icon name='housekeeper-male'
+            |Franchisee
         .ui.list
             with ev
                 .item Name

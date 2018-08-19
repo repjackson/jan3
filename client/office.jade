@@ -51,7 +51,7 @@ template(name='office_nav')
             | Employees
         a.item(href="/office/#{_id}/franchisees" class="{{ is_current_route 'office_franchisees'}}")
             i.large.icon
-                +iconsmall name='conference'
+                +icon name='housekeeper-male'
             // +view_stat stat_type='office_franchisees' doc_type='franchisee'
             | Franchisees
         a.item(href="/office/#{_id}/customers" class="{{ is_current_route 'office_customers'}}")
@@ -67,7 +67,7 @@ template(name='office_nav')
 
 template(name='office_view')
     +office_header
-    .ui.header office feed
+    +feed
 
 template(name='office_customers')
     +office_header
@@ -117,7 +117,7 @@ template(name='office_incidents')
             .sixteen.wide.column
                 table.ui.striped.fixed.table
                     thead
-                        +sort_column_header key='incident_number' label='Num' classes='one wide'
+                        +sort_column_header key='incident_number' label='#' classes='one wide'
                         +sort_column_header key='customer_name' label='Customer'
                         +sort_column_header key='service_date' label='Service Date'
                         +sort_column_header key='incident_type' label='Type' classes='one wide'
@@ -136,7 +136,8 @@ template(name='office_incidents')
                                 td #{service_date}
                                 td 
                                     +incident_type_label
-                                td #{incident_details}
+                                td.selectable(title='View Full Incident')
+                                    a(href="/view/#{_id}") #{incident_details}
                                 // td.one.wide(class=level_cell_class) 
                                 td.one.wide
                                     +level_icon

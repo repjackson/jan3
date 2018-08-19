@@ -5,10 +5,10 @@ Template.table.onCreated ->
 
 Template.table.helpers
     sort_descending: ->
-        if Session.equals('sort_direction', '1') and Session.equals('sort_key', @key) 
+        if Session.equals('sort_direction', 1) and Session.equals('sort_key', @key) 
             return true
     sort_ascending: ->
-        if Session.equals('sort_direction', '-1') and Session.equals('sort_key', @key)
+        if Session.equals('sort_direction', -1) and Session.equals('sort_key', @key)
             return true
     fields: -> Template.currentData().fields
     table_docs: -> 
@@ -40,7 +40,7 @@ Template.sort_column_header.events
         Session.set 'sort_key', @key
         if Session.equals 'sort_direction', -1
             Session.set 'sort_direction', 1
-        else if Session.equals 'sort_direction', 1
+        else
             Session.set 'sort_direction', -1
 
 Template.sort_column_header.helpers
