@@ -51,7 +51,7 @@ Template.office_header.events
             else
                 console.log res
 Template.office_header.helpers
-    current_name: -> console.log FlowRouter.getRouteName()
+    # current_name: -> console.log FlowRouter.getRouteName()
     office_doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     office_map_address: ->
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
@@ -213,7 +213,7 @@ Template.office_settings.helpers
         page_office = Docs.findOne FlowRouter.getParam('doc_id')
         current_incident_type = Session.get 'incident_type_selection'
         incident_type_owner_value = page_office["#{current_incident_type}_incident_owner"]
-        console.log incident_type_owner_value
+        # console.log incident_type_owner_value
         return incident_type_owner_value
 
     hours_key: -> 

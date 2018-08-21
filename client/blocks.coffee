@@ -285,67 +285,13 @@ Template.edit_author.helpers
     #         ]
     # }
 
-
-Template.small_doc_history.onCreated ->
-    @autorun =>  Meteor.subscribe 'child_docs', @data._id, 1
-Template.small_doc_history.helpers
-    doc_history_events: ->
-        cursor = 
-            Docs.find {
-                parent_id: Template.currentData()._id
-                type:'event'
-            }, 
-                sort:timestamp:-1
-                limit: 1
-        
 Template.parent_link.onCreated ->
     @autorun =>  Meteor.subscribe 'parent_doc', @data._id
 Template.parent_link.helpers
     parent_doc: ->
         Docs.find 
             _id: Template.currentData().parent_id
-        
-            
-Template.full_doc_history.onCreated ->
-    @autorun =>  Meteor.subscribe 'child_docs', @data._id
 
-
-Template.doc_history_event.onCreated ->
-    @autorun =>  Meteor.subscribe 'user_profile', @data.author_id
-Template.full_doc_history.helpers
-    doc_history_events: ->
-        Docs.find {
-            parent_id: Template.currentData()._id
-            type:'event'
-        }, sort:timestamp:-1
-        
-        
-Template.doc_history_event.helpers
-    event_icon_name: ->
-        # console.log @event_type
-        icon = ""
-        if @event_type
-            result = switch @event_type
-                when 'escalate' then icon.concat 'positive-dynamic'
-                when 'close' then icon.concat 'close-sign'
-                when 'setting_default_escalation_time' then icon.concat 'sort-by-modified-date'
-                when 'emailed_primary_contact' then icon.concat 'sent'
-                when 'emailed_secondary_contact' then icon.concat 'sent'
-                when 'emailed_franchisee_contact' then icon.concat 'housekeeper-male'
-                when 'submit' then icon.concat 'internal'
-                when 'unsubmit' then icon.concat 'undo'
-                when 'not-escalate' then icon.concat 'do-not-disturb'
-                when 'level_change' then icon.concat 'positive-dynamic'
-                else 'commit-git'
-        else if @event_key 
-            result = ' add-user-male'
-            
-        
-Template.full_doc_history.events
-    'click #clear_events': ->
-        doc_id = FlowRouter.getParam('doc_id')
-        if confirm 'Clear all events? Irriversible.'
-            Meteor.call 'clear_incident_events', doc_id
             
 Template.incidents_by_type.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], 'incident'

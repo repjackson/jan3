@@ -100,3 +100,42 @@ template(name='event')
                 // +mark_read_link
                 if is_dev
                     i.remove_event.remove.link.icon
+
+
+template(name='full_doc_history')
+    .ui.secondary.segment
+        .ui.header 
+            +icon name='activity-feed'
+            |Events
+            if is_admin
+                small#clear_events clear
+        .ui.comments
+            each doc_history_events
+                +doc_history_event
+                
+template(name='doc_history_event')
+    .comment
+        .avatar
+            // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            +icon name=event_icon_name
+        .content
+            if show_author
+                a.user #{author.username}
+            .metadata
+                .date {{ reg_format timestamp }}
+            .text #{action} #{text}
+                
+template(name='small_doc_history')
+    // .ui.header History
+    .ui.feed
+        each doc_history_events
+            +small_history_event
+                
+template(name='small_history_event')
+    .event
+        .content
+            .extra.text
+                |#{action} #{text}
+            .summary
+                .date {{reg_format timestamp}}
+                

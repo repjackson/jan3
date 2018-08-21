@@ -12,23 +12,6 @@ template(name='office_header')
                 .three.wide.right.aligned.column
                     // #calc_office_stats.ui.button Calc Office Stats
             .centered.row
-                .sixteen.wide.center.aligned.column
-                    .ui.horizontal.list
-                        .item ##{ev.ID}
-                        // .item Office Name
-                        //     strong #{ev.MASTER_LICENSEE}
-                        .item Owner
-                            strong #{ev.MASTER_OFFICE_OWNER}
-                        .item Manager
-                            strong #{ev.MASTER_OFFICE_MANAGER}
-                        // .item Last Updated
-                        //     strong #{ev.TIMESTAMP}
-                        .item #{ev.TELEPHONE}
-                        .item 
-                            |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-                            a(href=office_map_address target='_blank')
-                                i.external.icon
-            .centered.row
                 .sixteen.wide.column
                     unless is_customer
                         +office_nav
@@ -70,6 +53,23 @@ template(name='office_view')
     .ui.padded.grid
         .row
             .four.wide.column
+                .ui.secondary.segment
+                    .ui.list
+                        .item ##{ev.ID}
+                        // .item Office Name
+                        //     strong #{ev.MASTER_LICENSEE}
+                        .item Owner
+                            strong #{ev.MASTER_OFFICE_OWNER}
+                        .item Manager
+                            strong #{ev.MASTER_OFFICE_MANAGER}
+                        // .item Last Updated
+                        //     strong #{ev.TIMESTAMP}
+                        .item #{ev.TELEPHONE}
+                        .item 
+                            |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                            a(href=office_map_address target='_blank')
+                                i.external.icon
+
                 .ui.secondary.segment
                     .ui.header
                         +icon name='bar-chart'

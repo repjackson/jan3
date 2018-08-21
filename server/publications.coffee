@@ -499,7 +499,7 @@ Meteor.publish 'my_special_services', ->
         }, limit: 5
     
 Meteor.publish 'my_office_contacts', ()->    
-    console.log 'looking for office contacts'
+    # console.log 'looking for office contacts'
     user = Meteor.user()
     if user
         if 'customer' in user.roles

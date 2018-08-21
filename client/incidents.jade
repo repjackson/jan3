@@ -61,7 +61,7 @@ template(name='incident_view')
                 if is_customer
                     +link_button link='/customer_incidents' icon='error' label='My Incidents'
                 if is_office
-                    +link_button link="/office/#{my_office._id}/incidents" icon='error' label='Office Incidents'
+                    +link_button link=my_office_link icon='error' label='Office Incidents'
                     // a.ui.button(href="/office/#{my_office._id}/incidents")
                     //     +icon name='error'
                     //     | Office Incidents    
@@ -73,8 +73,9 @@ template(name='incident_view')
                     unless is_customer
                         +level_icon
             .four.wide.column
-                .ui.icon.remove_incident.button(data-content='Delete Incident')
-                    i.remove.icon
+                if is_dev
+                    .ui.icon.remove_incident.button(data-content='Delete Incident')
+                        i.remove.icon
                 unless is_customer
                     #run_single_escalation_check.ui.button 
                         i.user.shield.icon

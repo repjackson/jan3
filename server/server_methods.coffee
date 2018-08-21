@@ -337,72 +337,14 @@ Meteor.methods
     #     return new_message_id
       
       
-    update_escalation_statuses: ->
-        open_incidents = Docs.find({type:'incident', open:true, submitted:true})
-        open_incidents_count = open_incidents.count()
-        Meteor.call 'create_event',null, 'start_escalation_check', "Starting esclation check now."
-        Meteor.call 'create_event',null, 'incident_count', "Found #{open_incidents_count} open incidents, checking escalation status."
-        for incident in open_incidents.fetch()
-            Meteor.call 'single_escalation_check', incident._id
+    # update_escalation_statuses: ->
+    #     open_incidents = Docs.find({type:'incident', open:true, submitted:true})
+    #     open_incidents_count = open_incidents.count()
+    #     Meteor.call 'create_event',null, 'start_escalation_check', "Starting esclation check now."
+    #     Meteor.call 'create_event',null, 'incident_count', "Found #{open_incidents_count} open incidents, checking escalation status."
+    #     for incident in open_incidents.fetch()
+    #         Meteor.call 'single_escalation_check', incident._id
          
-    single_escalation_check: (incident_id)->
-        incident = Docs.findOne incident_id
-        if incident.level is 4
-            return
-            # Meteor.call 'create_event', incident_id, 'max_level_notice', "Incident is at max level 4, not escalating."
-        else
-            incident_office =
-                Docs.findOne
-                    "ev.MASTER_LICENSEE": incident.incident_office_name
-                    type:'office'
-            current_level = incident.level
-            next_level = current_level + 1
-
-            last_updated = incident.updated
-            existing_hours_value = incident_office["escalation_#{next_level}_#{incident.incident_type}_hours"]
-            if existing_hours_value 
-                hours_value = existing_hours_value
-            else 
-                hours_value = 2
-                Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation minutes found, using 2 as the default."
-                
-            
-            
-            now = Date.now()
-            updated_now_difference = now-last_updated
-            seconds_elapsed = Math.floor(updated_now_difference/1000)
-            minutes_elapsed = Math.floor(seconds_elapsed/60)
-            escalation_calculation = minutes_elapsed - hours_value
-            if minutes_elapsed < hours_value
-                Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
-                # continue
-            else    
-                Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, escalating."
-                Meteor.call 'escalate_incident', incident._id, ->
-            
-    escalate_incident: (doc_id)-> 
-        incident = Docs.findOne doc_id
-        current_level = incident.level
-        if current_level > 3
-            Docs.update doc_id,
-                $set:level:current_level-1
-        else
-            next_level = current_level + 1
-            Docs.update doc_id,
-                $set:
-                    level:next_level
-                    updated: Date.now()
-            Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{next_level}."
-            Meteor.call 'email_about_escalation', doc_id
-
-
-    clear_incident_events: (incident_id)->
-        cursor = Docs.find
-            parent_id: incident_id
-            type:'event'
-        for event_doc in cursor.fetch()
-            Docs.remove event_doc._id
-            
 
     check_username: (username)->
         found_user = Accounts.findUserByUsername username

@@ -268,35 +268,32 @@ Meteor.methods
                 username_display:'ID'
                 api_reverse_lookup:'NO'
                 id:'49467'
-                page_length:'100'
+                page_length:'10'
                 record_start:'1'
-                record_count:'100'
-        # return res.content
+                record_count:'10'
+        console.log res
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
-        #         # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-        #         # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
-        #         # new_id = Docs.insert 
+                # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
+                console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+                # new_id = Docs.insert 
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                     # doc.type = 'customer'
                     console.log doc
-                    # existing_service_doc = 
-                    #     Docs.findOne 
-                    #         type: 'special_service'
-                    #         jpid: doc.ID
-                    # if existing_service_doc
-                    #     console.log "existing special_service #{existing_service_doc.ev.FRANCHISEE}"
-                    #     # console.log doc
-                    #     Docs.update existing_service_doc._id,
-                    #         $set:
-                    #             ev: doc
-                    # else                    
-                    #     new_special_service_doc = Docs.insert 
-                    #         type:'special_service'
-                    #         jpid: doc.ID
-                    #         ev: doc
+                    existing_finance_doc = 
+                        Docs.findOne "ev.BILL_QB_INVOICE": doc.BILL_QB_INVOICE
+                    if existing_finance_doc
+                        console.log "existing finance #{existing_finance_doc.ev.FRANCHISEE}"
+                        # console.log doc
+                        Docs.update existing_finance_doc._id,
+                            $set:
+                                ev: doc
+                    else                    
+                        new_finance_doc = Docs.insert 
+                            type:'finance'
+                            ev: doc
                     #     console.log "added #{doc.ID}"
     
     sync_offices: () ->
@@ -541,11 +538,9 @@ Meteor.methods
                     if existing_customer_doc
                         console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
                         Docs.update existing_customer_doc._id,
-                            $set:
-                                ev: doc
+                            $set: ev: doc
                     unless existing_customer_doc                    
                         new_customer_doc = Docs.insert 
                             type: 'customer'
                             ev: doc
                         console.log "added #{doc.CUST_NAME}: #{doc.MASTER_LICENSEE}"
-                        

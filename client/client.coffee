@@ -38,6 +38,18 @@ Template.registerHelper 'is_editing', () ->
 
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
 
+Template.registerHelper 'my_office_link', () ->  
+    user = Meteor.user()
+    # console.log 'franch_doc', franch_doc
+    if user and user.profile 
+        if user.office_jpid
+            users_office = Docs.findOne
+                "ev.ID": user.office_jpid
+                type:'office'
+            # console.log users_office
+            users_office
+            return "/view/#{users_office._id}"
+
 Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
 
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()         
