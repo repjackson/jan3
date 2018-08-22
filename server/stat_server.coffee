@@ -17,6 +17,13 @@ Meteor.publish 'active_customers_stat', (type)->
         stat_type: 'active'
 
 
+Meteor.publish 'active_franchisees_stat', (type)->
+    Meteor.call 'calculate_active_customers'
+    Stats.find
+        doc_type: 'franchisee'
+        stat_type: 'active'
+
+
 
 Meteor.publish 'count', (type)->
     Meteor.call 'calculate_doc_type_count', type
@@ -190,8 +197,8 @@ Meteor.methods
         
         
     calculate_active_customers: ()->
-        count = Docs.find(type:'customer', "ev.ACCOUNT_STATUS":'active').count()
-        
+        count = Docs.find(type:'customer', "ev.ACCOUNT_STATUS":'ACTIVE').count()
+        console.log count
         Stats.update({
             doc_type: 'customer'
             stat_type: 'active'
@@ -199,7 +206,7 @@ Meteor.methods
         
         
     calculate_active_franchisees: ()->
-        count = Docs.find(type:'franchisee', "ev.ACCOUNT_STATUS":'active').count()
+        count = Docs.find(type:'franchisee', "ev.ACCOUNT_STATUS":'ACTIVE').count()
         
         Stats.update({
             doc_type: 'franchisee'

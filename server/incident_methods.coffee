@@ -18,20 +18,30 @@ Meteor.methods
                     $addToSet: assigned_to: owner_user._id
                     $set: assignment_timestamp:Date.now()
                 # escalation_minutes = incidents_office["escalation_1_#{incident.incident_type}_hours"]
-                Meteor.call 'create_event', incident_doc_id, 'assignment', "Incident owner #{owner_user.username} automatically assigned to submitted incident."
-                Meteor.call 'create_event', incident_doc_id, 'timestamp_update', "Incident assignment timestamp updated."
+                Meteor.call 'create_event', incident_doc_id, 'assignment', "Owner #{owner_user.username} automatically assigned after submission."
+                Meteor.call 'create_event', incident_doc_id, 'timestamp_update', "Assignment timestamp updated."
         else
             throw new Meteor.Error 'no incident office found, cant run escalation rules'
     
     
     
     unassign_user_from_incident: (incident_doc_id, username)->
-        assigned_user = Meteor.users.findOne username:username
+        owner_user = Meteor.users.findOne username:username
         incident_doc = Docs.findOne incident_doc_id
         Docs.update incident_doc_id,
             $pull: assigned_to: assigned_user._id
             $set: assignment_timestamp:Date.now()
-            
+        Meteor.call 'create_event', incident_doc_id, 'unassignment', "#{username} unassigned."
+        # assign owner if no one else
+        updated_doc = Docs.findOne incident_doc_id
+        if updated_doc.assigned_to.length is 0
+            incident_office = Docs.findOne({type:'office', "ev.ID":updated_doc.office_jpid})
+            owner_value = incident_office["#{incident_doc.incident_type}_incident_owner"]
+            owner_user = Meteor.users.findOne username:owner_value
+            Docs.update incident_doc_id, 
+                $addToSet:assigned_to:[owner_user._id]
+        Meteor.call 'create_incident_event', incident_doc_id, 'assignment', "#{username} assigned."
+                
             
     update_escalation_statuses: ->
         open_incidents = Docs.find({type:'incident', open:true, submitted:true})
@@ -68,10 +78,10 @@ Meteor.methods
             minutes_elapsed = Math.floor(seconds_elapsed/60)
             escalation_calculation = minutes_elapsed - hours_value
             if minutes_elapsed < hours_value
-                Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
+                Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in level #{next_level} #{incident.incident_type} rules, not escalating."
                 # continue
             else    
-                Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, escalating."
+                Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in level #{next_level} #{incident.incident_type} rules, escalating."
                 Meteor.call 'escalate_incident', incident._id, ->
             
     escalate_incident: (doc_id)-> 
@@ -86,7 +96,7 @@ Meteor.methods
                 $set:
                     level:next_level
                     updated: Date.now()
-            Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{next_level}."
+            Meteor.call 'create_event', doc_id, 'escalate', "Automatic escalation from #{current_level} to #{next_level}."
             Meteor.call 'email_about_escalation', doc_id
 
 
@@ -118,7 +128,7 @@ Meteor.methods
         initial_secondary_contact_value = office_doc["escalation_1_#{incident.incident_type}_secondary_contact"]
         
         initial_franchisee_value = office_doc["escalation_1_#{incident.incident_type}_contact_franchisee"]
-        
+        initial_customer_value = office_doc["escalation_1_#{incident.incident_type}_contact_customer"]
         # console.log 'initial_secondary_contact_value', initial_secondary_contact_value
         mail_fields = {
             to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
@@ -139,10 +149,10 @@ Meteor.methods
                 <h5>Franchisee: #{initial_franchisee_value}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
             "
         }
-        Meteor.call 'create_event', incident_id, 'emailed_owner', "#{incident_owner_username} emailed as the incident owner for initial submission."
+        Meteor.call 'create_event', incident_id, 'emailed_owner', "#{incident_owner_username} emailed as the incident owner after initial submission."
         Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{initial_secondary_contact_value} emailed as the secondary contact for initial submission."
         if initial_franchisee_value
-            Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for incident submission."
+            Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed after incident submission."
 
         Meteor.call 'send_email', mail_fields
     
@@ -225,17 +235,17 @@ Meteor.methods
             "
         }
         
-        Meteor.call 'send_message', incident_owner_username, 'system_escalation_bot', "You have been notified as the incident owner for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
-        Meteor.call 'send_message', escalation_secondary_contact_value, 'system_escalation_bot', "You have been notified as the secondary contact for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
+        Meteor.call 'send_message', incident_owner_username, 'system_escalation_bot', "You are being notified as the incident owner for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
+        Meteor.call 'send_message', escalation_secondary_contact_value, 'system_escalation_bot', "You are being notified as secondary contact for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
         
         Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{incident_owner_username} emailed as the incident owner for a #{incident.incident_type} escalation to level #{incident.level}."
         Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{escalation_secondary_contact_value} emailed as the secondary contact for a #{incident.incident_type} escalation to level #{incident.level}."
         if escalation_franchisee_value
             Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a #{incident.incident_type} escalation to level #{incident.level}."
-            Meteor.call 'send_message', franchisee.ev.FRANCHISEE, 'system_escalation_bot', "You have been notified as the franchisee for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
+            Meteor.call 'send_message', franchisee.ev.FRANCHISEE, 'system_escalation_bot', "You are being notified as the franchisee for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
         if escalation_customer_value
             Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a #{incident.incident_type} escalation to level #{incident.level}."
-            Meteor.call 'send_message', incident.customer_name, 'system_escalation_bot', "You have been notified as the customer for an incident submission."
+            Meteor.call 'send_message', incident.customer_name, 'system_escalation_bot', "You are being notified as the customer for an incident submission."
 
         Meteor.call 'send_email', mail_fields
 
@@ -260,8 +270,6 @@ Meteor.methods
             else 
                 hours_value = 2
                 Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation minutes found, using 2 as the default."
-                
-            
             
             now = Date.now()
             updated_now_difference = now-last_updated
@@ -287,7 +295,7 @@ Meteor.methods
                 $set:
                     level:next_level
                     updated: Date.now()
-            Meteor.call 'create_event', doc_id, 'escalate', "Incident was automatically escalated from #{current_level} to #{next_level}."
+            Meteor.call 'create_event', doc_id, 'escalate', "Automatic escalation from #{current_level} to #{next_level}."
             Meteor.call 'email_about_escalation', doc_id
 
 
