@@ -107,8 +107,8 @@ template(name='full_doc_history')
         .ui.header 
             +icon name='activity-feed'
             |Events
-            if is_admin
-                small#clear_events clear
+            // if is_admin
+            //     small#clear_events (x)
         .ui.comments
             each doc_history_events
                 +doc_history_event

@@ -44,7 +44,7 @@ Template.login.events
                     Bert.alert "Error Logging in #{username}: #{err.reason}", 'info', 'growl-top-right'
                 else
                     Meteor.call 'redirect_office_after_login', (err,res)->
-                        console.log res
+                        # console.log res
                         if 'office' in res.user.roles
                             FlowRouter.go "/office/#{res.office._id}/incidents"        
                         else if 'customer' in res.user.roles

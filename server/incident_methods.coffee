@@ -29,7 +29,7 @@ Meteor.methods
         owner_user = Meteor.users.findOne username:username
         incident_doc = Docs.findOne incident_doc_id
         Docs.update incident_doc_id,
-            $pull: assigned_to: assigned_user._id
+            $pull: assigned_to: owner_user._id
             $set: assignment_timestamp:Date.now()
         Meteor.call 'create_event', incident_doc_id, 'unassignment', "#{username} unassigned."
         # assign owner if no one else

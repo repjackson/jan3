@@ -234,15 +234,16 @@ Meteor.methods
                 action:action
 
     create_incident_event: (incident_doc_id, event_type, action)->
-        office_doc = Meteor.call 'find_office_from_customer_jpid'
-        franchisee_doc = Meteor.call 'find_franchisee_from_customer_jpid'
+        incident = Docs.findOne incident_doc_id
+        office_doc = Meteor.call 'find_office_from_customer_jpid', incident.ev.ID
+        franchisee_doc = Meteor.call 'find_franchisee_from_customer_jpid', incident.ev.ID
         Docs.insert
             type:'event'
-            parent_id: parent_id
+            parent_id: incident_doc_id
             event_type: event_type
             action:action
             office_jpid: office_doc.ev.ID
-            franchisee _jpid: franchisee _doc.ev.ID
+            franchisee_jpid: franchisee_doc.ev.ID
 
     set_incident_level: (target_id, event_type, level)->
         doc = Docs.findOne target_id

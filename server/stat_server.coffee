@@ -18,7 +18,7 @@ Meteor.publish 'active_customers_stat', (type)->
 
 
 Meteor.publish 'active_franchisees_stat', (type)->
-    Meteor.call 'calculate_active_customers'
+    Meteor.call 'calculate_active_franchisees'
     Stats.find
         doc_type: 'franchisee'
         stat_type: 'active'

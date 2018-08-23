@@ -99,6 +99,7 @@ Template.customer_incidents.onCreated ->
     Session.set('page_size',10)
     @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'my_incident_count'
+
 Template.customer_incidents.helpers
     customer_incidents: -> 
         Docs.find {
@@ -116,8 +117,10 @@ Template.incident_view.onRendered ->
     target_username = FlowRouter.getQueryParam 'username'
     # console.log 'target username?',target_username
     if target_username
-        Bert.alert "Unassigning user: #{target_username}", 'info', 'growl-top-right'
-        Meteor.call 'unassign_user_from_incident', FlowRouter.getParam('doc_id'), target_username
+        Meteor.call 'unassign_user_from_incident', FlowRouter.getParam('doc_id'), target_username, (err,res)->
+            if err then console.error err
+            else
+                Bert.alert "Unassigning user: #{target_username}", 'info', 'growl-top-right'
     # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getParam('doc_id')
 
 Template.incident_view.helpers

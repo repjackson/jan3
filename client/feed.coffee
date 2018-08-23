@@ -112,6 +112,8 @@ Template.doc_history_event.helpers
                 when 'emailed_franchisee_contact' then icon.concat 'housekeeper-male'
                 when 'submit' then icon.concat 'internal'
                 when 'unsubmit' then icon.concat 'undo'
+                when 'assignment' then icon.concat 'add-user-male'
+                when 'unassignment' then icon.concat 'remove-user-female'
                 when 'not-escalate' then icon.concat 'do-not-disturb'
                 when 'level_change' then icon.concat 'positive-dynamic'
                 else 'commit-git'
@@ -126,6 +128,8 @@ Template.doc_history_event.helpers
             when 'emailed_owner' then false
             when 'emailed_secondary_contact' then false
             when 'emailed_franchisee_contact' then false
+            when 'assignment' then false
+            when 'unnassigment' then false
             when 'submit' then true
             when 'unsubmit' then true
             when 'not-escalate' then false

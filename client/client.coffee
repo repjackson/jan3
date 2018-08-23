@@ -57,7 +57,7 @@ Template.registerHelper 'is_closed', () -> @status is 'closed'
 
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 # Template.registerHelper 'reg_format', (input) -> moment(input).format('MMMM Do YYYY, h:mm:ss a')
-Template.registerHelper 'reg_format', (input) -> moment(input).format('MMMM Do, h:mma')
+Template.registerHelper 'reg_format', (input) -> moment(input).format('MMMM Do h:mma')
 
 Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getParam('doc_id')
 

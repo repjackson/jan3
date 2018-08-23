@@ -92,6 +92,7 @@ Template.table_footer.helpers
         if Session.equals('page_size', number) then 'blue' else ''
     
     show_10: ->
+        # console.log @
         count_stat = Stats.findOne
             doc_type:@doc_type
             stat_type:@stat_type
