@@ -110,6 +110,8 @@ Template.doc_history_event.helpers
                 when 'emailed_owner' then icon.concat 'user-shield'
                 when 'emailed_secondary_contact' then icon.concat 'sent'
                 when 'emailed_franchisee_contact' then icon.concat 'housekeeper-male'
+                when 'mark_complete' then icon.concat 'checked-checkbox'
+                when 'mark_incomplete' then icon.concat 'unchecked-checkbox'
                 when 'submit' then icon.concat 'internal'
                 when 'unsubmit' then icon.concat 'undo'
                 when 'assignment' then icon.concat 'add-user-male'
@@ -132,6 +134,8 @@ Template.doc_history_event.helpers
             when 'unnassigment' then false
             when 'submit' then true
             when 'unsubmit' then true
+            when 'mark_complete' then true
+            when 'mark_incomplete' then true
             when 'not-escalate' then false
             when 'level_change' then true
             else false

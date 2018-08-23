@@ -9,7 +9,10 @@ template(name='blog')
             .three.wide.center.aligned.column
                 +add_button type='post'
         .row 
-            .sixteen.wide.column
+            .four.wide.column
+                +tag_facet
+                +timestamp_facet
+            .twelve.wide.column
                 each post_docs
                     +post_segment
 
@@ -17,10 +20,10 @@ template(name='blog')
 template(name='post_segment')
     .ui.segment
         h5.ui.header
-            a(href="/view/#{_id}")
-                if complete
-                    i.green.checkmark.icon
-                |#{title} 
+            // a(href="/view/#{_id}")
+            if complete
+                i.green.checkmark.icon
+            |#{title} 
         div
         |!{html}
         each tags

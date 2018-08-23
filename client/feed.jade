@@ -6,7 +6,11 @@ template(name='global_feed')
                     +icon name='rss'
                     | Global Feed
         .row
-            .sixteen.wide.column
+            .four.wide.column
+                .ui.header Stats
+                |Total
+                +view_stat stat_type='total' doc_type='event'
+            .twelve.wide.column
                 +feed
                         
                         
@@ -40,9 +44,9 @@ template(name='users_feed')
     h1.ui.header
         +icon name='rss'
         | Users Feed
-    .ui.feed
+    .ui.comments
         each feed_events
-            +users_feed_event
+            +doc_history_event
                         
                         
 template(name='users_feed_event')
@@ -63,11 +67,12 @@ template(name='users_feed_event')
                     
 template(name='feed')
     .ui.header
-        +icon name=icon
+        if icon
+            +icon name=icon
         | #{title}
-    .ui.feed
+    .ui.comments
         each event_docs
-            +event
+            +doc_history_event
                         
                         
 template(name='office_feed')
@@ -80,24 +85,35 @@ template(name='office_feed')
     .ui.button alert    
     .ui.button submission    
     
-    .ui.feed
+    .ui.comments
         each event_docs
-            +event
+            +doc_history_event
                         
                         
 
 template(name='event')
-    .event
-        .label
-            img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+    // .event
+    //     .label
+    //         img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+    //     .content
+    //         .summary
+    //             a.user #{author.username}
+    //             |#{action} #{text}
+    //             a(href="/view/#{parent._id}") #{parent.title}
+    //             .date #{when}
+    //         .meta
+    //             // +mark_read_link
+    .comment
+        .avatar
+            // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            +icon name=event_icon_name
         .content
-            .summary
+            if show_author
                 a.user #{author.username}
-                |#{action} #{text}
-                a(href="/view/#{parent._id}") #{parent.title}
-                .date #{when}
-            .meta
-                // +mark_read_link
+            .metadata
+                .date {{ reg_format timestamp }}
+            .text #{action} #{text}
+            .actions
                 if is_dev
                     i.remove_event.remove.link.icon
 
@@ -123,7 +139,13 @@ template(name='doc_history_event')
                 a.user #{author.username}
             .metadata
                 .date {{ reg_format timestamp }}
+                .rating #{event_type}
             .text #{action} #{text}
+            .actions
+                if is_dev
+                    i.remove_event.remove.link.icon
+        
+                
                 
 template(name='small_doc_history')
     // .ui.header History

@@ -34,7 +34,8 @@ template(name='offices')
                     tbody
                         each all_offices
                             tr
-                                td #{ev.ID}
+                                td.selectable
+                                    a(href="/view/#{_id}") #{ev.ID}
                                 td.selectable
                                     a(href="/view/#{_id}") #{ev.MASTER_LICENSEE}
                                 td #{ev.MASTER_OFFICE_MANAGER}

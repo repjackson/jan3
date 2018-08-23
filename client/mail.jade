@@ -15,7 +15,12 @@ template(name='mail')
                 //     +icon name='new-message' classes='ui mini inline image'
                 //     |#{unread_message_count}
         .row
-            .sixteen.wide.column
+            .four.wide.column
+                .ui.secondary.segment
+                    .ui.header Stats
+                    +view_stat doc_type='message' stat_type='total'
+                    |Messages
+            .twelve.wide.column
                 +table collection='Docs' type='message' fields=message_table_fields
             // .four.wide.column
                 // +theme_tag_filter type='conversation'
