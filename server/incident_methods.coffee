@@ -31,16 +31,17 @@ Meteor.methods
         Docs.update incident_doc_id,
             $pull: assigned_to: owner_user._id
             $set: assignment_timestamp:Date.now()
-        Meteor.call 'create_event', incident_doc_id, 'unassignment', "#{username} unassigned."
+        Meteor.call 'create_event', incident_doc_id, 'unassignment', "#{username} marked task complete and was unassigned."
         # assign owner if no one else
         updated_doc = Docs.findOne incident_doc_id
+        console.log updated_doc.assigned_to.length
         if updated_doc.assigned_to.length is 0
             incident_office = Docs.findOne({type:'office', "ev.ID":updated_doc.office_jpid})
             owner_value = incident_office["#{incident_doc.incident_type}_incident_owner"]
             owner_user = Meteor.users.findOne username:owner_value
             Docs.update incident_doc_id, 
                 $addToSet:assigned_to:[owner_user._id]
-        Meteor.call 'create_incident_event', incident_doc_id, 'assignment', "#{username} assigned."
+            Meteor.call 'create_event', incident_doc_id, 'assignment', "Owner #{username} reassigned after completed task by #{username}."
                 
             
     update_escalation_statuses: ->

@@ -5,124 +5,126 @@ template(name='admin')
                 h1.ui.center.aligned.header
                     +icon name='user-shield'
                     | Admin
-        .column
-            a.ui.card(href='/jpids')
+        .ui.four.stackable.centered.cards
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/jpids')
                         +icon name='fingerprint'
-                        +view_stat stat_type='total' doc_type='jpid'
                         | JP Ids
-        // .column
-        //     a.ui.card(href='/history')
-        //         .content
-        //             .ui.header
-        //                 +icon name='clock'
-        //                 | EV History
-        .column
-            a.ui.card(href='/offices')
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='jpid'
+            //     a.card(href='/history')
+            //         .content
+            //             .ui.header
+            //                 +icon name='clock'
+            //                 | EV History
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/offices')
                         +icon name='building'
-                        +view_stat stat_type='total' doc_type='office'
                         | Offices
-        .column
-            a.ui.card(href='/franchisees')
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='office'
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/franchisees')
                         +icon name='conference'
-                        +view_stat stat_type='total' doc_type='franchisee'
                         | Franchisees
-        .column
-            a.ui.card(href='/customers')
+                    .description
+                        .ui.list
+                            .item Active
+                                +view_stat stat_type='active' doc_type='franchisee'
+                            .item Total
+                                +view_stat stat_type='total' doc_type='franchisee'
+                            
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/customers')
                         +icon name='customer-support'
-                        +view_stat stat_type='total' doc_type='customer'
                         | Customers
-        .column
-            a.ui.card(href='/special_services')
+                    .ui.list
+                        .item Active
+                            +view_stat stat_type='active' doc_type='customer'
+                        .item Total
+                            +view_stat stat_type='total' doc_type='customer'
+            //     a.card(href='/special_services')
+            //         .content
+            //             .ui.header
+            //                 +icon name='invoice'
+            //                 +view_stat stat_type='total' doc_type='special_service'
+            //                 | Special Services
+            .card
                 .content
-                    .ui.header
-                        +icon name='invoice'
-                        +view_stat stat_type='total' doc_type='special_service'
-                        | Special Services
-        .column
-            a.ui.card(href='/services')
-                .content
-                    .ui.header
+                    a.ui.header(href='/services')
                         +icon name='broom'
-                        +view_stat stat_type='total' doc_type='service'
                         | Services
-        .column
-            a.ui.card(href='/stats')
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='service'
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/stats')
                         +icon name='bar-chart'
-                        +view_stat stat_type='total' doc_type='stat'
                         | Stats
-        .column
-            a.ui.card(href='/store')
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/store')
                         +icon name='small-business'
-                        +view_stat stat_type='total' doc_type='product'
                         | Store
-        .column
-            a.ui.card(href='/feed')
+                    .description
+                        | Total
+                        +view_stat stat_type='total' doc_type='product'
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/feed')
                         +icon name='rss'
-                        +view_stat stat_type='total' doc_type='event'
                         | Global Feed
-        .column
-            a.ui.card(href='/roles')
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='event'
+            .card
                 .content
-                    .ui.header
+                    .ui.header(href='/roles')
                         +icon name='checked-user-male'
-                        +view_stat stat_type='total' doc_type='role'
                         | Roles
-        .column
-            a.ui.card(href='/rules')
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='role'
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/rules')
                         +icon name='rules'
-                        +view_stat stat_type='total' doc_type='rule'
                         | Rules
-        .column
-            a.ui.card(href='/bugs')
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='rule'
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/bugs')
                         +icon name='bug'
-                        +view_stat stat_type='total' doc_type='bug'
                         | Bugs
-        .column
-            a.ui.card(href='/tasks')
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='bug'
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/tasks')
                         +icon name='realtime-protection'
-                        +view_stat stat_type='total' doc_type='task'
                         | Tasks
-        .column
-            a.ui.card(href='/incident_types')
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='task'
+            .card
                 .content
-                    .ui.header
+                    a.ui.header(href='/incident_types')
                         +icon name='clone'
-                        +view_stat stat_type='total' doc_type='incident_type'
                         | Incident Types
-                    
-
-template(name='admin_widget')
-    .ui.card
-        .content
-            a.ui.center.aligned.icon.header(href=link)
-                i.icon(class=icon)
-                .content
-                    |#{label}
-            .ui.list
-                each children
-                    a.item(href="/view/#{_id}") #{name} #{title} !{html}
-
-
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='incident_type'
+        .ui.hidden.divider
 
 
 template(name='bugs')
@@ -162,27 +164,31 @@ template(name='bug_edit')
                 #delete_bug.ui.icon.button
                     i.trash.icon
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit Bug #{body}
+                h1.ui.center.aligned.grey.header Edit Bug #{body} #{text}
             .three.wide.center.aligned.column
                 +save_button
         .eight.wide.column
+            h4.ui.header Site Link:
+                a(href=link) #{link}
             .ui.form
-                +edit_text_field key='body' label='Body'
+                +edit_text_field key='text' label='Description'
         
         
 template(name='bug_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
-                +link_button link='/bugs' icon='bug' label='bugs'
+                +link_button link='/bugs' icon='bug' label='Bugs'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header View Bug 
             .three.wide.center.aligned.column
                 +edit_button
         .row
             .eight.wide.column
-                .ui.header Body: 
-                    strong #{body}
+                h4.ui.header Site Link:
+                    a(href=link) #{link}
+                .ui.header Description: 
+                    strong #{body} #{text}
                 +author_info
                 .ui.header #{when}
                 
