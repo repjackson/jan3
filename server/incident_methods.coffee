@@ -148,12 +148,15 @@ Meteor.methods
                 <h5>Incident Owner: #{incident_owner_username}</h5>
                 <h5>Secondary Office Contact: #{initial_secondary_contact_value}</h5>
                 <h5>Franchisee: #{initial_franchisee_value}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
+                <h5>Customer: #{initial_customer_value}, #{customer.ev.CUST_NAME} at #{customer.ev.CUST_CONTACT_EMAIL}</h5>
             "
         }
         Meteor.call 'create_event', incident_id, 'emailed_owner', "#{incident_owner_username} emailed as the incident owner after initial submission."
         Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{initial_secondary_contact_value} emailed as the secondary contact for initial submission."
         if initial_franchisee_value
             Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed after incident submission."
+        if initial_customer_value
+            Meteor.call 'create_event', incident_id, 'emailed_customer_contact', "Customer #{customer.ev.CUST_NAME} emailed after incident submission."
 
         Meteor.call 'send_email', mail_fields
     

@@ -268,10 +268,10 @@ Meteor.methods
                 username_display:'ID'
                 api_reverse_lookup:'NO'
                 id:'49467'
-                page_length:'10'
-                record_start:'1'
-                record_count:'10'
-        console.log res
+                page_length:'10000'
+                record_start:'10000'
+                record_count:'10000'
+        # console.log res
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
@@ -281,11 +281,11 @@ Meteor.methods
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                     # doc.type = 'customer'
-                    console.log doc
+                    # console.log doc
                     existing_finance_doc = 
                         Docs.findOne "ev.BILL_QB_INVOICE": doc.BILL_QB_INVOICE
                     if existing_finance_doc
-                        console.log "existing finance #{existing_finance_doc.ev.FRANCHISEE}"
+                        console.log "existing finance #{existing_finance_doc}"
                         # console.log doc
                         Docs.update existing_finance_doc._id,
                             $set:
@@ -294,7 +294,7 @@ Meteor.methods
                         new_finance_doc = Docs.insert 
                             type:'finance'
                             ev: doc
-                    #     console.log "added #{doc.ID}"
+                        console.log "added #{doc.CUSTOMER} invoice" 
     
     sync_offices: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",

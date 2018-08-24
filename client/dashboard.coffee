@@ -97,7 +97,8 @@ Template.customer_incidents_widget.events
 Template.customer_incidents_widget.helpers
     customer_incidents: -> Docs.find {type:'incident'}, sort:timestamp:-1
     
-    skip_amount: -> Session.get 'skip'
+    skip_amount: -> Session.get('skip') + 1
+    end_result: -> Session.get('skip') + 1 + Session.get('page_size')
 
     pagination_item_class: ->
         if Session.equals('current_page_number', @number) then 'active' else ''
@@ -154,5 +155,12 @@ Template.dashboard_consumables_widget.onCreated ->
 Template.dashboard_consumables_widget.helpers
     products_available: -> 
         Docs.find type:'product'
+                
+                
+Template.customer_invoices_widget.onCreated ->
+    @autorun -> Meteor.subscribe 'customer_invoices'
+Template.customer_invoices_widget.helpers
+    customer_invoices: -> 
+        Docs.find type:'finance'
                 
                 

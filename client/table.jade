@@ -28,7 +28,7 @@ template(name='table_footer')
                 th(colspan=columns)
                     if pages
                         .ui.right.floated
-                            |From #{skip_amount} of #{count_amount}
+                            |From #{skip_amount} to #{end_result} of #{count_amount}
                         .ui.right.floated.pagination.menu
                             each pages
                                 a.set_page_number.item(class=pagination_item_class) #{number}

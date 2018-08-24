@@ -79,13 +79,13 @@ Template.edit_number_field.events
             
 Template.edit_textarea.events
     'keyup .textarea': (e,t)->
-        _.debounce(()->
+        textarea_value = $(e.currentTarget).closest('.textarea').val()
+        update_textarea = ->
             doc_id = FlowRouter.getParam('doc_id')
-            textarea_value = $(e.currentTarget).closest('.textarea').val()
             Docs.update doc_id,
-                { $set: "#{@key}": textarea_value }
-        , 500)
-        
+                { $set: "#{t.data.key}": textarea_value }
+        debounced = _.debounce(update_textarea, 500)
+        debounced()
             # , (err,res)=>
             #     if err
             #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'

@@ -15,22 +15,34 @@ template(name='dashboard')
             if currentUser.users_customer.parent_franchisee.parent_office.customer_message
                 .four.column.row
                     .column
-                        .ui.info.icon.floating.message
-                            i.info.icon
+                        .ui.floating.message
                             .content
-                                .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Message
+                                .header 
+                                    i.large.icon
+                                        +icon name='sms'
+                                    |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Message
+                            .content
+                                p 
                                 p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
                     .column
-                        .ui.info.icon.floating.message
-                            i.bullhorn.icon
+                        .ui.floating.message
                             .content
-                                .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Promotions
+                                .header 
+                                    i.large.icon
+                                        +icon name='discount'
+                                    |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Promotions
+                            .content
+                                p 
                                 p #{currentUser.users_customer.parent_franchisee.parent_office.customer_promotions}
                     .column
-                        .ui.info.icon.floating.message
-                            i.info.icon
+                        .ui.floating.message
                             .content
-                                .header #{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Help Policy
+                                .header 
+                                    i.large.icon
+                                        +icon name='faq'
+                                    |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Help Policy
+                            .content
+                                p 
                                 p #{currentUser.users_customer.parent_franchisee.parent_office.help_policy}
                     .column
                         +small_service_list
@@ -62,7 +74,7 @@ template(name='dashboard')
                 // .eight.wide.column
                 //     +dashboard_services_widget
                 .sixteen.wide.column
-                    +customer_finance_widget
+                    +customer_invoices_widget
             // .row
             //     .sixteen.wide.column
             //         +dashboard_consumables_widget
@@ -175,10 +187,10 @@ template(name='customer_incidents_widget')
         // i.exclamation.circle.icon
         +icon name='error'
         | #{currentUser.users_customer.ev.CUST_NAME}'s Incidents
-    table.ui.striped.selectable.fixed.table
+    table.ui.striped.fixed.table
         thead
             tr
-                th.one.wide Number
+                th.one.wide #
                 th Type
                 th Details
                 th Service Date
@@ -213,7 +225,7 @@ template(name='customer_incidents_widget')
                         .ui.right.floated.pagination.menu
                             each pages
                                 a.set_page_number.item(class=pagination_item_class) #{number}
-                    |Showing ##{skip_amount} of #{count_amount}.
+                    |Showing ##{skip_amount}-#{end_result} of #{count_amount}.
 
 template(name='customer_special_services')
     h3.ui.header 
@@ -234,10 +246,10 @@ template(name='customer_special_services')
             tr
                 // th JPID
                 // th Customer
-                th Service Type
+                th Type
                 th Description
                 th Date Created
-                th Extra Price
+                th $
                 
         tbody
             each my_special_services
@@ -262,7 +274,11 @@ template(name='dashboard_office_contacts_list')
                 tr
                     td 
                         img.ui.avatar.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
-                        |#{profile.first_name} #{profile.last_name}
+                        .ui.popup
+                            img.ui.small.image(src="{{c.url profile.image_id height=500 width=500 crop='fill' gravity='face'}}")
+                        a(href="/user/#{username}") #{profile.first_name} #{profile.last_name}
+                        .ui.popup
+                            img.ui.small.image(src="{{c.url profile.image_id height=500 width=500 crop='fill' gravity='face'}}")
                     td 
                         div #{profile.title}
                         div 
@@ -280,7 +296,7 @@ template(name='dashboard_office_contacts_list')
 
 template(name='small_service_list')
     .ui.secondary.segment
-        h3.ui.header 
+        h4.ui.dividing.header 
             +iconsmall name='broom'
             |Other Jan-Pro Services Offered
         .ui.three.column.grid
@@ -291,13 +307,32 @@ template(name='small_service_list')
                         |#{title}
 
 
-template(name='customer_finance_widget')
+template(name='customer_invoices_widget')
     .ui.secondary.segment
         .ui.header 
             +iconsmall name='money'
-            |Finances
-        h4.ui.header Account Status
-        h4.ui.header Invoices
-        h4.ui.header Statements
-        h4.ui.header Work History
-        
+            |Invoices
+        table.ui.striped.fixed.table
+            thead
+                tr
+                    th Office
+                    th Customer
+                    th Invoice
+                    th Date
+                    th Total
+                    th Balance
+                    th RS Amount
+                    th Specials 
+                    th Tax 
+            tbody
+                each customer_invoices
+                    tr
+                        td #{ev.MASTER_LICENSEE}
+                        td #{ev.CUSTOMER}
+                        td #{ev.BILL_QB_INVOICE}
+                        td #{ev.BILL_QB_INVOICE_DATE}
+                        td #{ev.BILL_QB_TOTAL}
+                        td #{ev.BILL_BALANCE}
+                        td #{ev.BILL_QB_RS_AMOUNT}
+                        td #{ev.BILL_QB_SPECIALS}
+                        td #{ev.SUP_TOT_TAX}

@@ -306,6 +306,8 @@ Meteor.publish 'my_customer_incidents', (query, limit=100, sort_key='timestamp',
                 limit:limit
                 sort:"#{sort_key}":parseInt("#{sort_direction}")
             }
+
+
 publishComposite 'docs', (selected_tags, type, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
     {
         find: ->
@@ -379,6 +381,26 @@ publishComposite 'customer_incidents', (customer_jpid)->
             cursor = Docs.find 
                 type:'incident' 
                 customer_jpid:customer_jpid
+            cursor
+        # children: [
+        #     {
+        #         find: (doc)-> Meteor.users.find _id:doc.author_id
+        #     }
+        #     {
+        #         find: (doc)-> Docs.find _id:doc.parent_id
+        #     }
+        #     {
+        #         find: (doc)-> Meteor.users.find _id:$in:doc.assigned_to
+        #     }
+        # ]
+    }
+    
+    
+publishComposite 'customer_invoices', (customer_jpid)->
+    {
+        find: ->
+            self = @
+            cursor = Docs.find {type:'finance'}, limit:10 
             cursor
         # children: [
         #     {

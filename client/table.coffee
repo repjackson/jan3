@@ -73,6 +73,7 @@ Template.table_footer.helpers
     is_querying: -> Session.get('query', null)
 
     skip_amount: -> parseInt(Session.get('skip'))+1
+    end_result: -> Session.get('skip') + 1 + Session.get('page_size')
 
     pagination_item_class: ->
         if Session.equals('current_page_number', @number) then 'active' else ''
