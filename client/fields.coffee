@@ -78,16 +78,19 @@ Template.edit_number_field.events
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
             
 Template.edit_textarea.events
-    'blur .textarea': (e,t)->
-        doc_id = FlowRouter.getParam('doc_id')
-        textarea_value = $(e.currentTarget).closest('.textarea').val()
-        Docs.update doc_id,
-            { $set: "#{@key}": textarea_value }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
+    'keyup .textarea': (e,t)->
+        _.debounce(()->
+            doc_id = FlowRouter.getParam('doc_id')
+            textarea_value = $(e.currentTarget).closest('.textarea').val()
+            Docs.update doc_id,
+                { $set: "#{@key}": textarea_value }
+        , 500)
+        
+            # , (err,res)=>
+            #     if err
+            #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
+            #     else
+            #         Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 Template.edit_textarea.helpers
     'key_value': () -> 

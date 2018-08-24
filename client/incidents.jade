@@ -91,10 +91,7 @@ template(name='incident_view')
                 //         |#{incident_number}
                 //     else
                 //         +call_method name='update_incident_number' argument=_id                
-                if can_edit_core
-                    // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
-                    +edit_datetime_field key='service_date' label='Service Time'
-                else
+                unless can_edit_core
                     .ui.secondary.segment
                         .ui.header 
                             +icon name='leave'
@@ -130,6 +127,8 @@ template(name='incident_view')
                         #submit_feedback.ui.button Submit Feedback
                 if can_edit_core
                     +edit_textarea label='Details' key='incident_details' icon='view-details'
+                    // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
+                    +edit_datetime_field key='service_date' label='Service Time'
                 else
                     .ui.basic.segment
                         // +icon name='view-details'
@@ -180,13 +179,13 @@ template(name='incident_view')
                     //     .unsubmit.ui.fluid.button
                     //         i.user.shield.icon
                     //         |Unsubmit
-                else
-                    if is_customer
-                        .ui.secondary.segment Fill Date, Details, and Type to Submit
                 if can_submit
                     .submit.ui.fluid.large.button
                         i.green.checkmark.icon
                         |Submit
+                else
+                    if is_customer
+                        .ui.secondary.segment Fill Date, Details, and Type to Submit
                 unless is_customer
                     if submitted
                         .ui.secondary.segment

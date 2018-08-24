@@ -91,6 +91,7 @@ Template.incidents.helpers
     all_incidents: -> 
         Docs.find {
             type:'incident'
+            submitted:true
         },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
         
         

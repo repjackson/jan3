@@ -5,7 +5,7 @@ template(name='feedback_responses')
             .ten.wide.column
                 h1.ui.center.aligned.header 
                     i.clone.icon
-                    | Incident Types
+                    | Feedback Reponses
             .three.wide.center.aligned.column
                 +add_button type='feedback_response'
         .row 
@@ -50,8 +50,8 @@ template(name='feedback_response_view')
                 a.ui.button(href="/view/#{parent_id}")
                     i.up.chevron.icon
                     |Incident
-                unless is_customer
-                    +link_button link='/feedback_responses' icon='exclamation triangle'
+                if is_dev
+                    +link_button link='/feedback_responses' icon='reply'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header View Feedback Response
             .three.wide.center.aligned.column

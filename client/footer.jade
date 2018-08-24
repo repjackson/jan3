@@ -3,8 +3,8 @@ template(name='footer')
         .ui.stackable.equal.height.centered.padded.grid
             .row
                 .four.wide.inverted.column
-                    a.ui.inverted.header(href='/blog') Dev Log
                     if is_admin
+                        a.ui.inverted.header(href='/blog') Dev Log
                         div
                             a.ui.inverted.header(href='/feed') Global Feed
                     unless currentUser

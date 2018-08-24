@@ -213,7 +213,7 @@ template(name='customer_incidents_widget')
                         .ui.right.floated.pagination.menu
                             each pages
                                 a.set_page_number.item(class=pagination_item_class) #{number}
-                    |Starting at result #{skip_amount} of #{count_amount}.
+                    |Showing ##{skip_amount} of #{count_amount}.
 
 template(name='customer_special_services')
     h3.ui.header 
