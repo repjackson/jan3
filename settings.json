@@ -1,5 +1,9 @@
 {
 	"private": {
+		"sms": {
+			"token": "dc8534de203d678fd74a5eaf167864be",
+			"sid": "AC7902add3a00bf69f1196b96e7b2f4122"
+		},
 		"stripe": {
 			"testSecretKey": "sk_test_VmLHoYbhDWLPgrVp5GoTd0AR",
 			"liveSecretKey": "sk_live_f0QHHkiCuftpYG49819oyrFr"

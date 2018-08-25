@@ -98,7 +98,7 @@ Template.customer_incidents_widget.helpers
     customer_incidents: -> Docs.find {type:'incident'}, sort:timestamp:-1
     
     skip_amount: -> Session.get('skip') + 1
-    end_result: -> Session.get('skip') + 1 + Session.get('page_size')
+    end_result: -> Session.get('skip') + 4
 
     pagination_item_class: ->
         if Session.equals('current_page_number', @number) then 'active' else ''
@@ -161,6 +161,6 @@ Template.customer_invoices_widget.onCreated ->
     @autorun -> Meteor.subscribe 'customer_invoices'
 Template.customer_invoices_widget.helpers
     customer_invoices: -> 
-        Docs.find type:'finance'
+        Docs.find {type:'finance'}, limit:3
                 
                 
