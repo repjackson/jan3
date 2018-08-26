@@ -113,6 +113,8 @@ if Meteor.isProduction
 Docs.allow
     insert: (user_id, doc) -> user_id
     # update: (user_id, doc) -> doc.author_id is user_id or Roles.userIsInRole(user_id, 'admin')
-    # remove: (user_id, doc) -> doc.author_id is user_id or Roles.userIsInRole(user_id, 'admin')
+    remove: (user_id, doc) -> 
+        user = Meteor.users.findOne user_id
+        doc.author_id is user_id or 'admin' in user.roles
     update: (user_id, doc) -> user_id
-    remove: (user_id, doc) -> user_id
+    # remove: (user_id, doc) -> user_id

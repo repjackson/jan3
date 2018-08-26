@@ -60,13 +60,13 @@ template(name='user_ev_info')
         .ui.list
             with ev
                 if LOGIN_ID
-                    .item LOGIN_ID: 
+                    .item Username: 
                         strong #{LOGIN_ID}
                 if LAST_NAME
-                    .item Last Name: 
+                    .item Last: 
                         strong #{LAST_NAME}
                 if FIRST_NAME
-                    .item First Name: 
+                    .item First: 
                         strong #{FIRST_NAME}
                 if JOB_TITLE
                     .item Job Title: 

@@ -1,5 +1,5 @@
 template(name='franchisees')
-    .ui.padded.stackable.middle.aligned.grid
+    .ui.padded.stackable.grid
         .middle.aligned.row
             .four.wide.column
                 +link_button link='/admin' label='Admin' icon='user-shield'
@@ -43,7 +43,7 @@ template(name='franchisees')
      
                     
 template(name='franchisee_view')
-    .ui.padded.stackable.middle.aligned.grid
+    .ui.padded.stackable.grid
         // .centered.row
         //     +office_by_franchisee
         .centered.middle.aligned.row
@@ -62,8 +62,6 @@ template(name='franchisee_view')
                     i.envelope.icon
                     |Message
                 .ui.secondary.segment
-                    .ui.header Office 
-                .ui.secondary.segment
                     .ui.large.list
                         .item #
                             strong #{ev.ID}
@@ -77,24 +75,34 @@ template(name='franchisee_view')
                             strong #{ev.TELE_CELL}
                         // .item Master Licensee: 
                         //     strong #{ev.MASTER_LICENSEE}
+                .ui.secondary.segment
+                    .ui.header 
+                        +icon name='building'
+                        |Office 
+                +messages_panel        
             .twelve.wide.column
-                .ui.header 
-                    +icon name='error'
-                    |Incidents
-                +incident_table franchisee_jpid=ev.ID
-                .ui.header 
-                    +icon name='customer-support'
-                    if ev.FRANCH_NAME
-                        |#{ev.FRANCH_NAME}
-                    else if ev.FRANCHISEE
-                        |#{ev.FRANCHISEE}
-                    |Customers
-                +franchisee_customers
-        // +customers_events_panel
-        // +customers_service_requests_panel
-        // +customers_consumables_panel
-        // +customers_users_panel
-        // +customers_quickbooks_panel
+                .ui.secondary.segment
+                    .ui.header 
+                        +icon name='error'
+                        |Incidents
+                    +incident_table franchisee_jpid=ev.ID
+                .ui.secondary.segment
+                    .ui.header 
+                        +icon name='customer-support'
+                        if ev.FRANCH_NAME
+                            |#{ev.FRANCH_NAME}
+                        else if ev.FRANCHISEE
+                            |#{ev.FRANCHISEE}
+                        |Customers
+                    +franchisee_customers
+                .ui.two.column.grid
+                    .column
+                        +events_panel
+                        +purchases_panel
+                        +quickbooks_panel
+                    .column
+                        +users_panel
+                        +service_requests_panel
 
 
 template(name='franchisee_customers')
