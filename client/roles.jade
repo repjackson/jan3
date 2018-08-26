@@ -1,5 +1,5 @@
 template(name='roles')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
@@ -29,7 +29,7 @@ template(name='role_card')
         
         
 template(name='role_edit')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 #delete.ui.icon.button
@@ -46,7 +46,7 @@ template(name='role_edit')
         
         
 template(name='role_view')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 +link_button link='/roles' icon='reviewer-female' label='Roles'

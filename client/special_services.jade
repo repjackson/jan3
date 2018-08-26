@@ -1,5 +1,5 @@
 template(name='special_services')
-    .ui.stackable.centered.padded.grid
+    .ui.stackable.centered.middle.aligned.padded.grid
         .middle.aligned.row
             .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
@@ -17,7 +17,7 @@ template(name='special_services')
                     
                     
 template(name='special_service_view')
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.middle.aligned.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 +link_button link='/services' icon='building' label='services'
@@ -52,7 +52,7 @@ template(name='users_by_special_service')
 
 
 template(name='special_service_edit')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 #delete.ui.basic.button
@@ -78,7 +78,7 @@ template(name='special_service_edit')
         
         
 // template(name='service_view')
-//     .ui.padded.stackable.centered.grid
+//     .ui.padded.stackable.middle.aligned.centered.grid
 //         .centered.row
 //             .three.wide.center.aligned.column
 //                 +link_button link='/services' icon='left chevron' label='services'

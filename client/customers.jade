@@ -1,5 +1,5 @@
 template(name='customers')
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.middle.aligned.grid
         .middle.aligned.row
             .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
@@ -13,8 +13,9 @@ template(name='customers')
                 //     i.refresh.icon
 
         .row
+            +table_header doc_type='customer' stat_type='active'
+        .row
             .sixteen.wide.column
-                +query_input
                 table.ui.striped.fixed.table
                     thead
                         +sort_column_header key='ev.ID' label='JPID'
@@ -42,7 +43,7 @@ template(name='customers')
 
 
 template(name='customer_view')
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.middle.aligned.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 if is_admin
@@ -160,7 +161,7 @@ template(name='my_customer_account_card')
             //         strong #{ev.MASTER_LICENSEE}
 
 template(name='customer_edit')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
             .ten.wide.column
@@ -173,7 +174,7 @@ template(name='customer_edit')
                     
         
 // template(name='role_view')
-//     .ui.padded.stackable.centered.grid
+//     .ui.padded.stackable.middle.aligned.centered.grid
 //         .centered.row
 //             .three.wide.center.aligned.column
 //                 +link_button link='/roles' icon='reviewer-female' label='Roles'

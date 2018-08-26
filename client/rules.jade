@@ -1,5 +1,5 @@
 template(name='rules')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
@@ -30,7 +30,7 @@ template(name='rule_card')
         
         
 template(name='rule_edit')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 #delete.ui.icon.button
@@ -47,7 +47,7 @@ template(name='rule_edit')
         
         
 template(name='rule_view')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 +link_button link='/rules' icon='rules' label='Rules'

@@ -1,6 +1,6 @@
 template(name='office_header')
     with office_doc
-        .ui.padded.stackable.grid
+        .ui.padded.stackable.middle.aligned.grid
             .centered.middle.aligned.row
                 .three.wide.center.aligned.column
                     if is_admin
@@ -91,8 +91,7 @@ template(name='office_customers')
     +office_header
     .ui.padded.grid
         .row
-            .sixteen.wide.column
-                +query_input
+            +table_header doc_type='customer' stat_type='office_customers'
         .centered.row
             .sixteen.wide.column
                 table.ui.striped.fixed.table
@@ -129,8 +128,7 @@ template(name='office_incidents')
     +office_header
     .ui.padded.grid
         .row
-            .sixteen.wide.column
-                +query_input
+            +table_header doc_type='incident' stat_type='office_incidents'    
         .centered.row
             .sixteen.wide.column
                 table.ui.striped.fixed.table
@@ -177,8 +175,7 @@ template(name='office_employees')
     +office_header
     .ui.padded.grid
         .row
-            .sixteen.wide.column
-                +query_input
+            +table_header stat_type='office_employees'   
         .centered.row
             .sixteen.wide.column
                 table.ui.striped.fixed.single.line.table
@@ -224,8 +221,7 @@ template(name='office_franchisees')
     +office_header
     .ui.padded.grid
         .row
-            .sixteen.wide.column
-                +query_input
+            +table_header doc_type='franchisee' stat_type='office_franchisees'     
         .centered.row
             .sixteen.wide.column
                 table.ui.striped.fixed.table

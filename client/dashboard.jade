@@ -11,7 +11,7 @@ template(name='dashboard')
         if is_customer
             +customer_menu
     if is_customer
-        .ui.padded.stackable.grid
+        .ui.padded.stackable.middle.aligned.grid
             if currentUser.users_customer.parent_franchisee.parent_office.customer_message
                 .four.column.row
                     .column

@@ -1,5 +1,5 @@
 template(name='users') 
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.middle.aligned.middle.aligned.grid
         .centered.row
             .four.wide.center.aligned.column 
                 +link_button link='/admin' label='Admin' icon='user-shield'
@@ -9,9 +9,10 @@ template(name='users')
                     | Users
             .four.wide.center.aligned.column 
                 +link_button link='/user/add' label='Add User' icon='plus'
-        .centered.row
+        .row
+            +table_header stat_type='total'
+        .row
             .sixteen.wide.column 
-                +query_input
                 table.ui.striped.table
                     thead
                     

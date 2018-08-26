@@ -1,5 +1,5 @@
 template(name='bugs')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
@@ -33,7 +33,7 @@ template(name='bug_card')
         
         
 template(name='bug_edit')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 #delete_bug.ui.icon.button
@@ -51,7 +51,7 @@ template(name='bug_edit')
 
         
 template(name='bug_view')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 +link_button link='/bugs' icon='bug' label='Bugs'

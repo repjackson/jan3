@@ -1,5 +1,5 @@
 template(name='franchisees')
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.middle.aligned.grid
         .middle.aligned.row
             .four.wide.column
                 +link_button link='/admin' label='Admin' icon='user-shield'
@@ -12,8 +12,9 @@ template(name='franchisees')
                 // .ui.icon.button.get_all_franchisees
                 //     i.refresh.icon
         .row
+            +table_header columns='5' doc_type='franchisee' stat_type='active'
+        .row
             .sixteen.wide.column
-                +query_input
                 table.ui.striped.fixed.table
                     thead
                         tr
@@ -42,7 +43,7 @@ template(name='franchisees')
      
                     
 template(name='franchisee_view')
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.middle.aligned.grid
         // .centered.row
         //     +office_by_franchisee
         .centered.middle.aligned.row

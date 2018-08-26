@@ -27,7 +27,7 @@ template(name='feedback_response_card')
         
         
 template(name='feedback_response_edit')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 #delete.ui.icon.button
@@ -44,7 +44,7 @@ template(name='feedback_response_edit')
         
         
 template(name='feedback_response_view')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 a.ui.button(href="/view/#{parent_id}")

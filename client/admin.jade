@@ -1,5 +1,5 @@
 template(name='admin')
-    .ui.padded.stackable.four.column.grid
+    .ui.padded.stackable.middle.aligned.four.column.grid
         .row
             .sixteen.wide.column
                 h1.ui.center.aligned.header
@@ -14,11 +14,14 @@ template(name='admin')
                     .description
                         |Total
                         +view_stat stat_type='total' doc_type='jpid'
-                a.card(href='/incidents')
-                    .content
-                        .ui.header
-                            +icon name='alert'
-                            | Incidents
+            .card
+                .content
+                    a.ui.header(href='/incidents')
+                        +icon name='error'
+                        | Incidents
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='incident'
             .card
                 .content
                     a.ui.header(href='/offices')

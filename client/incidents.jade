@@ -56,7 +56,7 @@ template(name='incidents')
 
                 
 template(name='incident_view')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 if is_customer
@@ -265,7 +265,7 @@ template(name='incident_tasks')
                         |#{title}
 
 template(name='incident_task_edit')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 +save_button
@@ -289,7 +289,7 @@ template(name='incident_task_edit')
                         +toggle_key key='task_type' value=slug label=title
     
 template(name='incident_task_view')
-    .ui.padded.stackable.centered.grid
+    .ui.padded.stackable.middle.aligned.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 +parent_link
