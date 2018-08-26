@@ -1,4 +1,5 @@
 FlowRouter.route '/customers', 
+    name: 'customers'
     action: -> BlazeLayout.render 'layout', main: 'customers'
     
 Template.customers.onCreated ->

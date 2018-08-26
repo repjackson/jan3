@@ -8,14 +8,28 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
 Meteor.methods
     sms_test: ->
         twilio.messages.create({
-            body: 'Hello from portal',
-            to: '+19705790321', 
+            body: 'Mr. Hammond, the phones are working.',
+            to: '+19176643297', 
             from: '+18442525977'
         }, (err,res)->
             if err then console.log err
             else
                 console.log res
         )
+        
+        
+    sendEmail: (to, from, subject, text) ->
+        @unblock()
+        Email.send
+            to: to
+            from: from
+            subject: subject
+            text: text
+        return
+
+    gmail_test: ->
+        Meteor.call 'sendEmail', 'eric <repjackson@gmail.com>', 'bob@example.com', 'Hello from Meteor!', 'This is a test of Email.send.'
+
         
 # accountSid = 'AC7902add3a00bf69f1196b96e7b2f4122'; // Your Account SID from www.twilio.com/console
 # authToken = 'your_auth_token';   // Your Auth Token from www.twilio.com/console

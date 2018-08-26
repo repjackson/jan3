@@ -78,7 +78,7 @@ Template.edit_number_field.events
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
             
 Template.edit_textarea.events
-    'keyup .textarea': (e,t)->
+    'blur .textarea': (e,t)->
         textarea_value = $(e.currentTarget).closest('.textarea').val()
         update_textarea = ->
             doc_id = FlowRouter.getParam('doc_id')

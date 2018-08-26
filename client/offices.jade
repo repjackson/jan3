@@ -30,18 +30,15 @@ template(name='offices')
                             +sort_column_header key='ev.MASTER_OFFICE_OWNER' label='Owner'
                             +sort_column_header key='ev.TELEPHONE' label='Phone'
                             +sort_column_header key='ev.ADDR_STREET' label='Address'
-                            // th.one.wide View
                     tbody
                         each all_offices
                             tr
                                 td.selectable
-                                    a(href="/view/#{_id}") #{ev.ID}
+                                    a(href="/office/#{_id}") #{ev.ID}
                                 td.selectable
-                                    a(href="/view/#{_id}") #{ev.MASTER_LICENSEE}
+                                    a(href="/office/#{_id}") #{ev.MASTER_LICENSEE}
                                 td #{ev.MASTER_OFFICE_MANAGER}
                                 td #{ev.MASTER_OFFICE_OWNER}
                                 td #{ev.TELEPHONE}
                                 td #{ev.ADDR_STREET}
-                                // td
-                                //     +view_button
                     +table_footer columns='6' doc_type='office' stat_type='total'

@@ -12,6 +12,12 @@ Template.nav.helpers
             Docs.find
                 "ev.ID": user.office_jpid
                 type:'office'
+    # isActiveRoute: (name)->
+    #     console.log name
+    #     if FlowRouter.current().route.name is name then 'active' else ''
+
+
+
 
 Template.nav.events
     'click #logout': (e,t)-> 

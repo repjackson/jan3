@@ -48,7 +48,7 @@ Template.registerHelper 'my_office_link', () ->
                 type:'office'
             # console.log users_office
             users_office
-            return "/view/#{users_office._id}"
+            return "/office/#{users_office._id}"
 
 Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
 

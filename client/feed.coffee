@@ -63,7 +63,8 @@ Template.office_feed.onCreated ->
 Template.office_feed.helpers
     event_docs: -> 
         context = Template.currentData()
-        Docs.find {type:'event', doc_type:context.doc_type}, sort:timestamp:-1
+        Docs.find {type:'event'}, sort:timestamp:-1
+        # Docs.find {type:'event', doc_type:context.doc_type}, sort:timestamp:-1
 Template.office_feed.events
     'click .remove_event': -> 
         if confirm 'Delete Event?'

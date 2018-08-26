@@ -23,79 +23,79 @@ template(name='nav')
         if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
             if my_office
-                a.item(href="/office/#{my_office._id}/incidents")
+                a.item(href="/office/#{my_office._id}/")
                     i.large.icon
                         +icon name='building'
                     | &nbsp; #{my_office.ev.MASTER_LICENSEE}
-            a.item(href="/office/#{my_office._id}/incidents" data-content="Office Incidents")
+            a.item(href="/office/#{my_office._id}/incidents" data-content="Office Incidents" class="{{ isActiveRoute 'office_incidents'}}")
                 i.large.icon
                     +icon name='error'
                 // | &nbsp; Incidents
-            a.item(href="/office/#{my_office._id}/employees" data-content="Office Employees")
+            a.item(href="/office/#{my_office._id}/employees" data-content="Office Employees" class="{{ isActiveRoute 'office_employees'}}")
                 i.large.icon
                     +icon name='groups'
                 // | &nbsp; Employees
-            a.item(href="/office/#{my_office._id}/franchisees" data-content="Office Franchisees")
+            a.item(href="/office/#{my_office._id}/franchisees" data-content="Office Franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
                 i.large.icon
                     +icon name='housekeeper-male'
                 // | &nbsp; Franchisees
-            a.item(href="/office/#{my_office._id}/customers" data-content="Office Customers")
+            a.item(href="/office/#{my_office._id}/customers" data-content="Office Customers" class="{{ isActiveRoute 'office_customers'}}")
                 i.large.icon
                     +icon name='customer-support'
                 // | &nbsp; Customers
-            a.item(href="/office/#{my_office._id}/settings" data-content="Office Settings")
+            a.item(href="/office/#{my_office._id}/settings" data-content="Office Settings" class="{{ isActiveRoute 'office_settings'}}")
                 i.large.icon
                     +icon name='settings'
                 // | &nbsp; Settings
         if is_admin
-            a.item(href='/admin' data-content='Admin Dashboard')
+            a.item(href='/admin' data-content='Admin Dashboard' class="{{ isActiveRoute 'admin'}}")
                 i.large.icon
                     +icon name='user-shield'
                 // .mobile.hidden &nbsp; Admin
-            a.mobile.hidden.item(href='/incidents' data-content='All Incidents')
+            a.mobile.hidden.item(href='/incidents' data-content='All Incidents' class="{{ isActiveRoute 'incidents'}}")
                 i.large.icon
                     +icon name='error'
                 // .mobile.hidden &nbsp; Incidents
-            a.mobile.hidden.item(href='/users' data-content='All Users')
+            a.mobile.hidden.item(href='/users' data-content='All Users' class="{{ isActiveRoute 'users'}}")
                 i.large.icon
                     +icon name='groups'
                 // .mobile.hidden &nbsp; Users
-            a.mobile.hidden.item(href='/offices' data-content='All Offices')
+            a.mobile.hidden.item(href='/offices' data-content='All Offices' class="{{ isActiveRoute 'offices'}}")
                 i.large.icon
                     +icon name='skyscrapers'
                 // .mobile.hidden Offices
-            a.mobile.hidden.item(href='/franchisees' data-content='All Franchisees')
+            a.mobile.hidden.item(href='/franchisees' data-content='All Franchisees' class="{{ isActiveRoute 'franchisees'}}")
                 i.large.icon
                     +icon name='housekeeper-male'
                 // .mobile.hidden Franchisees
-            a.mobile.hidden.item(href='/customers' data-content='All Customers')
+            a.mobile.hidden.item(href='/customers' data-content='All Customers' class="{{ isActiveRoute 'customers'}}")
                 i.large.icon
                     +icon name='customer-support'
                 // .mobile.hidden Customers
-            a.mobile.hidden.item(href='/services' data-content='All Services')
+            a.mobile.hidden.item(href='/services' data-content='All Services' class="{{ isActiveRoute 'services'}}")
                 i.large.icon
                     +icon name='broom'
                 // .mobile.hidden Services
         .right.menu
             if is_dev
-                a.item(href='/alfred' data-content='alfred')
-                    i.large.code.black.icon
+                // a.item(href='/alfred' data-content='alfred')
+                //     i.large.code.black.icon
                 // a.item(href='/blog' data-content='blog')
                 //     i.large.newspaper.black.icon
-                a.item(href='/databank' data-content='Databank')
-                    i.large.icon
-                        +icon name='database'
-                a.item(href='/tasks' data-content='Tasks')
+                // a.item(href='/databank' data-content='Databank')
+                //     i.large.icon
+                //         +icon name='database'
+                a.item(href='/tasks' data-content='Tasks' class="{{ isActiveRoute 'tasks'}}")
                     i.large.icon
                         +icon name='realtime-protection'
-                a.item(href='/stats' data-content='Stats')
+                a.item(href='/stats' data-content='Stats' class="{{ isActiveRoute 'stats'}}")
                     i.large.icon
                         +icon name='bar-chart'
-                a.icon.item(href='/feed' data-content='Site Events')
+                a.item(href='/feed' data-content='Site Events' class="{{ isActiveRoute 'global_feed'}}")
                     i.large.icon
-                        +icon name='appointment-reminders'
+                        +icon name='rss'
             if currentUser
-                a.icon.item(href='/mail' data-content='Messages')
+                a.icon.item(href='/mail' data-content='Messages' class="{{ isActiveRoute 'mail'}}")
                     i.large.envelope.icon
                 // a.item(href='/transactions')
                 //     i.large.icon
@@ -114,8 +114,8 @@ template(name='nav')
                         +icon name='logout-rounded'
             else
                 a.ui.icon.item(href='/login')
-                    i.large.icon
-                        +icon name='enter-2'
+                    // i.large.icon
+                    //     +icon name='enter-2'
                     // i.sign.in.alternate.icon
                     | &nbsp; Log In
 

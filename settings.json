@@ -33,6 +33,7 @@
 	},
 	"cloudinary_key": "754714459692734",
 	"cloudinary_secret": "rPPXD3rZM_GCjODvh0T70XeDCSw",
+	"MAIL_URL": "smtp://richard%40janhub.com:repj1984@smtp.gmail.com:465/",
 	"galaxy.meteor.com": {
 		"env": {
 			"MONGO_URL": "mongodb://janadmin:jancleaningcustomerpassword@aws-us-east-1-portal.21.dblayer.com:10444/jandb?ssl=true",

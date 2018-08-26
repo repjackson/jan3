@@ -1,5 +1,7 @@
-FlowRouter.route '/offices', action: ->
-    BlazeLayout.render 'layout', main: 'offices'
+FlowRouter.route '/offices', 
+    name: 'offices'
+    action: ->
+        BlazeLayout.render 'layout', main: 'offices'
 
 FlowRouter.route '/office/:doc_id', 
     name: 'office_dashboard'
@@ -59,10 +61,8 @@ Template.office_header.helpers
         # console.log encoded_address
         "https://www.google.com/maps/search/?api=1&query=#{encoded_address}"
 
-
-
-
-
+Template.office_dashboard.helpers
+    office_doc: -> Docs.findOne FlowRouter.getParam('doc_id')
 
 
 Template.office_customers.onCreated ->

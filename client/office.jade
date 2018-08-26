@@ -18,67 +18,74 @@ template(name='office_header')
 
 template(name='office_nav')
     .ui.six.item.stackable.menu
-        a.item(href="/view/#{_id}" class="{{ is_current_route 'office_view'}}")
+        a.item(href="/office/#{_id}" class="{{ isActiveRoute 'office_dashboard'}}")
             i.large.icon
                 +iconsmall name='dashboard'
             | &nbsp; Dashboard
-        a.item(href="/office/#{_id}/incidents" class="{{ is_current_route 'office_incidents'}}")
+        a.item(href="/office/#{_id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
             i.large.icon
                 +iconsmall name='error'
             // +view_stat doc_type='incident' stat_type='office_incidents'
             | Incidents
-        a.item(href="/office/#{_id}/employees" class="{{ is_current_route 'office_employees'}}")
+        a.item(href="/office/#{_id}/employees" class="{{ isActiveRoute 'office_employees'}}")
             i.large.icon
                 +iconsmall name='groups'
             // +view_stat stat_type='office_employees'
             | Employees
-        a.item(href="/office/#{_id}/franchisees" class="{{ is_current_route 'office_franchisees'}}")
+        a.item(href="/office/#{_id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
             i.large.icon
                 +icon name='housekeeper-male'
             // +view_stat stat_type='office_franchisees' doc_type='franchisee'
             | Franchisees
-        a.item(href="/office/#{_id}/customers" class="{{ is_current_route 'office_customers'}}")
+        a.item(href="/office/#{_id}/customers" class="{{ isActiveRoute 'office_customers'}}")
             i.large.icon
                 +iconsmall name='customer-support'
             // +view_stat stat_type='office_customers' doc_type='customer'
             | Customers
-        a.item(href="/office/#{_id}/settings" class="{{ is_current_route 'office_settings'}}")
+        a.item(href="/office/#{_id}/settings" class="{{ isActiveRoute 'office_settings'}}")
             i.large.icon
                 +iconsmall name='settings'
             | &nbsp; Settings
 
 
-template(name='office_view')
+template(name='office_dashboard')
     +office_header
     .ui.padded.grid
         .row
-            .four.wide.column
-                .ui.secondary.segment
-                    .ui.list
-                        .item ##{ev.ID}
-                        // .item Office Name
-                        //     strong #{ev.MASTER_LICENSEE}
-                        .item Owner
-                            strong #{ev.MASTER_OFFICE_OWNER}
-                        .item Manager
-                            strong #{ev.MASTER_OFFICE_MANAGER}
-                        // .item Last Updated
-                        //     strong #{ev.TIMESTAMP}
-                        .item #{ev.TELEPHONE}
-                        .item 
-                            |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-                            a(href=office_map_address target='_blank')
-                                i.external.icon
-
-                .ui.secondary.segment
-                    .ui.header
-                        +icon name='bar-chart'
-                        |Stats
-                    h4.ui.header Incidents
-                    h4.ui.header Franchisees
-                    h4.ui.header Customers
-            .twelve.wide.column
-                +office_feed
+            with office_doc
+                .four.wide.column
+                    .ui.secondary.segment
+                        .ui.list
+                            .item ##{ev.ID}
+                            // .item Office Name
+                            //     strong #{ev.MASTER_LICENSEE}
+                            .item Owner
+                                strong #{ev.MASTER_OFFICE_OWNER}
+                            .item Manager
+                                strong #{ev.MASTER_OFFICE_MANAGER}
+                            // .item Last Updated
+                            //     strong #{ev.TIMESTAMP}
+                            .item #{ev.TELEPHONE}
+                            .item 
+                                |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                                a(href=office_map_address target='_blank')
+                                    i.external.icon
+    
+                    .ui.secondary.segment
+                        .ui.header
+                            +icon name='bar-chart'
+                            |Stats
+                        .ui.list
+                            .item Incidents
+                                +view_stat doc_type='incident' stat_type='office_incidents' 
+                            .item Franchisees
+                                +view_stat doc_type='franchisee' stat_type='office_franchisees' 
+                            .item Customers
+                                +view_stat doc_type='customer' stat_type='office_customers' 
+                            .item Employees
+                                +view_stat stat_type='office_employees' 
+                .twelve.wide.column
+                    +office_feed
 
 template(name='office_customers')
     +office_header

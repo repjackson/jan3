@@ -14,11 +14,11 @@ template(name='admin')
                     .description
                         |Total
                         +view_stat stat_type='total' doc_type='jpid'
-            //     a.card(href='/history')
-            //         .content
-            //             .ui.header
-            //                 +icon name='clock'
-            //                 | EV History
+                a.card(href='/incidents')
+                    .content
+                        .ui.header
+                            +icon name='alert'
+                            | Incidents
             .card
                 .content
                     a.ui.header(href='/offices')

@@ -51,6 +51,24 @@ Template.login.events
                             Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                             FlowRouter.go "/"        
             
+    'keyup .username': (e,t)->
+        if e.which is 13 #enter
+            e.preventDefault()
+            # comment = $('#register_comment').val().trim()
+            username = $('.username').val()
+            password = $('.password').val()
+            Meteor.loginWithPassword username, password, (err,res)->
+                if err
+                    Bert.alert "Error Logging in #{username}: #{err.reason}", 'info', 'growl-top-right'
+                else
+                    Meteor.call 'redirect_office_after_login', (err,res)->
+                        # console.log res
+                        if 'office' in res.user.roles
+                            FlowRouter.go "/office/#{res.office._id}/incidents"        
+                        else if 'customer' in res.user.roles
+                            Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                            FlowRouter.go "/"        
+            
     'click #login_demo_admin': ->
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->
             if err then console.error err

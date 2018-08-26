@@ -1,5 +1,5 @@
 @Docs = new Meteor.Collection 'docs'
-@Settings = new Meteor.Collection 'settings'
+# @Settings = new Meteor.Collection 'settings'
 @Stats = new Meteor.Collection 'stats'
 @Tags = new Meteor.Collection 'tags'
 

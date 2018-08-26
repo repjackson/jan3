@@ -1,4 +1,5 @@
 FlowRouter.route '/franchisees', 
+    name: 'franchisees'
     action: -> BlazeLayout.render 'layout', main: 'franchisees'
 
 

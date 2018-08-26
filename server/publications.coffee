@@ -47,6 +47,8 @@ Meteor.publish 'assigned_to_users', (incident_doc_id)->
             _id: $in: incident_doc.assigned_to
         
         
+Meteor.publish 'office_events', (office_doc_id)->
+    Docs.find {type:'event'}, limit:10
         
         
         
