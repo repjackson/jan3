@@ -1,6 +1,6 @@
 template(name='user_view')
     with user
-        .ui.padded.stackable.middle.aligned.grid
+        .ui.padded.stackable.grid
             .middle.aligned.row
                 .four.wide.center.aligned.column
                     if is_admin
@@ -10,7 +10,7 @@ template(name='user_view')
                         |#{profile.first_name} #{profile.last_name} 
                         small @#{username}
                 .four.wide.center.aligned.column
-                    if is_admin
+                    if is_dev
                         .get_user_info.ui.icon.button(title='Refresh User Info')
                             i.refresh.icon
                     a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}")
@@ -23,7 +23,6 @@ template(name='user_view')
                         a.ui.fluid.button(href='/account/settings')
                             i.cog.icon
                             |Account Settings
-                        
                 .eight.wide.column
                     // +edit_profile_text_field key='customer_jpid' label='Connected Customer Account'
                     .ui.list
@@ -31,86 +30,19 @@ template(name='user_view')
                             .item
                                 strong Customer JPID 
                                 | #{customer_jpid}
-                    if ev
-                        .ui.secondary.segment
-                            .ui.header 
-                                +icon name='database'
-                                | EV Info
-                            .ui.list
-                                with ev
-                                    if LOGIN_ID
-                                        .item LOGIN_ID: 
-                                            strong #{LOGIN_ID}
-                                    if LAST_NAME
-                                        .item LAST_NAME: 
-                                            strong #{LAST_NAME}
-                                    if FIRST_NAME
-                                        .item FIRST_NAME: 
-                                            strong #{FIRST_NAME}
-                                    if JOB_TITLE
-                                        .item JOB_TITLE: 
-                                            strong #{JOB_TITLE}
-                                    if WORK_TELEPHONE
-                                        .item WORK_TELEPHONE: 
-                                            strong #{WORK_TELEPHONE}
-                                    if HOME_TELEPHONE
-                                        .item HOME_TELEPHONE: 
-                                            strong #{HOME_TELEPHONE}
-                                    if CELL_PHONE
-                                        .item CELL_PHONE: 
-                                            strong #{CELL_PHONE}
-                                    if COMPANY_NAME
-                                        .item COMPANY_NAME: 
-                                            strong #{COMPANY_NAME}
-                                    if ADDRESS_LINE1
-                                        .item ADDRESS_LINE1: 
-                                            strong #{ADDRESS_LINE1}
-                                    if ADDRESS_LINE2
-                                        .item ADDRESS_LINE2: 
-                                            strong #{ADDRESS_LINE2}
-                                    if CITY
-                                        .item CITY: 
-                                            strong #{CITY}
-                                    if STATE
-                                        .item STATE: 
-                                            strong #{STATE}
-                                    if POSTAL_CODE
-                                        .item POSTAL_CODE: 
-                                            strong #{POSTAL_CODE}
-                                    if COUNTRY
-                                        .item COUNTRY: 
-                                            strong #{COUNTRY}
-                                    if EMAIL
-                                        .item EMAIL: 
-                                            strong #{EMAIL}
-                                    if TIMEZONE
-                                        .item TIMEZONE: 
-                                            strong #{TIMEZONE}
-                                    if ALPHA_TIMEZONE
-                                        .item ALPHA_TIMEZONE: 
-                                            strong #{ALPHA_TIMEZONE}
-                                    if REGION
-                                        .item REGION: 
-                                            strong #{REGION}
-                                    if VARIANT
-                                        .item VARIANT: 
-                                            strong #{VARIANT}
-                                    if AREA_ID
-                                        .item AREA_ID: 
-                                            strong #{AREA_ID}
-                                    if EMAIL_ON
-                                        .item EMAIL_ON: 
-                                            strong #{EMAIL_ON}
-                                    if LANGUAGE
-                                        .item LANGUAGE: 
-                                            strong #{LANGUAGE}
                     +user_events                    
                     // +users_docs
                 .four.wide.column
-                    h4.ui.header Phone: #{ev.TELE_CELL} #{profile.phone}
-                    .ui.header Role
-                        each roles
-                            .ui.basic.label #{this}
+                    .ui.secondary.segment
+                        .ui.header 
+                            +icon name='contacts'
+                            | Contact
+                        .ui.header Phone: #{ev.TELE_CELL} #{profile.phone}
+                        .ui.header Role
+                            each roles
+                                .ui.basic.label #{this}
+                    if ev
+                        +user_ev_info
                     +user_comments
                     +user_assigned_to
                     if customer_jpid
@@ -120,7 +52,79 @@ template(name='user_view')
                     if office_jpid
                         +office_card
                 
-        
+template(name='user_ev_info')        
+    .ui.secondary.segment
+        .ui.header 
+            +icon name='database'
+            | ExtraView Info
+        .ui.list
+            with ev
+                if LOGIN_ID
+                    .item LOGIN_ID: 
+                        strong #{LOGIN_ID}
+                if LAST_NAME
+                    .item Last Name: 
+                        strong #{LAST_NAME}
+                if FIRST_NAME
+                    .item First Name: 
+                        strong #{FIRST_NAME}
+                if JOB_TITLE
+                    .item Job Title: 
+                        strong #{JOB_TITLE}
+                if WORK_TELEPHONE
+                    .item Work Tel: 
+                        strong #{WORK_TELEPHONE}
+                if HOME_TELEPHONE
+                    .item Home Tel: 
+                        strong #{HOME_TELEPHONE}
+                if CELL_PHONE
+                    .item Cell: 
+                        strong #{CELL_PHONE}
+                if COMPANY_NAME
+                    .item Company: 
+                        strong #{COMPANY_NAME}
+                if ADDRESS_LINE1
+                    .item Address: 
+                        strong #{ADDRESS_LINE1}
+                if ADDRESS_LINE2
+                    .item  
+                        strong #{ADDRESS_LINE2}
+                if CITY
+                    .item  
+                        strong #{CITY}
+                if STATE
+                    .item
+                        strong #{STATE}
+                if POSTAL_CODE
+                    .item 
+                        strong #{POSTAL_CODE}
+                if COUNTRY
+                    .item Country
+                        strong #{COUNTRY}
+                if EMAIL
+                    .item Email: 
+                        strong #{EMAIL}
+                if TIMEZONE
+                    .item Timezone: 
+                        strong #{TIMEZONE}
+                if ALPHA_TIMEZONE
+                    .item Alpha Timezone: 
+                        strong #{ALPHA_TIMEZONE}
+                if REGION
+                    .item Region: 
+                        strong #{REGION}
+                if VARIANT
+                    .item Variant: 
+                        strong #{VARIANT}
+                if AREA_ID
+                    .item Area ID: 
+                        strong #{AREA_ID}
+                // if EMAIL_ON
+                //     .item EMAIL_ON: 
+                //         strong #{EMAIL_ON}
+                if LANGUAGE
+                    .item Language: 
+                        strong #{LANGUAGE}
 template(name='users_docs')
     .ui.header Users Docs
     table.ui.striped.selectable.fixed.fluid.table

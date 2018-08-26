@@ -30,10 +30,18 @@ Template.table_footer.events
     'change #page_size': (e,t)->
         Session.set 'page_size',$('#page_size').val()
 
-    'click .set_10': ()-> Session.set 'page_size',10
-    'click .set_20': ()-> Session.set 'page_size',20
-    'click .set_50': ()-> Session.set 'page_size',50
-    'click .set_100': ()-> Session.set 'page_size',100
+    'click .set_10': ()-> 
+        Session.set 'page_size',10
+        Session.set 'current_page_number', 1
+    'click .set_20': ()-> 
+        Session.set 'page_size',20
+        Session.set 'current_page_number', 1
+    'click .set_50': ()-> 
+        Session.set 'page_size',50
+        Session.set 'current_page_number', 1
+    'click .set_100': ()-> 
+        Session.set 'page_size',100
+        Session.set 'current_page_number', 1
 
 Template.table_header.events
     'click .set_page_number': -> 
@@ -45,10 +53,18 @@ Template.table_header.events
     'change #page_size': (e,t)->
         Session.set 'page_size',$('#page_size').val()
 
-    'click .set_10': ()-> Session.set 'page_size',10
-    'click .set_20': ()-> Session.set 'page_size',20
-    'click .set_50': ()-> Session.set 'page_size',50
-    'click .set_100': ()-> Session.set 'page_size',100
+    'click .set_10': ()-> 
+        Session.set 'page_size',10
+        Session.set 'current_page_number', 1
+    'click .set_20': ()-> 
+        Session.set 'page_size',20
+        Session.set 'current_page_number', 1
+    'click .set_50': ()-> 
+        Session.set 'page_size',50
+        Session.set 'current_page_number', 1
+    'click .set_100': ()-> 
+        Session.set 'page_size',100
+        Session.set 'current_page_number', 1
 
 Template.sort_column_header.events
     'click .sort_by': (e,t)->

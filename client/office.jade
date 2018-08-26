@@ -1,27 +1,28 @@
 template(name='office_header')
     with office_doc
         .ui.padded.stackable.middle.aligned.grid
-            .centered.middle.aligned.row
-                .three.wide.center.aligned.column
-                    if is_admin
-                        +link_button link='/offices' icon='building' label='Offices'
-                .ten.wide.column
-                    h1.ui.center.aligned.header 
-                        +icon name='building'
-                        |#{ev.MASTER_LICENSEE} #{current_name}
-                .three.wide.right.aligned.column
-                    // #calc_office_stats.ui.button Calc Office Stats
-            .centered.row
-                .sixteen.wide.column
-                    unless is_customer
-                        +office_nav
+            // .centered.middle.aligned.row
+            //     .three.wide.center.aligned.column
+            //         if is_admin
+            //             +link_button link='/offices' icon='building' label='Offices'
+            //     .ten.wide.column
+            //         h1.ui.center.aligned.header 
+            //             +icon name='building'
+            //             |#{ev.MASTER_LICENSEE} #{current_name}
+            //     .three.wide.right.aligned.column
+            //         // #calc_office_stats.ui.button Calc Office Stats
+            unless is_office
+                .centered.row
+                    .sixteen.wide.column
+                        unless is_customer
+                            +office_nav
 
 template(name='office_nav')
     .ui.six.item.stackable.menu
         a.item(href="/office/#{_id}" class="{{ isActiveRoute 'office_dashboard'}}")
             i.large.icon
                 +iconsmall name='dashboard'
-            | &nbsp; Dashboard
+            | &nbsp; #{ev.MASTER_LICENSEE}
         a.item(href="/office/#{_id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
             i.large.icon
                 +iconsmall name='error'
