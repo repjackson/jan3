@@ -11,7 +11,7 @@ template(name='dashboard')
         if is_customer
             +customer_menu
     if is_customer
-        .ui.padded.stackable.middle.aligned.grid
+        .ui.padded.stackable.grid
             if currentUser.users_customer.parent_franchisee.parent_office.customer_message
                 .four.column.row
                     .column
@@ -225,13 +225,13 @@ template(name='customer_incidents_widget')
                         .ui.right.floated.pagination.menu
                             each pages
                                 a.set_page_number.item(class=pagination_item_class) #{number}
-                    |Showing ##{skip_amount}-#{end_result} of #{count_amount}.
+                    |#{skip_amount}-#{end_result} of #{count_amount}
 
 template(name='customer_special_services')
     h3.ui.header 
         // i.paint.brush.icon
         +icon name='broom'
-        |Services Overview
+        |Special Services
     with currentUser.users_customer
         .ui.horizontal.divided.list
             // .item #{customer_contact_person}
@@ -240,7 +240,6 @@ template(name='customer_special_services')
             .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
             .item Days of Service: #{customer_days_service_formatted}
             .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
-    .ui.header Special Services
     table.ui.striped.table
         thead
             tr
@@ -315,24 +314,24 @@ template(name='customer_invoices_widget')
         table.ui.striped.fixed.table
             thead
                 tr
-                    th Office
-                    th Customer
+                    // th Office
+                    // th Customer
                     th Invoice
                     th Date
                     th Total
                     th Balance
                     th RS Amount
                     th Specials 
-                    th Tax 
+                    // th Tax 
             tbody
                 each customer_invoices
                     tr
-                        td #{ev.MASTER_LICENSEE}
-                        td #{ev.CUSTOMER}
+                        // td #{ev.MASTER_LICENSEE}
+                        // td #{ev.CUSTOMER}
                         td #{ev.BILL_QB_INVOICE}
                         td #{ev.BILL_QB_INVOICE_DATE}
                         td #{ev.BILL_QB_TOTAL}
                         td.active #{ev.BILL_BALANCE}
                         td #{ev.BILL_QB_RS_AMOUNT}
                         td #{ev.BILL_QB_SPECIALS}
-                        td #{ev.SUP_TOT_TAX}
+                        // td #{ev.SUP_TOT_TAX}

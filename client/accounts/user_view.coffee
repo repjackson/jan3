@@ -1,6 +1,8 @@
-FlowRouter.route '/user/:username', action: (params) ->
-    BlazeLayout.render 'layout',
-        main: 'user_view'
+FlowRouter.route '/user/:username', 
+    name:'user_view'
+    action: (params) ->
+        BlazeLayout.render 'layout',
+            main: 'user_view'
 
 
 Template.user_view.onCreated ->

@@ -1,5 +1,5 @@
 template(name='store')
-    .ui.stackable.centered.middle.aligned.padded.grid
+    .ui.stackable.centered.padded.grid
         .centered.row
             .three.wide.center.aligned.column
             .ten.wide.column
@@ -38,7 +38,7 @@ template(name='product_card')
 
 
 template(name='product_edit')
-    .ui.padded.stackable.middle.aligned.centered.grid
+    .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 #delete.ui.icon.button
@@ -55,7 +55,7 @@ template(name='product_edit')
                 +edit_image_field
         
 template(name='product_view')
-    .ui.padded.stackable.middle.aligned.centered.grid
+    .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 +link_button link='/store' icon='small-business' label='Store'

@@ -90,7 +90,7 @@ template(name='office_dashboard')
 template(name='office_customers')
     +office_header
     .ui.padded.grid
-        .row
+        .middle.aligned.row
             +table_header doc_type='customer' stat_type='office_customers'
         .centered.row
             .sixteen.wide.column
@@ -127,7 +127,7 @@ template(name='office_customers')
 template(name='office_incidents')
     +office_header
     .ui.padded.grid
-        .row
+        .middle.aligned.row
             +table_header doc_type='incident' stat_type='office_incidents'    
         .centered.row
             .sixteen.wide.column
@@ -174,7 +174,7 @@ template(name='office_incidents')
 template(name='office_employees')
     +office_header
     .ui.padded.grid
-        .row
+        .middle.aligned.row
             +table_header stat_type='office_employees'   
         .centered.row
             .sixteen.wide.column
@@ -220,7 +220,7 @@ template(name='office_employees')
 template(name='office_franchisees')
     +office_header
     .ui.padded.grid
-        .row
+        .middle.aligned.row
             +table_header doc_type='franchisee' stat_type='office_franchisees'     
         .centered.row
             .sixteen.wide.column

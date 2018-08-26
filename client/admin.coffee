@@ -1,6 +1,8 @@
 FlowRouter.route '/admin', 
+    name:'admin'
     action: -> BlazeLayout.render 'layout', main: 'admin'
 FlowRouter.route '/bugs', 
+    name:'bugs'
     action: -> BlazeLayout.render 'layout', main: 'bugs'
             
 Template.admin.onCreated ->

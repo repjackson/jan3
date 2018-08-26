@@ -1,7 +1,9 @@
 FlowRouter.route '/incidents', 
+    name:'incidents'
     action: -> BlazeLayout.render 'layout', main:'incidents'
 
 FlowRouter.route '/customer_incidents', 
+    name:'customer_incidents'
     action: -> BlazeLayout.render 'layout', main:'customer_incidents'
 
     

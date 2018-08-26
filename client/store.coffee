@@ -1,5 +1,6 @@
-FlowRouter.route '/store', action: ->
-    BlazeLayout.render 'layout', main: 'store'
+FlowRouter.route '/store', 
+    name:'store'
+    action: -> BlazeLayout.render 'layout', main: 'store'
 
 Template.store.onCreated ->
     @autorun => Meteor.subscribe 'type', 'product'
