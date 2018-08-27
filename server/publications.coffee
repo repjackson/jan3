@@ -37,7 +37,10 @@ Meteor.publish 'active_customers', (query=null, limit=100, sort_key='timestamp',
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
         
-        
+    
+
+Meteor.publish 'demo_type', (type)->
+    Docs.find {type:type}, limit:5
 
 
 Meteor.publish 'assigned_to_users', (incident_doc_id)->

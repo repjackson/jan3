@@ -10,6 +10,10 @@ template(name='events_panel')
         .ui.header 
             +icon name='rss'
             |Events
+        .ui.comments
+            each event_docs
+                +doc_history_event
+            
 
 template(name='service_requests_panel')
     .ui.secondary.segment
@@ -34,6 +38,31 @@ template(name='quickbooks_panel')
         .ui.header
             +icon name='cash-in-hand'
             |Accounts
+        table.ui.striped.fixed.table
+            thead
+                tr
+                    // th Office
+                    // th Customer
+                    th Invoice
+                    th Date
+                    th Total
+                    th Balance
+                    th RS Amount
+                    th Specials 
+                    // th Tax 
+            tbody
+                each invoice_docs
+                    tr
+                        // td #{ev.MASTER_LICENSEE}
+                        // td #{ev.CUSTOMER}
+                        td #{ev.BILL_QB_INVOICE}
+                        td #{ev.BILL_QB_INVOICE_DATE}
+                        td #{ev.BILL_QB_TOTAL}
+                        td.active #{ev.BILL_BALANCE}
+                        td #{ev.BILL_QB_RS_AMOUNT}
+                        td #{ev.BILL_QB_SPECIALS}
+                        // td #{ev.SUP_TOT_TAX}            
+            
 
 template(name='messages_panel')
     .ui.secondary.segment
