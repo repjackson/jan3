@@ -137,7 +137,7 @@ Template.conversation_list.events
     
     'click .mark_unread': (e,t)-> 
         Meteor.call 'mark_unread', @_id, ->
-            $(e.currentTarget).closest('.message_segment').transition('pulse')
+            $(e.currentTarget).closest('.message_segment').transition('flash')
 
 Template.conversation_message.onRendered ->
     Meteor.setTimeout ->
@@ -160,11 +160,11 @@ Template.conversation_message.events
     'click .mark_read, click .text': (e,t)->
         unless Meteor.userId() in @read_by
             Meteor.call 'mark_read', @_id, ->
-                $(e.currentTarget).closest('.message_segment').transition('pulse')
+                $(e.currentTarget).closest('.message_segment').transition('flash')
     
     'click .mark_unread': (e,t)-> 
         Meteor.call 'mark_unread', @_id, ->
-            $(e.currentTarget).closest('.message_segment').transition('pulse')
+            $(e.currentTarget).closest('.message_segment').transition('flash')
 
 
 Template.conversation_view.helpers

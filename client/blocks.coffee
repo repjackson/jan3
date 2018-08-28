@@ -705,7 +705,7 @@ Template.session_delete_button.helpers
     confirming: -> Template.instance().confirming.get()
 Template.session_delete_button.events
     'click .delete': (e,t)-> 
-        # $(e.currentTarget).closest('.comment').transition('pulse')
+        # $(e.currentTarget).closest('.comment').transition('flash')
         t.confirming.set true
 
     'click .cancel': (e,t)-> t.confirming.set false

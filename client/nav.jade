@@ -181,30 +181,30 @@ template(name='left_sidebar')
                 i.chat.icon
                 | Feedback Responses
         if is_office
-            a.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
+            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
                 i.icon
                     +icon name='building'
                 | &nbsp; #{my_office.ev.MASTER_LICENSEE}
-            a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
+            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
                 i.icon
                     +icon name='error'
-                .large.monitor.only &nbsp; Incidents
-            a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
+                | &nbsp; Incidents
+            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
                 i.icon
                     +icon name='groups'
-                .large.monitor.only &nbsp; Employees
-            a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
+                | &nbsp; Employees
+            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
                 i.icon
                     +icon name='housekeeper-male'
-                .large.monitor.only &nbsp; Franchisees
-            a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
+                | &nbsp; Franchisees
+            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
                 i.icon
                     +icon name='customer-support'
-                .large.monitor.only &nbsp; Customers
-            a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
+                | &nbsp; Customers
+            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
                 i.icon
                     +icon name='settings'
-                .large.monitor.only &nbsp; Settings
+                | &nbsp; Settings
 
         // a.icon.toggle_left_sidebar.item(href='/admin')
         //     i.shield.icon

@@ -22,7 +22,7 @@ Template.table.helpers
         
 
 Template.table_footer.events
-    'click .set_page_number': -> 
+    'click .set_page_number': (e,t)-> 
         Session.set 'current_page_number', @number
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = @number*int_page_size-int_page_size
@@ -31,21 +31,25 @@ Template.table_footer.events
     'change #page_size': (e,t)->
         Session.set 'page_size',$('#page_size').val()
 
-    'click .set_10': ()-> 
+    'click .set_10': (e,t)-> 
         Session.set 'page_size',10
         Session.set 'current_page_number', 1
-    'click .set_20': ()-> 
+        $('.table_stats').transition('flash')
+    'click .set_20': (e,t)-> 
         Session.set 'page_size',20
         Session.set 'current_page_number', 1
-    'click .set_50': ()-> 
+        $('.table_stats').transition('flash')
+    'click .set_50': (e,t)-> 
         Session.set 'page_size',50
         Session.set 'current_page_number', 1
-    'click .set_100': ()-> 
+        $('.table_stats').transition('flash')
+    'click .set_100': (e,t)-> 
         Session.set 'page_size',100
         Session.set 'current_page_number', 1
+        $('.table_stats').transition('flash')
 
 
-    'click .increment_page': ->
+    'click .increment_page': (e,t)->
         current_page = Session.get('current_page_number')
         next_page = current_page+1
         Session.set 'current_page_number', next_page
@@ -53,7 +57,7 @@ Template.table_footer.events
         skip_amount = next_page*int_page_size-int_page_size
         Session.set 'skip', skip_amount
     
-    'click .decrement_page': ->
+    'click .decrement_page': (e,t)->
         current_page = Session.get('current_page_number')
         previous_page = current_page-1
         Session.set 'current_page_number', previous_page
@@ -67,44 +71,51 @@ Template.table_footer.events
 
 
 Template.table_header.events
-    'click .set_page_number': -> 
+    'click .set_page_number': (e,t)->
         Session.set 'current_page_number', @number
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = @number*int_page_size-int_page_size
         Session.set 'skip', skip_amount
+        $('.table_stats').transition('flash')
     
-    'click .increment_page': ->
+    'click .increment_page': (e,t)->
         current_page = Session.get('current_page_number')
         next_page = current_page+1
         Session.set 'current_page_number', next_page
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = next_page*int_page_size-int_page_size
         Session.set 'skip', skip_amount
+        $('.table_stats').transition('flash')
     
-    'click .decrement_page': ->
+    'click .decrement_page': (e,t)->
         current_page = Session.get('current_page_number')
         previous_page = current_page-1
         Session.set 'current_page_number', previous_page
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = previous_page*int_page_size-int_page_size
         Session.set 'skip', skip_amount
+        $('.table_stats').transition('flash')
     
     
     'change #page_size': (e,t)->
         Session.set 'page_size',$('#page_size').val()
 
-    'click .set_10': ()-> 
+    'click .set_10': (e,t)-> 
         Session.set 'page_size',10
         Session.set 'current_page_number', 1
-    'click .set_20': ()-> 
+        $('.table_stats').transition('flash')
+    'click .set_20': (e,t)-> 
         Session.set 'page_size',20
         Session.set 'current_page_number', 1
-    'click .set_50': ()-> 
+        $('.table_stats').transition('flash')
+    'click .set_50': (e,t)-> 
         Session.set 'page_size',50
         Session.set 'current_page_number', 1
-    'click .set_100': ()-> 
+        $('.table_stats').transition('flash')
+    'click .set_100': (e,t)-> 
         Session.set 'page_size',100
         Session.set 'current_page_number', 1
+        $('.table_stats').transition('flash')
 
 Template.sort_column_header.events
     'click .sort_by': (e,t)->

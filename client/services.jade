@@ -1,14 +1,14 @@
 template(name='services')
     .ui.stackable.centered.middle.aligned.padded.grid
         .middle.aligned.row
-            .three.wide.center.aligned.column
+            .three.wide.column
                 if is_admin
                     +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
                     +icon name='housekeeping'
                     | Services
-            .three.wide.center.aligned.column
+            .three.wide.right.aligned.column
                 +add_button type='service'
         .row
             .fourteen.wide.column
@@ -67,29 +67,25 @@ template(name='request_service_button')
         | Request 
                     
 template(name='service_view')
-    .ui.padded.stackable.middle.aligned.grid
+    .ui.padded.stackable.grid
         .centered.middle.aligned.row
-            .three.wide.center.aligned.column
+            .three.wide.column
                 +link_button link='/services' icon='building' label='Services'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header '#{title}' Service
             .three.wide.right.aligned.column
                 +edit_button
         .centered.row
-            .ten.wide.column
-                .ui.secondary.segment
-                    .large130 #{description}
-                    if is_admin
-                        .ui.header Slug: #{slug}
-                    img.ui.image.item(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
-
-            .three.wide.column
+            .four.wide.column
                 .ui.header Price: $#{price}
                 +request_service_button
-        .two.column.row
-            .column
+                if is_admin
+                    .ui.header Slug: #{slug}
+            .twelve.wide.column
+                .ui.secondary.segment
+                    .large130 #{description}
+                    img.ui.image.item(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                 +service_child_requests
-            .column
                 +full_doc_history
                 
                 
@@ -98,9 +94,9 @@ template(name='service_child_requests')
         .ui.header 
             +icon name='service-bell'
             |Requests
-        .ui.cards
+        .ui.divided.items
             each child_requests
-                .card
+                .item
                     .content
                         .meta.right.floated 
                             +author_info
@@ -133,7 +129,7 @@ template(name='service_edit')
                     
                     
 template(name='service_request_view')
-    .ui.padded.stackable.middle.aligned.grid
+    .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 +link_button link='/services' icon='building' label='Services'

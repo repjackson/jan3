@@ -27,7 +27,7 @@ template(name='table_footer')
             tr
                 th(colspan=columns)
                     if pages
-                        .ui.right.floated.pagination.menu
+                        .ui.right.floated.pagination.small.menu
                             if show_decrement
                                 a.icon.item.decrement_page
                                     i.left.chevron.icon
@@ -40,47 +40,47 @@ template(name='table_footer')
                             a.icon.item.increment_page
                                 i.right.chevron.icon
                     if pages
-                        |#{skip_amount} - #{end_result} / #{count_amount}
-                    .ui.small.compact.basic.buttons
+                        .table_stats #{skip_amount} - #{end_result} / #{count_amount}
+                    .ui.compact.buttons
                         if show_10
-                            .set_10.button(class="{{page_size_button_class '10'}}" title='View 10 per page') 10
+                            .set_10.ui.button(class="{{page_size_button_class '10'}}" title='View 10 per page') 10
                         if show_20
-                            .set_20.button(class="{{page_size_button_class '20'}}" title='View 20 per page') 20
+                            .set_20.ui.button(class="{{page_size_button_class '20'}}" title='View 20 per page') 20
                         if show_50
-                            .set_50.button(class="{{page_size_button_class '50'}}" title='View 50 per page') 50
+                            .set_50.ui.button(class="{{page_size_button_class '50'}}" title='View 50 per page') 50
                         if show_100
-                            .set_100.button(class="{{page_size_button_class '100'}}" title='View 100 per page') 100
+                            .set_100.ui.button(class="{{page_size_button_class '100'}}" title='View 100 per page') 100
 
 template(name='table_header')
     .four.wide.column
         +query_input
     if no_query
         .four.wide.column
-            |#{skip_amount}-#{end_result} / #{count_amount}
+            .table_stats #{skip_amount}-#{end_result} / #{count_amount}
         .four.wide.column
-            .ui.small.compact.basic.buttons
+            .ui.compact.buttons
                 if show_10
-                    .set_10.button(class="{{page_size_button_class '10'}}" title='View 10') 10
+                    .set_10.ui.button(class="{{page_size_button_class '10'}}" title='View 10') 10
                 if show_20
-                    .set_20.button(class="{{page_size_button_class '20'}}" title='View 20') 20
+                    .set_20.ui.button(class="{{page_size_button_class '20'}}" title='View 20') 20
                 if show_50
-                    .set_50.button(class="{{page_size_button_class '50'}}" title='View 50') 50
+                    .set_50.ui.button(class="{{page_size_button_class '50'}}" title='View 50') 50
                 if show_100
-                    .set_100.button(class="{{page_size_button_class '100'}}" title='View 100') 100
+                    .set_100.ui.button(class="{{page_size_button_class '100'}}" title='View 100') 100
         .four.wide.column
             if pages
-                .ui.right.floated.pagination.menu
+                .ui.right.floated.pagination.small.menu
                     if show_decrement
                         a.icon.item.decrement_page
-                            i.left.chevron.icon
-                    .ui.simple.dropdown.item
+                            i.left.chevron.grey.icon
+                    .ui.simple.dropdown.item(title='Change Page')
                         | #{current_page}
                         i.grey.dropdown.icon
                         .menu
                             each pages
-                                a.set_page_number.item(class=pagination_item_class title="View page #{number}") #{number}
+                                a.set_page_number.item(class=pagination_item_class) #{number}
                     a.icon.item.increment_page
-                        i.right.chevron.icon
+                        i.right.chevron.grey.icon
 
 
 template(name='status_template')

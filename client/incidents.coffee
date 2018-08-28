@@ -84,6 +84,9 @@ Template.level_icon.helpers
 
 Template.incidents.onCreated ->
     Session.setDefault('query',null)
+    Session.set('current_page_number',1)
+    Session.set('page_size',10)
+    Session.set('skip',0)
     @autorun -> Meteor.subscribe 'incidents', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'count', 'incident'
 
@@ -100,6 +103,8 @@ Template.incidents.helpers
 Template.customer_incidents.onCreated ->
     Session.set('query',null)
     Session.set('page_size',10)
+    Session.set('current_page_number',1)
+
     @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'my_incident_count'
 

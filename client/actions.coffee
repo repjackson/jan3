@@ -34,7 +34,7 @@ Template.vote_button.events
 #     self = @
 #     Meteor.setTimeout =>
 #         $('#thanks_modal').modal(
-#             transition: 'horizontal flip'
+#             transition: 'flash'
 #             closable: true
 #             inverted: true
 #             onApprove : =>
@@ -49,7 +49,7 @@ Template.vote_button.events
     
 #     Meteor.setTimeout ->
 #         $('#message_sent').modal(
-#             transition: 'horizontal flip'
+#             transition: 'flash'
 #             inverted: true
 #             )
 #     , 500
