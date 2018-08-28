@@ -19,6 +19,7 @@ Template.table.helpers
         for field in fields
             values.push @["#{field.key}"]
         values
+        
 
 Template.table_footer.events
     'click .set_page_number': -> 
@@ -43,12 +44,51 @@ Template.table_footer.events
         Session.set 'page_size',100
         Session.set 'current_page_number', 1
 
+
+    'click .increment_page': ->
+        current_page = Session.get('current_page_number')
+        next_page = current_page+1
+        Session.set 'current_page_number', next_page
+        int_page_size = parseInt(Session.get('page_size'))
+        skip_amount = next_page*int_page_size-int_page_size
+        Session.set 'skip', skip_amount
+    
+    'click .decrement_page': ->
+        current_page = Session.get('current_page_number')
+        previous_page = current_page-1
+        Session.set 'current_page_number', previous_page
+        int_page_size = parseInt(Session.get('page_size'))
+        skip_amount = previous_page*int_page_size-int_page_size
+        Session.set 'skip', skip_amount
+    
+
+
+
+
+
 Template.table_header.events
     'click .set_page_number': -> 
         Session.set 'current_page_number', @number
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = @number*int_page_size-int_page_size
         Session.set 'skip', skip_amount
+    
+    'click .increment_page': ->
+        current_page = Session.get('current_page_number')
+        next_page = current_page+1
+        Session.set 'current_page_number', next_page
+        int_page_size = parseInt(Session.get('page_size'))
+        skip_amount = next_page*int_page_size-int_page_size
+        Session.set 'skip', skip_amount
+    
+    'click .decrement_page': ->
+        current_page = Session.get('current_page_number')
+        previous_page = current_page-1
+        Session.set 'current_page_number', previous_page
+        int_page_size = parseInt(Session.get('page_size'))
+        skip_amount = previous_page*int_page_size-int_page_size
+        Session.set 'skip', skip_amount
+    
     
     'change #page_size': (e,t)->
         Session.set 'page_size',$('#page_size').val()
@@ -102,6 +142,10 @@ Template.query_input.events
 
 Template.table_footer.helpers
     no_query: -> Session.equals('query', null) or Session.equals('query', '')
+
+    show_decrement: -> Session.get('current_page_number')>1
+
+    show_10_decrement: -> Session.get('current_page_number')>10
 
     skip_amount: -> parseInt(Session.get('skip'))+1
     end_result: -> Session.get('skip') + 1 + Session.get('page_size')
@@ -181,8 +225,8 @@ Template.table_footer.helpers
             number_of_pages = Math.ceil(count_amount/current_page_size)
             pages = []
             page = 0
-            if number_of_pages > 7
-                number_of_pages = 7
+            if number_of_pages > 15
+                number_of_pages = 15
             while page<number_of_pages
                 pages.push {number:page+1}
                 page++
@@ -190,6 +234,12 @@ Template.table_footer.helpers
 
 Template.table_header.helpers
     no_query: -> Session.equals('query', null) or Session.equals('query', '')
+
+    show_decrement: -> Session.get('current_page_number')>1
+
+    show_10_decrement: -> Session.get('current_page_number')>10
+
+
 
     skip_amount: -> parseInt(Session.get('skip'))+1
     end_result: -> Session.get('skip') + 1 + Session.get('page_size')
@@ -272,8 +322,8 @@ Template.table_header.helpers
             number_of_pages = Math.ceil(count_amount/current_page_size)
             pages = []
             page = 0
-            if number_of_pages > 7
-                number_of_pages = 7
+            if number_of_pages > 15
+                number_of_pages = 15
             while page<number_of_pages
                 pages.push {number:page+1}
                 page++

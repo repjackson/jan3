@@ -11,7 +11,7 @@
     "container": true,
     "dimmer": true,
     "divider": true,
-    "dropdown": false,
+    "dropdown": true,
     "embed": false,
     "feed": true,
     "flag": false,

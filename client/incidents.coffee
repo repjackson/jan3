@@ -165,8 +165,8 @@ Template.incident_view.events
                 "ev.MASTER_LICENSEE": incident.incident_office_name
                 type:'office'
         if incidents_office
-            escalation_minutes = incidents_office["escalation_1_#{incident.incident_type}_hours"]
-            Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_minutes} minutes according to #{incident.incident_office_name} initial rules."
+            escalation_hours = incidents_office["escalation_1_#{incident.incident_type}_hours"]
+            Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_hours} hours according to #{incident.incident_office_name} initial rules."
             Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_1_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_1_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
         Docs.update doc_id,
             $set:

@@ -95,17 +95,23 @@ template(name='nav')
                     i.icon
                         +icon name='rss'
             if currentUser
-                a.icon.item(href='/mail' data-content='Messages' class="{{ isActiveRoute 'mail'}}")
-                    i.envelope.icon
-                // a.item(href='/notifications')
-                //     if unread
-                //         +icon name='appointment-reminders'
-                //     else
-                //         img(src="https://png.icons8.com/dotty/80/000000/appointment-reminders.png")
-                // if is_customer    
-                //     a.item(href='/cart')
-                //         i.icon
-                //             +icon name='shopping-cart'
+                a.item(href='/mail' data-content='Mail' class="{{ isActiveRoute 'mail'}}")
+                    if unread_mail
+                        i.icon
+                            +icon name='open-envelope'
+                    else
+                        i.icon
+                            +icon name='secured-letter'
+                a.item(href='/notifications' data-content="Notifications")
+                    if unread_notifications
+                        +icon name='appointment-reminders'
+                    else
+                        i.icon
+                            img.ui.image(src="https://png.icons8.com/dotty/80/000000/appointment-reminders.png")
+                if is_customer    
+                    a.item(href='/cart' data-content='Shopping Cart')
+                        i.icon
+                            +icon name='shopping-cart'
                 a.item(href="/user/#{currentUser.username}" data-content='View Profile' class="{{ isActiveRoute 'user_view'}}")
                     if currentUser.profile.image_id
                         i.icon
@@ -113,7 +119,7 @@ template(name='nav')
                     else
                         i.user.icon
                     .mobile.hidden &nbsp; #{currentUser.username}
-                a#logout.ui.item(href='#') 
+                a#logout.ui.item(href='#' data-content='Log Out') 
                     i.icon
                         +icon name='logout-rounded'
             else

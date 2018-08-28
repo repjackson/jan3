@@ -8,7 +8,7 @@ template(name='bugs')
                     +icon name='bug'
                     | Bugs
             .three.wide.right.aligned.column
-                +add_button type='bug'
+                // +add_button type='bug'
         .row 
             .ui.four.wide.column
                 +tag_facet
@@ -16,24 +16,30 @@ template(name='bugs')
                 +username_facet
             .ui.twelve.wide.column
                 each bugs
-                    +bug_item
+                    +bug_segment
                     .ui.hidden.divider
 
-template(name='bug_item')
+template(name='bug_segment')
     .ui.secondary.segment
-        .ui.item
-            .content
-                .header
-                    |#{body} #{text} #{description}
-                .meta
-                    a(href=link) #{link}
-                .description
-                    if tags
-                        .content
-                            i.spaced.icon
-                                +iconsmall name='tags'
-                            each tags
-                                .ui.small.basic.label #{this}
+        .ui.stackable.grid
+            .row
+                .sixteen.wide.column
+                    .large130 #{body} #{text} #{description}
+            .two.column.row
+                .column
+                    .meta
+                        a(href=link) Page: #{link}
+                    div
+                        if is_dev
+                            +mark_read_button                        
+                .column
+                    .description
+                        if tags
+                            .content
+                                i.spaced.icon
+                                    +iconsmall name='tags'
+                                each tags
+                                    .ui.small.basic.label #{this}
                     .content
                         i.spaced.icon
                             +iconsmall name='clock'
@@ -43,9 +49,9 @@ template(name='bug_item')
                         |submitted by 
                         +author_info
                         |#{when}
-                .extra
-                    +edit_button
-                    +view_button
+                    .extra
+                        +edit_button
+                        +view_button
         
         
         
