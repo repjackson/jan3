@@ -8,8 +8,6 @@ Meteor.methods
                 
                 console.log json
                 console.log 'type', typeof json
-                type = typeof body
-                console.log 'type', type
                 console.log 'keys', _.keys(json)
                 for thing in json
                     console.log thing
@@ -39,19 +37,17 @@ Meteor.methods
             console.log split_user
             if split_user[0]
                 found_user = 
-                    Docs.findOne 
-                        type:'user'
-                        user_id:split_user[0]
-                
-                unless found_user
-                    new_user_id = Docs.insert
-                        type:'user'
-                        user_id:split_user[0]
-                        user_first_name:split_user[1]
-                        user_last_name:split_user[2]
-                    console.log 'added user doc id:', new_user_id
-                # else
-                #     console.log 'existing user doc:', found_user._id
+                    Meteor.users.findOne 
+                        username:split_user[0]
+                if found_user
+                    console.log 'during sync, found user', split_user[0]
+                else
+                    console.log 'need to add user', split_user[0]
+                    # new_user_id = 
+                    #     Accounts.createUser
+                    #         username:split_user[0]
+                    #         profile.first_name:split_user[1]
+                    #         profile.last_name:split_user[2]
                 Meteor.call 'get_user_info', split_user[0]
 
     get_user_info: (username)->
