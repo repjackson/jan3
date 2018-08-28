@@ -9,13 +9,13 @@ template(name='office_by_franchisee')
 template(name='offices')
     .ui.stackable.centered.padded.grid
         .middle.aligned.row
-            .three.wide.center.aligned.column
+            .three.wide.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
                     +icon name='building'
                     |Offices
-            .three.wide.center.aligned.column
+            .three.wide.right.aligned.column
                 // if is_dev
                 // +call_method name='sync_offices'
         .middle.aligned.row

@@ -29,7 +29,7 @@ Meteor.methods
                 # disabled: [Y|N|
                 # filter: pattern 
                 # filter_type: "ID"
-        console.dir res.content
+        # console.dir res.content
         split_res = res.content.split '\r\n'
         
         for user_string in split_res
@@ -41,15 +41,19 @@ Meteor.methods
                         username:split_user[0]
                 if found_user
                     console.log 'during sync, found user', split_user[0]
+                    Meteor.call 'get_user_info', split_user[0]
                 else
                     console.log 'need to add user', split_user[0]
-                    # new_user_id = 
-                    #     Accounts.createUser
-                    #         username:split_user[0]
-                    #         profile.first_name:split_user[1]
-                    #         profile.last_name:split_user[2]
-                Meteor.call 'get_user_info', split_user[0]
-
+                    options = {}
+                    options.profile = {}
+                    options.username = split_user[0]
+                    options.profile.first_name = split_user[1]
+                    options.profile.last_name = split_user[2]
+                    result = Accounts.createUser(options)
+                    if result
+                        console.log 'add user result', result
+                        console.log 'added user', options.username
+                        Meteor.call 'get_user_info', options.username
     get_user_info: (username)->
         # users_cursor = Meteor.users.find({}).fetch()
         # for each_user in users_cursor

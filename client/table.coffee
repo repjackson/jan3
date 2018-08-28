@@ -1,8 +1,6 @@
 Template.table.onCreated ->
     @autorun => Meteor.subscribe 'count', @data.type
 
-
-
 Template.table.helpers
     sort_descending: ->
         if Session.equals('sort_direction', 1) and Session.equals('sort_key', @key) 
@@ -17,7 +15,14 @@ Template.table.helpers
         fields = Template.parentData().fields
         values = []
         for field in fields
-            values.push @["#{field.key}"]
+            if field.ev_subset is true
+                values.push Template.currentData().ev["#{field.key}"]
+            else
+                # console.log "#{field.key}"
+                values.push Template.currentData()["#{field.key}"]
+            for value in values
+                console.log value
+            console.log values
         values
         
 
@@ -32,60 +37,52 @@ Template.table_footer.events
         Session.set 'page_size',$('#page_size').val()
 
     'click .set_10': (e,t)-> 
-        Session.set 'page_size',10
         Session.set 'current_page_number', 1
         $('.table_stats').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
-        $('tbody tr').transition(
+        $('tbody').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
+        Session.set 'page_size',10
     
     'click .set_20': (e,t)-> 
+        $('.table_stats').transition(
+            animation:'pulse'
+            duration:300
+            )
+        $('tbody').transition(
+            animation:'pulse'
+            duration:300
+            )
         Session.set 'page_size',20
         Session.set 'current_page_number', 1
-        $('.table_stats').transition(
-            animation:'pulse'
-            duration:400
-            interval:100
-            )
-        $('tbody tr').transition(
-            animation:'pulse'
-            duration:400
-            interval:100
-            )
     
     'click .set_50': (e,t)-> 
-        Session.set 'page_size',50
-        Session.set 'current_page_number', 1
         $('.table_stats').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
-        $('tbody tr').transition(
+        $('tbody').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
+        Session.set 'current_page_number', 1
+        Session.set 'page_size',50
     
     'click .set_100': (e,t)-> 
-        Session.set 'page_size',100
-        Session.set 'current_page_number', 1
         $('.table_stats').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
-        $('tbody tr').transition(
+        $('tbody').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
+        Session.set 'current_page_number', 1
+        Session.set 'page_size',100
     
 
 
@@ -112,32 +109,28 @@ Template.table_footer.events
 
 Template.table_header.events
     'click .set_page_number': (e,t)->
+        $('.table_stats').transition(
+            animation:'pulse'
+            duration:300
+            )
+        $('tbody').transition(
+            animation:'pulse'
+            duration:300
+            )
         Session.set 'current_page_number', @number
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = @number*int_page_size-int_page_size
         Session.set 'skip', skip_amount
-        $('.table_stats').transition(
-            animation:'pulse'
-            duration:400
-            interval:100
-            )
-        $('tbody tr').transition(
-            animation:'pulse'
-            duration:400
-            interval:100
-            )
     
     
     'click .increment_page': (e,t)->
         $('.table_stats').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
-        $('tbody tr').transition(
+        $('tbody').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
         current_page = Session.get('current_page_number')
         next_page = current_page+1
@@ -149,13 +142,11 @@ Template.table_header.events
     'click .decrement_page': (e,t)->
         $('.table_stats').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
-        $('tbody tr').transition(
+        $('tbody').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
         current_page = Session.get('current_page_number')
         previous_page = current_page-1
@@ -169,56 +160,48 @@ Template.table_header.events
         Session.set 'page_size',$('#page_size').val()
 
     'click .set_10': (e,t)-> 
-        Session.set 'page_size',10
         $('.table_stats').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
-        $('tbody tr').transition(
+        $('tbody').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
+        Session.set 'page_size',10
     
     'click .set_20': (e,t)-> 
-        Session.set 'page_size',20
         $('.table_stats').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
-        $('tbody tr').transition(
+        $('tbody').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
+        Session.set 'page_size',20
     
     'click .set_50': (e,t)-> 
-        Session.set 'page_size',50
         $('.table_stats').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
-        $('tbody tr').transition(
+        $('tbody').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
+        Session.set 'page_size',50
     
     'click .set_100': (e,t)-> 
-        Session.set 'page_size',100
         $('.table_stats').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
-        $('tbody tr').transition(
+        $('tbody').transition(
             animation:'pulse'
-            duration:400
-            interval:100
+            duration:300
             )
+        Session.set 'page_size',100
     
 
 Template.sort_column_header.events

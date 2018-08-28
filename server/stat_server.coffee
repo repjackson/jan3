@@ -198,7 +198,6 @@ Meteor.methods
         
     calculate_active_customers: ()->
         count = Docs.find(type:'customer', "ev.ACCOUNT_STATUS":'ACTIVE').count()
-        console.log count
         Stats.update({
             doc_type: 'customer'
             stat_type: 'active'

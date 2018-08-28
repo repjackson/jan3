@@ -23,19 +23,20 @@ Meteor.startup(() =>
 )
 
 
-Accounts.onCreateUser (options, user)=>
+Accounts.onCreateUser (options=null, user)=>
     # console.log 'trying to update new user with options', options
     # console.log 'trying to update new user ', user
-    
-    edited_user = Object.assign({
-        customer_jpid:options.customer_jpid
-        franchisee_jpid:options.franchisee_jpid
-        office_jpid:options.office_jpid
-        roles:options.roles
-    }, user)
-
-    if options.profile
-        edited_user.profile = options.profile
+    if options
+        edited_user = Object.assign({
+            customer_jpid:options.customer_jpid
+            franchisee_jpid:options.franchisee_jpid
+            office_jpid:options.office_jpid
+            roles:options.roles
+        }, user)
+        if options.profile
+            edited_user.profile = options.profile
+    else
+        edited_user = {}
     return edited_user
 
 
