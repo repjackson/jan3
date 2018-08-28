@@ -27,7 +27,7 @@ template(name='invoice_card')
         
         
 template(name='invoice_edit')
-    .ui.padded.stackable.middle.aligned.centered.grid
+    .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 #delete.ui.icon.button
@@ -44,7 +44,7 @@ template(name='invoice_edit')
         
         
 template(name='invoice_view')
-    .ui.padded.stackable.middle.aligned.centered.grid
+    .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 +link_button link='/invoices' icon='exclamation triangle'

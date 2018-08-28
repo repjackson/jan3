@@ -66,7 +66,7 @@ Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 Template.registerHelper 'my_office', () -> 
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
-    if user and user.profile 
+    if user
         if user.office_jpid
             users_office = Docs.findOne
                 "ev.ID": user.office_jpid

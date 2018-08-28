@@ -1,4 +1,24 @@
 Meteor.methods
+    call_lodestar: ->
+        HTTP.call 'GET',"https://sandbox.lodestarbpm.com/test/api-test.php", (err,res)->
+            if err then console.log err 
+            else 
+                body = res.content
+                json = JSON.parse body
+                
+                console.log json
+                console.log 'type', typeof json
+                type = typeof body
+                console.log 'type', type
+                console.log 'keys', _.keys(json)
+                for thing in json
+                    console.log thing
+                
+                for office in json.offices
+                    console.log office
+
+
+
     sync_ev_users: ()->
         self = @
         

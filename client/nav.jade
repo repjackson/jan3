@@ -1,7 +1,7 @@
 template(name='nav')
     .ui.inverted.blue.top.attached.large.menu
-        // a.toggle_left_sidebar.icon.item 
-        //     i.bars.icon
+        a.toggle_left_sidebar.icon.item 
+            i.bars.icon
         if is_customer
             a.item(href='/')
                 // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
@@ -25,57 +25,57 @@ template(name='nav')
             if my_office
                 a.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
                     i.icon
-                        +icon name='dashboard'
+                        +icon name='building'
                     | &nbsp; #{my_office.ev.MASTER_LICENSEE}
             a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
                 i.icon
                     +icon name='error'
-                .mobile.hidden &nbsp; Incidents
+                .large.monitor.only &nbsp; Incidents
             a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
                 i.icon
                     +icon name='groups'
-                .mobile.hidden &nbsp; Employees
+                .large.monitor.only &nbsp; Employees
             a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
                 i.icon
                     +icon name='housekeeper-male'
-                .mobile.hidden &nbsp; Franchisees
+                .large.monitor.only &nbsp; Franchisees
             a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
                 i.icon
                     +icon name='customer-support'
-                .mobile.hidden &nbsp; Customers
+                .large.monitor.only &nbsp; Customers
             a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
                 i.icon
                     +icon name='settings'
-                .mobile.hidden &nbsp; Settings
+                .large.monitor.only &nbsp; Settings
         if is_admin
             a.item(href='/admin' data-content='Admin Dashboard' class="{{ isActiveRoute 'admin'}}")
                 i.icon
                     +icon name='user-shield'
-                .mobile.hidden &nbsp; Admin
+                // .mobile.hidden &nbsp; Admin
             a.mobile.hidden.item(href='/incidents' data-content='All Incidents' class="{{ isActiveRoute 'incidents'}}")
                 i.icon
                     +icon name='error'
-                .mobile.hidden &nbsp; Incidents
+                // .mobile.hidden &nbsp; Incidents
             a.mobile.hidden.item(href='/users' data-content='All Users' class="{{ isActiveRoute 'users'}}")
                 i.icon
                     +icon name='groups'
-                .mobile.hidden &nbsp; Users
+                // .mobile.hidden &nbsp; Users
             a.mobile.hidden.item(href='/offices' data-content='All Offices' class="{{ isActiveRoute 'offices'}}")
                 i.icon
                     +icon name='skyscrapers'
-                .mobile.hidden Offices
+                // .mobile.hidden Offices
             a.mobile.hidden.item(href='/franchisees' data-content='All Franchisees' class="{{ isActiveRoute 'franchisees'}}")
                 i.icon
                     +icon name='housekeeper-male'
-                .mobile.hidden Franchisees
+                // .mobile.hidden Franchisees
             a.mobile.hidden.item(href='/customers' data-content='All Customers' class="{{ isActiveRoute 'customers'}}")
                 i.icon
                     +icon name='customer-support'
-                .mobile.hidden Customers
+                // .mobile.hidden Customers
             a.mobile.hidden.item(href='/services' data-content='All Services' class="{{ isActiveRoute 'services'}}")
                 i.icon
                     +icon name='broom'
-                .mobile.hidden Services
+                // .mobile.hidden Services
         .right.menu
             if is_dev
                 // a.item(href='/alfred' data-content='alfred')
@@ -97,15 +97,19 @@ template(name='nav')
             if currentUser
                 a.icon.item(href='/mail' data-content='Messages' class="{{ isActiveRoute 'mail'}}")
                     i.envelope.icon
-                // a.item(href='/transactions')
-                //     i.icon
-                //         +icon name='data-in-both-directions'
-                // a.item(href='/cart')
-                //     i.icon
-                //         +icon name='shopping-cart'
+                // a.item(href='/notifications')
+                //     if unread
+                //         +icon name='appointment-reminders'
+                //     else
+                //         img(src="https://png.icons8.com/dotty/80/000000/appointment-reminders.png")
+                // if is_customer    
+                //     a.item(href='/cart')
+                //         i.icon
+                //             +icon name='shopping-cart'
                 a.item(href="/user/#{currentUser.username}" data-content='View Profile' class="{{ isActiveRoute 'user_view'}}")
                     if currentUser.profile.image_id
-                        img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        i.icon
+                            img.ui.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
                     .mobile.hidden &nbsp; #{currentUser.username}
@@ -125,33 +129,36 @@ template(name='left_sidebar')
     .ui.left.vertical.sidebar.inverted.blue.thin.menu
         if currentUser
             a.toggle_left_sidebar.header.item(href="/user/#{currentUser.username}")
-                img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                img.ui.centered.mini.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 |#{currentUser.username}
-    
-        a.header.toggle_left_sidebar.item(href='/') 
-            |Dashboard
-        // a.toggle_left_sidebar.item(href='/front')
-        //     i.globe.icon
-        //     | Sales Page
-        a.toggle_left_sidebar.item(href='/users') 
-            |Users
-        a.toggle_left_sidebar.item(href='/incidents') 
-            |Incidents
-        a.toggle_left_sidebar.item(href='/offices') 
-            |Offices
-        // a.toggle_left_sidebar.item(href='/schedule')
-        //     | Schedule
-        a.toggle_left_sidebar.item(href='/services')
-            // +tiny_sprite name='duster'
-            | Services
-        a.toggle_left_sidebar.item(href='/special_services')
-            // +tiny_sprite name='duster'
-            | Special Services
-        a.toggle_left_sidebar.item(href='/franchisees') 
-            |Franchisees
-        a.toggle_left_sidebar.item(href='/customers') 
-            |Customers
+        if is_customer
+            a.header.toggle_left_sidebar.item(href='/') 
+                |Dashboard
+            a.toggle_left_sidebar.item(href='/store')
+                i.shopping.cart.icon
+                | Store
+            // a.toggle_left_sidebar.item(href='/front')
+            //     i.globe.icon
+            //     | Sales Page
         if is_admin
+            a.toggle_left_sidebar.item(href='/users') 
+                |Users
+            a.toggle_left_sidebar.item(href='/incidents') 
+                |Incidents
+            a.toggle_left_sidebar.item(href='/offices') 
+                |Offices
+            // a.toggle_left_sidebar.item(href='/schedule')
+            //     | Schedule
+            a.toggle_left_sidebar.item(href='/services')
+                // +tiny_sprite name='duster'
+                | Services
+            a.toggle_left_sidebar.item(href='/special_services')
+                // +tiny_sprite name='duster'
+                | Special Services
+            a.toggle_left_sidebar.item(href='/franchisees') 
+                |Franchisees
+            a.toggle_left_sidebar.item(href='/customers') 
+                |Customers
             .divider
             a.toggle_left_sidebar.item(href='/admin') 
                 |Admin
@@ -164,13 +171,35 @@ template(name='left_sidebar')
     
                 // a.icon.item(href='/dashboard')
                 //     i.line.chart.icon
-            a.toggle_left_sidebar.item(href='/store')
-                i.shopping.cart.icon
-                | Store
             a.toggle_left_sidebar.item(href='/feedback_responses')
                 i.chat.icon
                 | Feedback Responses
-            
+        if is_office
+            a.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
+                i.icon
+                    +icon name='building'
+                | &nbsp; #{my_office.ev.MASTER_LICENSEE}
+            a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
+                i.icon
+                    +icon name='error'
+                .large.monitor.only &nbsp; Incidents
+            a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
+                i.icon
+                    +icon name='groups'
+                .large.monitor.only &nbsp; Employees
+            a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
+                i.icon
+                    +icon name='housekeeper-male'
+                .large.monitor.only &nbsp; Franchisees
+            a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
+                i.icon
+                    +icon name='customer-support'
+                .large.monitor.only &nbsp; Customers
+            a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
+                i.icon
+                    +icon name='settings'
+                .large.monitor.only &nbsp; Settings
+
         // a.icon.toggle_left_sidebar.item(href='/admin')
         //     i.shield.icon
         //     | Admin
