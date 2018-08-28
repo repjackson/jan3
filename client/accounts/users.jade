@@ -29,8 +29,8 @@ template(name='users')
                                 td
                                     if profile.image_id
                                         img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                        .ui.popup
-                                            img.ui.small.image(src="{{c.url profile.image_id height=500 width=500 crop='fill' gravity='face'}}")
+                                .ui.popup
+                                    img.ui.small.image(src="{{c.url profile.image_id height=500 width=500 crop='fill' gravity='face'}}")
                                 td.selectable
                                     a(href="/user/#{username}" title="View #{username} Profile") 
                                         |#{username}
