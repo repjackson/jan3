@@ -2,14 +2,14 @@ template(name='user_view')
     with user
         .ui.padded.stackable.grid
             .middle.aligned.row
-                .four.wide.center.aligned.column
+                .four.wide.column
                     if is_admin
                         +link_button link='/users' icon='groups' label='Users' classes='centered'
                 .eight.wide.center.aligned.column
                     h1.ui.header 
                         |#{profile.first_name} #{profile.last_name} 
                         small @#{username}
-                .four.wide.center.aligned.column
+                .four.wide.right.aligned.column
                     if is_dev
                         .get_user_info.ui.icon.button(title='Refresh User Info')
                             i.refresh.icon

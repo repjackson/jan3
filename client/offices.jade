@@ -7,7 +7,7 @@ template(name='office_by_franchisee')
             | #{ev.MASTER_LICENSEE}
             
 template(name='offices')
-    .ui.stackable.centered.middle.aligned.padded.grid
+    .ui.stackable.centered.padded.grid
         .middle.aligned.row
             .three.wide.center.aligned.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
@@ -18,7 +18,7 @@ template(name='offices')
             .three.wide.center.aligned.column
                 // if is_dev
                 // +call_method name='sync_offices'
-        .row
+        .middle.aligned.row
             +table_header doc_type='office' stat_type='total'
         .row
             .sixteen.wide.column

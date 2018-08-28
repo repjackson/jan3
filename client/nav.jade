@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.inverted.blue.top.attached.large.menu
+    .ui.inverted.blue.top.attached.menu
         a.toggle_left_sidebar.icon.item 
             i.bars.icon
         if is_customer
@@ -51,31 +51,31 @@ template(name='nav')
             a.item(href='/admin' data-content='Admin Dashboard' class="{{ isActiveRoute 'admin'}}")
                 i.icon
                     +icon name='user-shield'
-                // .mobile.hidden &nbsp; Admin
+                .large.monitor.only &nbsp; Admin
             a.mobile.hidden.item(href='/incidents' data-content='All Incidents' class="{{ isActiveRoute 'incidents'}}")
                 i.icon
                     +icon name='error'
-                // .mobile.hidden &nbsp; Incidents
+                .large.monitor.only &nbsp; Incidents
             a.mobile.hidden.item(href='/users' data-content='All Users' class="{{ isActiveRoute 'users'}}")
                 i.icon
                     +icon name='groups'
-                // .mobile.hidden &nbsp; Users
+                .large.monitor.only &nbsp; Users
             a.mobile.hidden.item(href='/offices' data-content='All Offices' class="{{ isActiveRoute 'offices'}}")
                 i.icon
                     +icon name='skyscrapers'
-                // .mobile.hidden Offices
+                .large.monitor.only Offices
             a.mobile.hidden.item(href='/franchisees' data-content='All Franchisees' class="{{ isActiveRoute 'franchisees'}}")
                 i.icon
                     +icon name='housekeeper-male'
-                // .mobile.hidden Franchisees
+                .large.monitor.only Franchisees
             a.mobile.hidden.item(href='/customers' data-content='All Customers' class="{{ isActiveRoute 'customers'}}")
                 i.icon
                     +icon name='customer-support'
-                // .mobile.hidden Customers
+                .large.monitor.only Customers
             a.mobile.hidden.item(href='/services' data-content='All Services' class="{{ isActiveRoute 'services'}}")
                 i.icon
                     +icon name='broom'
-                // .mobile.hidden Services
+                .large.monitor.only Services
         .right.menu
             if is_dev
                 // a.item(href='/alfred' data-content='alfred')

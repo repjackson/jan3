@@ -52,12 +52,22 @@ template(name='admin')
                             +view_stat stat_type='active' doc_type='customer'
                         .item Total
                             +view_stat stat_type='total' doc_type='customer'
-            //     a.card(href='/special_services')
-            //         .content
-            //             .ui.header
-            //                 +icon name='invoice'
-            //                 +view_stat stat_type='total' doc_type='special_service'
-            //                 | Special Services
+            .card
+                .content
+                    a.ui.header(href="/special_services")
+                        +icon name='invoice'
+                        | Special Services
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='special_service'
+            .card
+                .content
+                    a.ui.header(href="/feedback_responses")
+                        +icon name='talk-male'
+                        | Feedback Responses
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='feedback_response'
             .card
                 .content
                     a.ui.header(href='/services')

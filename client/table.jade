@@ -28,19 +28,18 @@ template(name='table_footer')
                 th(colspan=columns)
                     if pages
                         .ui.right.floated
-                            |From #{skip_amount} to #{end_result} of #{count_amount}
+                            |#{skip_amount} - #{end_result} of #{count_amount}
                         .ui.right.floated.pagination.menu
                             each pages
                                 a.set_page_number.item(class=pagination_item_class) #{number}
                     if show_10
-                        |View &nbsp;
-                        .set_10.ui.small.compact.button(class="{{page_size_button_class '10'}}") 10
+                        .set_10.ui.small.compact.button(class="{{page_size_button_class '10'}}" title='View 10 per page') 10
                     if show_20
-                        .set_20.ui.small.compact.button(class="{{page_size_button_class '20'}}") 20
+                        .set_20.ui.small.compact.button(class="{{page_size_button_class '20'}}" title='View 20 per page') 20
                     if show_50
-                        .set_50.ui.small.compact.button(class="{{page_size_button_class '50'}}") 50
+                        .set_50.ui.small.compact.button(class="{{page_size_button_class '50'}}" title='View 50 per page') 50
                     if show_100
-                        .set_100.ui.small.compact.button(class="{{page_size_button_class '100'}}") 100
+                        .set_100.ui.small.compact.button(class="{{page_size_button_class '100'}}" title='View 100 per page') 100
 
 template(name='table_header')
     .four.wide.column

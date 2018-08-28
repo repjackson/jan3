@@ -1,13 +1,13 @@
 template(name='bugs')
     .ui.padded.stackable.centered.grid
         .centered.row
-            .three.wide.center.aligned.column
+            .three.wide.column
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
                     +icon name='bug'
                     | Bugs
-            .three.wide.center.aligned.column
+            .three.wide.right.aligned.column
                 +add_button type='bug'
         .row 
             .ui.four.wide.column
@@ -15,20 +15,37 @@ template(name='bugs')
                 +timestamp_facet
                 +username_facet
             .ui.twelve.wide.column
-                .ui.centered.stackable.cards
-                    each bugs
-                        +bug_card
+                each bugs
+                    +bug_item
+                    .ui.hidden.divider
 
-template(name='bug_card')
-    .ui.card
-        .content
-            |#{body}
-        .content
-            +author_info
-            |#{when}
-        .content
-            +edit_button
-            +view_button
+template(name='bug_item')
+    .ui.secondary.segment
+        .ui.item
+            .content
+                .header
+                    |#{body} #{text} #{description}
+                .meta
+                    a(href=link) #{link}
+                .description
+                    if tags
+                        .content
+                            i.spaced.icon
+                                +iconsmall name='tags'
+                            each tags
+                                .ui.small.basic.label #{this}
+                    .content
+                        i.spaced.icon
+                            +iconsmall name='clock'
+                        each timestamp_tags
+                            .ui.small.basic.label #{this}
+                    .content
+                        |submitted by 
+                        +author_info
+                        |#{when}
+                .extra
+                    +edit_button
+                    +view_button
         
         
         

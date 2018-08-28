@@ -2,7 +2,8 @@ template(name='rules')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
-                +link_button link='/admin' icon='user-shield' label='Admin'
+                if is_admin
+                    +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
                     +icon name='reviewer-female'

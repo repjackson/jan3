@@ -7,13 +7,13 @@ template(name='users')
                 h1.ui.center.aligned.header 
                     +icon name='groups'
                     | Users
-            .four.wide.center.aligned.column 
+            .four.wide.right.aligned.column 
                 +link_button link='/user/add' label='Add User' icon='plus'
         .row
             +table_header stat_type='total'
         .row
             .sixteen.wide.column 
-                table.ui.striped.table
+                table.ui.striped.fixed.table
                     thead
                     
                         +sort_column_header key='username' label='Username'
@@ -23,7 +23,6 @@ template(name='users')
                         th Role
                         th Contact
                         +sort_column_header key='profile.office_name' label='Office'
-                        // th 
                     tbody
                         each all_users
                             tr
@@ -32,6 +31,8 @@ template(name='users')
                                         if profile.image_id
                                             img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                                         |#{username}
+                                .ui.popup
+                                    img.ui.small.image(src="{{c.url profile.image_id height=500 width=500 crop='fill' gravity='face'}}")
                                 td.selectable(title="View #{username} Profile") 
                                     a(href="/user/#{username}") 
                                         |#{profile.first_name} 
@@ -46,7 +47,4 @@ template(name='users')
                                     div #{email}
                                     div #{ev.WORK_TELEPHONE}
                                 td #{profile.office_name}
-                                // td 
-                                //     +edit_user_button
-                                //     +view_user_button
-                    +table_footer columns='8' stat_type='total'
+                    +table_footer columns='7' stat_type='total'

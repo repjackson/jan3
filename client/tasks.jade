@@ -2,6 +2,8 @@ template(name='tasks')
     .ui.stackable.padded.grid
         .middle.aligned.row 
             .three.wide.center.aligned.column
+                if is_admin
+                    +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header 
                     +icon name='realtime-protection'
