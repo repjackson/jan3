@@ -146,6 +146,7 @@ Template.small_doc_history.helpers
             
 Template.full_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', @data._id
+    @autorun =>  Meteor.subscribe 'type', 'event_type'
 
 
 Template.doc_history_event.onCreated ->
