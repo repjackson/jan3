@@ -1,3 +1,23 @@
+template(name='mail_nav')
+    .ui.fluid.button
+        i.plus.icon
+        | Compose
+    .ui.vertical.fluid.menu
+        a.item(href="/mail") 
+            |Inbox (#{inbox_count})
+            i.inbox.icon
+        a.item(href="/mail") 
+            |Sent (#{sent_count})
+            i.paper.plane.icon
+        .divider
+        a.item(href="/mail") 
+            |All
+            i.envelope.icon
+        a.item(href="/unread") 
+            |Unread (#{unread_count})
+            i.envelope.open.outline.icon
+
+
 template(name='mail')
     .ui.stackable.padded.grid
         .row
@@ -16,12 +36,15 @@ template(name='mail')
                 //     |#{unread_message_count}
         .row
             .four.wide.column
+                +mail_nav
                 .ui.secondary.segment
                     .ui.header Stats
                     +view_stat doc_type='message' stat_type='total'
                     |Messages
             .twelve.wide.column
-                +table collection='Docs' type='message' fields=message_table_fields
+                each message_docs
+                    +message_segment
+                // +table collection='Docs' type='message' fields=message_table_fields
             // .four.wide.column
                 // +theme_tag_filter type='conversation'
                 // +participant_filter type='conversation'
@@ -41,6 +64,39 @@ template(name='mail')
                 //     +full_conversation_view
                 // .ui.cards
                 //     each conversations
+
+template(name='message_segment')
+    .ui.segment(class=message_segment_class)
+        h4.ui.header #{from_username} -> #{to_username} 
+        .meta #{long_timestamp}
+        p.large120 #{text}
+        +mark_read_button
+        // +read_by_list
+        +view_button
+        
+
+template(name='unread')
+    .ui.stackable.padded.grid
+        .row
+            .five.wide.center.aligned.column
+            .eight.wide.center.aligned.column
+                h1.ui.header 
+                    +icon name='open-envelope'
+                    |Unread Mail
+            .three.wide.center.aligned.column
+        .row
+            .four.wide.column
+                +mail_nav
+                .ui.secondary.segment
+                    .ui.header Stats
+                    +view_stat doc_type='message' stat_type='total'
+                    |Messages
+            .twelve.wide.column
+                each unread_messages
+                    +message_segment
+
+
+
 
                 
 template(name='conversation_list')

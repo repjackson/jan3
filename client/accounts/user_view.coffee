@@ -12,6 +12,7 @@ Template.users_docs.onCreated ->
     @autorun -> Meteor.subscribe 'users_docs', FlowRouter.getParam('username')
 Template.user_events.onCreated ->
     @autorun -> Meteor.subscribe 'user_events', FlowRouter.getParam('username')
+    @autorun -> Meteor.subscribe 'type', 'event_type'
     
 Template.users_docs.helpers
     user_docs: ->

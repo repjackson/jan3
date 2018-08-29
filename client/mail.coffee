@@ -1,13 +1,38 @@
 FlowRouter.route '/mail', 
     name:'mail'
     action: -> BlazeLayout.render 'layout', main:'mail'
+FlowRouter.route '/unread', 
+    name:'unread'
+    action: -> BlazeLayout.render 'layout', main:'unread'
 
+Template.unread.onCreated ->
+    @autorun -> Meteor.subscribe('unread')
 Template.mail.onCreated ->
+    @autorun -> Meteor.subscribe('inbox_count')
+    @autorun -> Meteor.subscribe('unread_count')
     @autorun -> Meteor.subscribe('type', 'message')
     @view_published = new ReactiveVar(true)
     @autorun -> Meteor.subscribe 'type','message', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
 
+
+Template.message_segment.helpers
+    message_segment_class: ->
+        if @read_by and Meteor.userId() and Meteor.userId() in @read_by then 'secondary' else ''
+
+Template.unread.helpers
+    unread_messages: ->
+        Docs.find({
+            type:'message'
+            read_by: $nin: [Meteor.userId()]
+            })
+
+
 Template.mail.helpers
+    inbox_count: ->
+        Stats.findOne
+            doc_type:'message'
+            stat_type:'inbox'
+
     conversations: -> 
         if Template.instance().view_published.get() is true
             Docs.find {
@@ -21,6 +46,8 @@ Template.mail.helpers
                 published: -1
             }, sort: timestamp: -1
         
+        
+    message_docs: -> Docs.find type:'message'    
         
     message_table_fields: -> [
             {   

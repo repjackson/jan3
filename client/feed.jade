@@ -124,9 +124,9 @@ template(name='doc_history_event')
             .metadata
                 .date {{ reg_format timestamp }}
                 .rating(title='Event Type') #{event_type}
-                i.building.icon(title='Office')
-                i.money.icon(title='Customer')
-                i.user.icon(title='Author')
+                // i.building.icon(title='Office')
+                // i.money.icon(title='Customer')
+                // i.user.icon(title='Author')
             .text #{action} #{text}
             .actions
                 if is_dev

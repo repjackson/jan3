@@ -38,6 +38,17 @@ Template.registerHelper 'is_editing', () ->
 
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
 
+Template.registerHelper 'unread_count', () ->  
+    found_unread_count_stat = Stats.findOne({
+        doc_type:'message'
+        stat_type:'unread'
+        username:Meteor.user().username
+    })
+    if found_unread_count_stat
+        found_unread_count_stat.amount
+        
+        
+        
 Template.registerHelper 'my_office_link', () ->  
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
