@@ -134,6 +134,7 @@ Meteor.methods
             office_franchisee_count = 
                 Docs.find({
                     "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
+                    
                     type: "franchisee"
                 }).count()
             Stats.update {
@@ -161,7 +162,9 @@ Meteor.methods
         office_doc = Docs.findOne office_doc_id
         if office_doc
             office_employee_count = 
-                Meteor.users.find({"profile.office_name": office_doc.ev.MASTER_LICENSEE}).count()
+                Meteor.users.find({
+                    "ev.COMPANY_NAME": office_doc.ev.MASTER_LICENSEE
+                    }).count()
             Stats.update({
                 collection: 'users'
                 stat_type: 'office_employees'

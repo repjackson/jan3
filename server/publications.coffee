@@ -257,7 +257,7 @@ Meteor.publish 'office_employees', (office_doc_id, query, limit=1000, sort_key='
     office_doc = Docs.findOne office_doc_id
     if query 
         Meteor.users.find {
-            "profile.office_name": office_doc.ev.MASTER_LICENSEE
+            "ev.COMPANY_NAME": office_doc.ev.MASTER_LICENSEE
             $text: $search: query
         },{
             skip: skip
@@ -266,7 +266,7 @@ Meteor.publish 'office_employees', (office_doc_id, query, limit=1000, sort_key='
         }
     else
         Meteor.users.find {
-            "profile.office_name": office_doc.ev.MASTER_LICENSEE
+            "ev.COMPANY_NAME": office_doc.ev.MASTER_LICENSEE
         },{
             skip: skip
             limit:limit

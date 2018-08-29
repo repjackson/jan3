@@ -27,6 +27,7 @@ Template.feed.events
 
 
 Template.office_feed.onCreated ->
+    Meteor.subscribe 'type', 'event_type'
     @autorun => Meteor.subscribe 'office_events', FlowRouter.getParam('doc_id')
 
 Template.office_feed.helpers

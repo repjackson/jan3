@@ -136,8 +136,8 @@ Template.office_employees.helpers
         # console.log page_office
         if page_office
             Meteor.users.find {
-                "profile.office_name": page_office.ev.MASTER_LICENSEE }
-            # },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
+                "ev.COMPANY_NAME": page_office.ev.MASTER_LICENSEE
+            },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
 
 
 
