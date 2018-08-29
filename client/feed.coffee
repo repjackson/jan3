@@ -5,13 +5,16 @@ FlowRouter.route '/feed',
             main: 'oasis'
 
 Template.oasis.onCreated ->
-    @autorun => Meteor.subscribe 'facet', 
+    Meteor.subscribe 'type', 'event_type'
+    Session.setDefault 'view_mode', 'table'
+    @autorun => Meteor.subscribe 'oasis', 
         selected_tags.array()
         selected_author_ids.array()
         selected_location_tags.array()
         selected_timestamp_tags.array()
         type='event'
         author_id=null
+        Session.get('event_type')
 
     
 Template.oasis.events
@@ -27,6 +30,38 @@ Template.oasis.helpers
     table_mode_button_class: -> if Session.equals('view_mode', 'table') then 'blue' else ''
     list_mode_button_class: -> if Session.equals('view_mode', 'list') then 'blue' else ''
 
+
+    event_types: -> Docs.find type:'event_type'
+
+
+    oasis_table_fields: -> [
+            {   
+                key:'event_type'
+                label:'type'
+                sortable:true
+            }
+            {
+                key:'parent_id'
+                label:'parent id'
+                sortable:false
+            }
+            {
+                key:'long_timestamp'
+                label:'When'
+                sortable:true
+                
+            }
+            {
+                key:'text'
+                label:'Text'
+                sortable:false
+            }
+            {
+                key:'action'
+                label:'action'
+                sortable:false
+            }
+        ]
 
 
     # feed_events: -> Docs.find {type:'event'}, sort:timestamp:-1

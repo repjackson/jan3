@@ -57,3 +57,26 @@ sort dropdown up top
 franchisee and office cards in incident viewadd office_jpid filter to view stat
 
 billions of documents, then when you're ready, trillions
+
+
+
+
+<!--'escalate'  'positive-dynamic'-->
+<!--'close'  'close-sign'-->
+<!--'setting_default_escalation_time'  'sort-by-modified-date'-->
+<!--'emailed_owner'  'user-shield'-->
+'emailed_secondary_contact'  'sent'
+'emailed_franchisee_contact'  'housekeeper-male'
+'mark_complete'  'checked-checkbox'
+'mark_incomplete'  'unchecked-checkbox'
+'submit'  'internal'
+'unsubmit'  'undo'
+'assignment'  'add-user-male'
+'unassignment'  'remove-user-female'
+'not-escalate'  'do-not-disturb'
+'level_change'  'positive-dynamic'
+else 'commit-git'
+
+
+if youre lonely then build alfred into the best friend.  like poe.  why not
+

@@ -107,6 +107,14 @@ template(name='admin')
                         +view_stat stat_type='total' doc_type='role'
             .card
                 .content
+                    a.ui.header(href='/event_types')
+                        +icon name='rss'
+                        | Event Types
+                    .description
+                        |Total
+                        +view_stat stat_type='total' doc_type='event_type'
+            .card
+                .content
                     a.ui.header(href='/rules')
                         +icon name='rules'
                         | Rules
