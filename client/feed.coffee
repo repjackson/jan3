@@ -1,10 +1,34 @@
 FlowRouter.route '/feed', 
+    name:'oasis'
     action: ->
         BlazeLayout.render 'layout', 
-            main: 'global_feed'
+            main: 'oasis'
 
-Template.global_feed.onCreated ->
-Template.global_feed.helpers
+Template.oasis.onCreated ->
+    @autorun => Meteor.subscribe 'facet', 
+        selected_tags.array()
+        selected_author_ids.array()
+        selected_location_tags.array()
+        selected_timestamp_tags.array()
+        type='event'
+        author_id=null
+
+    
+Template.oasis.events
+    'click #set_table_view': ->
+        Session.set 'view_mode', 'table'
+    'click #set_list_view': ->
+        Session.set 'view_mode', 'list'
+    
+Template.oasis.helpers
+    viewing_table: -> Session.equals 'view_mode', 'table'
+    viewing_list: -> Session.equals 'view_mode', 'list'
+
+    table_mode_button_class: -> if Session.equals('view_mode', 'table') then 'blue' else ''
+    list_mode_button_class: -> if Session.equals('view_mode', 'list') then 'blue' else ''
+
+
+
     # feed_events: -> Docs.find {type:'event'}, sort:timestamp:-1
     # settings: ->
     #     collection: 'events'

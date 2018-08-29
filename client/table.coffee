@@ -20,9 +20,6 @@ Template.table.helpers
             else
                 # console.log "#{field.key}"
                 values.push Template.currentData()["#{field.key}"]
-            for value in values
-                console.log value
-            console.log values
         values
         
 
