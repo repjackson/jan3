@@ -65,15 +65,15 @@ billions of documents, then when you're ready, trillions
 <!--'close'  'close-sign'-->
 <!--'setting_default_escalation_time'  'sort-by-modified-date'-->
 <!--'emailed_owner'  'user-shield'-->
-'emailed_secondary_contact'  'sent'
-'emailed_franchisee_contact'  'housekeeper-male'
-'mark_complete'  'checked-checkbox'
-'mark_incomplete'  'unchecked-checkbox'
-'submit'  'internal'
-'unsubmit'  'undo'
-'assignment'  'add-user-male'
-'unassignment'  'remove-user-female'
-'not-escalate'  'do-not-disturb'
+<!--'emailed_secondary_contact'  'sent'-->
+<!--'emailed_franchisee_contact'  'housekeeper-male'-->
+<!--'mark_complete'  'checked-checkbox'-->
+<!--'mark_incomplete'  'unchecked-checkbox'-->
+<!--'submit'  'internal'-->
+<!--'unsubmit'  'undo'-->
+<!--'assignment'  'add-user-male'-->
+<!--'unassignment'  'remove-user-female'-->
+<!--'not-escalate'  'do-not-disturb'-->
 'level_change'  'positive-dynamic'
 else 'commit-git'
 

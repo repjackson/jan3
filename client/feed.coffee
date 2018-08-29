@@ -14,7 +14,7 @@ Template.oasis.onCreated ->
         selected_timestamp_tags.array()
         type='event'
         author_id=null
-        Session.get('event_type')
+        selected_doc_types.array()
 
     
 Template.oasis.events

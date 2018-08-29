@@ -149,3 +149,21 @@ template(name='participant_facet')
 
 template(name='tag_result')
     .three.wide.column #{title} #{office_name} #{name}
+    
+    
+template(name='doc_type_facet')
+    .ui.header 
+        i.icon
+            +icon name=icon
+        |#{label}
+    if selected_doc_types
+        #clear_doc_types.ui.icon.blue.button
+            i.remove.icon
+        each selected_doc_types
+            .unselect_doc_type.ui.blue.button
+                strong #{this}
+    each doc_types
+        .select_doc_type.ui.small.compact.button(class=event_type_selector_class)
+            i.icon
+                +icon name=icon
+            |#{title}

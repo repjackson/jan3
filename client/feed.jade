@@ -7,11 +7,6 @@ template(name='oasis')
                     | Global Feed
         .row
             .twelve.wide.column
-                each event_types
-                    .set_event_type.ui.icon.button(class=event_type_selector_class)
-                        +icon name=icon
-                        |#{title}
-
             .three.wide.column
                 #set_table_view.ui.icon.button(class=table_mode_button_class)
                     i.table.icon
@@ -19,6 +14,7 @@ template(name='oasis')
                     i.list.icon
         .row
             .four.wide.column
+                +doc_type_facet doc_type='event_type' label="Event Types" icon='hashtag-activity-feed'
                 +timestamp_facet
                 +username_facet
                 .ui.header Stats

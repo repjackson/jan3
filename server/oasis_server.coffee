@@ -5,7 +5,7 @@ Meteor.publish 'oasis', (
     selected_timestamp_tags
     type
     author_id
-    event_type
+    selected_event_types
     )->
     
         self = @
@@ -27,7 +27,7 @@ Meteor.publish 'oasis', (
             match.author_id = $in: selected_author_ids
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
         if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags
-        if event_type then match.event_type = event_type
+        if selected_event_types.length > 0 then match.event_type = $all: selected_event_types
 
         # if view_private is true then match.author_id = @userId
         # if view_resonates?
