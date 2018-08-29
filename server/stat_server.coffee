@@ -102,7 +102,15 @@ Meteor.publish 'office_customer_count', (office_doc_id)->
         office_jpid:office_doc.ev.ID
     }
 
-
+Meteor.publish 'event_type_count', (event_type)->
+    Meteor.call 'calculate_event_type_count', event_type
+    
+    Stats.find {
+        doc_type: 'event'
+        stat_type: 'event_type'
+        event_type:event_type
+    }
+    
 
 Meteor.methods
     calculate_office_incident_count: (office_doc_id)->
@@ -249,3 +257,13 @@ Meteor.methods
                 office_jpid:office_doc.ev.ID
             }, { $set:amount:office_incident_count },{upsert:true }
 
+
+    calculate_event_type_count: (event_type)->
+        count = Docs.find(type:'event', event_type:event_type).count()
+        
+        Stats.update({
+            doc_type: 'event'
+            stat_type: 'event_type'
+            event_type:event_type
+        }, { $set:amount:count },{ upsert:true })
+    

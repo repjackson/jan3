@@ -3,6 +3,14 @@
 Template.doc_type_facet.onCreated ->
     @autorun => Meteor.subscribe 'type', @data.doc_type
 
+Template.doc_type_facet.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.ui.accordion').accordion()
+            , 500
+
+
 Template.doc_type_facet.helpers
     doc_types: ->
         doc_count = Docs.find().count()

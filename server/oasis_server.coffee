@@ -27,7 +27,7 @@ Meteor.publish 'oasis', (
             match.author_id = $in: selected_author_ids
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
         if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags
-        if selected_event_types.length > 0 then match.event_type = $all: selected_event_types
+        if selected_event_types.length > 0 then match.event_type = $in: selected_event_types
 
         # if view_private is true then match.author_id = @userId
         # if view_resonates?
@@ -169,7 +169,7 @@ Meteor.publish 'oasis', (
         #         count: author_id.count
         
         # doc_results = []
-        subHandle = Docs.find(match, {limit:10, sort: timestamp:-1}).observeChanges(
+        subHandle = Docs.find(match, {limit:100, sort: timestamp:-1}).observeChanges(
             added: (id, fields) ->
                 # console.log 'added doc', id, fields
                 # doc_results.push id
