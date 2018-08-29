@@ -174,14 +174,14 @@ Template.register_customer.events
         options.office_jpid = office_jpid
         options.roles = ['customer']
         
-        # console.log options
+        console.log 'office jpid from client', office_jpid
         
         Accounts.createUser(options, (err,res)=>
             if err
                 Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
             else
                 Bert.alert "Registered new customer user: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                Meteor.call 'refresh_customer_jpids', username
+                # Meteor.call 'refresh_customer_jpids', username
                 FlowRouter.go '/'                
                 # if current_role is 'customer'
                 #     Meteor.call 'refresh_customer_jpids', user.username

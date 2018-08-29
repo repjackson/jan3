@@ -12,7 +12,7 @@ template(name='accounts_nav')
         a.item(href='/')
             img.ui.avatar.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
             | &nbsp; Home
-        +menu_item link='/login' label='Login' icon='password' name='login'
+        +menu_item link='/login' label='Login' icon='internal' name='login'
         +menu_item link='/reset_password' label='Reset Password' icon='forgot-password' name='reset_password'
         +menu_item link='/register_customer' label='Register Customer' icon='add-user-group-woman-man' name='register_customer'
         +menu_item link='/register_office' label='Register Office' icon='add-user-group-woman-man' name='register_office'

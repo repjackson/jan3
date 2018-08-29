@@ -487,8 +487,8 @@ Meteor.methods
             "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
         
         found_office = Docs.findOne
-            type: 'office'
             "ev.MASTER_LICENSEE": found_franchisee.ev.MASTER_LICENSEE
+            type: 'office'
 
         Meteor.users.update user._id,
             $set:
