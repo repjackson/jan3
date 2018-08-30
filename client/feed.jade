@@ -95,7 +95,7 @@ template(name='event')
             if show_author
                 a.user #{author.username}
             .metadata
-                .date {{ reg_format timestamp }}
+                .date {{ long_format timestamp }}
             .text #{action} #{text}
             .actions
                 if is_dev
@@ -122,7 +122,7 @@ template(name='doc_history_event')
             if show_author
                 a.user #{author.username}
             .metadata
-                .date {{ reg_format timestamp }}
+                .date {{ long_format timestamp }}
                 .rating(title='Event Type') #{event_type}
                 // i.building.icon(title='Office')
                 // i.money.icon(title='Customer')
@@ -146,5 +146,5 @@ template(name='small_history_event')
             .extra.text
                 |#{action} #{text}
             .summary
-                .date {{reg_format timestamp}}
+                .date {{long_format timestamp}}
                 

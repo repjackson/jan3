@@ -31,7 +31,7 @@ template(name='post_segment')
         div
         |created by 
         +author_info 
-        |#{when} {{ reg_format timestamp }}
+        |#{when} {{ long_format timestamp }}
         div
         // +mark_doc_complete_button
         +vote_up_button
@@ -88,7 +88,7 @@ template(name='post_view')
             .four.wide.column
                 |created by 
                 +author_info 
-                div #{when} {{ reg_format timestamp }}
+                div #{when} {{ long_format timestamp }}
                 .ui.header 
                     i.tags.icon
                     |Tags

@@ -75,9 +75,10 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'adm
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()         
 Template.registerHelper 'is_closed', () -> @status is 'closed'
 
-Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
-# Template.registerHelper 'reg_format', (input) -> moment(input).format('MMMM Do YYYY, h:mm:ss a')
-Template.registerHelper 'reg_format', (input) -> moment(input).format('MMMM Do h:mma')
+
+
+Template.registerHelper 'from_now', (input) -> moment(input).fromNow()
+Template.registerHelper 'long_format', (input) -> moment(input).format('MMMM Do h:mma')
 
 Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getParam('doc_id')
 
@@ -109,9 +110,6 @@ Template.registerHelper 'my_office', () ->
         #     else null
     else null
 
-Template.registerHelper 'from_now', (date) -> moment(date).fromNow()
-
-Template.registerHelper 'formal_when', () -> moment(@timestamp).format('MMMM Do YYYY, h:mm:ss a')
 
 Template.registerHelper 'is_current_route', (name) -> 
     if FlowRouter.current().route.name is name then 'active' else ''

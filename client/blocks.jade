@@ -11,7 +11,7 @@ template(name='when_template')
     |#{when}
     
 template(name='last_updated_template')
-    |{{ reg_format last_updated_datetime }}
+    |{{ long_format last_updated_datetime }}
     
     
 
@@ -670,7 +670,7 @@ template(name='office_card')
                 else
                     a(href="/office/#{_id}")
                         h4.ui.header #{ev.MASTER_LICENSEE}
-                div ##{ev.ID} 
+                // div ##{ev.ID} 
                 div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
                 div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
                 div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
@@ -718,7 +718,8 @@ template(name='assignment_widget')
         .ui.header 
             +icon name='user-shield'
             |Assignments
-        p Last Assigned {{ reg_format assignment_timestamp }}
+        p Last Assigned {{ long_format assignment_timestamp }}
+        p {{ from_now assignment_timestamp }}
         // if overdue
         //     |overdue
         // else

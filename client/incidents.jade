@@ -38,7 +38,7 @@ template(name='incidents')
                                 td #{incident_office_name}
                                 td
                                     +incident_type_label
-                                td {{ reg_format timestamp }}
+                                td {{ long_format timestamp }}
                                 td #{service_date}
                                 td.selectable
                                     a(href="/view/#{_id}") #{incident_details}
@@ -109,7 +109,7 @@ template(name='incident_view')
                         +incident_type_label
                 .ui.secondary.segment
                     .ui.header Last Updated
-                    |{{ reg_format updated }}
+                    |{{ long_format updated }}
 
             .nine.wide.column
                 unless open
@@ -175,7 +175,7 @@ template(name='incident_view')
                         .ui.header
                             +icon name='internal'
                             | Submitted 
-                        |{{reg_format submitted_datetime}}
+                        |{{long_format submitted_datetime}}
                     // unless is_customer
                     //     .unsubmit.ui.fluid.button
                     //         i.user.shield.icon
