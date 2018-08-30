@@ -71,7 +71,23 @@ template(name='office_dashboard')
                                 |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                                 a(href=office_map_address target='_blank')
                                     i.external.icon
-    
+                    .ui.secondary.segment
+                        .ui.header
+                            +icon name='chat'
+                            | Messages
+                    .ui.secondary.segment
+                        .ui.header
+                            +icon name='request'
+                            | Service Requests
+                    .ui.secondary.segment
+                        .ui.header
+                            +icon name='money'
+                            | Invoices
+                    .ui.secondary.segment
+                        .ui.header
+                            +icon name='comment'
+                            | Comments
+
                     .ui.secondary.segment
                         .ui.header
                             +icon name='bar-chart'

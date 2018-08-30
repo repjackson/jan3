@@ -1,8 +1,3 @@
-Template.event_types.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-Template.event_types.helpers
-
-
 FlowRouter.route '/event_types', 
     name:'event_types'
     action: ->

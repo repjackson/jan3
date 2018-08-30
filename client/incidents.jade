@@ -78,10 +78,11 @@ template(name='incident_view')
                 if is_dev
                     .ui.icon.remove_incident.button(data-content='Delete Incident')
                         i.remove.icon
-                unless is_customer
-                    #run_single_escalation_check.ui.button 
-                        i.user.shield.icon
-                        |Check Escalation
+                if currentUser
+                    unless is_customer
+                        #run_single_escalation_check.ui.button 
+                            i.user.shield.icon
+                            |Check Escalation
         .row
             .three.wide.column
                 // if is_dev

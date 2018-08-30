@@ -1,5 +1,5 @@
 template(name='services')
-    .ui.stackable.centered.middle.aligned.padded.grid
+    .ui.stackable.centered.padded.grid
         .middle.aligned.row
             .three.wide.column
                 if is_admin
@@ -11,19 +11,46 @@ template(name='services')
             .three.wide.right.aligned.column
                 +add_button type='service'
         .row
-            .fourteen.wide.column
-                .ui.centered.cards
+            .four.wide.column
+                .ui.secondary.segment
+                    .ui.header
+                        +icon name='leaderboard'
+                        | Most Popular
+                    .ui.list
+                        each top_requested
+                            .item 
+                                if image_id
+                                    img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
+                                if icon
+                                    +icon name=icon
+                                |#{title} #{request_count}
+                .ui.secondary.segment
+                    .ui.header
+                        +icon name='headset'
+                        | Most Requesting Customer
+                .ui.secondary.segment
+                    .ui.header
+                        +icon name='housekeeper-male'
+                        | Most Requested Franchisee
+                .ui.secondary.segment
+                    .ui.header
+                        +icon name='building'
+                        | Most Requested Office
+            .twelve.wide.column
+                .ui.centered.three.cards
                     each services
                         +service_card
                 
 template(name='service_card')
     .ui.card
-        // if image_id
-        //     a.image(href="/view/#{_id}")
-        //         img.ui.image(src="{{c.url image_id height=200 width=200 crop='scale'}}")
         .content
-            .right.floated.meta $#{price}
-            a.header(href="/view/#{_id}") #{title}
+            a.header(href="/view/#{_id}") 
+                if image_id
+                    img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
+                    // .right.floated.meta $#{price}
+                if icon
+                    +icon name=icon
+                |#{title}
             if is_admin
                 .meta #{slug}
             .description
@@ -44,7 +71,7 @@ template(name='service_item')
             a.image(href="/view/#{_id}")
                 img.ui.tiny.image(src="{{c.url image_id height=200 width=200 crop='scale'}}")
         .content
-            .right.floated.meta $#{price}
+            // .right.floated.meta $#{price}
             a.header(href="/view/#{_id}") #{title}
             if is_admin
                 .meta #{slug}
@@ -72,12 +99,15 @@ template(name='service_view')
             .three.wide.column
                 +link_button link='/services' icon='building' label='Services'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header '#{title}' Service
+                h1.ui.center.aligned.grey.header 
+                    if icon
+                        +icon name=icon
+                    |'#{title}' Service
             .three.wide.right.aligned.column
                 +edit_button
         .centered.row
             .four.wide.column
-                .ui.header Price: $#{price}
+                // .ui.header Price: $#{price}
                 +request_service_button
                 if is_admin
                     .ui.header Slug: #{slug}
@@ -121,9 +151,12 @@ template(name='service_edit')
         .centered.row
             .ten.wide.column
                 .ui.form
-                    +edit_text_field key='title' label='Title' icon='code'
+                    +edit_text_field key='title' label='Title'
+                    +edit_text_field key='icon' label='Icon'
+                    if icon
+                        +icon name=icon
                     +edit_text_field key='slug' label='Slug' icon='code'
-                    +edit_number_field key='price' label='Price' icon='money'
+                    // +edit_number_field key='price' label='Price' icon='money'
                     +edit_image_field
                     +edit_textarea key='description' label='Description' icon='details'
                     

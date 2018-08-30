@@ -80,3 +80,7 @@ else 'commit-git'
 
 if youre lonely then build alfred into the best friend.  like poe.  why not
 
+service notesmake ecommerce agame
+requests equals points
+chart difference.  so rate of change is the comparitive metric.  green/red  percent difference over last week/month 
+competition for office, franchisee, global ranking, per serviceoffice page view start i dashboard

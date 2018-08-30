@@ -9,6 +9,10 @@ Template.services.onCreated ->
 Template.services.helpers
     services: -> Docs.find type:'service'
 
+    top_requested: -> 
+        Docs.find {type:'service'}, 
+            sort:request_count:-1
+
 Template.request_service_button.events
     'click .request_service': ->
         current_customer_jpid = Meteor.user().customer_jpid
