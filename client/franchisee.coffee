@@ -6,8 +6,8 @@ FlowRouter.route '/franchisees',
 Template.franchisees.onCreated ->
     Session.set('query',null)
     Session.set('sort_direction',-1)
-    Session.set('current_page_number',1)
-    Session.set('current_page_size',10)
+    Session.set('page_number',1)
+    Session.set('page_size',10)
     Session.set('skip',0)
 
 

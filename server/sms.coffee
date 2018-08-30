@@ -6,17 +6,17 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
 # console.log Meteor.settings.private.sms.sid
 # console.log Meteor.settings.private.sms.secret
 Meteor.methods
-    sms_test: ->
+    send_sms: (to,body)->
         twilio.messages.create({
-            body: 'Mr. Hammond, the phones are working.',
-            to: '+19176643297', 
+            to: to, 
             from: '+18442525977'
+            body: body
         }, (err,res)->
             if err then console.log err
             else
                 console.log res
         )
-        
+    
         
     sendEmail: (to, from, subject, text) ->
         @unblock()

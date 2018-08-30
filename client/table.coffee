@@ -25,7 +25,7 @@ Template.table.helpers
 
 Template.table_footer.events
     'click .set_page_number': (e,t)-> 
-        Session.set 'current_page_number', @number
+        Session.set 'page_number', @number
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = @number*int_page_size-int_page_size
         Session.set 'skip', skip_amount
@@ -34,7 +34,7 @@ Template.table_footer.events
         Session.set 'page_size',$('#page_size').val()
 
     'click .set_10': (e,t)-> 
-        Session.set 'current_page_number', 1
+        Session.set 'page_number', 1
         $('.table_stats').transition(
             animation:'pulse'
             duration:100
@@ -44,6 +44,9 @@ Template.table_footer.events
             duration:100
             )
         Session.set 'page_size',10
+        Session.set 'page_number',1
+        Session.set 'skip',0
+
     
     'click .set_20': (e,t)-> 
         $('.table_stats').transition(
@@ -55,7 +58,8 @@ Template.table_footer.events
             duration:100
             )
         Session.set 'page_size',20
-        Session.set 'current_page_number', 1
+        Session.set 'page_number', 1
+        Session.set 'skip',0
     
     'click .set_50': (e,t)-> 
         $('.table_stats').transition(
@@ -66,8 +70,9 @@ Template.table_footer.events
             animation:'pulse'
             duration:100
             )
-        Session.set 'current_page_number', 1
+        Session.set 'page_number', 1
         Session.set 'page_size',50
+        Session.set 'skip',0
     
     'click .set_100': (e,t)-> 
         $('.table_stats').transition(
@@ -78,23 +83,24 @@ Template.table_footer.events
             animation:'pulse'
             duration:100
             )
-        Session.set 'current_page_number', 1
+        Session.set 'page_number', 1
         Session.set 'page_size',100
+        Session.set 'skip',0
     
 
 
     'click .increment_page': (e,t)->
-        current_page = Session.get('current_page_number')
+        current_page = Session.get('page_number')
         next_page = current_page+1
-        Session.set 'current_page_number', next_page
+        Session.set 'page_number', next_page
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = next_page*int_page_size-int_page_size
         Session.set 'skip', skip_amount
     
     'click .decrement_page': (e,t)->
-        current_page = Session.get('current_page_number')
+        current_page = Session.get('page_number')
         previous_page = current_page-1
-        Session.set 'current_page_number', previous_page
+        Session.set 'page_number', previous_page
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = previous_page*int_page_size-int_page_size
         Session.set 'skip', skip_amount
@@ -114,7 +120,7 @@ Template.table_header.events
             animation:'pulse'
             duration:100
             )
-        Session.set 'current_page_number', @number
+        Session.set 'page_number', @number
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = @number*int_page_size-int_page_size
         Session.set 'skip', skip_amount
@@ -129,9 +135,9 @@ Template.table_header.events
             animation:'pulse'
             duration:100
             )
-        current_page = Session.get('current_page_number')
+        current_page = Session.get('page_number')
         next_page = current_page+1
-        Session.set 'current_page_number', next_page
+        Session.set 'page_number', next_page
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = next_page*int_page_size-int_page_size
         Session.set 'skip', skip_amount
@@ -145,9 +151,9 @@ Template.table_header.events
             animation:'pulse'
             duration:100
             )
-        current_page = Session.get('current_page_number')
+        current_page = Session.get('page_number')
         previous_page = current_page-1
-        Session.set 'current_page_number', previous_page
+        Session.set 'page_number', previous_page
         int_page_size = parseInt(Session.get('page_size'))
         skip_amount = previous_page*int_page_size-int_page_size
         Session.set 'skip', skip_amount
@@ -166,7 +172,9 @@ Template.table_header.events
             duration:100
             )
         Session.set 'page_size',10
-    
+        Session.set 'page_number',1
+        Session.set 'skip',0
+        
     'click .set_20': (e,t)-> 
         $('.table_stats').transition(
             animation:'pulse'
@@ -177,6 +185,9 @@ Template.table_header.events
             duration:100
             )
         Session.set 'page_size',20
+        Session.set 'page_number',1
+        Session.set 'skip',0
+    
     
     'click .set_50': (e,t)-> 
         $('.table_stats').transition(
@@ -188,6 +199,8 @@ Template.table_header.events
             duration:100
             )
         Session.set 'page_size',50
+        Session.set 'page_number',1
+        Session.set 'skip',0
     
     'click .set_100': (e,t)-> 
         $('.table_stats').transition(
@@ -199,6 +212,8 @@ Template.table_header.events
             duration:100
             )
         Session.set 'page_size',100
+        Session.set 'page_number',1
+        Session.set 'skip',0
     
 
 Template.sort_column_header.events
@@ -238,16 +253,16 @@ Template.query_input.events
 Template.table_footer.helpers
     no_query: -> Session.equals('query', null) or Session.equals('query', '')
 
-    show_decrement: -> Session.get('current_page_number')>1
-    show_increment: -> Session.get('current_page_number')<Session.get('number_of_pages')
+    show_decrement: -> Session.get('page_number')>1
+    show_increment: -> Session.get('page_number')<Session.get('number_of_pages')
 
-    show_10_decrement: -> Session.get('current_page_number')>10
+    show_10_decrement: -> Session.get('page_number')>10
 
     skip_amount: -> parseInt(Session.get('skip'))+1
     end_result: -> Session.get('skip') + 1 + Session.get('page_size')
 
     pagination_item_class: ->
-        if Session.equals('current_page_number', @number) then 'active' else ''
+        if Session.equals('page_number', @number) then 'active' else ''
         
     count_amount: ->
         count_stat = Stats.findOne
@@ -317,8 +332,8 @@ Template.table_footer.helpers
             stat_type:@stat_type
         if stat_doc
             count_amount = stat_doc.amount
-            current_page_size = parseInt Session.get('page_size')
-            number_of_pages = Math.ceil(count_amount/current_page_size)
+            page_size = parseInt Session.get('page_size')
+            number_of_pages = Math.ceil(count_amount/page_size)
             Session.set('number_of_pages', number_of_pages)
             pages = []
             page = 0
@@ -332,11 +347,11 @@ Template.table_footer.helpers
 Template.table_header.helpers
     no_query: -> Session.equals('query', null) or Session.equals('query', '')
 
-    show_decrement: -> Session.get('current_page_number')>1
+    show_decrement: -> Session.get('page_number')>1
     
-    show_increment: -> Session.get('current_page_number')<Session.get('number_of_pages')
+    show_increment: -> Session.get('page_number')<Session.get('number_of_pages')
 
-    show_10_decrement: -> Session.get('current_page_number')>10
+    show_10_decrement: -> Session.get('page_number')>10
 
 
 
@@ -344,7 +359,7 @@ Template.table_header.helpers
     end_result: -> Session.get('skip') + 1 + Session.get('page_size')
 
     pagination_item_class: ->
-        if Session.equals('current_page_number', @number) then 'active' else ''
+        if Session.equals('page_number', @number) then 'active' else ''
         
     count_amount: ->
         count_stat = Stats.findOne
@@ -417,8 +432,8 @@ Template.table_header.helpers
             stat_type:@stat_type
         if stat_doc
             count_amount = stat_doc.amount
-            current_page_size = parseInt Session.get('page_size')
-            number_of_pages = Math.ceil(count_amount/current_page_size)
+            page_size = parseInt Session.get('page_size')
+            number_of_pages = Math.ceil(count_amount/page_size)
             pages = []
             page = 0
             if number_of_pages > 15

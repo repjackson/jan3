@@ -88,7 +88,7 @@ Template.customer_incidents_widget.onCreated ->
 
 Template.customer_incidents_widget.events
     'click .set_page_number': -> 
-        Session.set 'current_page_number', @number
+        Session.set 'page_number', @number
         int_page_size = 3
         skip_amount = @number*int_page_size-int_page_size
         Session.set 'skip', skip_amount
@@ -101,7 +101,7 @@ Template.customer_incidents_widget.helpers
     end_result: -> Session.get('skip') + 4
 
     pagination_item_class: ->
-        if Session.equals('current_page_number', @number) then 'active' else ''
+        if Session.equals('page_number', @number) then 'active' else ''
         
     count_amount: ->
         count_stat = Stats.findOne()
@@ -112,8 +112,8 @@ Template.customer_incidents_widget.helpers
         stat_doc = Stats.findOne()
         if stat_doc
             count_amount = stat_doc.amount
-            current_page_size = 3
-            number_of_pages = Math.ceil(count_amount/current_page_size)
+            page_size = 3
+            number_of_pages = Math.ceil(count_amount/page_size)
             pages = []
             page = 0
             if number_of_pages>10

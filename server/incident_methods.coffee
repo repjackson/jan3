@@ -239,6 +239,8 @@ Meteor.methods
             "
         }
         
+        sms_owner_value = true
+        
         Meteor.call 'send_message', incident_owner_username, 'system_escalation_bot', "You are being notified as the incident owner for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
         Meteor.call 'send_message', escalation_secondary_contact_value, 'system_escalation_bot', "You are being notified as secondary contact for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
         
@@ -250,6 +252,8 @@ Meteor.methods
         if escalation_customer_value
             Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a #{incident.incident_type} escalation to level #{incident.level}."
             Meteor.call 'send_message', incident.customer_name, 'system_escalation_bot', "You are being notified as the customer for an incident submission."
+        if sms_owner_value
+            Meteor.call 'send_sms', '+19705790321', "#{incident_owner_username}, one of your incidents escalated to #{incident.level}." 
 
         Meteor.call 'send_email', mail_fields
 
@@ -301,6 +305,7 @@ Meteor.methods
                     updated: Date.now()
             Meteor.call 'create_event', doc_id, 'escalate', "Automatic escalation from #{current_level} to #{next_level}."
             Meteor.call 'email_about_escalation', doc_id
+            Meteor.call 'text_about_escalation', doc_id
 
 
     clear_incident_events: (incident_id)->

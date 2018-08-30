@@ -17,7 +17,7 @@ Session.setDefault('sort_direction','-1')
 Session.setDefault('sort_key','timestamp')
 Session.setDefault('page_size',10)
 Session.setDefault('skip',0)
-Session.setDefault('current_page_number',1)
+Session.setDefault('page_number',1)
 
 Bert.defaults =
     hideDelay: 2000
@@ -82,7 +82,7 @@ Template.registerHelper 'long_format', (input) -> moment(input).format('MMMM Do 
 
 Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getParam('doc_id')
 
-Template.registerHelper 'current_page', () -> Session.get 'current_page_number'
+Template.registerHelper 'current_page', () -> Session.get 'page_number'
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 

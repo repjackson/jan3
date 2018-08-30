@@ -30,9 +30,9 @@ FlowRouter.route '/office/:doc_id/settings',
 Template.offices.onCreated ->
     @autorun -> Meteor.subscribe 'offices', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'count', 'office'
-    Session.set('current_page_number',1)
+    Session.set('page_number',1)
     Session.set 'page_size', 10
-    Session.setDefault('skip',0)
+    Session.set('skip',0)
 
 
 Template.offices.helpers
@@ -68,9 +68,10 @@ Template.office_dashboard.helpers
 Template.office_customers.onCreated ->
     @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_customer_count', FlowRouter.getParam('doc_id')
+    Session.set 'page_number', 1
     Session.set 'page_size', 10
-    Session.setDefault('skip',0)
-
+    Session.set 'skip',0
+    
 
 # Template.office_customers.events
     # 'click #refresh_ny_customers': ->
@@ -92,7 +93,8 @@ Template.office_incidents.onCreated ->
     @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_incident_count', FlowRouter.getParam('doc_id')
     Session.set 'page_size', 10
-    Session.setDefault('skip',0)
+    Session.set('skip',0)
+    Session.set 'page_number', 1
 
 Template.office_incidents.onRendered ->
     Meteor.setTimeout ->
@@ -122,8 +124,9 @@ Template.office_employees.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
     @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_employee_count', FlowRouter.getParam('doc_id')
-    Session.setDefault('page_size',10)
-    Session.setDefault('skip',0)
+    Session.set('page_size',10)
+    Session.set('skip',0)
+    Session.set 'page_number', 1
 
 Template.office_employees.onRendered ->
     Meteor.setTimeout ->
@@ -144,6 +147,10 @@ Template.office_employees.helpers
 Template.office_franchisees.onCreated ->
     @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_franchisee_count', FlowRouter.getParam('doc_id')
+    Session.set('page_size',10)
+    Session.set('skip',0)
+    Session.set 'page_number', 1
+
 
 Template.office_franchisees.helpers  
     office_franchisees: ->

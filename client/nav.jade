@@ -26,56 +26,57 @@ template(name='nav')
                 a.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
                     i.icon
                         +icon name='building'
-                    .large.monitor.only &nbsp; #{my_office.ev.MASTER_LICENSEE}
+                    .computer.only &nbsp; Dashboard
+                    // .computer.only &nbsp; #{my_office.ev.MASTER_LICENSEE}
             a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
                 i.icon
                     +icon name='error'
-                .large.monitor.only &nbsp; Incidents
+                .computer.only &nbsp; Incidents
             a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
                 i.icon
                     +icon name='groups'
-                .large.monitor.only &nbsp; Employees
+                .computer.only &nbsp; Employees
             a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
                 i.icon
                     +icon name='housekeeper-male'
-                .large.monitor.only &nbsp; Franchisees
+                .computer.only &nbsp; Franchisees
             a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
                 i.icon
                     +icon name='customer-support'
-                .large.monitor.only &nbsp; Customers
+                .computer.only &nbsp; Customers
             a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
                 i.icon
                     +icon name='settings'
-                .large.monitor.only &nbsp; Settings
+                .computer.only &nbsp; Settings
         if is_admin
             a.item(href='/admin' data-content='Admin Dashboard' class="{{ isActiveRoute 'admin'}}")
                 i.icon
                     +icon name='user-shield'
-                .large.monitor.only &nbsp; Admin
+                .computer.only &nbsp; Admin
             a.mobile.hidden.item(href='/incidents' data-content='All Incidents' class="{{ isActiveRoute 'incidents'}}")
                 i.icon
                     +icon name='error'
-                .large.monitor.only &nbsp; Incidents
+                .computer.only &nbsp; Incidents
             a.mobile.hidden.item(href='/users' data-content='All Users' class="{{ isActiveRoute 'users'}}")
                 i.icon
                     +icon name='groups'
-                .large.monitor.only &nbsp; Users
+                .computer.only &nbsp; Users
             a.mobile.hidden.item(href='/offices' data-content='All Offices' class="{{ isActiveRoute 'offices'}}")
                 i.icon
                     +icon name='skyscrapers'
-                .large.monitor.only Offices
+                .computer.only Offices
             a.mobile.hidden.item(href='/franchisees' data-content='All Franchisees' class="{{ isActiveRoute 'franchisees'}}")
                 i.icon
                     +icon name='housekeeper-male'
-                .large.monitor.only Franchisees
+                .computer.only Franchisees
             a.mobile.hidden.item(href='/customers' data-content='All Customers' class="{{ isActiveRoute 'customers'}}")
                 i.icon
                     +icon name='customer-support'
-                .large.monitor.only Customers
+                .computer.only Customers
             a.mobile.hidden.item(href='/services' data-content='All Services' class="{{ isActiveRoute 'services'}}")
                 i.icon
                     +icon name='broom'
-                .large.monitor.only Services
+                .computer.only Services
         .right.menu
             if is_dev
                 // a.item(href='/alfred' data-content='alfred')
