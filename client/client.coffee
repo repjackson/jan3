@@ -38,6 +38,15 @@ Template.registerHelper 'is_editing', () ->
 
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
 
+Template.registerHelper 'overdue', () -> 
+    if @assignment_timestamp
+        now = Date.now()
+        response = @assignment_timestamp - now
+        calc = moment.duration(response).humanize()
+        hour_amount = moment.duration(response).asHours()
+        if hour_amount<-5 then true else false
+
+
 Template.registerHelper 'unread_count', () ->  
     found_unread_count_stat = Stats.findOne({
         doc_type:'message'

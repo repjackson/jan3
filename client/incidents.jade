@@ -192,7 +192,8 @@ template(name='incident_view')
                         .ui.secondary.segment
                             +incident_tasks
                     // +notify_button
-                    +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
+                    +assignment_widget
+                    // +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
                 // +incident_sla_widget
 
     .ui.confirm_close.modal

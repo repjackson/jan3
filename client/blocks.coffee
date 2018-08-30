@@ -43,15 +43,8 @@ Template.incident_assigment_cell.helpers
     #         calc = moment.duration(response).humanize()
     #         hour_amount = moment.duration(response).asHours()
     #         if hour_amount<-5 then 'negative' else 'positive'
-    overdue: ->
-        if @assignment_timestamp
-            now = Date.now()
-            response = @assignment_timestamp - now
-            calc = moment.duration(response).humanize()
-            hour_amount = moment.duration(response).asHours()
-            if hour_amount<-5 then true else false
 
-    associated_users: -> 
+    assigned_users: -> 
         if @assigned_to
             Meteor.users.find 
                 _id: $in: @assigned_to
@@ -425,7 +418,6 @@ Template.radio_item.events
 Template.multiple_user_select.onCreated ()->
     @autorun => Meteor.subscribe 'selected_users', FlowRouter.getParam('doc_id'), @data.key
     @user_results = new ReactiveVar( [] )
-    
 Template.multiple_user_select.events
     'keyup #multiple_user_select_input': (e,t)->
         multiple_user_select_input_value = $(e.currentTarget).closest('#multiple_user_select_input').val().trim()
@@ -434,7 +426,6 @@ Template.multiple_user_select.events
             if err then console.error err
             else
                 t.user_results.set res
-
 
     'click .select_user': (e,t) ->
         key = Template.parentData(0).key
@@ -456,7 +447,6 @@ Template.multiple_user_select.events
                     $set: assignment_timestamp:Date.now()
                 Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to incident: #{page_doc.title}."
                 Meteor.call 'send_email_about_incident_assignment', page_doc._id, @username
-                
     
     'click .pull_user': ->
         context = Template.currentData(0)
@@ -795,3 +785,68 @@ Template.mark_doc_complete_button.events
             Docs.update @_id, 
                 $set:complete: true
             Meteor.call 'create_incomplete_task_event', @_id, 
+
+
+
+
+Template.assignment_widget.onCreated ()->
+    @autorun => Meteor.subscribe 'assigned_users', FlowRouter.getParam('doc_id')
+    @user_results = new ReactiveVar( [] )
+Template.assignment_widget.events
+    'keyup #multiple_user_select_input': (e,t)->
+        multiple_user_select_input_value = $(e.currentTarget).closest('#multiple_user_select_input').val().trim()
+        current_incident = Docs.findOne FlowRouter.getParam('doc_id')
+        Meteor.call 'lookup_office_user_by_username_and_officename', current_incident.incident_office_name, multiple_user_select_input_value, (err,res)=>
+            if err then console.error err
+            else
+                t.user_results.set res
+
+    'click .select_user': (e,t) ->
+        key = Template.parentData(0).key
+        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # searched_value = doc["#{template.data.key}"]
+        Meteor.call 'assign_user', page_doc._id, @, (err,res)=>
+            if err
+                Bert.alert "Error Assigning #{@username}: #{err.reason}", 'danger', 'growl-top-right'
+            else
+                Bert.alert "Assigned #{@username}.", 'success', 'growl-top-right'
+        $('#multiple_user_select_input').val ''
+        t.user_results.set null
+        if page_doc.type is 'task'
+            Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to task: #{page_doc.title}."
+            Meteor.call 'send_email_about_task_assignment', page_doc._id, @username
+        else if page_doc.type is 'incident'
+            Docs.update page_doc._id,
+                $set: assignment_timestamp:Date.now()
+            Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to incident: #{page_doc.title}."
+            Meteor.call 'send_email_about_incident_assignment', page_doc._id, @username
+    
+    'click .pull_user': ->
+        context = Template.currentData(0)
+        swal {
+            title: "Remove #{@username}?"
+            # text: 'Confirm delete?'
+            type: 'info'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Unassign'
+            confirmButtonColor: '#da5347'
+        }, =>
+            page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+            Meteor.call 'unassign_user', page_doc._id, @, (err,res)=>
+                if err
+                    Bert.alert "Error removing #{@username}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Removed #{@username}.", 'success', 'growl-top-right'
+    
+Template.assignment_widget.helpers
+    user_results: ->
+        user_results = Template.instance().user_results.get()
+        user_results
+
+    assigned_users: ->
+        # console.log context
+        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        Meteor.users.find(_id: $in: parent_doc.assigned_to)

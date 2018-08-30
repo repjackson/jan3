@@ -855,6 +855,10 @@ Meteor.publish 'offices', (name_filter='', limit=100, sort_key='timestamp', sort
 #     }            
     
 
+Meteor.publish 'assigned_users', (doc_id)->
+    doc = Docs.findOne doc_id
+    Meteor.users.find(_id: $in: doc.assigned_to)
+
 Meteor.publish 'selected_users', (doc_id, key)->
     doc = Docs.findOne doc_id
     Meteor.users.find(_id: $in: doc["#{key}"])

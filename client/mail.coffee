@@ -10,9 +10,15 @@ Template.unread.onCreated ->
 Template.mail.onCreated ->
     @autorun -> Meteor.subscribe('inbox_count')
     @autorun -> Meteor.subscribe('unread_count')
-    @autorun -> Meteor.subscribe('type', 'message')
     @view_published = new ReactiveVar(true)
     @autorun -> Meteor.subscribe 'type','message', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    @autorun => Meteor.subscribe 'facet', 
+        selected_tags.array()
+        selected_author_ids.array()
+        selected_location_tags.array()
+        selected_timestamp_tags.array()
+        type='message'
+        author_id=null
 
 
 Template.message_segment.helpers

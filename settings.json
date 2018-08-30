@@ -33,11 +33,12 @@
 	},
 	"cloudinary_key": "754714459692734",
 	"cloudinary_secret": "rPPXD3rZM_GCjODvh0T70XeDCSw",
-	"MAIL_URL": "smtp://richard%40janhub.com:repj1984@smtp.gmail.com:465/",
+	"MAIL_URL": "smtp://richard%40janhub.com:janhubrichardpassword@smtp.gmail.com:465/",
 	"galaxy.meteor.com": {
 		"env": {
 			"MONGO_URL": "mongodb://janadmin:jancleaningcustomerpassword@aws-us-east-1-portal.21.dblayer.com:10444/jandb?ssl=true",
-			"ROOT_URL": "https://www.jan.meteorapp.com"
+			"ROOT_URL": "https://www.jan.meteorapp.com",
+			"MAIL_URL": "smtp://richard%40janhub.com:janhubrichardpassword@smtp.gmail.com:465/"
 		}
 	},
 	"public": {
