@@ -25,6 +25,10 @@ Template.databank.helpers
         array = selected_doc_types.array()
         return "databank_#{array[0]}"
 
+    current_doc_type: -> 
+        array = selected_doc_types.array()
+        return array[0]
+
 
 
 

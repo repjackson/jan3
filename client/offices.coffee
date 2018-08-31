@@ -1,7 +1,7 @@
 FlowRouter.route '/offices', 
     name: 'offices'
     action: ->
-        BlazeLayout.render 'layout', main: 'offices'
+        BlazeLayout.render 'layout', main: 'databank_office'
 
 FlowRouter.route '/office/:doc_id', 
     name: 'office_dashboard'
