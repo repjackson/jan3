@@ -311,7 +311,7 @@ Meteor.methods
     #     message_doc = Docs.findOne new_message_id
     #     message_author = Meteor.users.findOne message_doc.author_id
         
-    #     message_link = "https://www.jan.meteorapp.com/view/#{conversation_doc._id}"
+    #     message_link = "https://www.jan.meteorapp.com/v/#{conversation_doc._id}"
         
     #     this.unblock()
         

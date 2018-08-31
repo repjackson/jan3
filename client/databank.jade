@@ -10,16 +10,14 @@ template(name='databank')
                 +add_button type='item'
         .row 
             .four.wide.column
+                +doc_type_facet doc_type='schema' label="Schemas" icon='database'
                 +tag_facet
                 +timestamp_facet
-                
                 +username_facet
-                .ui.header Total
-                    +view_stat doc_type='item' stat_type='total' 
             .twelve.wide.column
                 +Template.dynamic template=databank_view
-                each databank
-                    +item_segment
+                // each databank
+                //     +item_segment
 
 template(name='item_segment')
     .ui.segment

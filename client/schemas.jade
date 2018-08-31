@@ -20,7 +20,7 @@ template(name='schema_card')
     .ui.fluid.card
         .content
             a.grey.header(href="/view/#{_id}")
-                |#{name} 
+                |#{title} 
         .content
             h5 Slug: #{slug}
             |!{html}
@@ -42,7 +42,7 @@ template(name='schema_edit')
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit '#{name}' Schema
+                h1.ui.center.aligned.grey.header Edit '#{title}' Schema
             .three.wide.column
                 #delete.ui.icon.button
                     i.trash.icon
@@ -101,12 +101,12 @@ template(name='schema_view')
             .three.wide.column
                 +link_button link='/schemas' icon='chevron left' label='schemas'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header #{name} Schema
+                h1.ui.center.aligned.grey.header #{title} Schema
             .three.wide.column
                 +edit_button
         .row
             .twelve.wide.column
-                .ui.header Name: #{name}
+                .ui.header Name: #{title}
                 .ui.header Slug: #{slug}
                 | !{html}
                 each tags
@@ -116,7 +116,7 @@ template(name='schema_view')
                     each fields
                         .item #{title} (#{slug}) [#{type}]
                 .ui.segment
-                    .ui.header #{name} Docs
+                    .ui.header #{title} Docs
                     +add_button type=slug
                     .ui.stackable.cards
                         each schema_docs
@@ -127,7 +127,7 @@ template(name='schema_view')
                 
 template(name='schema_selector')
     each user_schemas
-        .toggle_schema.ui.button #{name}            
+        .toggle_schema.ui.button #{title}            
         
         
 template(name='schema_doc')

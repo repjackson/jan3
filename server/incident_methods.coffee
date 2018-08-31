@@ -165,8 +165,8 @@ Meteor.methods
         incident_doc = Docs.findOne incident_doc_id
         
         assigned_to_user = Meteor.users.findOne username:username
-        incident_link = "https://www.jan.meteorapp.com/view/#{incident_doc._id}"
-        unnassign_self_link = "https://www.jan.meteorapp.com/view/#{incident_doc._id}?username=#{assigned_to_user.username}"
+        incident_link = "https://www.jan.meteorapp.com/v/#{incident_doc._id}"
+        unnassign_self_link = "https://www.jan.meteorapp.com/v/#{incident_doc._id}?username=#{assigned_to_user.username}"
         
         mail_fields = {
             # to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>", "<#{assigned_to_user.emails[0].address}>"]
@@ -244,7 +244,7 @@ Meteor.methods
         Meteor.call 'send_message', incident_owner_username, 'system_escalation_bot', "You are being notified as the incident owner for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
         Meteor.call 'send_message', escalation_secondary_contact_value, 'system_escalation_bot', "You are being notified as secondary contact for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
         
-        Meteor.call 'create_event', incident_id, 'emailed_primary_contact', "#{incident_owner_username} emailed as the incident owner for a #{incident.incident_type} escalation to level #{incident.level}."
+        Meteor.call 'create_event', incident_id, 'emailed_incident_owner', "#{incident_owner_username} emailed as the incident owner for a #{incident.incident_type} escalation to level #{incident.level}."
         Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{escalation_secondary_contact_value} emailed as the secondary contact for a #{incident.incident_type} escalation to level #{incident.level}."
         if escalation_franchisee_value
             Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a #{incident.incident_type} escalation to level #{incident.level}."
@@ -253,7 +253,7 @@ Meteor.methods
             Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a #{incident.incident_type} escalation to level #{incident.level}."
             Meteor.call 'send_message', incident.customer_name, 'system_escalation_bot', "You are being notified as the customer for an incident submission."
         if sms_owner_value
-            Meteor.call 'send_sms', '+19705790321', "#{incident_owner_username}, one of your incidents escalated to #{incident.level}.<a href='/view'>test</a>" 
+            Meteor.call 'send_sms', '+19705790321', "#{incident_owner_username}, one of your incidents escalated to #{incident.level}." 
 
         Meteor.call 'send_email', mail_fields
 
