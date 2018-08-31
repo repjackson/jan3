@@ -1,13 +1,10 @@
 template(name='admin')
-    .ui.padded.stackable.four.column.grid
+    .ui.padded.stackable.grid
         .row
             .sixteen.wide.column
                 h1.ui.center.aligned.header
-                    +icon name='dashboard'
+                    +icon name='user-shield'
                     | Admin
-                    
-        a.ui.button(href='/admin_sections')
-            |admin sections
         // .ui.four.stackable.centered.cards
         //     .card
         //         .content
@@ -140,13 +137,15 @@ template(name='admin')
         //             .description
         //                 |Total
         //                 +view_stat stat_type='total' doc_type='incident_type'
-        .ui.stackable.cards
+        .ui.stackable.centered.cards
             each admin_sections
                 .ui.card
                     .content
-                        a.ui.header(href='/a/#{slug}')
+                        a.ui.header(href=link)
                             +icon name=icon
                             | #{title}
+                        // .description
+                        //     a(href=link) #{link}
                         .description
                             |Total
                             +view_stat stat_type='total' doc_type=slug
