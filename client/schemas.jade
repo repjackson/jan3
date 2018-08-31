@@ -9,27 +9,29 @@ template(name='schemas')
             .three.wide.column
                 +add_button type='schema'
         .row 
-            .three.wide.column
+            .four.wide.column
                 +tag_facet
-            .ten.wide.column
+            .twelve.wide.column
                 .ui.centered.stackable.cards
                     each schemas
                         +schema_card
 
 template(name='schema_card')
-    .ui.fluid.card
+    .ui.card
         .content
             a.grey.header(href="/view/#{_id}")
+                if icon
+                    +icon name=icon
                 |#{title} 
         .content
             h5 Slug: #{slug}
             |!{html}
             each tags
                 .ui.label #{this}
-        .content
-            .ui.list
-                each fields
-                    .item #{title} (#{slug}) [#{type}]
+        // .content
+        //     .ui.list
+        //         each fields
+        //             .item #{title} (#{slug}) [#{type}]
         .content
             +edit_button
             +view_button
@@ -42,15 +44,20 @@ template(name='schema_edit')
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit '#{title}' Schema
+                h1.ui.center.aligned.grey.header 
+                    if icon
+                        +icon name=icon
+                    |Edit '#{title}' Schema
             .three.wide.column
                 #delete.ui.icon.button
                     i.trash.icon
         .centered.row
             .four.wide.column
                 .ui.form
-                    +edit_text_field key='name' label='Schema Name'
+                    +edit_text_field key='title' label='Title'
+                    +edit_text_field key='name' label='Name (old)'
                     +edit_text_field key='slug' label='Slug'
+                    +edit_text_field key='icon' label='Icon'
                     +edit_array_field key='tags'
                     // +reference_type_multiple key='field_ids' label='Fields' type='field'
             .twelve.wide.column
@@ -99,9 +106,12 @@ template(name='schema_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +link_button link='/schemas' icon='chevron left' label='schemas'
+                +link_button link='/schemas' icon='database' label='Schemas'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header #{title} Schema
+                h1.ui.center.aligned.grey.header 
+                    if icon
+                        +icon name=icon
+                    |#{title} Schema
             .three.wide.column
                 +edit_button
         .row

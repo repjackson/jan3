@@ -53,7 +53,9 @@ Template.doc_type_facet.helpers
 
 
 Template.doc_type_facet.events
-    'click .select_doc_type': -> selected_doc_types.push @slug
+    'click .select_doc_type': -> 
+        selected_doc_types.clear()
+        selected_doc_types.push @slug
     'click .unselect_doc_type': -> selected_doc_types.remove @valueOf()
     'click #clear_doc_types': -> selected_doc_types.clear()
 

@@ -15,11 +15,19 @@ Template.databank.onCreated ->
         selected_timestamp_tags.array()
         type='item'
         author_id=null
-
-
-    
 Template.databank.onRendered ->
-    $('.indicating.progress').progress();
+    # $('.indicating.progress').progress();
+    
+
+Template.databank.helpers
+    databank: ->  Docs.find { type:'item'}
+    databank_view: -> 
+        array = selected_doc_types.array()
+        return "databank_#{array[0]}"
+
+
+
+
     
 
 Template.item_segment.onCreated ->
@@ -38,9 +46,6 @@ Template.item_view.onCreated ->
 
     
     
-Template.databank.helpers
-    databank: ->  Docs.find { type:'item'}
-    databank_view: -> "databank_#{@type}"
 
 Template.item_edit.helpers
     item: -> Doc.findOne FlowRouter.getParam('doc_id')

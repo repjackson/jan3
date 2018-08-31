@@ -2,7 +2,7 @@
 FlowRouter.route '/roles', action: ->
     BlazeLayout.render 'layout', 
         # sub_nav: 'dev_nav'
-        main: 'roles'
+        main: 'databank_role'
 
 
 Template.databank_role.onCreated ->
