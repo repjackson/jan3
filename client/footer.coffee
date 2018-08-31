@@ -41,7 +41,7 @@ Template.footer.events
         #             complete: false
         #             body: val
         #             link: window.location.pathname
-        #         link = "https://www.jan.meteorapp.com/view/#{new_bug_id}"
+        #         link = "https://www.jan.meteorapp.com/v/#{new_bug_id}"
         #         $("#bug_description").val('')
         #         Meteor.call 'create_event', new_bug_id, 'bug_submit', "submitted a bug: #{val}."
         #         Meteor.call 'beta_send_email', "#{Meteor.user().username} submitted a bug on the JP Portal.", "<h3>#{Meteor.user().username} submitted this bug on the JP Portal:</h3> <h3>#{val}</h3><h3> at #{long_timestamp}.</h3> <a href=#{link}>View Bug</a>"

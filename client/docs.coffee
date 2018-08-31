@@ -1,4 +1,4 @@
-FlowRouter.route '/view/:doc_id', 
+FlowRouter.route '/v/:doc_id', 
     name: 'view'
     action: (params) ->
         BlazeLayout.render 'layout',

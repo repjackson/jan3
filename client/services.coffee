@@ -83,7 +83,7 @@ Template.service_request_edit.events
                 last_updated_datetime: Date.now()
         Meteor.call 'create_event', doc_id, 'submit_service_request', "submitted the service request for #{service.title}."
         # Meteor.call 'email_about_service_request', request._id
-        FlowRouter.go "/view/#{request._id}"
+        FlowRouter.go "/v/#{request._id}"
 
 Template.service_request_edit.helpers
     can_submit: ->

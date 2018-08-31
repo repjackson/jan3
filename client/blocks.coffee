@@ -685,7 +685,7 @@ Template.delete_button.events
     'click .cancel': (e,t)-> t.confirming.set false
     'click .confirm': (e,t)-> 
         Docs.remove @_id
-        FlowRouter.go("/view/#{@parent_id}")
+        FlowRouter.go("/v/#{@parent_id}")
             
 Template.session_delete_button.onCreated ->
     @confirming = new ReactiveVar(false)

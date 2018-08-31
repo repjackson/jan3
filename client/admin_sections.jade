@@ -1,4 +1,4 @@
-template(name='event_types')
+template(name='admin_sections')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
@@ -9,18 +9,18 @@ template(name='event_types')
                     +icon name='hashtag-activity-feed'
                     | Event Types
             .three.wide.right.aligned.column
-                +add_button type='event_type'
+                +add_button type='admin_section'
         .row 
             .four.wide.column
                 +tag_facet
                 |Total
-                +view_stat doc_type='event_type' stat_type='total'
+                +view_stat doc_type='admin_section' stat_type='total'
             .twelve.wide.column
                 .ui.centered.stackable.four.cards
-                    each event_types
-                        +event_type_card
+                    each admin_sections
+                        +admin_section_card
 
-template(name='event_type_card')
+template(name='admin_section_card')
     .card
         .content
             a.grey.header(href="/v/#{_id}")
@@ -37,7 +37,7 @@ template(name='event_type_card')
         
         
         
-template(name='event_type_edit')
+template(name='admin_section_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
@@ -58,11 +58,11 @@ template(name='event_type_edit')
                 +edit_textarea name='description' label='Description' icon='details'
         
         
-template(name='event_type_view')
+template(name='admin_section_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
-                +link_button link='/event_types' icon='type' label='Event Types'
+                +link_button link='/admin_sections' icon='type' label='Event Types'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Event Type '#{title}'
             .three.wide.center.aligned.column

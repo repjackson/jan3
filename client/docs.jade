@@ -4,8 +4,5 @@ template(name='doc_edit')
 
 template(name='doc_view')
     with doc
-        unless type
-            if parent_id
-                +parent_link
         +Template.dynamic template=type_view
                             

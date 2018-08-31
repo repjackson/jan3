@@ -16,7 +16,7 @@ template(name='event_view')
                         .summary
                             a.user #{author.username}
                             |#{action} #{text}
-                            a(href="/view/#{parent._id}") #{parent.title}
+                            a(href="/v/#{parent._id}") #{parent.title}
                             .date #{when}
                         .meta
                             +mark_read_link
@@ -41,7 +41,7 @@ template(name='users_feed_event')
             .summary
                 a.user #{author.username}
                 |#{action} #{text}
-                a(href="/view/#{parent._id}") #{parent.title}
+                a(href="/v/#{parent._id}") #{parent.title}
                 .date #{when}
             .meta
                 +mark_read_link
@@ -83,7 +83,7 @@ template(name='event')
     //         .summary
     //             a.user #{author.username}
     //             |#{action} #{text}
-    //             a(href="/view/#{parent._id}") #{parent.title}
+    //             a(href="/v/#{parent._id}") #{parent.title}
     //             .date #{when}
     //         .meta
     //             // +mark_read_link

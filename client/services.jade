@@ -44,7 +44,7 @@ template(name='services')
 template(name='service_card')
     .ui.card
         .content
-            a.header(href="/view/#{_id}") 
+            a.header(href="/v/#{_id}") 
                 if image_id
                     img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
                     // .right.floated.meta $#{price}
@@ -60,7 +60,7 @@ template(name='service_card')
                 | #{request_count} requests
         .content
             +request_service_button
-            a.ui.button(href="/view/#{_id}") 
+            a.ui.button(href="/v/#{_id}") 
                 i.large.icon
                     +iconsmall name='view-details'
                 |Details
@@ -68,11 +68,11 @@ template(name='service_card')
 template(name='service_item')
     .item
         if image_id
-            a.image(href="/view/#{_id}")
+            a.image(href="/v/#{_id}")
                 img.ui.tiny.image(src="{{c.url image_id height=200 width=200 crop='scale'}}")
         .content
             // .right.floated.meta $#{price}
-            a.header(href="/view/#{_id}") #{title}
+            a.header(href="/v/#{_id}") #{title}
             if is_admin
                 .meta #{slug}
             .description
@@ -82,7 +82,7 @@ template(name='service_item')
         //         | #{request_count} requests
         .content
             +request_service_button
-            a.ui.button(href="/view/#{_id}") 
+            a.ui.button(href="/v/#{_id}") 
                 i.large.icon
                     +iconsmall name='view-details'
                 |Details
@@ -124,19 +124,19 @@ template(name='service_child_requests')
         .ui.header 
             +icon name='service-bell'
             |Requests
-        .ui.divided.items
-            each child_requests
-                .item
-                    .content
-                        .meta.right.floated 
-                            +author_info
-                        .header #{service_title}
-                        .meta #{service_date}
-                    .content
-                        .meta Requested #{when}
-                        .large130 #{request_details}
-                    .content
-                        +view_button
+        each child_requests
+            .ui.secondary.segment
+                .content
+                    .meta.right.floated 
+                        +author_info
+                    .header #{service_title}
+                    .meta #{service_date}
+                .content
+                    .meta Requested #{when}
+                    .large130 #{request_details}
+                .content
+                    +view_button
+            .ui.hidden.divider
                         
 template(name='service_edit')
     .ui.padded.stackable.centered.grid

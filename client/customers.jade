@@ -28,9 +28,9 @@ template(name='customers')
                         each all_customers
                             tr
                                 td.selectable(title='View')
-                                    a(href="/view/#{_id}") #{ev.ID}
+                                    a(href="/v/#{_id}") #{ev.ID}
                                 td.selectable(title='View')
-                                    a(href="/view/#{_id}") #{ev.CUST_NAME}
+                                    a(href="/v/#{_id}") #{ev.CUST_NAME}
                                 td #{ev.FRANCHISEE}
                                 td #{ev.MASTER_LICENSEE}
                                 td 
@@ -118,7 +118,7 @@ template(name='customer_widget')
 
 template(name='customers_franchisee')
     with customers_franchisee_doc
-        a.ui.header(href="/view/#{_id}") 
+        a.ui.header(href="/v/#{_id}") 
             +icon name='housekeeper-male'
             |Franchisee
         .ui.list
@@ -151,7 +151,7 @@ template(name='my_customer_account_card')
     .ui.card
         with currentUser.users_customer
             .content
-                a.ui.header(href="/view/#{_id}")
+                a.ui.header(href="/v/#{_id}")
                     +icon name='customer-support'
                     |Customer Account
             .content
@@ -159,7 +159,7 @@ template(name='my_customer_account_card')
                 div Billing Contact: #{customer_billing_contact}
                 div HR Contact: #{customer_hr_contact}
             .content
-                a(href="/view/#{_id}")
+                a(href="/v/#{_id}")
                     h4.ui.header #{ev.CUST_NAME}
             .content
                 .ui.list

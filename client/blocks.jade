@@ -32,7 +32,7 @@ template(name='toggle_boolean')
             #turn_on.ui.button #{no_label}
 
 template(name='save_button')
-    a.ui.large.icon.button(href="/view/#{_id}") 
+    a.ui.large.icon.button(href="/v/#{_id}") 
         i.large.green.checkmark.icon
         // | Save
         
@@ -44,7 +44,7 @@ template(name='edit_button')
         // | Edit
 
 template(name='view_button')
-    a.ui.icon.button(href="/view/#{_id}" data-content='View Details' class=classes) 
+    a.ui.icon.button(href="/v/#{_id}" data-content='View Details' class=classes) 
         // +icon name='details-pane'
         i.right.chevron.green.icon
         
@@ -128,20 +128,20 @@ template(name='parent_segment')
 
 template(name='parent_link')
     // with parent_doc
-    //     a.ui.button(href="/view/#{_id}") 
+    //     a.ui.button(href="/v/#{_id}") 
     //         i.chevron.up.icon
     //         if image_url
     //             img.ui.medium.centered.image(src=image_url)
     //         if icon
     //             i.icon(class=icon)
     //         |#{text}
-    a.ui.button(href="/view/#{parent_id}") 
+    a.ui.button(href="/v/#{parent_id}") 
         i.chevron.up.icon
         |Incident
                     
 
 template(name='view_full_button')
-    a.floated.right(href="/view/#{_id}")
+    a.floated.right(href="/v/#{_id}")
         // i.right.chevron.link.icon
         | View
                         
@@ -185,7 +185,7 @@ template(name='incidents_by_type')
                 .item
                     img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     .content
-                        a.header(href="/view/#{_id}") ##{incident_number} 
+                        a.header(href="/v/#{_id}") ##{incident_number} 
                         .description
                             |#{when}
             
@@ -630,11 +630,11 @@ template(name='customer_card')
     .ui.card
         with customer_doc
             .content
-                a.ui.header(href="/view/#{_id}")
+                a.ui.header(href="/v/#{_id}")
                     +icon name='customer-support'
                     |Customer Account
             .content
-                a(href="/view/#{_id}")
+                a(href="/v/#{_id}")
                     h4.ui.header #{ev.CUST_NAME}
                 .ui.list
                     .item ##{ev.ID}
@@ -683,12 +683,12 @@ template(name='franchisee_card')
     .ui.card
         with franchisee_doc
             .content
-                a(href="/view/#{_id}")
+                a(href="/v/#{_id}")
                     .ui.header 
                         +icon name='conference'
                         |Franchisee
             .content
-                a(href="/view/#{_id}")
+                a(href="/v/#{_id}")
                     h4.ui.header #{franchisee}
                 .ui.list
                     .item(title='JPID') ##{ev.ID}

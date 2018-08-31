@@ -31,7 +31,7 @@ Template.add_incident_button.events
                             level: 1
                             open: true
                             submitted: false
-                    FlowRouter.go "/view/#{new_incident_id}"
+                    FlowRouter.go "/v/#{new_incident_id}"
 
 
 Template.incident_type_label.onRendered ->

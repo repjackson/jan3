@@ -41,7 +41,7 @@ template(name='incidents')
                                 td {{ long_format timestamp }}
                                 td #{service_date}
                                 td.selectable
-                                    a(href="/view/#{_id}") #{incident_details}
+                                    a(href="/v/#{_id}") #{incident_details}
                                 // td #{level}
                                 td 
                                     +status_template
@@ -262,7 +262,7 @@ template(name='incident_tasks')
         each incident_tasks
             .large.item
                 .content
-                    a.header(href="/view/#{_id}") 
+                    a.header(href="/v/#{_id}") 
                         if complete
                             i.green.checkmark.icon
                         |#{title}
@@ -449,7 +449,7 @@ template(name='incident_table')
                     //     td #{customer_name}
                     td #{service_date}
                     td.selectable
-                        a(href="/view/#{_id}") #{incident_details}
+                        a(href="/v/#{_id}") #{incident_details}
                     // td #{level}
                     td 
                         +status_template

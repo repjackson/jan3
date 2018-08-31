@@ -24,13 +24,13 @@ template(name='product_card')
                 img.ui.medium.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
         .content
             .right.floated.meta $#{price}
-            a.header(href="/view/#{_id}") #{title}
+            a.header(href="/v/#{_id}") #{title}
             // a.author #{author.username}
             .description
                 p #{description}
         .content
             +add_to_cart_button
-            a.ui.button(href="/view/#{_id}")
+            a.ui.button(href="/v/#{_id}")
                 i.large.icon
                     +iconsmall name='view-details'
                 |Details

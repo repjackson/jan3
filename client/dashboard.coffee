@@ -43,7 +43,7 @@ Template.dashboard.events
                             level: 1
                             open: true
                             submitted: false
-                    FlowRouter.go "/view/#{new_incident_id}"
+                    FlowRouter.go "/v/#{new_incident_id}"
 
 Template.dashboard_office_contacts_list.onCreated ->
     @autorun -> Meteor.subscribe 'my_office_contacts'

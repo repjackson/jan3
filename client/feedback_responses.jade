@@ -17,7 +17,7 @@ template(name='feedback_responses')
 template(name='feedback_response_card')
     .card
         .content
-            a.grey.header(href="/view/#{_id}")
+            a.grey.header(href="/v/#{_id}")
                 |#{name} 
         .content
             |!{html}
@@ -47,7 +47,7 @@ template(name='feedback_response_view')
     .ui.padded.stackable.centered.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
-                a.ui.button(href="/view/#{parent_id}")
+                a.ui.button(href="/v/#{parent_id}")
                     i.up.chevron.icon
                     |Incident
                 if is_dev

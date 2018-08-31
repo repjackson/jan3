@@ -301,7 +301,7 @@ template(name='small_service_list')
         .ui.three.column.grid
             each services_offered
                 .column
-                    a.ui.item(href="/view/#{_id}")
+                    a.ui.item(href="/v/#{_id}")
                         img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
                         |#{title}
 

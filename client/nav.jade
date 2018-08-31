@@ -26,57 +26,57 @@ template(name='nav')
                 a.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
                     i.icon
                         +icon name='building'
-                    .computer.only &nbsp; Dashboard
-                    // .computer.only &nbsp; #{my_office.ev.MASTER_LICENSEE}
+                    .mobile.hidden &nbsp; Dashboard
+                    // .mobile.hidden &nbsp; #{my_office.ev.MASTER_LICENSEE}
             a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
                 i.icon
                     +icon name='error'
-                .computer.only &nbsp; Incidents
+                .mobile.hidden &nbsp; Incidents
             a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
                 i.icon
                     +icon name='groups'
-                .computer.only &nbsp; Employees
+                .mobile.hidden &nbsp; Employees
             a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
                 i.icon
                     +icon name='housekeeper-male'
-                .computer.only &nbsp; Franchisees
+                .mobile.hidden &nbsp; Franchisees
             a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
                 i.icon
                     +icon name='customer-support'
-                .computer.only &nbsp; Customers
+                .mobile.hidden &nbsp; Customers
             a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
                 i.icon
                     +icon name='settings'
-                .computer.only &nbsp; Settings
+                .mobile.hidden &nbsp; Settings
         if is_admin
             a.item(href='/admin' data-content='Admin Dashboard' class="{{ isActiveRoute 'admin'}}")
                 i.icon
                     +icon name='user-shield'
-                .computer.only &nbsp; Admin
+                .mobile.hidden &nbsp; Admin
             a.mobile.hidden.item(href='/incidents' data-content='All Incidents' class="{{ isActiveRoute 'incidents'}}")
                 i.icon
                     +icon name='error'
-                .computer.only &nbsp; Incidents
+                .mobile.hidden &nbsp; Incidents
             a.mobile.hidden.item(href='/users' data-content='All Users' class="{{ isActiveRoute 'users'}}")
                 i.icon
                     +icon name='groups'
-                .computer.only &nbsp; Users
+                .mobile.hidden &nbsp; Users
             a.mobile.hidden.item(href='/offices' data-content='All Offices' class="{{ isActiveRoute 'offices'}}")
                 i.icon
                     +icon name='skyscrapers'
-                .computer.only Offices
+                .mobile.hidden Offices
             a.mobile.hidden.item(href='/franchisees' data-content='All Franchisees' class="{{ isActiveRoute 'franchisees'}}")
                 i.icon
                     +icon name='housekeeper-male'
-                .computer.only Franchisees
+                .mobile.hidden Franchisees
             a.mobile.hidden.item(href='/customers' data-content='All Customers' class="{{ isActiveRoute 'customers'}}")
                 i.icon
                     +icon name='customer-support'
-                .computer.only Customers
+                .mobile.hidden Customers
             a.mobile.hidden.item(href='/services' data-content='All Services' class="{{ isActiveRoute 'services'}}")
                 i.icon
                     +icon name='broom'
-                .computer.only Services
+                .mobile.hidden Services
         .right.menu
             if is_dev
                 // a.item(href='/alfred' data-content='alfred')
