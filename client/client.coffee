@@ -75,6 +75,9 @@ Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'adm
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()         
 Template.registerHelper 'is_closed', () -> @status is 'closed'
 
+Template.registerHelper 'databank_docs': ->  
+    console.log @
+    Docs.find { type:Session.get('selected_doc_type')}
 
 
 Template.registerHelper 'from_now', (input) -> moment(input).fromNow()

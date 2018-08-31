@@ -79,13 +79,6 @@ template(name='nav')
                 .mobile.hidden Services
         .right.menu
             if is_dev
-                // a.item(href='/alfred' data-content='alfred')
-                //     i.code.black.icon
-                // a.item(href='/blog' data-content='blog')
-                //     i.newspaper.black.icon
-                // a.item(href='/databank' data-content='Databank')
-                //     i.icon
-                //         +icon name='database'
                 a.item(href='/tasks' data-content='Tasks' class="{{ isActiveRoute 'tasks'}}")
                     i.icon
                         +icon name='realtime-protection'
@@ -93,6 +86,12 @@ template(name='nav')
                     i.icon
                         +icon name='bar-chart'
             if is_admin    
+                a.item(href='/schemas' data-content='Schemas')
+                    i.icon
+                        +icon name='code'
+                a.item(href='/databank' data-content='Databank')
+                    i.icon
+                        +icon name='database'
                 a.item(href='/feed' data-content='Site Events' class="{{ isActiveRoute 'oasis'}}")
                     i.icon
                         +icon name='rss'

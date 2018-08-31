@@ -5,14 +5,12 @@ Meteor.publish 'oasis', (
     selected_timestamp_tags
     type
     author_id
-    selected_event_types
     )->
     
         self = @
         match = {}
         
         # match.tags = $all: selected_tags
-        if type then match.type = type
         # console.log selected_timestamp_tags
 
         # if view_private is true
@@ -27,7 +25,7 @@ Meteor.publish 'oasis', (
             match.author_id = $in: selected_author_ids
         if selected_location_tags.length > 0 then match.location_tags = $all: selected_location_tags
         if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags
-        if selected_event_types.length > 0 then match.event_type = $in: selected_event_types
+        if type then match.type = type
 
         # if view_private is true then match.author_id = @userId
         # if view_resonates?

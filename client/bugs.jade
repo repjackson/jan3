@@ -1,25 +1,9 @@
-template(name='bugs')
-    .ui.padded.stackable.centered.grid
-        .centered.row
-            .three.wide.column
-                +link_button link='/admin' icon='user-shield' label='Admin'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header 
-                    +icon name='bug'
-                    | Bugs
-            .three.wide.right.aligned.column
-                // +add_button type='bug'
-        .row 
-            .ui.four.wide.column
-                +tag_facet
-                +timestamp_facet
-                +username_facet
-            .ui.twelve.wide.column
-                each bugs
-                    +bug_segment
-                    .ui.hidden.divider
+template(name='databank_bug')
+    each databank_docs
+        +bug_segment
+        .ui.hidden.divider
 
-template(name='bug_segment')
+template(name='bug_single')
     .ui.secondary.segment
         .ui.stackable.grid
             .row
