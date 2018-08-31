@@ -16,12 +16,8 @@ template(name='databank')
                 +username_facet
                 .ui.header Total
                     +view_stat doc_type='item' stat_type='total' 
-                .ui.header Complete #{complete_item_count}
-                .ui.header Incomplete #{incomplete_item_count}
-                .ui.indicating.progress
-                    .bar
-                    .label Completion
             .twelve.wide.column
+                +Template.dynamic template=databank_view
                 each databank
                     +item_segment
 

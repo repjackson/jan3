@@ -98,7 +98,7 @@ Meteor.methods
         task_doc = Docs.findOne task_doc_id
         
         assigned_to_user = Meteor.users.findOne username:username
-        task_link = "https://www.jan.meteorapp.com/view/#{task_doc._id}"
+        task_link = "https://www.jan.meteorapp.com/v/#{task_doc._id}"
         
         mail_fields = {
             to: ["<#{assigned_to_user.emails[0].address}>"]

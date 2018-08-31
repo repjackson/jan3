@@ -1,7 +1,3 @@
-Template.roles.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-Template.roles.helpers
-
 
 FlowRouter.route '/roles', action: ->
     BlazeLayout.render 'layout', 
@@ -9,9 +5,9 @@ FlowRouter.route '/roles', action: ->
         main: 'roles'
 
 
-Template.roles.onCreated ->
+Template.databank_role.onCreated ->
     @autorun => Meteor.subscribe 'docs', [], 'role'
-Template.roles.helpers
+Template.databank_role.helpers
     roles: ->  Docs.find { type:'role'}
 
 

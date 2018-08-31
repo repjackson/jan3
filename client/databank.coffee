@@ -40,6 +40,7 @@ Template.item_view.onCreated ->
     
 Template.databank.helpers
     databank: ->  Docs.find { type:'item'}
+    databank_view: -> "databank_#{@type}"
 
 Template.item_edit.helpers
     item: -> Doc.findOne FlowRouter.getParam('doc_id')
