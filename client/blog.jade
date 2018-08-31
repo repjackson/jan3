@@ -1,23 +1,6 @@
-template(name='blog')
-    .ui.stackable.padded.grid
-        .middle.aligned.row 
-            .three.wide.center.aligned.column
-            .ten.wide.column
-                h1.ui.center.aligned.header 
-                    +icon name='typewriter-with-paper'
-                    | Development Blog
-            .three.wide.center.aligned.column
-                +add_button type='post'
-        .row 
-            .four.wide.column
-                +tag_facet
-                +timestamp_facet
-            .twelve.wide.column
-                each post_docs
-                    +post_segment
 
 
-template(name='post_segment')
+template(name='post_single')
     .ui.segment
         h5.ui.header
             // a(href="/v/#{_id}")
