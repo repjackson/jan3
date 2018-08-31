@@ -17,7 +17,13 @@ Template.doc_type_view.helpers
             
 Template.admin.onCreated ->
     @autorun -> Meteor.subscribe 'admin_total_stats'
-    @autorun -> Meteor.subscribe 'type', 'admin_section'
+    @autorun => Meteor.subscribe 'facet', 
+        selected_tags.array()
+        selected_author_ids.array()
+        selected_location_tags.array()
+        selected_timestamp_tags.array()
+        type='admin_section'
+        author_id=null
 
 Template.admin.helpers
     admin_sections: ->

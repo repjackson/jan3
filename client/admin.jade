@@ -5,150 +5,23 @@ template(name='admin')
                 h1.ui.center.aligned.header
                     +icon name='user-shield'
                     | Admin
-        // .ui.four.stackable.centered.cards
-        //     .card
-        //         .content
-        //             a.ui.header(href='/incidents')
-        //                 +icon name='error'
-        //                 | Incidents
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='incident'
-        //     .card
-        //         .content
-        //             a.ui.header(href='/offices')
-        //                 +icon name='building'
-        //                 | Offices
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='office'
-        //     .card
-        //         .content
-        //             a.ui.header(href='/franchisees')
-        //                 +icon name='conference'
-        //                 | Franchisees
-        //             .description
-        //                 .ui.list
-        //                     .item Active
-        //                         +view_stat stat_type='active' doc_type='franchisee'
-        //                     .item Total
-        //                         +view_stat stat_type='total' doc_type='franchisee'
-                            
-        //     .card
-        //         .content
-        //             a.ui.header(href='/customers')
-        //                 +icon name='customer-support'
-        //                 | Customers
-        //             .ui.list
-        //                 .item Active
-        //                     +view_stat stat_type='active' doc_type='customer'
-        //                 .item Total
-        //                     +view_stat stat_type='total' doc_type='customer'
-        //     .card
-        //         .content
-        //             a.ui.header(href="/special_services")
-        //                 +icon name='invoice'
-        //                 | Special Services
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='special_service'
-        //     .card
-        //         .content
-        //             a.ui.header(href="/feedback_responses")
-        //                 +icon name='talk-male'
-        //                 | Feedback Responses
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='feedback_response'
-        //     .card
-        //         .content
-        //             a.ui.header(href='/services')
-        //                 +icon name='broom'
-        //                 | Services
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='service'
-        //     .card
-        //         .content
-        //             a.ui.header(href='/stats')
-        //                 +icon name='bar-chart'
-        //                 | Stats
-        //     .card
-        //         .content
-        //             a.ui.header(href='/store')
-        //                 +icon name='small-business'
-        //                 | Store
-        //             .description
-        //                 | Total
-        //                 +view_stat stat_type='total' doc_type='product'
-        //     .card
-        //         .content
-        //             a.ui.header(href='/feed')
-        //                 +icon name='rss'
-        //                 | Global Feed
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='event'
-        //     .card
-        //         .content
-        //             .ui.header(href='/roles')
-        //                 +icon name='checked-user-male'
-        //                 | Roles
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='role'
-        //     .card
-        //         .content
-        //             a.ui.header(href='/event_types')
-        //                 +icon name='rss'
-        //                 | Event Types
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='event_type'
-        //     .card
-        //         .content
-        //             a.ui.header(href='/rules')
-        //                 +icon name='rules'
-        //                 | Rules
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='rule'
-        //     .card
-        //         .content
-        //             a.ui.header(href='/bugs')
-        //                 +icon name='bug'
-        //                 | Bugs
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='bug'
-        //     .card
-        //         .content
-        //             a.ui.header(href='/tasks')
-        //                 +icon name='realtime-protection'
-        //                 | Tasks
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='task'
-        //     .card
-        //         .content
-        //             a.ui.header(href='/incident_types')
-        //                 +icon name='clone'
-        //                 | Incident Types
-        //             .description
-        //                 |Total
-        //                 +view_stat stat_type='total' doc_type='incident_type'
-        .ui.stackable.centered.cards
-            each admin_sections
-                .ui.card
-                    .content
-                        a.ui.header(href=link)
-                            +icon name=icon
-                            | #{title}
-                        // .description
-                        //     a(href=link) #{link}
-                        .description
-                            |Total
-                            +view_stat stat_type='total' doc_type=slug
+        .row
+            .four.wide.column
+                +tag_facet
+            .twelve.wide.column
+                .ui.stackable.centered.cards
+                    each admin_sections
+                        .ui.card
+                            .content
+                                a.ui.header(href=link)
+                                    +icon name=icon
+                                    | #{title}
+                                // .description
+                                //     a(href=link) #{link}
+                                if slug
+                                        .description
+                                            |Total
+                                            +view_stat stat_type='total' doc_type=slug
         .ui.hidden.divider
 
 

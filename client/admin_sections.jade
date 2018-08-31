@@ -45,13 +45,13 @@ template(name='admin_section_edit')
                 #delete.ui.icon.button
                     i.trash.icon
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit Event Type '#{title}'
+                h1.ui.center.aligned.grey.header Edit Admin Section '#{title}'
             .three.wide.center.aligned.column
                 +save_button
         .eight.wide.column
             .ui.form
                 +edit_text_field key='title' label='title'
-                +edit_text_field key='slug' label='slug'
+                +edit_text_field key='slug' label='doc_type'
                 +edit_text_field key='icon' label='icon'
                 +edit_text_field key='link' label='link'
                 if icon
@@ -64,15 +64,15 @@ template(name='admin_section_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
-                +link_button link='/admin_sections' icon='type' label='Event Types'
+                +link_button link='/admin_sections' icon='type' label='Admin Sections'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Event Type '#{title}'
+                h1.ui.center.aligned.grey.header Admin Section '#{title}'
             .three.wide.center.aligned.column
                 +edit_button
         .row
             .eight.wide.column
                 .ui.header title: #{title}
-                .ui.header slug: #{slug}
+                .ui.header doc_type: #{slug}
                 .ui.header link:
                     a(href=link) #{link}
                 .ui.header icon: #{icon}
