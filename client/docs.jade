@@ -1,15 +1,18 @@
 template(name='doc_edit')
-    with doc
-        +Template.dynamic template=type_edit
+    // with doc
+    //     +Template.dynamic template=type_edit
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
                 +link_button link='/databank' icon='database' label='Databank'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header Edit #{doc.title}
+                h1.ui.center.aligned.grey.header Edit #{doc.title} #{doc.type}
             .three.wide.center.aligned.column
-                +save_button
+                a.ui.large.icon.button(href="/v/#{doc._id}") 
+                    i.large.green.checkmark.icon
         .row
+            .four.wide.column
+                |Type: #{doc.type}
             .eight.wide.column
                 with schema_doc
                     .ui.form
@@ -20,7 +23,7 @@ template(name='doc_edit')
                                         i.icon(class=icon)
                                     |#{title}
                                 .ui.input
-                                    input#text_field(type='text' value=key_value )
+                                    input.text_field(type='text' value=slug_value)
                                     
 
 
@@ -39,7 +42,8 @@ template(name='doc_view')
             .eight.wide.column
                 with schema_doc
                     each fields
-                        +Template.dynamic template=view_field_template
+                        h4.ui.header #{title}: #{slug_value}
+                        // +Template.dynamic template=view_field_template
                 // +jsonView json=schema_doc
                 // +jsonView json=schema_doc.fields
         

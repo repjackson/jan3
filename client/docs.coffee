@@ -17,6 +17,11 @@ Template.doc_view.helpers
         Docs.findOne
             type:'schema'
     view_field_template: -> "view_#{@type}_field"
+    slug_value: -> 
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc
+            doc["#{@slug}"]
+
 
 FlowRouter.route '/edit/:doc_id', action: (params) ->
     BlazeLayout.render 'layout',
@@ -34,6 +39,23 @@ Template.doc_edit.helpers
         Docs.findOne
             type:'schema'
     edit_field_template: -> "edit_#{@type}_field"
+
+    slug_value: -> 
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc
+            doc["#{@slug}"]
+
+
+Template.doc_edit.events
+    'change .text_field': (e,t)->
+        text_value = e.currentTarget.value
+        Docs.update FlowRouter.getParam('doc_id'),
+            { $set: "#{@slug}": text_value }
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 
 Template.doc_card.onCreated ->
