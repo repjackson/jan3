@@ -568,3 +568,31 @@ Meteor.methods
             doc_type:'task'
             parent_id:task_id
             text:"Task was marked incomplete by #{Meteor.user().username}."
+
+
+Meteor.methods
+    update_field_title: (doc_id, field_object, title)->
+        Docs.update { _id:doc_id, fields:field_object },
+            { $set: "fields.$.title": title }
+
+    update_field_slug: (doc_id, field_object, slug)->
+        # console.log doc_id
+        # console.log field_object
+        # console.log slug
+        Docs.update { _id:doc_id, fields:field_object },
+            { $set: "fields.$.slug": slug }
+
+
+    update_field_type: (doc_id, field_object, type)->
+        Docs.update { _id:doc_id, fields:field_object },
+            { $set: "fields.$.type": type }
+
+
+    slugify: (doc_id, field_object, title)->
+        slug = title.toString().toLowerCase().replace(/\s+/g, '_').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '_').replace(/^-+/, '').replace(/-+$/,'')
+        return slug
+        # console.log field_object
+        # console.log doc_id
+        # # Docs.update { _id:doc_id, fields:field_object },
+        # Docs.update { _id:doc_id, fields:field_object },
+        #     { $set: "fields.$.slug": slug }

@@ -1,8 +1,62 @@
 template(name='doc_edit')
     with doc
         +Template.dynamic template=type_edit
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.center.aligned.column
+                +link_button link='/databank' icon='database' label='Databank'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header Edit #{doc.title}
+            .three.wide.center.aligned.column
+                +save_button
+        .row
+            .eight.wide.column
+                with schema_doc
+                    .ui.form
+                        each fields
+                            .field(class=field_class)
+                                label
+                                    if icon
+                                        i.icon(class=icon)
+                                    |#{title}
+                                .ui.input
+                                    input#text_field(type='text' value=key_value )
+                                    
+
 
 template(name='doc_view')
     with doc
         +Template.dynamic template=type_view
-                            
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.center.aligned.column
+                +link_button link='/databank' icon='database' label='Databank'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header #{doc.title}
+            .three.wide.center.aligned.column
+                +edit_button
+        .row
+            .eight.wide.column
+                with schema_doc
+                    each fields
+                        +Template.dynamic template=view_field_template
+                // +jsonView json=schema_doc
+                // +jsonView json=schema_doc.fields
+        
+    
+template(name='doc_card')
+    .ui.card
+        .content
+            a.grey.header(href="/v/#{_id}")
+                |#{title} 
+        .content
+            .ui.list
+                .item type: #{type}
+        .content
+            with schema_doc
+                each fields
+                    h4.ui.header #{title}: #{slug_value}
+        .content
+            +edit_button
+            +view_button
+        

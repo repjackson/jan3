@@ -19,15 +19,15 @@ template(name='schemas')
 template(name='schema_card')
     .ui.card
         .content
-            a.grey.header(href="/view/#{_id}")
+            a.grey.header(href="/v/#{_id}")
                 if icon
                     +icon name=icon
                 |#{title} 
         .content
             h5 Slug: #{slug}
             |!{html}
-            each tags
-                .ui.label #{this}
+            // each tags
+            //     .ui.label #{this}
         // .content
         //     .ui.list
         //         each fields
@@ -115,12 +115,14 @@ template(name='schema_view')
             .three.wide.column
                 +edit_button
         .row
-            .twelve.wide.column
+            .four.wide.column
                 .ui.header Name: #{title}
                 .ui.header Slug: #{slug}
-                | !{html}
                 each tags
                     .ui.label #{this}
+                +comments
+            .twelve.wide.column
+                | !{html}
                 .ui.header Fields
                 .ui.list
                     each fields
@@ -130,9 +132,9 @@ template(name='schema_view')
                     +add_button type=slug
                     .ui.stackable.cards
                         each schema_docs
-                            +schema_doc
-            .four.wide.column
-                +comments
+                            +Template.dynamic template=single_view
+
+                            // +schema_doc
                 
                 
 template(name='schema_selector')

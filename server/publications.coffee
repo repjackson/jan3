@@ -816,6 +816,13 @@ Meteor.publish 'franchisee_by_id', (franchisee_jpid)->
 
 
 
+Meteor.publish 'schema_doc', (child_doc_id)->
+    doc = Docs.findOne child_doc_id
+    Docs.find
+        type:'schema'
+        slug:doc.type
+
+
 Meteor.publish 'service_child_requests', (service_id)->
     Docs.find
         type:'service_request'

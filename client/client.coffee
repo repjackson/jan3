@@ -139,7 +139,7 @@ Template.registerHelper 'user_is_customer', () -> @roles and 'customer' in @role
 Template.registerHelper 'user_is_office', () -> @roles and 'office' in @roles
         
 Template.registerHelper 'has_user_customer_jpid', () -> 
-    Meteor.user() and Meteor.user() and Meteor.user().customer_jpid
+    Meteor.user() and Meteor.user().customer_jpid
 
 Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 
@@ -150,23 +150,24 @@ Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 #         else
 #             console.log res
 #     )
-Template.registerHelper 'key_value', (key) -> 
-    doc_field = Template.parentData(2)
-    current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-    # console.log @key
-    # console.log Template.parentData(1)
-    # console.log Template.parentData(2)
-    # console.log Template.parentData(3)
-    # console.log Template.parentData(4)
-    # console.log Template.parentData(5)
-    if @key
-        current_doc["#{@key}"]
+# Template.registerHelper 'slug_value', () -> 
+#     doc_field = Template.parentData(2)
+#     current_doc = Template.parentData(3)
+#     # console.log @key
+#     console.log Template.parentData(1)
+#     console.log Template.parentData(2)
+#     console.log Template.parentData(3)
+#     # console.log Template.parentData(4)
+#     # console.log Template.parentData(5)
+#     console.log @
+#     current_doc["#{@slug}"]
 
-Template.registerHelper 'page_key_value', (key) -> 
+Template.registerHelper 'page_key_value', () -> 
     # doc_field = Template.parentData(2)
+    console.log @
     current_doc = Docs.findOne FlowRouter.getParam('doc_id')
     if current_doc
-        current_doc["#{key}"]
+        current_doc["#{@slug}"]
 
 
 Template.registerHelper 'profile_key_value', () -> 

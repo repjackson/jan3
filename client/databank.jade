@@ -5,7 +5,7 @@ template(name='databank')
             .ten.wide.column
                 h1.ui.center.aligned.header 
                     +icon name='realtime-protection'
-                    | databank: #{current_doc_type}
+                    | Databank: #{current_doc_type}
             .three.wide.center.aligned.column
                 +add_button type=current_doc_type label=current_doc_type
         .row 
@@ -16,7 +16,8 @@ template(name='databank')
                 +username_facet
             .twelve.wide.column
                 each databank_docs
-                    +Template.dynamic template=single_view
+                    +doc_card
+                    // +Template.dynamic template=single_view
                 // each databank
                 //     +item_segment
 
