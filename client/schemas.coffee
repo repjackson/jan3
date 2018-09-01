@@ -12,6 +12,8 @@ FlowRouter.route '/schemas', action: ->
 # @selected_schema_tags = new ReactiveArray []
 
 Template.schemas.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'schema'
+    
     @autorun => Meteor.subscribe 'facet', 
         selected_tags.array()
         selected_author_ids.array()

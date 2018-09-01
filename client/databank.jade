@@ -15,8 +15,9 @@ template(name='databank')
                 +timestamp_facet
                 +username_facet
             .twelve.wide.column
-                each databank_docs
-                    +doc_card
+                .ui.stackable.cards
+                    each databank_docs
+                        +doc_card
                     // +Template.dynamic template=single_view
                 // each databank
                 //     +item_segment

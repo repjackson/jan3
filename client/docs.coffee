@@ -67,6 +67,6 @@ Template.doc_card.helpers
             type:'schema'
             slug:@type
 
-    slug_value: () -> 
+    slug_value: -> 
         current_doc = Template.parentData(2)
         current_doc["#{@slug}"]
