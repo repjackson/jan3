@@ -27,7 +27,7 @@ competition
 stats
 like any video game
 but points are dollars and recognition
-anyone can clea
+anyone can clean
 its fun if its all recorded
 
 
@@ -84,3 +84,6 @@ service notesmake ecommerce agame
 requests equals points
 chart difference.  so rate of change is the comparitive metric.  green/red  percent difference over last week/month 
 competition for office, franchisee, global ranking, per serviceoffice page view start i dashboard
+
+you're only allowed to talk to tori through the site
+and no styling.  everything is done through database.  they don't like it they change it. I'm the world builder.

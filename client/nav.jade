@@ -49,7 +49,7 @@ template(name='nav')
                     +icon name='settings'
                 .mobile.hidden &nbsp; Settings
         if is_admin
-            a.item(href='/admin' data-content='Admin Dashboard' class="{{ isActiveRoute 'admin'}}")
+            a.item(href='/databank' data-content='Admin' class="{{ isActiveRoute 'databank'}}")
                 i.icon
                     +icon name='user-shield'
                 .mobile.hidden &nbsp; Admin
@@ -79,42 +79,10 @@ template(name='nav')
                 .mobile.hidden Services
         .right.menu
             if is_dev
-                a.item(href='/tasks' data-content='Tasks' class="{{ isActiveRoute 'tasks'}}")
-                    i.icon
-                        +icon name='realtime-protection'
-                a.item(href='/stats' data-content='Stats' class="{{ isActiveRoute 'stats'}}")
-                    i.icon
-                        +icon name='bar-chart'
-            if is_admin    
                 a.item(href='/schemas' data-content='Schemas')
                     i.icon
                         +icon name='code'
-                a.item(href='/databank' data-content='Databank')
-                    i.icon
-                        +icon name='database'
-                a.item(href='/feed' data-content='Site Events' class="{{ isActiveRoute 'oasis'}}")
-                    i.icon
-                        +icon name='rss'
             if currentUser
-                a.item(href='/mail' data-content='Mail' class="{{ isActiveRoute 'mail'}}")
-                    if unread_mail
-                        i.icon
-                            +icon name='open-envelope'
-                    else
-                        i.icon
-                            +icon name='secured-letter'
-                // a.item(href='/notifications' data-content="Notifications" class="{{ isActiveRoute 'notifications'}}")
-                //     if unread_notifications
-                //         i.icon
-                //             +icon name='appointment-reminders'
-                //     else
-                //         i.icon
-                //             img.ui.image(src="https://png.icons8.com/ios/80/000000/appointment-reminders.png")
-                            
-                // if is_customer    
-                //     a.item(href='/cart' data-content='Shopping Cart')
-                //         i.icon
-                //             +icon name='shopping-cart'
                 a.item(href="/user/#{currentUser.username}" data-content='View Profile' class="{{ isActiveRoute 'user_view'}}")
                     if currentUser.profile.image_id
                         i.icon
