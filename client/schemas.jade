@@ -132,7 +132,8 @@ template(name='schema_view')
                     +add_button type=slug
                     .ui.stackable.cards
                         each schema_docs
-                            +Template.dynamic template=single_view
+                            +doc_card
+                            // +Template.dynamic template=single_view
 
                             // +schema_doc
                 
