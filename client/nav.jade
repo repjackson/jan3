@@ -12,10 +12,6 @@ template(name='nav')
                 i.icon
                     +icon name='error'
                 .mobile.hidden &nbsp; My Incidents
-            a.mobile.hidden.item(href='/store' class="{{ isActiveRoute 'store'}}")
-                i.icon
-                    +icon name='small-business'
-                .mobile.hidden &nbsp; Consumables
             a.mobile.hidden.item(href='/services' class="{{ isActiveRoute 'services'}}")
                 i.icon
                     +icon name='broom'
@@ -49,7 +45,7 @@ template(name='nav')
                     +icon name='settings'
                 .mobile.hidden &nbsp; Settings
         if is_admin
-            a.item(href='/databank' data-content='Admin' class="{{ isActiveRoute 'databank'}}")
+            a.item(href='/admin' data-content='Admin' class="{{ isActiveRoute 'admin'}}")
                 i.icon
                     +icon name='user-shield'
                 .mobile.hidden &nbsp; Admin

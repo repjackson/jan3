@@ -1,11 +1,11 @@
-template(name='databank')
+template(name='admin')
     .ui.stackable.padded.grid
         .middle.aligned.row 
             .three.wide.center.aligned.column
             .ten.wide.column
                 h1.ui.center.aligned.header 
                     +icon name='realtime-protection'
-                    | Admin: #{current_doc_type}
+                    | Admin #{current_doc_type}
             .three.wide.center.aligned.column
                 +add_button type=current_doc_type label=current_doc_type
         .row 

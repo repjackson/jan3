@@ -1,13 +1,12 @@
-FlowRouter.route '/databank', action: ->
+FlowRouter.route '/admin', action: ->
     BlazeLayout.render 'layout', 
         sub_nav: 'admin_nav'
-        main: 'databank'
+        main: 'admin'
 
 
-Template.databank.onCreated ->
+Template.admin.onCreated ->
     # @autorun => Meteor.subscribe 'type', 'item'
     @autorun => Meteor.subscribe 'count', 'item'
-    @autorun => Meteor.subscribe 'incomplete_item_count'
     @autorun => Meteor.subscribe 'oasis', 
         selected_tags.array()
         selected_author_ids.array()
@@ -17,11 +16,11 @@ Template.databank.onCreated ->
         author_id=null
         
         
-Template.databank.onRendered ->
+Template.admin.onRendered ->
     # $('.indicating.progress').progress();
     
 
-Template.databank.helpers
+Template.admin.helpers
     databank_docs: ->  Docs.find { type:Session.get('selected_doc_type')}
     databank_view: -> 
         array = selected_doc_types.array()
@@ -33,3 +32,8 @@ Template.databank.helpers
     current_doc_type: -> 
         array = selected_doc_types.array()
         return array[0]
+
+
+
+
+    
