@@ -49,3 +49,4 @@ meteorhacks:ssr
 email
 zimme:active-route
 dynamic-import
+mdg:meteor-apm-agent
