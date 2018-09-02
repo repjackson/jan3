@@ -105,66 +105,15 @@ template(name='set_session_item')
         
         
 
-template(name='complete')            
-    .field
-        label completed
-        #mark_complete.ui.button(class=complete_class) yes 
-        #mark_incomplete.ui.button(class=incomplete_class) no 
-
-
 template(name='toggle_key')
     .toggle_key.ui.compact.button(class=toggle_key_button_class) #{label}
 
-
-template(name='parent_segment')
-    .ui.secondary.segment
-        .ui.header Parent Doc
-        with parent
-            +view_array_field key='tags'
-            .large130 #{text}
-            // +author_info
-            // |#{when}
-        +view_button
-
-template(name='parent_link')
-    // with parent_doc
-    //     a.ui.button(href="/v/#{_id}") 
-    //         i.chevron.up.icon
-    //         if image_url
-    //             img.ui.medium.centered.image(src=image_url)
-    //         if icon
-    //             i.icon(class=icon)
-    //         |#{text}
-    a.ui.button(href="/v/#{parent_id}") 
-        i.chevron.up.icon
-        |Incident
-                    
 
 template(name='view_full_button')
     a.floated.right(href="/v/#{_id}")
         // i.right.chevron.link.icon
         | View
                         
-template(name='toggle_follow')
-    if currentUser
-        if is_following
-            #remove_friend.ui.button
-                i.minus.icon
-                | Unfollow
-        else
-            #add_friend.ui.button
-                i.plus.icon
-                | Follow
-
-
-// template(name='bookmark_button')
-//     if bookmarked
-//         .ui.icon.button
-//             i.bookmark.icon
-//     else
-//         .ui.icon.primary.button
-//             i.bookmark.icon
-            
             
 template(name='associated_incidents')
     .ui.secondary.segment
@@ -373,21 +322,6 @@ template(name='link_button')
         // i.left.chevron.icon
         | #{label}
 
-template(name='edit_author')
-    .ui.header Edit Author
-    with author
-        img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-        |#{username}
-    // .ui.input
-        // +inputAutocomplete settings=author_edit_settings id="author_select" class="" autocomplete="off" placeholder='Lookup...'
-                    
-
-
-template(name='delete_button')
-    #delete.ui.red.icon.button(title='delete')
-        i.trash.icon
-        +mini_sprite name='trash'
-        
         
 template(name='edit_link')
     .field
@@ -415,49 +349,8 @@ template(name='call_method')
         else
             |#{name}
     
-template(name='small_comment_count')
-    .ui.mini.statistic
-        .value
-            i.comment.icon
-            |#{comment_count}
-        // .label Comments
 
     
-    
-template(name='html_create')
-    if doc
-        with doc
-            if is_editing
-                .ui.labeled.fluid.input
-                    .ui.label select staff
-                    input#staff(type='text' value=staff)
-            else
-                div(class=doc_classes)
-                    |#{staff}
-            // if isInRole 'admin'
-            +session_edit_icon
-    else
-        // if isInRole 'admin'
-        .ui.header no coc found
-        .create_doc.ui.button
-            i.plus.icon
-            |create html with #{template_tags}
-    
-template(name='office_map')
-    .ui.secondary.segment
-        .ui.header
-            i.map.marker.icon
-            | #{geocode.formatted_address}
-        +google_places_input
-        #map
-        
-template(name='google_places_input')
-    .ui.fluid.icon.input
-        i.search.icon
-        input#google_places_field(type='text' placeholder='change address...')    
-        
-        
-        
 template(name='mini_inline_sprite')
     img.ui.mini.inline.spaced.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
 template(name='mini_sprite')
@@ -506,15 +399,6 @@ template(name='iconsmall')
     // if is_office
     //     img.ui.mini.inline.image(src="https://png.icons8.com/office/64/000000/#{name}.png" class=classes)
 
-template(name='user_pill')
-    .item
-        .content
-            .header
-                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{name}
-            // .description
-            //     each five_tags
-            //         .ui.basic.small.label #{this}
 
 
 
