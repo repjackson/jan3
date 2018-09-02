@@ -98,23 +98,15 @@ template(name='customer_view')
                     +incident_table customer_jpid=ev.ID
                 .ui.stackable.two.column.grid
                     .column
-                        +customer_widget label='Comments' icon='chat'
-                        +customer_widget label='Users' icon='group'
-                        +customer_widget label='Invoices' icon='money'
-                        +customer_widget label='Special Services' icon='broom'
+                        +doc_type_module label='Comments' icon='chat' doc_type='comment'
+                        +doc_type_module label='Users' icon='group' doc_type='user'
+                        +doc_type_module label='Invoices' icon='money' doc_type='finance'
+                        +doc_type_module label='Special Services' icon='broom' doc_type='special_service'
                     .column
-                        +customer_widget label='Service Requests' icon='broom'
-                        +customer_widget label='Activity' icon='rss'
-                        +customer_widget label='Messages' icon='chat'
+                        +doc_type_module label='Service Requests' icon='broom' doc_type='service_request'
+                        +doc_type_module label='Activity' icon='rss' doc_type='event'
+                        +doc_type_module label='Messages' icon='chat' doc_type='message'
 
-template(name='customer_widget')
-    .ui.secondary.segment
-        .ui.header 
-            +icon name=icon
-            | #{label}
-    
-
-                
 
 template(name='customers_franchisee')
     with customers_franchisee_doc

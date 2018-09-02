@@ -816,6 +816,13 @@ Meteor.publish 'franchisee_by_id', (franchisee_jpid)->
 
 
 
+
+Meteor.publish 'doc_type_module', (parent_id, type)->
+    parent = Docs.findOne parent_id
+    Docs.find { type:type }, limit:5
+
+
+
 Meteor.publish 'schema_doc', (child_doc_id)->
     doc = Docs.findOne child_doc_id
     Docs.find

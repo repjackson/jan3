@@ -79,8 +79,9 @@ template(name='franchisee_view')
                     .ui.header 
                         +icon name='building'
                         |Office 
-                +messages_panel        
-            .twelve.wide.column
+                +doc_type_module label='Incidents' icon='error' doc_type='incident'
+                +doc_type_module label='Incident Feedback' icon='reply' doc_type='feedback_response'
+            .eight.wide.column
                 .ui.secondary.segment
                     .ui.header 
                         +icon name='error'
@@ -95,14 +96,9 @@ template(name='franchisee_view')
                             |#{ev.FRANCHISEE}
                         |Customers
                     +franchisee_customers
-                +quickbooks_panel
-                .ui.two.column.grid
-                    .column
-                        +events_panel
-                        +purchases_panel
-                    .column
-                        +users_panel
-                        +service_requests_panel
+            .four.wide.column
+                +doc_type_module label='Messages' icon='chat' doc_type='message'
+                +doc_type_module label='Comments' icon='comment' doc_type='comment'
 
 
 template(name='franchisee_customers')

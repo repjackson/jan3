@@ -4,7 +4,7 @@ template(name='doc_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.center.aligned.column
-                +link_button link='/databank' icon='database' label='Databank'
+                +link_button link='/admin' icon='database' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Edit #{doc.title} #{doc.type}
             .three.wide.center.aligned.column
@@ -35,7 +35,7 @@ template(name='doc_view')
         .ui.padded.stackable.centered.grid
             .centered.row
                 .three.wide.center.aligned.column
-                    +link_button link='/databank' icon='database' label='Databank'
+                    +link_button link='/admin' icon='database' label='Admin'
                 .ten.wide.column
                     h1.ui.center.aligned.grey.header View #{doc.title} #{doc.type}
                 .three.wide.center.aligned.column

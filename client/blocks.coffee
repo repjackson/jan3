@@ -692,3 +692,19 @@ Template.assignment_widget.helpers
         # console.log context
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         Meteor.users.find(_id: $in: parent_doc.assigned_to)
+
+
+
+
+Template.doc_type_module.onCreated ->
+    @autorun => Meteor.subscribe 'doc_type_module', FlowRouter.getParam('doc_id'), @data.doc_type
+Template.doc_type_module.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.accordion').accordion()
+    , 500
+
+Template.doc_type_module.helpers
+    children: -> Docs.find { type:@doc_type}
+
+    view_mode_template: ->
+        console.log @

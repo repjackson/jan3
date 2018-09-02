@@ -631,3 +631,34 @@ template(name='assignment_widget')
                                 h4.ui.header
                                     |#{profile.first_name} #{profile.last_name}
                                     | @#{username}
+
+
+template(name='doc_type_module')
+    .ui.secondary.segment
+        .ui.accordion
+            .active.title
+                .ui.header 
+                    +icon name=icon
+                    | #{label}
+                // +Template.dynamic template=view_mode_template
+            .active.content
+                .ui.comments
+                    each children
+                        .comment
+                            a.avatar(href="/user/#{author.username}")
+                                if author.profile.image_id
+                                    img.ui.avatar.spaced.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                                else
+                                    i.user.icon
+                            .content
+                                a.author(href="/user/#{author.username}") #{author.username}
+                                .metadata
+                                    span.date #{when}
+                                .text
+                                    p #{text}
+                                .actions
+                                    a(href="/v/#{_id}")
+                                        i.right.chevron.link.icon
+                                    if is_admin
+                                        a.delete_comment
+                                            i.trash.icon
