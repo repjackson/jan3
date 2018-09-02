@@ -44,9 +44,8 @@ percolate:synced-cron
 meteorhacks:aggregate
 manuel:reactivearray
 random@1.1.0
-froala:editor-reactive@=2.4.2
 modules@0.12.2
-dynamic-import@0.4.2
 meteorhacks:ssr
 email
 zimme:active-route
+dynamic-import

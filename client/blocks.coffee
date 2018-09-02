@@ -135,32 +135,6 @@ Template.set_session_item.events
     'click .set_session_filter': -> Session.set "#{@key}", @value
             
 
-Template.delete_button.events
-    'click #delete': ->
-        template = Template.currentData()
-        swal {
-            title: 'Delete?'
-            # text: 'Confirm delete?'
-            type: 'error'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Delete'
-            confirmButtonColor: '#da5347'
-        }, =>
-            # doc = Docs.findOne FlowRouter.getParam('doc_id')
-            # Docs.remove doc._id, ->
-            #     FlowRouter.go "/docs"
-
-
-
-Template.edit_link.events
-    'blur #link': ->
-        link = $('#link').val()
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: link: link
-            
             
 Template.publish_button.events
     'click #publish': ->
@@ -178,113 +152,6 @@ Template.call_method.events
             # else
                 
                 
-# Template.html_create.onCreated ->
-#     @autorun => Meteor.subscribe 'facet_doc', @data.tags
-    
-# Template.html_create.helpers
-#     doc: ->
-#         tags = Template.currentData().tags
-#         split_array = tags.split ','
-
-#         Docs.findOne
-#             tags: split_array
-
-#     template_tags: -> Template.currentData().tags
-
-#     doc_classes: -> Template.parentData().classes
-
-# Template.html_create.events
-#     'click .create_doc': (e,t)->
-#         tags = t.data.tags
-#         split_array = tags.split ','
-#         new_id = Docs.insert
-#             tags: split_array
-#         Session.set 'editing_id', new_id
-
-#     'blur #staff': ->
-#         staff = $('#staff').val()
-#         Docs.update @_id,
-#             $set: staff: staff                
-            
-            
-# Template.google_places_input.onRendered ->
-    # input = document.getElementById('google_places_field');
-    # options = {
-    #     types: ['geocode'],
-    #     # componentRestrictions: {country: 'fr'}
-    # }
-    # @autocomplete = new google.maps.places.Autocomplete(input, options);
-    # @autorun(() =>
-    #     if GoogleMaps.loaded()
-    #         # $('#google_places_field').geocomplete();
-    #         $("#google_places_field").geocomplete().bind("geocode:result", (event, result)->
-    #             lat = result.geometry.location.lat()
-    #             long = result.geometry.location.lng()
-    #             result.lat = lat
-    #             result.lng = long
-    #             if confirm "change location to #{result.formatted_address}?"
-    #                 Meteor.call 'update_location', FlowRouter.getParam('doc_id'), result
-    #             )
-    # )
-
-
-# Template.google_places_input.events
-    # 'change #google_places_field': (e,t)->
-
-        # result = t.autocomplete.gm_accessors_.place.jd.w3
-        # console.dir result
-        # Meteor.call 'update_location', FlowRouter.getParam('doc_id'), result, (err,res)->
-            # console./log res
-        # stuff = Template.instance().autocomplete.gm_accessors_.place
-        # Docs.update FlowRouter.getParam('doc_id'),
-        #     $set: stuff: stuff
-        # console.dir stuff.jd.formattedPrediction
-        
-# Template.office_map.onRendered ->
-#     doc = Docs.findOne FlowRouter.getParam('doc_id')
-#     mymap = L.map('map').setView([doc.location_lat, doc.location_lng], 15);
-#     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-#         # attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-#         maxZoom: 18,
-#         id: 'mapbox.streets',
-#         accessToken: 'pk.eyJ1IjoicmVwamFja3NvbiIsImEiOiJjamc4dGtiYm4yN245MnFuNWMydWNuaXJlIn0.z3_-xuCT46yTC_6Zhl34kQ'
-#     }).addTo(mymap);
-
-
-
-Template.edit_author.onCreated ->
-    Meteor.subscribe 'usernames'
-
-Template.edit_author.events
-    # "autocompleteselect input": (event, template, doc) ->
-    #     if confirm 'Change author?'
-    #         Docs.update FlowRouter.getParam('doc_id'),
-    #             $set: author_id: doc._id
-    #         $('#author_select').val("")
-
-
-
-Template.edit_author.helpers
-    # author_edit_settings: -> {
-    #     position: 'bottom'
-    #     limit: 10
-    #     rules: [
-    #         {
-    #             collection: Meteor.users
-    #             field: 'username'
-    #             matchAll: true
-    #             template: Template.user_pill
-    #         }
-    #         ]
-    # }
-
-Template.parent_link.onCreated ->
-    @autorun =>  Meteor.subscribe 'parent_doc', @data._id
-Template.parent_link.helpers
-    parent_doc: ->
-        Docs.find 
-            _id: Template.currentData().parent_id
-
             
 Template.incidents_by_type.onCreated ->
     @autorun =>  Meteor.subscribe 'docs', [], 'incident'
@@ -673,19 +540,6 @@ Template.doc_result.helpers
         found = Docs.findOne context._id
         found
         
-Template.delete_button.onCreated ->
-    @confirming = new ReactiveVar(false)
-            
-Template.delete_button.helpers
-    confirming: -> Template.instance().confirming.get()
-
-Template.delete_button.events
-    'click .delete': (e,t)-> t.confirming.set true
-
-    'click .cancel': (e,t)-> t.confirming.set false
-    'click .confirm': (e,t)-> 
-        Docs.remove @_id
-        FlowRouter.go("/v/#{@parent_id}")
             
 Template.session_delete_button.onCreated ->
     @confirming = new ReactiveVar(false)

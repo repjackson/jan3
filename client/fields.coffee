@@ -210,43 +210,17 @@ Template.edit_profile_text_field.events
 #         if current_user
 
 
-Template.complete.events
-    'click #mark_complete': (e,t)->
-        Docs.update @_id,
-            $set: complete: true
-    'click #mark_incomplete': (e,t)->
-        Docs.update @_id,
-            $set: complete: false
-
-Template.complete.helpers
-    complete_class: -> if @complete then 'green' else 'basic'
-    incomplete_class: -> if @complete then 'basic' else 'red'
 
 
-Template.toggle_follow.helpers
-    is_following: -> if Meteor.user()?.following_ids then @_id in Meteor.user().following_ids
+# Template.edit_html.events
+#     'blur .froala-container': (e,t)->
+#         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-Template.toggle_follow.events
-    'click #follow': (e,t)-> 
-        Meteor.users.update Meteor.userId(), $addToSet: following_ids: @_id
-
-        # Meteor.call 'add_notification', @_id, 'friended', Meteor.userId()
-
-    'click #unfollow': (e,t)-> 
-        Meteor.users.update Meteor.userId(), $pull: following_ids: @_id
-
-        # Meteor.call 'add_notification', @_id, 'unfriended', Meteor.userId()
-
-
-Template.edit_html.events
-    'blur .froala-container': (e,t)->
-        html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
-        
-        doc_id = FlowRouter.getParam('doc_id')
-        # short = truncate(html, 5, { byWords: true })
-        Docs.update doc_id,
-            $set: 
-                html: html
+#         doc_id = FlowRouter.getParam('doc_id')
+#         # short = truncate(html, 5, { byWords: true })
+#         Docs.update doc_id,
+#             $set: 
+#                 html: html
 
 
 # Template.edit_html_field.events
@@ -274,20 +248,20 @@ Template.edit_html.events
 #             height: 300
 #         }
 
-Template.edit_html.helpers
-    getFEContext: ->
-        @current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        self = @
-        {
-            _value: self.current_doc.html
-            _keepMarkers: true
-            _className: 'froala-reactive-meteorized-override'
-            toolbarInline: false
-            initOnClick: false
-            # imageInsertButtons: ['imageBack', '|', 'imageByURL']
-            tabSpaces: false
-            height: 300
-        }
+# Template.edit_html.helpers
+#     getFEContext: ->
+#         @current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         self = @
+#         {
+#             _value: self.current_doc.html
+#             _keepMarkers: true
+#             _className: 'froala-reactive-meteorized-override'
+#             toolbarInline: false
+#             initOnClick: false
+#             # imageInsertButtons: ['imageBack', '|', 'imageByURL']
+#             tabSpaces: false
+#             height: 300
+#         }
 
 
 Template.toggle_boolean.events
