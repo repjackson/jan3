@@ -18,6 +18,7 @@ Session.setDefault('sort_key','timestamp')
 Session.setDefault('page_size',10)
 Session.setDefault('skip',0)
 Session.setDefault('page_number',1)
+Session.setDefault('dev_mode',false)
 
 Bert.defaults =
     hideDelay: 2000
@@ -128,6 +129,20 @@ Template.registerHelper 'is_admin', () ->
 Template.registerHelper 'is_dev', () -> 
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles
+Template.registerHelper 'dev_mode', ()->
+    if Meteor.user() and Meteor.user().roles
+        'dev' in Meteor.user().roles and Session.get('dev_mode')
+        
+        
+Template.registerHelper 'editing_mode', ()->
+    if Meteor.user() and Meteor.user().roles
+        'editor' in Meteor.user().roles and Session.get('editing_mode')
+        
+        
+        
+Template.registerHelper 'is_editor', () -> 
+    if Meteor.user() and Meteor.user().roles
+        'editor' in Meteor.user().roles
 Template.registerHelper 'is_office', () -> 
     if Meteor.user() and Meteor.user().roles
         'office' in Meteor.user().roles

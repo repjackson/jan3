@@ -664,8 +664,8 @@ template(name='doc_type_module')
                                             i.trash.icon
                                             
 template(name='modules')
-    if is_dev
-        #add_module.ui.icon.button(title="Add Module with #{tags}")
+    if editing_mode
+        #add_module.ui.icon.blue.button(title="Add Module with #{tags}")
             i.fork.icon
     each modules
         +module 
@@ -701,17 +701,22 @@ template(name='module')
         .ui.divided.list
             each children
                 .item doc: #{title} #{incident_details} #{text} #{body}
-    if is_dev
-        .ui.divider
-        .ui.form
-            +edit_module_text_field label='Title' key='title'
-            +edit_module_text_field label='Icon' key='icon'
-            +edit_module_text_field label='View Mode' key='view_mode'
-            +edit_module_text_field label='Children Doc Type' key='children_doc_type'
-            +edit_module_text_field label='Filter Key' key='filter_key'
-            +edit_module_text_field label='Filter Value' key='filter_value'
-            +edit_module_text_field label='Doc Limit' key='limit'
-                
+    if editing_mode
+        .ui.tertiary.blue.segment
+            h3.ui.header 
+                i.pencil.icon
+                |Edit #{title}
+            .ui.form
+                +edit_module_text_field label='Title' key='title'
+                +edit_module_text_field label='Icon' key='icon'
+                +edit_module_text_field label='View Mode' key='view_mode'
+                +edit_module_text_field label='Children Doc Type' key='children_doc_type'
+                +edit_module_text_field label='Filter Key' key='filter_key'
+                +edit_module_text_field label='Filter Value' key='filter_value'
+                +edit_module_text_field label='Doc Limit' key='limit'
+                |Show Fields
+                each schema_doc.fields
+                    .ui.button #{title}
         
 template(name='edit_module_text_field')
     .inline.field

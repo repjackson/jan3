@@ -75,6 +75,20 @@ template(name='nav')
                 .mobile.hidden Services
         .right.menu
             if is_dev
+                a#toggle_dev.black.inverted.item(href='#')
+                    i.icon
+                        if dev_mode
+                            +icon name='toggle-on'
+                        else
+                            +icon name='toggle-off'
+            if is_editor
+                a#toggle_editing.item(href='#' title='Toggle Editing Mode')
+                    i.icon
+                        if editing_mode
+                            +icon name='toggle-on'
+                        else
+                            +icon name='toggle-off'
+            if is_dev
                 a.item(href='/schemas' data-content='Schemas')
                     i.icon
                         +icon name='code'

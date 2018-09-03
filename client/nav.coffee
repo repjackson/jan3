@@ -25,6 +25,11 @@ Template.nav.events
         Meteor.logout()
         FlowRouter.go '/login'
 
+
+    'click #toggle_dev': ->
+        Session.set('dev_mode',!Session.get('dev_mode'))
+    'click #toggle_editing': ->
+        Session.set('editing_mode',!Session.get('editing_mode'))
     
 Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'my_customer_account'
@@ -41,6 +46,7 @@ Template.nav.onRendered ->
     # Meteor.setTimeout ->
     #     $('.ui.dropdown').dropdown()
     # , 1000
+    
     Meteor.setTimeout ->
         $('.item').popup()
     , 1500
