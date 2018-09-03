@@ -583,9 +583,12 @@ Meteor.methods
             { $set: "fields.$.slug": slug }
 
 
-    update_field_type: (doc_id, field_object, type)->
+    update_field_key_value: (doc_id, field_object, key, value)->
+        # console.log 'updating field', field_object, key
+        # console.log value
         Docs.update { _id:doc_id, fields:field_object },
-            { $set: "fields.$.type": type }
+            { $set: "fields.$.#{key}": value }
+
 
 
     slugify: (doc_id, field_object, title)->

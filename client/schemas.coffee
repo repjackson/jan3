@@ -114,16 +114,6 @@ Template.field_edit.events
             #     Bert.alert "Updated Field slug to #{text_value}", 'success', 'growl-top-right'
 
 
-Template.select_field_type.helpers
-    select_field_type_button_class: -> 
-        # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log current_doc["#{@key}"]
-        # console.log @
-        # console.log Template.parentData()
-        # console.log Template.parentData()["#{@key}"]
-        
-        if Template.parentData().type is @value then 'active' else 'basic'
-
 
 Template.schema_doc.helpers
     schema_fields: -> 
@@ -139,21 +129,31 @@ Template.schema_doc.helpers
     view_field_template: -> "view_#{@type}_field"
         
 
-Template.select_field_type.events
-    'click .select_field_type': ->
+Template.select_field_key_value.events
+    'click .select_field_key_value': ->
         field = Template.parentData()
         doc_id = FlowRouter.getParam('doc_id')
-        Meteor.call 'update_field_type', doc_id, field, @value, (err,res)=>
+        Meteor.call 'update_field_key_value', doc_id, field, @key, @value, (err,res)=>
             # if err
             #     Bert.alert "Error updating field type to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
             # else
             #     Bert.alert "Updated field type to #{@value}", 'success', 'growl-top-right'
 
 
+Template.select_field_key_value.helpers
+    select_field_key_value_button_class: -> 
+        # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log current_doc["#{@key}"]
+        # console.log @
+        # console.log Template.parentData()
+        # console.log Template.parentData()["#{@key}"]
+        
+        if Template.parentData()["#{@key}"] is @value then 'active' else 'basic'
     # 'change .field_type': (e,t)->
     #     text_value = e.currentTarget.value
     #     Docs.update FlowRouter.getParam('doc_id'),
     #         { $set: "#{@key}": text_value }
     #         , (err,res)=>
+
 
 

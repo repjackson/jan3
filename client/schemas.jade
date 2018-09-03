@@ -87,23 +87,30 @@ template(name='field_edit')
 
         // +edit_text_field key='key' label='Slug (lowercase title)'
         // +edit_text_field key='type' label='Type'
-        +select_field_type key='field_type' value='date' label='Date'
-        +select_field_type key='field_type' value='text' label='Text'
-        +select_field_type key='field_type' value='multiple_reference' label='Multiple References'
-        +select_field_type key='field_type' value='single_reference' label='Single Reference'
-        +select_field_type key='field_type' value='number' label='Number'
-        +select_field_type key='field_type' value='address' label='Address'
-        +select_field_type key='field_type' value='phone' label='Phone'
-        +select_field_type key='field_type' value='html' label='HTML'
-        +select_field_type key='field_type' value='file' label='File'
-        +select_field_type key='field_type' value='user_reference' label='User Reference'
-        +select_field_type key='field_type' value='email' label='Email'
+        h4 Ev Subset
+        +select_field_key_value key='ev_subset' value='true' label='True'
+        +select_field_key_value key='ev_subset' value='false' label='False'
+        .ui.divider
+        h4 Field Type
+        +select_field_key_value key='field_type' value='date' label='Date'
+        +select_field_key_value key='field_type' value='text' label='Text'
+        +select_field_key_value key='field_type' value='multiple_reference' label='Multiple References'
+        +select_field_key_value key='field_type' value='single_reference' label='Single Reference'
+        +select_field_key_value key='field_type' value='number' label='Number'
+        +select_field_key_value key='field_type' value='address' label='Address'
+        +select_field_key_value key='field_type' value='phone' label='Phone'
+        +select_field_key_value key='field_type' value='html' label='HTML'
+        +select_field_key_value key='field_type' value='file' label='File'
+        +select_field_key_value key='field_type' value='user_reference' label='User Reference'
+        +select_field_key_value key='field_type' value='email' label='Email'
         .remove_field.ui.icon.large.button
             i.remove.icon
 
 
-template(name='select_field_type')
-    .select_field_type.ui.small.compact.button(class=select_field_type_button_class) #{label}
+template(name='select_field_key_value')
+    .select_field_key_value.ui.small.compact.button(class=select_field_key_value_button_class) #{label}
+
+        
 
         
 template(name='schema_view')

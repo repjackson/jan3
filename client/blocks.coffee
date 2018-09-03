@@ -749,7 +749,10 @@ Template.module.helpers
         child_doc = Template.parentData(1)
         
         # console.log child_doc["#{@slug}"]
-        child_doc.ev["#{@slug}"]
+        if @ev_subset
+            child_doc.ev["#{@slug}"]
+        else
+            child_doc["#{@slug}"]
         
     values: ->
         schema_doc = Docs.findOne
