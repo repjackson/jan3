@@ -117,6 +117,6 @@ Docs.allow
     # update: (user_id, doc) -> doc.author_id is user_id or Roles.userIsInRole(user_id, 'admin')
     remove: (user_id, doc) -> 
         user = Meteor.users.findOne user_id
-        doc.author_id is user_id or 'admin' in user.roles
+        doc.author_id is user_id or 'dev' in user.roles
     update: (user_id, doc) -> user_id
     # remove: (user_id, doc) -> user_id

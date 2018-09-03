@@ -123,17 +123,17 @@ Template.customer_incidents_widget.helpers
                 page++
             return pages
     
-Template.dashboard_services_widget.onCreated ->
-    @autorun -> Meteor.subscribe 'type','service'
-Template.dashboard_services_widget.helpers
-    services_offered: -> 
-        # console.log Meteor.user().users_office()
-        users_office = Meteor.user().users_office()
-        if users_office
-            # console.log users_office.services
-            Docs.find
-                type:'service'
-                slug: $in: users_office.services
+# Template.dashboard_services_widget.onCreated ->
+#     @autorun -> Meteor.subscribe 'type','service'
+# Template.dashboard_services_widget.helpers
+#     services_offered: -> 
+#         # console.log Meteor.user().users_office()
+#         users_office = Meteor.user().users_office()
+#         if users_office
+#             # console.log users_office.services
+#             Docs.find
+#                 type:'service'
+#                 slug: $in: users_office.services
                 
                 
 Template.small_service_list.onCreated ->
@@ -149,18 +149,5 @@ Template.small_service_list.helpers
                 slug: $in: users_office.services
                 
                 
-                
-Template.dashboard_consumables_widget.onCreated ->
-    @autorun -> Meteor.subscribe 'type','product'
-Template.dashboard_consumables_widget.helpers
-    products_available: -> 
-        Docs.find type:'product'
-                
-                
-Template.customer_invoices_widget.onCreated ->
-    @autorun -> Meteor.subscribe 'customer_invoices'
-Template.customer_invoices_widget.helpers
-    customer_invoices: -> 
-        Docs.find {type:'finance'}, limit:3
                 
                 

@@ -70,20 +70,10 @@ template(name='dashboard')
                 .sixteen.wide.column
                     .ui.secondary.segment
                         +customer_incidents_widget
-                // .eight.wide.column
-                //     +dashboard_services_widget
-                    // +customer_invoices_widget
             .row
                 .sixteen.wide.column
-                    .ui.secondary.segment
+                    .ui.secondary.fluid.segment
                         +modules tags='customer,dashboard,invoices'
-            // .row
-            //     .sixteen.wide.column
-            //         +dashboard_consumables_widget
-            // .row
-            //     .sixteen.wide.column
-            //         .ui.secondary.segment
-            //             +office_contact_cards
             .centered.row
                 .sixteen.wide.column
                     .ui.secondary.segment
@@ -284,33 +274,3 @@ template(name='small_service_list')
                         img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
                         |#{title}
 
-
-template(name='customer_invoices_widget')
-    .ui.secondary.segment
-        .ui.header 
-            +iconsmall name='money'
-            |Invoices
-        table.ui.striped.fixed.table
-            thead
-                tr
-                    // th Office
-                    // th Customer
-                    th Invoice
-                    th Date
-                    th Total
-                    th Balance
-                    th RS Amount
-                    th Specials 
-                    // th Tax 
-            tbody
-                each customer_invoices
-                    tr
-                        // td #{ev.MASTER_LICENSEE}
-                        // td #{ev.CUSTOMER}
-                        td #{ev.BILL_QB_INVOICE}
-                        td #{ev.BILL_QB_INVOICE_DATE}
-                        td #{ev.BILL_QB_TOTAL}
-                        td.active #{ev.BILL_BALANCE}
-                        td #{ev.BILL_QB_RS_AMOUNT}
-                        td #{ev.BILL_QB_SPECIALS}
-                        // td #{ev.SUP_TOT_TAX}

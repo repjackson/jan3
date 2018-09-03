@@ -665,8 +665,8 @@ template(name='doc_type_module')
                                             
 template(name='modules')
     if is_dev
-        #add_module.ui.icon.button(title='Add Module')
-            i.plus.icon
+        #add_module.ui.icon.button(title="Add Module with #{tags}")
+            i.fork.icon
     each modules
         +module 
                                             

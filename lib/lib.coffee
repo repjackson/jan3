@@ -89,7 +89,7 @@ Docs.helpers
         found_event_type = Docs.findOne 
             type:'event_type'
             slug:@event_type
-        console.log found_event_type
+        # console.log found_event_type
         found_event_type
 
 
