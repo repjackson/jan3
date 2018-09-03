@@ -710,8 +710,6 @@ Template.doc_type_module.helpers
         console.log @
         
         
-Template.module.onCreated ->
-    @autorun => Meteor.subscribe 'module_children', @data.children_doc_type
 
 Template.modules.onCreated ->
     @autorun => Meteor.subscribe 'type', 'module'
@@ -719,10 +717,21 @@ Template.modules.onCreated ->
 Template.modules.helpers
     modules: -> Docs.find type:'module'
     
+    
+Template.module.onRendered ->
+    Meteor.setTimeout ->
+        $('.shape').shape();
+    , 500
+
+Template.module.onCreated ->
+    @autorun => Meteor.subscribe 'module_children', @data.children_doc_type
 Template.module.helpers
     children: -> 
         Docs.find { type:@children_doc_type}
-    
+Template.module.events
+    'click .toggle_editing': (e,t)->
+        $(e.currentTarget).closest('.shape').shape('flip over');
+
     
 Template.modules.events
     'click #add_module': (e,t)->

@@ -673,21 +673,26 @@ template(name='modules')
                 +module 
                                             
 template(name='module')
-    .ui.secondary.segment
-        .ui.header
-            if icon
-                +icon name=icon
-            |#{title}
-        .ui.list
-            each children
-                .item #{title} #{incident_details} #{text} #{body}
-        .ui.divider
-        .ui.inline.form
-            +edit_module_text_field label='Title' key='title'
-            +edit_module_text_field label='Icon' key='icon'
-            +edit_module_text_field label='View Mode' key='visible'
-            +edit_module_text_field label='Children Doc Type' key='children_doc_type'
-        
+    .ui.shape
+        .ui.sides
+            .side.active
+                .ui.secondary.segment
+                    .ui.header
+                        if icon
+                            +icon name=icon
+                        |#{title}
+                        i.toggle_editing.pencil.link.icon
+                    .ui.divided.list
+                        each children
+                            .item doc: #{title} #{incident_details} #{text} #{body}
+            .side
+                i.toggle_editing.check.link.icon
+                .ui.inline.form
+                    +edit_module_text_field label='Title' key='title'
+                    +edit_module_text_field label='Icon' key='icon'
+                    +edit_module_text_field label='View Mode' key='visible'
+                    +edit_module_text_field label='Children Doc Type' key='children_doc_type'
+                
         
 template(name='edit_module_text_field')
     .field

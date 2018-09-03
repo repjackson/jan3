@@ -37,7 +37,7 @@
     "reveal": false,
     "search": true,
     "segment": true,
-    "shape": false,
+    "shape": true,
     "sidebar": true,
     "site": true,
     "statistic": true,
