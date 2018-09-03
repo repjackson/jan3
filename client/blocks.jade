@@ -664,15 +664,32 @@ template(name='doc_type_module')
                                             i.trash.icon
                                             
 template(name='modules')
-    #add_module.ui.icon.button(title='Add Module')
-        i.plus.icon
-    each modules
-        +module 
+    .ui.stackable.padded.grid
+        .row
+            #add_module.ui.icon.button(title='Add Module')
+                i.plus.icon
+        each modules
+            .row
+                +module 
                                             
 template(name='module')
     .ui.secondary.segment
         .ui.header
             if icon
                 +icon name=icon
-            if title
-                |#{title} Hello World
+            |#{title}
+        .ui.list
+            each children
+                .item #{title} #{incident_details} #{text} #{body}
+        .ui.divider
+        .ui.inline.form
+            +edit_module_text_field label='Title' key='title'
+            +edit_module_text_field label='Icon' key='icon'
+            +edit_module_text_field label='View Mode' key='visible'
+            +edit_module_text_field label='Children Doc Type' key='children_doc_type'
+        
+        
+template(name='edit_module_text_field')
+    .field
+        label #{label}
+        input.text_field(type='text' value=module_key_value)

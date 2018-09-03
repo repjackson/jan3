@@ -710,6 +710,8 @@ Template.doc_type_module.helpers
         console.log @
         
         
+Template.module.onCreated ->
+    @autorun => Meteor.subscribe 'module_children', @data.children_doc_type
 
 Template.modules.onCreated ->
     @autorun => Meteor.subscribe 'type', 'module'
@@ -717,9 +719,30 @@ Template.modules.onCreated ->
 Template.modules.helpers
     modules: -> Docs.find type:'module'
     
+Template.module.helpers
+    children: -> 
+        Docs.find { type:@children_doc_type}
+    
     
 Template.modules.events
     'click #add_module': (e,t)->
         Docs.insert
             type:'module'
     
+    
+Template.edit_module_text_field.events
+    'change .text_field': (e,t)->
+        text_value = e.currentTarget.value
+        Docs.update Template.parentData()._id,
+            { $set: "#{@key}": text_value }
+            # , (err,res)=>
+            #     if err
+            #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
+            #     else
+            #         Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
+    
+Template.edit_module_text_field.helpers 
+    module_key_value: () -> 
+        module_doc = Template.parentData()
+        if module_doc
+            module_doc["#{@key}"]

@@ -817,8 +817,10 @@ Meteor.publish 'franchisee_by_id', (franchisee_jpid)->
 
 
 
-Meteor.publish 'doc_type_module', (parent_id, type)->
-    parent = Docs.findOne parent_id
+Meteor.publish 'doc_type_module', (type)->
+    Docs.find { type:type }, limit:5
+
+Meteor.publish 'module_children', (type)->
     Docs.find { type:type }, limit:5
 
 
