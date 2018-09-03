@@ -67,7 +67,7 @@ template(name='schema_edit')
             .twelve.wide.column
                 #add_field.ui.button
                     i.plus.icon
-                    | field
+                    | Field
                 .ui.vertical.segments
                     each fields
                         +field_edit
@@ -82,16 +82,22 @@ template(name='field_edit')
                     input.field_title(type='text' value=title)
             .field
                 .ui.labeled.fluid.input
-                    .ui.label slug
+                    .ui.label Slug
                     input.field_slug(type='text' value=slug)
 
         // +edit_text_field key='key' label='Slug (lowercase title)'
         // +edit_text_field key='type' label='Type'
-        h4 Ev Subset
-        +select_field_key_value key='ev_subset' value='true' label='True'
-        +select_field_key_value key='ev_subset' value='false' label='False'
+        | Table Visible
+        +select_field_key_value key='table_visible' value=true label='True'
+        +select_field_key_value key='table_visible' value=false label='False'
+        | Table Cell Class
+        +select_field_key_value key='table_cell_class' value='active' label='Active'
+        +select_field_key_value key='table_cell_class' value='' label='None'
+        | Ev Subset
+        +select_field_key_value key='ev_subset' value=true label='True'
+        +select_field_key_value key='ev_subset' value=false label='False'
         .ui.divider
-        h4 Field Type
+        | Field Type
         +select_field_key_value key='field_type' value='date' label='Date'
         +select_field_key_value key='field_type' value='text' label='Text'
         +select_field_key_value key='field_type' value='multiple_reference' label='Multiple References'

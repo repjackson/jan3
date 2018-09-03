@@ -582,6 +582,13 @@ Meteor.methods
         Docs.update { _id:doc_id, fields:field_object },
             { $set: "fields.$.slug": slug }
 
+    pull_schema_field: (schema_doc_id, field_object)->
+        # console.log doc_id
+        # console.log field_object
+        # console.log slug
+        Docs.update { _id:schema_doc_id },
+            { $pull: "fields": field_object }
+
 
     update_field_key_value: (doc_id, field_object, key, value)->
         # console.log 'updating field', field_object, key

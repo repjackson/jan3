@@ -1,81 +1,82 @@
 template(name='dashboard')
-    // #dash_header.ui.vertical.masthead.center.aligned.padded.segment
-    //     .ui.container
-    //         .ui.hidden.divider
-    //         img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-    //         h2.ui.inverted.header Customer Portal
-    //         unless currentUser
-    //             a.ui.center.aligned.big.inverted.blue.button(href='/login')
-    //                 |Login to see Dashboard
-    //                 i.right.arrow.icon
-    //     if is_customer
-    //         +customer_menu
+    #dash_header.ui.vertical.masthead.center.aligned.padded.segment
+        .ui.container
+            .ui.hidden.divider
+            img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            h2.ui.inverted.header Customer Portal
+            unless currentUser
+                a.ui.center.aligned.big.inverted.blue.button(href='/login')
+                    |Login to see Dashboard
+                    i.right.arrow.icon
+        if is_customer
+            +customer_menu
     if is_customer
         .ui.padded.stackable.grid
-            // if currentUser.users_customer.parent_franchisee.parent_office.customer_message
-            //     .four.column.row
-            //         .column
-            //             .ui.floating.message
-            //                 .content
-            //                     .header 
-            //                         i.large.icon
-            //                             +icon name='sms'
-            //                         |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Message
-            //                 .content
-            //                     p 
-            //                     p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
-            //         .column
-            //             .ui.floating.message
-            //                 .content
-            //                     .header 
-            //                         i.large.icon
-            //                             +icon name='discount'
-            //                         |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Promotions
-            //                 .content
-            //                     p 
-            //                     p #{currentUser.users_customer.parent_franchisee.parent_office.customer_promotions}
-            //         .column
-            //             .ui.floating.message
-            //                 .content
-            //                     .header 
-            //                         i.large.icon
-            //                             +icon name='faq'
-            //                         |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Help Policy
-            //                 .content
-            //                     p 
-            //                     p #{currentUser.users_customer.parent_franchisee.parent_office.help_policy}
-            //         .column
-            //             +small_service_list
+            if currentUser.users_customer.parent_franchisee.parent_office.customer_message
+                .four.column.row
+                    .column
+                        .ui.floating.message
+                            .content
+                                .header 
+                                    i.large.icon
+                                        +icon name='sms'
+                                    |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Message
+                            .content
+                                p 
+                                p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
+                    .column
+                        .ui.floating.message
+                            .content
+                                .header 
+                                    i.large.icon
+                                        +icon name='discount'
+                                    |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Promotions
+                            .content
+                                p 
+                                p #{currentUser.users_customer.parent_franchisee.parent_office.customer_promotions}
+                    .column
+                        .ui.floating.message
+                            .content
+                                .header 
+                                    i.large.icon
+                                        +icon name='faq'
+                                    |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Help Policy
+                            .content
+                                p 
+                                p #{currentUser.users_customer.parent_franchisee.parent_office.help_policy}
+                    .column
+                        +small_service_list
 
-            // .row
-            //     with currentUser.users_customer.parent_franchisee
-            //         .sixteen.wide.column
-            //             .ui.secondary.segment
-            //                 h3.ui.header 
-            //                     +icon name='conference'
-            //                     // |#{ev.FRANCHISEE} Franchisee Contact
-            //                     |Your Local Owner / Operator
-            //                 table.ui.sortable.striped.table
-            //                     tbody
-            //                         tr
-            //                             td #{ev.FRANCHISEE}
-            //                             td(title='Short Name') #{ev.FRANCH_NAME}
-            //                             td #{ev.FRANCH_EMAIL}
-            //                             td #{ev.TELE_CELL} #{profile.phone}
-            //                             td
-            //                                 a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
-            //                                     // i.mail.icon
-            //                                     +icon name='send'
-            // .row
-            //     .sixteen.wide.column
-            //         .ui.secondary.segment
-            //             +customer_incidents_widget
             .row
+                with currentUser.users_customer.parent_franchisee
+                    .sixteen.wide.column
+                        .ui.secondary.segment
+                            h3.ui.header 
+                                +icon name='conference'
+                                // |#{ev.FRANCHISEE} Franchisee Contact
+                                |Your Local Owner / Operator
+                            table.ui.sortable.striped.table
+                                tbody
+                                    tr
+                                        td #{ev.FRANCHISEE}
+                                        td(title='Short Name') #{ev.FRANCH_NAME}
+                                        td #{ev.FRANCH_EMAIL}
+                                        td #{ev.TELE_CELL} #{profile.phone}
+                                        td
+                                            a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
+                                                // i.mail.icon
+                                                +icon name='send'
+            .row
+                .sixteen.wide.column
+                    .ui.secondary.segment
+                        +customer_incidents_widget
                 // .eight.wide.column
                 //     +dashboard_services_widget
+                    // +customer_invoices_widget
+            .row
                 .sixteen.wide.column
-                    +customer_invoices_widget
-                    +modules tags='customer,dashboard'
+                    .ui.secondary.segment
+                        +modules tags='customer,dashboard,invoices'
             // .row
             //     .sixteen.wide.column
             //         +dashboard_consumables_widget
@@ -83,14 +84,14 @@ template(name='dashboard')
             //     .sixteen.wide.column
             //         .ui.secondary.segment
             //             +office_contact_cards
-        // .centered.row
-        //     .sixteen.wide.column
-        //         .ui.secondary.segment
-        //             +dashboard_office_contacts_list
-        // .centered.row
-        //     .sixteen.wide.column
-        //         .ui.secondary.segment
-        //             +customer_special_services
+            .centered.row
+                .sixteen.wide.column
+                    .ui.secondary.segment
+                        +dashboard_office_contacts_list
+            .centered.row
+                .sixteen.wide.column
+                    .ui.secondary.segment
+                        +customer_special_services
             //     .five.wide.column
             //         +user_franchise_card
             //     .five.wide.column
@@ -237,27 +238,8 @@ template(name='customer_special_services')
             .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
             .item Days of Service: #{customer_days_service_formatted}
             .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
-    table.ui.striped.table
-        thead
-            tr
-                // th JPID
-                // th Customer
-                th Type
-                th Description
-                th Date Created
-                th $
-                
-        tbody
-            each my_special_services
-                tr
-                    // td #{ev.ID}
-                    // td #{ev.CUSTOMER}
-                    td #{ev.SERV_TYPE}
-                    td #{ev.EXTRA_SERV_DESC}
-                    td #{ev.DATE_CREATED}
-                    td #{ev.EXTRA_PRICE}
-
-
+    +modules tags='customer,dashboard,special_services'
+    
 
 template(name='dashboard_office_contacts_list')
     h3.ui.header 

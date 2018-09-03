@@ -664,26 +664,23 @@ template(name='doc_type_module')
                                             i.trash.icon
                                             
 template(name='modules')
-    .ui.stackable.padded.grid
-        .row
-            #add_module.ui.icon.button(title='Add Module')
-                i.plus.icon
-        each modules
-            .row
-                .sixteen.wide.column
-                    +module 
+    if is_dev
+        #add_module.ui.icon.button(title='Add Module')
+            i.plus.icon
+    each modules
+        +module 
                                             
 template(name='module')
-    .ui.secondary.fluid.segment
-        .ui.header
-            if icon
-                +icon name=icon
-            |#{title}
-        if is_table
-            table.ui.striped.selectable.fixed.table
-                thead
-                    tr
-                        each schema_doc.fields
+    .ui.header
+        if icon
+            +icon name=icon
+        |#{title}
+    if is_table
+        table.ui.striped.selectable.fixed.table
+            thead
+                tr
+                    each schema_doc.fields
+                        if table_visible
                             if sortable
                                 th.sort_by
                                     |#{title}
@@ -694,24 +691,26 @@ template(name='module')
                             else
                                 th
                                     |#{title}
-                tbody
-                    each children
-                        tr
-                            each schema_doc_fields
-                                td #{child_schema_field_value}
-        if is_list
-            .ui.divided.list
+            tbody
                 each children
-                    .item doc: #{title} #{incident_details} #{text} #{body}
-        if is_dev
-            .ui.divider
-            .ui.form
-                +edit_module_text_field label='Title' key='title'
-                +edit_module_text_field label='Icon' key='icon'
-                +edit_module_text_field label='View Mode' key='view_mode'
-                +edit_module_text_field label='Children Doc Type' key='children_doc_type'
-                +edit_module_text_field label='Filter Key' key='filter_key'
-                +edit_module_text_field label='Filter Value' key='filter_value'
+                    tr
+                        each schema_doc_fields
+                            if table_visible
+                                td(class=table_cell_class) #{child_schema_field_value}
+    if is_list
+        .ui.divided.list
+            each children
+                .item doc: #{title} #{incident_details} #{text} #{body}
+    if is_dev
+        .ui.divider
+        .ui.form
+            +edit_module_text_field label='Title' key='title'
+            +edit_module_text_field label='Icon' key='icon'
+            +edit_module_text_field label='View Mode' key='view_mode'
+            +edit_module_text_field label='Children Doc Type' key='children_doc_type'
+            +edit_module_text_field label='Filter Key' key='filter_key'
+            +edit_module_text_field label='Filter Value' key='filter_value'
+            +edit_module_text_field label='Doc Limit' key='limit'
                 
         
 template(name='edit_module_text_field')

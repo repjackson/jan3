@@ -914,7 +914,7 @@ Meteor.publish 'customers_franchisee', (customer_doc_id)->
 Meteor.publish 'modules', (tags)->
     Docs.find   
         type:'module'
-        tags:$in:tags
+        tags:$all:tags
             
             
             

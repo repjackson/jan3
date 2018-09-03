@@ -718,8 +718,12 @@ Template.modules.onCreated ->
     @autorun => Meteor.subscribe 'modules', split_tags
 
 Template.modules.helpers
-    modules: -> Docs.find type:'module'
-    
+    modules: -> 
+        split_tags = @tags.split ','
+        Docs.find 
+            type:'module'
+            tags:$all:split_tags
+
     
 # Template.module.onRendered ->
 #     Meteor.setTimeout ->
@@ -731,7 +735,7 @@ Template.module.onCreated ->
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
 Template.module.helpers
     children: -> 
-        Docs.find { type:@children_doc_type }
+        Docs.find { type:@children_doc_type }, limit:parseInt(@limit)
     schema_doc: ->
         Docs.findOne
             type:'schema'
@@ -742,7 +746,8 @@ Template.module.helpers
         schema_doc = Docs.findOne 
             type:'schema'
             slug: module_doc.children_doc_type
-        schema_doc.fields
+        if schema_doc
+            schema_doc.fields
         
         
     child_schema_field_value: ->

@@ -81,7 +81,14 @@ Template.schema_edit.events
 
 
 Template.field_edit.events
-    'click .remove_field': -> console.log @
+    'click .remove_field': -> 
+        if confirm "Remove #{@label} field?"
+            schema_doc_id = FlowRouter.getParam('doc_id')
+            Meteor.call 'pull_schema_field', schema_doc_id, @, (err,res)=>
+                if err
+                    Bert.alert "Error pulling #{@label}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    # Bert.alert "Updated", 'success', 'growl-top-right'
 
 
     'change .field_title': (e,t)->
@@ -90,16 +97,16 @@ Template.field_edit.events
         doc_id = FlowRouter.getParam('doc_id')
         Meteor.call 'update_field_title', doc_id, @, new_title, (err,res)=>
             # if err
-            #     Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+            #     Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
             # else
             #     Bert.alert "Updated Field Title to #{new_title}", 'success', 'growl-top-right'
-        Meteor.call 'slugify', doc_id, @, new_title, (err,res)=>
-            if err
-                Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-            else
-                console.log res
-                $(e.currentTarget).closest('.field_slug').val res
-                Meteor.call 'update_field_slug', doc_id, @, res, (err,res)=>
+        # Meteor.call 'slugify', doc_id, @, new_title, (err,res)=>
+        #     if err
+        #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
+        #     else
+        #         console.log res
+        #         $(e.currentTarget).closest('.field_slug').val res
+        #         Meteor.call 'update_field_slug', doc_id, @, res, (err,res)=>
 
             
 
@@ -109,7 +116,7 @@ Template.field_edit.events
         # console.log text_value
         Meteor.call 'update_field_slug', doc_id, @, text_value, (err,res)=>
             # if err
-            #     Bert.alert "Error Updating #{@label}: #{error.reason}", 'danger', 'growl-top-right'
+            #     Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
             # else
             #     Bert.alert "Updated Field slug to #{text_value}", 'success', 'growl-top-right'
 
@@ -135,7 +142,7 @@ Template.select_field_key_value.events
         doc_id = FlowRouter.getParam('doc_id')
         Meteor.call 'update_field_key_value', doc_id, field, @key, @value, (err,res)=>
             # if err
-            #     Bert.alert "Error updating field type to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
+            #     Bert.alert "Error updating field type to #{@value}: #{err.reason}", 'danger', 'growl-top-right'
             # else
             #     Bert.alert "Updated field type to #{@value}", 'success', 'growl-top-right'
 
