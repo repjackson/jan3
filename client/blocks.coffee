@@ -712,22 +712,69 @@ Template.doc_type_module.helpers
         
 
 Template.modules.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'module'
+    # console.log @data.tags
+    split_tags = @data.tags.split ','
+    # console.log split_tags
+    @autorun => Meteor.subscribe 'modules', split_tags
 
 Template.modules.helpers
     modules: -> Docs.find type:'module'
     
     
-Template.module.onRendered ->
-    Meteor.setTimeout ->
-        $('.shape').shape();
-    , 500
+# Template.module.onRendered ->
+#     Meteor.setTimeout ->
+#         $('.shape').shape();
+#     , 500
 
 Template.module.onCreated ->
     @autorun => Meteor.subscribe 'module_children', @data.children_doc_type
+    @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
 Template.module.helpers
     children: -> 
-        Docs.find { type:@children_doc_type}
+        Docs.find { type:@children_doc_type }
+    schema_doc: ->
+        Docs.findOne
+            type:'schema'
+            slug:@children_doc_type
+        
+    schema_doc_fields: -> 
+        module_doc = Template.parentData(1)
+        schema_doc = Docs.findOne 
+            type:'schema'
+            slug: module_doc.children_doc_type
+        schema_doc.fields
+        
+        
+    child_schema_field_value: ->
+        child_doc = Template.parentData(1)
+        
+        # console.log child_doc["#{@slug}"]
+        child_doc.ev["#{@slug}"]
+        
+    values: ->
+        schema_doc = Docs.findOne
+            type:'schema'
+            slug:@children_doc_type
+        if schema_doc
+            console.log 'schema doc found', schema_doc
+            fields = schema_doc.fields
+            values = []
+            for field in fields
+                console.log 'schema doc found', field
+                console.log 'this', @
+                values.push @ev["#{field.slug}"]
+                # if field.ev_subset is true
+                #     values.push Template.currentData().ev["#{field.key}"]
+                # else
+                #     # console.log "#{field.key}"
+                #     values.push Template.currentData()["#{field.key}"]
+            values
+        
+        
+        
+    is_table: -> @view_mode is 'table'    
+    is_list: -> @view_mode is 'list'    
+        
 Template.module.events
     'click .toggle_editing': (e,t)->
         $(e.currentTarget).closest('.shape').shape('flip over');
@@ -735,8 +782,13 @@ Template.module.events
     
 Template.modules.events
     'click #add_module': (e,t)->
+        # console.log @tags
+        split_tags = @tags.split ','
+        # console.log split_tags
+
         Docs.insert
             type:'module'
+            tags:split_tags            
     
     
 Template.edit_module_text_field.events

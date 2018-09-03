@@ -670,31 +670,55 @@ template(name='modules')
                 i.plus.icon
         each modules
             .row
-                +module 
+                .sixteen.wide.column
+                    +module 
                                             
 template(name='module')
-    .ui.shape
-        .ui.sides
-            .side.active
-                .ui.secondary.segment
-                    .ui.header
-                        if icon
-                            +icon name=icon
-                        |#{title}
-                        i.toggle_editing.pencil.link.icon
-                    .ui.divided.list
-                        each children
-                            .item doc: #{title} #{incident_details} #{text} #{body}
-            .side
-                i.toggle_editing.check.link.icon
-                .ui.inline.form
-                    +edit_module_text_field label='Title' key='title'
-                    +edit_module_text_field label='Icon' key='icon'
-                    +edit_module_text_field label='View Mode' key='visible'
-                    +edit_module_text_field label='Children Doc Type' key='children_doc_type'
+    .ui.secondary.fluid.segment
+        .ui.header
+            if icon
+                +icon name=icon
+            |#{title}
+        if is_table
+            table.ui.striped.selectable.fixed.table
+                thead
+                    tr
+                        each schema_doc.fields
+                            if sortable
+                                th.sort_by
+                                    |#{title}
+                                    if sort_descending
+                                        i.sort.amount.down.icon
+                                    if sort_ascending
+                                        i.sort.amount.up.icon
+                            else
+                                th
+                                    |#{title}
+                tbody
+                    each children
+                        tr
+                            each schema_doc_fields
+                                td #{child_schema_field_value}
+        if is_list
+            .ui.divided.list
+                each children
+                    .item doc: #{title} #{incident_details} #{text} #{body}
+        if is_dev
+            .ui.divider
+            .ui.form
+                +edit_module_text_field label='Title' key='title'
+                +edit_module_text_field label='Icon' key='icon'
+                +edit_module_text_field label='View Mode' key='view_mode'
+                +edit_module_text_field label='Children Doc Type' key='children_doc_type'
+                +edit_module_text_field label='Filter Key' key='filter_key'
+                +edit_module_text_field label='Filter Value' key='filter_value'
                 
         
 template(name='edit_module_text_field')
-    .field
+    .inline.field
         label #{label}
         input.text_field(type='text' value=module_key_value)
+        
+        
+        
+        

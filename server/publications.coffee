@@ -831,6 +831,11 @@ Meteor.publish 'schema_doc', (child_doc_id)->
         type:'schema'
         slug:doc.type
 
+Meteor.publish 'schema_doc_by_type', (doc_type)->
+    Docs.find
+        type:'schema'
+        slug:doc_type
+
 
 Meteor.publish 'service_child_requests', (service_id)->
     Docs.find
@@ -906,7 +911,10 @@ Meteor.publish 'customers_franchisee', (customer_doc_id)->
             return cursor
             
             
-            
+Meteor.publish 'modules', (tags)->
+    Docs.find   
+        type:'module'
+        tags:$in:tags
             
             
             
