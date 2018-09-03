@@ -23,6 +23,8 @@ template(name='user_view')
                         a.ui.fluid.button(href='/account/settings')
                             i.cog.icon
                             |Account Settings
+                    +doc_type_module label='Messages' icon='chat' doc_type='message'
+                    +doc_type_module label='Comments' icon='comment' doc_type='comment'
                 .eight.wide.column
                     // +edit_profile_text_field key='customer_jpid' label='Connected Customer Account'
                     .ui.list
@@ -32,6 +34,8 @@ template(name='user_view')
                                 | #{customer_jpid}
                     +user_events                    
                     // +users_docs
+                    +doc_type_module label='Incidents' icon='error' doc_type='incident'
+                    +doc_type_module label='Incident Feedback' icon='reply' doc_type='feedback_response'
                 .four.wide.column
                     .ui.secondary.segment
                         .ui.header 
@@ -51,6 +55,7 @@ template(name='user_view')
                         +franchisee_card
                     if office_jpid
                         +office_card
+    
                 
 template(name='user_ev_info')        
     .ui.secondary.segment

@@ -86,9 +86,12 @@ Meteor.users.helpers
 
 Docs.helpers
     event_type_doc: ->
-        Docs.findOne 
+        found_event_type = Docs.findOne 
             type:'event_type'
             slug:@event_type
+        console.log found_event_type
+        found_event_type
+
 
     author: -> Meteor.users.findOne @author_id
     assigned_to_user: -> 

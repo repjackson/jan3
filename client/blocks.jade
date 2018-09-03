@@ -469,36 +469,36 @@ template(name='radio_item')
             label #{label}
 
 
-template(name='session_delete_button')
-    unless confirming
-        .delete.ui.icon.button
-            i.remove.icon
-    else
-        .ui.icon.button.cancel 
-            i.ban.icon
-            // |Cancel
-        .ui.button.confirm 
-            i.red.trash.icon
-            |Confirm
+// template(name='session_delete_button')
+//     unless confirming
+//         .delete.ui.icon.button
+//             i.remove.icon
+//     else
+//         .ui.icon.button.cancel 
+//             i.ban.icon
+//             // |Cancel
+//         .ui.button.confirm 
+//             i.red.trash.icon
+//             |Confirm
 
 
-template(name='published')
-    if can_edit
-        #publish.ui.icon.compact.button(data-tooltip='Publish' class=published_class)
-            +icon name='visible' classes='ui mini inline image'
-        #unpublish.ui.icon.compact.button(data-tooltip='Unpublish' class=private_class)
-            +icon name='invisible' classes='ui mini inline image'
+// template(name='published')
+//     if can_edit
+//         #publish.ui.icon.compact.button(data-tooltip='Publish' class=published_class)
+//             +icon name='visible' classes='ui mini inline image'
+//         #unpublish.ui.icon.compact.button(data-tooltip='Unpublish' class=private_class)
+//             +icon name='invisible' classes='ui mini inline image'
             
             
-template(name='subscribe_button')
-    if is_participant
-        #subscribe_button.ui.button(class=subscribe_buton_class)
-            if subscribed
-                +icon48 name='checked' classes='ui mini inline image'
-                | Subscribed
-            else
-                +icon48 name='unchecked-checkbox' classes='ui mini inline image'
-                |Not Subscribed
+// template(name='subscribe_button')
+//     if is_participant
+//         #subscribe_button.ui.button(class=subscribe_buton_class)
+//             if subscribed
+//                 +icon48 name='checked' classes='ui mini inline image'
+//                 | Subscribed
+//             else
+//                 +icon48 name='unchecked-checkbox' classes='ui mini inline image'
+//                 |Not Subscribed
             
             
 template(name='user_card')
@@ -662,3 +662,17 @@ template(name='doc_type_module')
                                     if is_admin
                                         a.delete_comment
                                             i.trash.icon
+                                            
+template(name='modules')
+    #add_module.ui.icon.button(title='Add Module')
+        i.plus.icon
+    each modules
+        +module 
+                                            
+template(name='module')
+    .ui.secondary.segment
+        .ui.header
+            if icon
+                +icon name=icon
+            if title
+                |#{title} Hello World

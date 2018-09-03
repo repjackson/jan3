@@ -71,46 +71,46 @@ Template.full_doc_history.helpers
         
         
 Template.doc_history_event.helpers
-    event_icon_name: ->
-        # console.log @event_type
-        icon = ""
-        if @event_type
-            result = switch @event_type
-                when 'escalate' then icon.concat 'positive-dynamic'
-                when 'close' then icon.concat 'close-sign'
-                when 'setting_default_escalation_time' then icon.concat 'sort-by-modified-date'
-                when 'emailed_owner' then icon.concat 'user-shield'
-                when 'emailed_secondary_contact' then icon.concat 'sent'
-                when 'emailed_franchisee_contact' then icon.concat 'housekeeper-male'
-                when 'mark_complete' then icon.concat 'checked-checkbox'
-                when 'mark_incomplete' then icon.concat 'unchecked-checkbox'
-                when 'submit' then icon.concat 'internal'
-                when 'unsubmit' then icon.concat 'undo'
-                when 'assignment' then icon.concat 'add-user-male'
-                when 'unassignment' then icon.concat 'remove-user-female'
-                when 'not-escalate' then icon.concat 'do-not-disturb'
-                when 'level_change' then icon.concat 'positive-dynamic'
-                else 'commit-git'
-        else if @event_key 
-            result = ' add-user-male'
+    # event_icon_name: ->
+    #     # console.log @event_type
+    #     icon = ""
+    #     if @event_type
+    #         result = switch @event_type
+    #             when 'escalate' then icon.concat 'positive-dynamic'
+    #             when 'close' then icon.concat 'close-sign'
+    #             when 'setting_default_escalation_time' then icon.concat 'sort-by-modified-date'
+    #             when 'emailed_owner' then icon.concat 'user-shield'
+    #             when 'emailed_secondary_contact' then icon.concat 'sent'
+    #             when 'emailed_franchisee_contact' then icon.concat 'housekeeper-male'
+    #             when 'mark_complete' then icon.concat 'checked-checkbox'
+    #             when 'mark_incomplete' then icon.concat 'unchecked-checkbox'
+    #             when 'submit' then icon.concat 'internal'
+    #             when 'unsubmit' then icon.concat 'undo'
+    #             when 'assignment' then icon.concat 'add-user-male'
+    #             when 'unassignment' then icon.concat 'remove-user-female'
+    #             when 'not-escalate' then icon.concat 'do-not-disturb'
+    #             when 'level_change' then icon.concat 'positive-dynamic'
+    #             else 'commit-git'
+    #     else if @event_key 
+    #         result = ' add-user-male'
             
-    show_author: ->
-        result = switch @event_type
-            when 'escalate' then false
-            when 'close' then true
-            when 'setting_default_escalation_time' then false
-            when 'emailed_owner' then false
-            when 'emailed_secondary_contact' then false
-            when 'emailed_franchisee_contact' then false
-            when 'assignment' then false
-            when 'unnassigment' then false
-            when 'submit' then true
-            when 'unsubmit' then true
-            when 'mark_complete' then true
-            when 'mark_incomplete' then true
-            when 'not-escalate' then false
-            when 'level_change' then true
-            else false
+    # show_author: ->
+    #     result = switch @event_type
+    #         when 'escalate' then false
+    #         when 'close' then true
+    #         when 'setting_default_escalation_time' then false
+    #         when 'emailed_owner' then false
+    #         when 'emailed_secondary_contact' then false
+    #         when 'emailed_franchisee_contact' then false
+    #         when 'assignment' then false
+    #         when 'unnassigment' then false
+    #         when 'submit' then true
+    #         when 'unsubmit' then true
+    #         when 'mark_complete' then true
+    #         when 'mark_incomplete' then true
+    #         when 'not-escalate' then false
+    #         when 'level_change' then true
+    #         else false
             
         
 # Template.full_doc_history.events

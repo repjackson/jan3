@@ -541,24 +541,24 @@ Template.doc_result.helpers
         found
         
             
-Template.session_delete_button.onCreated ->
-    @confirming = new ReactiveVar(false)
+# Template.session_delete_button.onCreated ->
+#     @confirming = new ReactiveVar(false)
             
      
-Template.session_delete_button.helpers
-    confirming: -> Template.instance().confirming.get()
-Template.session_delete_button.events
-    'click .delete': (e,t)-> 
-        # $(e.currentTarget).closest('.comment').transition('flash')
-        t.confirming.set true
+# Template.session_delete_button.helpers
+#     confirming: -> Template.instance().confirming.get()
+# Template.session_delete_button.events
+#     'click .delete': (e,t)-> 
+#         # $(e.currentTarget).closest('.comment').transition('flash')
+#         t.confirming.set true
 
-    'click .cancel': (e,t)-> t.confirming.set false
-    'click .confirm': (e,t)-> 
-        $(e.currentTarget).closest('.comment').transition('fade right')
-        $(e.currentTarget).closest('.notification_segment').transition('fade right')
-        Meteor.setTimeout =>
-            Docs.remove(@_id)
-        , 1000
+#     'click .cancel': (e,t)-> t.confirming.set false
+#     'click .confirm': (e,t)-> 
+#         $(e.currentTarget).closest('.comment').transition('fade right')
+#         $(e.currentTarget).closest('.notification_segment').transition('fade right')
+#         Meteor.setTimeout =>
+#             Docs.remove(@_id)
+#         , 1000
 
 
 Template.office_card.onCreated ->
@@ -708,3 +708,18 @@ Template.doc_type_module.helpers
 
     view_mode_template: ->
         console.log @
+        
+        
+
+Template.modules.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'module'
+
+Template.modules.helpers
+    modules: -> Docs.find type:'module'
+    
+    
+Template.modules.events
+    'click #add_module': (e,t)->
+        Docs.insert
+            type:'module'
+    

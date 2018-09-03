@@ -52,48 +52,49 @@ template(name='office_nav')
 template(name='office_dashboard')
     +office_header
     .ui.padded.stackable.grid
-        .row
-            with office_doc
-                .four.wide.column
-                    .ui.secondary.segment
-                        .ui.list
-                            .item ##{ev.ID}
-                            // .item Office Name
-                            //     strong #{ev.MASTER_LICENSEE}
-                            .item Owner
-                                strong #{ev.MASTER_OFFICE_OWNER}
-                            .item Manager
-                                strong #{ev.MASTER_OFFICE_MANAGER}
-                            // .item Last Updated
-                            //     strong #{ev.TIMESTAMP}
-                            .item #{ev.TELEPHONE}
-                            .item 
-                                |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-                                a(href=office_map_address target='_blank')
-                                    i.external.icon
-                    +doc_type_module label='Invoices' icon='money' doc_type='finance'
-                    +doc_type_module label='Service Requests' icon='broom' doc_type='service_request'
-                    .ui.secondary.segment
-                        .ui.header
-                            +icon name='bar-chart'
-                            |Stats
-                        .ui.list
-                            .item Incidents
-                                +view_stat doc_type='incident' stat_type='office_incidents' 
-                            .item Franchisees
-                                +view_stat doc_type='franchisee' stat_type='office_franchisees' 
-                            .item Customers
-                                +view_stat doc_type='customer' stat_type='office_customers' 
-                            .item Employees
-                                +view_stat stat_type='office_employees' 
-                .eight.wide.column
-                    .ui.secondary.segment
-                        +office_feed
-                    +doc_type_module label='Incidents' icon='error' doc_type='incident'
-                    +doc_type_module label='Incident Feedback' icon='reply' doc_type='feedback_response'
-                .four.wide.column
-                    +doc_type_module label='Messages' icon='chat' doc_type='message'
-                    +doc_type_module label='Comments' icon='comment' doc_type='comment'
+        +modules
+        // .row
+        //     with office_doc
+        //         .four.wide.column
+        //             .ui.secondary.segment
+        //                 .ui.list
+        //                     .item ##{ev.ID}
+        //                     // .item Office Name
+        //                     //     strong #{ev.MASTER_LICENSEE}
+        //                     .item Owner
+        //                         strong #{ev.MASTER_OFFICE_OWNER}
+        //                     .item Manager
+        //                         strong #{ev.MASTER_OFFICE_MANAGER}
+        //                     // .item Last Updated
+        //                     //     strong #{ev.TIMESTAMP}
+        //                     .item #{ev.TELEPHONE}
+        //                     .item 
+        //                         |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+        //                         a(href=office_map_address target='_blank')
+        //                             i.external.icon
+        //             +doc_type_module label='Invoices' icon='money' doc_type='finance'
+        //             +doc_type_module label='Service Requests' icon='broom' doc_type='service_request'
+        //             .ui.secondary.segment
+        //                 .ui.header
+        //                     +icon name='bar-chart'
+        //                     |Stats
+        //                 .ui.list
+        //                     .item Incidents
+        //                         +view_stat doc_type='incident' stat_type='office_incidents' 
+        //                     .item Franchisees
+        //                         +view_stat doc_type='franchisee' stat_type='office_franchisees' 
+        //                     .item Customers
+        //                         +view_stat doc_type='customer' stat_type='office_customers' 
+        //                     .item Employees
+        //                         +view_stat stat_type='office_employees' 
+        //         .eight.wide.column
+        //             .ui.secondary.segment
+        //                 +office_feed
+        //             +doc_type_module label='Incidents' icon='error' doc_type='incident'
+        //             +doc_type_module label='Incident Feedback' icon='reply' doc_type='feedback_response'
+        //         .four.wide.column
+        //             +doc_type_module label='Messages' icon='chat' doc_type='message'
+        //             +doc_type_module label='Comments' icon='comment' doc_type='comment'
 
 template(name='office_customers')
     +office_header
