@@ -818,6 +818,16 @@ Template.module.events
         else
             Session.set 'sort_direction', -1
 
+    'click .add_schema_field': ->
+        module = Template.currentData()
+        Docs.update module._id,
+            $addToSet: fields: key:@slug
+    
+    'click .add_schema_field': ->
+        module = Template.currentData()
+        Docs.update module._id,
+            $pull: fields: key:@valueOf()
+
     
 Template.modules.events
     'click #add_module': (e,t)->

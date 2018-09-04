@@ -687,26 +687,24 @@ template(name='module')
                         table.ui.striped.selectable.fixed.table
                             thead
                                 tr
-                                    each schema_doc.fields
-                                        if table_visible
-                                            if sortable
-                                                th.sort_by
-                                                    |#{title}
-                                                    if sort_descending
-                                                        i.chevron.down.link.blue.icon
-                                                    else if sort_ascending
-                                                        i.chevron.up.link.blue.icon
-                                                    else
-                                                        i.sort.link.grey.icon
-                                            else
-                                                th
-                                                    |#{title}
+                                    each fields
+                                        if sortable
+                                            th.sort_by
+                                                |#{title}
+                                                if sort_descending
+                                                    i.chevron.down.link.blue.icon
+                                                else if sort_ascending
+                                                    i.chevron.up.link.blue.icon
+                                                else
+                                                    i.sort.link.grey.icon
+                                        else
+                                            th
+                                                |#{title}
                             tbody
                                 each children
                                     tr
                                         each schema_doc_fields
-                                            if table_visible
-                                                td(class=table_cell_class) #{child_schema_field_value}
+                                            td(class=table_cell_class) #{child_schema_field_value}
                             if view_table_footer
                                 +table_footer columns=schema_doc.fields.length doc_type=children_doc_type stat_type=table_stat_type
                     if is_list
@@ -722,26 +720,63 @@ template(name='module')
                             h3.ui.header 
                                 +icon name=icon
                                 |Edit #{title}
+                            |Module
                             +set_key_value key='published' value=true label='Published'
                             +set_key_value key='published' value=false label='Hidden'
-                            div
-                            +set_key_value key='view_table_header' value=true label='View Table Header'
-                            +set_key_value key='view_table_header' value=false label='Hide Header'
-                            div
-                            +set_key_value key='view_table_footer' value=true label='View Table Footer'
-                            +set_key_value key='view_table_footer' value=false label='Hide Footer'
                             .ui.form
                                 +edit_module_text_field label='Title' key='title'
                                 +edit_module_text_field label='Icon' key='icon'
-                                +edit_module_text_field label='View Mode' key='view_mode'
-                                +edit_module_text_field label='Children Doc Type' key='children_doc_type'
-                                +edit_module_text_field label='Table Stat Type' key='table_stat_type'
-                                +edit_module_text_field label='Filter Key' key='filter_key'
-                                +edit_module_text_field label='Filter Value' key='filter_value'
-                                +edit_module_text_field label='Doc Limit' key='limit'
-                                |Show Fields
-                                each schema_doc.fields
-                                    .ui.button #{title}
+                                .two.fields
+                                    +edit_module_text_field label='Filter Key' key='filter_key'
+                                    +edit_module_text_field label='Filter Value' key='filter_value'
+                            div Shown Fields
+                            if fields
+                                each fields
+                                    .remove_schema_field.ui.blue.compact.button #{key}
+                                table.ui.striped.fixed.table
+                                    thead
+                                        tr
+                                            th.one.wide #
+                                            th Label
+                                            th Key
+                                            th Template
+                                            th Key
+                                            th Key
+                                    tbody
+                                        each fields
+                                            tr
+                                                td #{order}
+                                                td #{label}
+                                                td #{key}
+                                                td #{template}
+                                                td 
+                                                    i.remove.icon
+
+                            div Available Fields
+                            each schema_doc.fields
+                                .add_schema_field.ui.compact.button #{title}
+                            div Doc Type
+                                +set_key_value key='children_doc_type' value='incident' label='Incidents'
+                                +set_key_value key='children_doc_type' value='customer' label='Customers'
+                                +set_key_value key='children_doc_type' value='franchisee' label='Franchisees'
+                                +set_key_value key='children_doc_type' value='service' label='Services'
+                            div View Mode
+                                +set_key_value key='view_mode' value='table' label='Table'
+                                +set_key_value key='view_mode' value='list' label='List'
+                                +set_key_value key='view_mode' value='comments' label='Comments'
+                            .ui.secondary.segment
+                                if is_table
+                                    div Stat Type
+                                    +set_key_value key='table_stat_type' value='total' label='Total'
+                                    +set_key_value key='table_stat_type' value='active' label='Active'
+                                    div
+                                    +set_key_value key='view_table_header' value=true label='View Header'
+                                    +set_key_value key='view_table_header' value=false label='Hide Header'
+                                    div
+                                    +set_key_value key='view_table_footer' value=true label='View Footer'
+                                    +set_key_value key='view_table_footer' value=false label='Hide Footer'
+                                else 
+                                    +edit_module_text_field label='Result Limit' key='limit'
         
 template(name='edit_module_text_field')
     .inline.field
