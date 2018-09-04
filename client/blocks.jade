@@ -690,7 +690,7 @@ template(name='module')
                                     each fields
                                         if sortable
                                             th.sort_by
-                                                |#{title}
+                                                |#{label}
                                                 if sort_descending
                                                     i.chevron.down.link.blue.icon
                                                 else if sort_ascending
@@ -699,14 +699,19 @@ template(name='module')
                                                     i.sort.link.grey.icon
                                         else
                                             th
-                                                |#{title}
+                                                |#{label}
                             tbody
                                 each children
                                     tr
-                                        each schema_doc_fields
-                                            td(class=table_cell_class) #{child_schema_field_value}
+                                        each ../fields
+                                            if field_template
+                                                td 
+                                                    +Template.dynamic template=field_template data=..
+                                            else
+                                                td(class=table_cell_class) #{child_schema_field_value}
+                                            
                             if view_table_footer
-                                +table_footer columns=schema_doc.fields.length doc_type=children_doc_type stat_type=table_stat_type
+                                +table_footer columns=fields.length doc_type=children_doc_type stat_type=table_stat_type
                     if is_list
                         .ui.divided.list
                             each children
@@ -730,9 +735,9 @@ template(name='module')
                                     +edit_module_text_field label='Filter Key' key='filter_key'
                                     +edit_module_text_field label='Filter Value' key='filter_value'
                             div Shown Fields
+                                .add_blank_field.ui.icon.button(title='Add Blank Field')
+                                    i.plus.icon
                             if fields
-                                each fields
-                                    .remove_schema_field.ui.blue.compact.button #{key}
                                 table.ui.striped.fixed.table
                                     thead
                                         tr
@@ -740,21 +745,28 @@ template(name='module')
                                             th Label
                                             th Key
                                             th Template
-                                            th Key
-                                            th Key
+                                            th Sortable
+                                            th Remove
                                     tbody
                                         each fields
                                             tr
-                                                td #{order}
+                                                td
+                                                    i.move_down.chevron.up.link.icon
+                                                    i.move_up.chevron.down.link.icon
                                                 td #{label}
                                                 td #{key}
-                                                td #{template}
                                                 td 
-                                                    i.remove.icon
+                                                    .ui.fluid.small.input
+                                                        input.field_template(type='text' value=field_template)
+                                                td 
+                                                    i.eye.icon
+                                                td 
+                                                    i.remove_schema_field.remove.icon
 
                             div Available Fields
                             each schema_doc.fields
-                                .add_schema_field.ui.compact.button #{title}
+                                if show_schema_field
+                                    .add_schema_field.ui.compact.button #{title}
                             div Doc Type
                                 +set_key_value key='children_doc_type' value='incident' label='Incidents'
                                 +set_key_value key='children_doc_type' value='customer' label='Customers'

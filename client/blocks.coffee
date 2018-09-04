@@ -753,6 +753,17 @@ Template.module.helpers
             slug:@children_doc_type
         
     module_segment_class: -> if @published then '' else 'disabled'    
+       
+    show_schema_field: ->
+        parent = Template.parentData()
+        schema_fields = 
+            Docs.findOne({
+                type:'schema'
+                slug:parent.children_doc_type
+            }).fields
+        module_fields = parent.fields
+        selected_keys = _.pluck parent.fields, 'key'
+        if @slug in selected_keys then false else true
         
         
     can_view_module: ->
@@ -778,9 +789,9 @@ Template.module.helpers
         
         # console.log child_doc["#{@slug}"]
         if @ev_subset
-            child_doc.ev["#{@slug}"]
+            child_doc.ev["#{@key}"]
         else
-            child_doc["#{@slug}"]
+            child_doc["#{@key}"]
         
     values: ->
         schema_doc = Docs.findOne
@@ -808,8 +819,20 @@ Template.module.helpers
     is_comments: -> @view_mode is 'comments'    
         
 Template.module.events
-    # 'click .toggle_editing': (e,t)->
-    #     $(e.currentTarget).closest('.shape').shape('flip over');
+    'click .move_up': ->
+        current = Template.currentData()
+        current_index = current.fields.indexOf @ 
+        next_index = current+1
+        Meteor.call 'move', current._id, current.fields, current_index, next_index
+        
+        
+    'click .move_down': ->
+        # console.log @
+        current = Template.currentData()
+        current_index = current.fields.indexOf @ 
+        lower_index = current-1
+        Meteor.call 'move', current._id, current.fields, current_index, lower_index
+
     'click .sort_by': (e,t)->
         slug = if @ev_subset then "ev.#{@slug}" else @slug
         Session.set 'sort_key', slug
@@ -817,18 +840,36 @@ Template.module.events
             Session.set 'sort_direction', 1
         else
             Session.set 'sort_direction', -1
+    
+    'click .add_blank_field': ->
+        module = Template.currentData()
+        new_field_object = {
+            key:''
+            label:''
+            ev_subset:false
+            }
+        Docs.update module._id,
+            $addToSet: fields: new_field_object
 
     'click .add_schema_field': ->
         module = Template.currentData()
+        new_field_object = {
+            key:@slug
+            label:@title
+            ev_subset:@ev_subset
+            }
         Docs.update module._id,
-            $addToSet: fields: key:@slug
+            $addToSet: fields: new_field_object
     
-    'click .add_schema_field': ->
-        module = Template.currentData()
-        Docs.update module._id,
-            $pull: fields: key:@valueOf()
+    'click .remove_schema_field': ->
+        if confirm 'Remove field?'
+            module = Template.currentData()
+            Meteor.call 'remove_module_field_object', module._id, @
 
-    
+    'blur .field_template': (e,t)->
+        template_value = e.currentTarget.value
+        Meteor.call 'update_module_field', Template.currentData()._id, @, 'field_template', template_value
+
 Template.modules.events
     'click #add_module': (e,t)->
         # console.log @tags
@@ -837,7 +878,8 @@ Template.modules.events
 
         Docs.insert
             type:'module'
-            tags:split_tags            
+            tags:split_tags 
+            fields: []
     
     
 Template.edit_module_text_field.events
