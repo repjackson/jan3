@@ -136,13 +136,13 @@ Template.registerHelper 'dev_mode', ()->
         
 Template.registerHelper 'editing_mode', ()->
     if Meteor.user() and Meteor.user().roles
-        'editor' in Meteor.user().roles and Session.get('editing_mode')
+        'admin' in Meteor.user().roles and Session.get('editing_mode')
         
         
         
 Template.registerHelper 'is_editor', () -> 
     if Meteor.user() and Meteor.user().roles
-        'editor' in Meteor.user().roles
+        'admin' in Meteor.user().roles
 Template.registerHelper 'is_office', () -> 
     if Meteor.user() and Meteor.user().roles
         'office' in Meteor.user().roles

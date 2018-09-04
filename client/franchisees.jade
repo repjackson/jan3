@@ -5,7 +5,7 @@ template(name='franchisees')
                 +link_button link='/admin' label='Admin' icon='user-shield'
             .eight.wide.column
                 h1.ui.center.aligned.header
-                    +icon name='housekeeper-male'
+                    +icon name='business'
                     | Franchisees
             .four.wide.column
                 // if is_dev
@@ -49,10 +49,10 @@ template(name='franchisee_view')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 if is_admin
-                    +link_button link='/franchisees' icon='housekeeper-male' label='Franchisees'
+                    +link_button link='/franchisees' icon='business' label='Franchisees'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
-                    +icon name='housekeeper-male'
+                    +icon name='business'
                     |#{ev.FRANCHISEE} Franchisee
             .three.wide.right.aligned.column
                 // +edit_button
@@ -79,8 +79,10 @@ template(name='franchisee_view')
                     .ui.header 
                         +icon name='building'
                         |Office 
-                +doc_type_module label='Incidents' icon='error' doc_type='incident'
-                +doc_type_module label='Incident Feedback' icon='reply' doc_type='feedback_response'
+                .ui.secondary.segment
+                    +modules tags='franchisee,incidents'
+                .ui.secondary.segment
+                    +modules tags='franchisee,incident,feedback_response'
             .eight.wide.column
                 .ui.secondary.segment
                     .ui.header 
@@ -97,8 +99,10 @@ template(name='franchisee_view')
                         |Customers
                     +franchisee_customers
             .four.wide.column
-                +doc_type_module label='Messages' icon='chat' doc_type='message'
-                +doc_type_module label='Comments' icon='comment' doc_type='comment'
+                .ui.secondary.segment
+                    +modules tags='franchisee,message'
+                .ui.secondary.segment
+                    +modules tags='franchisee,comment'
 
 
 template(name='franchisee_customers')

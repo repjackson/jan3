@@ -34,7 +34,7 @@ template(name='nav')
                 .mobile.hidden &nbsp; Employees
             a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
                 i.icon
-                    +icon name='housekeeper-male'
+                    +icon name='business'
                 .mobile.hidden &nbsp; Franchisees
             a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
                 i.icon
@@ -63,7 +63,7 @@ template(name='nav')
                 .mobile.hidden Offices
             a.mobile.hidden.item(href='/franchisees' data-content='All Franchisees' class="{{ isActiveRoute 'franchisees'}}")
                 i.icon
-                    +icon name='housekeeper-male'
+                    +icon name='business'
                 .mobile.hidden Franchisees
             a.mobile.hidden.item(href='/customers' data-content='All Customers' class="{{ isActiveRoute 'customers'}}")
                 i.icon
@@ -176,7 +176,7 @@ template(name='left_sidebar')
                 | &nbsp; Employees
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
                 i.icon
-                    +icon name='housekeeper-male'
+                    +icon name='business'
                 | &nbsp; Franchisees
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
                 i.icon

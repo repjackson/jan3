@@ -26,19 +26,6 @@ Template.feed.events
             Docs.remove @_id
 
 
-Template.office_feed.onCreated ->
-    Meteor.subscribe 'type', 'event_type'
-    @autorun => Meteor.subscribe 'office_events', FlowRouter.getParam('doc_id')
-
-Template.office_feed.helpers
-    event_docs: -> 
-        context = Template.currentData()
-        Docs.find {type:'event'}, sort:timestamp:-1
-        # Docs.find {type:'event', doc_type:context.doc_type}, sort:timestamp:-1
-Template.office_feed.events
-    'click .remove_event': -> 
-        if confirm 'Delete Event?'
-            Docs.remove @_id
 
             
 Template.small_doc_history.onCreated ->
@@ -81,7 +68,7 @@ Template.doc_history_event.helpers
     #             when 'setting_default_escalation_time' then icon.concat 'sort-by-modified-date'
     #             when 'emailed_owner' then icon.concat 'user-shield'
     #             when 'emailed_secondary_contact' then icon.concat 'sent'
-    #             when 'emailed_franchisee_contact' then icon.concat 'housekeeper-male'
+    #             when 'emailed_franchisee_contact' then icon.concat 'business'
     #             when 'mark_complete' then icon.concat 'checked-checkbox'
     #             when 'mark_incomplete' then icon.concat 'unchecked-checkbox'
     #             when 'submit' then icon.concat 'internal'

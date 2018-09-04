@@ -698,7 +698,7 @@ Template.assignment_widget.helpers
 
 Template.doc_type_module.onCreated ->
     @autorun => Meteor.subscribe 'doc_type_module', FlowRouter.getParam('doc_id'), @data.doc_type
-Template.doc_type_module.onRendered ->
+Template.module.onRendered ->
     Meteor.setTimeout ->
         $('.ui.accordion').accordion()
     , 500
@@ -782,6 +782,7 @@ Template.module.helpers
         
     is_table: -> @view_mode is 'table'    
     is_list: -> @view_mode is 'list'    
+    is_comments: -> @view_mode is 'comments'    
         
 Template.module.events
     'click .toggle_editing': (e,t)->
