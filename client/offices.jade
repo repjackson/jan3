@@ -18,28 +18,4 @@ template(name='databank_office')
             .three.wide.right.aligned.column
                 // if is_dev
                 // +call_method name='sync_offices'
-        .middle.aligned.row
-            +table_header doc_type='office' stat_type='total'
-        .row
-            .sixteen.wide.column
-                table.ui.striped.fixed.fluid.sortable.table
-                    thead
-                        tr
-                            +sort_column_header key='ev.ID' label='JPID' classes='two wide'
-                            +sort_column_header key='ev.MASTER_LICENSEE' label='Name' show_search=true classes='three wide'
-                            +sort_column_header key='ev.MASTER_OFFICE_MANAGER' label='Manager'
-                            +sort_column_header key='ev.MASTER_OFFICE_OWNER' label='Owner'
-                            +sort_column_header key='ev.TELEPHONE' label='Phone'
-                            +sort_column_header key='ev.ADDR_STREET' label='Address'
-                    tbody
-                        each all_offices
-                            tr
-                                td.selectable
-                                    a(href="/office/#{_id}") #{ev.ID}
-                                td.selectable
-                                    a(href="/office/#{_id}") #{ev.MASTER_LICENSEE}
-                                td #{ev.MASTER_OFFICE_MANAGER}
-                                td #{ev.MASTER_OFFICE_OWNER}
-                                td #{ev.TELEPHONE}
-                                td #{ev.ADDR_STREET}
-                    +table_footer columns='6' doc_type='office' stat_type='total'
+        +modules tags='offices,admin,total'

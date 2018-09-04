@@ -5,41 +5,10 @@ template(name='customers')
                 +link_button link='/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    +icon name='customer-support'
+                    +icon name='headset'
                     | Customers
             .three.wide.right.aligned.column
-                // if is_dev
-                // .sync_customers.ui.icon.button(title='Refresh Customers')
-                //     i.refresh.icon
-
-        .middle.aligned.row
-            +table_header doc_type='customer' stat_type='active'
-        .row
-            .sixteen.wide.column
-                table.ui.striped.fixed.table
-                    thead
-                        +sort_column_header key='ev.ID' label='JPID'
-                        +sort_column_header key='ev.CUST_NAME' label='Customer Name'
-                        +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
-                        +sort_column_header key='ev.MASTER_LICENSEE' label='Master Licensee'
-                        th Contact
-                        +sort_column_header key='ev.ADDR_STREET' label='Address'
-                    tbody
-                        each all_customers
-                            tr
-                                td.selectable(title='View')
-                                    a(href="/v/#{_id}") #{ev.ID}
-                                td.selectable(title='View')
-                                    a(href="/v/#{_id}") #{ev.CUST_NAME}
-                                td #{ev.FRANCHISEE}
-                                td #{ev.MASTER_LICENSEE}
-                                td 
-                                    div 
-                                        strong #{ev.CUST_CONT_PERSON}
-                                    div #{ev.CUST_CONTACT_EMAIL}
-                                    div #{ev.TELEPHONE}
-                                td #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                    +table_footer columns='6' doc_type='customer' stat_type='active'
+        +modules tags='admin,customers,total,page'
 
 
 template(name='customer_view')
@@ -47,10 +16,10 @@ template(name='customer_view')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 if is_admin
-                    +link_button link='/customers' icon='customer-support' label='Customers'
+                    +link_button link='/customers' icon='headset' label='Customers'
             .ten.wide.column
                 h2.ui.center.aligned.grey.header 
-                    +icon name='customer-support'
+                    +icon name='headset'
                     |##{ev.ID}
                     if ev.CUST_NAME
                         |#{ev.CUST_NAME} 
@@ -98,21 +67,14 @@ template(name='customer_view')
                     +incident_table customer_jpid=ev.ID
                 .ui.stackable.two.column.grid
                     .column
-                        .ui.secondary.segment
-                            +modules tags='customer,comments'
-                        .ui.secondary.segment
-                            +modules tags='users,users'
-                        .ui.secondary.segment
-                            +modules tags='customer,invoices'
-                        .ui.secondary.segment
-                            +modules tags='customer,service,special_service'
+                        +modules tags='customer,comments'
+                        +modules tags='users,users'
+                        +modules tags='customer,invoices'
+                        +modules tags='customer,service,special_service'
                     .column
-                        .ui.secondary.segment
-                            +modules tags='customer,service,service_request'
-                        .ui.secondary.segment
-                            +modules tags='customer,activity'
-                        .ui.secondary.segment
-                            +modules tags='customer,message'
+                        +modules tags='customer,service,service_request'
+                        +modules tags='customer,activity'
+                        +modules tags='customer,message'
 
 
 template(name='customers_franchisee')
@@ -151,7 +113,7 @@ template(name='my_customer_account_card')
         with currentUser.users_customer
             .content
                 a.ui.header(href="/v/#{_id}")
-                    +icon name='customer-support'
+                    +icon name='headset'
                     |Customer Account
             .content
                 div Customer Owner: #{customer_owner}

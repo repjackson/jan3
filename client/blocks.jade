@@ -515,7 +515,7 @@ template(name='customer_card')
         with customer_doc
             .content
                 a.ui.header(href="/v/#{_id}")
-                    +icon name='customer-support'
+                    +icon name='headset'
                     |Customer Account
             .content
                 a(href="/v/#{_id}")
@@ -633,35 +633,35 @@ template(name='assignment_widget')
                                     | @#{username}
 
 
-template(name='doc_type_module')
-    .ui.secondary.segment
-        .ui.accordion
-            .active.title
-                .ui.header 
-                    +icon name=icon
-                    | #{label}
-                // +Template.dynamic template=view_mode_template
-            .active.content
-                .ui.comments
-                    each children
-                        .comment
-                            a.avatar(href="/user/#{author.username}")
-                                if author.profile.image_id
-                                    img.ui.avatar.spaced.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                                else
-                                    i.user.icon
-                            .content
-                                a.author(href="/user/#{author.username}") #{author.username}
-                                .metadata
-                                    span.date #{when}
-                                .text
-                                    p #{text}
-                                .actions
-                                    a(href="/v/#{_id}")
-                                        i.right.chevron.link.icon
-                                    if is_admin
-                                        a.delete_comment
-                                            i.trash.icon
+// template(name='doc_type_module')
+//     .ui.secondary.segment
+//         .ui.accordion
+//             .active.title
+//                 .ui.header 
+//                     +icon name=icon
+//                     | #{label}
+//                 // +Template.dynamic template=view_mode_template
+//             .active.content
+//                 .ui.comments
+//                     each children
+//                         .comment
+//                             a.avatar(href="/user/#{author.username}")
+//                                 if author.profile.image_id
+//                                     img.ui.avatar.spaced.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+//                                 else
+//                                     i.user.icon
+//                             .content
+//                                 a.author(href="/user/#{author.username}") #{author.username}
+//                                 .metadata
+//                                     span.date #{when}
+//                                 .text
+//                                     p #{text}
+//                                 .actions
+//                                     a(href="/v/#{_id}")
+//                                         i.right.chevron.link.icon
+//                                     if is_admin
+//                                         a.delete_comment
+//                                             i.trash.icon
                                             
 template(name='modules')
     if editing_mode
@@ -671,65 +671,87 @@ template(name='modules')
         +module 
                                             
 template(name='module')
-    .ui.accordion
-        .active.title
-            .ui.header
-                if icon
-                    +icon name=icon
-                |#{title}
-        .active.content
-            if is_table
-                table.ui.striped.selectable.fixed.table
-                    thead
-                        tr
-                            each schema_doc.fields
-                                if table_visible
-                                    if sortable
-                                        th.sort_by
-                                            |#{title}
-                                            if sort_descending
-                                                i.sort.amount.down.icon
-                                            if sort_ascending
-                                                i.sort.amount.up.icon
-                                    else
-                                        th
-                                            |#{title}
-                    tbody
-                        each children
-                            tr
-                                each schema_doc_fields
-                                    if table_visible
-                                        td(class=table_cell_class) #{child_schema_field_value}
-            if is_list
-                .ui.divided.list
-                    each children
-                        .item doc: #{title} #{incident_details} #{text} #{body}
-            if is_comments
-                .ui.comments
-                    each children
-                        +doc_history_event
-            if editing_mode
-                .ui.tertiary.blue.segment
-                    h3.ui.header 
-                        +icon name=icon
-                        |Edit #{title}
-                    .ui.form
-                        +edit_module_text_field label='Title' key='title'
-                        +edit_module_text_field label='Icon' key='icon'
-                        +edit_module_text_field label='View Mode' key='view_mode'
-                        +edit_module_text_field label='Children Doc Type' key='children_doc_type'
-                        +edit_module_text_field label='Filter Key' key='filter_key'
-                        +edit_module_text_field label='Filter Value' key='filter_value'
-                        +edit_module_text_field label='Doc Limit' key='limit'
-                        |Show Fields
-                        each schema_doc.fields
-                            .ui.button #{title}
+    if can_view_module
+        .ui.secondary.segment(class=module_segment_class)
+            .ui.accordion
+                .active.title
+                    .ui.header
+                        if icon
+                            +icon name=icon
+                        |#{title}
+                .active.content
+                    if is_table
+                        if view_table_header
+                            .middle.aligned.row
+                                +table_header doc_type=children_doc_type stat_type=table_stat_type
+                        table.ui.striped.selectable.fixed.table
+                            thead
+                                tr
+                                    each schema_doc.fields
+                                        if table_visible
+                                            if sortable
+                                                th.sort_by
+                                                    |#{title}
+                                                    if sort_descending
+                                                        i.chevron.down.link.blue.icon
+                                                    else if sort_ascending
+                                                        i.chevron.up.link.blue.icon
+                                                    else
+                                                        i.sort.link.grey.icon
+                                            else
+                                                th
+                                                    |#{title}
+                            tbody
+                                each children
+                                    tr
+                                        each schema_doc_fields
+                                            if table_visible
+                                                td(class=table_cell_class) #{child_schema_field_value}
+                            if view_table_footer
+                                +table_footer columns=schema_doc.fields.length doc_type=children_doc_type stat_type=table_stat_type
+                    if is_list
+                        .ui.divided.list
+                            each children
+                                .item doc: #{title} #{incident_details} #{text} #{body}
+                    if is_comments
+                        .ui.comments
+                            each children
+                                +doc_history_event
+                    if editing_mode
+                        .ui.tertiary.blue.segment
+                            h3.ui.header 
+                                +icon name=icon
+                                |Edit #{title}
+                            +set_key_value key='published' value=true label='Published'
+                            +set_key_value key='published' value=false label='Hidden'
+                            div
+                            +set_key_value key='view_table_header' value=true label='View Table Header'
+                            +set_key_value key='view_table_header' value=false label='Hide Header'
+                            div
+                            +set_key_value key='view_table_footer' value=true label='View Table Footer'
+                            +set_key_value key='view_table_footer' value=false label='Hide Footer'
+                            .ui.form
+                                +edit_module_text_field label='Title' key='title'
+                                +edit_module_text_field label='Icon' key='icon'
+                                +edit_module_text_field label='View Mode' key='view_mode'
+                                +edit_module_text_field label='Children Doc Type' key='children_doc_type'
+                                +edit_module_text_field label='Table Stat Type' key='table_stat_type'
+                                +edit_module_text_field label='Filter Key' key='filter_key'
+                                +edit_module_text_field label='Filter Value' key='filter_value'
+                                +edit_module_text_field label='Doc Limit' key='limit'
+                                |Show Fields
+                                each schema_doc.fields
+                                    .ui.button #{title}
         
 template(name='edit_module_text_field')
     .inline.field
         label #{label}
         input.text_field(type='text' value=module_key_value)
         
+        
+        
+template(name='set_key_value')
+    .set_key_value.ui.small.compact.button(class=set_value_button_class) #{label}
         
         
         

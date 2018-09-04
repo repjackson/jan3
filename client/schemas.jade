@@ -87,17 +87,20 @@ template(name='field_edit')
 
         // +edit_text_field key='key' label='Slug (lowercase title)'
         // +edit_text_field key='type' label='Type'
-        | Table Visible
+        div Table Visible
         +select_field_key_value key='table_visible' value=true label='True'
         +select_field_key_value key='table_visible' value=false label='False'
-        | Table Cell Class
+        div Table Sortable
+        +select_field_key_value key='sortable' value=true label='True'
+        +select_field_key_value key='sortable' value=false label='False'
+        div Table Cell Class
         +select_field_key_value key='table_cell_class' value='active' label='Active'
         +select_field_key_value key='table_cell_class' value='' label='None'
-        | Ev Subset
+        div Ev Subset
         +select_field_key_value key='ev_subset' value=true label='True'
         +select_field_key_value key='ev_subset' value=false label='False'
         .ui.divider
-        | Field Type
+        div Field Type
         +select_field_key_value key='field_type' value='date' label='Date'
         +select_field_key_value key='field_type' value='text' label='Text'
         +select_field_key_value key='field_type' value='multiple_reference' label='Multiple References'

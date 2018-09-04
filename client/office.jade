@@ -40,7 +40,7 @@ template(name='office_nav')
             | Franchisees
         a.item(href="/office/#{_id}/customers" class="{{ isActiveRoute 'office_customers'}}")
             i.large.icon
-                +iconsmall name='customer-support'
+                +iconsmall name='headset'
             // +view_stat stat_type='office_customers' doc_type='customer'
             | Customers
         a.item(href="/office/#{_id}/settings" class="{{ isActiveRoute 'office_settings'}}")
@@ -71,10 +71,8 @@ template(name='office_dashboard')
                                 |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                                 a(href=office_map_address target='_blank')
                                     i.external.icon
-                    .ui.secondary.segment
-                        +modules tags='office,dashboard,finance'
-                    .ui.secondary.segment
-                        +modules tags='office,dashboard,service_requests'
+                    +modules tags='office,dashboard,finance'
+                    +modules tags='office,dashboard,service_requests'
                     .ui.secondary.segment
                         .ui.header
                             +icon name='bar-chart'
@@ -89,17 +87,12 @@ template(name='office_dashboard')
                             .item Employees
                                 +view_stat stat_type='office_employees' 
                 .eight.wide.column
-                    .ui.secondary.segment
-                        +modules tags='office,dashboard,feed'
-                    .ui.secondary.segment
-                        +modules tags='office,dashboard,incidents'
-                    .ui.secondary.segment
-                        +modules tags='office,dashboard,incident_feedback'
+                    +modules tags='office,dashboard,feed'
+                    +modules tags='office,dashboard,incidents'
+                    +modules tags='office,dashboard,incident_feedback'
                 .four.wide.column
-                    .ui.secondary.segment
-                        +modules tags='office,dashboard,messages'
-                    .ui.secondary.segment
-                        +modules tags='office,dashboard,comments'
+                    +modules tags='office,dashboard,messages'
+                    +modules tags='office,dashboard,comments'
 
 template(name='office_customers')
     +office_header

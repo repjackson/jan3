@@ -8,38 +8,7 @@ template(name='franchisees')
                     +icon name='business'
                     | Franchisees
             .four.wide.column
-                // if is_dev
-                // .ui.icon.button.get_all_franchisees
-                //     i.refresh.icon
-        .middle.aligned.row
-            +table_header columns='5' doc_type='franchisee' stat_type='active'
-        .row
-            .sixteen.wide.column
-                table.ui.striped.fixed.table
-                    thead
-                        tr
-                            +sort_column_header key='ev.ID' label='JPID' classes='two wide'
-                            +sort_column_header key='ev.FRANCHISEE' label='Name'
-                            +sort_column_header key='ev.FRANCH_NAME' label='Short Name'
-                            th Contact
-                            +sort_column_header key='ev.ADDR_STREET' label='Office'
-                            // th.one.wide View
-                    tbody
-                        each all_franchisees
-                            tr
-                                td.selectable 
-                                    a(href="/v/#{_id}") #{ev.ID}
-                                td.selectable 
-                                    a(href="/v/#{_id}") #{ev.FRANCHISEE}
-                                td.selectable 
-                                    a(href="/v/#{_id}") #{ev.FRANCH_NAME}
-                                td
-                                    div #{ev.FRANCH_EMAIL}
-                                    div #{ev.TELE_CELL}
-                                td #{ev.MASTER_LICENSEE}
-                                // td
-                                //     +view_button
-                    +table_footer columns='5' doc_type='franchisee' stat_type='active'
+        +modules tags='admin,franchisees,active'
      
                     
 template(name='franchisee_view')
@@ -91,7 +60,7 @@ template(name='franchisee_view')
                     +incident_table franchisee_jpid=ev.ID
                 .ui.secondary.segment
                     .ui.header 
-                        +icon name='customer-support'
+                        +icon name='headset'
                         if ev.FRANCH_NAME
                             |#{ev.FRANCH_NAME}
                         else if ev.FRANCHISEE

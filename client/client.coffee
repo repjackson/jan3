@@ -19,6 +19,7 @@ Session.setDefault('page_size',10)
 Session.setDefault('skip',0)
 Session.setDefault('page_number',1)
 Session.setDefault('dev_mode',false)
+Session.setDefault('editing_mode',false)
 
 Bert.defaults =
     hideDelay: 2000

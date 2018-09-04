@@ -696,18 +696,18 @@ Template.assignment_widget.helpers
 
 
 
-Template.doc_type_module.onCreated ->
-    @autorun => Meteor.subscribe 'doc_type_module', FlowRouter.getParam('doc_id'), @data.doc_type
-Template.module.onRendered ->
-    Meteor.setTimeout ->
-        $('.ui.accordion').accordion()
-    , 500
+# Template.doc_type_module.onCreated ->
+#     @autorun => Meteor.subscribe 'doc_type_module', FlowRouter.getParam('doc_id'), @data.doc_type
+# Template.module.onRendered ->
+#     Meteor.setTimeout ->
+#         $('.ui.accordion').accordion()
+#     , 500
 
-Template.doc_type_module.helpers
-    children: -> Docs.find { type:@doc_type}
+# Template.doc_type_module.helpers
+#     children: -> Docs.find { type:@doc_type}
 
-    view_mode_template: ->
-        console.log @
+#     view_mode_template: ->
+#         console.log @
         
         
 
@@ -725,21 +725,44 @@ Template.modules.helpers
             tags:$all:split_tags
 
     
-# Template.module.onRendered ->
-#     Meteor.setTimeout ->
-#         $('.shape').shape();
-#     , 500
+Template.module.onRendered ->
+    Meteor.setTimeout ->
+        $('.accordion').accordion();
+    , 500
 
 Template.module.onCreated ->
     @autorun => Meteor.subscribe 'module_children', @data.children_doc_type
+    @autorun -> Meteor.subscribe 'active_customers', Session.get('query'),parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
 Template.module.helpers
+    sort_descending: ->
+        slug = if @ev_subset then "ev.#{@slug}" else @slug
+        if Session.equals('sort_direction', 1) and Session.equals('sort_key', slug) 
+            return true
+    sort_ascending: ->
+        slug = if @ev_subset then "ev.#{@slug}" else @slug
+        if Session.equals('sort_direction', -1) and Session.equals('sort_key', slug)
+            return true
+
     children: -> 
         Docs.find { type:@children_doc_type }, limit:parseInt(@limit)
     schema_doc: ->
         Docs.findOne
             type:'schema'
             slug:@children_doc_type
+        
+    module_segment_class: -> if @published then '' else 'disabled'    
+        
+        
+    can_view_module: ->
+        if @published
+            true
+        else
+            if Meteor.user() and Meteor.user().roles and 'admin' in Meteor.user().roles and Session.get('editing_mode')
+                true
+            else
+                false
         
     schema_doc_fields: -> 
         module_doc = Template.parentData(1)
@@ -785,8 +808,15 @@ Template.module.helpers
     is_comments: -> @view_mode is 'comments'    
         
 Template.module.events
-    'click .toggle_editing': (e,t)->
-        $(e.currentTarget).closest('.shape').shape('flip over');
+    # 'click .toggle_editing': (e,t)->
+    #     $(e.currentTarget).closest('.shape').shape('flip over');
+    'click .sort_by': (e,t)->
+        slug = if @ev_subset then "ev.#{@slug}" else @slug
+        Session.set 'sort_key', slug
+        if Session.equals 'sort_direction', -1
+            Session.set 'sort_direction', 1
+        else
+            Session.set 'sort_direction', -1
 
     
 Template.modules.events
@@ -810,6 +840,16 @@ Template.edit_module_text_field.events
             #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
             #     else
             #         Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
+    
+Template.set_key_value.events
+    'click .set_key_value': ->
+        Docs.update Template.parentData()._id,
+            { $set: "#{@key}": @value }
+    
+Template.set_key_value.helpers
+    set_value_button_class: -> 
+        if Template.parentData()["#{@key}"] is @value then 'active' else 'basic'
+
     
 Template.edit_module_text_field.helpers 
     module_key_value: () -> 

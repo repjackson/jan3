@@ -16,34 +16,6 @@ template(name='nav')
                 i.icon
                     +icon name='broom'
                 .mobile.hidden Services
-        if is_office
-            // with currentUser.users_customer.parent_franchisee.parent_office
-            if my_office
-                a.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
-                    i.icon
-                        +icon name='building'
-                    .mobile.hidden &nbsp; Dashboard
-                    // .mobile.hidden &nbsp; #{my_office.ev.MASTER_LICENSEE}
-            a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
-                i.icon
-                    +icon name='error'
-                .mobile.hidden &nbsp; Incidents
-            a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
-                i.icon
-                    +icon name='groups'
-                .mobile.hidden &nbsp; Employees
-            a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
-                i.icon
-                    +icon name='business'
-                .mobile.hidden &nbsp; Franchisees
-            a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
-                i.icon
-                    +icon name='customer-support'
-                .mobile.hidden &nbsp; Customers
-            a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
-                i.icon
-                    +icon name='settings'
-                .mobile.hidden &nbsp; Settings
         if is_admin
             a.item(href='/admin' data-content='Admin' class="{{ isActiveRoute 'admin'}}")
                 i.icon
@@ -67,12 +39,40 @@ template(name='nav')
                 .mobile.hidden Franchisees
             a.mobile.hidden.item(href='/customers' data-content='All Customers' class="{{ isActiveRoute 'customers'}}")
                 i.icon
-                    +icon name='customer-support'
+                    +icon name='headset'
                 .mobile.hidden Customers
             a.mobile.hidden.item(href='/services' data-content='All Services' class="{{ isActiveRoute 'services'}}")
                 i.icon
                     +icon name='broom'
                 .mobile.hidden Services
+        else if is_office
+            // with currentUser.users_customer.parent_franchisee.parent_office
+            if my_office
+                a.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
+                    i.icon
+                        +icon name='building'
+                    .mobile.hidden &nbsp; Dashboard
+                    // .mobile.hidden &nbsp; #{my_office.ev.MASTER_LICENSEE}
+            a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
+                i.icon
+                    +icon name='error'
+                .mobile.hidden &nbsp; Incidents
+            a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
+                i.icon
+                    +icon name='groups'
+                .mobile.hidden &nbsp; Employees
+            a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
+                i.icon
+                    +icon name='business'
+                .mobile.hidden &nbsp; Franchisees
+            a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
+                i.icon
+                    +icon name='headset'
+                .mobile.hidden &nbsp; Customers
+            a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
+                i.icon
+                    +icon name='settings'
+                .mobile.hidden &nbsp; Settings
         .right.menu
             if is_dev
                 a#toggle_dev.black.inverted.item(href='#')
@@ -180,7 +180,7 @@ template(name='left_sidebar')
                 | &nbsp; Franchisees
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
                 i.icon
-                    +icon name='customer-support'
+                    +icon name='headset'
                 | &nbsp; Customers
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
                 i.icon
