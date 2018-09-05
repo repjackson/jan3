@@ -10,7 +10,8 @@ template(name='users')
             .four.wide.right.aligned.column 
                 +link_button link='/user/add' label='Add User' icon='plus'
         .row
-            +table_header stat_type='total'
+            .sixteen.wide.column
+                +table_header stat_type='total'
         .row
             .sixteen.wide.column 
                 table.ui.striped.fixed.table

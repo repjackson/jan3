@@ -147,7 +147,6 @@ Docs.helpers
             
 
 Meteor.methods
-
     move: (doc_id, array, from_index, to_index)->
         array.splice(to_index, 0, array.splice(from_index, 1)[0] );
         console.log array

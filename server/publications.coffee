@@ -37,7 +37,44 @@ Meteor.publish 'active_customers', (query=null, limit=100, sort_key='timestamp',
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
         
+        
+Meteor.publish 'module_docs', (
+    module_doc_id, 
+    filter_key=null, 
+    filter_value=null, 
+    query=null, 
+    limit=100, 
+    sort_key='timestamp', 
+    sort_direction=1, 
+    skip=0)->
+        module = Docs.findOne module_doc_id
+        
+        match = {}
+        match.type = module.children_doc_type
+        if filter_key then match["#{filter_key}"] = filter_value
+        console.log match
+        
+        Docs.find match, limit:5
     
+    
+        # if query
+        #     Docs.find {
+        #         type:module.children_doc_type
+        #         $text: $search: query
+        #     },{
+        #         skip: skip
+        #         limit:limit
+        #         sort:"#{sort_key}":parseInt("#{sort_direction}")
+        #     }
+        # else
+        #     Docs.find {
+        #         match
+        #     },{
+        #         skip: skip
+        #         limit:limit
+        #         sort:"#{sort_key}":parseInt("#{sort_direction}")
+        #     }
+            
 
 Meteor.publish 'demo_type', (type)->
     Docs.find {type:type}, limit:5

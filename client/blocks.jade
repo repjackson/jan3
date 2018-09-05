@@ -752,7 +752,7 @@ template(name='module')
                                             tr
                                                 td
                                                     i.move_down.chevron.up.link.icon
-                                                    i.move_up.chevron.down.link.icon
+                                                    // i.move_up.chevron.down.link.icon
                                                 td #{label}
                                                 td #{key}
                                                 td 
@@ -761,17 +761,15 @@ template(name='module')
                                                 td 
                                                     i.eye.icon
                                                 td 
-                                                    i.remove_schema_field.remove.icon
+                                                    i.remove_schema_field.remove.link.icon
 
                             div Available Fields
                             each schema_doc.fields
                                 if show_schema_field
                                     .add_schema_field.ui.compact.button #{title}
                             div Doc Type
-                                +set_key_value key='children_doc_type' value='incident' label='Incidents'
-                                +set_key_value key='children_doc_type' value='customer' label='Customers'
-                                +set_key_value key='children_doc_type' value='franchisee' label='Franchisees'
-                                +set_key_value key='children_doc_type' value='service' label='Services'
+                                each schemas
+                                    +set_key_value key='children_doc_type' value=slug label=title
                             div View Mode
                                 +set_key_value key='view_mode' value='table' label='Table'
                                 +set_key_value key='view_mode' value='list' label='List'

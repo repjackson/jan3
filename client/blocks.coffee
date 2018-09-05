@@ -731,11 +731,22 @@ Template.module.onRendered ->
     , 500
 
 Template.module.onCreated ->
-    @autorun => Meteor.subscribe 'module_children', @data.children_doc_type
-    @autorun -> Meteor.subscribe 'active_customers', Session.get('query'),parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    Meteor.subscribe 'type', 'schema'
+    @autorun => Meteor.subscribe 'module_docs', 
+        @data._id, 
+        @data.filter_key, 
+        @data.filter_value, 
+        Session.get('query'), 
+        parseInt(Session.get('page_size')),
+        Session.get('sort_key'), 
+        Session.get('sort_direction'), 
+        parseInt(Session.get('skip'))
 
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
+    
+    
 Template.module.helpers
+    schemas: -> Docs.find type:'schema'
     sort_descending: ->
         slug = if @ev_subset then "ev.#{@slug}" else @slug
         if Session.equals('sort_direction', 1) and Session.equals('sort_key', slug) 
@@ -852,6 +863,7 @@ Template.module.events
             $addToSet: fields: new_field_object
 
     'click .add_schema_field': ->
+        console.log @
         module = Template.currentData()
         new_field_object = {
             key:@slug
@@ -895,12 +907,17 @@ Template.edit_module_text_field.events
     
 Template.set_key_value.events
     'click .set_key_value': ->
-        Docs.update Template.parentData()._id,
+        console.log @
+        console.log Template.currentData()
+        console.log Template.parentData(1)
+        console.log Template.parentData(2)
+        
+        Docs.update Template.parentData(2)._id,
             { $set: "#{@key}": @value }
     
 Template.set_key_value.helpers
     set_value_button_class: -> 
-        if Template.parentData()["#{@key}"] is @value then 'active' else 'basic'
+        if Template.parentData(2)["#{@key}"] is @value then 'active' else 'basic'
 
     
 Template.edit_module_text_field.helpers 

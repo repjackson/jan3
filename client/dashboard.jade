@@ -68,7 +68,6 @@ template(name='dashboard')
                                                 +icon name='send'
             .row
                 .sixteen.wide.column
-                    +customer_incidents_widget
                     +modules tags='customer,dashboard,incidents'
             .row
                 .sixteen.wide.column
@@ -79,12 +78,18 @@ template(name='dashboard')
                     +modules tags='customer,dashboard,office,contacts'
             .centered.row
                 .sixteen.wide.column
-                    .ui.secondary.segment
-                        +customer_special_services
-            //     .five.wide.column
-            //         +user_franchise_card
-            //     .five.wide.column
-            //         +user_office_card
+                    h3.ui.header 
+                        +icon name='broom'
+                        |Special Services
+                    with currentUser.users_customer
+                        .ui.horizontal.divided.list
+                            // .item #{customer_contact_person}
+                            if customer_contact_email
+                                .item #{customer_contact_email}
+                            .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
+                            .item Days of Service: #{customer_days_service_formatted}
+                            .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
+                    +modules tags='customer,dashboard,office,special_services'
 
     
 template(name='customer_menu')
@@ -110,126 +115,7 @@ template(name='customer_menu')
         //         +icon name='help'
         //     | &nbsp; Help
 
-template(name='dashboard_services_widget')
-    .ui.secondary.segment
-        .ui.header 
-            +iconsmall name='broom'
-            |Services Offered by #{currentUser.users_office.ev.MASTER_LICENSEE}
-        .ui.three.cards
-            each services_offered
-                +service_card     
                 
-template(name='dashboard_consumables_widget')
-    .ui.secondary.segment
-        .ui.header 
-            +iconsmall name='toilet-paper'
-            |Consumables
-        .ui.cards
-            each products_available
-                +product_card     
-                
-// template(name='my_cleaning_schedule')
-//     .ui.fluid.accordion
-//         .active.title
-//             h3.ui.header 
-//                 |Cleaning Schedule
-//                 i.dropdown.icon
-//         .active.content
-//             #cleaning_schedule
-//                 +fullcalendar cal_options
-            
-        
-// template(name='office_contact_cards')
-//     h3.ui.header 
-//         +icon name='contacts'
-//         // i.big.icons
-//         //     i.users.icon
-//         //     i.corner.building.icon
-//         |Office Contacts
-//     .ui.stackable.centered.seven.cards
-//         each office_contacts
-//             +office_contact_card
-
-// template(name='office_contact_card')
-//     .ui.card
-//         .image
-//             a(href="/user/#{username}")
-//                 img.ui.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
-//         .content
-//             a(href="/user/#{username}")
-//                 .ui.header #{profile.first_name} #{profile.last_name}
-//                 .meta #{username}
-//         .content
-//             .ui.small.list
-//                 a.item(href="mailto:#{email}" target='_window' title="Email #{name}")
-//                     |#{email}
-//                 .item #{ev.JOB_TITLE}
-//                 .item #{ev.TELE_CELL} #{profile.phone}
-                
-        // +view_button
-
-
-template(name='customer_incidents_widget')
-    h3.ui.header
-        // i.exclamation.circle.icon
-        +icon name='error'
-        | #{currentUser.users_customer.ev.CUST_NAME}'s Incidents
-    table.ui.striped.fixed.table
-        thead
-            tr
-                th.one.wide #
-                th Type
-                th Details
-                th Service Date
-                th Status
-                th Submitted
-                th Assigned To
-                // th.four.wide Last Event
-                th.one.wide View 
-        tbody
-            each customer_incidents
-                tr
-                    td #{incident_number}
-                    td
-                        +incident_type_label
-                    td #{incident_details}
-                    td #{service_date}
-                    td 
-                        +status_template
-                    td
-                        +submitted_template
-                    td
-                        +associated_users
-                    // td
-                    //     +small_doc_history
-                    td
-                        +view_button
-        tfoot
-            tr
-                th(colspan='8')
-                    if pages
-                        .ui.right.floated
-                        .ui.right.floated.pagination.menu
-                            each pages
-                                a.set_page_number.item(class=pagination_item_class) #{number}
-                    |#{skip_amount}-#{end_result} of #{count_amount}
-
-template(name='customer_special_services')
-    h3.ui.header 
-        // i.paint.brush.icon
-        +icon name='broom'
-        |Special Services
-    with currentUser.users_customer
-        .ui.horizontal.divided.list
-            // .item #{customer_contact_person}
-            if customer_contact_email
-                .item #{customer_contact_email}
-            .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
-            .item Days of Service: #{customer_days_service_formatted}
-            .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
-    +modules tags='customer,dashboard,special_services'
-    
-
 template(name='dashboard_office_contacts_list')
     h3.ui.header 
         +icon name='organization'

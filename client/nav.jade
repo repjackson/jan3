@@ -2,20 +2,6 @@ template(name='nav')
     .ui.inverted.blue.top.attached.menu
         a.toggle_left_sidebar.icon.item 
             i.bars.icon
-        if is_customer
-            a.item(href='/')
-                // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                i.icon
-                    +icon name='dashboard'
-                .mobile.hidden &nbsp; Dashboard
-            a.mobile.hidden.item(href='/customer_incidents' class="{{ isActiveRoute 'customer_incidents'}}")
-                i.icon
-                    +icon name='error'
-                .mobile.hidden &nbsp; My Incidents
-            a.mobile.hidden.item(href='/services' class="{{ isActiveRoute 'services'}}")
-                i.icon
-                    +icon name='broom'
-                .mobile.hidden Services
         if is_admin
             a.item(href='/admin' data-content='Admin' class="{{ isActiveRoute 'admin'}}")
                 i.icon
@@ -42,6 +28,20 @@ template(name='nav')
                     +icon name='headset'
                 .mobile.hidden Customers
             a.mobile.hidden.item(href='/services' data-content='All Services' class="{{ isActiveRoute 'services'}}")
+                i.icon
+                    +icon name='broom'
+                .mobile.hidden Services
+        else if is_customer
+            a.item(href='/')
+                // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                i.icon
+                    +icon name='dashboard'
+                .mobile.hidden &nbsp; Dashboard
+            a.mobile.hidden.item(href='/customer_incidents' class="{{ isActiveRoute 'customer_incidents'}}")
+                i.icon
+                    +icon name='error'
+                .mobile.hidden &nbsp; My Incidents
+            a.mobile.hidden.item(href='/services' class="{{ isActiveRoute 'services'}}")
                 i.icon
                     +icon name='broom'
                 .mobile.hidden Services
@@ -74,13 +74,13 @@ template(name='nav')
                     +icon name='settings'
                 .mobile.hidden &nbsp; Settings
         .right.menu
-            if is_dev
-                a#toggle_dev.black.inverted.item(href='#')
-                    i.icon
-                        if dev_mode
-                            +icon name='toggle-on'
-                        else
-                            +icon name='toggle-off'
+            // if is_dev
+            //     a#toggle_dev.black.inverted.item(href='#')
+            //         i.icon
+            //             if dev_mode
+            //                 +icon name='toggle-on'
+            //             else
+            //                 +icon name='toggle-off'
             if is_editor
                 a#toggle_editing.item(href='#' title='Toggle Editing Mode')
                     i.icon

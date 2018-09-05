@@ -87,7 +87,7 @@ Template.incidents.onCreated ->
     Session.set('page_number',1)
     Session.set('page_size',10)
     Session.set('skip',0)
-    @autorun -> Meteor.subscribe 'incidents', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    # @autorun -> Meteor.subscribe 'incidents', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'count', 'incident'
 
 
