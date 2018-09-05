@@ -734,6 +734,7 @@ Template.module.onCreated ->
         Session.get('sort_key'), 
         Session.get('sort_direction'), 
         parseInt(Session.get('skip'))
+        FlowRouter.getParam('doc_id')
 
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
     

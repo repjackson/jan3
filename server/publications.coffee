@@ -46,9 +46,10 @@ Meteor.publish 'module_docs', (
     limit=100, 
     sort_key='timestamp', 
     sort_direction=1, 
-    skip=0)->
+    skip=0,
+    page_doc_id)->
         module = Docs.findOne module_doc_id
-        
+        page_doc = Docs.findOne page_doc_id
         match = {}
         match.type = module.children_doc_type
         
@@ -58,18 +59,42 @@ Meteor.publish 'module_docs', (
         console.log 'initial filter',filter_value
         calculated_value =
             switch filter_value
-                when "{currentuser_customer_jpid}" 
+                # user
+                when "{current_user_customer_jpid}" 
                     Meteor.user().customer_jpid
-                when "{currentuser_customer_name}"
+                when "{current_user_office_jpid}" 
+                    Meteor.user().office_jpid
+                when "{current_user_franchisee_jpid}" 
+                    Meteor.user().franchisee_jpid
+                when "{current_user_customer_name}"
                     found_customer = Docs.findOne
                         type:'customer'
                         "ev.ID":Meteor.user().customer_jpid
                     found_customer.ev.CUST_NAME
-                when "{currentuser_office_name}"
-                    found_customer = Docs.findOne
+                when "{current_user_office_name}"
+                    found_office = Docs.findOne
                         type:'office'
                         "ev.ID":Meteor.user().office_jpid
-                    found_customer.ev.MASTER_LICENSEE
+                    found_office.ev.MASTER_LICENSEE
+                when "{current_user_franchisee_name}"
+                    found_franchisee = Docs.findOne
+                        type:'franchisee'
+                        "ev.ID":Meteor.user().franchisee_jpid
+                    found_franchisee.ev.FRANCHISEE
+                # page
+                when "{current_page_customer_jpid}" 
+                    console.log page_doc.ev.ID 
+                    page_doc.ev.ID 
+                when "{current_page_office_jpid}" 
+                    page_doc.ev.ID 
+                when "{current_page_franchisee_jpid}" 
+                    page_doc.ev.ID 
+                when "{current_page_customer_name}"
+                    page_doc.ev.CUST_NAME
+                when "{current_page_office_name}"
+                    page_doc.ev.MASTER_LICENSEE
+                when "{current_page_franchisee_name}"
+                    page_doc.ev.FRANCHISEE
                 else filter_value
         if filter_key then match["#{filter_key}"] = calculated_value
         console.log 'calc value', calculated_value
