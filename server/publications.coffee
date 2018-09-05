@@ -47,13 +47,14 @@ Meteor.publish 'module_docs', (
     sort_key='timestamp', 
     sort_direction=1, 
     skip=0,
+    status
     page_doc_id)->
         module = Docs.findOne module_doc_id
         page_doc = Docs.findOne page_doc_id
         match = {}
         match.type = module.children_doc_type
         
-        
+        if status then match["ev"]["ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
         # console.log limit
         # console.log 'initial filter',filter_value

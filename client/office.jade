@@ -97,39 +97,39 @@ template(name='office_dashboard')
 template(name='office_customers')
     +office_header
     +modules tags='office,page,customers,section'
-    .ui.padded.grid
-        .middle.aligned.row
-            +table_header doc_type='customer' stat_type='office_customers'
-        .centered.row
-            .sixteen.wide.column
-                table.ui.striped.fixed.table
-                    thead
-                        +sort_column_header key='ev.ID' label='JPID' classes='one wide'
-                        +sort_column_header key='ev.CUST_NAME' label='Customer Name'
-                        +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
-                        th Contact
-                        +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
-                        +sort_column_header key='ev.ADDR_STREET' label='Address'
-                        // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
-                        // th.one.wide View
-                    tbody
-                        each office_customers
-                            tr
-                                td.selectable(title="View #{ev.CUST_NAME} Customer")
-                                    a(href="/v/#{_id}") #{ev.ID}
-                                td.selectable(title="View #{ev.CUST_NAME} Customer")
-                                    a(href="/v/#{_id}") #{ev.CUST_NAME}
-                                td 
-                                    div #{ev.CUST_CONT_PERSON}
-                                td 
-                                    div #{ev.CUST_CONTACT_EMAIL}
-                                    div #{ev.TELEPHONE}
-                                td #{ev.FRANCHISEE}
-                                td #{ev.ADDR_STREET}
-                                // td #{ev.TIMESTAMP}
-                                // td 
-                                //     +view_button
-                    +table_footer columns='6' doc_type='customer' stat_type='office_customers'
+    // .ui.padded.grid
+    //     .middle.aligned.row
+    //         +table_header doc_type='customer' stat_type='office_customers'
+    //     .centered.row
+    //         .sixteen.wide.column
+    //             table.ui.striped.fixed.table
+    //                 thead
+    //                     +sort_column_header key='ev.ID' label='JPID' classes='one wide'
+    //                     +sort_column_header key='ev.CUST_NAME' label='Customer Name'
+    //                     +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
+    //                     th Contact
+    //                     +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
+    //                     +sort_column_header key='ev.ADDR_STREET' label='Address'
+    //                     // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
+    //                     // th.one.wide View
+    //                 tbody
+    //                     each office_customers
+    //                         tr
+    //                             td.selectable(title="View #{ev.CUST_NAME} Customer")
+    //                                 a(href="/v/#{_id}") #{ev.ID}
+    //                             td.selectable(title="View #{ev.CUST_NAME} Customer")
+    //                                 a(href="/v/#{_id}") #{ev.CUST_NAME}
+    //                             td 
+    //                                 div #{ev.CUST_CONT_PERSON}
+    //                             td 
+    //                                 div #{ev.CUST_CONTACT_EMAIL}
+    //                                 div #{ev.TELEPHONE}
+    //                             td #{ev.FRANCHISEE}
+    //                             td #{ev.ADDR_STREET}
+    //                             // td #{ev.TIMESTAMP}
+    //                             // td 
+    //                             //     +view_button
+    //                 +table_footer columns='6' doc_type='customer' stat_type='office_customers'
 
 
 template(name='office_incidents')
@@ -184,8 +184,8 @@ template(name='office_incidents')
 template(name='office_employees')
     +office_header
     .ui.padded.grid
-        .middle.aligned.row
-            +table_header stat_type='office_employees'   
+        // .middle.aligned.row
+        //     +table_header stat_type='office_employees'   
         .centered.row
             .sixteen.wide.column
                 table.ui.striped.fixed.single.line.table

@@ -8,14 +8,14 @@ template(name='accounts_layout')
                     +Template.dynamic template=main
 
 template(name='accounts_nav')
-    #nav.ui.five.item.stackable.inverted.blue.menu
+    #nav.ui.five.item.stackable.inverted.blue.large.menu
         a.item(href='/')
             img.ui.avatar.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
             | &nbsp; Home
         +menu_item link='/login' label='Login' icon='internal' name='login'
         +menu_item link='/reset_password' label='Reset Password' icon='forgot-password' name='reset_password'
-        +menu_item link='/register_customer' label='Register Customer' icon='add-user-group-woman-man' name='register_customer'
-        +menu_item link='/register_office' label='Register Office' icon='add-user-group-woman-man' name='register_office'
+        +menu_item link='/register_customer' label='Add Customer' icon='add-user-group-woman-man' name='register_customer'
+        +menu_item link='/register_office' label='Add Office' icon='add-user-group-woman-man' name='register_office'
 
 template(name='menu_item')
     a.item(href=link class="{{ isActiveRoute name }}")
@@ -72,20 +72,20 @@ template(name='login')
                                     +icon name='play' classes='ui inline image'
                             if currentUser
                                 |You are logged in as #{currentUser.username}
-                .ui.horizontal.divider or login as
+                .ui.horizontal.divider or demo
                 .ui.three.column.stackable.grid
                     .column
                         #login_demo_customer.ui.fluid.large.button
-                            +iconsmall name='online-support' classes='ui inline image'
-                            |Demo Customer
+                            +iconsmall name='headset' classes='ui inline image'
+                            | &nbsp; Customer
                     .column
                         #login_demo_office.ui.fluid.large.button
                             +iconsmall name='building' classes='ui inline image'
-                            |Demo Office
+                            | &nbsp; Office
                     .column
                         #login_demo_admin.ui.fluid.large.button
                             +iconsmall name='user-shield' classes='ui inline image'
-                            |Demo Admin
+                            | &nbsp; Admin
                
                 
 template(name='register_customer')

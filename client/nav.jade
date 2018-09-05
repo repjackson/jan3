@@ -53,26 +53,26 @@ template(name='nav')
                         +icon name='building'
                     .mobile.hidden &nbsp; Dashboard
                     // .mobile.hidden &nbsp; #{my_office.ev.MASTER_LICENSEE}
-            a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
+            a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}" title='Office Incidents')
                 i.large.icon
                     +icon name='error'
-                .mobile.hidden &nbsp; Incidents
-            a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
+                // .mobile.hidden &nbsp; Incidents
+            a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}" title='Office Employees')
                 i.large.icon
                     +icon name='groups'
-                .mobile.hidden &nbsp; Employees
-            a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
+                // .mobile.hidden &nbsp; Employees
+            a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}" title='Office Franchisees')
                 i.large.icon
                     +icon name='business'
-                .mobile.hidden &nbsp; Franchisees
-            a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
+                // .mobile.hidden &nbsp; Franchisees
+            a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}" title='Office Customers')
                 i.large.icon
                     +icon name='headset'
-                .mobile.hidden &nbsp; Customers
-            a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
+                // .mobile.hidden &nbsp; Customers
+            a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}" title='Office Settings')
                 i.large.icon
                     +icon name='settings'
-                .mobile.hidden &nbsp; Settings
+                // .mobile.hidden &nbsp; Settings
         .right.menu
             // if is_dev
             //     a#toggle_dev.black.inverted.item(href='#')
@@ -100,7 +100,7 @@ template(name='nav')
                     else
                         i.user.icon
                     .mobile.hidden &nbsp; #{currentUser.username}
-                a#logout.ui.item(href='#' data-content='Log Out') 
+                a#logout.ui.item(href='#') 
                     i.large.icon
                         +icon name='logout-rounded'
             else

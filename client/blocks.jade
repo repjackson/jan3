@@ -742,6 +742,10 @@ template(name='module')
                                     i.filter.icon
                                     |Filter
                                 h5 
+                                    |Status
+                                +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
+                                +set_key_value key='filter_status' value="" label='All'
+                                h5 
                                     i.key.icon
                                     |Key
                                 +set_key_value key='filter_key' value='_id' label='Portal Doc Id'
@@ -821,6 +825,10 @@ template(name='module')
                                     +set_key_value key='table_stat_type' value='total' label='Total'
                                     +set_key_value key='table_stat_type' value='active' label='Active'
                                     +set_key_value key='table_stat_type' value='customer' label='Customer'
+                                    +set_key_value key='table_stat_type' value='office_customers' label='Office Customers'
+                                    +set_key_value key='table_stat_type' value='office_incidents' label='Office Incidents'
+                                    +set_key_value key='table_stat_type' value='office_employees' label='Office Employees'
+                                    +set_key_value key='table_stat_type' value='office_franchisees' label='Office Franchisees'
                                     div
                                     +set_key_value key='view_table_header' value=true label='View Header'
                                     +set_key_value key='view_table_header' value=false label='Hide Header'

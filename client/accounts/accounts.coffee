@@ -25,7 +25,7 @@ Template.login.events
                 Meteor.call 'redirect_office_after_login', (err,res)->
                     if 'office' in res.user.roles
                         Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
-                        FlowRouter.go "/office/#{res.office._id}/incidents"        
+                        FlowRouter.go "/office/#{res.office._id}"        
                     else if 'customer' in res.user.roles
                         Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                         FlowRouter.go "/"    
@@ -46,7 +46,7 @@ Template.login.events
                     Meteor.call 'redirect_office_after_login', (err,res)->
                         # console.log res
                         if 'office' in res.user.roles
-                            FlowRouter.go "/office/#{res.office._id}/incidents"        
+                            FlowRouter.go "/office/#{res.office._id}/"        
                         else if 'customer' in res.user.roles
                             Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                             FlowRouter.go "/"        
@@ -64,7 +64,7 @@ Template.login.events
                     Meteor.call 'redirect_office_after_login', (err,res)->
                         # console.log res
                         if 'office' in res.user.roles
-                            FlowRouter.go "/office/#{res.office._id}/incidents"        
+                            FlowRouter.go "/office/#{res.office._id}/"        
                         else if 'customer' in res.user.roles
                             Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                             FlowRouter.go "/"        
@@ -334,7 +334,7 @@ Template.register_office.events
             else
                 Bert.alert "Registered new office user: #{username}. Redirecting to office page.", 'success', 'growl-bottom-right'
                 # Meteor.call 
-                FlowRouter.go "/office/#{office_doc._id}/incidents"                
+                FlowRouter.go "/office/#{office_doc._id}/"                
         )
     
     'keyup #username': (e,t)->

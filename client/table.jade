@@ -52,7 +52,7 @@ template(name='table_footer')
                             .set_100.ui.button(class="{{page_size_button_class '100'}}" title='View 100 per page') 100
 
 template(name='table_header')
-    .ui.grid
+    .ui.middle.aligned.grid
         .four.wide.column
             +query_input
         if no_query

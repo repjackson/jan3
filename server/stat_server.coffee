@@ -134,7 +134,7 @@ Meteor.methods
             office_franchisee_count = 
                 Docs.find({
                     "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
-                    
+                    "ev.ACCOUNT_STATUS": 'ACTIVE'
                     type: "franchisee"
                 }).count()
             Stats.update {
@@ -149,6 +149,7 @@ Meteor.methods
             office_customer_count = 
                 Docs.find({
                     "ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE
+                    "ev.ACCOUNT_STATUS": 'ACTIVE'
                     type:'customer'
                 }).count()
             Stats.update({

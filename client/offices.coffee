@@ -73,22 +73,6 @@ Template.office_customers.onCreated ->
     Session.set 'skip',0
     
 
-# Template.office_customers.events
-    # 'click #refresh_ny_customers': ->
-    #     Meteor.call 'sync_ny_customers', ->
-Template.office_customers.helpers    
-    office_customers: ->  
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        if page_office
-            Docs.find {
-                type: "customer"
-                "ev.ACCOUNT_STATUS": 'ACTIVE'
-                "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
-            },{ sort: "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
-
-
-
-
 Template.office_incidents.onCreated ->
     # @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_incident_count', FlowRouter.getParam('doc_id')
@@ -100,24 +84,6 @@ Template.office_incidents.onRendered ->
     Meteor.setTimeout ->
         $('img').popup()
     , 1000
-
-
-Template.office_incidents.helpers    
-    office_incidents: ->  
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        if page_office
-            Docs.find {
-                incident_office_name: page_office.ev.MASTER_LICENSEE
-                type: "incident"
-            },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
-
-    level_cell_class: ->
-        switch @level
-            when 1 then 'positive'
-            when 2 then 'warning'
-            when 3 then 'warning'
-            when 4 then 'negative'
-
 
 
 Template.office_employees.onCreated ->
@@ -150,17 +116,6 @@ Template.office_franchisees.onCreated ->
     Session.set('page_size',10)
     Session.set('skip',0)
     Session.set 'page_number', 1
-
-
-Template.office_franchisees.helpers  
-    office_franchisees: ->
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        if page_office
-            Docs.find {
-                type: "franchisee"
-                "ev.MASTER_LICENSEE": page_office.ev.MASTER_LICENSEE
-            },{ sort: "#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
-
 
 
 Template.office_service_settings.onCreated ->
