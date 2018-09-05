@@ -1,111 +1,111 @@
 template(name='nav')
-    .ui.inverted.blue.top.attached.menu
+    .ui.inverted.blue.top.attached.borderless.menu
         a.toggle_left_sidebar.icon.item 
             i.bars.icon
         if is_admin
-            a.item(href='/admin' data-content='Admin' class="{{ isActiveRoute 'admin'}}")
-                i.icon
+            a.item(href='/admin' data-content='Admin' class="{{ isActiveRoute 'admin'}}" title='Admin')
+                i.large.icon
                     +icon name='user-shield'
-                .mobile.hidden &nbsp; Admin
-            a.mobile.hidden.item(href='/incidents' data-content='All Incidents' class="{{ isActiveRoute 'incidents'}}")
-                i.icon
+                // .mobile.hidden &nbsp; Admin
+            a.mobile.hidden.item(href='/incidents' class="{{ isActiveRoute 'incidents'}}" title='Incidents')
+                i.large.icon
                     +icon name='error'
-                .mobile.hidden &nbsp; Incidents
-            a.mobile.hidden.item(href='/users' data-content='All Users' class="{{ isActiveRoute 'users'}}")
-                i.icon
+                // .mobile.hidden &nbsp; Incidents
+            a.mobile.hidden.item(href='/users' class="{{ isActiveRoute 'users'}}" title='Users')
+                i.large.icon
                     +icon name='groups'
-                .mobile.hidden &nbsp; Users
-            a.mobile.hidden.item(href='/offices' data-content='All Offices' class="{{ isActiveRoute 'offices'}}")
-                i.icon
+                // .mobile.hidden &nbsp; Users
+            a.mobile.hidden.item(href='/offices' class="{{ isActiveRoute 'offices'}}" title='Offices')
+                i.large.icon
                     +icon name='skyscrapers'
-                .mobile.hidden Offices
-            a.mobile.hidden.item(href='/franchisees' data-content='All Franchisees' class="{{ isActiveRoute 'franchisees'}}")
-                i.icon
+                // .mobile.hidden Offices
+            a.mobile.hidden.item(href='/franchisees' class="{{ isActiveRoute 'franchisees'}}" title='Franchisees')
+                i.large.icon
                     +icon name='business'
-                .mobile.hidden Franchisees
-            a.mobile.hidden.item(href='/customers' data-content='All Customers' class="{{ isActiveRoute 'customers'}}")
-                i.icon
+                // .mobile.hidden Franchisees
+            a.mobile.hidden.item(href='/customers' class="{{ isActiveRoute 'customers'}}" title='Customers')
+                i.large.icon
                     +icon name='headset'
-                .mobile.hidden Customers
-            a.mobile.hidden.item(href='/services' data-content='All Services' class="{{ isActiveRoute 'services'}}")
-                i.icon
+                // .mobile.hidden Customers
+            a.mobile.hidden.item(href='/services' class="{{ isActiveRoute 'services'}}" title='Services')
+                i.large.icon
                     +icon name='broom'
-                .mobile.hidden Services
+                // .mobile.hidden Services
         else if is_customer
             a.item(href='/')
                 // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                i.icon
+                i.large.icon
                     +icon name='dashboard'
                 .mobile.hidden &nbsp; Dashboard
             a.mobile.hidden.item(href='/customer_incidents' class="{{ isActiveRoute 'customer_incidents'}}")
-                i.icon
+                i.large.icon
                     +icon name='error'
                 .mobile.hidden &nbsp; My Incidents
             a.mobile.hidden.item(href='/services' class="{{ isActiveRoute 'services'}}")
-                i.icon
+                i.large.icon
                     +icon name='broom'
                 .mobile.hidden Services
         else if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
             if my_office
                 a.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
-                    i.icon
+                    i.large.icon
                         +icon name='building'
                     .mobile.hidden &nbsp; Dashboard
                     // .mobile.hidden &nbsp; #{my_office.ev.MASTER_LICENSEE}
             a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
-                i.icon
+                i.large.icon
                     +icon name='error'
                 .mobile.hidden &nbsp; Incidents
             a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
-                i.icon
+                i.large.icon
                     +icon name='groups'
                 .mobile.hidden &nbsp; Employees
             a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
-                i.icon
+                i.large.icon
                     +icon name='business'
                 .mobile.hidden &nbsp; Franchisees
             a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
-                i.icon
+                i.large.icon
                     +icon name='headset'
                 .mobile.hidden &nbsp; Customers
             a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
-                i.icon
+                i.large.icon
                     +icon name='settings'
                 .mobile.hidden &nbsp; Settings
         .right.menu
             // if is_dev
             //     a#toggle_dev.black.inverted.item(href='#')
-            //         i.icon
+            //         i.large.icon
             //             if dev_mode
             //                 +icon name='toggle-on'
             //             else
             //                 +icon name='toggle-off'
             if is_editor
                 a#toggle_editing.item(href='#' title='Toggle Editing Mode')
-                    i.icon
+                    i.large.icon
                         if editing_mode
                             +icon name='toggle-on'
                         else
                             +icon name='toggle-off'
             if is_dev
                 a.item(href='/schemas' data-content='Schemas')
-                    i.icon
+                    i.large.icon
                         +icon name='code'
             if currentUser
                 a.item(href="/user/#{currentUser.username}" data-content='View Profile' class="{{ isActiveRoute 'user_view'}}")
                     if currentUser.profile.image_id
-                        i.icon
+                        i.large.icon
                             img.ui.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
                     .mobile.hidden &nbsp; #{currentUser.username}
                 a#logout.ui.item(href='#' data-content='Log Out') 
-                    i.icon
+                    i.large.icon
                         +icon name='logout-rounded'
             else
                 a.item(href='/login')
-                    i.icon
+                    i.large.icon
                         +icon name='internal'
                     // i.sign.in.alternate.icon
                     | &nbsp; Log In
@@ -150,27 +150,27 @@ template(name='left_sidebar')
                 |Feed
         if is_office
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
-                i.icon
+                i.large.icon
                     +icon name='building'
                 | &nbsp; #{my_office.ev.MASTER_LICENSEE}
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
-                i.icon
+                i.large.icon
                     +icon name='error'
                 | &nbsp; Incidents
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
-                i.icon
+                i.large.icon
                     +icon name='groups'
                 | &nbsp; Employees
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
-                i.icon
+                i.large.icon
                     +icon name='business'
                 | &nbsp; Franchisees
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
-                i.icon
+                i.large.icon
                     +icon name='headset'
                 | &nbsp; Customers
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
-                i.icon
+                i.large.icon
                     +icon name='settings'
                 | &nbsp; Settings
 
@@ -187,7 +187,7 @@ template(name='left_sidebar')
             //     else
             //         i.user.icon
             // a#logout.ui.toggle_sidebar.item(href='#') 
-            //     i.icon
+            //     i.large.icon
             //         +mini_sprite name='edit'
             //     | Sign Out
         if currentUser
@@ -196,6 +196,6 @@ template(name='left_sidebar')
                 i.right.chevron.large.icon
         else
             a.ui.toggle_sidebar.item(href='/login') 
-                // i.icon
+                // i.large.icon
                 //     +mini_sprite name='enter'
                 | Log In

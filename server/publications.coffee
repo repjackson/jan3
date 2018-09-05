@@ -82,6 +82,8 @@ Meteor.publish 'module_docs', (
                         "ev.ID":Meteor.user().franchisee_jpid
                     found_franchisee.ev.FRANCHISEE
                 # page
+                when "{current_page_doc_id}" 
+                    page_doc._id 
                 when "{current_page_customer_jpid}" 
                     console.log page_doc.ev.ID 
                     page_doc.ev.ID 

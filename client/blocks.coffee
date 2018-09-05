@@ -824,6 +824,9 @@ Template.module.helpers
     is_comments: -> @view_mode is 'comments'    
         
 Template.module.events
+    'click .remove_module': ->
+        if confirm 'Remove module?'
+            Docs.remove @_id
     'click .move_up': ->
         current = Template.currentData()
         current_index = current.fields.indexOf @ 
@@ -940,7 +943,7 @@ Template.edit_module_text_field.helpers
 
 Template.set_field_key_value.events 
     'click .set_field_key_value': (e,t)->
-        console.log @
-        console.log Template.currentData()
-        console.log Template.parentData()
+        # console.log @
+        # console.log Template.currentData()
+        # console.log Template.parentData()
         Meteor.call 'update_module_field', Template.parentData(2)._id, Template.parentData(), @key, @value

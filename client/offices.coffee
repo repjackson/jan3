@@ -66,7 +66,7 @@ Template.office_dashboard.helpers
 
 
 Template.office_customers.onCreated ->
-    @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    # @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_customer_count', FlowRouter.getParam('doc_id')
     Session.set 'page_number', 1
     Session.set 'page_size', 10
@@ -90,7 +90,7 @@ Template.office_customers.helpers
 
 
 Template.office_incidents.onCreated ->
-    @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    # @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_incident_count', FlowRouter.getParam('doc_id')
     Session.set 'page_size', 10
     Session.set('skip',0)
@@ -145,7 +145,7 @@ Template.office_employees.helpers
 
 
 Template.office_franchisees.onCreated ->
-    @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    # @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_franchisee_count', FlowRouter.getParam('doc_id')
     Session.set('page_size',10)
     Session.set('skip',0)

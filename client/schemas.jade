@@ -87,31 +87,24 @@ template(name='field_edit')
 
         // +edit_text_field key='key' label='Slug (lowercase title)'
         // +edit_text_field key='type' label='Type'
-        div Table Visible
-        +select_field_key_value key='table_visible' value=true label='True'
-        +select_field_key_value key='table_visible' value=false label='False'
-        div Table Sortable
-        +select_field_key_value key='sortable' value=true label='True'
-        +select_field_key_value key='sortable' value=false label='False'
         div Table Cell Class
-        +select_field_key_value key='table_cell_class' value='active' label='Active'
-        +select_field_key_value key='table_cell_class' value='' label='None'
+            +select_field_key_value key='table_cell_class' value='active' label='Active'
+            +select_field_key_value key='table_cell_class' value='' label='None'
         div Ev Subset
-        +select_field_key_value key='ev_subset' value=true label='True'
-        +select_field_key_value key='ev_subset' value=false label='False'
-        .ui.divider
+            +select_field_key_value key='ev_subset' value=true label='True'
+            +select_field_key_value key='ev_subset' value=false label='False'
         div Field Type
-        +select_field_key_value key='field_type' value='date' label='Date'
-        +select_field_key_value key='field_type' value='text' label='Text'
-        +select_field_key_value key='field_type' value='multiple_reference' label='Multiple References'
-        +select_field_key_value key='field_type' value='single_reference' label='Single Reference'
-        +select_field_key_value key='field_type' value='number' label='Number'
-        +select_field_key_value key='field_type' value='address' label='Address'
-        +select_field_key_value key='field_type' value='phone' label='Phone'
-        +select_field_key_value key='field_type' value='html' label='HTML'
-        +select_field_key_value key='field_type' value='file' label='File'
-        +select_field_key_value key='field_type' value='user_reference' label='User Reference'
-        +select_field_key_value key='field_type' value='email' label='Email'
+            +select_field_key_value key='field_type' value='date' label='Date'
+            +select_field_key_value key='field_type' value='text' label='Text'
+            +select_field_key_value key='field_type' value='multiple_reference' label='Multiple References'
+            +select_field_key_value key='field_type' value='single_reference' label='Single Reference'
+            +select_field_key_value key='field_type' value='number' label='Number'
+            +select_field_key_value key='field_type' value='address' label='Address'
+            +select_field_key_value key='field_type' value='phone' label='Phone'
+            +select_field_key_value key='field_type' value='html' label='HTML'
+            +select_field_key_value key='field_type' value='file' label='File'
+            +select_field_key_value key='field_type' value='user_reference' label='User Reference'
+            +select_field_key_value key='field_type' value='email' label='Email'
         .remove_field.ui.icon.large.button
             i.remove.icon
 
