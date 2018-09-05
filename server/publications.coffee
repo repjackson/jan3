@@ -51,14 +51,29 @@ Meteor.publish 'module_docs', (
         
         match = {}
         match.type = module.children_doc_type
-        if filter_key then match["#{filter_key}"] = filter_value
+        
+        
         if query then match["$text"] = "$search":query
-        # console.log match
         # console.log limit
-        # console.log sort_key
-        # console.log sort_direction
-        # console.log skip
-        # Docs.find match, limit:5
+        console.log 'initial filter',filter_value
+        calculated_value =
+            switch filter_value
+                when "{currentuser_customer_jpid}" 
+                    Meteor.user().customer_jpid
+                when "{currentuser_customer_name}"
+                    found_customer = Docs.findOne
+                        type:'customer'
+                        "ev.ID":Meteor.user().customer_jpid
+                    found_customer.ev.CUST_NAME
+                when "{currentuser_office_name}"
+                    found_customer = Docs.findOne
+                        type:'office'
+                        "ev.ID":Meteor.user().office_jpid
+                    found_customer.ev.MASTER_LICENSEE
+                else filter_value
+        if filter_key then match["#{filter_key}"] = calculated_value
+        console.log 'calc value', calculated_value
+        console.log match
         
     
         Docs.find match,{

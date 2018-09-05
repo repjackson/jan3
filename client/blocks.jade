@@ -725,20 +725,35 @@ template(name='module')
                             h3.ui.header 
                                 +icon name=icon
                                 |Edit #{title}
-                            |Module
-                            +set_key_value key='published' value=true label='Published'
-                            +set_key_value key='published' value=false label='Hidden'
-                            .ui.form
-                                +edit_module_text_field label='Title' key='title'
-                                +edit_module_text_field label='Icon' key='icon'
-                                +edit_module_text_field label='Filter Key' key='filter_key'
-                                +edit_module_text_field label='Filter Value' key='filter_value'
-                                div Current User Customer JPID                                
-                                +set_key_value key='filter_key' value='customer_jpid' label='Set Filter Key to Customer JPID'
-                                +set_key_value key='filter_value' value=currentUser.customer_jpid label='Current User Customer JPID'
-                                div Current User Office JPID                                
-                                +set_key_value key='filter_key' value='office_jpid' label='Set Filter Key to Office JPID'
-                                +set_key_value key='filter_value' value=currentUser.office_jpid label='Current User office JPID'
+                            .ui.stackable.two.column.grid
+                                .column
+                                    |Module
+                                    +set_key_value key='published' value=true label='Published'
+                                    +set_key_value key='published' value=false label='Hidden'
+                                    .ui.form
+                                        +edit_module_text_field label='Title' key='title'
+                                        +edit_module_text_field label='Icon' key='icon'
+                                .column
+                                    .ui.form
+                                        h4
+                                            i.filter.icon
+                                            |Filter
+                                        h5 
+                                            i.key.icon
+                                            |Key
+                                        +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
+                                        +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
+                                        +set_key_value key='filter_key' value='office_jpid' label='Office JPID'
+                                        +set_key_value key='filter_key' value='customer_jpid' label='Customer JPID'
+                                        +edit_module_text_field label='Filter Key' key='filter_key'
+                                        h5 
+                                            i.terminal.icon
+                                            |Value
+                                        +set_key_value key='filter_value' value='{currentuser_customer_name}' label='Current User Customer Name'
+                                        +set_key_value key='filter_value' value='{currentuser_customer_jpid}' label='Current User Customer JPID'
+                                        +set_key_value key='filter_value' value='{currentuser_office_jpid}' label='Current User Office JPID'
+                                        +set_key_value key='filter_value' value='{currentuser_office_name}' label='Current User Office Name'
+                                        +edit_module_text_field label='Filter Value' key='filter_value'
 
                             div Shown Fields
                                 .add_blank_field.ui.icon.button(title='Add Blank Field')

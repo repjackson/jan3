@@ -1,18 +1,17 @@
 template(name='dashboard')
-    unless is_dev
-        #dash_header.ui.vertical.masthead.center.aligned.padded.segment
-            .ui.container
-                img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                h2.ui.inverted.header Customer Portal
-                unless currentUser
-                    a.ui.center.aligned.big.inverted.blue.button(href='/login')
-                        |Login to see Dashboard
-                        i.right.arrow.icon
-            if is_customer
-                +customer_menu
+    #dash_header.ui.vertical.masthead.center.aligned.padded.segment
+        .ui.container
+            img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            h2.ui.inverted.header Customer Portal
+            unless currentUser
+                a.ui.center.aligned.big.inverted.blue.button(href='/login')
+                    |Login to see Dashboard
+                    i.right.arrow.icon
+        if is_customer
+            +customer_menu
     if is_customer
         .ui.padded.stackable.grid
-            if currentUser.users_customer.parent_franchisee.parent_office.customer_message
+            if currentUser.users_office.customer_message
                 .four.column.row
                     .column
                         .ui.floating.message
@@ -68,6 +67,9 @@ template(name='dashboard')
                                                 +icon name='send'
             .row
                 .sixteen.wide.column
+                    h3.ui.header 
+                        +icon name='error'
+                        |#{currentUser.users_customer.ev.CUST_NAME} Incidents
                     +modules tags='customer,dashboard,incidents'
             .row
                 .sixteen.wide.column
@@ -119,7 +121,7 @@ template(name='customer_menu')
 template(name='dashboard_office_contacts_list')
     h3.ui.header 
         +icon name='organization'
-        |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Contacts
+        |#{currentUser.users_office.ev.MASTER_LICENSEE} Contacts
 
     table.ui.sortable.striped.table
         tbody
