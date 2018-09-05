@@ -48,6 +48,11 @@ template(name='view_button')
         // +icon name='details-pane'
         i.right.chevron.green.icon
         
+template(name='view_office_button')
+    a.ui.icon.button(href="/office/#{_id}" data-content='View Office' class=classes) 
+        // +icon name='details-pane'
+        i.right.chevron.green.icon
+        
 template(name='view_user_button')
     a.ui.icon.button(href="/user/#{username}" title="View #{username}" class=classes) 
         // +avatar_sprite name='chevron-right'
@@ -721,47 +726,44 @@ template(name='module')
                             each children
                                 +doc_history_event
                     if editing_mode
-                        .ui.tertiary.blue.segment
+                        .ui.tertiary.segment
                             h3.ui.header 
                                 +icon name=icon
                                 |Edit #{title}
-                            .ui.stackable.two.column.grid
-                                .column
-                                    |Module
-                                    +set_key_value key='published' value=true label='Published'
-                                    +set_key_value key='published' value=false label='Hidden'
-                                    .ui.form
-                                        +edit_module_text_field label='Title' key='title'
-                                        +edit_module_text_field label='Icon' key='icon'
-                                .column
-                                    .ui.form
-                                        h4
-                                            i.filter.icon
-                                            |Filter
-                                        h5 
-                                            i.key.icon
-                                            |Key
-                                        +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
-                                        +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
-                                        +set_key_value key='filter_key' value='office_jpid' label='Office JPID'
-                                        +set_key_value key='filter_key' value='customer_jpid' label='Customer JPID'
-                                        +edit_module_text_field label='Filter Key' key='filter_key'
-                                        h5 
-                                            i.terminal.icon
-                                            |Value
-                                        +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
-                                        +set_key_value key='filter_value' value='{current_user_customer_jpid}' label='Current User Customer JPID'
-                                        +set_key_value key='filter_value' value='{current_user_office_jpid}' label='Current User Office JPID'
-                                        +set_key_value key='filter_value' value='{current_user_office_name}' label='Current User Office Name'
-                                        +set_key_value key='filter_value' value='{current_user_franchisee_jpid}' label='Current User Franchisee JPID'
-                                        +set_key_value key='filter_value' value='{current_user_franchisee_name}' label='Current User Franchisee Name'
-                                        +set_key_value key='filter_value' value='{current_page_customer_name}' label='Current Page Customer Name'
-                                        +set_key_value key='filter_value' value='{current_page_customer_jpid}' label='Current Page Customer JPID'
-                                        +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
-                                        +set_key_value key='filter_value' value='{current_page_franchisee_jpid}' label='Current Page Franchisee JPID'
-                                        +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
-                                        +set_key_value key='filter_value' value='{current_page_office_jpid}' label='Current Page Office JPID'
-                                        +edit_module_text_field label='Filter Value' key='filter_value'
+                            |Module
+                            +set_key_value key='published' value=true label='Published'
+                            +set_key_value key='published' value=false label='Hidden'
+                            .ui.form
+                                +edit_module_text_field label='Title' key='title'
+                                +edit_module_text_field label='Icon' key='icon'
+                            .ui.form
+                                h4
+                                    i.filter.icon
+                                    |Filter
+                                h5 
+                                    i.key.icon
+                                    |Key
+                                +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
+                                +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
+                                +set_key_value key='filter_key' value='office_jpid' label='Office JPID'
+                                +set_key_value key='filter_key' value='customer_jpid' label='Customer JPID'
+                                +edit_module_text_field label='Filter Key' key='filter_key'
+                                h5 
+                                    i.terminal.icon
+                                    |Value
+                                +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
+                                +set_key_value key='filter_value' value='{current_user_customer_jpid}' label='Current User Customer JPID'
+                                +set_key_value key='filter_value' value='{current_user_office_jpid}' label='Current User Office JPID'
+                                +set_key_value key='filter_value' value='{current_user_office_name}' label='Current User Office Name'
+                                +set_key_value key='filter_value' value='{current_user_franchisee_jpid}' label='Current User Franchisee JPID'
+                                +set_key_value key='filter_value' value='{current_user_franchisee_name}' label='Current User Franchisee Name'
+                                +set_key_value key='filter_value' value='{current_page_customer_name}' label='Current Page Customer Name'
+                                +set_key_value key='filter_value' value='{current_page_customer_jpid}' label='Current Page Customer JPID'
+                                +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
+                                +set_key_value key='filter_value' value='{current_page_franchisee_jpid}' label='Current Page Franchisee JPID'
+                                +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
+                                +set_key_value key='filter_value' value='{current_page_office_jpid}' label='Current Page Office JPID'
+                                +edit_module_text_field label='Filter Value' key='filter_value'
 
                             div Shown Fields
                                 .add_blank_field.ui.icon.button(title='Add Blank Field')

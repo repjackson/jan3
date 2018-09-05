@@ -60,18 +60,13 @@ template(name='customer_view')
                     .ui.secondary.segment
                         +customers_franchisee
             .twelve.wide.column
-                .ui.secondary.segment
-                    .ui.header 
-                        +icon name='error'
-                        | Incidents
-                    // +incident_table customer_jpid=ev.ID
-                    +modules tags='customer,comments'
-                    +modules tags='users,users'
-                    +modules tags='customer,invoices'
-                    +modules tags='customer,service,special_service'
-                    +modules tags='customer,service,service_request'
-                    +modules tags='customer,activity'
-                    +modules tags='customer,message'
+                +modules tags='customer,page,incidents'
+                +modules tags='users,users'
+                +modules tags='customer,invoices'
+                +modules tags='customer,service,special_service'
+                +modules tags='customer,service,service_request'
+                +modules tags='customer,activity'
+                +modules tags='customer,message'
 
 
 template(name='customers_franchisee')

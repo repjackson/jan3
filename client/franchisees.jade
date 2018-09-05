@@ -27,73 +27,30 @@ template(name='franchisee_view')
                 // +edit_button
         .centered.row
             .four.wide.column
-                .ui.button
-                    i.envelope.icon
-                    |Message
                 .ui.secondary.segment
                     .ui.large.list
-                        .item #
-                            strong #{ev.ID}
+                        .item ##{ev.ID}
                         .item 
-                            i.grey.message.icon
-                            strong #{ev.FRANCH_EMAIL}
-                        .item Short Name
-                            strong #{ev.FRANCH_NAME}
+                            i.grey.envelope.icon
+                            |#{ev.FRANCH_EMAIL}
+                        .item(title='Short Name')
+                            | #{ev.FRANCH_NAME}
                         .item 
                             i.grey.phone.icon
-                            strong #{ev.TELE_CELL}
+                            |#{ev.TELE_CELL}
+                            
                         // .item Master Licensee: 
                         //     strong #{ev.MASTER_LICENSEE}
-                .ui.secondary.segment
-                    .ui.header 
-                        +icon name='building'
-                        |Office 
-                .ui.secondary.segment
-                    +modules tags='franchisee,incidents'
-                .ui.secondary.segment
-                    +modules tags='franchisee,incident,feedback_response'
+                +modules tags='franchisee,page,parent_office'
+                +modules tags='franchisee,incidents'
+                +modules tags='franchisee,incident,feedback_response'
             .eight.wide.column
-                .ui.secondary.segment
-                    .ui.header 
-                        +icon name='error'
-                        |Incidents
-                    +incident_table franchisee_jpid=ev.ID
-                .ui.secondary.segment
-                    .ui.header 
-                        +icon name='headset'
-                        if ev.FRANCH_NAME
-                            |#{ev.FRANCH_NAME}
-                        else if ev.FRANCHISEE
-                            |#{ev.FRANCHISEE}
-                        |Customers
-                    +franchisee_customers
+                +modules tags='incidents,franchisee_page'
             .four.wide.column
-                .ui.secondary.segment
-                    +modules tags='franchisee,message'
-                .ui.secondary.segment
-                    +modules tags='franchisee,comment'
+                +modules tags='franchisee,message'
+                +modules tags='franchisee,comment'
 
 
-template(name='franchisee_customers')
-    table.ui.striped.fixed.table
-        thead
-            th.two.wide JPID
-            th Customer Name
-            th Contact Person
-            th Contact Email
-            th Telephone
-            th.three.wide Address
-            // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
-        tbody
-            each franchisee_customers_docs
-                tr
-                    td.selectable(title='View')
-                        a(href="/v/#{_id}") #{ev.ID}
-                    td.selectable(title='View')
-                        a(href="/v/#{_id}") #{ev.CUST_NAME}
-                    // td #{ev.FRANCHISEE}
-                    td #{ev.CUST_CONT_PERSON}
-                    td #{ev.CUST_CONTACT_EMAIL}
-                    td #{ev.TELEPHONE}
-                    td #{ev.ADDR_STREET} #{ev.ADDR_CITY} #{ADDR_STATE}
-                    // td #{ev.TIMESTAMP}
+template(name='combined_address_template')
+    td #{ev.ADDR_STREET} #{ev.ADDR_CITY} #{ADDR_STATE}
+    // td #{ev.TIMESTAMP}

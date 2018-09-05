@@ -97,8 +97,8 @@ Meteor.publish 'module_docs', (
                     page_doc.ev.FRANCHISEE
                 else filter_value
         if filter_key then match["#{filter_key}"] = calculated_value
-        console.log 'calc value', calculated_value
-        console.log match
+        # console.log 'calc value', calculated_value
+        # console.log match
         
     
         Docs.find match,{
