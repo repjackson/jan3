@@ -56,7 +56,7 @@ Meteor.publish 'module_docs', (
         
         if query then match["$text"] = "$search":query
         # console.log limit
-        console.log 'initial filter',filter_value
+        # console.log 'initial filter',filter_value
         calculated_value =
             switch filter_value
                 # user

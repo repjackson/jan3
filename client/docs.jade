@@ -67,3 +67,17 @@ template(name='doc_card')
             +edit_button
             +view_button
         
+
+
+template(name='finance_view')
+    .ui.padded.stackable.grid
+        .centered.row
+            .three.wide.center.aligned.column
+                // +link_button link='/roles' icon='reviewer-female' label='Roles'
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header View Invoice
+            .three.wide.center.aligned.column
+                // +edit_button
+        .centered.row
+            .twelve.wide.column
+                +modules tags='finance,invoice,view,page'

@@ -743,20 +743,27 @@ template(name='module')
                                 h5 
                                     i.key.icon
                                     |Key
+                                +set_key_value key='filter_key' value='_id' label='Portal Doc Id'
                                 +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
                                 +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
                                 +set_key_value key='filter_key' value='office_jpid' label='Office JPID'
                                 +set_key_value key='filter_key' value='customer_jpid' label='Customer JPID'
+                                +set_key_value key='filter_key' value='franchisee_jpid' label='Franchisee JPID'
                                 +edit_module_text_field label='Filter Key' key='filter_key'
                                 h5 
                                     i.terminal.icon
                                     |Value
+                                div
+                                i.user.icon
                                 +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
                                 +set_key_value key='filter_value' value='{current_user_customer_jpid}' label='Current User Customer JPID'
                                 +set_key_value key='filter_value' value='{current_user_office_jpid}' label='Current User Office JPID'
                                 +set_key_value key='filter_value' value='{current_user_office_name}' label='Current User Office Name'
                                 +set_key_value key='filter_value' value='{current_user_franchisee_jpid}' label='Current User Franchisee JPID'
                                 +set_key_value key='filter_value' value='{current_user_franchisee_name}' label='Current User Franchisee Name'
+                                div
+                                i.clone.icon
+                                +set_key_value key='filter_value' value='{current_page_doc_id}' label='Current Page Doc Id'
                                 +set_key_value key='filter_value' value='{current_page_customer_name}' label='Current Page Customer Name'
                                 +set_key_value key='filter_value' value='{current_page_customer_jpid}' label='Current Page Customer JPID'
                                 +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'

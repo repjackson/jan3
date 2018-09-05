@@ -857,7 +857,7 @@ Template.module.events
             $addToSet: fields: new_field_object
 
     'click .add_schema_field': ->
-        console.log @
+        # console.log @
         module = Template.currentData()
         new_field_object = {
             key:@slug
