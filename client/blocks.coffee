@@ -624,13 +624,6 @@ Template.view_single_user_key.helpers
             doc.amount
 
 
-
-                
-
-
-
-
-
 Template.assignment_widget.onCreated ()->
     @autorun => Meteor.subscribe 'assigned_users', FlowRouter.getParam('doc_id')
     @user_results = new ReactiveVar( [] )
@@ -823,8 +816,6 @@ Template.module.helpers
                 #     values.push Template.currentData()["#{field.key}"]
             values
         
-        
-        
     is_table: -> @view_mode is 'table'    
     is_list: -> @view_mode is 'list'    
     is_comments: -> @view_mode is 'comments'    
@@ -912,10 +903,25 @@ Template.set_key_value.events
         console.log Template.parentData(1)
         console.log Template.parentData(2)
         
+        Docs.update Template.parentData(1)._id,
+            { $set: "#{@key}": @value }
+    
+Template.set_key_value_2.events
+    'click .set_key_value': ->
+        console.log @
+        console.log Template.currentData()
+        console.log Template.parentData(1)
+        console.log Template.parentData(2)
+        
         Docs.update Template.parentData(2)._id,
             { $set: "#{@key}": @value }
     
 Template.set_key_value.helpers
+    set_value_button_class: -> 
+        if Template.parentData()["#{@key}"] is @value then 'active' else 'basic'
+
+    
+Template.set_key_value_2.helpers
     set_value_button_class: -> 
         if Template.parentData(2)["#{@key}"] is @value then 'active' else 'basic'
 

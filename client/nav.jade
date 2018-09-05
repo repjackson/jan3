@@ -121,9 +121,6 @@ template(name='left_sidebar')
         if is_customer
             a.header.toggle_left_sidebar.item(href='/') 
                 |Dashboard
-            a.toggle_left_sidebar.item(href='/store')
-                i.shopping.cart.icon
-                | Store
             // a.toggle_left_sidebar.item(href='/front')
             //     i.globe.icon
             //     | Sales Page
@@ -151,16 +148,6 @@ template(name='left_sidebar')
                 |Admin
             a.toggle_left_sidebar.item(href='/feed') 
                 |Feed
-            .ui.divider
-            a.toggle_left_sidebar.item(href='/roles') 
-                |Roles
-            a.toggle_left_sidebar.item(href='/rules') SLA Rules
-    
-                // a.icon.item(href='/dashboard')
-                //     i.line.chart.icon
-            a.toggle_left_sidebar.item(href='/feedback_responses')
-                i.chat.icon
-                | Feedback Responses
         if is_office
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
                 i.icon

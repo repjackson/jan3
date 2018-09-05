@@ -324,7 +324,7 @@ template(name='incident_task_view')
             
             
 template(name='customer_incidents')
-    .ui.stackable.padded.centered.grid
+    .ui.stackable.padded.grid
         .middle.aligned.centered.row
             .three.wide.center.aligned.column
             .ten.wide.column
@@ -333,7 +333,9 @@ template(name='customer_incidents')
                     |#{currentUser.users_customer.ev.CUST_NAME} Incidents
             .three.wide.center.aligned.column
                 +add_incident_button label='Log New Incident'
+        
         .middle.aligned.row
+            +modules tags='customer,incidents,current'
             +table_header doc_type='incident' stat_type='customer'
         .row
             .sixteen.wide.column

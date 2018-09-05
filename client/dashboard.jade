@@ -1,15 +1,15 @@
 template(name='dashboard')
-    #dash_header.ui.vertical.masthead.center.aligned.padded.segment
-        .ui.container
-            .ui.hidden.divider
-            img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            h2.ui.inverted.header Customer Portal
-            unless currentUser
-                a.ui.center.aligned.big.inverted.blue.button(href='/login')
-                    |Login to see Dashboard
-                    i.right.arrow.icon
-        if is_customer
-            +customer_menu
+    unless is_dev
+        #dash_header.ui.vertical.masthead.center.aligned.padded.segment
+            .ui.container
+                img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                h2.ui.inverted.header Customer Portal
+                unless currentUser
+                    a.ui.center.aligned.big.inverted.blue.button(href='/login')
+                        |Login to see Dashboard
+                        i.right.arrow.icon
+            if is_customer
+                +customer_menu
     if is_customer
         .ui.padded.stackable.grid
             if currentUser.users_customer.parent_franchisee.parent_office.customer_message
