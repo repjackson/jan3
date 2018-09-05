@@ -52,28 +52,20 @@ Meteor.publish 'module_docs', (
         match = {}
         match.type = module.children_doc_type
         if filter_key then match["#{filter_key}"] = filter_value
-        console.log match
+        if query then match["$text"] = "$search":query
+        # console.log match
+        # console.log limit
+        # console.log sort_key
+        # console.log sort_direction
+        # console.log skip
+        # Docs.find match, limit:5
         
-        Docs.find match, limit:5
     
-    
-        # if query
-        #     Docs.find {
-        #         type:module.children_doc_type
-        #         $text: $search: query
-        #     },{
-        #         skip: skip
-        #         limit:limit
-        #         sort:"#{sort_key}":parseInt("#{sort_direction}")
-        #     }
-        # else
-        #     Docs.find {
-        #         match
-        #     },{
-        #         skip: skip
-        #         limit:limit
-        #         sort:"#{sort_key}":parseInt("#{sort_direction}")
-        #     }
+        Docs.find match,{
+            skip: skip
+            limit:limit
+            sort:"#{sort_key}":parseInt("#{sort_direction}")
+        }
             
 
 Meteor.publish 'demo_type', (type)->

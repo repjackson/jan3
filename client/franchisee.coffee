@@ -12,7 +12,7 @@ Template.franchisees.onCreated ->
 
 
     @autorun => Meteor.subscribe 'active_franchisees_stat'
-    @autorun -> Meteor.subscribe 'type', 'franchisee', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    # @autorun -> Meteor.subscribe 'type', 'franchisee', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
 
 Template.franchisees.helpers
     all_franchisees: ->

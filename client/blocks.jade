@@ -765,7 +765,9 @@ template(name='module')
                                                     .ui.fluid.small.input
                                                         input.field_template(type='text' value=field_template)
                                                 td 
-                                                    i.eye.icon
+                                                    +set_field_key_value key='sortable' value=true label='Y'
+                                                    |#{sortable}
+                                                    +set_field_key_value key='sortable' value=false label='N'
                                                 td 
                                                     i.remove_schema_field.remove.link.icon
 
@@ -785,6 +787,7 @@ template(name='module')
                                     div Stat Type
                                     +set_key_value key='table_stat_type' value='total' label='Total'
                                     +set_key_value key='table_stat_type' value='active' label='Active'
+                                    +set_key_value key='table_stat_type' value='customer' label='Customer'
                                     div
                                     +set_key_value key='view_table_header' value=true label='View Header'
                                     +set_key_value key='view_table_header' value=false label='Hide Header'
@@ -803,6 +806,9 @@ template(name='edit_module_text_field')
         
 template(name='set_key_value')
     .set_key_value.ui.small.compact.button(class=set_value_button_class) #{label}
+        
+template(name='set_field_key_value')
+    .set_field_key_value.ui.small.compact.button(class=set_value_button_class) #{label}
         
         
 template(name='set_key_value_2')

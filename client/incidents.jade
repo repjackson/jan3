@@ -336,38 +336,6 @@ template(name='customer_incidents')
         
         .middle.aligned.row
             +modules tags='customer,incidents,current'
-            +table_header doc_type='incident' stat_type='customer'
-        .row
-            .sixteen.wide.column
-                table.ui.striped.selectable.fixed.fluid.sortable.table
-                    thead
-                        tr
-                            +sort_column_header key='number' label='#' classes='one wide'
-                            +sort_column_header key='incident_type' label='Type' classes='one wide'
-                            +sort_column_header key='service_date' label='Service Date'
-                            +sort_column_header key='incident_details' label='Details' classes='three wide'
-                            // +sort_column_header key='level' label='Level'
-                            +sort_column_header key='open' label='Status' classes='one wide'
-                            +sort_column_header key='submitted' label='Submitted'
-                            th.two.wide Assignment
-                            th.one.wide View
-                    tbody
-                        each customer_incidents
-                            tr
-                                td #{incident_number}
-                                td
-                                    +incident_type_label
-                                td #{service_date}
-                                td #{incident_details}
-                                // td #{level}
-                                td 
-                                    +status_template
-                                td
-                                    +submitted_template
-                                +incident_assigment_cell
-                                td
-                                    +view_button
-                    +table_footer columns='8' doc_type='incident' stat_type='customer'
         
 template(name='add_incident_button')
     if has_user_customer_jpid

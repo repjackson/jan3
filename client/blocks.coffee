@@ -741,16 +741,18 @@ Template.module.onCreated ->
 Template.module.helpers
     schemas: -> Docs.find type:'schema'
     sort_descending: ->
-        slug = if @ev_subset then "ev.#{@slug}" else @slug
-        if Session.equals('sort_direction', 1) and Session.equals('sort_key', slug) 
+        key = if @ev_subset then "ev.#{@key}" else @key
+        if Session.equals('sort_direction', 1) and Session.equals('sort_key', key) 
             return true
     sort_ascending: ->
-        slug = if @ev_subset then "ev.#{@slug}" else @slug
-        if Session.equals('sort_direction', -1) and Session.equals('sort_key', slug)
+        key = if @ev_subset then "ev.#{@key}" else @key
+        if Session.equals('sort_direction', -1) and Session.equals('sort_key', key)
             return true
 
     children: -> 
-        Docs.find { type:@children_doc_type }, limit:parseInt(@limit)
+        Docs.find { type:@children_doc_type
+            },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
+
     schema_doc: ->
         Docs.findOne
             type:'schema'
@@ -836,8 +838,8 @@ Template.module.events
         Meteor.call 'move', current._id, current.fields, current_index, lower_index
 
     'click .sort_by': (e,t)->
-        slug = if @ev_subset then "ev.#{@slug}" else @slug
-        Session.set 'sort_key', slug
+        key = if @ev_subset then "ev.#{@key}" else @key
+        Session.set 'sort_key', key
         if Session.equals 'sort_direction', -1
             Session.set 'sort_direction', 1
         else
@@ -873,6 +875,8 @@ Template.module.events
         template_value = e.currentTarget.value
         Meteor.call 'update_module_field', Template.currentData()._id, @, 'field_template', template_value
 
+
+
 Template.modules.events
     'click #add_module': (e,t)->
         # console.log @tags
@@ -898,20 +902,20 @@ Template.edit_module_text_field.events
     
 Template.set_key_value.events
     'click .set_key_value': ->
-        console.log @
-        console.log Template.currentData()
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
+        # console.log @
+        # console.log Template.currentData()
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
         
         Docs.update Template.parentData(1)._id,
             { $set: "#{@key}": @value }
     
 Template.set_key_value_2.events
     'click .set_key_value': ->
-        console.log @
-        console.log Template.currentData()
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
+        # console.log @
+        # console.log Template.currentData()
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
         
         Docs.update Template.parentData(2)._id,
             { $set: "#{@key}": @value }
@@ -931,3 +935,11 @@ Template.edit_module_text_field.helpers
         module_doc = Template.parentData()
         if module_doc
             module_doc["#{@key}"]
+
+
+Template.set_field_key_value.events 
+    'click .set_field_key_value': (e,t)->
+        console.log @
+        console.log Template.currentData()
+        console.log Template.parentData()
+        Meteor.call 'update_module_field', Template.parentData(2)._id, Template.parentData(), @key, @value
