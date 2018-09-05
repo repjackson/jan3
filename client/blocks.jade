@@ -578,13 +578,13 @@ template(name='franchisee_card')
                         |Franchisee
             .content
                 a(href="/v/#{_id}")
-                    h4.ui.header #{franchisee}
+                    h4.ui.header #{ev.FRANCH_NAME}
                 .ui.list
                     .item(title='JPID') ##{ev.ID}
-                    .item(title='Short Name') #{ev.FRANCH_NAME}
+                    .item #{ev.FRANCH_EMAIL}
+                    // .item(title='Short Name') #{ev.FRANCH_NAME}
                     .item(title='Call Number')
                         a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
-                    .item #{franchisee_email}
 
 
 

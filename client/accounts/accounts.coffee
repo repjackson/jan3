@@ -228,21 +228,22 @@ Template.register_customer.events
                 
     'keyup #customer_jpid': (e,t)->
         customer_jpid = $('#customer_jpid').val()
-        console.log customer_jpid
+        # console.log customer_jpid
         Meteor.call 'find_customer_by_jpid', customer_jpid, (err,res)->
             if err 
                 Session.set 'jpid_lookup_status', err.error
             else
-                console.log res
+                # console.log res
                 Session.set 'account_selected', true
                 Session.set 'customer_jpid', res.ev.ID
-                console.log Session.get 'customer_jpid'
+                # console.log Session.get 'customer_jpid'
                 Session.set 'jpid_lookup_status', "Found JPID #{customer_jpid}."
                 Meteor.call 'find_franchisee_from_customer_jpid', customer_jpid, (err,res)=>
                     if err then console.error err
                     else
-                        # console.log 'franchisee?', res
-                        Session.set 'franchisee_jpid', res.ev.ID
+                        console.log 'franchisee?', res
+                        if res and res.ev
+                            Session.set 'franchisee_jpid', res.ev.ID
                 Meteor.call 'find_office_from_customer_jpid', customer_jpid, (err,res)=>
                     if err then console.error err
                     else
@@ -257,7 +258,7 @@ Template.register_customer.events
             console.log 'account selected'
         else 
             Session.set 'account_selected', false
-            console.log 'no account selected'
+            # console.log 'no account selected'
     
 
 Template.register_office.onCreated ->

@@ -419,11 +419,12 @@ Meteor.methods
         customer_doc = Docs.findOne
             "ev.ID": customer_jpid
             type:'customer'
-        
-        found_franchisee = Docs.findOne
-            type: 'franchisee'
-            "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
-        return found_franchisee
+        console.log customer_doc
+        if customer_doc and customer_doc.ev.FRANCHISEE
+            found_franchisee = Docs.findOne
+                "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
+                type: 'franchisee'
+            return found_franchisee
         
 
          

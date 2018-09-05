@@ -93,7 +93,8 @@ Meteor.publish 'module_docs', (
                 when "{current_page_franchisee_jpid}" 
                     page_doc.ev.ID 
                 when "{current_page_customer_name}"
-                    page_doc.ev.CUST_NAME
+                    if page_doc
+                        page_doc.ev.CUST_NAME
                 when "{current_page_office_name}"
                     page_doc.ev.MASTER_LICENSEE
                 when "{current_page_franchisee_name}"

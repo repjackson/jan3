@@ -128,6 +128,14 @@ template(name='incident_view')
                                 |#{text}
                     else
                         #submit_feedback.ui.button Submit Feedback
+                if can_edit_core
+                    +edit_textarea label='Details' key='incident_details' icon='view-details'
+                    // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
+                    +edit_datetime_field key='service_date' label='Service Time'
+                else
+                    .ui.basic.segment
+                        // +icon name='view-details'
+                        .large130 #{incident_details}
                 unless can_edit_core
                     +comments
                     +full_doc_history
@@ -138,14 +146,6 @@ template(name='incident_view')
                             |Type
                         each incident_type_docs
                             +toggle_key key='incident_type' value=slug label=name
-                if can_edit_core
-                    +edit_textarea label='Details' key='incident_details' icon='view-details'
-                    // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
-                    +edit_datetime_field key='service_date' label='Service Time'
-                else
-                    .ui.basic.segment
-                        // +icon name='view-details'
-                        .large130 #{incident_details}
                 if can_edit_core
                     +edit_image_field
                 else
