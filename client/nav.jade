@@ -51,8 +51,8 @@ template(name='nav')
                 a.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
                     i.large.icon
                         +icon name='building'
-                    .mobile.hidden &nbsp; Dashboard
-                    // .mobile.hidden &nbsp; #{my_office.ev.MASTER_LICENSEE}
+                    // .mobile.hidden &nbsp; Dashboard
+                    .mobile.hidden &nbsp; #{my_office.ev.MASTER_LICENSEE}
             a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}" title='Office Incidents')
                 i.large.icon
                     +icon name='error'

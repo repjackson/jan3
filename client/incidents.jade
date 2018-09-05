@@ -128,6 +128,16 @@ template(name='incident_view')
                                 |#{text}
                     else
                         #submit_feedback.ui.button Submit Feedback
+                unless can_edit_core
+                    +comments
+                    +full_doc_history
+                else
+                    .ui.secondary.segment
+                        .ui.header 
+                            +icon name='category'
+                            |Type
+                        each incident_type_docs
+                            +toggle_key key='incident_type' value=slug label=name
                 if can_edit_core
                     +edit_textarea label='Details' key='incident_details' icon='view-details'
                     // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
@@ -141,16 +151,6 @@ template(name='incident_view')
                 else
                     if image_id
                         img.ui.centered.image(src="{{c.url image_id height=500 crop='fit'}}")
-                unless can_edit_core
-                    +comments
-                    +full_doc_history
-                else
-                    .ui.secondary.segment
-                        .ui.header 
-                            +icon name='category'
-                            |Type
-                        each incident_type_docs
-                            +toggle_key key='incident_type' value=slug label=name
             .four.wide.column
                 if submitted
                     .ui.secondary.segment
@@ -197,31 +197,6 @@ template(name='incident_view')
                     +assignment_widget
                     // +multiple_user_select key='assigned_to' label='Assigned To' icon='user-shield'
                 // +incident_sla_widget
-
-    .ui.confirm_close.modal
-        h3.ui.center.aligned.header
-            | Confirm Close Incident
-        .content
-            p This will stop automatic escalations.
-        .actions
-            .ui.cancel.icon.button
-                i.remove.icon
-            // if can_submit_bug
-            .ui.green.ok.ok_button.large.icon.button
-                i.checkmark.large.icon
-
-    // .ui.delete_incident.basic.modal
-    //     h3.ui.center.aligned.header
-    //         | Confirm Delete Incident
-    //     .actions
-    //         .ui.cancel.icon.button
-    //             i.cancel.icon
-    //             |Cancel
-    //         // if can_submit_bug
-    //         .ui.red.ok.ok_button.large.button
-    //             i.checkmark.large.icon
-    //             | Remove
-
 
 
 
@@ -375,57 +350,3 @@ template(name='sla_rule_doc')
         strong #{secondary_contact_value} 
             //     .ui.disabled.button Can't Set #{number}
             
-    // .ui.incident.modal
-    //     h1.ui.center.aligned.header
-    //         | Confirm Change Incident Level from #{level}
-    //         p This will notify
-    //         h5 #{primary_contact_value}
-    //         if primary_franchisee_toggle_value
-    //             .item Franchisee
-    //         h5 #{secondary_contact_value}
-    //         if secondary_franchisee_toggle_value
-    //             .item Franchisee
-    //     .actions
-    //         .ui.cancel.basic.button
-    //             // i.remove.icon
-    //             | Cancel
-    //         .ui.green.ok.ok_button.button
-    //             // i.checkmark.icon
-    //             // +icon24 name='checkmark' classes='ui avatar image'
-    //             | Confirm
-
-
-template(name='incident_table')
-    table.ui.striped.selectable.fixed.fluid.sortable.table
-        thead
-            tr
-                +sort_column_header key='number' label='#' classes='one wide'
-                +sort_column_header key='incident_type' label='Type' classes='one wide'
-                // if show_customer
-                //     +sort_column_header key='customer_name' label='Customer'
-                +sort_column_header key='service_date' label='Service Date'
-                th.three.wide Details
-                // +sort_column_header key='level' label='Level'
-                +sort_column_header key='open' label='Status' classes='one wide'
-                +sort_column_header key='submitted' label='Submitted'
-                th.two.wide Assignment
-                th.one.wide View
-        tbody
-            each incident_docs
-                tr
-                    td #{incident_number}
-                    td
-                        +incident_type_label
-                    // if show_customer
-                    //     td #{customer_name}
-                    td #{service_date}
-                    td.selectable
-                        a(href="/v/#{_id}") #{incident_details}
-                    // td #{level}
-                    td 
-                        +status_template
-                    td
-                        +submitted_template
-                    +incident_assigment_cell
-                    td
-                        +view_button

@@ -23,8 +23,6 @@ template(name='user_view')
                         a.ui.fluid.button(href='/account/settings')
                             i.cog.icon
                             |Account Settings
-                    +doc_type_module label='Messages' icon='chat' doc_type='message'
-                    +doc_type_module label='Comments' icon='comment' doc_type='comment'
                 .eight.wide.column
                     // +edit_profile_text_field key='customer_jpid' label='Connected Customer Account'
                     .ui.list
@@ -34,8 +32,6 @@ template(name='user_view')
                                 | #{customer_jpid}
                     +user_events                    
                     // +users_docs
-                    +doc_type_module label='Incidents' icon='error' doc_type='incident'
-                    +doc_type_module label='Incident Feedback' icon='reply' doc_type='feedback_response'
                 .four.wide.column
                     .ui.secondary.segment
                         .ui.header 
@@ -47,8 +43,6 @@ template(name='user_view')
                                 .ui.basic.label #{this}
                     if ev
                         +user_ev_info
-                    +doc_type_module label='Comments' icon='comment'
-                    +user_assigned_to
                     if customer_jpid
                         +customer_card
                     if franchisee_jpid
@@ -151,11 +145,6 @@ template(name='user_events')
             each user_events
                 +doc_history_event
 
-template(name='user_assigned_to')
-    .ui.secondary.segment
-        .ui.header 
-            +icon name='tasks'
-            | Assigned To
             
             
             

@@ -1,26 +1,3 @@
-template(name='table')
-    // +query_input placeholder='Filter Office Name'
-    table.ui.striped.selectable.fixed.table
-        thead
-            tr
-                each fields
-                    if sortable
-                        th.sort_by
-                            |#{label}
-                            if sort_descending
-                                i.sort.amount.down.icon
-                            if sort_ascending
-                                i.sort.amount.up.icon
-                    else
-                        th
-                            |#{label}
-        tbody
-            each table_docs
-                tr
-                    each values
-                        td #{this}
-        +table_footer columns=fields.length                        
-                                
 template(name='table_footer')
     if no_query
         tfoot

@@ -725,6 +725,7 @@ Template.module.onRendered ->
 
 Template.module.onCreated ->
     Meteor.subscribe 'type', 'schema'
+    Meteor.subscribe 'type', 'event_type'
     @autorun => Meteor.subscribe 'module_docs', 
         @data._id, 
         @data.filter_key, 

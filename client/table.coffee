@@ -1,28 +1,3 @@
-Template.table.onCreated ->
-    @autorun => Meteor.subscribe 'count', @data.type
-
-Template.table.helpers
-    sort_descending: ->
-        if Session.equals('sort_direction', 1) and Session.equals('sort_key', @key) 
-            return true
-    sort_ascending: ->
-        if Session.equals('sort_direction', -1) and Session.equals('sort_key', @key)
-            return true
-    fields: -> Template.currentData().fields
-    table_docs: -> 
-        if Template.currentData().collection is 'Stats' then Stats.find() else Docs.find(type:Template.currentData().type)
-    values: ->
-        fields = Template.parentData().fields
-        values = []
-        for field in fields
-            if field.ev_subset is true
-                values.push Template.currentData().ev["#{field.key}"]
-            else
-                # console.log "#{field.key}"
-                values.push Template.currentData()["#{field.key}"]
-        values
-        
-
 Template.table_footer.events
     'click .set_page_number': (e,t)-> 
         Session.set 'page_number', @number

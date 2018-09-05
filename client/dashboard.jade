@@ -18,30 +18,30 @@ template(name='dashboard')
                             .header 
                                 i.large.icon
                                     +icon name='sms'
-                                |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Message
+                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Message
                         .content
                             p 
-                            p #{currentUser.users_customer.parent_franchisee.parent_office.customer_message}
+                            p #{currentUser.users_office.customer_message}
                 .column
                     .ui.floating.message
                         .content
                             .header 
                                 i.large.icon
                                     +icon name='discount'
-                                |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Promotions
+                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Promotions
                         .content
                             p 
-                            p #{currentUser.users_customer.parent_franchisee.parent_office.customer_promotions}
+                            p #{currentUser.users_office.customer_promotions}
                 .column
                     .ui.floating.message
                         .content
                             .header 
                                 i.large.icon
                                     +icon name='faq'
-                                |#{currentUser.users_customer.parent_franchisee.parent_office.ev.MASTER_LICENSEE} Help Policy
+                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Help Policy
                         .content
                             p 
-                            p #{currentUser.users_customer.parent_franchisee.parent_office.help_policy}
+                            p #{currentUser.users_office.help_policy}
                 .column
                     +small_service_list
 
