@@ -137,7 +137,7 @@ Template.registerHelper 'dev_mode', ()->
         
 Template.registerHelper 'editing_mode', ()->
     if Meteor.user() and Meteor.user().roles
-        'admin' in Meteor.user().roles and Session.get('editing_mode')
+        'dev' in Meteor.user().roles and Session.get('editing_mode')
         
         
         

@@ -82,7 +82,7 @@ template(name='nav')
             //             else
             //                 +icon name='toggle-off'
             if is_dev
-                a#toggle_editing.item(href='#' title='Toggle Editing Mode')
+                #toggle_editing.item
                     i.large.icon
                         if editing_mode
                             +icon name='toggle-on'

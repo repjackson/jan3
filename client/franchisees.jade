@@ -24,7 +24,7 @@ template(name='franchisee_view')
                     +icon name='business'
                     if ev.FRANCHISEE
                         |#{ev.FRANCHISEE} 
-                    if ev.FRANCH_NAME
+                    else if ev.FRANCH_NAME
                         |#{ev.FRANCH_NAME} 
                     |Franchisee
             .three.wide.right.aligned.column

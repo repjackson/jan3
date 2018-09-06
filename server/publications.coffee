@@ -101,9 +101,9 @@ Meteor.publish 'module_docs', (
                 when "{current_page_franchisee_name}"
                     page_doc.ev.FRANCHISEE
                 else filter_value
-        if filter_key then match["#{filter_key}"] = calculated_value
+        if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
         # console.log 'calc value', calculated_value
-        console.log match
+        # console.log match
         
     
         Docs.find match,{
