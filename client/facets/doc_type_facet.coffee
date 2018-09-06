@@ -27,30 +27,7 @@ Template.doc_type_facet.helpers
             # console.log cursor.fetch()
             return cursor
             
-    cloud_doc_type_class: ->
-        button_class = []
-        switch
-            when @index <= 5 then button_class.push ' '
-            when @index <= 10 then button_class.push 'small'
-            when @index <= 15 then button_class.push 'tiny '
-            when @index <= 20 then button_class.push ' mini'
-        return button_class
-
     selected_doc_types: -> selected_doc_types.array()
-    # settings: -> {
-    #     position: 'bottom'
-    #     limit: 10
-    #     rules: [
-    #         {
-    #             collection: doc_types
-    #             field: 'name'
-    #             matchAll: false
-    #             template: Template.doc_type_result
-    #         }
-    #     ]
-    # }
-
-
 
 Template.doc_type_facet.events
     'click .select_doc_type': -> 

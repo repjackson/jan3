@@ -22,7 +22,11 @@ template(name='franchisee_view')
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
                     +icon name='business'
-                    |#{ev.FRANCHISEE} Franchisee
+                    if ev.FRANCHISEE
+                        |#{ev.FRANCHISEE} 
+                    if ev.FRANCH_NAME
+                        |#{ev.FRANCH_NAME} 
+                    |Franchisee
             .three.wide.right.aligned.column
                 // +edit_button
         .centered.row
@@ -30,14 +34,17 @@ template(name='franchisee_view')
                 .ui.secondary.segment
                     .ui.large.list
                         .item ##{ev.ID}
-                        .item 
-                            i.grey.envelope.icon
-                            |#{ev.FRANCH_EMAIL}
-                        .item(title='Short Name')
-                            | #{ev.FRANCH_NAME}
-                        .item 
-                            i.grey.phone.icon
-                            |#{ev.TELE_CELL}
+                        if ev.FRANCH_EMAIL
+                            .item 
+                                i.grey.envelope.icon
+                                |#{ev.FRANCH_EMAIL}
+                        if ev.FRANCH_NAME
+                            .item(title='Short Name')
+                                | #{ev.FRANCH_NAME}
+                        if ev.TELE_CELL
+                            .item 
+                                i.grey.phone.icon
+                                |#{ev.TELE_CELL}
                             
                         // .item Master Licensee: 
                         //     strong #{ev.MASTER_LICENSEE}

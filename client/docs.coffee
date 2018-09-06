@@ -63,10 +63,16 @@ Template.doc_card.onCreated ->
     
 Template.doc_card.helpers
     schema_doc: ->
-        Docs.findOne
+        found = Docs.findOne
             type:'schema'
             slug:@type
+        console.log found
+        found
+    
 
     slug_value: -> 
         current_doc = Template.parentData(2)
-        current_doc["#{@slug}"]
+        if @ev_subset
+            current_doc.ev["#{@slug}"]
+        else
+            current_doc["#{@slug}"]

@@ -17,7 +17,7 @@ Meteor.methods
                 Docs.update incident_doc_id,
                     $addToSet: assigned_to: owner_user._id
                     $set: assignment_timestamp:Date.now()
-                # escalation_minutes = incidents_office["escalation_1_#{incident.incident_type}_hours"]
+                # escalation_hours = incidents_office["escalation_1_#{incident.incident_type}_hours"]
                 Meteor.call 'create_event', incident_doc_id, 'assignment', "Owner #{owner_user.username} automatically assigned after submission."
                 Meteor.call 'create_event', incident_doc_id, 'timestamp_update', "Assignment timestamp updated."
         else
@@ -71,18 +71,18 @@ Meteor.methods
                 hours_value = existing_hours_value
             else 
                 hours_value = 2
-                Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation minutes found, using 2 as the default."
+                Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation hours found, using 2 as the default."
                 
             now = Date.now()
             updated_now_difference = now-last_updated
             seconds_elapsed = Math.floor(updated_now_difference/1000)
-            minutes_elapsed = Math.floor(seconds_elapsed/60)
-            escalation_calculation = minutes_elapsed - hours_value
-            if minutes_elapsed < hours_value
-                Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in level #{next_level} #{incident.incident_type} rules, not escalating."
+            hours_elapsed = Math.floor(seconds_elapsed/60)
+            escalation_calculation = hours_elapsed - hours_value
+            if hours_elapsed < hours_value
+                Meteor.call 'create_event', incident_id, 'not-escalate', "#{hours_elapsed} hours have elapsed, less than #{hours_value} in level #{next_level} #{incident.incident_type} rules, not escalating."
                 # continue
             else    
-                Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in level #{next_level} #{incident.incident_type} rules, escalating."
+                Meteor.call 'create_event', incident_id, 'escalate', "#{hours_elapsed} hours have elapsed, more than #{hours_value} in level #{next_level} #{incident.incident_type} rules, escalating."
                 Meteor.call 'escalate_incident', incident._id, ->
             
     escalate_incident: (doc_id)-> 
@@ -277,18 +277,18 @@ Meteor.methods
                 hours_value = existing_hours_value
             else 
                 hours_value = 2
-                Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation minutes found, using 2 as the default."
+                Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation hours found, using 2 as the default."
             
             now = Date.now()
             updated_now_difference = now-last_updated
             seconds_elapsed = Math.floor(updated_now_difference/1000)
-            minutes_elapsed = Math.floor(seconds_elapsed/60)
-            escalation_calculation = minutes_elapsed - hours_value
-            if minutes_elapsed < hours_value
-                Meteor.call 'create_event', incident_id, 'not-escalate', "#{minutes_elapsed} minutes have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
+            hours_elapsed = Math.floor(seconds_elapsed/60)
+            escalation_calculation = hours_elapsed - hours_value
+            if hours_elapsed < hours_value
+                Meteor.call 'create_event', incident_id, 'not-escalate', "#{hours_elapsed} hours have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
                 # continue
             else    
-                Meteor.call 'create_event', incident_id, 'escalate', "#{minutes_elapsed} minutes have elapsed, more than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, escalating."
+                Meteor.call 'create_event', incident_id, 'escalate', "#{hours_elapsed} hours have elapsed, more than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, escalating."
                 Meteor.call 'escalate_incident', incident._id, ->
             
     escalate_incident: (doc_id)-> 

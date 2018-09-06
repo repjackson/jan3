@@ -103,7 +103,10 @@ template(name='doc_history_event')
     .comment
         .avatar
             // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-            +icon name=event_type_doc.icon
+            if icon
+                +icon name=event_type_doc.icon
+            else
+                +icon name='commit-git'
         .content
             if show_author
                 a.user #{author.username}

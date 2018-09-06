@@ -1,0 +1,40 @@
+template(name='dev')
+    .ui.padded.stackable.grid
+        .centered.middle.aligned.row
+            .three.wide.center.aligned.column
+                if is_admin
+                    +link_button link='/admin' icon='user-shield' label='Admin'
+            .ten.wide.column
+                h2.ui.center.aligned.grey.header 
+                    +icon name='code'
+                    |Dev
+            .three.wide.right.aligned.column
+        .centered.row
+            .four.wide.column
+                .ui.header Cell Phone Test
+                .ui.labeled.input
+                    .ui.label Number
+                    input#recipient_number(type='text')
+                .ui.labeled.input
+                    .ui.label Message
+                    input#sms_message(type='text')
+                #send_sms.ui.button Send Test SMS
+            .four.wide.column
+                .ui.header Email Test
+                .ui.labeled.input
+                    .ui.label Address
+                    input#recipient_email(type='text')
+                .ui.labeled.input
+                    .ui.label Message
+                    input#email_body(type='text')
+                #send_email.ui.button Send Email
+            .four.wide.column
+                .ui.header Events
+                each events
+                    .ui.comment
+                        .content
+                            .author 
+                                +author_info
+                            .metadata
+                                span.date #{when}
+                            .text #{text}

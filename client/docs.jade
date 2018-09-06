@@ -53,16 +53,22 @@ template(name='doc_view')
     
 template(name='doc_card')
     .ui.card
-        .content
-            a.grey.header(href="/v/#{_id}")
-                |#{title} 
+        if title
+            .content
+                a.grey.header(href="/v/#{_id}")
+                    if icon
+                        +icon name=icon
+                    |#{title} 
         .content
             .ui.list
-                .item type: #{type}
+                .item Type: #{type}
         .content
             with schema_doc
-                each fields
-                    h4.ui.header #{title}: #{slug_value}
+                .ui.list
+                    each fields
+                        .item 
+                            small #{title}
+                            | #{slug_value}
         .content
             +edit_button
             +view_button

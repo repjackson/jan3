@@ -94,6 +94,7 @@ Meteor.publish 'module_docs', (
                     page_doc.ev.ID 
                 when "{current_page_customer_name}"
                     if page_doc
+                        console.log page_doc.ev.CUST_NAME
                         page_doc.ev.CUST_NAME
                 when "{current_page_office_name}"
                     page_doc.ev.MASTER_LICENSEE
@@ -102,7 +103,7 @@ Meteor.publish 'module_docs', (
                 else filter_value
         if filter_key then match["#{filter_key}"] = calculated_value
         # console.log 'calc value', calculated_value
-        # console.log match
+        console.log match
         
     
         Docs.find match,{
@@ -988,6 +989,13 @@ Meteor.publish 'modules', (tags)->
     Docs.find   
         type:'module'
         tags:$all:tags
+            
+Meteor.publish 'events_by_type', (type)->
+    Docs.find   
+        type:'event'
+        event_type:type
+            
+            
             
             
             

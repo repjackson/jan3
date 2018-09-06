@@ -12,10 +12,17 @@ Meteor.methods
             from: '+18442525977'
             body: body
         }, (err,res)->
-            if err then console.log err
+            if err 
+                throw new Meteor.Error 'text_not_sent', 'error sending text'
             else
-                console.log res
+                # console.log res
         )
+        new_event_id = Docs.insert
+            type:'event'
+            event_type:'sms'
+            text: "SMS was sent to #{to}: #{body}" 
+            recipient: to
+        console.log new_event_id
     
         
     sendEmail: (to, from, subject, text) ->
