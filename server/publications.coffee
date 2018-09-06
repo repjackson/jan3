@@ -54,7 +54,7 @@ Meteor.publish 'module_docs', (
         match = {}
         match.type = module.children_doc_type
         
-        if status then match["ev"]["ACCOUNT_STATUS"] = "ACTIVE"
+        if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
         # console.log limit
         # console.log 'initial filter',filter_value

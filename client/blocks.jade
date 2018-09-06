@@ -670,8 +670,9 @@ template(name='assignment_widget')
                                             
 template(name='modules')
     if editing_mode
-        #add_module.ui.icon.blue.button(title="Add Module with #{tags}")
+        #add_module.ui.button(title="Add Module with #{tags}")
             i.fork.icon
+            |Add Module with #{tags}
     each modules
         +module 
                                             
@@ -720,7 +721,14 @@ template(name='module')
                     if is_list
                         .ui.divided.list
                             each children
-                                .item doc: #{title} #{incident_details} #{text} #{body}
+                                .item
+                                    .ui.horizontal.list
+                                        each ../fields
+                                            .item
+                                                if field_template
+                                                    +Template.dynamic template=field_template data=..
+                                                else
+                                                    | #{child_schema_field_value}
                     if is_comments
                         .ui.comments
                             each children
@@ -730,32 +738,33 @@ template(name='module')
                             h3.ui.header 
                                 +icon name=icon
                                 |Edit #{title}
-                                i.remove_module.remove.icon
+                            i.remove_module.remove.icon
                             |Module
                             +set_key_value key='published' value=true label='Published'
                             +set_key_value key='published' value=false label='Hidden'
                             .ui.form
                                 +edit_module_text_field label='Title' key='title'
                                 +edit_module_text_field label='Icon' key='icon'
+                            h3.ui.header
+                                i.filter.icon
+                                |Filter
                             .ui.form
-                                h4
-                                    i.filter.icon
-                                    |Filter
                                 h5 
                                     |Status
                                 +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
                                 +set_key_value key='filter_status' value="" label='All'
-                                h5 
+                                h5.ui.header 
                                     i.key.icon
                                     |Key
-                                +set_key_value key='filter_key' value='_id' label='Portal Doc Id'
+                                +set_key_value key='filter_key' value='_id' label='_id'
+                                +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
                                 +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
                                 +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
-                                +set_key_value key='filter_key' value='office_jpid' label='Office JPID'
-                                +set_key_value key='filter_key' value='customer_jpid' label='Customer JPID'
-                                +set_key_value key='filter_key' value='franchisee_jpid' label='Franchisee JPID'
+                                +set_key_value key='filter_key' value='office_jpid' label='office_jpid'
+                                +set_key_value key='filter_key' value='customer_jpid' label='customer_jpid'
+                                +set_key_value key='filter_key' value='franchisee_jpid' label='franchisee_jpid'
                                 +edit_module_text_field label='Filter Key' key='filter_key'
-                                h5 
+                                h5.ui.header 
                                     i.terminal.icon
                                     |Value
                                 div

@@ -48,14 +48,14 @@ template(name='franchisee_view')
                             
                         // .item Master Licensee: 
                         //     strong #{ev.MASTER_LICENSEE}
-                +modules tags='franchisee,page,parent_office'
                 +modules tags='franchisee,incidents'
                 +modules tags='franchisee,incident,feedback_response'
-            .eight.wide.column
+            .twelve.wide.column
+                +modules tags='franchisee,page,parent_office'
                 +modules tags='incidents,franchisee_page'
-            .four.wide.column
-                +modules tags='franchisee,message'
-                +modules tags='franchisee,comment'
+            // .four.wide.column
+            //     +modules tags='franchisee,message'
+            //     +modules tags='franchisee,comment'
 
 
 template(name='combined_address_template')

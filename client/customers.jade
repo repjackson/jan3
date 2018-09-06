@@ -56,17 +56,14 @@ template(name='customer_view')
                                 strong #{CUST_DAYS_SERVICE}
                             .item Regular Service Amount
                                 strong #{CUST_REG_SERVICE_AMT}
-                if ev.FRANCHISEE
-                    .ui.secondary.segment
-                        +customers_franchisee
             .twelve.wide.column
+                +modules tags='customer,page,parent_franchisee'
                 +modules tags='customer,pages,incidents'
                 +modules tags='users,users'
                 +modules tags='customer,invoices'
                 +modules tags='customer,service,special_service'
                 +modules tags='customer,service,service_request'
                 +modules tags='customer,activity'
-                +modules tags='customer,message'
 
 
 template(name='customers_franchisee')

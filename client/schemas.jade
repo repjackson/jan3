@@ -162,5 +162,5 @@ template(name='schema_doc')
             .header #{_id}
             each ../fields
                 +Template.dynamic template=view_field_template
-                // |{{ key_value key=slug}}
-                // .ui.label slug:#{slug}
+                |{{ key_value key=slug}}
+                .ui.label slug:#{slug}
