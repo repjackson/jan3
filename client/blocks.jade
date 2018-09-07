@@ -678,7 +678,7 @@ template(name='modules')
                                             
 template(name='module')
     if can_view_module
-        .ui.secondary.segment(class=module_segment_class)
+        .ui(class=module_classes)
             .ui.accordion
                 .active.title
                     .ui.header
@@ -745,6 +745,7 @@ template(name='module')
                             .ui.form
                                 +edit_module_text_field label='Title' key='title'
                                 +edit_module_text_field label='Icon' key='icon'
+                                +edit_module_text_field label='Classes' key='module_classes'
                             h3.ui.header
                                 i.filter.icon
                                 |Filter

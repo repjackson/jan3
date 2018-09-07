@@ -150,20 +150,20 @@ Meteor.methods
                     updatedList = JSON.stringify(json_result.PROBLEM_RECORD, (key, value) ->
                         if value == undefined then '' else value
                     )
-                    # console.dir updatedList
-                    existing_jpid = 
-                        Docs.findOne 
-                            type: 'jpid'
-                            jpid: jp_id
-                    if existing_jpid
-                        Docs.update existing_jpid,
-                            $set:
-                                ev: json_result.PROBLEM_RECORD
-                    else                    
-                        new_jpid = Docs.insert 
-                            type:'jpid'
-                            jpid:jp_id
-                            ev: json_result.PROBLEM_RECORD
+                    console.dir updatedList
+                    # existing_jpid = 
+                    #     Docs.findOne 
+                    #         type: 'jpid'
+                    #         jpid: jp_id
+                    # if existing_jpid
+                    #     Docs.update existing_jpid,
+                    #         $set:
+                    #             ev: json_result.PROBLEM_RECORD
+                    # else                    
+                    #     new_jpid = Docs.insert 
+                    #         type:'jpid'
+                    #         jpid:jp_id
+                    #         ev: json_result.PROBLEM_RECORD
                             
     search_ev: (query)->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",

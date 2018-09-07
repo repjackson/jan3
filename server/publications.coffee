@@ -99,11 +99,16 @@ Meteor.publish 'module_docs', (
                 when "{current_page_office_name}"
                     page_doc.ev.MASTER_LICENSEE
                 when "{current_page_franchisee_name}"
-                    page_doc.ev.FRANCHISEE
+                    if page_doc.ev.FRANCHISEE.length > 0
+                        console.log 'returning page franch name', page_doc.ev.FRANCHISEE
+                        page_doc.ev.FRANCHISEE
+                    if page_doc.ev.FRANCHISEE.length is 0
+                        console.log 'stopping blank franch query', page_doc.ev.FRANCHISEE
+                        @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
-        # console.log 'calc value', calculated_value
-        # console.log match
+        console.log 'calc value', calculated_value
+        console.log match
         
     
         Docs.find match,{

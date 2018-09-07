@@ -761,8 +761,6 @@ Template.module.helpers
             type:'schema'
             slug:@children_doc_type
         
-    module_segment_class: -> if @published then '' else 'disabled'    
-       
     show_schema_field: ->
         parent = Template.parentData()
         schema_fields = 
