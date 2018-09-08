@@ -729,10 +729,39 @@ template(name='block')
                                                     +Template.dynamic template=field_template data=..
                                                 else
                                                     | #{child_schema_field_value}
+                    if is_grid
+                        .ui.equal.width.four.column.grid
+                            each children
+                                .column
+                                    .ui.secondary.segment
+                                        if title
+                                            a.ui.header(href="/v/#{_id}")
+                                                if icon
+                                                    i.icon  
+                                                        +icon name=icon
+                                                |#{title}    
+                                        .ui.list
+                                            each ../fields
+                                                .item
+                                                    if field_template
+                                                        +Template.dynamic template=field_template data=..
+                                                    else
+                                                        | #{child_schema_field_value}
                     if is_comments
                         .ui.comments
                             each children
                                 +doc_history_event
+                    if is_header
+                        .centered.middle.aligned.row
+                            .three.wide.center.aligned.column
+                                if is_admin
+                                    +link_button link='/admin' icon='user-shield' label='Admin'
+                            .ten.wide.column
+                                h2.ui.center.aligned.grey.header 
+                                    +icon name='code'
+                                    |Dev
+                            .three.wide.right.aligned.column
+
                     if editing_mode
                         .ui.tertiary.segment
                             h3.ui.header 
@@ -824,11 +853,13 @@ template(name='block')
                                     .add_schema_field.ui.compact.button #{title}
                             div Doc Type
                                 each schemas
-                                    +set_key_value_2 key='children_doc_type' value=slug label=title
+                                    +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
                             div View Mode
-                                +set_key_value key='view_mode' value='table' label='Table'
-                                +set_key_value key='view_mode' value='list' label='List'
-                                +set_key_value key='view_mode' value='comments' label='Comments'
+                                +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
+                                +set_key_value key='view_mode' value='list' label='List' icon='list'
+                                +set_key_value key='view_mode' value='comments' label='Comments' icon='comments'
+                                +set_key_value key='view_mode' value='grid' label='Grid' icon='grid'
+                                +set_key_value key='view_mode' value='header' label='Header'
                             .ui.secondary.segment
                                 if is_table
                                     div Stat Type
@@ -856,14 +887,29 @@ template(name='edit_block_text_field')
         
         
 template(name='set_key_value')
-    .set_key_value.ui.small.compact.button(class=set_value_button_class) #{label}
+    .set_key_value.ui.small.compact.button(class=set_value_button_class) 
+        if icon
+            i.icon
+                +icon name=icon
+        |#{label}
+        
+template(name='set_page_key_value')
+    .set_page_key_value.ui.small.compact.button(class=set_value_button_class) 
+        if icon
+            i.icon
+                +icon name=icon
+        |#{label}
         
 template(name='set_field_key_value')
     .set_field_key_value.ui.small.compact.button(class=set_value_button_class) #{label}
         
         
 template(name='set_key_value_2')
-    .set_key_value.ui.small.compact.button(class=set_value_button_class) #{label}
+    .set_key_value.ui.small.compact.button(class=set_value_button_class) 
+        if icon
+            i.icon
+                +icon name=icon
+        |#{label}
         
         
         

@@ -2,21 +2,17 @@ FlowRouter.route '/dev', action: ->
     BlazeLayout.render 'layout', 
         main: 'dev'
         
-FlowRouter.route '/p/:doc_id', action: ->
-    BlazeLayout.render 'layout', 
-        main: 'page'
-
 Template.dev.onCreated ->
     @autorun => Meteor.subscribe 'events_by_type', 'sms'
     @autorun => Meteor.subscribe 'type', 'page'
-Template.page.onCreated ->
-    @autorun => Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 
 Template.dev.helpers
     events: -> Docs.find type:'event'
     pages: -> Docs.find type:'page'
-Template.page.helpers
-    page_doc: -> Docs.findOne type:'page'
+
+Template.page_view.helpers
+    page_doc: -> 
+        Docs.findOne FlowRouter.getParam('doc_id')
     
     
 Template.dev.events
@@ -38,7 +34,7 @@ Template.dev.events
                 console.res
     
     
-Template.page.events
+Template.page_view.events
     # 'click #add_row': ->
     #     current_page = Docs.findOne FlowRouter.getParam('doc_id')
     #     next_row_number = current_page.rows.length+1

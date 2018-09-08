@@ -154,13 +154,13 @@ Meteor.methods
             $set: fields: array
 
 
-    update_module_field: (module_doc_id, field_object, key, value)->
-        Docs.update { _id:module_doc_id, fields:field_object },
+    update_block_field: (block_doc_id, field_object, key, value)->
+        Docs.update { _id:block_doc_id, fields:field_object },
             { $set: "fields.$.#{key}": value }
     
     
-    remove_module_field_object: (module_doc_id, field_object)->
-        Docs.update { _id:module_doc_id },
+    remove_block_field_object: (block_doc_id, field_object)->
+        Docs.update { _id:block_doc_id },
             { $pull: "fields": field_object }
 
 

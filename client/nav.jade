@@ -3,34 +3,40 @@ template(name='nav')
         a.toggle_left_sidebar.icon.item 
             i.bars.icon
         if is_admin
-            a.item(href='/admin' data-content='Admin' class="{{ isActiveRoute 'admin'}}" title='Admin')
-                i.large.icon
-                    +icon name='user-shield'
-                // .mobile.hidden &nbsp; Admin
-            a.mobile.hidden.item(href='/incidents' class="{{ isActiveRoute 'incidents'}}" title='Incidents')
-                i.large.icon
-                    +icon name='error'
-                // .mobile.hidden &nbsp; Incidents
-            a.mobile.hidden.item(href='/users' class="{{ isActiveRoute 'users'}}" title='Users')
-                i.large.icon
-                    +icon name='groups'
-                // .mobile.hidden &nbsp; Users
-            a.mobile.hidden.item(href='/offices' class="{{ isActiveRoute 'offices'}}" title='Offices')
-                i.large.icon
-                    +icon name='skyscrapers'
-                // .mobile.hidden Offices
-            a.mobile.hidden.item(href='/franchisees' class="{{ isActiveRoute 'franchisees'}}" title='Franchisees')
-                i.large.icon
-                    +icon name='business'
-                // .mobile.hidden Franchisees
-            a.mobile.hidden.item(href='/customers' class="{{ isActiveRoute 'customers'}}" title='Customers')
-                i.large.icon
-                    +icon name='headset'
-                // .mobile.hidden Customers
-            a.mobile.hidden.item(href='/services' class="{{ isActiveRoute 'services'}}" title='Services')
-                i.large.icon
-                    +icon name='broom'
-                // .mobile.hidden Services
+            each admin_nav_items
+                a.item(href="/v/#{_id}" data-content=label class="{{ isActiveRoute slug }}" title=label)
+                    i.large.icon
+                        +icon name=icon
+                    // .mobile.hidden &nbsp; Admin
+            
+            // a.item(href='/admin' data-content='Admin' class="{{ isActiveRoute 'admin'}}" title='Admin')
+            //     i.large.icon
+            //         +icon name='user-shield'
+            //     // .mobile.hidden &nbsp; Admin
+            // a.mobile.hidden.item(href='/incidents' class="{{ isActiveRoute 'incidents'}}" title='Incidents')
+            //     i.large.icon
+            //         +icon name='error'
+            //     // .mobile.hidden &nbsp; Incidents
+            // a.mobile.hidden.item(href='/users' class="{{ isActiveRoute 'users'}}" title='Users')
+            //     i.large.icon
+            //         +icon name='groups'
+            //     // .mobile.hidden &nbsp; Users
+            // a.mobile.hidden.item(href='/offices' class="{{ isActiveRoute 'offices'}}" title='Offices')
+            //     i.large.icon
+            //         +icon name='skyscrapers'
+            //     // .mobile.hidden Offices
+            // a.mobile.hidden.item(href='/franchisees' class="{{ isActiveRoute 'franchisees'}}" title='Franchisees')
+            //     i.large.icon
+            //         +icon name='business'
+            //     // .mobile.hidden Franchisees
+            // a.mobile.hidden.item(href='/customers' class="{{ isActiveRoute 'customers'}}" title='Customers')
+            //     i.large.icon
+            //         +icon name='headset'
+            //     // .mobile.hidden Customers
+            // a.mobile.hidden.item(href='/services' class="{{ isActiveRoute 'services'}}" title='Services')
+            //     i.large.icon
+            //         +icon name='broom'
+            //     // .mobile.hidden Services
         else if is_customer
             a.item(href='/')
                 // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
@@ -135,9 +141,9 @@ template(name='left_sidebar')
             a.toggle_left_sidebar.item(href='/services')
                 // +tiny_sprite name='duster'
                 | Services
-            a.toggle_left_sidebar.item(href='/special_services')
-                // +tiny_sprite name='duster'
-                | Special Services
+            // a.toggle_left_sidebar.item(href='/special_services')
+            //     // +tiny_sprite name='duster'
+            //     | Special Services
             a.toggle_left_sidebar.item(href='/franchisees') 
                 |Franchisees
             a.toggle_left_sidebar.item(href='/customers') 

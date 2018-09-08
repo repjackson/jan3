@@ -180,7 +180,7 @@ Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 
 Template.registerHelper 'page_key_value', () -> 
     # doc_field = Template.parentData(2)
-    console.log @
+    # console.log @
     current_doc = Docs.findOne FlowRouter.getParam('doc_id')
     if current_doc
         current_doc["#{@key}"]

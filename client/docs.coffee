@@ -14,8 +14,10 @@ Template.doc_view.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     type_view: -> "#{@type}_view"
     schema_doc: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
         Docs.findOne
             type:'schema'
+            slug:doc.type
     view_field_template: -> "view_#{@type}_field"
     slug_value: -> 
         doc = Docs.findOne FlowRouter.getParam('doc_id')
@@ -36,8 +38,10 @@ Template.doc_edit.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     type_edit: -> "#{@type}_edit"
     schema_doc: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
         Docs.findOne
             type:'schema'
+            slug:doc.type
     edit_field_template: -> "edit_#{@type}_field"
 
     slug_value: -> 
@@ -66,7 +70,7 @@ Template.doc_card.helpers
         found = Docs.findOne
             type:'schema'
             slug:@type
-        console.log found
+        # console.log found
         found
     
 

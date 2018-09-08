@@ -827,6 +827,7 @@ Template.block.helpers
     is_table: -> @view_mode is 'table'    
     is_list: -> @view_mode is 'list'    
     is_comments: -> @view_mode is 'comments'    
+    is_grid: -> @view_mode is 'grid'    
         
 Template.block.events
     'click .remove_block': ->
@@ -888,7 +889,8 @@ Template.block.events
 
 Template.blocks.events
     'click #add_block': (e,t)->
-        # console.log @tags
+        console.log @
+        console.log @tags
         if @tags and typeof @tags is 'string'
             split_tags = @tags.split ','
         else
@@ -914,12 +916,13 @@ Template.edit_block_text_field.events
     
 Template.set_key_value.events
     'click .set_key_value': ->
-        # console.log @
-        # console.log Template.currentData()
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
-        
         Docs.update Template.parentData(1)._id,
+            { $set: "#{@key}": @value }
+            
+            
+Template.set_page_key_value.events
+    'click .set_page_key_value': ->
+        Docs.update FlowRouter.getParam('doc_id'),
             { $set: "#{@key}": @value }
     
 Template.set_key_value_2.events
@@ -935,6 +938,12 @@ Template.set_key_value_2.events
 Template.set_key_value.helpers
     set_value_button_class: -> 
         if Template.parentData()["#{@key}"] is @value then 'active' else 'basic'
+
+    
+Template.set_page_key_value.helpers
+    set_value_button_class: ->
+        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if doc["#{@key}"] is @value then 'active' else 'basic'
 
     
 Template.set_key_value_2.helpers

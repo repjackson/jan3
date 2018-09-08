@@ -31,24 +31,24 @@ template(name='doc_edit')
 template(name='doc_view')
     with doc
         +Template.dynamic template=type_view
-    if is_dev
-        .ui.padded.stackable.centered.grid
-            .centered.row
-                .three.wide.center.aligned.column
-                    +link_button link='/admin' icon='database' label='Admin'
-                .ten.wide.column
-                    h1.ui.center.aligned.grey.header View #{doc.title} #{doc.type}
-                .three.wide.center.aligned.column
-                    +edit_button
-            .row
-                .four.wide.column
-                    .ui.header When #{when}
-                    +author_info
-                .eight.wide.column
-                    with schema_doc
-                        each fields
-                            h4.ui.header #{title}: #{slug_value}
-                            // +Template.dynamic template=view_field_template
+    // if is_dev
+    //     .ui.padded.stackable.centered.grid
+    //         .centered.row
+    //             .three.wide.center.aligned.column
+    //                 +link_button link='/admin' icon='database' label='Admin'
+    //             .ten.wide.column
+    //                 h1.ui.center.aligned.grey.header View #{doc.title} #{doc.type}
+    //             .three.wide.center.aligned.column
+    //                 +edit_button
+    //         .row
+    //             .four.wide.column
+    //                 .ui.header When #{when}
+    //                 +author_info
+    //             .eight.wide.column
+    //                 with schema_doc
+    //                     each fields
+                            // h4.ui.header #{title}: #{slug_value}
+                            // // +Template.dynamic template=view_field_template
         
     
 template(name='doc_card')

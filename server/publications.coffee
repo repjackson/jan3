@@ -38,8 +38,8 @@ Meteor.publish 'active_customers', (query=null, limit=100, sort_key='timestamp',
         }
         
         
-Meteor.publish 'module_docs', (
-    module_doc_id, 
+Meteor.publish 'block_docs', (
+    block_doc_id, 
     filter_key=null, 
     filter_value=null, 
     query=null, 
@@ -49,10 +49,10 @@ Meteor.publish 'module_docs', (
     skip=0,
     status
     page_doc_id)->
-        module = Docs.findOne module_doc_id
+        block = Docs.findOne block_doc_id
         page_doc = Docs.findOne page_doc_id
         match = {}
-        match.type = module.children_doc_type
+        match.type = block.children_doc_type
         
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
@@ -896,10 +896,10 @@ Meteor.publish 'franchisee_by_id', (franchisee_jpid)->
 
 
 
-Meteor.publish 'doc_type_module', (type)->
+Meteor.publish 'doc_type_block', (type)->
     Docs.find { type:type }, limit:5
 
-Meteor.publish 'module_children', (type)->
+Meteor.publish 'block_children', (type)->
     Docs.find { type:type }, limit:5
 
 
@@ -1002,5 +1002,8 @@ Meteor.publish 'events_by_type', (type)->
             
             
             
-            
+Meteor.publish 'page_by_slug', (slug)->
+    Docs.find
+        type:'page'
+        slug:slug
             
