@@ -164,6 +164,12 @@ Meteor.methods
             { $pull: "fields": field_object }
 
 
+    update_row_key: (page_doc_id, row_object, key, value)->
+        Docs.update { _id:page_doc_id, rows:row_object },
+            { $set: "rows.$.#{key}": value }
+    
+    
+
 
     vote_up: (id)->
         doc = Docs.findOne id

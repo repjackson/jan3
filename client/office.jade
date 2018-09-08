@@ -71,8 +71,8 @@ template(name='office_dashboard')
                                 |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                                 a(href=office_map_address target='_blank')
                                     i.external.icon
-                    +modules tags='office,dashboard,finance'
-                    +modules tags='office,dashboard,service_requests'
+                    +blocks tags='office,dashboard,finance'
+                    +blocks tags='office,dashboard,service_requests'
                     .ui.secondary.segment
                         .ui.header
                             +icon name='bar-chart'
@@ -87,16 +87,16 @@ template(name='office_dashboard')
                             .item Employees
                                 +view_stat stat_type='office_employees' 
                 .eight.wide.column
-                    +modules tags='office,dashboard,feed'
-                    +modules tags='office,dashboard,incidents'
-                    +modules tags='office,dashboard,incident_feedback'
+                    +blocks tags='office,dashboard,feed'
+                    +blocks tags='office,dashboard,incidents'
+                    +blocks tags='office,dashboard,incident_feedback'
                 .four.wide.column
-                    +modules tags='office,dashboard,messages'
-                    +modules tags='office,dashboard,comments'
+                    +blocks tags='office,dashboard,messages'
+                    +blocks tags='office,dashboard,comments'
 
 template(name='office_customers')
     +office_header
-    +modules tags='office,page,customers,section'
+    +blocks tags='office,page,customers,section'
     // .ui.padded.grid
     //     .middle.aligned.row
     //         +table_header doc_type='customer' stat_type='office_customers'
@@ -134,7 +134,7 @@ template(name='office_customers')
 
 template(name='office_incidents')
     +office_header
-    +modules tags='office,page,incidents,section'
+    +blocks tags='office,page,incidents,section'
 
     // .ui.padded.grid
     //     .middle.aligned.row
@@ -231,7 +231,7 @@ template(name='office_employees')
 
 template(name='office_franchisees')
     +office_header
-    +modules tags='office,page,franchisees,section'
+    +blocks tags='office,page,franchisees,section'
     // .ui.padded.grid
     //     .middle.aligned.row
     //         +table_header doc_type='franchisee' stat_type='office_franchisees'     

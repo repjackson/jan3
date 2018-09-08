@@ -689,14 +689,14 @@ Template.assignment_widget.helpers
 
 
 
-# Template.doc_type_module.onCreated ->
-#     @autorun => Meteor.subscribe 'doc_type_module', FlowRouter.getParam('doc_id'), @data.doc_type
-# Template.module.onRendered ->
+# Template.doc_type_block.onCreated ->
+#     @autorun => Meteor.subscribe 'doc_type_block', FlowRouter.getParam('doc_id'), @data.doc_type
+# Template.block.onRendered ->
 #     Meteor.setTimeout ->
 #         $('.ui.accordion').accordion()
 #     , 500
 
-# Template.doc_type_module.helpers
+# Template.doc_type_block.helpers
 #     children: -> Docs.find { type:@doc_type}
 
 #     view_mode_template: ->
@@ -704,29 +704,34 @@ Template.assignment_widget.helpers
         
         
 
-Template.modules.onCreated ->
+Template.blocks.onCreated ->
     # console.log @data.tags
-    split_tags = @data.tags.split ','
+    if @data.tags and typeof @data.tags is 'string'
+        split_tags = @data.tags.split ','
+    else
+        split_tags = @data.tags
     # console.log split_tags
-    @autorun => Meteor.subscribe 'modules', split_tags
+    @autorun => Meteor.subscribe 'blocks', split_tags
 
-Template.modules.helpers
-    modules: -> 
-        split_tags = @tags.split ','
+Template.blocks.helpers
+    blocks: -> 
+        if @tags and typeof @tags is 'string'
+            split_tags = @tags.split ','
+        else
+            split_tags = @tags
         Docs.find 
-            type:'module'
+            type:'block'
             tags:$all:split_tags
-
     
-Template.module.onRendered ->
+Template.block.onRendered ->
     Meteor.setTimeout ->
         $('.accordion').accordion();
     , 500
 
-Template.module.onCreated ->
+Template.block.onCreated ->
     Meteor.subscribe 'type', 'schema'
     Meteor.subscribe 'type', 'event_type'
-    @autorun => Meteor.subscribe 'module_docs', 
+    @autorun => Meteor.subscribe 'block_docs', 
         @data._id, 
         @data.filter_key, 
         @data.filter_value, 
@@ -741,7 +746,7 @@ Template.module.onCreated ->
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
     
     
-Template.module.helpers
+Template.block.helpers
     schemas: -> Docs.find type:'schema'
     sort_descending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
@@ -768,12 +773,12 @@ Template.module.helpers
                 type:'schema'
                 slug:parent.children_doc_type
             }).fields
-        module_fields = parent.fields
+        block_fields = parent.fields
         selected_keys = _.pluck parent.fields, 'key'
         if @slug in selected_keys then false else true
         
         
-    can_view_module: ->
+    can_view_block: ->
         if @published
             true
         else
@@ -783,10 +788,10 @@ Template.module.helpers
                 false
         
     schema_doc_fields: -> 
-        module_doc = Template.parentData(1)
+        block_doc = Template.parentData(1)
         schema_doc = Docs.findOne 
             type:'schema'
-            slug: module_doc.children_doc_type
+            slug: block_doc.children_doc_type
         if schema_doc
             schema_doc.fields
         
@@ -823,9 +828,9 @@ Template.module.helpers
     is_list: -> @view_mode is 'list'    
     is_comments: -> @view_mode is 'comments'    
         
-Template.module.events
-    'click .remove_module': ->
-        if confirm 'Remove module?'
+Template.block.events
+    'click .remove_block': ->
+        if confirm 'Remove block?'
             Docs.remove @_id
     'click .move_up': ->
         current = Template.currentData()
@@ -850,50 +855,53 @@ Template.module.events
             Session.set 'sort_direction', -1
     
     'click .add_blank_field': ->
-        module = Template.currentData()
+        block = Template.currentData()
         new_field_object = {
             key:''
             label:''
             ev_subset:false
             }
-        Docs.update module._id,
+        Docs.update block._id,
             $addToSet: fields: new_field_object
 
     'click .add_schema_field': ->
         # console.log @
-        module = Template.currentData()
+        block = Template.currentData()
         new_field_object = {
             key:@slug
             label:@title
             ev_subset:@ev_subset
             }
-        Docs.update module._id,
+        Docs.update block._id,
             $addToSet: fields: new_field_object
     
     'click .remove_schema_field': ->
         if confirm 'Remove field?'
-            module = Template.currentData()
-            Meteor.call 'remove_module_field_object', module._id, @
+            block = Template.currentData()
+            Meteor.call 'remove_block_field_object', block._id, @
 
     'blur .field_template': (e,t)->
         template_value = e.currentTarget.value
-        Meteor.call 'update_module_field', Template.currentData()._id, @, 'field_template', template_value
+        Meteor.call 'update_block_field', Template.currentData()._id, @, 'field_template', template_value
 
 
 
-Template.modules.events
-    'click #add_module': (e,t)->
+Template.blocks.events
+    'click #add_block': (e,t)->
         # console.log @tags
-        split_tags = @tags.split ','
-        # console.log split_tags
+        if @tags and typeof @tags is 'string'
+            split_tags = @tags.split ','
+        else
+            split_tags = @tags
+        
 
         Docs.insert
-            type:'module'
+            type:'block'
             tags:split_tags 
             fields: []
     
     
-Template.edit_module_text_field.events
+Template.edit_block_text_field.events
     'change .text_field': (e,t)->
         text_value = e.currentTarget.value
         Docs.update Template.parentData()._id,
@@ -934,11 +942,11 @@ Template.set_key_value_2.helpers
         if Template.parentData(2)["#{@key}"] is @value then 'active' else 'basic'
 
     
-Template.edit_module_text_field.helpers 
-    module_key_value: () -> 
-        module_doc = Template.parentData()
-        if module_doc
-            module_doc["#{@key}"]
+Template.edit_block_text_field.helpers 
+    block_key_value: () -> 
+        block_doc = Template.parentData()
+        if block_doc
+            block_doc["#{@key}"]
 
 
 Template.set_field_key_value.events 
@@ -946,4 +954,4 @@ Template.set_field_key_value.events
         # console.log @
         # console.log Template.currentData()
         # console.log Template.parentData()
-        Meteor.call 'update_module_field', Template.parentData(2)._id, Template.parentData(), @key, @value
+        Meteor.call 'update_block_field', Template.parentData(2)._id, Template.parentData(), @key, @value

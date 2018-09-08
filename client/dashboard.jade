@@ -69,14 +69,14 @@ template(name='dashboard')
                 h3.ui.header 
                     +icon name='error'
                     |#{currentUser.users_customer.ev.CUST_NAME} Incidents
-                +modules tags='customer,dashboard,incidents'
+                +blocks tags='customer,dashboard,incidents'
         .row
             .sixteen.wide.column
-                +modules tags='customer,dashboard,invoices'
+                +blocks tags='customer,dashboard,invoices'
         .centered.row
             .sixteen.wide.column
                 +dashboard_office_contacts_list
-                +modules tags='customer,dashboard,office,contacts'
+                +blocks tags='customer,dashboard,office,contacts'
         .centered.row
             .sixteen.wide.column
                 h3.ui.header 
@@ -90,7 +90,7 @@ template(name='dashboard')
                         .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
                         .item Days of Service: #{customer_days_service_formatted}
                         .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
-                +modules tags='customer,dashboard,office,special_services'
+                +blocks tags='customer,dashboard,office,special_services'
 
     
 template(name='customer_menu')

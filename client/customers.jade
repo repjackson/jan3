@@ -8,7 +8,7 @@ template(name='customers')
                     +icon name='headset'
                     | Customers
             .three.wide.right.aligned.column
-        +modules tags='admin,customers,total,page'
+        +blocks tags='admin,customers,total,page'
 
 
 template(name='customer_view')
@@ -57,13 +57,13 @@ template(name='customer_view')
                             .item Regular Service Amount
                                 strong #{CUST_REG_SERVICE_AMT}
             .twelve.wide.column
-                +modules tags='customer,page,parent_franchisee'
-                +modules tags='customer,pages,incidents'
-                +modules tags='users,users'
-                +modules tags='customer,invoices'
-                +modules tags='customer,service,special_service'
-                +modules tags='customer,service,service_request'
-                +modules tags='customer,activity'
+                +blocks tags='customer,page,parent_franchisee'
+                +blocks tags='customer,pages,incidents'
+                +blocks tags='users,users'
+                +blocks tags='customer,invoices'
+                +blocks tags='customer,service,special_service'
+                +blocks tags='customer,service,service_request'
+                +blocks tags='customer,activity'
 
 
 template(name='customers_franchisee')

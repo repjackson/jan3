@@ -57,7 +57,7 @@ Meteor.publish 'module_docs', (
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
         # console.log limit
-        # console.log 'initial filter',filter_value
+        console.log 'initial filter',filter_value
         calculated_value =
             switch filter_value
                 # user
@@ -990,9 +990,9 @@ Meteor.publish 'customers_franchisee', (customer_doc_id)->
             return cursor
             
             
-Meteor.publish 'modules', (tags)->
+Meteor.publish 'blocks', (tags)->
     Docs.find   
-        type:'module'
+        type:'block'
         tags:$all:tags
             
 Meteor.publish 'events_by_type', (type)->

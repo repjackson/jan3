@@ -638,7 +638,7 @@ template(name='assignment_widget')
                                     | @#{username}
 
 
-// template(name='doc_type_module')
+// template(name='doc_type_block')
 //     .ui.secondary.segment
 //         .ui.accordion
 //             .active.title
@@ -668,17 +668,17 @@ template(name='assignment_widget')
 //                                         a.delete_comment
 //                                             i.trash.icon
                                             
-template(name='modules')
+template(name='blocks')
     if editing_mode
-        #add_module.ui.button(title="Add Module with #{tags}")
+        #add_block.ui.button(title="Add block with #{tags}")
             i.fork.icon
-            |Add Module with #{tags}
-    each modules
-        +module 
+            |Add block with #{tags}
+    each blocks
+        +block 
                                             
-template(name='module')
-    if can_view_module
-        .ui(class=module_classes)
+template(name='block')
+    if can_view_block
+        .ui(class=block_classes)
             .ui.accordion
                 .active.title
                     .ui.header
@@ -738,14 +738,14 @@ template(name='module')
                             h3.ui.header 
                                 +icon name=icon
                                 |Edit #{title}
-                            i.remove_module.remove.icon
-                            |Module
+                            i.remove_block.remove.icon
+                            |block
                             +set_key_value key='published' value=true label='Published'
                             +set_key_value key='published' value=false label='Hidden'
                             .ui.form
-                                +edit_module_text_field label='Title' key='title'
-                                +edit_module_text_field label='Icon' key='icon'
-                                +edit_module_text_field label='Classes' key='module_classes'
+                                +edit_block_text_field label='Title' key='title'
+                                +edit_block_text_field label='Icon' key='icon'
+                                +edit_block_text_field label='Classes' key='block_classes'
                             h3.ui.header
                                 i.filter.icon
                                 |Filter
@@ -764,7 +764,7 @@ template(name='module')
                                 +set_key_value key='filter_key' value='office_jpid' label='office_jpid'
                                 +set_key_value key='filter_key' value='customer_jpid' label='customer_jpid'
                                 +set_key_value key='filter_key' value='franchisee_jpid' label='franchisee_jpid'
-                                +edit_module_text_field label='Filter Key' key='filter_key'
+                                +edit_block_text_field label='Filter Key' key='filter_key'
                                 h5.ui.header 
                                     i.terminal.icon
                                     |Value
@@ -785,7 +785,7 @@ template(name='module')
                                 +set_key_value key='filter_value' value='{current_page_franchisee_jpid}' label='Current Page Franchisee JPID'
                                 +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
                                 +set_key_value key='filter_value' value='{current_page_office_jpid}' label='Current Page Office JPID'
-                                +edit_module_text_field label='Filter Value' key='filter_value'
+                                +edit_block_text_field label='Filter Value' key='filter_value'
 
                             div Shown Fields
                                 .add_blank_field.ui.icon.button(title='Add Blank Field')
@@ -846,12 +846,12 @@ template(name='module')
                                     +set_key_value key='view_table_footer' value=true label='View Footer'
                                     +set_key_value key='view_table_footer' value=false label='Hide Footer'
                                 else 
-                                    +edit_module_text_field label='Result Limit' key='limit'
+                                    +edit_block_text_field label='Result Limit' key='limit'
         
-template(name='edit_module_text_field')
+template(name='edit_block_text_field')
     .inline.field
         label #{label}
-        input.text_field(type='text' value=module_key_value)
+        input.text_field(type='text' value=block_key_value)
         
         
         

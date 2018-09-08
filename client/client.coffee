@@ -183,7 +183,12 @@ Template.registerHelper 'page_key_value', () ->
     console.log @
     current_doc = Docs.findOne FlowRouter.getParam('doc_id')
     if current_doc
-        current_doc["#{@slug}"]
+        current_doc["#{@key}"]
+        
+        
+        
+        
+        
 
 
 Template.registerHelper 'profile_key_value', () -> 

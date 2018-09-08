@@ -8,7 +8,7 @@ template(name='franchisees')
                     +icon name='business'
                     | Franchisees
             .four.wide.column
-        +modules tags='admin,franchisees,active'
+        +blocks tags='admin,franchisees,active'
      
                     
 template(name='franchisee_view')
@@ -48,14 +48,14 @@ template(name='franchisee_view')
                             
                         // .item Master Licensee: 
                         //     strong #{ev.MASTER_LICENSEE}
-                +modules tags='franchisee,incidents'
-                +modules tags='franchisee,incident,feedback_response'
+                +blocks tags='franchisee,incidents'
+                +blocks tags='franchisee,incident,feedback_response'
             .twelve.wide.column
-                +modules tags='franchisee,page,parent_office'
-                +modules tags='incidents,franchisee_page'
+                +blocks tags='franchisee,page,parent_office'
+                +blocks tags='incidents,franchisee_page'
             // .four.wide.column
-            //     +modules tags='franchisee,message'
-            //     +modules tags='franchisee,comment'
+            //     +blocks tags='franchisee,message'
+            //     +blocks tags='franchisee,comment'
 
 
 template(name='combined_address_template')
