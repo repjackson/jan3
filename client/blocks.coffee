@@ -705,6 +705,12 @@ Template.assignment_widget.helpers
         
 
 Template.blocks.onCreated ->
+    Session.set('query',null)
+    Session.set('sort_direction',-1)
+    Session.set('page_number',1)
+    Session.set('page_size',10)
+    Session.set('skip',0)
+
     # console.log @data.tags
     # if @data.tags and typeof @data.tags is 'string'
     #     split_tags = @data.tags.split ','

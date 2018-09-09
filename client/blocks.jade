@@ -47,6 +47,16 @@ template(name='view_button')
     a.ui.icon.button(href="/v/#{_id}" data-content='View Details' class=classes) 
         // +icon name='details-pane'
         i.right.chevron.green.icon
+
+
+template(name='icon_view')
+    if icon
+        +icon name=icon
+        
+template(name='view_page_button')
+    a.ui.icon.button(href="/p/#{slug}" data-content='View Page' class=classes) 
+        // +icon name='details-pane'
+        i.right.chevron.blue.icon
         
 template(name='view_office_button')
     a.ui.icon.button(href="/office/#{_id}" data-content='View Office' class=classes) 
@@ -755,7 +765,7 @@ template(name='block')
                         .centered.middle.aligned.row
                             .three.wide.center.aligned.column
                                 if is_admin
-                                    +link_button link='/admin' icon='user-shield' label='Admin'
+                                    +link_button link='/p/admin' icon='user-shield' label='Admin'
                             .ten.wide.column
                                 h2.ui.center.aligned.grey.header 
                                     +icon name='code'

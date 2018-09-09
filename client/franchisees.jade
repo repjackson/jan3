@@ -1,16 +1,3 @@
-template(name='franchisees')
-    .ui.padded.stackable.grid
-        .middle.aligned.row
-            .four.wide.column
-                +link_button link='/admin' label='Admin' icon='user-shield'
-            .eight.wide.column
-                h1.ui.center.aligned.header
-                    +icon name='business'
-                    | Franchisees
-            .four.wide.column
-        +blocks tags='admin,franchisees,active'
-     
-                    
 template(name='franchisee_view')
     .ui.padded.stackable.grid
         // .centered.row

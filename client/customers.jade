@@ -1,16 +1,3 @@
-template(name='customers')
-    .ui.padded.stackable.grid
-        .middle.aligned.row
-            .three.wide.column
-                +link_button link='/admin' icon='user-shield' label='Admin'
-            .ten.wide.column
-                h1.ui.center.aligned.header
-                    +icon name='headset'
-                    | Customers
-            .three.wide.right.aligned.column
-        +blocks tags='admin,customers,total,page'
-
-
 template(name='customer_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row

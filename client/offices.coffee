@@ -1,8 +1,3 @@
-FlowRouter.route '/offices', 
-    name: 'offices'
-    action: ->
-        BlazeLayout.render 'layout', main: 'databank_office'
-
 FlowRouter.route '/office/:doc_id', 
     name: 'office_dashboard'
     action: -> BlazeLayout.render 'layout', main: 'office_dashboard'
@@ -27,20 +22,6 @@ FlowRouter.route '/office/:doc_id/settings',
     name: 'office_settings'
     action: -> BlazeLayout.render 'layout', main: 'office_settings'
 
-Template.databank_office.onCreated ->
-    # @autorun -> Meteor.subscribe 'offices', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    @autorun => Meteor.subscribe 'count', 'office'
-    Session.set('page_number',1)
-    Session.set 'page_size', 10
-    Session.set('skip',0)
-
-
-Template.databank_office.helpers
-    all_offices: ->
-        Docs.find {
-            type:'office'
-            },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}")}
-            
 
 Template.office_header.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')

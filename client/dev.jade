@@ -3,7 +3,7 @@ template(name='dev')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 if is_admin
-                    +link_button link='/admin' icon='user-shield' label='Admin'
+                    +link_button link='/p/admin' icon='user-shield' label='Admin'
             .ten.wide.column
                 h2.ui.center.aligned.grey.header 
                     +icon name='code'
@@ -42,8 +42,8 @@ template(name='dev')
                 .ui.header Pages
                 +add_button type='page'
                 each pages
-                    .ui.header #{title}
-                    a(href='/p/#{_id}') go
+                    .ui.header #{title} (#{slug})
+                    a(href='/p/#{slug}') go
 
 
 
@@ -81,7 +81,7 @@ template(name='page_view')
             .centered.middle.aligned.row
                 .three.wide.center.aligned.column
                     if is_admin
-                        +link_button link='/admin' icon='user-shield' label='Admin'
+                        +link_button link='/p/admin' icon='user-shield' label='Admin'
                 .ten.wide.column
                     h2.ui.center.aligned.grey.header 
                         +icon name=icon
@@ -125,7 +125,7 @@ template(name='page')
             .centered.middle.aligned.row
                 .three.wide.center.aligned.column
                     if is_admin
-                        +link_button link='/admin' icon='user-shield' label='Admin'
+                        +link_button link='/p/admin' icon='user-shield' label='Admin'
                 .ten.wide.column
                     h2.ui.center.aligned.grey.header 
                         +icon name=icon

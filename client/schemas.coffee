@@ -1,37 +1,3 @@
-Template.schemas.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-Template.schemas.helpers
-
-
-FlowRouter.route '/schemas', action: ->
-    BlazeLayout.render 'layout', 
-        sub_nav: 'admin_nav'
-        main: 'schemas'
-
-
-# @selected_schema_tags = new ReactiveArray []
-
-Template.schemas.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'schema'
-    
-    @autorun => Meteor.subscribe 'facet', 
-        selected_tags.array()
-        selected_author_ids.array()
-        selected_location_tags.array()
-        selected_timestamp_tags.array()
-        type='schema'
-        author_id=null
-        
-        
-Template.schemas.helpers
-    schemas: ->  Docs.find { type:'schema'}
-
-
-Template.schema_card.onCreated ->
-
-Template.schema_card.helpers
-    
-
 Template.schema_edit.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 Template.schema_view.onCreated ->

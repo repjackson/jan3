@@ -74,7 +74,7 @@ Template.login.events
             if err then console.error err
             else
                 Bert.alert "Logged in as Demo Admin. Redirecting to dashboard.", 'success', 'growl-top-right'
-                FlowRouter.go '/admin'                
+                FlowRouter.go '/p/admin'                
             
     'click #login_demo_office': ->
         Meteor.loginWithPassword 'demo_office', 'demoofficepassword', (err,res)->

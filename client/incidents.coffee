@@ -1,7 +1,3 @@
-FlowRouter.route '/incidents', 
-    name:'incidents'
-    action: -> BlazeLayout.render 'layout', main:'incidents'
-
 FlowRouter.route '/customer_incidents', 
     name:'customer_incidents'
     action: -> BlazeLayout.render 'layout', main:'customer_incidents'
@@ -82,24 +78,6 @@ Template.level_icon.helpers
     is_level_four: -> @level is 4
 
 
-Template.incidents.onCreated ->
-    Session.setDefault('query',null)
-    Session.set('page_number',1)
-    Session.set('page_size',10)
-    Session.set('skip',0)
-    # @autorun -> Meteor.subscribe 'incidents', Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    @autorun => Meteor.subscribe 'count', 'incident'
-
-
-
-Template.incidents.helpers
-    all_incidents: -> 
-        Docs.find {
-            type:'incident'
-            submitted:true
-        },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
-        
-        
 Template.customer_incidents.onCreated ->
     Session.set('query',null)
     Session.set('page_size',10)
