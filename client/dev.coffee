@@ -2,6 +2,10 @@ FlowRouter.route '/dev', action: ->
     BlazeLayout.render 'layout', 
         main: 'dev'
         
+FlowRouter.route '/p/:page_slug', action: ->
+    BlazeLayout.render 'layout', 
+        main: 'page'
+        
 Template.dev.onCreated ->
     @autorun => Meteor.subscribe 'events_by_type', 'sms'
     @autorun => Meteor.subscribe 'type', 'page'
@@ -10,9 +14,33 @@ Template.dev.helpers
     events: -> Docs.find type:'event'
     pages: -> Docs.find type:'page'
 
+Template.page_view.onCreated ->
+    # location.reload() 
+    @autorun => Meteor.subscribe 'blocks', FlowRouter.getParam('doc_id')
+
+    
+Template.page.onCreated ->
+    @autorun => Meteor.subscribe 'page_by_slug', FlowRouter.getParam('page_slug')
+    @autorun => Meteor.subscribe 'blocks_by_page_slug', FlowRouter.getParam('page_slug')
+
+    
+    
 Template.page_view.helpers
     page_doc: -> 
-        Docs.findOne FlowRouter.getParam('doc_id')
+        FlowRouter.watchPathChange();
+        currentContext = FlowRouter.current();
+        # console.log currentContext
+        Docs.findOne currentContext.params.doc_id
+    
+    
+Template.page.helpers
+    page_doc: -> 
+        FlowRouter.watchPathChange();
+        currentContext = FlowRouter.current();
+        console.log currentContext
+        Docs.findOne
+            type:'page'
+            slug: FlowRouter.getParam('page_slug')
     
     
 Template.dev.events

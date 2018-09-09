@@ -39,7 +39,7 @@ Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'my_franchisee'
     @autorun -> Meteor.subscribe 'my_office'
     @autorun -> Meteor.subscribe 'me'
-    @autorun -> Meteor.subscribe 'type','page'
+    @autorun -> Meteor.subscribe 'admin_nav_pages'
     
 Template.dashboard.onRendered ->
     # Meteor.setTimeout ->

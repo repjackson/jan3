@@ -191,6 +191,18 @@ Template.edit_text_field.events
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
+Template.edit_page_text_field.events
+    'change #text_field': (e,t)->
+        text_value = e.currentTarget.value
+        page = Docs.findOne slug:FlowRouter.getParam('page_slug')
+        Docs.update page._id,
+            { $set: "#{@key}": text_value }
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
+
 Template.edit_profile_text_field.events
     'change #text_field': (e,t)->
         text_value = e.currentTarget.value

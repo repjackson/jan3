@@ -706,22 +706,21 @@ Template.assignment_widget.helpers
 
 Template.blocks.onCreated ->
     # console.log @data.tags
-    if @data.tags and typeof @data.tags is 'string'
-        split_tags = @data.tags.split ','
-    else
-        split_tags = @data.tags
-    # console.log split_tags
-    @autorun => Meteor.subscribe 'blocks', split_tags
+    # if @data.tags and typeof @data.tags is 'string'
+    #     split_tags = @data.tags.split ','
+    # else
+    #     split_tags = @data.tags
+    # # console.log split_tags
 
 Template.blocks.helpers
     blocks: -> 
-        if @tags and typeof @tags is 'string'
-            split_tags = @tags.split ','
-        else
-            split_tags = @tags
+        # if @tags and typeof @tags is 'string'
+        #     split_tags = @tags.split ','
+        # else
+        #     split_tags = @tags
         Docs.find 
             type:'block'
-            tags:$all:split_tags
+            parent_slug:FlowRouter.getParam('page_slug')
     
 Template.block.onRendered ->
     Meteor.setTimeout ->
@@ -731,6 +730,8 @@ Template.block.onRendered ->
 Template.block.onCreated ->
     Meteor.subscribe 'type', 'schema'
     Meteor.subscribe 'type', 'event_type'
+    Meteor.subscribe 'stat', @data.children_doc_type, @data.table_stat_type
+
     @autorun => Meteor.subscribe 'block_docs', 
         @data._id, 
         @data.filter_key, 
@@ -889,17 +890,15 @@ Template.block.events
 
 Template.blocks.events
     'click #add_block': (e,t)->
-        console.log @
-        console.log @tags
-        if @tags and typeof @tags is 'string'
-            split_tags = @tags.split ','
-        else
-            split_tags = @tags
+        # if @tags and typeof @tags is 'string'
+        #     split_tags = @tags.split ','
+        # else
+        #     split_tags = @tags
         
 
         Docs.insert
             type:'block'
-            tags:split_tags 
+            parent_slug:FlowRouter.getParam('page_slug') 
             fields: []
     
     
@@ -922,7 +921,10 @@ Template.set_key_value.events
             
 Template.set_page_key_value.events
     'click .set_page_key_value': ->
-        Docs.update FlowRouter.getParam('doc_id'),
+        page = Docs.findOne 
+            type:'page'
+            slug:FlowRouter.getParam('page_slug')
+        Docs.update page._id,
             { $set: "#{@key}": @value }
     
 Template.set_key_value_2.events
@@ -942,8 +944,10 @@ Template.set_key_value.helpers
     
 Template.set_page_key_value.helpers
     set_value_button_class: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if doc["#{@key}"] is @value then 'active' else 'basic'
+        page = Docs.findOne 
+            type:'page'
+            slug:FlowRouter.getParam('page_slug')
+        if page["#{@key}"] is @value then 'active' else 'basic'
 
     
 Template.set_key_value_2.helpers

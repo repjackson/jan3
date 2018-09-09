@@ -49,6 +49,7 @@ Meteor.publish 'block_docs', (
     skip=0,
     status
     page_doc_id)->
+        console.log block_doc_id
         block = Docs.findOne block_doc_id
         page_doc = Docs.findOne page_doc_id
         match = {}
@@ -990,16 +991,29 @@ Meteor.publish 'customers_franchisee', (customer_doc_id)->
             return cursor
             
             
-Meteor.publish 'blocks', (tags)->
+Meteor.publish 'blocks', (parent_id)->
     Docs.find   
         type:'block'
-        tags:$all:tags
+        parent_id:parent_id
+            
+Meteor.publish 'blocks_by_page_slug', (page_slug)->
+    # parent = Docs.findOne 
+    #     type:'page'
+    #     slug:page_slug
+    Docs.find   
+        type:'block'
+        parent_slug:page_slug
             
 Meteor.publish 'events_by_type', (type)->
     Docs.find   
         type:'event'
         event_type:type
             
+            
+Meteor.publish 'admin_nav_pages', ()->
+    Docs.find
+        type:'page'
+        admin_nav:true
             
             
 Meteor.publish 'page_by_slug', (slug)->

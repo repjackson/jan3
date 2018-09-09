@@ -672,7 +672,7 @@ template(name='blocks')
     if editing_mode
         #add_block.ui.button(title="Add block with #{tags}")
             i.fork.icon
-            |Add block with #{tags}
+            |Add Child Block
     each blocks
         +block 
                                             
@@ -766,15 +766,17 @@ template(name='block')
                         .ui.tertiary.segment
                             h3.ui.header 
                                 +icon name=icon
-                                |Edit #{title}
+                                |Edit #{title} #{_id}
                             i.remove_block.remove.icon
-                            |block
                             +set_key_value key='published' value=true label='Published'
                             +set_key_value key='published' value=false label='Hidden'
                             .ui.form
-                                +edit_block_text_field label='Title' key='title'
-                                +edit_block_text_field label='Icon' key='icon'
-                                +edit_block_text_field label='Classes' key='block_classes'
+                                .fields
+                                    +edit_block_text_field label='Title' key='title'
+                                    +edit_block_text_field label='Icon' key='icon'
+                                    +edit_block_text_field label='Classes' key='block_classes'
+                                    +edit_block_text_field label='Slug' key='slug'
+                                    +edit_block_text_field label='Parent Slug' key='parent_slug'
                             h3.ui.header
                                 i.filter.icon
                                 |Filter
@@ -816,9 +818,22 @@ template(name='block')
                                 +set_key_value key='filter_value' value='{current_page_office_jpid}' label='Current Page Office JPID'
                                 +edit_block_text_field label='Filter Value' key='filter_value'
 
-                            div Shown Fields
+                            h4 Shown Fields
                                 .add_blank_field.ui.icon.button(title='Add Blank Field')
                                     i.plus.icon
+                            h4 Available Fields
+                            each schema_doc.fields
+                                if show_schema_field
+                                    .add_schema_field.ui.compact.button #{title}
+                            div Doc Type
+                                each schemas
+                                    +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
+                            div View Mode
+                                +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
+                                +set_key_value key='view_mode' value='list' label='List' icon='list'
+                                +set_key_value key='view_mode' value='comments' label='Comments' icon='comments'
+                                +set_key_value key='view_mode' value='grid' label='Grid' icon='grid'
+                                +set_key_value key='view_mode' value='header' label='Header'
                             if fields
                                 table.ui.striped.fixed.table
                                     thead
@@ -847,19 +862,6 @@ template(name='block')
                                                 td 
                                                     i.remove_schema_field.remove.link.icon
 
-                            div Available Fields
-                            each schema_doc.fields
-                                if show_schema_field
-                                    .add_schema_field.ui.compact.button #{title}
-                            div Doc Type
-                                each schemas
-                                    +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
-                            div View Mode
-                                +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
-                                +set_key_value key='view_mode' value='list' label='List' icon='list'
-                                +set_key_value key='view_mode' value='comments' label='Comments' icon='comments'
-                                +set_key_value key='view_mode' value='grid' label='Grid' icon='grid'
-                                +set_key_value key='view_mode' value='header' label='Header'
                             .ui.secondary.segment
                                 if is_table
                                     div Stat Type
@@ -894,18 +896,18 @@ template(name='set_key_value')
         |#{label}
         
 template(name='set_page_key_value')
-    .set_page_key_value.ui.small.compact.button(class=set_value_button_class) 
+    .set_page_key_value.ui.compact.button(class=set_value_button_class) 
         if icon
             i.icon
                 +icon name=icon
         |#{label}
         
 template(name='set_field_key_value')
-    .set_field_key_value.ui.small.compact.button(class=set_value_button_class) #{label}
+    .set_field_key_value.ui.compact.button(class=set_value_button_class) #{label}
         
         
 template(name='set_key_value_2')
-    .set_key_value.ui.small.compact.button(class=set_value_button_class) 
+    .set_key_value.ui.compact.button(class=set_value_button_class) 
         if icon
             i.icon
                 +icon name=icon

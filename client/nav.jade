@@ -4,7 +4,7 @@ template(name='nav')
             i.bars.icon
         if is_admin
             each admin_nav_items
-                a.item(href="/v/#{_id}" data-content=label class="{{ isActiveRoute slug }}" title=label)
+                a.item(href="/p/#{slug}" class="{{ isActiveRoute slug }}" title=title)
                     i.large.icon
                         +icon name=icon
                     // .mobile.hidden &nbsp; Admin

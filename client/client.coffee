@@ -185,6 +185,15 @@ Template.registerHelper 'page_key_value', () ->
     if current_doc
         current_doc["#{@key}"]
         
+Template.registerHelper 'page_slug_key_value', () -> 
+    # doc_field = Template.parentData(2)
+    # console.log @
+    page = Docs.findOne 
+        type:'page'
+        slug:FlowRouter.getParam('page_slug')
+    if page
+        page["#{@key}"]
+        
         
         
         
