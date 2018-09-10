@@ -18,9 +18,9 @@ Template.add_button.events
 
 
 Template.reference_type_single.onCreated ->
-    @autorun =>  Meteor.subscribe 'docs', [], @data.type
+    @autorun =>  Meteor.subscribe 'type', @data.type
 Template.reference_type_multiple.onCreated ->
-    @autorun =>  Meteor.subscribe 'docs', [], @data.type
+    @autorun =>  Meteor.subscribe 'type', @data.type
 
 Template.associated_users.onCreated ->
     @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
@@ -49,10 +49,6 @@ Template.incident_assigment_cell.helpers
             Meteor.users.find 
                 _id: $in: @assigned_to
 
-Template.associated_incidents.onCreated ->
-    @autorun =>  Meteor.subscribe 'docs', [], 'incident'
-Template.associated_incidents.helpers
-    incidents: -> Docs.find type:'incident'
 
 
 Template.reference_type_single.helpers
@@ -565,7 +561,7 @@ Template.doc_result.helpers
 
 
 Template.office_card.onCreated ->
-    @autorun =>  Meteor.subscribe 'office_by_id', @data.office_jpid
+    @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.office_jpid
 Template.office_card.helpers
     office_doc: ->
         context = Template.currentData(0)
@@ -576,7 +572,7 @@ Template.office_card.helpers
         doc
         
 Template.customer_card.onCreated ->
-    @autorun =>  Meteor.subscribe 'customer_by_id', @data.customer_jpid
+    @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.customer_jpid
 Template.customer_card.helpers
     customer_doc: ->
         context = Template.currentData(0)
@@ -588,7 +584,7 @@ Template.customer_card.helpers
 
 
 Template.franchisee_card.onCreated ->
-    @autorun =>  Meteor.subscribe 'franchisee_by_id', @data.franchisee_jpid
+    @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.franchisee_jpid
 Template.franchisee_card.helpers
     franchisee_doc: ->
         context = Template.currentData(0)
@@ -692,21 +688,6 @@ Template.assignment_widget.helpers
 
 
 
-# Template.doc_type_block.onCreated ->
-#     @autorun => Meteor.subscribe 'doc_type_block', FlowRouter.getParam('doc_id'), @data.doc_type
-# Template.block.onRendered ->
-#     Meteor.setTimeout ->
-#         $('.ui.accordion').accordion()
-#     , 500
-
-# Template.doc_type_block.helpers
-#     children: -> Docs.find { type:@doc_type}
-
-#     view_mode_template: ->
-#         console.log @
-        
-        
-
 Template.blocks.onCreated ->
     Session.set('query',null)
     Session.set('sort_direction',-1)
@@ -727,14 +708,14 @@ Template.blocks.helpers
         #     split_tags = @tags.split ','
         # else
         #     split_tags = @tags
-        Docs.find 
+        Docs.find {
             type:'block'
             parent_slug:FlowRouter.getParam('page_slug')
-    
-Template.block.onRendered ->
-    Meteor.setTimeout ->
-        $('.accordion').accordion();
-    , 500
+        }, sort:rank:1
+# Template.block.onRendered ->
+#     Meteor.setTimeout ->
+#         $('.accordion').accordion();
+#     , 500
 
 Template.block.onCreated ->
     Meteor.subscribe 'type', 'schema'

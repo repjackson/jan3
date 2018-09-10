@@ -1,14 +1,5 @@
 template(name='users') 
     .ui.padded.stackable.middle.aligned.middle.aligned.grid
-        .centered.row
-            .four.wide.column 
-                +link_button link='/p/admin' label='Admin' icon='user-shield'
-            .eight.wide.column 
-                h1.ui.center.aligned.header 
-                    +icon name='groups'
-                    | Users
-            .four.wide.right.aligned.column 
-                +link_button link='/user/add' label='Add User' icon='plus'
         .row
             .sixteen.wide.column
                 +table_header stat_type='total'

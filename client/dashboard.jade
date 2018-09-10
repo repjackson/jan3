@@ -1,96 +1,97 @@
-template(name='dashboard')
-    #dash_header.ui.vertical.masthead.center.aligned.padded.segment
-        .ui.container
-            img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            h2.ui.inverted.header Customer Portal
-            unless currentUser
-                a.ui.center.aligned.big.inverted.blue.button(href='/login')
-                    |Login to see Dashboard
-                    i.right.arrow.icon
-        if is_customer
-            +customer_menu
-    .ui.padded.stackable.grid
-        if currentUser.users_office.customer_message
-            .four.column.row
-                .column
-                    .ui.floating.message
-                        .content
-                            .header 
-                                i.large.icon
-                                    +icon name='sms'
-                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Message
-                        .content
-                            p 
-                            p #{currentUser.users_office.customer_message}
-                .column
-                    .ui.floating.message
-                        .content
-                            .header 
-                                i.large.icon
-                                    +icon name='discount'
-                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Promotions
-                        .content
-                            p 
-                            p #{currentUser.users_office.customer_promotions}
-                .column
-                    .ui.floating.message
-                        .content
-                            .header 
-                                i.large.icon
-                                    +icon name='faq'
-                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Help Policy
-                        .content
-                            p 
-                            p #{currentUser.users_office.help_policy}
-                .column
-                    +small_service_list
+// template(name='dashboard')
+//     #dash_header.ui.vertical.masthead.center.aligned.padded.segment
+//         .ui.container
+//             img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+//             h2.ui.inverted.header Customer Portal
+//             unless currentUser
+//                 a.ui.center.aligned.big.inverted.blue.button(href='/login')
+//                     |Login to see Dashboard
+//                     i.right.arrow.icon
+//         if is_customer
+//             +customer_menu
+//     .ui.padded.stackable.grid
+//         if currentUser.users_office.customer_message
+//             .four.column.row
+//                 .column
+//                     .ui.floating.message
+//                         .content
+//                             .header 
+//                                 i.large.icon
+//                                     +icon name='sms'
+//                                 |#{currentUser.users_office.ev.MASTER_LICENSEE} Message
+//                         .content
+//                             p 
+//                             p #{currentUser.users_office.customer_message}
+//                 .column
+//                     .ui.floating.message
+//                         .content
+//                             .header 
+//                                 i.large.icon
+//                                     +icon name='discount'
+//                                 |#{currentUser.users_office.ev.MASTER_LICENSEE} Promotions
+//                         .content
+//                             p 
+//                             p #{currentUser.users_office.customer_promotions}
+//                 .column
+//                     .ui.floating.message
+//                         .content
+//                             .header 
+//                                 i.large.icon
+//                                     +icon name='faq'
+//                                 |#{currentUser.users_office.ev.MASTER_LICENSEE} Help Policy
+//                         .content
+//                             p 
+//                             p #{currentUser.users_office.help_policy}
+//                 .column
+//                     +small_service_list
 
-        .row
-            with currentUser.users_customer.parent_franchisee
-                .sixteen.wide.column
-                    .ui.secondary.segment
-                        h3.ui.header 
-                            +icon name='conference'
-                            // |#{ev.FRANCHISEE} Franchisee Contact
-                            |Your Local Owner / Operator
-                        table.ui.sortable.striped.table
-                            tbody
-                                tr
-                                    td #{ev.FRANCHISEE}
-                                    td(title='Short Name') #{ev.FRANCH_NAME}
-                                    td #{ev.FRANCH_EMAIL}
-                                    td #{ev.TELE_CELL} #{profile.phone}
-                                    td
-                                        a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
-                                            // i.mail.icon
-                                            +icon name='send'
-        .row
-            .sixteen.wide.column
-                h3.ui.header 
-                    +icon name='error'
-                    |#{currentUser.users_customer.ev.CUST_NAME} Incidents
-                +blocks tags='customer,dashboard,incidents'
-        .row
-            .sixteen.wide.column
-                +blocks tags='customer,dashboard,invoices'
-        .centered.row
-            .sixteen.wide.column
-                +dashboard_office_contacts_list
-                +blocks tags='customer,dashboard,office,contacts'
-        .centered.row
-            .sixteen.wide.column
-                h3.ui.header 
-                    +icon name='broom'
-                    |Special Services
-                with currentUser.users_customer
-                    .ui.horizontal.divided.list
-                        // .item #{customer_contact_person}
-                        if customer_contact_email
-                            .item #{customer_contact_email}
-                        .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
-                        .item Days of Service: #{customer_days_service_formatted}
-                        .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
-                +blocks tags='customer,dashboard,office,special_services'
+//         .row
+//             with currentUser.users_customer.parent_franchisee
+//                 .sixteen.wide.column
+//                     .ui.secondary.segment
+//                         h3.ui.header 
+//                             +icon name='conference'
+//                             // |#{ev.FRANCHISEE} Franchisee Contact
+//                             |Your Local Owner / Operator
+//                         table.ui.sortable.striped.table
+//                             tbody
+//                                 tr
+//                                     td #{ev.FRANCHISEE}
+//                                     td(title='Short Name') #{ev.FRANCH_NAME}
+//                                     td #{ev.FRANCH_EMAIL}
+//                                     td #{ev.TELE_CELL} #{profile.phone}
+//                                     td
+//                                         a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
+//                                             // i.mail.icon
+//                                             +icon name='send'
+//         .row
+//             .sixteen.wide.column
+//                 h3.ui.header 
+//                     +icon name='error'
+//                     |#{currentUser.users_customer.ev.CUST_NAME} Incidents
+//                 +blocks tags='customer,dashboard,incidents'
+//         .row
+//             .sixteen.wide.column
+//                 +blocks tags='customer,dashboard,invoices'
+//         .centered.row
+//             .sixteen.wide.column
+//                 +dashboard_office_contacts_list
+//                 +blocks tags='customer,dashboard,office,contacts'
+//         .centered.row
+        
+template(name='customer_special_services')        
+    h3.ui.header 
+        +icon name='broom'
+        |Special Services
+    with currentUser.users_customer
+        .ui.horizontal.divided.list
+            // .item #{customer_contact_person}
+            if customer_contact_email
+                .item #{customer_contact_email}
+            .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
+            .item Days of Service: #{customer_days_service_formatted}
+            .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
+    // +blocks tags='customer,dashboard,office,special_services'
 
     
 template(name='customer_menu')
@@ -160,3 +161,53 @@ template(name='small_service_list')
                         img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
                         |#{title}
 
+
+template(name='dashboard_header')
+    #dash_header.ui.vertical.masthead.center.aligned.padded.segment
+        .ui.container
+            img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            h2.ui.inverted.header Customer Portal
+            unless currentUser
+                a.ui.center.aligned.big.inverted.blue.button(href='/login')
+                    |Login to see Dashboard
+                    i.right.arrow.icon
+        if is_customer
+            +customer_menu
+
+
+template(name='office_message')
+    .ui.padded.stackable.grid
+        if currentUser.users_office.customer_message
+            .four.column.row
+                .column
+                    .ui.floating.message
+                        .content
+                            .header 
+                                i.large.icon
+                                    +icon name='sms'
+                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Message
+                        .content
+                            p 
+                            p #{currentUser.users_office.customer_message}
+                .column
+                    .ui.floating.message
+                        .content
+                            .header 
+                                i.large.icon
+                                    +icon name='discount'
+                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Promotions
+                        .content
+                            p 
+                            p #{currentUser.users_office.customer_promotions}
+                .column
+                    .ui.floating.message
+                        .content
+                            .header 
+                                i.large.icon
+                                    +icon name='faq'
+                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Help Policy
+                        .content
+                            p 
+                            p #{currentUser.users_office.help_policy}
+                .column
+                    +small_service_list

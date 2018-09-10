@@ -35,15 +35,15 @@ Template.office_header.events
                 console.log res
 Template.office_header.helpers
     # current_name: -> console.log FlowRouter.getRouteName()
-    office_doc: -> Docs.findOne FlowRouter.getParam('jpid')
+    office_doc: -> Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
     office_map_address: ->
-        page_office = Docs.findOne FlowRouter.getParam('jpid')
+        page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         encoded_address = encodeURIComponent "#{page_office.ev.ADDR_STREET} #{page_office.ev.ADDR_STREET_2} #{page_office.ev.ADDR_CITY},#{page_office.ev.ADDR_STATE} #{page_office.ev.ADDR_POSTAL_CODE} #{page_office.ev.MASTER_COUNTRY}"
         # console.log encoded_address
         "https://www.google.com/maps/search/?api=1&query=#{encoded_address}"
 
 Template.office_dashboard.helpers
-    office_doc: -> Docs.findOne FlowRouter.getParam('jpid')
+    office_doc: -> Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
 
 
 Template.office_employees.onCreated ->
@@ -61,7 +61,7 @@ Template.office_employees.onRendered ->
 
 Template.office_employees.helpers    
     office_employees: ->  
-        page_office = Docs.findOne FlowRouter.getParam('jpid')
+        page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         # console.log page_office
         if page_office
             Meteor.users.find {
@@ -77,12 +77,12 @@ Template.office_service_settings.onCreated ->
 Template.office_service_settings.helpers
     services: -> Docs.find {type:'service'}
     select_service_button_class: ->
-        page_office = Docs.findOne FlowRouter.getParam('jpid')
+        page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         if @slug in page_office.services then 'blue' else 'basic'
         
 Template.office_service_settings.events
     'click .select_service': -> 
-        page_office = Docs.findOne FlowRouter.getParam('jpid')
+        page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         if page_office 
             if page_office.services
                 if @slug in page_office.services

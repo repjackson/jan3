@@ -69,7 +69,10 @@ Template.edit_image_field.events
 Template.edit_number_field.events
     'change #number_field': (e,t)->
         number_value = parseInt e.currentTarget.value
-        Docs.update FlowRouter.getParam('doc_id'),
+        page = Docs.findOne 
+            type:'page'
+            slug:FlowRouter.getParam('page_slug')
+        Docs.update page._ids,
             { $set: "#{@key}": number_value }
             , (err,res)=>
                 if err

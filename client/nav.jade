@@ -8,51 +8,19 @@ template(name='nav')
                     i.large.icon
                         +icon name=icon
                     // .mobile.hidden &nbsp; Admin
-            
-            a.mobile.hidden.item(href='/users' class="{{ isActiveRoute 'users'}}" title='Users')
-                i.large.icon
-                    +icon name='groups'
-            //     // .mobile.hidden &nbsp; Users
-            a.mobile.hidden.item(href='/services' class="{{ isActiveRoute 'services'}}" title='Services')
-                i.large.icon
-                    +icon name='broom'
-                // .mobile.hidden Services
         else if is_customer
-            a.item(href='/')
-                // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                i.large.icon
-                    +icon name='dashboard'
-                .mobile.hidden &nbsp; Dashboard
-            a.mobile.hidden.item(href='/customer_incidents' class="{{ isActiveRoute 'customer_incidents'}}")
-                i.large.icon
-                    +icon name='error'
-                .mobile.hidden &nbsp; My Incidents
-            a.mobile.hidden.item(href='/services' class="{{ isActiveRoute 'services'}}")
-                i.large.icon
-                    +icon name='broom'
-                .mobile.hidden Services
+            each customer_nav_items
+                a.item(href="/p/#{slug}" class="{{ isActiveRoute slug }}" title=title)
+                    i.large.icon
+                        +icon name=icon
+                    .mobile.hidden &nbsp; #{title}
         else if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
             each office_nav_items
                 a.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ isActiveRoute slug }}" title=title)
                     i.large.icon
                         +icon name=icon
-            // a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}" title='Office Employees')
-            //     i.large.icon
-            //         +icon name='groups'
-            //     // .mobile.hidden &nbsp; Employees
-            // a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}" title='Office Settings')
-            //     i.large.icon
-            //         +icon name='settings'
-            //     // .mobile.hidden &nbsp; Settings
         .right.menu
-            // if is_dev
-            //     a#toggle_dev.black.inverted.item(href='#')
-            //         i.large.icon
-            //             if dev_mode
-            //                 +icon name='toggle-on'
-            //             else
-            //                 +icon name='toggle-off'
             if is_dev
                 a#toggle_editing.item(href='#')
                     i.large.icon
@@ -99,15 +67,13 @@ template(name='left_sidebar')
             //     i.globe.icon
             //     | Sales Page
         if is_admin
-            a.toggle_left_sidebar.item(href='/users') 
+            a.toggle_left_sidebar.item(href='/p/users') 
                 |Users
             a.toggle_left_sidebar.item(href='/p/admin_incidents') 
                 |Incidents
             a.toggle_left_sidebar.item(href='/p/admin_offices') 
                 |Offices
-            // a.toggle_left_sidebar.item(href='/schedule')
-            //     | Schedule
-            a.toggle_left_sidebar.item(href='/services')
+            a.toggle_left_sidebar.item(href='/p/services')
                 // +tiny_sprite name='duster'
                 | Services
             // a.toggle_left_sidebar.item(href='/special_services')

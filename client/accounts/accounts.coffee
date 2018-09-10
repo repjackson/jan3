@@ -28,10 +28,10 @@ Template.login.events
                         FlowRouter.go "/office/#{res.office._id}"        
                     else if 'customer' in res.user.roles
                         Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                        FlowRouter.go "/"    
+                        FlowRouter.go "/p/customer_dashboard"    
                     else    
                         Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                        FlowRouter.go "/"    
+                        FlowRouter.go "/p/customer_dashboard"    
     
     'keyup .password': (e,t)->
         if e.which is 13 #enter
@@ -49,7 +49,7 @@ Template.login.events
                             FlowRouter.go "/office/#{res.office._id}/"        
                         else if 'customer' in res.user.roles
                             Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                            FlowRouter.go "/"        
+                            FlowRouter.go "/p/customer_dashboard"        
             
     'keyup .username': (e,t)->
         if e.which is 13 #enter
@@ -67,7 +67,7 @@ Template.login.events
                             FlowRouter.go "/office/#{res.office._id}/"        
                         else if 'customer' in res.user.roles
                             Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                            FlowRouter.go "/"        
+                            FlowRouter.go "/p/customer_dashboard"        
             
     'click #login_demo_admin': ->
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->
@@ -84,14 +84,14 @@ Template.login.events
                 Meteor.call 'find_office_from_jpid', '15793131',(err,res)->
                     if err then console.error err
                         # console.log res
-                FlowRouter.go "/office/L93szwF2nsqvANnre/incidents"                
+                FlowRouter.go "/p/office_incidents/15793131"                
             
     'click #login_demo_customer': ->
         Meteor.loginWithPassword 'demo_customer', 'democustomerpassword', (err,res)->
             if err then console.error err
             else
                 Bert.alert "Logged in as Demo Customer. Redirecting to dashboard.", 'success', 'growl-top-right'
-                FlowRouter.go '/'                
+                FlowRouter.go '/p/customer_dashboard'                
             
             
 Template.login.helpers
@@ -182,7 +182,7 @@ Template.register_customer.events
             else
                 Bert.alert "Registered new customer user: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
                 # Meteor.call 'refresh_customer_jpids', username
-                FlowRouter.go '/'                
+                FlowRouter.go '/p/customer_dashboard'                
                 # if current_role is 'customer'
                 #     Meteor.call 'refresh_customer_jpids', user.username
                 # if current_role is 'office'
@@ -335,7 +335,7 @@ Template.register_office.events
             else
                 Bert.alert "Registered new office user: #{username}. Redirecting to office page.", 'success', 'growl-bottom-right'
                 # Meteor.call 
-                FlowRouter.go "/office/#{office_doc._id}/"                
+                FlowRouter.go "/office_incidents/#{office_jpid}/"                
         )
     
     'keyup #username': (e,t)->

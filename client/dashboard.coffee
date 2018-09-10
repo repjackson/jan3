@@ -1,6 +1,6 @@
-FlowRouter.route '/', action: ->
-    BlazeLayout.render 'layout', 
-        main: 'dashboard'
+# FlowRouter.route '/', action: ->
+#     BlazeLayout.render 'layout', 
+#         main: 'dashboard'
 
 # Template.office_contact_cards.helpers
 #     office_contacts: -> 
@@ -19,7 +19,7 @@ FlowRouter.route '/', action: ->
 #                 }, limit:100
 #                 found
 
-Template.dashboard.events
+Template.customer_menu.events
     'click .log_ticket': (e,t)->
         my_customer_ob = Meteor.user().users_customer()
         user = Meteor.user()

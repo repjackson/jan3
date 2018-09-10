@@ -26,6 +26,11 @@ Template.nav.helpers
             type:'page'
             office_nav:true
         }, sort:number:-1
+    customer_nav_items: ->
+        Docs.find {
+            type:'page'
+            customer_nav:true
+        }, sort:number:-1
 
 
 Template.nav.events
@@ -49,21 +54,3 @@ Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'customer_nav_pages'
     @autorun -> Meteor.subscribe 'office_nav_pages'
     
-Template.dashboard.onRendered ->
-    # Meteor.setTimeout ->
-    #     $('.ui.dropdown').dropdown()
-    # , 400
-    
-Template.nav.onRendered ->
-    # Meteor.setTimeout ->
-    #     $('.ui.dropdown').dropdown()
-    # , 1000
-    
-    Meteor.setTimeout ->
-        $('.item').popup()
-    , 1500
-    
-    
-    
-
-
