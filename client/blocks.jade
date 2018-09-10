@@ -657,6 +657,11 @@ template(name='block')
             if custom_template
                 +Template.dynamic template=custom_template
             else
+                if is_cards
+                    .ui.centered.three.cards
+                        each children
+                            +service_card
+
                 if is_table
                     if view_table_header
                         .middle.aligned.row
@@ -706,7 +711,7 @@ template(name='block')
                             .column
                                 .ui.secondary.segment
                                     if title
-                                        a.ui.header(href="/v/#{_id}")
+                                        a.ui.header(href="/p/#{slug}")
                                             if icon
                                                 i.icon  
                                                     +icon name=icon
@@ -859,6 +864,55 @@ template(name='block')
                                 +set_key_value key='view_table_footer' value=false label='Hide Footer'
                             else 
                                 +edit_block_text_field label='Result Limit' key='limit'
+     
+template(name='child_card')
+    .ui.card
+        .content
+            a.header(href="/v/#{_id}") 
+                if image_id
+                    img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
+                    // .right.floated.meta $#{price}
+                if icon
+                    +icon name=icon
+                |#{title}
+            if is_admin
+                .meta #{slug}
+            .description
+                p #{description}
+        if request_count
+            .content
+                | #{request_count} requests
+        .content
+            +request_service_button
+            a.ui.button(href="/v/#{_id}") 
+                i.large.icon
+                    +iconsmall name='view-details'
+                |Details
+    
+template(name='child_item')
+    .item
+        if image_id
+            a.image(href="/v/#{_id}")
+                img.ui.tiny.image(src="{{c.url image_id height=200 width=200 crop='scale'}}")
+        .content
+            // .right.floated.meta $#{price}
+            a.header(href="/v/#{_id}") #{title}
+            if is_admin
+                .meta #{slug}
+            .description
+                p #{description}
+        // if request_count
+        //     .content
+        //         | #{request_count} requests
+        .content
+            +request_service_button
+            a.ui.button(href="/v/#{_id}") 
+                i.large.icon
+                    +iconsmall name='view-details'
+                |Details
+     
+     
+     
         
 template(name='edit_block_text_field')
     .inline.field

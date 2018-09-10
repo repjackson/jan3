@@ -21,16 +21,20 @@ template(name='nav')
                     i.large.icon
                         +icon name=icon
         .right.menu
+            if is_admin
+                a.item(href='/p/pages' data-content='Pages')
+                    i.large.icon
+                        +icon name='layout'
             if is_dev
+                a.item(href='/p/pages' data-content='Pages')
+                    i.large.icon
+                        +icon name='layout'
                 a#toggle_editing.item(href='#')
                     i.large.icon
                         if editing_mode
                             +icon name='toggle-on'
                         else
                             +icon name='toggle-off'
-                a.item(href='/p/pages' data-content='Pages')
-                    i.large.icon
-                        +icon name='layout'
                 a.item(href='/p/schemas' data-content='Schemas')
                     i.large.icon
                         +icon name='database'
