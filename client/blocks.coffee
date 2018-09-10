@@ -353,11 +353,11 @@ Template.office_username_query.events
     'click .select_office_user': (e,t) ->
         key = Template.parentData(0).key
         # searched_value = doc["#{template.data.key}"]
-        office_doc_id = FlowRouter.getParam('doc_id')
+        office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         # console.log key
         # console.log @username
         
-        Docs.update office_doc_id,
+        Docs.update office_doc._id,
             $set: "#{key}": @username
         # console.log Docs.findOne(office_doc_id)["#{key}"]
         # $(e.currentTarget).closest('#office_username_query').val ''
@@ -368,7 +368,7 @@ Template.office_username_query.events
         office_username_query = $(e.currentTarget).closest('#office_username_query').val().trim()
         # $('#office_username_query').val ''
         Session.set 'office_username_query', office_username_query
-        current_office_id = Docs.findOne(FlowRouter.getParam('doc_id')).ev.ID
+        current_office_id = FlowRouter.getParam('jpid')
         Meteor.call 'lookup_office_user_by_username_and_office_jpid', current_office_id, office_username_query, (err,res)=>
             if err then console.error err
             else
@@ -388,7 +388,7 @@ Template.office_username_query.events
             confirmButtonText: 'Unassign'
             confirmButtonColor: '#da5347'
         }, =>
-            page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+            office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
             Docs.update page_doc._id,
                 $unset: "#{context.key}": 1
 
@@ -398,11 +398,14 @@ Template.office_username_query.helpers
         user_results
 
     selected_user: ->
-        context = Template.currentData(0)
-        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if parent_doc["#{context.key}"]
+        # context = Template.currentData(0)
+        # context = Template.parentData(1)
+        context = Template.parentData(2)
+        office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
+        if office_doc["#{context.key}"]
+            # console.log office_doc["#{context.key}"]
             Meteor.users.findOne
-                username: parent_doc["#{context.key}"]
+                username: office_doc["#{context.key}"]
         else
             false
 
@@ -410,10 +413,10 @@ Template.office_username_query.helpers
 Template.view_sla_contact.helpers
     selected_contact: ->
         context = Template.currentData(0)
-        parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        if parent_doc["#{context.key}"]
+        office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
+        if office_doc["#{context.key}"]
             Meteor.users.findOne
-                username: parent_doc[parent_doc["#{context.key}"]]
+                username: office_doc["#{context.key}"]
         else
             false
 
@@ -737,7 +740,7 @@ Template.block.onCreated ->
     Meteor.subscribe 'type', 'schema'
     Meteor.subscribe 'type', 'event_type'
     Meteor.subscribe 'stat', @data.children_doc_type, @data.table_stat_type
-
+    # console.log @data
     @autorun => Meteor.subscribe 'block_docs', 
         @data._id, 
         @data.filter_key, 
@@ -748,7 +751,7 @@ Template.block.onCreated ->
         Session.get('sort_direction'), 
         parseInt(Session.get('skip'))
         @data.filter_status
-        FlowRouter.getParam('doc_id')
+        FlowRouter.getParam('jpid')
 
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
     
@@ -789,7 +792,7 @@ Template.block.helpers
         if @published
             true
         else
-            if Meteor.user() and Meteor.user().roles and 'admin' in Meteor.user().roles and Session.get('editing_mode')
+            if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles and Session.get('editing_mode')
                 true
             else
                 false

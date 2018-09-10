@@ -94,92 +94,6 @@ template(name='office_dashboard')
                     +blocks tags='office,dashboard,messages'
                     +blocks tags='office,dashboard,comments'
 
-template(name='office_customers')
-    +office_header
-    +blocks tags='office,page,customers,section'
-    // .ui.padded.grid
-    //     .middle.aligned.row
-    //         +table_header doc_type='customer' stat_type='office_customers'
-    //     .centered.row
-    //         .sixteen.wide.column
-    //             table.ui.striped.fixed.table
-    //                 thead
-    //                     +sort_column_header key='ev.ID' label='JPID' classes='one wide'
-    //                     +sort_column_header key='ev.CUST_NAME' label='Customer Name'
-    //                     +sort_column_header key='ev.CUST_CONT_PERSON' label='Contact Person'
-    //                     th Contact
-    //                     +sort_column_header key='ev.FRANCHISEE' label='Franchisee'
-    //                     +sort_column_header key='ev.ADDR_STREET' label='Address'
-    //                     // +sort_column_header key='ev.TIMESTAMP' label='Timestamp'
-    //                     // th.one.wide View
-    //                 tbody
-    //                     each office_customers
-    //                         tr
-    //                             td.selectable(title="View #{ev.CUST_NAME} Customer")
-    //                                 a(href="/v/#{_id}") #{ev.ID}
-    //                             td.selectable(title="View #{ev.CUST_NAME} Customer")
-    //                                 a(href="/v/#{_id}") #{ev.CUST_NAME}
-    //                             td 
-    //                                 div #{ev.CUST_CONT_PERSON}
-    //                             td 
-    //                                 div #{ev.CUST_CONTACT_EMAIL}
-    //                                 div #{ev.TELEPHONE}
-    //                             td #{ev.FRANCHISEE}
-    //                             td #{ev.ADDR_STREET}
-    //                             // td #{ev.TIMESTAMP}
-    //                             // td 
-    //                             //     +view_button
-    //                 +table_footer columns='6' doc_type='customer' stat_type='office_customers'
-
-
-template(name='office_incidents')
-    +office_header
-    +blocks tags='office,page,incidents,section'
-
-    // .ui.padded.grid
-    //     .middle.aligned.row
-    //         +table_header doc_type='incident' stat_type='office_incidents'    
-    //     .centered.row
-    //         .sixteen.wide.column
-    //             table.ui.striped.fixed.table
-    //                 thead
-    //                     +sort_column_header key='incident_number' label='#' classes='one wide'
-    //                     +sort_column_header key='customer_name' label='Customer'
-    //                     +sort_column_header key='service_date' label='Service Date'
-    //                     +sort_column_header key='incident_type' label='Type' classes='one wide'
-    //                     th.three.wide Details
-    //                     +sort_column_header key='level' label='Level' classes='one wide'
-    //                     +sort_column_header key='submitted' label='Submitted'
-    //                     +sort_column_header key='open' label='Open' classes='one wide'
-    //                     th.two.wide Assignment
-    //                     th.three.wide Last Event
-    //                     th.one.wide View
-    //                 tbody
-    //                     each office_incidents
-    //                         tr
-    //                             td #{incident_number}
-    //                             td #{customer_name}
-    //                             td #{service_date}
-    //                             td 
-    //                                 +incident_type_label
-    //                             td.selectable(title='View Full Incident')
-    //                                 a(href="/v/#{_id}") #{incident_details}
-    //                             // td.one.wide(class=level_cell_class) 
-    //                             td.one.wide
-    //                                 +level_icon
-    //                             td
-    //                                 +submitted_template
-    //                             td 
-    //                                 +status_template
-    //                             +incident_assigment_cell
-    //                             td
-    //                                 +small_doc_history
-
-    //                             td 
-    //                                 +view_button
-    //                 +table_footer columns='11' doc_type='incident' stat_type='office_incidents'    
-
-
 
 template(name='office_employees')
     +office_header
@@ -229,38 +143,6 @@ template(name='office_employees')
                     +table_footer columns='8' stat_type='office_employees'   
 
 
-template(name='office_franchisees')
-    +office_header
-    +blocks tags='office,page,franchisees,section'
-    // .ui.padded.grid
-    //     .middle.aligned.row
-    //         +table_header doc_type='franchisee' stat_type='office_franchisees'     
-    //     .centered.row
-    //         .sixteen.wide.column
-    //             table.ui.striped.fixed.table
-    //                 thead
-    //                     +sort_column_header key='ev.ID' label='JPID' classes='two wide'
-    //                     +sort_column_header key='ev.FRANCHISEE' label='Name'
-    //                     +sort_column_header key='ev.FRANCH_EMAIL' label='Email'
-    //                     +sort_column_header key='ev.FRANCH_NAME' label='Short Name'
-    //                     +sort_column_header key='ev.TELE_CELL' label='Phone'
-    //                     // th.one.wide View
-    //                 tbody
-    //                     each office_franchisees
-    //                         tr
-    //                             td.selectable(title="View #{ev.FRANCHISEE} Franchisee")
-    //                                 a(href="/v/#{_id}") #{ev.ID}
-    //                             td.selectable(title="View #{ev.FRANCHISEE} Franchisee")
-    //                                 a(href="/v/#{_id}") #{ev.FRANCHISEE}
-    //                             td #{ev.FRANCH_EMAIL}
-    //                             td #{ev.FRANCH_NAME}
-    //                             td #{ev.TELE_CELL}
-    //                             // td 
-    //                             //     +view_button
-    //                 +table_footer columns='5' doc_type='franchisee' stat_type='office_franchisees'     
-
-                    
-                    
 
 template(name='office_settings')
     .ui.stackable.padded.grid

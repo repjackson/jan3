@@ -1,76 +1,55 @@
-FlowRouter.route '/office/:doc_id', 
-    name: 'office_dashboard'
-    action: -> BlazeLayout.render 'layout', main: 'office_dashboard'
+# FlowRouter.route '/office/:jpid', 
+#     name: 'office_dashboard'
+#     action: -> BlazeLayout.render 'layout', main: 'office_dashboard'
 
-FlowRouter.route '/office/:doc_id/incidents', 
-    name: 'office_incidents'
-    action: -> BlazeLayout.render 'layout', main: 'office_incidents'
+# FlowRouter.route '/office/:jpid/incidents', 
+#     name: 'office_incidents'
+#     action: -> BlazeLayout.render 'layout', main: 'office_incidents'
 
-FlowRouter.route '/office/:doc_id/employees', 
-    name: 'office_employees'
-    action: -> BlazeLayout.render 'layout', main: 'office_employees'
+# FlowRouter.route '/office/:jpid/employees', 
+#     name: 'office_employees'
+#     action: -> BlazeLayout.render 'layout', main: 'office_employees'
 
-FlowRouter.route '/office/:doc_id/franchisees', 
-    name: 'office_franchisees'
-    action: -> BlazeLayout.render 'layout', main: 'office_franchisees'
+# FlowRouter.route '/office/:jpid/franchisees', 
+#     name: 'office_franchisees'
+#     action: -> BlazeLayout.render 'layout', main: 'office_franchisees'
 
-FlowRouter.route '/office/:doc_id/customers', 
-    name: 'office_customers'
-    action: -> BlazeLayout.render 'layout', main: 'office_customers'
+# FlowRouter.route '/office/:jpid/customers', 
+#     name: 'office_customers'
+#     action: -> BlazeLayout.render 'layout', main: 'office_customers'
 
-FlowRouter.route '/office/:doc_id/settings', 
-    name: 'office_settings'
-    action: -> BlazeLayout.render 'layout', main: 'office_settings'
+# FlowRouter.route '/office/:jpid/settings', 
+#     name: 'office_settings'
+#     action: -> BlazeLayout.render 'layout', main: 'office_settings'
 
 
 Template.office_header.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'office_stats', FlowRouter.getParam('doc_id')
+    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('jpid')
+    @autorun -> Meteor.subscribe 'office_stats', FlowRouter.getParam('jpid')
 
 Template.office_header.events
     'click #calc_office_stats': ->
-        Meteor.call 'calc_office_stats', FlowRouter.getParam('doc_id'), (err,res)->
+        Meteor.call 'calc_office_stats', FlowRouter.getParam('jpid'), (err,res)->
             if err then console.error err
             else
                 console.log res
 Template.office_header.helpers
     # current_name: -> console.log FlowRouter.getRouteName()
-    office_doc: -> Docs.findOne FlowRouter.getParam('doc_id')
+    office_doc: -> Docs.findOne FlowRouter.getParam('jpid')
     office_map_address: ->
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        page_office = Docs.findOne FlowRouter.getParam('jpid')
         encoded_address = encodeURIComponent "#{page_office.ev.ADDR_STREET} #{page_office.ev.ADDR_STREET_2} #{page_office.ev.ADDR_CITY},#{page_office.ev.ADDR_STATE} #{page_office.ev.ADDR_POSTAL_CODE} #{page_office.ev.MASTER_COUNTRY}"
         # console.log encoded_address
         "https://www.google.com/maps/search/?api=1&query=#{encoded_address}"
 
 Template.office_dashboard.helpers
-    office_doc: -> Docs.findOne FlowRouter.getParam('doc_id')
-
-
-Template.office_customers.onCreated ->
-    # @autorun -> Meteor.subscribe 'office_customers', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    @autorun => Meteor.subscribe 'office_customer_count', FlowRouter.getParam('doc_id')
-    Session.set 'page_number', 1
-    Session.set 'page_size', 10
-    Session.set 'skip',0
-    
-
-Template.office_incidents.onCreated ->
-    # @autorun -> Meteor.subscribe 'office_incidents', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    @autorun => Meteor.subscribe 'office_incident_count', FlowRouter.getParam('doc_id')
-    Session.set 'page_size', 10
-    Session.set('skip',0)
-    Session.set 'page_number', 1
-
-Template.office_incidents.onRendered ->
-    Meteor.setTimeout ->
-        $('img').popup()
-    , 1000
+    office_doc: -> Docs.findOne FlowRouter.getParam('jpid')
 
 
 Template.office_employees.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
-    @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    @autorun => Meteor.subscribe 'office_employee_count', FlowRouter.getParam('doc_id')
+    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('jpid')
+    @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('jpid'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
+    @autorun => Meteor.subscribe 'office_employee_count', FlowRouter.getParam('jpid')
     Session.set('page_size',10)
     Session.set('skip',0)
     Session.set 'page_number', 1
@@ -82,7 +61,7 @@ Template.office_employees.onRendered ->
 
 Template.office_employees.helpers    
     office_employees: ->  
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        page_office = Docs.findOne FlowRouter.getParam('jpid')
         # console.log page_office
         if page_office
             Meteor.users.find {
@@ -91,13 +70,6 @@ Template.office_employees.helpers
 
 
 
-Template.office_franchisees.onCreated ->
-    # @autorun -> Meteor.subscribe 'office_franchisees', FlowRouter.getParam('doc_id'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    @autorun => Meteor.subscribe 'office_franchisee_count', FlowRouter.getParam('doc_id')
-    Session.set('page_size',10)
-    Session.set('skip',0)
-    Session.set 'page_number', 1
-
 
 Template.office_service_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'service'
@@ -105,12 +77,12 @@ Template.office_service_settings.onCreated ->
 Template.office_service_settings.helpers
     services: -> Docs.find {type:'service'}
     select_service_button_class: ->
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        page_office = Docs.findOne FlowRouter.getParam('jpid')
         if @slug in page_office.services then 'blue' else 'basic'
         
 Template.office_service_settings.events
     'click .select_service': -> 
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        page_office = Docs.findOne FlowRouter.getParam('jpid')
         if page_office 
             if page_office.services
                 if @slug in page_office.services
@@ -130,7 +102,8 @@ Template.office_service_settings.events
 Template.office_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'rule'
     @autorun -> Meteor.subscribe 'type', 'incident_type'
-    @autorun -> Meteor.subscribe 'static_office_employees', FlowRouter.getParam('doc_id')
+    @autorun -> Meteor.subscribe 'static_office_employees', FlowRouter.getParam('jpid')
+    @autorun -> Meteor.subscribe 'doc_by_jpid', FlowRouter.getParam('jpid')
     Session.setDefault 'incident_type_selection', 'change_service'
 
 Template.office_settings.events
@@ -140,8 +113,8 @@ Template.office_settings.events
     
 Template.office_settings.helpers
     current_office: ->
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log page_office
+        page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
+        console.log page_office
         return page_office
     incident_types: -> Docs.find {type:'incident_type'}
     select_incident_type_button_class: -> if Session.equals('incident_type_selection', @slug) then 'blue' else 'basic'
@@ -153,7 +126,7 @@ Template.office_settings.helpers
         "#{current_incident_type}_incident_owner"
 
     incident_type_owner_value: ->
-        page_office = Docs.findOne FlowRouter.getParam('doc_id')
+        page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         current_incident_type = Session.get 'incident_type_selection'
         incident_type_owner_value = page_office["#{current_incident_type}_incident_owner"]
         # console.log incident_type_owner_value

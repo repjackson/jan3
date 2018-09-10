@@ -17,9 +17,15 @@ Template.nav.helpers
     #     if FlowRouter.current().route.name is name then 'active' else ''
 
     admin_nav_items: ->
-        Docs.find
+        Docs.find {
             type:'page'
             admin_nav:true
+        }, sort:number:-1
+    office_nav_items: ->
+        Docs.find {
+            type:'page'
+            office_nav:true
+        }, sort:number:-1
 
 
 Template.nav.events
@@ -40,6 +46,8 @@ Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'my_office'
     @autorun -> Meteor.subscribe 'me'
     @autorun -> Meteor.subscribe 'admin_nav_pages'
+    @autorun -> Meteor.subscribe 'customer_nav_pages'
+    @autorun -> Meteor.subscribe 'office_nav_pages'
     
 Template.dashboard.onRendered ->
     # Meteor.setTimeout ->

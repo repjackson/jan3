@@ -54,42 +54,42 @@ Meteor.publish 'incomplete_task_count', ()->
         doc_type: 'task'
         stat_type: 'incomplete'
 
-Meteor.publish 'office_stats', (office_doc_id)->
-    office_doc = Docs.findOne office_doc_id
+Meteor.publish 'office_stats', (office_jpid)->
+    office_doc = Docs.findOne "ev.ID":office_jpid
     Stats.find {
-        office_jpid:office_doc.ev.ID
+        office_jpid:office_jpid
     }
     
 
 
-Meteor.publish 'office_employee_count', (office_doc_id)->
+Meteor.publish 'office_employee_count', (office_jpid)->
     user = Meteor.user()
-    Meteor.call 'calculate_office_employee_count', office_doc_id
-    office_doc = Docs.findOne office_doc_id
+    Meteor.call 'calculate_office_employee_count', office_jpid
+    office_doc = Docs.findOne "ev.ID":office_jpid
     Stats.find {
         collection: 'users'
         stat_type: 'office_employees'
-        office_jpid:office_doc.ev.ID
+        office_jpid:office_jpid
     }
     
-Meteor.publish 'office_franchisee_count', (office_doc_id)->
+Meteor.publish 'office_franchisee_count', (office_jpid)->
     user = Meteor.user()
-    Meteor.call 'calculate_office_franchisee_count', office_doc_id
-    office_doc = Docs.findOne office_doc_id
+    Meteor.call 'calculate_office_franchisee_count', office_jpid
+    office_doc = Docs.findOne "ev.ID":office_jpid
     Stats.find {
         doc_type: 'franchisee'
         stat_type: 'office_franchisees'
-        office_jpid:office_doc.ev.ID
+        office_jpid:office_jpid
     }
     
-Meteor.publish 'office_incident_count', (office_doc_id)->
+Meteor.publish 'office_incident_count', (office_jpid)->
     user = Meteor.user()
-    Meteor.call 'calculate_office_incident_count', office_doc_id
-    office_doc = Docs.findOne office_doc_id
+    Meteor.call 'calculate_office_incident_count', office_jpid
+    office_doc = Docs.findOne "ev.ID":office_jpid
     Stats.find {
         doc_type: 'incident'
         stat_type: 'office_incidents'
-        office_jpid:office_doc.ev.ID
+        office_jpid:office_jpid
     }
 
 Meteor.publish 'office_customer_count', (office_doc_id)->

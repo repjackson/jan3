@@ -48,10 +48,10 @@ Meteor.publish 'block_docs', (
     sort_direction=1, 
     skip=0,
     status
-    page_doc_id)->
-        console.log block_doc_id
+    page_jpid)->
+        console.log 'block_doc_id', block_doc_id
         block = Docs.findOne block_doc_id
-        page_doc = Docs.findOne page_doc_id
+        page_doc = Docs.findOne "ev.ID":page_jpid
         match = {}
         match.type = block.children_doc_type
         
@@ -84,15 +84,8 @@ Meteor.publish 'block_docs', (
                         "ev.ID":Meteor.user().franchisee_jpid
                     found_franchisee.ev.FRANCHISEE
                 # page
-                when "{current_page_doc_id}" 
-                    page_doc._id 
-                when "{current_page_customer_jpid}" 
-                    console.log page_doc.ev.ID 
-                    page_doc.ev.ID 
-                when "{current_page_office_jpid}" 
-                    page_doc.ev.ID 
-                when "{current_page_franchisee_jpid}" 
-                    page_doc.ev.ID 
+                when "{current_page_jpid}" 
+                    page_jpid
                 when "{current_page_customer_name}"
                     if page_doc
                         console.log page_doc.ev.CUST_NAME
@@ -354,8 +347,8 @@ Meteor.publish 'office_employees', (office_doc_id, query, limit=1000, sort_key='
         }
     
     
-Meteor.publish 'static_office_employees', (office_doc_id)->
-    office_doc = Docs.findOne office_doc_id
+Meteor.publish 'static_office_employees', (office_jpid)->
+    office_doc = Docs.findOne "ev.ID":office_jpid
     Meteor.users.find
         "profile.office_name": office_doc.ev.MASTER_LICENSEE
     
@@ -1015,9 +1008,28 @@ Meteor.publish 'admin_nav_pages', ()->
         type:'page'
         admin_nav:true
             
+Meteor.publish 'office_nav_pages', ()->
+    Docs.find
+        type:'page'
+        office_nav:true
+            
+Meteor.publish 'customer_nav_pages', ()->
+    Docs.find
+        type:'page'
+        customer_nav:true
+            
             
 Meteor.publish 'page_by_slug', (slug)->
     Docs.find
         type:'page'
         slug:slug
+            
+            
+            
+Meteor.publish 'doc_by_jpid', (jpid)->
+    Docs.find
+        "ev.ID":jpid
+            
+            
+            
             

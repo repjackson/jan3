@@ -33,32 +33,18 @@ template(name='nav')
                 .mobile.hidden Services
         else if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
-            if my_office
-                a.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
+            each office_nav_items
+                a.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ isActiveRoute slug }}" title=title)
                     i.large.icon
-                        +icon name='building'
-                    // .mobile.hidden &nbsp; Dashboard
-                    .mobile.hidden &nbsp; #{my_office.ev.MASTER_LICENSEE}
-            a.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}" title='Office Incidents')
-                i.large.icon
-                    +icon name='error'
-                // .mobile.hidden &nbsp; Incidents
-            a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}" title='Office Employees')
-                i.large.icon
-                    +icon name='groups'
-                // .mobile.hidden &nbsp; Employees
-            a.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}" title='Office Franchisees')
-                i.large.icon
-                    +icon name='business'
-                // .mobile.hidden &nbsp; Franchisees
-            a.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}" title='Office Customers')
-                i.large.icon
-                    +icon name='headset'
-                // .mobile.hidden &nbsp; Customers
-            a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}" title='Office Settings')
-                i.large.icon
-                    +icon name='settings'
-                // .mobile.hidden &nbsp; Settings
+                        +icon name=icon
+            // a.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}" title='Office Employees')
+            //     i.large.icon
+            //         +icon name='groups'
+            //     // .mobile.hidden &nbsp; Employees
+            // a.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}" title='Office Settings')
+            //     i.large.icon
+            //         +icon name='settings'
+            //     // .mobile.hidden &nbsp; Settings
         .right.menu
             // if is_dev
             //     a#toggle_dev.black.inverted.item(href='#')
@@ -74,9 +60,12 @@ template(name='nav')
                             +icon name='toggle-on'
                         else
                             +icon name='toggle-off'
+                a.item(href='/p/pages' data-content='Pages')
+                    i.large.icon
+                        +icon name='layout'
                 a.item(href='/p/schemas' data-content='Schemas')
                     i.large.icon
-                        +icon name='code'
+                        +icon name='database'
             if currentUser
                 a.item(href="/user/#{currentUser.username}" data-content='View Profile' class="{{ isActiveRoute 'user_view'}}")
                     if currentUser.profile.image_id
@@ -112,9 +101,9 @@ template(name='left_sidebar')
         if is_admin
             a.toggle_left_sidebar.item(href='/users') 
                 |Users
-            a.toggle_left_sidebar.item(href='/incidents') 
+            a.toggle_left_sidebar.item(href='/p/admin_incidents') 
                 |Incidents
-            a.toggle_left_sidebar.item(href='/offices') 
+            a.toggle_left_sidebar.item(href='/p/admin_offices') 
                 |Offices
             // a.toggle_left_sidebar.item(href='/schedule')
             //     | Schedule
@@ -124,40 +113,38 @@ template(name='left_sidebar')
             // a.toggle_left_sidebar.item(href='/special_services')
             //     // +tiny_sprite name='duster'
             //     | Special Services
-            a.toggle_left_sidebar.item(href='/franchisees') 
+            a.toggle_left_sidebar.item(href='/p/admin_franchisees') 
                 |Franchisees
-            a.toggle_left_sidebar.item(href='/customers') 
+            a.toggle_left_sidebar.item(href='/p/admin_customers') 
                 |Customers
             .divider
             a.toggle_left_sidebar.item(href='/p/admin') 
                 |Admin
-            a.toggle_left_sidebar.item(href='/feed') 
-                |Feed
         if is_office
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
                 i.large.icon
                     +icon name='building'
-                | &nbsp; #{my_office.ev.MASTER_LICENSEE}
+                // | &nbsp; #{my_office.ev.MASTER_LICENSEE}
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
                 i.large.icon
                     +icon name='error'
-                | &nbsp; Incidents
+                // | &nbsp; Incidents
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
                 i.large.icon
                     +icon name='groups'
-                | &nbsp; Employees
+                // | &nbsp; Employees
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
                 i.large.icon
                     +icon name='business'
-                | &nbsp; Franchisees
+                // | &nbsp; Franchisees
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
                 i.large.icon
                     +icon name='headset'
-                | &nbsp; Customers
+                // | &nbsp; Customers
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
                 i.large.icon
                     +icon name='settings'
-                | &nbsp; Settings
+                // | &nbsp; Settings
 
         // a.icon.toggle_left_sidebar.item(href='/p/admin')
         //     i.shield.icon

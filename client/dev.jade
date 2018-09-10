@@ -96,18 +96,21 @@ template(name='page')
         if editing_mode
             .ui.fluid.tertiary.segment.editing_segment
                 .ui.header 
-                    +icon name='user-shield'
+                    if icon 
+                        +icon name=icon
                     |Edit Page
                 .ui.form
                     .fields
                         +edit_page_text_field key='title' label='Title'
                         +edit_page_text_field key='icon' label='Icon'
                         +edit_page_text_field key='slug' label='Slug'
-                if icon 
-                    +icon name=icon
                 +edit_array_field key='tags'
                 +set_page_key_value key='admin_nav' value=true label='Admin Nav Visible'
-                +set_page_key_value key='admin_nav' value=false label='Hidden'
+                +set_page_key_value key='admin_nav' value=false label='Admin Hidden'
+                +set_page_key_value key='office_nav' value=true label='Office Nav Visible'
+                +set_page_key_value key='office_nav' value=false label='Office Hidden'
+                +set_page_key_value key='customer_nav' value=true label='Customer Nav Visible'
+                +set_page_key_value key='customer_nav' value=false label='Customer Hidden'
                 // +edit_page_text_field key='root_grid_classes' label='Root Grid Classes'
                 // #add_row.ui.button add row
                 // .ui.header Rows
@@ -132,4 +135,4 @@ template(name='page')
                         | #{title}
                 .three.wide.right.aligned.column
             .centered.row
-        +blocks parent_id=_id
+        +blocks

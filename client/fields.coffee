@@ -95,7 +95,13 @@ Template.edit_textarea.events
 Template.edit_textarea.helpers
     'key_value': () -> 
         doc_field = Template.parentData(0)
-        current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        if FlowRouter.getParam('jpid')
+            current_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
+        if FlowRouter.getParam('doc_id')
+            current_doc = Docs.findOne FlowRouter.getParam('jpid')
         if current_doc
             if doc_field.key
                 current_doc["#{doc_field.key}"]

@@ -195,6 +195,15 @@ Template.registerHelper 'page_slug_key_value', () ->
         page["#{@key}"]
         
         
+Template.registerHelper 'page_jpid_key_value', () -> 
+    # doc_field = Template.parentData(2)
+    # console.log @
+    page = Docs.findOne 
+        "ev.ID":FlowRouter.getParam('jpid')
+    if page
+        page["#{@key}"]
+        
+        
         
         
         

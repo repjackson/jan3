@@ -2,7 +2,7 @@ FlowRouter.route '/dev', action: ->
     BlazeLayout.render 'layout', 
         main: 'dev'
         
-FlowRouter.route '/p/:page_slug', action: ->
+FlowRouter.route '/p/:page_slug/:jpid?', action: ->
     BlazeLayout.render 'layout', 
         main: 'page'
         
@@ -37,7 +37,7 @@ Template.page.helpers
     page_doc: -> 
         FlowRouter.watchPathChange();
         currentContext = FlowRouter.current();
-        console.log currentContext
+        # console.log currentContext
         Docs.findOne
             type:'page'
             slug: FlowRouter.getParam('page_slug')

@@ -53,6 +53,7 @@ template(name='icon_view')
     if icon
         +icon name=icon
         
+        
 template(name='view_page_button')
     a.ui.icon.button(href="/p/#{slug}" data-content='View Page' class=classes) 
         // +icon name='details-pane'
@@ -460,12 +461,8 @@ template(name='toggle_boolean_checkbox')
     .ui.form
         .field
             .ui.toggle.checkbox
-                input(type='checkbox' name=key checked=key_value)
+                input(type='checkbox' name=key checked=page_jpid_key_value)
                 label
-                    if key_value
-                        i.icon(class=icon)
-                    else
-                        i.grey.icon(class=icon)
                     |#{label}
 
 
@@ -696,82 +693,84 @@ template(name='block')
                             +icon name=icon
                         |#{title}
                 .active.content
-                    if is_table
-                        if view_table_header
-                            .middle.aligned.row
-                                +table_header doc_type=children_doc_type stat_type=table_stat_type
-                        table.ui.striped.selectable.fixed.table
-                            thead
-                                tr
-                                    each fields
-                                        if sortable
-                                            th.sort_by
-                                                |#{label}
-                                                if sort_descending
-                                                    i.chevron.down.link.blue.icon
-                                                else if sort_ascending
-                                                    i.chevron.up.link.blue.icon
-                                                else
-                                                    i.sort.link.grey.icon
-                                        else
-                                            th
-                                                |#{label}
-                            tbody
-                                each children
+                    if custom_template
+                        +Template.dynamic template=custom_template
+                    else
+                        if is_table
+                            if view_table_header
+                                .middle.aligned.row
+                                    +table_header doc_type=children_doc_type stat_type=table_stat_type
+                            table.ui.striped.selectable.fixed.table
+                                thead
                                     tr
-                                        each ../fields
-                                            if field_template
-                                                td 
-                                                    +Template.dynamic template=field_template data=..
+                                        each fields
+                                            if sortable
+                                                th.sort_by
+                                                    |#{label}
+                                                    if sort_descending
+                                                        i.chevron.down.link.blue.icon
+                                                    else if sort_ascending
+                                                        i.chevron.up.link.blue.icon
+                                                    else
+                                                        i.sort.link.grey.icon
                                             else
-                                                td(class=table_cell_class) #{child_schema_field_value}
-                                            
-                            if view_table_footer
-                                +table_footer columns=fields.length doc_type=children_doc_type stat_type=table_stat_type
-                    if is_list
-                        .ui.divided.list
-                            each children
-                                .item
-                                    .ui.horizontal.list
-                                        each ../fields
-                                            .item
+                                                th
+                                                    |#{label}
+                                tbody
+                                    each children
+                                        tr
+                                            each ../fields
                                                 if field_template
-                                                    +Template.dynamic template=field_template data=..
+                                                    td 
+                                                        +Template.dynamic template=field_template data=..
                                                 else
-                                                    | #{child_schema_field_value}
-                    if is_grid
-                        .ui.equal.width.four.column.grid
-                            each children
-                                .column
-                                    .ui.secondary.segment
-                                        if title
-                                            a.ui.header(href="/v/#{_id}")
-                                                if icon
-                                                    i.icon  
-                                                        +icon name=icon
-                                                |#{title}    
-                                        .ui.list
+                                                    td(class=table_cell_class) #{child_schema_field_value}
+                                                
+                                if view_table_footer
+                                    +table_footer columns=fields.length doc_type=children_doc_type stat_type=table_stat_type
+                        if is_list
+                            .ui.divided.list
+                                each children
+                                    .item
+                                        .ui.horizontal.list
                                             each ../fields
                                                 .item
                                                     if field_template
                                                         +Template.dynamic template=field_template data=..
                                                     else
                                                         | #{child_schema_field_value}
-                    if is_comments
-                        .ui.comments
-                            each children
-                                +doc_history_event
-                    if is_header
-                        .centered.middle.aligned.row
-                            .three.wide.center.aligned.column
-                                if is_admin
-                                    +link_button link='/p/admin' icon='user-shield' label='Admin'
-                            .ten.wide.column
-                                h2.ui.center.aligned.grey.header 
-                                    +icon name='code'
-                                    |Dev
-                            .three.wide.right.aligned.column
-
+                        if is_grid
+                            .ui.equal.width.four.column.grid
+                                each children
+                                    .column
+                                        .ui.secondary.segment
+                                            if title
+                                                a.ui.header(href="/v/#{_id}")
+                                                    if icon
+                                                        i.icon  
+                                                            +icon name=icon
+                                                    |#{title}    
+                                            .ui.list
+                                                each ../fields
+                                                    .item
+                                                        if field_template
+                                                            +Template.dynamic template=field_template data=..
+                                                        else
+                                                            | #{child_schema_field_value}
+                        if is_comments
+                            .ui.comments
+                                each children
+                                    +doc_history_event
+                        if is_header
+                            .centered.middle.aligned.row
+                                .three.wide.center.aligned.column
+                                    if is_admin
+                                        +link_button link='/p/admin' icon='user-shield' label='Admin'
+                                .ten.wide.column
+                                    h2.ui.center.aligned.grey.header 
+                                        +icon name='code'
+                                        |Dev
+                                .three.wide.right.aligned.column
                     if editing_mode
                         .ui.tertiary.segment
                             h3.ui.header 
@@ -785,111 +784,111 @@ template(name='block')
                                     +edit_block_text_field label='Title' key='title'
                                     +edit_block_text_field label='Icon' key='icon'
                                     +edit_block_text_field label='Classes' key='block_classes'
+                                .fields
                                     +edit_block_text_field label='Slug' key='slug'
                                     +edit_block_text_field label='Parent Slug' key='parent_slug'
-                            h3.ui.header
-                                i.filter.icon
-                                |Filter
-                            .ui.form
-                                h5 
-                                    |Status
-                                +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
-                                +set_key_value key='filter_status' value="" label='All'
-                                h5.ui.header 
-                                    i.key.icon
-                                    |Key
-                                +set_key_value key='filter_key' value='_id' label='_id'
-                                +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
-                                +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
-                                +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
-                                +set_key_value key='filter_key' value='office_jpid' label='office_jpid'
-                                +set_key_value key='filter_key' value='customer_jpid' label='customer_jpid'
-                                +set_key_value key='filter_key' value='franchisee_jpid' label='franchisee_jpid'
-                                +edit_block_text_field label='Filter Key' key='filter_key'
-                                h5.ui.header 
-                                    i.terminal.icon
-                                    |Value
-                                div
-                                i.user.icon
-                                +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
-                                +set_key_value key='filter_value' value='{current_user_customer_jpid}' label='Current User Customer JPID'
-                                +set_key_value key='filter_value' value='{current_user_office_jpid}' label='Current User Office JPID'
-                                +set_key_value key='filter_value' value='{current_user_office_name}' label='Current User Office Name'
-                                +set_key_value key='filter_value' value='{current_user_franchisee_jpid}' label='Current User Franchisee JPID'
-                                +set_key_value key='filter_value' value='{current_user_franchisee_name}' label='Current User Franchisee Name'
-                                div
-                                i.clone.icon
-                                +set_key_value key='filter_value' value='{current_page_doc_id}' label='Current Page Doc Id'
-                                +set_key_value key='filter_value' value='{current_page_customer_name}' label='Current Page Customer Name'
-                                +set_key_value key='filter_value' value='{current_page_customer_jpid}' label='Current Page Customer JPID'
-                                +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
-                                +set_key_value key='filter_value' value='{current_page_franchisee_jpid}' label='Current Page Franchisee JPID'
-                                +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
-                                +set_key_value key='filter_value' value='{current_page_office_jpid}' label='Current Page Office JPID'
-                                +edit_block_text_field label='Filter Value' key='filter_value'
-
-                            h4 Shown Fields
-                                .add_blank_field.ui.icon.button(title='Add Blank Field')
-                                    i.plus.icon
-                            h4 Available Fields
-                            each schema_doc.fields
-                                if show_schema_field
-                                    .add_schema_field.ui.compact.button #{title}
-                            div Doc Type
-                                each schemas
-                                    +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
-                            div View Mode
-                                +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
-                                +set_key_value key='view_mode' value='list' label='List' icon='list'
-                                +set_key_value key='view_mode' value='comments' label='Comments' icon='comments'
-                                +set_key_value key='view_mode' value='grid' label='Grid' icon='grid'
-                                +set_key_value key='view_mode' value='header' label='Header'
-                            if fields
-                                table.ui.striped.fixed.table
-                                    thead
-                                        tr
-                                            th.one.wide #
-                                            th Label
-                                            th Key
-                                            th Template
-                                            th Sortable
-                                            th Remove
-                                    tbody
-                                        each fields
+                                    +edit_block_text_field label='Custom Template' key='custom_template'
+                            unless custom_template
+                                h3.ui.header
+                                    i.filter.icon
+                                    |Filter
+                                .ui.form
+                                    h5 
+                                        |Status
+                                    +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
+                                    +set_key_value key='filter_status' value="" label='All'
+                                    h5.ui.header 
+                                        i.key.icon
+                                        |Key
+                                    +set_key_value key='filter_key' value='_id' label='_id'
+                                    +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
+                                    +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
+                                    +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
+                                    +set_key_value key='filter_key' value='office_jpid' label='office_jpid'
+                                    +set_key_value key='filter_key' value='customer_jpid' label='customer_jpid'
+                                    +set_key_value key='filter_key' value='franchisee_jpid' label='franchisee_jpid'
+                                    +edit_block_text_field label='Filter Key' key='filter_key'
+                                    h5.ui.header 
+                                        i.terminal.icon
+                                        |Value
+                                    div
+                                    i.user.icon
+                                    +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
+                                    +set_key_value key='filter_value' value='{current_user_customer_jpid}' label='Current User Customer JPID'
+                                    +set_key_value key='filter_value' value='{current_user_office_jpid}' label='Current User Office JPID'
+                                    +set_key_value key='filter_value' value='{current_user_office_name}' label='Current User Office Name'
+                                    +set_key_value key='filter_value' value='{current_user_franchisee_jpid}' label='Current User Franchisee JPID'
+                                    +set_key_value key='filter_value' value='{current_user_franchisee_name}' label='Current User Franchisee Name'
+                                    div
+                                    i.clone.icon
+                                    +set_key_value key='filter_value' value='{current_page_customer_name}' label='Current Page Customer Name'
+                                    +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
+                                    +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
+                                    +set_key_value key='filter_value' value='{current_page_jpid}' label='Current Page JPID'
+                                    +edit_block_text_field label='Filter Value' key='filter_value'
+    
+                                h4 Shown Fields
+                                    .add_blank_field.ui.icon.button(title='Add Blank Field')
+                                        i.plus.icon
+                                h4 Available Fields
+                                each schema_doc.fields
+                                    if show_schema_field
+                                        .add_schema_field.ui.compact.button #{title}
+                                div Doc Type
+                                    each schemas
+                                        +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
+                                div View Mode
+                                    +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
+                                    +set_key_value key='view_mode' value='list' label='List' icon='list'
+                                    +set_key_value key='view_mode' value='comments' label='Comments' icon='comments'
+                                    +set_key_value key='view_mode' value='grid' label='Grid' icon='grid'
+                                    +set_key_value key='view_mode' value='header' label='Header'
+                                if fields
+                                    table.ui.striped.fixed.table
+                                        thead
                                             tr
-                                                td
-                                                    i.move_down.chevron.up.link.icon
-                                                    // i.move_up.chevron.down.link.icon
-                                                td #{label}
-                                                td #{key}
-                                                td 
-                                                    .ui.fluid.small.input
-                                                        input.field_template(type='text' value=field_template)
-                                                td 
-                                                    +set_field_key_value key='sortable' value=true label='Y'
-                                                    |#{sortable}
-                                                    +set_field_key_value key='sortable' value=false label='N'
-                                                td 
-                                                    i.remove_schema_field.remove.link.icon
-
-                            .ui.secondary.segment
-                                if is_table
-                                    div Stat Type
-                                    +set_key_value key='table_stat_type' value='total' label='Total'
-                                    +set_key_value key='table_stat_type' value='active' label='Active'
-                                    +set_key_value key='table_stat_type' value='customer' label='Customer'
-                                    +set_key_value key='table_stat_type' value='office_customers' label='Office Customers'
-                                    +set_key_value key='table_stat_type' value='office_incidents' label='Office Incidents'
-                                    +set_key_value key='table_stat_type' value='office_employees' label='Office Employees'
-                                    +set_key_value key='table_stat_type' value='office_franchisees' label='Office Franchisees'
-                                    div
-                                    +set_key_value key='view_table_header' value=true label='View Header'
-                                    +set_key_value key='view_table_header' value=false label='Hide Header'
-                                    div
-                                    +set_key_value key='view_table_footer' value=true label='View Footer'
-                                    +set_key_value key='view_table_footer' value=false label='Hide Footer'
-                                else 
-                                    +edit_block_text_field label='Result Limit' key='limit'
+                                                th.one.wide #
+                                                th Label
+                                                th Key
+                                                th Template
+                                                th Sortable
+                                                th Remove
+                                        tbody
+                                            each fields
+                                                tr
+                                                    td
+                                                        i.move_down.chevron.up.link.icon
+                                                        // i.move_up.chevron.down.link.icon
+                                                    td #{label}
+                                                    td #{key}
+                                                    td 
+                                                        .ui.fluid.small.input
+                                                            input.field_template(type='text' value=field_template)
+                                                    td 
+                                                        +set_field_key_value key='sortable' value=true label='Y'
+                                                        |#{sortable}
+                                                        +set_field_key_value key='sortable' value=false label='N'
+                                                    td 
+                                                        i.remove_schema_field.remove.link.icon
+    
+                                .ui.secondary.segment
+                                    if is_table
+                                        div Stat Type
+                                        +set_key_value key='table_stat_type' value='total' label='Total'
+                                        +set_key_value key='table_stat_type' value='active' label='Active'
+                                        +set_key_value key='table_stat_type' value='customer' label='Customer'
+                                        +set_key_value key='table_stat_type' value='office_customers' label='Office Customers'
+                                        +set_key_value key='table_stat_type' value='office_incidents' label='Office Incidents'
+                                        +set_key_value key='table_stat_type' value='office_employees' label='Office Employees'
+                                        +set_key_value key='table_stat_type' value='office_franchisees' label='Office Franchisees'
+                                        div
+                                        +set_key_value key='view_table_header' value=true label='View Header'
+                                        +set_key_value key='view_table_header' value=false label='Hide Header'
+                                        div
+                                        +set_key_value key='view_table_footer' value=true label='View Footer'
+                                        +set_key_value key='view_table_footer' value=false label='Hide Footer'
+                                    else 
+                                        +edit_block_text_field label='Result Limit' key='limit'
         
 template(name='edit_block_text_field')
     .inline.field
