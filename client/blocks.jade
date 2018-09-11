@@ -947,4 +947,10 @@ template(name='set_key_value_2')
         |#{label}
         
         
-        
+template(name='event_type_icon')
+    if event_type_doc.icon
+        +icon name=event_type_doc.icon
+        |#{event_type}
+    else
+        +icon name='commit-git'
+        |#{event_type}

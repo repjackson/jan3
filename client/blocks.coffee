@@ -686,7 +686,8 @@ Template.assignment_widget.helpers
         Meteor.users.find(_id: $in: parent_doc.assigned_to)
 
 
-
+Template.author_info.onCreated ->
+    Meteor.subscribe 'author', @data.author_id
 
 Template.blocks.onCreated ->
     Session.set('query',null)
@@ -719,13 +720,23 @@ Template.blocks.helpers
 
 Template.block.onCreated ->
     Meteor.subscribe 'type', 'schema'
-    Meteor.subscribe 'type', 'event_type'
-    Session.set 'limit', parseInt(@data.limit)
-    Session.set 'page_size', parseInt(@data.limit)
+    # Meteor.subscribe 'type', 'event_type'
+    Meteor.subscribe('facet', 
+        selected_tags.array()
+        selected_author_ids.array()
+        selected_location_tags.array()
+        selected_timestamp_tags.array()
+        type=@data.children_doc_type
+        )
+
+    if @data.limit
+        Session.set 'limit', parseInt(@data.limit)
+        Session.set 'page_size', parseInt(@data.limit)
     Meteor.subscribe 'stat', @data.children_doc_type, @data.table_stat_type
     # console.log @data
     @autorun => Meteor.subscribe 'block_docs', 
         @data._id, 
+        selected_tags.array()
         @data.filter_key, 
         @data.filter_value, 
         Session.get('query'), 

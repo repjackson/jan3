@@ -12,6 +12,14 @@ FlowRouter.route '/reset_password',
     action: -> BlazeLayout.render 'accounts_layout', main: 'reset_password'
     
     
+Template.accounts_layout.onCreated ->
+    @autorun -> Meteor.subscribe 'my_customer_account'
+    @autorun -> Meteor.subscribe 'my_franchisee'
+    @autorun -> Meteor.subscribe 'my_office'
+    @autorun -> Meteor.subscribe 'me'
+    
+    
+    
 Template.login.events
     'click .login': (e,t)->
         e.preventDefault()

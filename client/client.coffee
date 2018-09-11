@@ -5,6 +5,32 @@ FlowRouter.notFound =
     action: ->
         BlazeLayout.render 'layout', 
             main: 'not_found'
+
+
+FlowRouter.route('/', {
+    triggersEnter: [(context, redirect) ->
+        console.log context
+        console.log redirect
+        user = Meteor.user()
+        console.log 'user1',user
+        
+        if user
+            console.log 'user2',user
+            if user.roles 
+                if 'customer' in user.roles
+                    console.log 'found customer'
+                    redirect '/p/customer_dashboard' 
+                else if 'admin' in user.roles
+                    console.log 'found admin'
+                    redirect '/p/admin' 
+                else if 'office' in user.roles
+                    console.log 'found office'
+                    redirect "/p/office_incidents/#{user.office_jpid}" 
+        else
+            redirect '/login' 
+    ]
+})
+
 # Meteor.startup( () =>
 #     GoogleMaps.load
 #         key: 'AIzaSyAK_vkvxDH5vsqGkd0Qn-dDmq-rShTA7UA',

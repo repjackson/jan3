@@ -92,29 +92,29 @@ template(name='left_sidebar')
                 |Admin
         if is_office
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
-                i.large.icon
-                    +icon name='building'
-                // | &nbsp; #{my_office.ev.MASTER_LICENSEE}
+                // i.large.icon
+                //     +icon name='building'
+                | &nbsp; #{my_office.ev.MASTER_LICENSEE}
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
-                i.large.icon
-                    +icon name='error'
-                // | &nbsp; Incidents
+                // i.large.icon
+                //     +icon name='error'
+                | &nbsp; Incidents
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
-                i.large.icon
-                    +icon name='groups'
-                // | &nbsp; Employees
+                // i.large.icon
+                //     +icon name='groups'
+                | &nbsp; Employees
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
-                i.large.icon
-                    +icon name='business'
-                // | &nbsp; Franchisees
+                // i.large.icon
+                //     +icon name='business'
+                | &nbsp; Franchisees
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
-                i.large.icon
-                    +icon name='headset'
-                // | &nbsp; Customers
+                // i.large.icon
+                //     +icon name='headset'
+                | &nbsp; Customers
             a.toggle_left_sidebar.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
-                i.large.icon
-                    +icon name='settings'
-                // | &nbsp; Settings
+                // i.large.icon
+                //     +icon name='settings'
+                | &nbsp; Settings
 
         // a.icon.toggle_left_sidebar.item(href='/p/admin')
         //     i.shield.icon

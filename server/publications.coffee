@@ -22,10 +22,11 @@ Meteor.publish 'type', (type, query=null, limit=100, sort_key='timestamp', sort_
         
 Meteor.publish 'block_docs', (
     block_doc_id, 
+    tags
     filter_key=null, 
     filter_value=null, 
     query=null, 
-    limit=100, 
+    limit=10, 
     sort_key='timestamp', 
     sort_direction=1, 
     skip=0,
@@ -36,7 +37,7 @@ Meteor.publish 'block_docs', (
         page_doc = Docs.findOne "ev.ID":page_jpid
         match = {}
         match.type = block.children_doc_type
-        
+        if tags.length > 0 then match.tags = $all: tags
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
         # console.log limit
@@ -84,8 +85,11 @@ Meteor.publish 'block_docs', (
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
         console.log 'calc value', calculated_value
-        console.log match
-        
+        console.log 'match',match
+        console.log 'prelimit', limit
+        if -1 > limit > 100
+            limit = 100
+        console.log 'limit', limit
     
         Docs.find match,{
             skip: skip
@@ -255,37 +259,42 @@ Meteor.publish 'user_profile', (user_id)->
             franchisee_jpid:1
             office_jpid:1
             
+Meteor.publish 'author', (user_id)->
+    Meteor.users.find user_id,
+        fields:
+            profile: 1
+            username: 1
+            # ev:1
+            # published:1
+            # customer_jpid:1
+            # franchisee_jpid:1
+            # office_jpid:1
+            
 
 # user connected accounts 
 Meteor.publish 'my_customer_account', ->
     user = Meteor.user()
-    if user and user.customer_jpid
+    if user and user.customer_jpid and user.roles and 'customer' in user.roles
         Docs.find
             "ev.ID": user.customer_jpid
             type:'customer'
         
 Meteor.publish 'my_franchisee', ->
     user = Meteor.user()
-    if user and user.franchisee_jpid
+    if user and user.franchisee_jpid and user.roles and 'customer' in user.roles
         Docs.find
             "ev.ID": user.franchisee_jpid
             type:'franchisee'
         
 Meteor.publish 'my_office', ->
     user = Meteor.user()
-    if user 
-        if user.customer_jpid
-            customer_doc = Docs.findOne
-                "ev.ID": user.customer_jpid
-                type:'customer'
-            Docs.find
-                "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
-                type:'office'
-        if user.office_jpid
-            Docs.find
-                "ev.ID": user.office_jpid
-                type:'office'
-
+    if user and user.office_jpid and user.roles and 'office' or 'customer' in user.roles
+        console.log 'publishing office', user.office_jpid
+        Docs.find
+            "ev.ID": user.office_jpid
+            type:'office'
+    else
+        console.log 'not publishing office', user.office_jpid
         
 Meteor.publish 'my_special_services', ->
     user = Meteor.user()
