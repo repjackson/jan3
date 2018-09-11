@@ -17,38 +17,6 @@ template(name='office_header')
                         unless is_customer
                             +office_nav
 
-template(name='office_nav')
-    .ui.six.item.stackable.menu
-        a.item(href="/office/#{_id}" class="{{ isActiveRoute 'office_dashboard'}}" title='Office Dashboard')
-            // i.large.icon
-            //     +iconsmall name='dashboard'
-            | &nbsp; #{ev.MASTER_LICENSEE}
-        a.item(href="/office/#{_id}/incidents" class="{{ isActiveRoute 'office_incidents'}}" title='Office Incidents')
-            i.large.icon
-                +iconsmall name='error'
-            // +view_stat doc_type='incident' stat_type='office_incidents'
-            // | Incidents
-        a.item(href="/office/#{_id}/employees" class="{{ isActiveRoute 'office_employees'}}" title='Office Employees')
-            i.large.icon
-                +iconsmall name='groups'
-            // +view_stat stat_type='office_employees'
-            // | Employees
-        a.item(href="/office/#{_id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}" title='Office Franchisees')
-            i.large.icon
-                +icon name='business'
-            // +view_stat stat_type='office_franchisees' doc_type='franchisee'
-            // | Franchisees
-        a.item(href="/office/#{_id}/customers" class="{{ isActiveRoute 'office_customers'}}" title='Office Customers')
-            i.large.icon
-                +iconsmall name='headset'
-            // +view_stat stat_type='office_customers' doc_type='customer'
-            // | Customers
-        a.item(href="/office/#{_id}/settings" class="{{ isActiveRoute 'office_settings'}}"  title='Office Settings')
-            i.large.icon
-                +iconsmall name='settings'
-            // | &nbsp; Settings
-
-
 template(name='office_dashboard')
     +office_header
     .ui.padded.stackable.grid

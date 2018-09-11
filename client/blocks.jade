@@ -827,16 +827,16 @@ template(name='block')
                             +set_key_value key='filter_value' value=false label='false'
                             +edit_block_text_field label='Filter Value' key='filter_value'
 
-                        h4 Shown Fields
-                            .add_blank_field.ui.icon.button(title='Add Blank Field')
-                                i.plus.icon
-                        h4 Available Fields
-                        each schema_doc.fields
-                            if show_schema_field
-                                .add_schema_field.ui.compact.button #{title}
                         div Doc Type
                             each schemas
                                 +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
+                        h4 Available Schema Fields
+                        each schema_doc.fields
+                            if show_schema_field
+                                .add_schema_field.ui.compact.button #{title}
+                        h4 Shown Fields
+                            .add_blank_field.ui.icon.button(title='Add Blank Field')
+                                i.plus.icon
                         div View Mode
                             +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
                             +set_key_value key='view_mode' value='list' label='List' icon='list'

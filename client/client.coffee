@@ -232,6 +232,8 @@ Template.registerHelper 'page_jpid_key_value', () ->
         
         
         
+Template.registerHelper 'active_route', (slug) -> 
+    if FlowRouter.getParam('page_slug') is slug then 'active' else ''
         
 
 

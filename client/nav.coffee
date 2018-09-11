@@ -12,8 +12,6 @@ Template.nav.helpers
             Docs.find
                 "ev.ID": user.office_jpid
                 type:'office'
-    active_route: (slug)->
-        if FlowRouter.getParam('page_slug') is slug then 'active' else ''
 
     admin_nav_items: ->
         Docs.find {
@@ -38,10 +36,6 @@ Template.left_sidebar.helpers
             Docs.find
                 "ev.ID": user.office_jpid
                 type:'office'
-    # isActiveRoute: (name)->
-    #     console.log name
-    #     if FlowRouter.current().route.name is name then 'active' else ''
-
     admin_nav_items: ->
         Docs.find {
             type:'page'

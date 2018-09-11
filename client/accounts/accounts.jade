@@ -18,7 +18,7 @@ template(name='accounts_nav')
         +menu_item link='/register_office' label='Add Office' icon='add-user-group-woman-man' name='register_office'
 
 template(name='menu_item')
-    a.item(href=link class="{{ isActiveRoute name }}")
+    a.item(href=link class="{{ active_route slug }}")
         // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
         i.large.icon
             +icon name=icon
