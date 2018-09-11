@@ -660,7 +660,28 @@ template(name='block')
                 if is_cards
                     .ui.centered.three.cards
                         each children
-                            +service_card
+                            .ui.card
+                                if title
+                                    .content
+                                        a.grey.header(href="/v/#{_id}")
+                                            if icon
+                                                +icon name=icon
+                                            |#{title} 
+                                .content
+                                    .ui.list
+                                        each ../fields
+                                            .item
+                                                if field_template
+                                                    +Template.dynamic template=field_template data=..
+                                                else
+                                                    | #{child_schema_field_value}
+                                .content
+                                    each ../actions
+                                        .ui.icon.button(title=title)
+                                            i.icon
+                                                +icon name=icon
+                                    // +edit_button
+                                    // +view_button
 
                 if is_table
                     if view_table_header
@@ -822,6 +843,7 @@ template(name='block')
                             +set_key_value key='view_mode' value='comments' label='Comments' icon='comments'
                             +set_key_value key='view_mode' value='grid' label='Grid' icon='grid'
                             +set_key_value key='view_mode' value='header' label='Header'
+                            +set_key_value key='view_mode' value='cards' label='Cards'
                         if fields
                             table.ui.striped.fixed.table
                                 thead

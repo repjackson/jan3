@@ -12,25 +12,24 @@ Template.nav.helpers
             Docs.find
                 "ev.ID": user.office_jpid
                 type:'office'
-    # isActiveRoute: (name)->
-    #     console.log name
-    #     if FlowRouter.current().route.name is name then 'active' else ''
+    active_route: (slug)->
+        if FlowRouter.getParam('page_slug') is slug then 'active' else ''
 
     admin_nav_items: ->
         Docs.find {
             type:'page'
             admin_nav:true
-        }, sort:number:-1
+        }, sort:number:1
     office_nav_items: ->
         Docs.find {
             type:'page'
             office_nav:true
-        }, sort:number:-1
+        }, sort:number:1
     customer_nav_items: ->
         Docs.find {
             type:'page'
             customer_nav:true
-        }, sort:number:-1
+        }, sort:number:1
 
 Template.left_sidebar.helpers
     my_office_doc: ->
@@ -47,17 +46,17 @@ Template.left_sidebar.helpers
         Docs.find {
             type:'page'
             admin_nav:true
-        }, sort:number:-1
+        }, sort:number:1
     office_nav_items: ->
         Docs.find {
             type:'page'
             office_nav:true
-        }, sort:number:-1
+        }, sort:number:1
     customer_nav_items: ->
         Docs.find {
             type:'page'
             customer_nav:true
-        }, sort:number:-1
+        }, sort:number:1
 
 
 Template.nav.events

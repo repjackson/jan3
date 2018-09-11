@@ -4,38 +4,34 @@ template(name='nav')
             i.bars.icon
         if is_admin
             each admin_nav_items
-                a.item(href="/p/#{slug}" class="{{ isActiveRoute slug }}" title=title)
+                a.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
                     i.large.icon
                         +icon name=icon
                     // .mobile.hidden &nbsp; Admin
         else if is_customer
             each customer_nav_items
-                a.item(href="/p/#{slug}" class="{{ isActiveRoute slug }}" title=title)
+                a.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
                     i.large.icon
                         +icon name=icon
                     .mobile.hidden &nbsp; #{title}
         else if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
             each office_nav_items
-                a.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ isActiveRoute slug }}" title=title)
+                a.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
                     i.large.icon
                         +icon name=icon
         .right.menu
-            if is_admin
-                a.item(href='/p/pages' data-content='Pages')
-                    i.large.icon
-                        +icon name='layout'
             if is_dev
-                a.item(href='/p/pages' data-content='Pages')
+                a.item(href='/p/admin' data-content='Admin' class="{{ active_route 'admin' }}" )
                     i.large.icon
-                        +icon name='layout'
+                        +icon name='user-shield'
                 a#toggle_editing.item(href='#')
                     i.large.icon
                         if editing_mode
                             +icon name='toggle-on'
                         else
                             +icon name='toggle-off'
-                a.item(href='/p/schemas' data-content='Schemas')
+                a.item(href='/p/schemas' data-content='Schemas' class="{{ active_route 'schemas' }}" )
                     i.large.icon
                         +icon name='database'
             if is_customer
@@ -43,7 +39,7 @@ template(name='nav')
                     i.large.icon
                         +icon name='plus'
             if currentUser
-                a.item(href="/user/#{currentUser.username}" data-content='View Profile' class="{{ isActiveRoute 'user_view'}}")
+                a.item(href="/user/#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
                     if currentUser.profile.image_id
                         i.large.icon
                             img.ui.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
@@ -71,25 +67,19 @@ template(name='left_sidebar')
         if is_customer
             a.header.toggle_left_sidebar.item(href='/') 
                 |Dashboard
-            // a.toggle_left_sidebar.item(href='/front')
-            //     i.globe.icon
-            //     | Sales Page
         if is_admin
             each admin_nav_items
-                a.toggle_left_sidebar.item(href="/p/#{slug}" class="{{ isActiveRoute slug }}" title=title)
+                a.toggle_left_sidebar.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
                     i.large.icon
                         +icon name=icon
                     |#{title}
         else if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
             each office_nav_items
-                a.toggle_left_sidebar.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ isActiveRoute slug }}" title=title)
+                a.toggle_left_sidebar.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
                     // i.large.icon
                     //     +icon name=icon
                     | #{title}
-        // a.icon.toggle_left_sidebar.item(href='/p/admin')
-        //     i.shield.icon
-        //     | Admin
             // a.toggle_sidebar.item(href="/profile/edit/#{currentUser._id}")
             //     if currentUser.profile.first_name
             //         | #{currentUser.profile.first_name}

@@ -841,6 +841,7 @@ Template.block.helpers
     is_list: -> @view_mode is 'list'    
     is_comments: -> @view_mode is 'comments'    
     is_grid: -> @view_mode is 'grid'    
+    is_cards: -> @view_mode is 'cards'    
         
 Template.block.events
     'click .remove_block': ->

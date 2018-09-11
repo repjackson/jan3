@@ -1,8 +1,3 @@
-FlowRouter.route '/services', 
-    name:'services'
-    action: ->
-        BlazeLayout.render 'layout', main: 'services'
-
 Template.services.onCreated ->
     @autorun => Meteor.subscribe 'type', 'service'
 
