@@ -720,6 +720,8 @@ Template.blocks.helpers
 Template.block.onCreated ->
     Meteor.subscribe 'type', 'schema'
     Meteor.subscribe 'type', 'event_type'
+    Session.set 'limit', parseInt(@data.limit)
+    Session.set 'page_size', parseInt(@data.limit)
     Meteor.subscribe 'stat', @data.children_doc_type, @data.table_stat_type
     # console.log @data
     @autorun => Meteor.subscribe 'block_docs', 

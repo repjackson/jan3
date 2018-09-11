@@ -768,6 +768,7 @@ template(name='block')
                             i.filter.icon
                             |Filter
                         .ui.form
+                            +edit_block_text_field label='Result Limit' key='limit'
                             h5 
                                 |Status
                             +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
@@ -863,7 +864,6 @@ template(name='block')
                                 +set_key_value key='view_table_footer' value=true label='View Footer'
                                 +set_key_value key='view_table_footer' value=false label='Hide Footer'
                             else 
-                                +edit_block_text_field label='Result Limit' key='limit'
      
 template(name='child_card')
     .ui.card
