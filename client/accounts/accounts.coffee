@@ -75,7 +75,7 @@ Template.login.events
                     Meteor.call 'redirect_office_after_login', (err,res)->
                         if 'office' in res.user.roles
                             Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
-                            FlowRouter.go "/office/#{res.office._id}"        
+                            FlowRouter.go "/p/office_incidents/#{res.user.office_jpid}"        
                         else if 'customer' in res.user.roles
                             Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                             FlowRouter.go "/p/customer_dashboard"    
@@ -122,8 +122,8 @@ Template.register_customer.onRendered ->
     Session.setDefault 'account_selected', false
 
 Template.register_customer.onCreated ->
-    @autorun =>  Meteor.subscribe 'customer_by_id', Session.get('customer_jpid')
-    @autorun =>  Meteor.subscribe 'office_by_id', Session.get('office_jpid')
+    @autorun =>  Meteor.subscribe 'doc_by_jpid', Session.get('customer_jpid')
+    @autorun =>  Meteor.subscribe 'doc_by_jpid', Session.get('office_jpid')
 
 
 Template.register_customer.helpers
@@ -277,7 +277,7 @@ Template.register_customer.events
     
 
 Template.register_office.onCreated ->
-    @autorun =>  Meteor.subscribe 'office_by_id', Session.get('office_jpid')
+    @autorun =>  Meteor.subscribe 'doc_by_jpid', Session.get('office_jpid')
 
 
 Template.register_office.onRendered ->
@@ -350,7 +350,7 @@ Template.register_office.events
             else
                 Bert.alert "Registered new office user: #{username}. Redirecting to office page.", 'success', 'growl-bottom-right'
                 # Meteor.call 
-                FlowRouter.go "/office_incidents/#{office_jpid}/"                
+                FlowRouter.go "/p/office_incidents/#{office_jpid}/"                
         )
     
     'keyup #username': (e,t)->

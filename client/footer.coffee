@@ -53,7 +53,7 @@ Template.footer.events
 Template.role_switcher.events
     'click .change_role': ->
         cursor = Docs.find(type:'role').fetch()
-        console.log @
+        # console.log @
         user = Meteor.user()
         if user
             if @slug in user.roles

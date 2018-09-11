@@ -88,7 +88,11 @@ template(name='login')
                                 #login_demo_admin.ui.fluid.button(class=login_button_class)
                                     +iconsmall name='user-shield' classes='ui inline image'
                                     | &nbsp; Admin
-               
+                else
+                    .ui.header
+                        |Logged in as #{currentUser.username}...
+                    // .logout.ui.button
+                    //     |Log Out
                 
 template(name='register_customer')
     .ui.middle.aligned.centered.padded.grid

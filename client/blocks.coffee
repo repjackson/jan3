@@ -32,10 +32,10 @@ Template.associated_users.helpers
                 _id: $in: @assigned_to
 
 
-Template.incident_assigment_cell.onCreated ->
+Template.incident_assignment_cell.onCreated ->
     @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
     
-Template.incident_assigment_cell.helpers
+Template.incident_assignment_cell.helpers
     # incident_assignment_cell_class: ->
     #     if @assignment_timestamp
     #         now = Date.now()

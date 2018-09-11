@@ -14,9 +14,9 @@ Template.dev.helpers
     events: -> Docs.find type:'event'
     pages: -> Docs.find type:'page'
 
-Template.page_view.onCreated ->
-    # location.reload() 
-    @autorun => Meteor.subscribe 'blocks', FlowRouter.getParam('doc_id')
+# Template.page_view.onCreated ->
+#     # location.reload() 
+#     @autorun => Meteor.subscribe 'blocks', FlowRouter.getParam('doc_id')
 
     
 Template.page.onCreated ->
@@ -25,12 +25,12 @@ Template.page.onCreated ->
 
     
     
-Template.page_view.helpers
-    page_doc: -> 
-        FlowRouter.watchPathChange();
-        currentContext = FlowRouter.current();
-        # console.log currentContext
-        Docs.findOne currentContext.params.doc_id
+# Template.page_view.helpers
+#     page_doc: -> 
+#         FlowRouter.watchPathChange();
+#         currentContext = FlowRouter.current();
+#         # console.log currentContext
+#         Docs.findOne currentContext.params.doc_id
     
     
 Template.page.helpers
@@ -62,7 +62,7 @@ Template.dev.events
                 console.res
     
     
-Template.page_view.events
+# Template.page_view.events
     # 'click #add_row': ->
     #     current_page = Docs.findOne FlowRouter.getParam('doc_id')
     #     next_row_number = current_page.rows.length+1

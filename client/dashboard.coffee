@@ -20,30 +20,30 @@
 #                 found
 
 Template.customer_menu.events
-    # 'click .log_ticket': (e,t)->
-    #     my_customer_ob = Meteor.user().users_customer()
-    #     user = Meteor.user()
-    #     console.log my_customer_ob
-    #     if my_customer_ob
-    #         Meteor.call 'count_current_incident_number', (err,incident_count)=>
-    #             if err then console.error err
-    #             else
-    #                 console.log incident_count
-    #                 next_incident_number = incident_count + 1
-    #                 new_incident_id = 
-    #                     Docs.insert
-    #                         type: 'incident'
-    #                         incident_number: next_incident_number
-    #                         franchisee_jpid: user.franchisee_jpid
-    #                         office_jpid: user.office_jpid
-    #                         customer_jpid: user.customer_jpid
-    #                         customer_name: my_customer_ob.ev.CUST_NAME
-    #                         incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
-    #                         incident_franchisee: my_customer_ob.ev.FRANCHISEE
-    #                         level: 1
-    #                         open: true
-    #                         submitted: false
-    #                 FlowRouter.go "/v/#{new_incident_id}"
+    'click .log_ticket': (e,t)->
+        my_customer_ob = Meteor.user().users_customer()
+        user = Meteor.user()
+        console.log my_customer_ob
+        if my_customer_ob
+            Meteor.call 'count_current_incident_number', (err,incident_count)=>
+                if err then console.error err
+                else
+                    console.log incident_count
+                    next_incident_number = incident_count + 1
+                    new_incident_id = 
+                        Docs.insert
+                            type: 'incident'
+                            incident_number: next_incident_number
+                            franchisee_jpid: user.franchisee_jpid
+                            office_jpid: user.office_jpid
+                            customer_jpid: user.customer_jpid
+                            customer_name: my_customer_ob.ev.CUST_NAME
+                            incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
+                            incident_franchisee: my_customer_ob.ev.FRANCHISEE
+                            level: 1
+                            open: true
+                            submitted: false
+                    FlowRouter.go "/v/#{new_incident_id}"
 
 Template.dashboard_office_contacts_list.onCreated ->
     @autorun -> Meteor.subscribe 'my_office_contacts'
