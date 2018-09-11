@@ -69,12 +69,12 @@ Template.nav.events
     'click .log_ticket': (e,t)->
         my_customer_ob = Meteor.user().users_customer()
         user = Meteor.user()
-        console.log my_customer_ob
+        # console.log my_customer_ob
         if my_customer_ob
             Meteor.call 'count_current_incident_number', (err,incident_count)=>
                 if err then console.error err
                 else
-                    console.log incident_count
+                    # console.log incident_count
                     next_incident_number = incident_count + 1
                     new_incident_id = 
                         Docs.insert

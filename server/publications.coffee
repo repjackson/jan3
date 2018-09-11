@@ -41,7 +41,7 @@ Meteor.publish 'block_docs', (
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
         # console.log limit
-        # console.log 'initial filter',filter_value
+        console.log 'initial filter',filter_value
         calculated_value =
             switch filter_value
                 # user
@@ -84,8 +84,13 @@ Meteor.publish 'block_docs', (
                         @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
-        # console.log 'calc value', calculated_value
-        # console.log 'match',match
+        console.log 'calc value', calculated_value
+        user = Meteor.user()
+        if user and user.roles
+            # unless 'customer' in user.roles
+            match.submitted = $ne: false
+                
+        console.log 'match',match
         # console.log 'prelimit', limit
         if -1 > limit > 100
             limit = 100
