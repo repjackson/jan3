@@ -7,7 +7,7 @@ Template.role_switcher.helpers
             type: 'role'
 
     role_button_class: ->
-        if Meteor.user() and Meteor.user().roles and @name in Meteor.user().roles then 'blue' else ''
+        if Meteor.user() and Meteor.user().roles and @slug in Meteor.user().roles then 'blue' else ''
 
 
 Template.footer.helpers
@@ -51,14 +51,14 @@ Template.footer.events
             
 
 Template.role_switcher.events
-    # 'click .change_role': ->
-    #     cursor = Docs.find(type:'role').fetch()
-    #     console.log @
-    #     user = Meteor.user()
-    #     if user
-    #         if @name in user.roles
-    #             Meteor.users.update Meteor.userId(),
-    #                 $pull: roles:@name
-    #         else
-    #             Meteor.users.update Meteor.userId(),
-    #                 $addToSet: roles: @name
+    'click .change_role': ->
+        cursor = Docs.find(type:'role').fetch()
+        console.log @
+        user = Meteor.user()
+        if user
+            if @slug in user.roles
+                Meteor.users.update Meteor.userId(),
+                    $pull: roles:@slug
+            else
+                Meteor.users.update Meteor.userId(),
+                    $addToSet: roles: @slug

@@ -548,7 +548,7 @@ template(name='office_card')
                         +icon name='building'
                         |Office
                 else
-                    a(href="/office/#{_id}")
+                    a(href="/p/office_incidents/#{ev.ID}")
                         .ui.header 
                             +icon name='building'
                             |Office
@@ -556,7 +556,7 @@ template(name='office_card')
                 if is_customer
                     h4.ui.header #{ev.MASTER_LICENSEE}
                 else
-                    a(href="/office/#{_id}")
+                    a(href="/p/office_incidents/#{ev.ID}")
                         h4.ui.header #{ev.MASTER_LICENSEE}
                 // div ##{ev.ID} 
                 div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
@@ -768,7 +768,8 @@ template(name='block')
                             i.filter.icon
                             |Filter
                         .ui.form
-                            +edit_block_text_field label='Result Limit' key='limit'
+                            +edit_block_text_field label='Hard Limit' key='hard_limit'
+                            +edit_block_text_field label='Soft Limit' key='limit'
                             h5 
                                 |Status
                             +set_key_value key='filter_status' value="ACTIVE" label='Active Status'

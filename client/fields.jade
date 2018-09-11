@@ -29,6 +29,16 @@ template(name='edit_profile_text_field')
         input#text_field(type='text' value=profile_key_value )
 
         
+template(name='edit_user_text_field')
+    .ui.form
+        .inline.field(class=field_class)
+            label
+                if icon
+                    i.icon(class=icon)
+                |#{label}
+        input#text_field(type='text' value=user_key_value )
+
+        
 template(name='view_text_field')
     h4.ui.header #{title}: #{slug_value}
         

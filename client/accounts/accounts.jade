@@ -57,35 +57,37 @@ template(name='login')
                     // +icon name='password'
                     img.ui.spaced.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
                     | Jan-Pro Customer Portal Login
-                .ui.segment
-                    .ui.large.form
-                        .field
-                            label Username
-                            input.username(type='text')
-                        .field
-                            label Password
-                            input.password(type='password')
-                        .field
-                            unless currentUser
-                                .login.ui.fluid.large.button(class=login_button_class)
-                                    | Login
-                                    +icon name='play' classes='ui inline image'
-                            if currentUser
-                                |You are logged in as #{currentUser.username}
-                .ui.horizontal.divider or demo
-                .ui.three.column.stackable.grid
-                    .column
-                        #login_demo_customer.ui.fluid.button
-                            +iconsmall name='headset' classes='ui inline image'
-                            | &nbsp; Customer
-                    .column
-                        #login_demo_office.ui.fluid.button
-                            +iconsmall name='building' classes='ui inline image'
-                            | &nbsp; Office
-                    .column
-                        #login_demo_admin.ui.fluid.button
-                            +iconsmall name='user-shield' classes='ui inline image'
-                            | &nbsp; Admin
+                // if currentUser
+                //     | Logging out...
+                //     // |You are logged in as #{currentUser.username}
+                unless currentUser
+                    .ui.segment
+                        .ui.large.form
+                            .field
+                                label Username
+                                input.username(type='text')
+                            .field
+                                label Password
+                                input.password(type='password')
+                            .field
+                                unless currentUser
+                                    .login.ui.fluid.large.button(class=login_button_class)
+                                        | Login
+                                        +icon name='play' classes='ui inline image'
+                        .ui.horizontal.divider or demo
+                        .ui.three.column.stackable.grid
+                            .column
+                                #login_demo_customer.ui.fluid.button(class=login_button_class)
+                                    +iconsmall name='headset' classes='ui inline image'
+                                    | &nbsp; Customer
+                            .column
+                                #login_demo_office.ui.fluid.button(class=login_button_class)
+                                    +iconsmall name='building' classes='ui inline image'
+                                    | &nbsp; Office
+                            .column
+                                #login_demo_admin.ui.fluid.button(class=login_button_class)
+                                    +iconsmall name='user-shield' classes='ui inline image'
+                                    | &nbsp; Admin
                
                 
 template(name='register_customer')

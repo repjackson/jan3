@@ -721,13 +721,13 @@ Template.blocks.helpers
 Template.block.onCreated ->
     Meteor.subscribe 'type', 'schema'
     # Meteor.subscribe 'type', 'event_type'
-    Meteor.subscribe('facet', 
-        selected_tags.array()
-        selected_author_ids.array()
-        selected_location_tags.array()
-        selected_timestamp_tags.array()
-        type=@data.children_doc_type
-        )
+    # Meteor.subscribe('facet', 
+    #     selected_tags.array()
+    #     selected_author_ids.array()
+    #     selected_location_tags.array()
+    #     selected_timestamp_tags.array()
+    #     type=@data.children_doc_type
+    #     )
 
     if @data.limit
         Session.set 'limit', parseInt(@data.limit)
@@ -762,8 +762,17 @@ Template.block.helpers
             return true
 
     children: -> 
-        Docs.find { type:@children_doc_type
-            },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
+        if @hard_limit
+            Docs.find { type:@children_doc_type
+                },{ 
+                    sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") 
+                    limit:parseInt(@hard_limit)
+                    }
+        else
+            Docs.find { type:@children_doc_type
+                },{ 
+                    sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") 
+                    }
 
     schema_doc: ->
         Docs.findOne

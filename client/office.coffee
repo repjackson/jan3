@@ -1,28 +1,3 @@
-# FlowRouter.route '/office/:jpid', 
-#     name: 'office_dashboard'
-#     action: -> BlazeLayout.render 'layout', main: 'office_dashboard'
-
-# FlowRouter.route '/office/:jpid/incidents', 
-#     name: 'office_incidents'
-#     action: -> BlazeLayout.render 'layout', main: 'office_incidents'
-
-# FlowRouter.route '/office/:jpid/employees', 
-#     name: 'office_employees'
-#     action: -> BlazeLayout.render 'layout', main: 'office_employees'
-
-# FlowRouter.route '/office/:jpid/franchisees', 
-#     name: 'office_franchisees'
-#     action: -> BlazeLayout.render 'layout', main: 'office_franchisees'
-
-# FlowRouter.route '/office/:jpid/customers', 
-#     name: 'office_customers'
-#     action: -> BlazeLayout.render 'layout', main: 'office_customers'
-
-# FlowRouter.route '/office/:jpid/settings', 
-#     name: 'office_settings'
-#     action: -> BlazeLayout.render 'layout', main: 'office_settings'
-
-
 Template.office_header.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('jpid')
     @autorun -> Meteor.subscribe 'office_stats', FlowRouter.getParam('jpid')

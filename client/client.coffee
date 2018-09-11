@@ -89,14 +89,14 @@ Template.registerHelper 'unread_count', () ->
 Template.registerHelper 'my_office_link', () ->  
     user = Meteor.user()
     # console.log 'franch_doc', franch_doc
-    if user and user.profile 
+    if user
         if user.office_jpid
-            users_office = Docs.findOne
-                "ev.ID": user.office_jpid
-                type:'office'
-            # console.log users_office
-            users_office
-            return "/office/#{users_office._id}"
+            # users_office = Docs.findOne
+            #     "ev.ID": user.office_jpid
+            #     type:'office'
+            # # console.log users_office
+            # users_office
+            return "/p/office_incidents/#{user.office_jpid}"
 
 Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
 
@@ -240,6 +240,12 @@ Template.registerHelper 'profile_key_value', () ->
     current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
     if current_user
         current_user.profile["#{@key}"]
+        
+Template.registerHelper 'user_key_value', () -> 
+    # doc_field = Template.parentData(2)
+    current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
+    if current_user
+        current_user["#{@key}"]
         
 # Template.registerHelper 'user_key_value', () -> 
 #     # doc_field = Template.parentData(2)

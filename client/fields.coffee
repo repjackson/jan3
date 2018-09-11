@@ -220,12 +220,18 @@ Template.edit_profile_text_field.events
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
+Template.edit_user_text_field.events
+    'change #text_field': (e,t)->
+        text_value = e.currentTarget.value
+        Meteor.users.update FlowRouter.getParam('user_id'),
+            { $set: "#{@key}": text_value }
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
-# Template.edit_profile_text_field.helpers
-#     profile_key_value: () -> 
-#         # doc_field = Template.parentData(2)
-#         current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
-#         if current_user
+
 
 
 

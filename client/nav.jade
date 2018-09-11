@@ -38,6 +38,10 @@ template(name='nav')
                 a.item(href='/p/schemas' data-content='Schemas')
                     i.large.icon
                         +icon name='database'
+            if is_customer
+                a.log_ticket.item(href='#' data-content='Log Incident')
+                    i.large.icon
+                        +icon name='plus'
             if currentUser
                 a.item(href="/user/#{currentUser.username}" data-content='View Profile' class="{{ isActiveRoute 'user_view'}}")
                     if currentUser.profile.image_id
@@ -71,51 +75,18 @@ template(name='left_sidebar')
             //     i.globe.icon
             //     | Sales Page
         if is_admin
-            a.toggle_left_sidebar.item(href='/p/users') 
-                |Users
-            a.toggle_left_sidebar.item(href='/p/admin_incidents') 
-                |Incidents
-            a.toggle_left_sidebar.item(href='/p/admin_offices') 
-                |Offices
-            a.toggle_left_sidebar.item(href='/p/services')
-                // +tiny_sprite name='duster'
-                | Services
-            // a.toggle_left_sidebar.item(href='/special_services')
-            //     // +tiny_sprite name='duster'
-            //     | Special Services
-            a.toggle_left_sidebar.item(href='/p/admin_franchisees') 
-                |Franchisees
-            a.toggle_left_sidebar.item(href='/p/admin_customers') 
-                |Customers
-            .divider
-            a.toggle_left_sidebar.item(href='/p/admin') 
-                |Admin
-        if is_office
-            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/" class="{{ isActiveRoute 'office_dashboard'}}")
-                // i.large.icon
-                //     +icon name='building'
-                | &nbsp; #{my_office.ev.MASTER_LICENSEE}
-            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/incidents" class="{{ isActiveRoute 'office_incidents'}}")
-                // i.large.icon
-                //     +icon name='error'
-                | &nbsp; Incidents
-            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/employees" class="{{ isActiveRoute 'office_employees'}}")
-                // i.large.icon
-                //     +icon name='groups'
-                | &nbsp; Employees
-            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/franchisees" class="{{ isActiveRoute 'office_franchisees'}}")
-                // i.large.icon
-                //     +icon name='business'
-                | &nbsp; Franchisees
-            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/customers" class="{{ isActiveRoute 'office_customers'}}")
-                // i.large.icon
-                //     +icon name='headset'
-                | &nbsp; Customers
-            a.toggle_left_sidebar.item(href="/office/#{my_office._id}/settings" class="{{ isActiveRoute 'office_settings'}}")
-                // i.large.icon
-                //     +icon name='settings'
-                | &nbsp; Settings
-
+            each admin_nav_items
+                a.toggle_left_sidebar.item(href="/p/#{slug}" class="{{ isActiveRoute slug }}" title=title)
+                    i.large.icon
+                        +icon name=icon
+                    |#{title}
+        else if is_office
+            // with currentUser.users_customer.parent_franchisee.parent_office
+            each office_nav_items
+                a.toggle_left_sidebar.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ isActiveRoute slug }}" title=title)
+                    // i.large.icon
+                    //     +icon name=icon
+                    | #{title}
         // a.icon.toggle_left_sidebar.item(href='/p/admin')
         //     i.shield.icon
         //     | Admin

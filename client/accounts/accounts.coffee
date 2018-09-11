@@ -116,6 +116,7 @@ Template.login.helpers
             'disabled'
         
         
+        
 Template.register_customer.onRendered ->
     Session.setDefault 'customer_jpid', null
     Session.setDefault 'account_selected', false

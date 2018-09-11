@@ -3,14 +3,14 @@ template(name='incident_view')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 if is_customer
-                    +link_button link='/customer_incidents' icon='error' label='My Incidents'
+                    +link_button link='/p/customer_incidents' icon='error' label='My Incidents'
                 if is_office
                     +link_button link=my_office_link icon='error' label='Office Incidents'
                     // a.ui.button(href="/office/#{my_office._id}/incidents")
                     //     +icon name='error'
                     //     | Office Incidents    
                 if is_admin
-                    +link_button link='/incidents' icon='user-shield' label='All Incidents'
+                    +link_button link='/p/admin_incidents' icon='user-shield' label='All Incidents'
             .nine.wide.column
                 h1.ui.center.aligned.header 
                     |##{incident_number} #{customer_name} Incident 
@@ -50,9 +50,10 @@ template(name='incident_view')
                     .ui.secondary.segment
                         .ui.header Type
                         +incident_type_label
-                .ui.secondary.segment
-                    .ui.header Last Updated
-                    |{{ long_format updated }}
+                unless is_customer
+                    .ui.secondary.segment
+                        .ui.header Last Updated
+                        |{{ long_format updated }}
 
             .nine.wide.column
                 unless open
@@ -70,6 +71,11 @@ template(name='incident_view')
                     else
                         #submit_feedback.ui.button Submit Feedback
                 if can_edit_core
+                    .ui.header 
+                        +icon name='category'
+                        |Type
+                    each incident_type_docs
+                        +toggle_key key='incident_type' value=slug label=name
                     +edit_textarea label='Details' key='incident_details' icon='view-details'
                     // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
                     +edit_datetime_field key='service_date' label='Service Time'
@@ -80,13 +86,6 @@ template(name='incident_view')
                 unless can_edit_core
                     +comments
                     +full_doc_history
-                else
-                    .ui.secondary.segment
-                        .ui.header 
-                            +icon name='category'
-                            |Type
-                        each incident_type_docs
-                            +toggle_key key='incident_type' value=slug label=name
                 if can_edit_core
                     +edit_image_field
                 else
@@ -129,7 +128,8 @@ template(name='incident_view')
                         |Submit
                 else
                     if is_customer
-                        .ui.secondary.segment Fill Date, Details, and Type to Submit
+                        unless submitted
+                            .ui.secondary.segment Fill Date, Details, and Type to Submit
                 unless is_customer
                     if submitted
                         .ui.secondary.segment

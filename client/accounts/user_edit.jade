@@ -47,8 +47,8 @@ template(name='user_edit')
                             // +single_doc_select type='customer' save_key='customer_id' search_key='cust_name' label='Customer'
                         if user_is_customer
                             +lookup_customer
-                            +edit_profile_text_field key='customer_jpid' label='Connected Customer JP ID'
-                            +edit_profile_text_field key='office_jpid' label='Connected Office JP ID'
+                            +edit_user_text_field key='customer_jpid' label='Connected Customer JP ID'
+                            +edit_user_text_field key='office_jpid' label='Connected Office JP ID'
                             if profile.franchisee_jpid
                                 h5 Franchisee: #{profile.franchisee_jpid}
                             if office_jpid

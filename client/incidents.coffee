@@ -1,4 +1,4 @@
-FlowRouter.route '/customer_incidents', 
+FlowRouter.route '/p/customer_incidents', 
     name:'customer_incidents'
     action: -> BlazeLayout.render 'layout', main:'customer_incidents'
 
@@ -221,7 +221,7 @@ Template.incident_view.events
             doc_id = FlowRouter.getParam('doc_id')
             Docs.remove doc_id
             Meteor.call 'clear_incident_events', doc_id, ->
-            FlowRouter.go '/incidents'
+            FlowRouter.go '/p/admin_incidents'
 
         
 # Template.incident_sla_widget.onRendered ->
