@@ -60,7 +60,7 @@ template(name='view_page_button')
         i.right.chevron.blue.icon
         
 template(name='view_office_button')
-    a.ui.icon.button(href="/office/#{_id}" data-content='View Office' class=classes) 
+    a.ui.icon.button(href="/p/office_incidents/#{ev.ID}" data-content='View Office' class=classes) 
         // +icon name='details-pane'
         i.right.chevron.green.icon
         
@@ -228,17 +228,18 @@ template(name='office_username_query')
                     input#office_username_query(type='text' placeholder=label)
             .ui.middle.aligned.selection.animated.list
                 each user_results
-                    .select_office_user.item 
+                    .select_office_user.basic.large.label.item 
                         if profile.image_id
                             img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                         strong #{profile.first_name} #{profile.last_name}
                         |#{username}
     with selected_user
-        h5
+        .ui.basic.large.label
             if profile.image_id
                 img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
             |#{profile.first_name} #{profile.last_name} @#{username}
-            i.pull_user.remove.red.link.icon
+        .ui.icon.button.pull_user
+            i.remove.red.link.icon
           
 template(name='many_doc_select')
     .ui.dividing.header #{label}
@@ -450,12 +451,12 @@ template(name='message_button')
 
                     
 template(name='toggle_boolean_checkbox')      
-    .ui.form
-        .field
-            .ui.toggle.checkbox
-                input(type='checkbox' name=key checked=page_jpid_key_value)
-                label
-                    |#{label}
+    .ui.icon.button(class=page_jpid_key_value title=title)
+        if icon
+            i.large.icon
+                +iconsmall name=icon classes='inline'
+        // label
+        //     |#{label}
 
 
 template(name='toggle_user_published')
@@ -796,7 +797,7 @@ template(name='block')
                             +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
                             +set_key_value key='filter_status' value="" label='All'
                             h5.ui.header 
-                                i.key.icon
+                                +icon name='key' classes='inline'
                                 |Key
                             +set_key_value key='filter_key' value='_id' label='_id'
                             +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
@@ -952,6 +953,7 @@ template(name='set_key_value')
             i.icon
                 +icon name=icon
         |#{label}
+        
         
 template(name='set_page_key_value')
     .set_page_key_value.ui.compact.button(class=set_value_button_class) 

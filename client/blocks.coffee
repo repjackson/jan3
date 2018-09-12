@@ -203,14 +203,15 @@ Template.toggle_boolean_checkbox.onRendered ->
     , 500
 
         
-# Template.toggle_boolean_checkbox.helpers
-#     toggle_key_button_class: -> 
-#         current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        
-#         if @value
-#             if current_doc["#{@key}"] is @value then 'primary'
-#         # else if current_doc["#{@key}"] is true then 'active' else 'basic'
-#         else ''
+Template.toggle_boolean_checkbox.helpers
+    toggle_key_button_class: -> 
+        current_doc = Docs.findOne 
+            type:'page'
+            slug:FlowRouter.getParam('page_slug')
+        if @value
+            if current_doc["#{@key}"] is true then 'primary'
+        # else if current_doc["#{@key}"] is true then 'active' else 'basic'
+        else ''
 
 Template.toggle_boolean_checkbox.events
     'click .ui.toggle.checkbox': (e,t)->
@@ -931,6 +932,15 @@ Template.set_key_value.events
         Docs.update Template.parentData(1)._id,
             { $set: "#{@key}": @value }
             
+Template.set_page_key_value.events
+    'click .set_key_value': ->
+        page = Docs.findOne 
+            type:'page'
+            slug:FlowRouter.getParam('page_slug')
+        if page
+            Docs.update page._id,
+                { $set: "#{@key}": @value }
+            
             
 Template.set_page_key_value.events
     'click .set_page_key_value': ->
@@ -960,7 +970,7 @@ Template.set_page_key_value.helpers
         page = Docs.findOne 
             type:'page'
             slug:FlowRouter.getParam('page_slug')
-        if page["#{@key}"] is @value then 'active' else 'basic'
+        if page["#{@key}"] is @value then 'inverted blue' else 'basic'
 
     
 Template.set_key_value_2.helpers

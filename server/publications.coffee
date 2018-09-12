@@ -293,13 +293,14 @@ Meteor.publish 'my_franchisee', ->
         
 Meteor.publish 'my_office', ->
     user = Meteor.user()
-    if user and user.office_jpid and user.roles and 'office' or 'customer' in user.roles
-        console.log 'publishing office', user.office_jpid
-        Docs.find
-            "ev.ID": user.office_jpid
-            type:'office'
+    if user 
+        if user.office_jpid and user.roles and 'office' or 'customer' in user.roles
+            console.log 'publishing office', user.office_jpid
+            Docs.find
+                "ev.ID": user.office_jpid
+                type:'office'
     else
-        console.log 'not publishing office', user.office_jpid
+        console.log 'not publishing office', user?.office_jpid
         
 Meteor.publish 'my_special_services', ->
     user = Meteor.user()
