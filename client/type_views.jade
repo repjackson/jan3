@@ -251,7 +251,7 @@ template(name='schema_view')
     .ui.padded.stackable.centered.grid
         .centered.row
             .three.wide.column
-                +link_button link='/schemas' icon='database' label='Schemas'
+                +link_button link='/p/schemas' icon='database' label='Schemas'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header 
                     if icon
@@ -261,7 +261,7 @@ template(name='schema_view')
                 +edit_button
         .row
             .four.wide.column
-                .ui.header Name: #{title}
+                .ui.header Title: #{title}
                 .ui.header Slug: #{slug}
                 each tags
                     .ui.label #{this}
@@ -272,10 +272,10 @@ template(name='schema_view')
                 .ui.list
                     each fields
                         .item #{title} (#{slug}) [#{type}]
-                .ui.segment
-                    .ui.header #{title} Docs
+                .ui.secondary.segment
+                    .ui.header #{title} hi Docs
                     +add_button type=slug
-                    .ui.stackable.cards
+                    .ui.stackable.three.cards
                         each schema_docs
                             +doc_card
                             // +Template.dynamic template=single_view

@@ -14,7 +14,12 @@ Template.doc_view.helpers
     doc: -> Docs.findOne FlowRouter.getParam('doc_id')
     type_view: -> "#{@type}_view"
     schema_doc: ->
-        doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if FlowRouter.getParam('doc_id')
+            doc = Docs.findOne FlowRouter.getParam('doc_id')
+        if FlowRouter.getParam('page_slug')
+            doc = Docs.findOne
+                type:'page'
+                slug:FlowRouter.getParam('page_slug')
         Docs.findOne
             type:'schema'
             slug:doc.type

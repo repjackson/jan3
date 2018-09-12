@@ -1,10 +1,11 @@
 Meteor.publish 'stats', ->
     Stats.find()
 
-Meteor.publish 'stat', (doc_type, stat_type)->
-    Stats.find
-        doc_type: doc_type
-        stat_type: stat_type
+# Meteor.publish 'stat', (doc_type, stat_type)->
+Meteor.publish 'stat', (match_object)->
+    console.log 'match_object', match_object
+    Meteor.call 'calculate_stat', match_object
+    Stats.find match_object
 
 Meteor.publish 'admin_total_stats', ()->
     Stats.find 
@@ -113,52 +114,6 @@ Meteor.publish 'event_type_count', (event_type)->
     
 
 Meteor.methods
-    calculate_office_incident_count: (office_doc_id)->
-        office_doc = Docs.findOne office_doc_id
-        if office_doc
-            office_incident_count = 
-                Docs.find({
-                    incident_office_name: office_doc.ev.MASTER_LICENSEE
-                    type: "incident"
-                }).count()
-            Stats.update {
-                doc_type: 'incident'
-                stat_type: 'office_incidents'
-                office_jpid:office_doc.ev.ID
-            }, { $set:amount:office_incident_count },{upsert:true }
-
-
-    calculate_office_franchisee_count: (office_doc_id)->
-        office_doc = Docs.findOne office_doc_id
-        if office_doc
-            office_franchisee_count = 
-                Docs.find({
-                    "ev.MASTER_LICENSEE": office_doc.ev.MASTER_LICENSEE
-                    "ev.ACCOUNT_STATUS": 'ACTIVE'
-                    type: "franchisee"
-                }).count()
-            Stats.update {
-                doc_type: 'franchisee'
-                stat_type: 'office_franchisees'
-                office_jpid:office_doc.ev.ID
-            }, { $set:amount:office_franchisee_count },{upsert:true }
-        
-    calculate_office_customer_count: (office_doc_id)->
-        office_doc = Docs.findOne office_doc_id
-        if office_doc
-            office_customer_count = 
-                Docs.find({
-                    "ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE
-                    "ev.ACCOUNT_STATUS": 'ACTIVE'
-                    type:'customer'
-                }).count()
-            Stats.update({
-                doc_type: 'customer'
-                stat_type: 'office_customers'
-                office_jpid:office_doc.ev.ID
-            },{ $set:amount:office_customer_count },{upsert:true})
-        
-        
     calculate_office_employee_count: (office_doc_id)->
         office_doc = Docs.findOne office_doc_id
         if office_doc
@@ -183,14 +138,6 @@ Meteor.methods
         
         
         
-    calculate_doc_type_count: (type)->
-        count = Docs.find(type:type).count()
-        
-        Stats.update({
-            doc_type: type
-            stat_type: 'total'
-        }, { $set:amount:count },{ upsert:true })
-    
     calculate_my_incidents_count: ()->
         user = Meteor.user()
         if user and user.customer_jpid
@@ -208,24 +155,6 @@ Meteor.methods
         
         
         
-    calculate_active_customers: ()->
-        count = Docs.find(type:'customer', "ev.ACCOUNT_STATUS":'ACTIVE').count()
-        Stats.update({
-            doc_type: 'customer'
-            stat_type: 'active'
-        }, { $set:amount:count },{ upsert:true })
-        
-        
-    calculate_active_franchisees: ()->
-        count = Docs.find(type:'franchisee', "ev.ACCOUNT_STATUS":'ACTIVE').count()
-        
-        Stats.update({
-            doc_type: 'franchisee'
-            stat_type: 'active'
-        }, { $set:amount:count },{ upsert:true })
-        
-        
-        
     calculate_user_count: ()->
         count = Meteor.users().count()
         
@@ -234,40 +163,34 @@ Meteor.methods
             stat_type: 'total'
         }, { $set:amount:count },{ upsert:true }
         
-        
-        
-        
-    calc_office_stats: (office_doc_id)->
-        office_doc = Docs.findOne office_doc_id
-        if office_doc
-            office_incident_count = 
-                Docs.find({
-                    incident_office_name: office_doc.ev.MASTER_LICENSEE
-                    type: "incident"
-                }).count()
-            Stats.update {
-                doc_type: 'incident'
-                stat_type: 'office_incidents'
-                office_jpid:office_doc.ev.ID
-            }, { $set:amount:office_incident_count },{upsert:true }
-            office_incident_count = 
-                Docs.find({
-                    incident_office_name: office_doc.ev.MASTER_LICENSEE
-                    type: "incident"
-                }).count()
-            Stats.update {
-                doc_type: 'incident'
-                stat_type: 'office_incidents'
-                office_jpid:office_doc.ev.ID
-            }, { $set:amount:office_incident_count },{upsert:true }
 
 
-    calculate_event_type_count: (event_type)->
-        count = Docs.find(type:'event', event_type:event_type).count()
-        
-        Stats.update({
-            doc_type: 'event'
-            stat_type: 'event_type'
-            event_type:event_type
-        }, { $set:amount:count },{ upsert:true })
+    
+
+    # calculate_stat: (doc_type, stat_type)->
+    calculate_stat: (stat_match_object)->
+        count_match_object = {}
+        if stat_match_object
+            console.log 'calc stat with', stat_match_object
+            if stat_match_object.stat_type and stat_match_object.stat_type is 'office'
+                office_doc = Docs.findOne
+                    type:'office'
+                    "ev.ID":stat_match_object.jpid
+                if office_doc
+                    console.log office_doc
+                    switch stat_match_object.doc_type
+                        when 'incident' then count_match_object.incident_office_name = office_doc.ev.MASTER_LICENSEE
+                        when 'franchisee' then count_match_object["ev.MASTER_LICENSEE"] = office_doc.ev.MASTER_LICENSEE
+                        when 'customer' then count_match_object["ev.MASTER_LICENSEE"] = office_doc.ev.MASTER_LICENSEE
+                # count_match_object["ev.ID"] = stat_match_object.jpid
+
+            count_match_object.type = stat_match_object.doc_type
+                    
+            if stat_match_object.active and stat_match_object.active is true
+                count_match_object["ev.ACCOUNT_STATUS"] = 'ACTIVE'
+            count = 
+                Docs.find(count_match_object).count()
+            # console.log 'calculated_count', count
+            # console.log 'calculated_count ob', count_match_object
+            Stats.update(stat_match_object, { $set:amount:count },{ upsert:true })
     

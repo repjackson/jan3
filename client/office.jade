@@ -141,7 +141,10 @@ template(name='office_settings')
                             +icon name='administrative-tools'
                             | &nbsp; SLA Settings
                         each incident_types
-                            .select_incident_type.ui.compact.button(class=select_incident_type_button_class) 
+                            .select_incident_type.ui.button(class=select_incident_type_button_class) 
+                                if icon
+                                    i.icon  
+                                        +icon name=icon
                                 |#{name}
                         if selected_incident_type
                             // .ui.header Default Contact for #{selected_incident_type}

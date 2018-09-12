@@ -59,11 +59,10 @@ template(name='doc_card')
                 a.grey.header(href="/v/#{_id}")
                     if icon
                         +icon name=icon
-                    |#{title} 
+                    |#{title}
         .content
-            .ui.list
+            if is_dev
                 .item Type: #{type}
-        .content
             with schema_doc
                 .ui.list
                     each fields

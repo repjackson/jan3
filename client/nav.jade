@@ -7,7 +7,7 @@ template(name='nav')
                 a.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
                     i.large.icon
                         +icon name=icon
-                    // .mobile.hidden &nbsp; Admin
+                    .mobile.hidden &nbsp; #{title}
         else if is_customer
             each customer_nav_items
                 a.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
@@ -20,6 +20,7 @@ template(name='nav')
                 a.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
                     i.large.icon
                         +icon name=icon
+                    .mobile.hidden &nbsp; #{title}
         .right.menu
             if is_dev
                 a.item(href='/p/admin' data-content='Admin' class="{{ active_route 'admin' }}" )

@@ -395,8 +395,8 @@ Template.office_username_query.helpers
         user_results
 
     selected_user: ->
-        # context = Template.currentData(0)
-        # context = Template.parentData(1)
+        context = Template.currentData(0)
+        context = Template.parentData(1)
         context = Template.parentData(2)
         office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         if office_doc["#{context.key}"]
@@ -719,8 +719,14 @@ Template.blocks.helpers
 #         $('.accordion').accordion();
 #     , 500
 
+Template.block.onRendered ->
+    stat = Stats.findOne()
+    if stat
+        console.log 'stat',stat
+
 Template.block.onCreated ->
     Meteor.subscribe 'type', 'schema'
+
     # Meteor.subscribe 'type', 'event_type'
     # Meteor.subscribe('facet', 
     #     selected_tags.array()
@@ -729,11 +735,31 @@ Template.block.onCreated ->
     #     selected_timestamp_tags.array()
     #     type=@data.children_doc_type
     #     )
+    @page_number = new ReactiveVar(1)
+    @sort_key = new ReactiveVar('timestamp')
+    @sort_direction = new ReactiveVar(1)
+    @number_of_pages = new ReactiveVar(1)
+    @page_size = new ReactiveVar(10)
+    @skip = new ReactiveVar(0)
 
     if @data.limit
-        Session.set 'limit', parseInt(@data.limit)
-        Session.set 'page_size', parseInt(@data.limit)
-    Meteor.subscribe 'stat', @data.children_doc_type, @data.table_stat_type
+        @limit = new ReactiveVar(parseInt(@data.limit))
+        @page_size = new ReactiveVar(parseInt(@data.limit))
+    else
+        @page_size = new ReactiveVar(10)
+        @limit = new ReactiveVar(10)
+    match_object = {}
+    if FlowRouter.getParam 'jpid'
+        match_object.jpid = FlowRouter.getParam 'jpid'
+    if @data.filter_status is "ACTIVE"
+        match_object.active = true
+    else
+        match_object.active = false
+    match_object.doc_type = @data.children_doc_type
+    match_object.stat_type = @data.table_stat_type
+    console.log 'stat doc match ob',match_object
+    Meteor.subscribe 'stat', match_object
+    # console.log @
     # console.log @data
     @autorun => Meteor.subscribe 'block_docs', 
         @data._id, 
@@ -741,11 +767,11 @@ Template.block.onCreated ->
         @data.filter_key, 
         @data.filter_value, 
         Session.get('query'), 
-        parseInt(Session.get('page_size')),
-        Session.get('sort_key'), 
-        Session.get('sort_direction'), 
-        parseInt(Session.get('skip'))
-        @data.filter_status
+        @page_size.get(),
+        @sort_key.get(),
+        @sort_direction.get(),
+        @skip.get(),
+        @data.filter_status,
         FlowRouter.getParam('jpid')
 
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
@@ -755,24 +781,29 @@ Template.block.helpers
     schemas: -> Docs.find type:'schema'
     sort_descending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
-        if Session.equals('sort_direction', 1) and Session.equals('sort_key', key) 
+        temp = Template.instance() 
+        if temp.sort_direction.get() is 1 and temp.sort_key.get() is key 
+            console.log 'descending'
             return true
     sort_ascending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
-        if Session.equals('sort_direction', -1) and Session.equals('sort_key', key)
+        temp = Template.instance() 
+        if temp.sort_direction.get() is -1 and temp.sort_key.get() is key 
+            console.log 'ascending'
             return true
 
     children: -> 
+        temp = Template.instance() 
         if @hard_limit
             Docs.find { type:@children_doc_type
                 },{ 
-                    sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") 
+                    sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
                     limit:parseInt(@hard_limit)
                     }
         else
             Docs.find { type:@children_doc_type
                 },{ 
-                    sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") 
+                    sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
                     }
 
     schema_doc: ->
@@ -864,11 +895,12 @@ Template.block.events
 
     'click .sort_by': (e,t)->
         key = if @ev_subset then "ev.#{@key}" else @key
-        Session.set 'sort_key', key
-        if Session.equals 'sort_direction', -1
-            Session.set 'sort_direction', 1
+        t.sort_key.set key
+        console.log t.sort_key.get()
+        if t.sort_direction.get() is -1
+            t.sort_direction.set 1
         else
-            Session.set 'sort_direction', -1
+            t.sort_direction.set -1
     
     'click .add_blank_field': ->
         block = Template.currentData()
