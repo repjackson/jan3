@@ -62,7 +62,7 @@ template(name='login')
                 //     // |You are logged in as #{currentUser.username}
                 unless currentUser
                     .ui.segment
-                        .ui.divided.grid
+                        .ui.grid
                             .twelve.wide.column
                                 .ui.labeled.fluid.input
                                     .ui.basic.label Username
@@ -76,7 +76,7 @@ template(name='login')
                                     unless currentUser
                                         .login.ui.fluid.large.button(class=login_button_class title='Login')
                                             // | Login
-                                            +icon name='checkmark' classes='ui inline image'
+                                            +icon name='internal' classes='ui inline image'
                             .four.wide.column
                                 // .ui.center.aligned.header
                                 //     +icon name='user-shield'

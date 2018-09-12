@@ -38,7 +38,7 @@ Template.login.events
                 Meteor.call 'redirect_office_after_login', (err,res)->
                     if 'office' in res.user.roles
                         # Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
-                        FlowRouter.go "/office/#{res.office._id}"        
+                        FlowRouter.go "/p/office_incidents/#{res.office_jpid}"        
                     else if 'customer' in res.user.roles
                         # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                         FlowRouter.go "/p/customer_dashboard"    
