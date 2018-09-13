@@ -176,13 +176,17 @@ template(name='field_edit')
         .ui.form
             .two.fields
                 .field
-                    .ui.labeled.fluid.input
+                    .ui.labeled.input
                         .ui.label Title
                         input.field_title(type='text' value=title)
                 .field
-                    .ui.labeled.fluid.input
+                    .ui.labeled.input
                         .ui.label Slug
                         input.field_slug(type='text' value=slug)
+                .field
+                    .ui.labeled.two.wide.input
+                        .ui.label Description
+                        input.action_description(type='text' value=description)
 
         // +edit_text_field key='key' label='Slug (lowercase title)'
         // +edit_text_field key='type' label='Type'
@@ -204,21 +208,26 @@ template(name='field_edit')
             +select_field_key_value key='field_type' value='file' label='File'
             +select_field_key_value key='field_type' value='user_reference' label='User Reference'
             +select_field_key_value key='field_type' value='email' label='Email'
+            +select_field_key_value key='field_type' value='boolean' label='Boolean'
         .remove_field.ui.icon.large.button
             i.remove.icon
 
 template(name='action_edit')
     .ui.segment
         .ui.form
-            .two.fields
+            .three.fields
                 .field
                     .ui.labeled.fluid.input
                         .ui.label Title
                         input.action_title(type='text' value=title)
                 .field
-                    .ui.labeled.fluid.input
+                    .ui.labeled.two.wide.input
                         .ui.label Slug
                         input.action_slug(type='text' value=slug)
+                .field
+                    .ui.labeled.two.wide.input
+                        .ui.label Description
+                        input.action_description(type='text' value=description)
 
         // +edit_text_field key='key' label='Slug (lowercase title)'
         // +edit_text_field key='type' label='Type'

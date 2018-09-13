@@ -39,11 +39,6 @@ FlowRouter.route('/', {
 
 
 Session.setDefault('query',null)
-Session.setDefault('sort_direction','-1')
-Session.setDefault('sort_key','timestamp')
-Session.setDefault('page_size',10)
-Session.setDefault('skip',0)
-Session.setDefault('page_number',1)
 Session.setDefault('dev_mode',false)
 Session.setDefault('editing_mode',false)
 
@@ -75,14 +70,14 @@ Template.registerHelper 'overdue', () ->
         if hour_amount<-5 then true else false
 
 
-Template.registerHelper 'unread_count', () ->  
-    found_unread_count_stat = Stats.findOne({
-        doc_type:'message'
-        stat_type:'unread'
-        username:Meteor.user().username
-    })
-    if found_unread_count_stat
-        found_unread_count_stat.amount
+# Template.registerHelper 'unread_count', () ->  
+#     found_unread_count_stat = Stats.findOne({
+#         doc_type:'message'
+#         stat_type:'unread'
+#         username:Meteor.user().username
+#     })
+#     if found_unread_count_stat
+#         found_unread_count_stat.amount
         
         
         
@@ -184,6 +179,15 @@ Template.registerHelper 'has_user_customer_jpid', () ->
     Meteor.user() and Meteor.user().customer_jpid
 
 Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
+
+
+Template.registerHelper 'block_field_value', ->
+    # console.log @
+    sla_setting = Template.parentData(0)
+    field_key = Template.parentData(3).key
+    value = sla_setting["#{field_key}"]
+
+
 
 # Meteor.startup ->
 #     # HTTP.call('get',"https://avalon.extraview.net/jan-pro/ExtraView/ev_api.action?user_id=zpeckham&password=jpi19&statevar=get_roles", (err,res)->

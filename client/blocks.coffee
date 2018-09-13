@@ -1,14 +1,17 @@
 Template.toggle_boolean.events
     'click #turn_on': ->
-        Docs.update FlowRouter.getParam('doc_id'), $set: "#{@key}": true
+        data_doc = Template.parentData()
+        Docs.update data_doc._id, $set: "#{@key}": true
 
     'click #turn_off': ->
-        Docs.update FlowRouter.getParam('doc_id'), $set: "#{@key}": false
+        data_doc = Template.parentData()
+        Docs.update data_doc._id, $set: "#{@key}": false
 
 Template.toggle_boolean.helpers
     is_on: -> 
-        page_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        page_doc["#{@key}"]
+        # page_doc = Docs.findOne FlowRouter.getParam('doc_id')
+        data_doc = Template.parentData()
+        data_doc["#{@key}"]
 
 
 Template.add_button.events
@@ -103,11 +106,11 @@ Template.reference_type_multiple.events
 
 
 
-Template.set_view_mode.helpers
-    view_mode_button_class: -> if Session.equals('view_mode', @view) then 'active' else ''
+# Template.set_view_mode.helpers
+#     view_mode_button_class: -> if Session.equals('view_mode', @view) then 'active' else ''
 
-Template.set_view_mode.events
-    'click #set_view_mode': -> Session.set 'view_mode', @view
+# Template.set_view_mode.events
+#     'click #set_view_mode': -> Session.set 'view_mode', @view
             
 Template.set_session_button.events
     'click .set_session_filter': -> Session.set "#{@key}", @value
@@ -132,14 +135,14 @@ Template.set_session_item.events
             
 
             
-Template.publish_button.events
-    'click #publish': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: published: true
+# Template.publish_button.events
+#     'click #publish': ->
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: published: true
 
-    'click #unpublish': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: published: false
+#     'click #unpublish': ->
+#         Docs.update FlowRouter.getParam('doc_id'),
+#             $set: published: false
             
             
 Template.call_method.events
@@ -688,15 +691,9 @@ Template.assignment_widget.helpers
 
 
 Template.author_info.onCreated ->
-    Meteor.subscribe 'author', @data.author_id
+    @autorun => Meteor.subscribe 'author', @data.author_id
 
 Template.blocks.onCreated ->
-    Session.set('query',null)
-    Session.set('sort_direction',-1)
-    Session.set('page_number',1)
-    Session.set('page_size',10)
-    Session.set('skip',0)
-
     # console.log @data.tags
     # if @data.tags and typeof @data.tags is 'string'
     #     split_tags = @data.tags.split ','
@@ -719,14 +716,15 @@ Template.blocks.helpers
 #         $('.accordion').accordion();
 #     , 500
 
-Template.block.onRendered ->
-    stat = Stats.findOne()
-    if stat
-        console.log 'stat',stat
+# Template.block.onRendered ->
+#     stat = Stats.findOne()
+#     if stat
+#         console.log 'stat',stat
+
+Template.edit_block.onCreated ->
+    @autorun -> Meteor.subscribe 'type', 'schema'
 
 Template.block.onCreated ->
-    Meteor.subscribe 'type', 'schema'
-
     # Meteor.subscribe 'type', 'event_type'
     # Meteor.subscribe('facet', 
     #     selected_tags.array()
@@ -757,8 +755,8 @@ Template.block.onCreated ->
         match_object.active = false
     match_object.doc_type = @data.children_doc_type
     match_object.stat_type = @data.table_stat_type
-    console.log 'stat doc match ob',match_object
-    Meteor.subscribe 'stat', match_object
+    # console.log 'stat doc match ob',match_object
+    @autorun -> Meteor.subscribe 'stat', match_object
     # console.log @
     # console.log @data
     @autorun => Meteor.subscribe 'block_docs', 
@@ -777,8 +775,9 @@ Template.block.onCreated ->
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
     
     
-Template.block.helpers
+Template.edit_block.helpers
     schemas: -> Docs.find type:'schema'
+Template.block.helpers
     sort_descending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
         temp = Template.instance() 
@@ -806,6 +805,30 @@ Template.block.helpers
                     sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
                     }
 
+    can_view_block: ->
+        if @published
+            true
+        else
+            if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles and Session.get('editing_mode')
+                true
+            else
+                false
+    child_schema_field_value: ->
+        child_doc = Template.parentData(1)
+        
+        # console.log child_doc["#{@slug}"]
+        if @ev_subset
+            child_doc.ev["#{@key}"]
+        else
+            child_doc["#{@key}"]
+        
+Template.edit_block.onRendered ->
+    Meteor.setTimeout ->
+        $('.tabular.menu .item').tab()
+    , 400
+    
+    
+Template.edit_block.helpers
     schema_doc: ->
         Docs.findOne
             type:'schema'
@@ -823,15 +846,6 @@ Template.block.helpers
         if @slug in selected_keys then false else true
         
         
-    can_view_block: ->
-        if @published
-            true
-        else
-            if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles and Session.get('editing_mode')
-                true
-            else
-                false
-        
     schema_doc_fields: -> 
         block_doc = Template.parentData(1)
         schema_doc = Docs.findOne 
@@ -841,14 +855,6 @@ Template.block.helpers
             schema_doc.fields
         
         
-    child_schema_field_value: ->
-        child_doc = Template.parentData(1)
-        
-        # console.log child_doc["#{@slug}"]
-        if @ev_subset
-            child_doc.ev["#{@key}"]
-        else
-            child_doc["#{@key}"]
         
     values: ->
         schema_doc = Docs.findOne
@@ -869,6 +875,7 @@ Template.block.helpers
                 #     values.push Template.currentData()["#{field.key}"]
             values
         
+Template.block.helpers
     is_table: -> @view_mode is 'table'    
     is_list: -> @view_mode is 'list'    
     is_comments: -> @view_mode is 'comments'    
@@ -876,9 +883,15 @@ Template.block.helpers
     is_cards: -> @view_mode is 'cards'    
         
 Template.block.events
-    'click .remove_block': ->
-        if confirm 'Remove block?'
-            Docs.remove @_id
+    'click .add_block_child': (e,t)->
+        if FlowRouter.getParam('jpid')
+            Docs.insert 
+                type:@children_doc_type
+                office_jpid:FlowRouter.getParam('jpid')
+        else
+            Docs.insert 
+                type:@children_doc_type
+    
     'click .move_up': ->
         current = Template.currentData()
         current_index = current.fields.indexOf @ 
@@ -902,6 +915,10 @@ Template.block.events
         else
             t.sort_direction.set -1
     
+Template.edit_block.events
+    'click .remove_block': ->
+        if confirm 'Remove block?'
+            Docs.remove @_id
     'click .add_blank_field': ->
         block = Template.currentData()
         new_field_object = {
@@ -931,6 +948,10 @@ Template.block.events
     'blur .field_template': (e,t)->
         template_value = e.currentTarget.value
         Meteor.call 'update_block_field', Template.currentData()._id, @, 'field_template', template_value
+
+    'blur .field_label': (e,t)->
+        template_value = e.currentTarget.value
+        Meteor.call 'update_block_field', Template.currentData()._id, @, 'label', template_value
 
 
 

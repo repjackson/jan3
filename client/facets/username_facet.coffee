@@ -16,7 +16,7 @@ Template.username_facet.onCreated ->
             author_array.push author_id.text
         
         if author_array.length > 0
-            Meteor.subscribe 'author_array', author_array
+            @autorun -> Meteor.subscribe 'author_array', author_array
         
         
 Template.username_facet.helpers

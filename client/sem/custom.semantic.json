@@ -43,7 +43,7 @@
     "statistic": true,
     "step": false,
     "sticky": true,
-    "tab": false,
+    "tab": true,
     "table": true,
     "transition": true,
     "visibility": true

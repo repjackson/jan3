@@ -80,6 +80,92 @@ Template.edit_number_field.events
                 else
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
             
+        
+Template.block_edit_number.events
+    'change #number_field': (e,t)->
+        console.log @
+        child_doc = Template.parentData(0)
+        console.log Template.parentData(1)
+        console.log Template.parentData(2)
+        field_object = Template.parentData(3)
+        field_key = Template.parentData(3).key
+        number_value = parseInt e.currentTarget.value
+        Docs.update child_doc._id,
+            { $set: "#{field_object.key}": number_value }
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{field_object.label}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{field_object.label}", 'success', 'growl-top-right'
+          
+Template.block_edit_text_field.events
+    'blur .block_text_field': (e,t)->
+        text_value = e.currentTarget.value
+        child_doc = Template.parentData(0)
+        field_object = Template.parentData(3)
+        field_key = Template.parentData(3).key
+        Docs.update child_doc._id,
+            { $set: "#{field_key}": text_value }
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{field_object.label}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{field_object.label}", 'success', 'growl-top-right'
+          
+          
+Template.block_boolean_toggle.events
+    'click .toggle_field_boolean': (e,t)->
+        child_doc = Template.parentData(0)
+        field_key = Template.parentData(3).key
+        field_object = Template.parentData(3)
+        negative_value = !child_doc["#{field_key}"]
+        Docs.update child_doc._id,
+            { $set: "#{field_key}": negative_value }
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{field_object.label}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{field_object.label}", 'success', 'growl-top-right'
+          
+          
+          
+          
+Template.block_list_dropdown.events
+    'click .select_dropdown_item': (e,t)->
+        # console.log @slug
+        # console.log Template.parentData(0)
+        field_object = Template.parentData(3)
+        child_doc = Template.parentData(0)
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        field_key = Template.parentData(3).key
+        Docs.update child_doc._id,
+            { $set: "#{field_key}": @slug }
+            , (err,res)=>
+                if err
+                    Bert.alert "Error Updating #{field_object.label}: #{err.reason}", 'danger', 'growl-top-right'
+                else
+                    Bert.alert "Updated #{field_object.label}", 'success', 'growl-top-right'
+          
+          
+Template.block_list_dropdown.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'incident_type'
+Template.block_list_dropdown.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.dropdown').dropdown()
+    ,500
+
+
+Template.block_list_dropdown.helpers
+    incident_types: ->
+        Docs.find type:'incident_type'
+          
+          
+          
+          
+          
+          
+            
 Template.edit_textarea.events
     'blur .textarea': (e,t)->
         textarea_value = $(e.currentTarget).closest('.textarea').val()
@@ -290,15 +376,6 @@ Template.edit_user_text_field.events
 #             height: 300
 #         }
 
-
-Template.toggle_boolean.events
-    'click #make_featured': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: featured: true
-
-    'click #make_unfeatured': ->
-        Docs.update FlowRouter.getParam('doc_id'),
-            $set: featured: false
 
 Template.edit_array_field.events
     # "autocompleteselect input": (event, template, doc) ->

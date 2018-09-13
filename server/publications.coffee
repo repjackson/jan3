@@ -1,24 +1,25 @@
-Meteor.publish 'type', (type, query=null, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
-    if query
-        Docs.find {
-            type: type
-            $text: $search: query
-        },{
-            skip: skip
-            limit:limit
-            sort:"#{sort_key}":parseInt("#{sort_direction}")
-        }
-    else
-        Docs.find {
-            type:type
-        },{
-            skip: skip
-            limit:limit
-            sort:"#{sort_key}":parseInt("#{sort_direction}")
-        }
+# Meteor.publish 'type', (type, query=null, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
+#     if query
+#         Docs.find {
+#             type: type
+#             $text: $search: query
+#         },{
+#             skip: skip
+#             limit:limit
+#             sort:"#{sort_key}":parseInt("#{sort_direction}")
+#         }
+#     else
+#         Docs.find {
+#             type:type
+#         },{
+#             skip: skip
+#             limit:limit
+#             sort:"#{sort_key}":parseInt("#{sort_direction}")
+#         }
 
         
-
+Meteor.publish 'type', (type)->
+    Docs.find type:type
         
 Meteor.publish 'block_docs', (
     block_doc_id, 

@@ -113,6 +113,49 @@ template(name='edit_number_field')
             .ui.input
                 input#number_field(type='number' min=min max=max value=page_slug_key_value)
 
+
+template(name='block_edit_number')
+    .ui.form
+        .field(class=field_class)
+            label #{label}
+            .ui.input
+                input#number_field(type='number' min='0' max='24' value=block_field_value)
+
+
+template(name='block_boolean_toggle')      
+    .ui.icon.button.toggle_field_boolean(class=block_field_value title=title)
+        if block_field_value
+            i.green.checkmark.icon
+        else
+            i.circle.outline.icon
+
+
+
+template(name='block_edit_text_field')
+    .ui.form
+        .field(class=field_class)
+            label
+                if icon
+                    i.icon(class=icon)
+                |#{label}
+            .ui.input
+                input.block_text_field(type='text' value=block_field_value )
+
+
+
+template(name='block_list_dropdown')
+    .ui.compact.menu
+        .ui.dropdown.item
+            |#{block_field_value}
+            .menu
+                each incident_types
+                    .select_dropdown_item.item #{title}
+
+
+
+
+
+
 template(name='view_numeric_field')
     .ui.form
         .field

@@ -78,14 +78,6 @@ Template.level_icon.helpers
     is_level_four: -> @level is 4
 
 
-Template.customer_incidents.onCreated ->
-    Session.set('query',null)
-    Session.set('page_size',10)
-    Session.set('page_number',1)
-
-    # @autorun -> Meteor.subscribe 'my_customer_incidents', Session.get('query'), parseInt(Session.get('page_size')), Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    @autorun => Meteor.subscribe 'my_incident_count'
-
 
 Template.incident_view.onCreated ->
     @autorun -> Meteor.subscribe 'type','incident_type'

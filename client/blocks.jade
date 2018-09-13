@@ -25,11 +25,12 @@ template(name='list_item')
 
 
 template(name='toggle_boolean')
-    .field
-        if is_on
-            #turn_off.ui.button #{yes_label}
-        else
-            #turn_on.ui.button #{no_label}
+    if is_on
+        #turn_off.ui.active.compact.button #{yes_label}
+    else
+        #turn_on.ui.compact.basic.button #{no_label}
+
+
 
 template(name='save_button')
     a.ui.large.icon.button(href="/v/#{_id}") 
@@ -96,6 +97,13 @@ template(name='reference_type_multiple')
                 i.search.icon
                 // +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder="add..."
 
+template(name='toggle_boolean_checkbox')      
+    .ui.form
+        .field
+            .ui.toggle.checkbox
+                input(type='checkbox' name=key checked=page_jpid_key_value)
+                label
+                    |#{label}
 
 
 template(name="office_result")
@@ -450,13 +458,6 @@ template(name='message_button')
             a(href=link) #{label}
 
                     
-template(name='toggle_boolean_checkbox')      
-    .ui.icon.button(class=page_jpid_key_value title=title)
-        if icon
-            i.icon
-                +iconsmall name=icon classes='inline'
-        // label
-        //     |#{label}
 
 
 template(name='toggle_user_published')
@@ -658,6 +659,9 @@ template(name='block')
             if custom_template
                 +Template.dynamic template=custom_template
             else
+                if view_add_button
+                    .ui.add_block_child.icon.button
+                        i.plus.icon
                 if is_cards
                     .ui.centered.three.cards
                         each children
@@ -739,7 +743,7 @@ template(name='block')
                                 tr
                                     each ../fields
                                         if field_template
-                                            td 
+                                            td(style="overflow:visible;") 
                                                 +Template.dynamic template=field_template data=..
                                         else
                                             td(class=table_cell_class) #{child_schema_field_value}
@@ -790,132 +794,137 @@ template(name='block')
                                 |Dev
                         .three.wide.right.aligned.column
             if editing_mode
-                .ui.tertiary.segment
-                    h3.ui.header 
-                        +icon name=icon
-                        |Edit #{title} #{_id}
-                    i.remove_block.remove.icon
-                    +set_key_value key='published' value=true label='Published'
-                    +set_key_value key='published' value=false label='Hidden'
-                    +set_key_value key='view_title' value=true label='View Title'
-                    +set_key_value key='view_title' value=false label='Hide Title'
-                    .ui.header Rank
-                    +set_key_value key='rank' value=1 label='1'
-                    +set_key_value key='rank' value=2 label='2'
-                    +set_key_value key='rank' value=3 label='3'
-                    +set_key_value key='rank' value=4 label='4'
-                    +set_key_value key='rank' value=5 label='5'
+                +edit_block
 
-                    .ui.form
-                        .fields
-                            +edit_block_text_field label='Title' key='title'
-                            +edit_block_text_field label='Icon' key='icon'
-                            +edit_block_text_field label='Classes' key='block_classes'
-                        .fields
-                            +edit_block_text_field label='Slug' key='slug'
-                            +edit_block_text_field label='Parent Slug' key='parent_slug'
-                            +edit_block_text_field label='Custom Template' key='custom_template'
-                    unless custom_template
-                        h3.ui.header
-                            i.filter.icon
-                            |Filter
-                        .ui.form
-                            +edit_block_text_field label='Hard Limit' key='hard_limit'
-                            +edit_block_text_field label='Soft Limit' key='limit'
-                            h5 
-                                |Status
-                            +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
-                            +set_key_value key='filter_status' value="" label='All'
-                            h5.ui.header 
-                                +icon name='key' classes='inline'
-                                |Key
-                            +set_key_value key='filter_key' value='_id' label='_id'
-                            +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
-                            +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
-                            +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
-                            +set_key_value key='filter_key' value='office_jpid' label='office_jpid'
-                            +set_key_value key='filter_key' value='customer_jpid' label='customer_jpid'
-                            +set_key_value key='filter_key' value='franchisee_jpid' label='franchisee_jpid'
-                            +edit_block_text_field label='Filter Key' key='filter_key'
-                            h5.ui.header 
-                                i.terminal.icon
-                                |Value
-                            div
-                            i.user.icon
-                            +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
-                            +set_key_value key='filter_value' value='{current_user_customer_jpid}' label='Current User Customer JPID'
-                            +set_key_value key='filter_value' value='{current_user_office_jpid}' label='Current User Office JPID'
-                            +set_key_value key='filter_value' value='{current_user_office_name}' label='Current User Office Name'
-                            +set_key_value key='filter_value' value='{current_user_franchisee_jpid}' label='Current User Franchisee JPID'
-                            +set_key_value key='filter_value' value='{current_user_franchisee_name}' label='Current User Franchisee Name'
-                            div
-                            i.clone.icon
-                            +set_key_value key='filter_value' value='{current_page_customer_name}' label='Current Page Customer Name'
-                            +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
-                            +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
-                            +set_key_value key='filter_value' value='{current_page_jpid}' label='Current Page JPID'
-                            +set_key_value key='filter_value' value=true label='true'
-                            +set_key_value key='filter_value' value=false label='false'
-                            +edit_block_text_field label='Filter Value' key='filter_value'
+template(name='edit_block')
+    .ui.tertiary.segment
+        h3.ui.header 
+            +icon name=icon
+            |Edit #{title}
+        .ui.top.attached.tabular.pointing.secondary.menu
+            a.active.item(data-tab='general') General
+            a.item(data-tab='filter') 
+                i.filter.icon
+                |Filter
+            a.item(data-tab='mode') Mode
+            a.item(data-tab='fields') Fields
+        .ui.bottom.attached.active.tab.secondary.segment(data-tab='general')
+            i.remove_block.remove.link.icon(title='remove block')
+            +toggle_boolean key='published' yes_label='Published' no_label='Private'
+            +toggle_boolean key='view_title' yes_label='Title Visible' no_label='Title Hidden'
+            +toggle_boolean key='view_add_button' yes_label='Show Add Button' no_label='Hide Add Button'
+            | Block Rank
+            +set_key_value key='rank' value=1 label='1'
+            +set_key_value key='rank' value=2 label='2'
+            +set_key_value key='rank' value=3 label='3'
+            +set_key_value key='rank' value=4 label='4'
+            +set_key_value key='rank' value=5 label='5'
+            .ui.form
+                .fields
+                    +edit_block_text_field label='Title' key='title'
+                    +edit_block_text_field label='Icon' key='icon'
+                    +edit_block_text_field label='Classes' key='block_classes'
+                .fields
+                    +edit_block_text_field label='Slug' key='slug'
+                    +edit_block_text_field label='Parent Slug' key='parent_slug'
+                    +edit_block_text_field label='Custom Template' key='custom_template'
+            h5 doc id #{_id}
+        .ui.bottom.attached.tab.secondary.segment(data-tab='filter')
+            .ui.form
+                +edit_block_text_field label='Hard Limit' key='hard_limit'
+                +edit_block_text_field label='Soft Limit' key='limit'
+                +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
+                +set_key_value key='filter_status' value="" label='All'
+                div
+                +edit_block_text_field label='Filter Key' key='filter_key'
+                +set_key_value key='filter_key' value='_id' label='_id'
+                +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
+                +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
+                +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
+                +set_key_value key='filter_key' value='office_jpid' label='office_jpid'
+                +set_key_value key='filter_key' value='customer_jpid' label='customer_jpid'
+                +set_key_value key='filter_key' value='franchisee_jpid' label='franchisee_jpid'
+                div
+                +edit_block_text_field label='Filter Value' key='filter_value'
+                div
+                i.user.icon
+                +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
+                +set_key_value key='filter_value' value='{current_user_customer_jpid}' label='Current User Customer JPID'
+                +set_key_value key='filter_value' value='{current_user_office_jpid}' label='Current User Office JPID'
+                +set_key_value key='filter_value' value='{current_user_office_name}' label='Current User Office Name'
+                +set_key_value key='filter_value' value='{current_user_franchisee_jpid}' label='Current User Franchisee JPID'
+                +set_key_value key='filter_value' value='{current_user_franchisee_name}' label='Current User Franchisee Name'
+                div
+                i.clone.icon
+                +set_key_value key='filter_value' value='{current_page_customer_name}' label='Current Page Customer Name'
+                +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
+                +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
+                +set_key_value key='filter_value' value='{current_page_jpid}' label='Current Page JPID'
+                +set_key_value key='filter_value' value=true label='true'
+                +set_key_value key='filter_value' value=false label='false'
+        // unless custom_template
+        .ui.bottom.attached.tab.secondary.segment(data-tab='mode')
+            div Doc Type
+                each schemas
+                    +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
+            div View Mode
+                +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
+                +set_key_value key='view_mode' value='list' label='List' icon='list'
+                +set_key_value key='view_mode' value='comments' label='Comments' icon='comments'
+                +set_key_value key='view_mode' value='grid' label='Grid' icon='grid'
+                +set_key_value key='view_mode' value='header' label='Header'
+                +set_key_value key='view_mode' value='cards' label='Cards'
+            if is_table
+                .ui.secondary.segment
+                    div Stat Type
+                    +set_key_value key='table_stat_type' value='total' label='Total'
+                    // +set_key_value key='table_stat_type' value='active' label='Active'
+                    +set_key_value key='table_stat_type' value='office' label='Office'
+                    div
+                    +set_key_value key='view_table_header' value=true label='View Header'
+                    +set_key_value key='view_table_header' value=false label='Hide Header'
+                    div
+                    +set_key_value key='view_table_footer' value=true label='View Footer'
+                    +set_key_value key='view_table_footer' value=false label='Hide Footer'
+        .ui.bottom.attached.tab.secondary.segment(data-tab='fields')
+            h4 Available Schema Fields
+            each schema_doc.fields
+                if show_schema_field
+                    .add_schema_field.ui.compact.button #{title}
+            h4 Shown Fields
+                .add_blank_field.ui.icon.button(title='Add Blank Field')
+                    i.plus.icon
+            if fields
+                table.ui.striped.fixed.table
+                    thead
+                        tr
+                            th.one.wide #
+                            th Key
+                            th Label
+                            th Template
+                            th Sortable
+                            th Remove
+                    tbody
+                        each fields
+                            tr
+                                td
+                                    i.move_down.chevron.up.link.icon
+                                    // i.move_up.chevron.down.link.icon
+                                td #{key}
+                                td 
+                                    .ui.fluid.small.input
+                                        input.field_label(type='text' value=label)
+                                td 
+                                    .ui.fluid.small.input
+                                        input.field_template(type='text' value=field_template)
+                                td 
+                                    +set_field_key_value key='sortable' value=true label='Y'
+                                    |#{sortable}
+                                    +set_field_key_value key='sortable' value=false label='N'
+                                td 
+                                    i.remove_schema_field.remove.link.icon
 
-                        div Doc Type
-                            each schemas
-                                +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
-                        h4 Available Schema Fields
-                        each schema_doc.fields
-                            if show_schema_field
-                                .add_schema_field.ui.compact.button #{title}
-                        h4 Shown Fields
-                            .add_blank_field.ui.icon.button(title='Add Blank Field')
-                                i.plus.icon
-                        div View Mode
-                            +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
-                            +set_key_value key='view_mode' value='list' label='List' icon='list'
-                            +set_key_value key='view_mode' value='comments' label='Comments' icon='comments'
-                            +set_key_value key='view_mode' value='grid' label='Grid' icon='grid'
-                            +set_key_value key='view_mode' value='header' label='Header'
-                            +set_key_value key='view_mode' value='cards' label='Cards'
-                        if fields
-                            table.ui.striped.fixed.table
-                                thead
-                                    tr
-                                        th.one.wide #
-                                        th Label
-                                        th Key
-                                        th Template
-                                        th Sortable
-                                        th Remove
-                                tbody
-                                    each fields
-                                        tr
-                                            td
-                                                i.move_down.chevron.up.link.icon
-                                                // i.move_up.chevron.down.link.icon
-                                            td #{label}
-                                            td #{key}
-                                            td 
-                                                .ui.fluid.small.input
-                                                    input.field_template(type='text' value=field_template)
-                                            td 
-                                                +set_field_key_value key='sortable' value=true label='Y'
-                                                |#{sortable}
-                                                +set_field_key_value key='sortable' value=false label='N'
-                                            td 
-                                                i.remove_schema_field.remove.link.icon
 
-                        .ui.secondary.segment
-                            if is_table
-                                div Stat Type
-                                +set_key_value key='table_stat_type' value='total' label='Total'
-                                // +set_key_value key='table_stat_type' value='active' label='Active'
-                                +set_key_value key='table_stat_type' value='office' label='Office'
-                                div
-                                +set_key_value key='view_table_header' value=true label='View Header'
-                                +set_key_value key='view_table_header' value=false label='Hide Header'
-                                div
-                                +set_key_value key='view_table_footer' value=true label='View Footer'
-                                +set_key_value key='view_table_footer' value=false label='Hide Footer'
-                            else 
      
 template(name='child_card')
     .ui.card

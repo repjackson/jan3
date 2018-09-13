@@ -72,21 +72,18 @@ Template.office_service_settings.events
     
     
     
-    
-
-Template.office_settings.onCreated ->
-    @autorun -> Meteor.subscribe 'type', 'rule'
+Template.office_sla.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'incident_type'
+    @autorun -> Meteor.subscribe 'type', 'rule'
     @autorun -> Meteor.subscribe 'static_office_employees', FlowRouter.getParam('jpid')
-    @autorun -> Meteor.subscribe 'doc_by_jpid', FlowRouter.getParam('jpid')
     Session.setDefault 'incident_type_selection', 'change_service'
 
-Template.office_settings.events
+Template.office_sla.events
     'click .select_incident_type': ->
         Session.set 'incident_type_selection', @slug
 
     
-Template.office_settings.helpers
+Template.office_sla.helpers
     current_office: ->
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         console.log page_office

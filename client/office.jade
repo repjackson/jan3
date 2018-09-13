@@ -112,11 +112,9 @@ template(name='office_employees')
 
 
 
-template(name='office_settings')
+template(name='office_messages')
     .ui.stackable.padded.grid
         .sixteen.wide.column
-            .row
-                +office_header
             .row.ui.secondary.segment
                 .ui.grid
                     .five.wide.column
@@ -126,61 +124,50 @@ template(name='office_settings')
                         +edit_textarea key='customer_promotions' label='Customer Dashboard Promotions Message' icon='megaphone'
                     .five.wide.column
                         +edit_textarea key='help_policy' label='Customer Dashboard Help Policy' icon='info'
-            .row
-                .sixteen.wide.column
-                    .ui.secondary.segment
-                        h3.ui.header
-                            +icon name='broom'
-                            | &nbsp; Offered Services
-                        +office_service_settings
-            .ui.fitted.hidden.divider
-            .row
-                .sixteen.wide.column
-                    .ui.secondary.segment
-                        h3.ui.header
-                            +icon name='administrative-tools'
-                            | &nbsp; SLA Settings
-                        each incident_types
-                            .select_incident_type.ui.button(class=select_incident_type_button_class) 
-                                if icon
-                                    i.icon  
-                                        +icon name=icon
-                                |#{title}
-                        if selected_incident_type
-                            // .ui.header Default Contact for #{selected_incident_type}
-                            each rule_docs
-                                .ui.secondary.segment
-                                    h4.ui.header #{name} for #{selected_incident_type} Rules
-                                    .ui.two.column.stackable.grid
-                                        .column
-                                            unless is_initial
-                                                strong Escalation Hours &nbsp;
-                                                // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
-                                                +set_page_key_value key=hours_key value=1 label='1'
-                                                +set_page_key_value key=hours_key value=2 label='2'
-                                                +set_page_key_value key=hours_key value=4 label='4'
-                                                +set_page_key_value key=hours_key value=12 label='12'
-                                                .ui.hidden.divider
-                                            else 
-                                                +toggle_boolean_checkbox key=customer_toggle_key label='Customer' icon='headset'
-                                            +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee' icon='business'
-                                        .column
-                                            strong Owner
-                                            if is_initial
-                                                +office_username_query key=incident_type_owner_key label='Select Incident Type Owner'
-                                                +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'
-                                                +toggle_boolean_checkbox key=primary_sms_key label='Send SMS' icon='comment'
-                                            else
-                                                .ui.large.basic.label #{incident_type_owner_value}
-                                            //     h5.ui.header Using Default Primary Contact
-                                            // else
-                                            //     .ui.hidden.fitted.divider
-                                            //     +office_username_query key=primary_contact_key label='Select Primary Contact'
-                                            div
-                                            strong Secondary
-                                            +office_username_query key=secondary_contact_key label='Select Secondary Contact'
-                                            +toggle_boolean_checkbox key=secondary_email_key label='Send Email' icon='envelope'
-                                            +toggle_boolean_checkbox key=secondary_sms_key label='Send SMS' icon='comment'
+                        
+                        
+template(name='office_sla')
+    each incident_types
+        .select_incident_type.ui.button(class=select_incident_type_button_class) 
+            if icon
+                i.icon  
+                    +icon name=icon
+            |#{title}
+    if selected_incident_type
+        // .ui.header Default Contact for #{selected_incident_type}
+        each rule_docs
+            .ui.secondary.segment
+                h4.ui.header #{title} for #{selected_incident_type} Rules
+                .ui.two.column.stackable.grid
+                    .column
+                        unless is_initial
+                            strong Escalation Hours &nbsp;
+                            // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
+                            +set_page_key_value key=hours_key value=1 label='1'
+                            +set_page_key_value key=hours_key value=2 label='2'
+                            +set_page_key_value key=hours_key value=4 label='4'
+                            +set_page_key_value key=hours_key value=12 label='12'
+                            .ui.hidden.divider
+                        else 
+                            +toggle_boolean_checkbox key=customer_toggle_key label='Customer' icon='headset'
+                        +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee' icon='business'
+                    .column
+                        strong Owner
+                        if is_initial
+                            +office_username_query key=incident_type_owner_key label='Select Incident Type Owner'
+                            +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'
+                            +toggle_boolean_checkbox key=primary_sms_key label='Send SMS' icon='comment'
+                        else
+                            .ui.large.basic.label #{incident_type_owner_value}
+                        //     h5.ui.header Using Default Primary Contact
+                        // else
+                        //     .ui.hidden.fitted.divider
+                        //     +office_username_query key=primary_contact_key label='Select Primary Contact'
+                        div
+                        strong Secondary
+                        +office_username_query key=secondary_contact_key label='Select Secondary Contact'
+                        +toggle_boolean_checkbox key=secondary_email_key label='Send Email' icon='envelope'
+                        +toggle_boolean_checkbox key=secondary_sms_key label='Send SMS' icon='comment'
             
 template(name='office_service_settings')
     // h5.ui.header Select which to offer customers.
