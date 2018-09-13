@@ -346,79 +346,6 @@ Template.multiple_user_select.helpers
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         Meteor.users.find(_id: $in: parent_doc["#{context.key}"])
     
-Template.office_username_query.onCreated ()->
-    @user_results = new ReactiveVar( [] )
-    
-Template.office_username_query.events
-    'click .select_office_user': (e,t) ->
-        key = Template.parentData(0).key
-        # searched_value = doc["#{template.data.key}"]
-        office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        # console.log key
-        # console.log @username
-        
-        Docs.update office_doc._id,
-            $set: "#{key}": @username
-        # console.log Docs.findOne(office_doc_id)["#{key}"]
-        # $(e.currentTarget).closest('#office_username_query').val ''
-        t.user_results.set null
-
-
-    'keyup #office_username_query': (e,t)->
-        office_username_query = $(e.currentTarget).closest('#office_username_query').val().trim()
-        # $('#office_username_query').val ''
-        Session.set 'office_username_query', office_username_query
-        current_office_id = FlowRouter.getParam('jpid')
-        Meteor.call 'lookup_office_user_by_username_and_office_jpid', current_office_id, office_username_query, (err,res)=>
-            if err then console.error err
-            else
-                t.user_results.set res
-
-
-    'click .pull_user': ->
-        context = Template.currentData(0)
-        swal {
-            title: "Remove #{@username}?"
-            # text: 'Confirm delete?'
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Unassign'
-            confirmButtonColor: '#da5347'
-        }, =>
-            office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-            Docs.update page_doc._id,
-                $unset: "#{context.key}": 1
-
-Template.office_username_query.helpers
-    user_results: ->
-        user_results = Template.instance().user_results.get()
-        user_results
-
-    selected_user: ->
-        context = Template.currentData(0)
-        context = Template.parentData(1)
-        context = Template.parentData(2)
-        office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        if office_doc["#{context.key}"]
-            # console.log office_doc["#{context.key}"]
-            Meteor.users.findOne
-                username: office_doc["#{context.key}"]
-        else
-            false
-
-
-Template.view_sla_contact.helpers
-    selected_contact: ->
-        context = Template.currentData(0)
-        office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        if office_doc["#{context.key}"]
-            Meteor.users.findOne
-                username: office_doc["#{context.key}"]
-        else
-            false
 
 
 Template.many_doc_select.onCreated ->
@@ -881,6 +808,7 @@ Template.block.helpers
     is_comments: -> @view_mode is 'comments'    
     is_grid: -> @view_mode is 'grid'    
     is_cards: -> @view_mode is 'cards'    
+    is_sla_settings: -> @view_mode is 'sla_settings'    
         
 Template.block.events
     'click .add_block_child': (e,t)->
@@ -984,15 +912,6 @@ Template.set_key_value.events
     'click .set_key_value': ->
         Docs.update Template.parentData(1)._id,
             { $set: "#{@key}": @value }
-            
-Template.set_page_key_value.events
-    'click .set_key_value': ->
-        page = Docs.findOne 
-            type:'page'
-            slug:FlowRouter.getParam('page_slug')
-        if page
-            Docs.update page._id,
-                { $set: "#{@key}": @value }
             
             
 Template.set_page_key_value.events

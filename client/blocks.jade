@@ -104,6 +104,8 @@ template(name='toggle_boolean_checkbox')
                 input(type='checkbox' name=key checked=page_jpid_key_value)
                 label
                     |#{label}
+        .field
+        
 
 
 template(name="office_result")
@@ -242,12 +244,12 @@ template(name='office_username_query')
                         strong #{profile.first_name} #{profile.last_name}
                         |#{username}
     with selected_user
-        .ui.large.label(title="@#{username}")
+        div(title="@#{username}")
             if profile.image_id
                 img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
             |#{profile.first_name} #{profile.last_name}
-        .ui.icon.button.pull_user
-            i.remove.red.link.icon
+        .ui.icon.compact.button.pull_user
+            i.remove.icon
           
 template(name='many_doc_select')
     .ui.dividing.header #{label}
@@ -687,7 +689,6 @@ template(name='block')
                                                 +icon name=icon
                                     // +edit_button
                                     // +view_button
-
                 if is_table
                     if view_table_header
                         .middle.aligned.row
@@ -874,6 +875,7 @@ template(name='edit_block')
                 +set_key_value key='view_mode' value='grid' label='Grid' icon='grid'
                 +set_key_value key='view_mode' value='header' label='Header'
                 +set_key_value key='view_mode' value='cards' label='Cards'
+                +set_key_value key='view_mode' value='sla_settings' label='SLA Settings'
             if is_table
                 .ui.secondary.segment
                     div Stat Type
@@ -996,6 +998,8 @@ template(name='set_page_key_value')
             i.icon
                 +icon name=icon
         |#{label}
+
+
         
 template(name='set_field_key_value')
     .set_field_key_value.ui.compact.button(class=set_value_button_class) #{label}

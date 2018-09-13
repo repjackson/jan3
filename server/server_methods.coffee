@@ -481,3 +481,21 @@ Meteor.methods
         # # Docs.update { _id:doc_id, fields:field_object },
         # Docs.update { _id:doc_id, fields:field_object },
         #     { $set: "fields.$.slug": slug }
+        
+        
+    update_sla_setting: (office_jpid, incident_type, escalation_number, key, value)->
+        console.log 'trying to update sla setting'
+        console.log office_jpid
+        console.log incident_type
+        console.log escalation_number
+        console.log key
+        console.log value
+        
+        sla_doc= Docs.update {
+            type;'sla_setting'
+            office_jpid:office_jpid
+            incident_type:incident_type
+            escalation_number:escalation_number
+        }, { $set: "#{key}":value }, {upsert:true}
+        if sla_doc
+            console.log sla_doc

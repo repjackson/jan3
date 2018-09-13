@@ -137,42 +137,83 @@ template(name='office_sla')
         // .ui.header Default Contact for #{selected_incident_type}
         each rule_docs
             .ui.secondary.segment
-                h4.ui.header #{title} for #{selected_incident_type} Rules
-                .ui.two.column.stackable.grid
-                    .column
-                        unless is_initial
-                            strong Escalation Hours &nbsp;
-                            // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
-                            +set_page_key_value key=hours_key value=1 label='1'
-                            +set_page_key_value key=hours_key value=2 label='2'
-                            +set_page_key_value key=hours_key value=4 label='4'
-                            +set_page_key_value key=hours_key value=12 label='12'
-                            .ui.hidden.divider
-                        else 
-                            +toggle_boolean_checkbox key=customer_toggle_key label='Customer' icon='headset'
-                        +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee' icon='business'
-                    .column
-                        strong Owner
-                        if is_initial
-                            +office_username_query key=incident_type_owner_key label='Select Incident Type Owner'
-                            +toggle_boolean_checkbox key=primary_email_key label='Send Email' icon='envelope'
-                            +toggle_boolean_checkbox key=primary_sms_key label='Send SMS' icon='comment'
-                        else
-                            .ui.large.basic.label #{incident_type_owner_value}
-                        //     h5.ui.header Using Default Primary Contact
-                        // else
-                        //     .ui.hidden.fitted.divider
-                        //     +office_username_query key=primary_contact_key label='Select Primary Contact'
-                        div
-                        strong Secondary
-                        +office_username_query key=secondary_contact_key label='Select Secondary Contact'
-                        +toggle_boolean_checkbox key=secondary_email_key label='Send Email' icon='envelope'
-                        +toggle_boolean_checkbox key=secondary_sms_key label='Send SMS' icon='comment'
+                h4.ui.header #{title} 
+                    // for #{selected_incident_type} Rules
+                with sla_settings_doc
+                    .ui.three.column.stackable.grid
+                        .column
+                            if is_initial
+                                +toggle_boolean_checkbox key=customer_toggle_key label='Customer' icon='headset'
+                            else 
+                                strong Escalation Hours &nbsp;
+                                // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
+                                +set_sla_key_value key=hours_key value=1 label='1'
+                                +set_sla_key_value key=hours_key value=2 label='2'
+                                +set_sla_key_value key=hours_key value=4 label='4'
+                                +set_sla_key_value key=hours_key value=12 label='12'
+                                .ui.hidden.divider
+                            +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee' icon='business'
+                        .column
+                            strong Owner
+                            if is_initial
+                                +incident_owner_select
+
+                                +toggle_boolean_checkbox key='email_owner' label='Email' icon='envelope'
+                                +toggle_boolean_checkbox key='sms_owner' label='SMS' icon='comment'
+                            else
+                                if incident_owner
+                                    .ui.large.basic.label #{incident_owner}
+                            //     h5.ui.header Using Default Primary Contact
+                            // else
+                            //     .ui.hidden.fitted.divider
+                            //     +office_username_query key=primary_contact_key label='Select Primary Contact'
+                        .column
+                            strong Secondary
+                            +office_username_query key=secondary_contact_key label='Select Secondary Contact'
+                            +toggle_boolean_checkbox key='email_secondary' label='Email' icon='envelope'
+                            +toggle_boolean_checkbox key='sms_secondary' label='SMS' icon='comment'
             
 template(name='office_service_settings')
     // h5.ui.header Select which to offer customers.
     each services
-        .select_service.ui.button(class=select_service_button_class) 
-            // if icon
-            //     +icon name=icon classes='ui spaced image'
-            |#{title}
+        if title
+            .select_service.ui.button(class=select_service_button_class) 
+                // if icon
+                //     +icon name=icon classes='ui spaced image'
+                |#{title}
+            
+            
+            
+template(name='set_sla_key_value')
+    .set_page_key_value.ui.compact.button(class=set_value_button_class) 
+        |#{label}
+        
+        
+template(name='incident_owner_select')
+    unless incident_owner
+        .ui.form
+            .field
+                .ui.icon.input
+                    i.search.icon
+                    input#office_username_query(type='text' placeholder='Select employee...')
+            .ui.middle.aligned.selection.animated.list
+                each user_results
+                    .select_office_user.basic.large.label.item 
+                        if profile.image_id
+                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        strong #{profile.first_name} #{profile.last_name}
+                        |#{username}
+        // h5.ui.header 
+        //     i.user.grey.icon
+        //     |#{label}
+    // with selected_user
+    //     div(title="@#{username}")
+    //         if profile.image_id
+    //             img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+    //         |#{profile.first_name} #{profile.last_name}
+    if incident_owner
+        strong #{incident_owner}
+        .ui.icon.compact.button.pull_user
+            i.remove.icon
+
+

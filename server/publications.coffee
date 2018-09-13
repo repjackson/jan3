@@ -567,8 +567,18 @@ Meteor.publish 'page_by_slug', (slug)->
         slug:slug
             
             
-            
 Meteor.publish 'doc_by_jpid', (jpid)->
     if jpid
         Docs.find
             "ev.ID":jpid
+            
+Meteor.publish 'office_sla_settings', (jpid)->
+    Docs.find
+        type:'sla_setting'
+        office_jpid:jpid
+            
+            
+            
+            
+            
+            
