@@ -7,24 +7,6 @@ Meteor.publish 'stat', (match_object)->
     Meteor.call 'calculate_stat', match_object
     Stats.find match_object
 
-Meteor.publish 'admin_total_stats', ()->
-    Stats.find 
-        stat_type:'total'
-
-Meteor.publish 'active_customers_stat', (type)->
-    Meteor.call 'calculate_active_customers'
-    Stats.find
-        doc_type: 'customer'
-        stat_type: 'active'
-
-
-Meteor.publish 'active_franchisees_stat', (type)->
-    Meteor.call 'calculate_active_franchisees'
-    Stats.find
-        doc_type: 'franchisee'
-        stat_type: 'active'
-
-
 
 Meteor.publish 'count', (type)->
     Meteor.call 'calculate_doc_type_count', type
@@ -32,14 +14,6 @@ Meteor.publish 'count', (type)->
         doc_type: type
         stat_type: 'total'
 
-Meteor.publish 'my_incident_count', ()->
-    user = Meteor.user()
-    if user
-        Meteor.call 'calculate_my_incidents_count'
-        Stats.find
-            doc_type: 'incident'
-            stat_type: 'customer'
-            customer_jpid: user.customer_jpid
 
 
 Meteor.publish 'all_users_count', ()->
@@ -48,19 +22,6 @@ Meteor.publish 'all_users_count', ()->
         collection: 'users'
         stat_type: 'total'
 
-Meteor.publish 'incomplete_task_count', ()->
-    Meteor.call 'calculate_incomplete_task_count'
-    Stats.find
-        collection: 'doc'
-        doc_type: 'task'
-        stat_type: 'incomplete'
-
-Meteor.publish 'office_stats', (office_jpid)->
-    office_doc = Docs.findOne "ev.ID":office_jpid
-    Stats.find {
-        office_jpid:office_jpid
-    }
-    
 
 
 Meteor.publish 'office_employee_count', (office_jpid)->
@@ -73,44 +34,6 @@ Meteor.publish 'office_employee_count', (office_jpid)->
         office_jpid:office_jpid
     }
     
-Meteor.publish 'office_franchisee_count', (office_jpid)->
-    user = Meteor.user()
-    Meteor.call 'calculate_office_franchisee_count', office_jpid
-    office_doc = Docs.findOne "ev.ID":office_jpid
-    Stats.find {
-        doc_type: 'franchisee'
-        stat_type: 'office_franchisees'
-        office_jpid:office_jpid
-    }
-    
-Meteor.publish 'office_incident_count', (office_jpid)->
-    user = Meteor.user()
-    Meteor.call 'calculate_office_incident_count', office_jpid
-    office_doc = Docs.findOne "ev.ID":office_jpid
-    Stats.find {
-        doc_type: 'incident'
-        stat_type: 'office_incidents'
-        office_jpid:office_jpid
-    }
-
-Meteor.publish 'office_customer_count', (office_doc_id)->
-    Meteor.call 'calculate_office_customer_count', office_doc_id
-    office_doc = Docs.findOne office_doc_id
-    
-    Stats.find {
-        doc_type: 'customer'
-        stat_type: 'office_customers'
-        office_jpid:office_doc.ev.ID
-    }
-
-Meteor.publish 'event_type_count', (event_type)->
-    Meteor.call 'calculate_event_type_count', event_type
-    
-    Stats.find {
-        doc_type: 'event'
-        stat_type: 'event_type'
-        event_type:event_type
-    }
     
 
 Meteor.methods
@@ -163,9 +86,6 @@ Meteor.methods
             stat_type: 'total'
         }, { $set:amount:count },{ upsert:true }
         
-
-
-    
 
     # calculate_stat: (doc_type, stat_type)->
     calculate_stat: (stat_match_object)->

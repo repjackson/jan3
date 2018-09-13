@@ -24,9 +24,10 @@ template(name='footer')
                 .four.wide.column
                     if is_customer
                         +customer_card customer_jpid=currentUser.customer_jpid
-                .four.wide.column
-                    if is_customer
-                        +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
+                if currentUser.franchisee_jpid
+                    .four.wide.column
+                        if is_customer
+                            +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
                 .four.wide.column
                     unless is_admin
                         +office_card office_jpid=currentUser.office_jpid

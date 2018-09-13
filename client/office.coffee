@@ -1,21 +1,21 @@
-Template.office_header.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('jpid')
-    @autorun -> Meteor.subscribe 'office_stats', FlowRouter.getParam('jpid')
+# Template.office_header.onCreated ->
+#     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('jpid')
+#     @autorun -> Meteor.subscribe 'office_stats', FlowRouter.getParam('jpid')
 
-Template.office_header.events
-    'click #calc_office_stats': ->
-        Meteor.call 'calc_office_stats', FlowRouter.getParam('jpid'), (err,res)->
-            if err then console.error err
-            else
-                console.log res
-Template.office_header.helpers
-    # current_name: -> console.log FlowRouter.getRouteName()
-    office_doc: -> Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-    office_map_address: ->
-        page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        encoded_address = encodeURIComponent "#{page_office.ev.ADDR_STREET} #{page_office.ev.ADDR_STREET_2} #{page_office.ev.ADDR_CITY},#{page_office.ev.ADDR_STATE} #{page_office.ev.ADDR_POSTAL_CODE} #{page_office.ev.MASTER_COUNTRY}"
-        # console.log encoded_address
-        "https://www.google.com/maps/search/?api=1&query=#{encoded_address}"
+# Template.office_header.events
+#     'click #calc_office_stats': ->
+#         Meteor.call 'calc_office_stats', FlowRouter.getParam('jpid'), (err,res)->
+#             if err then console.error err
+#             else
+#                 console.log res
+# Template.office_header.helpers
+#     # current_name: -> console.log FlowRouter.getRouteName()
+#     office_doc: -> Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
+#     office_map_address: ->
+#         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
+#         encoded_address = encodeURIComponent "#{page_office.ev.ADDR_STREET} #{page_office.ev.ADDR_STREET_2} #{page_office.ev.ADDR_CITY},#{page_office.ev.ADDR_STATE} #{page_office.ev.ADDR_POSTAL_CODE} #{page_office.ev.MASTER_COUNTRY}"
+#         # console.log encoded_address
+#         "https://www.google.com/maps/search/?api=1&query=#{encoded_address}"
 
 Template.office_dashboard.helpers
     office_doc: -> Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
