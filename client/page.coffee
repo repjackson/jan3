@@ -29,7 +29,6 @@ Template.page.onCreated ->
 #     page_doc: -> 
 #         FlowRouter.watchPathChange();
 #         currentContext = FlowRouter.current();
-#         # console.log currentContext
 #         Docs.findOne currentContext.params.doc_id
     
     
@@ -37,7 +36,6 @@ Template.page.helpers
     page_doc: -> 
         FlowRouter.watchPathChange();
         currentContext = FlowRouter.current();
-        # console.log currentContext
         Docs.findOne
             type:'page'
             slug: FlowRouter.getParam('page_slug')
@@ -48,18 +46,14 @@ Template.dev.events
         recipient = $('#recipient_email').val()
         message = $('#email_body').val()
         Meteor.call 'sendEmail', recipient, 'repjackson@gmail.com', 'test dev portal message', message, (err,res)->
-            if err then console.log err
-            else
-                console.res
+            if err then console.error err
     
     'click #send_sms': (e,t)->
         recipient = $('#recipient_number').val()
         message = $('#sms_message').val()
         
         Meteor.call 'send_sms', recipient, message, (err,res)->
-            if err then console.log err
-            else
-                console.res
+            if err then console.error err
     
     
 # Template.page_view.events
@@ -72,7 +66,6 @@ Template.dev.events
     #                 number:next_row_number
     #             }
     # 'click .add_column': ->
-    #     console.log @
     #     current_page = Docs.findOne FlowRouter.getParam('doc_id')
     #     Meteor.call 'add_column', FlowRouter.getParam('doc_id'), @, 'row_class', row_class_value
         
@@ -84,5 +77,4 @@ Template.dev.events
         
     # 'blur .row_class': (e,t)->
     #     row_class_value = e.currentTarget.value
-    #     console.log row_class_value
     #     Meteor.call 'update_row_key', FlowRouter.getParam('doc_id'), @, 'row_class', row_class_value

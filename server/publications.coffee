@@ -33,10 +33,6 @@ Meteor.publish 'block_docs', (
     skip=0,
     status
     page_jpid)->
-        # console.log 'block_doc_id', block_doc_id
-        # console.log 'block_doc_id', block_doc_id
-        # console.log 'block_doc_id', block_doc_id
-        # console.log 'block_doc_id', block_doc_id
         block = Docs.findOne block_doc_id
         page_doc = Docs.findOne "ev.ID":page_jpid
         match = {}
@@ -44,8 +40,6 @@ Meteor.publish 'block_docs', (
         if tags.length > 0 then match.tags = $all: tags
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
-        # console.log 'limit',limit
-        # console.log 'initial filter',filter_value
         calculated_value =
             switch filter_value
                 # user
@@ -75,31 +69,23 @@ Meteor.publish 'block_docs', (
                     page_jpid
                 when "{current_page_customer_name}"
                     if page_doc
-                        console.log page_doc.ev.CUST_NAME
                         page_doc.ev.CUST_NAME
                 when "{current_page_office_name}"
                     page_doc.ev.MASTER_LICENSEE
                 when "{current_page_franchisee_name}"
                     if page_doc.ev.FRANCHISEE.length > 0
-                        console.log 'returning page franch name', page_doc.ev.FRANCHISEE
                         page_doc.ev.FRANCHISEE
                     if page_doc.ev.FRANCHISEE.length is 0
-                        console.log 'stopping blank franch query', page_doc.ev.FRANCHISEE
                         @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
-        # console.log 'calc value', calculated_value
         user = Meteor.user()
         if user and user.roles
             # unless 'customer' in user.roles
             match.submitted = $ne: false
                 
-        # console.log 'match',match
-        # console.log 'prelimit', limit
         if -1 > limit > 100
             limit = 100
-        # console.log 'skip', skip
-        # console.log 'limit', limit
         Docs.find match,{
             skip: skip
             limit:limit
@@ -299,12 +285,10 @@ Meteor.publish 'my_office', ->
     user = Meteor.user()
     if user 
         if user.office_jpid and user.roles and 'office' or 'customer' in user.roles
-            # console.log 'publishing office', user.office_jpid
             Docs.find
                 "ev.ID": user.office_jpid
                 type:'office'
     else
-        console.log 'not publishing office', user?.office_jpid
         
 Meteor.publish 'my_special_services', ->
     user = Meteor.user()
@@ -319,16 +303,13 @@ Meteor.publish 'my_special_services', ->
         }, limit: 5
     
 Meteor.publish 'my_office_contacts', ()->    
-    # console.log 'looking for office contacts'
     user = Meteor.user()
     if user
         if 'customer' in user.roles
-            # console.log 'good?'
             if user.customer_jpid
                 customer_doc = Docs.findOne
                     "ev.ID": user.customer_jpid
                     type:'customer'
-                # console.log customer_doc
                 Meteor.users.find {
                     published: true
                     "profile.office_name": customer_doc.ev.MASTER_LICENSEE

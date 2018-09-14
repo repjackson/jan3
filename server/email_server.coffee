@@ -41,8 +41,6 @@ Meteor.startup ->
 
 Meteor.methods 
     send_email: (mail_fields) ->
-        # console.log 'about to send email'
-        # console.log 'mail fields', mail_fields
         # check([mail_fields.to, mail_fields.from, mail_fields.subject, mail_fields.text, mail_fields.html], [String]);
         # Let other method calls from the same client start running,
         # without waiting for the email sending to complete.
@@ -53,7 +51,6 @@ Meteor.methods
             subject: mail_fields.subject
             text: mail_fields.text
             html: mail_fields.html
-        console.log 'classic email sent'
 
         # if Meteor.isProduction
         #     Meteor.Mailgun.send
@@ -62,9 +59,7 @@ Meteor.methods
         #         subject: mail_fields.subject
         #         text: mail_fields.text
         #         html: mail_fields.html
-        #     console.log 'email sent from production'
         # if Meteor.isDevelopment
-            # console.log 'email sending from dev'
             
             # Meteor.Mailgun.send
             #     to: mail_fields.to
@@ -72,7 +67,6 @@ Meteor.methods
             #     subject: mail_fields.subject
             #     text: mail_fields.text
             #     html: mail_fields.html
-            # console.log 'email sent from dev'
         return
         
     send_message: (to_username, from_username, message_text)->    

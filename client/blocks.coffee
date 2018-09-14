@@ -342,7 +342,6 @@ Template.multiple_user_select.helpers
 
     user_array_users: ->
         context = Template.currentData(0)
-        # console.log context
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         Meteor.users.find(_id: $in: parent_doc["#{context.key}"])
     
@@ -612,7 +611,6 @@ Template.assignment_widget.helpers
         user_results
 
     assigned_users: ->
-        # console.log context
         parent_doc = Docs.findOne FlowRouter.getParam('doc_id')
         Meteor.users.find(_id: $in: parent_doc.assigned_to)
 
@@ -621,12 +619,10 @@ Template.author_info.onCreated ->
     @autorun => Meteor.subscribe 'author', @data.author_id
 
 Template.blocks.onCreated ->
-    # console.log @data.tags
     # if @data.tags and typeof @data.tags is 'string'
     #     split_tags = @data.tags.split ','
     # else
     #     split_tags = @data.tags
-    # # console.log split_tags
 
 Template.blocks.helpers
     blocks: -> 
@@ -646,7 +642,6 @@ Template.blocks.helpers
 # Template.block.onRendered ->
 #     stat = Stats.findOne()
 #     if stat
-#         console.log 'stat',stat
 
 Template.edit_block.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'schema'
@@ -682,10 +677,7 @@ Template.block.onCreated ->
         match_object.active = false
     match_object.doc_type = @data.children_doc_type
     match_object.stat_type = @data.table_stat_type
-    # console.log 'stat doc match ob',match_object
     @autorun -> Meteor.subscribe 'stat', match_object
-    # console.log @
-    # console.log @data
     @autorun => Meteor.subscribe 'block_docs', 
         @data._id, 
         selected_tags.array()
@@ -709,13 +701,11 @@ Template.block.helpers
         key = if @ev_subset then "ev.#{@key}" else @key
         temp = Template.instance() 
         if temp.sort_direction.get() is 1 and temp.sort_key.get() is key 
-            console.log 'descending'
             return true
     sort_ascending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
         temp = Template.instance() 
         if temp.sort_direction.get() is -1 and temp.sort_key.get() is key 
-            console.log 'ascending'
             return true
 
     children: -> 
@@ -743,7 +733,6 @@ Template.block.helpers
     child_schema_field_value: ->
         child_doc = Template.parentData(1)
         
-        # console.log child_doc["#{@slug}"]
         if @ev_subset
             child_doc.ev["#{@key}"]
         else
@@ -788,17 +777,13 @@ Template.edit_block.helpers
             type:'schema'
             slug:@children_doc_type
         if schema_doc
-            console.log 'schema doc found', schema_doc
             fields = schema_doc.fields
             values = []
             for field in fields
-                console.log 'schema doc found', field
-                console.log 'this', @
                 values.push @ev["#{field.slug}"]
                 # if field.ev_subset is true
                 #     values.push Template.currentData().ev["#{field.key}"]
                 # else
-                #     # console.log "#{field.key}"
                 #     values.push Template.currentData()["#{field.key}"]
             values
         
@@ -813,12 +798,14 @@ Template.block.helpers
 Template.block.events
     'click .add_block_child': (e,t)->
         if FlowRouter.getParam('jpid')
-            Docs.insert 
+            new_id = Docs.insert 
                 type:@children_doc_type
                 office_jpid:FlowRouter.getParam('jpid')
         else
-            Docs.insert 
+            new_id = Docs.insert 
                 type:@children_doc_type
+        # FlowRouter.go("/edit/#{_id}")
+    
     
     'click .move_up': ->
         current = Template.currentData()
@@ -828,7 +815,6 @@ Template.block.events
         
         
     'click .move_down': ->
-        # console.log @
         current = Template.currentData()
         current_index = current.fields.indexOf @ 
         lower_index = current-1
@@ -837,7 +823,6 @@ Template.block.events
     'click .sort_by': (e,t)->
         key = if @ev_subset then "ev.#{@key}" else @key
         t.sort_key.set key
-        console.log t.sort_key.get()
         if t.sort_direction.get() is -1
             t.sort_direction.set 1
         else
@@ -858,7 +843,6 @@ Template.edit_block.events
             $addToSet: fields: new_field_object
 
     'click .add_schema_field': ->
-        # console.log @
         block = Template.currentData()
         new_field_object = {
             key:@slug
@@ -924,10 +908,6 @@ Template.set_page_key_value.events
     
 Template.set_key_value_2.events
     'click .set_key_value': ->
-        # console.log @
-        # console.log Template.currentData()
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
         
         Docs.update Template.parentData(2)._id,
             { $set: "#{@key}": @value }
@@ -959,7 +939,4 @@ Template.edit_block_text_field.helpers
 
 Template.set_field_key_value.events 
     'click .set_field_key_value': (e,t)->
-        # console.log @
-        # console.log Template.currentData()
-        # console.log Template.parentData()
         Meteor.call 'update_block_field', Template.parentData(2)._id, Template.parentData(), @key, @value

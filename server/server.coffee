@@ -57,7 +57,7 @@ SyncedCron.add
         parser.text 'every 1 hour'
     job: -> 
         Meteor.call 'update_escalation_statuses', (err,res)->
-            if err then console.log err
+            if err then console.error err
             # else
                 # console.log 'res:',res
 
@@ -69,7 +69,7 @@ SyncedCron.add({
             parser.text 'every 6 hours'
         job: -> 
             Meteor.call 'get_recent_customers', (err, res)->
-                if err then console.log err
+                if err then console.error err
                 else
                     console.log 'update customers res:',res
     },{
@@ -79,7 +79,7 @@ SyncedCron.add({
             parser.text 'every 3 hours'
         job: -> 
             Meteor.call 'sync_ev_users', (err, res)->
-                if err then console.log err
+                if err then console.error err
                 else
                     console.log 'user sync res:',res
     },{
@@ -90,7 +90,7 @@ SyncedCron.add({
             parser.text 'every 8 hours'
         job: -> 
             Meteor.call 'get_recent_franchisees', (err, res)->
-                if err then console.log err
+                if err then console.error err
                 else
                     console.log 'update franchisees res:',res
     },{
@@ -100,7 +100,7 @@ SyncedCron.add({
             parser.text 'every 6 hours'
         job: -> 
             Meteor.call 'get_recent_offices', (err, res)->
-                if err then console.log err
+                if err then console.error err
                 else
                     console.log 'update offices res:',res
     }

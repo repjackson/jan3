@@ -14,7 +14,6 @@ Template.office_employees.onRendered ->
 Template.office_employees.helpers    
     office_employees: ->  
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        # console.log page_office
         if page_office
             Meteor.users.find {
                 "ev.COMPANY_NAME": page_office.ev.MASTER_LICENSEE
@@ -57,11 +56,6 @@ Template.set_sla_key_value.events
                 type:'sla_config'
                 office_jpid:FlowRouter.getParam('jpid')
                 escalation_number: rule_doc.number
-        console.log @
-        console.log Template.parentData(0)
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
-        console.log Template.parentData(3)
         # Docs.update page._id,
         #     { $set: "#{@key}": @value }
 
@@ -92,7 +86,6 @@ Template.office_sla.events
 Template.office_sla.helpers
     current_office: ->
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        console.log page_office
         return page_office
     incident_types: -> Docs.find {type:'incident_type'}
     select_incident_type_button_class: -> if Session.equals('incident_type_selection', @slug) then 'blue' else 'basic'
@@ -104,10 +97,8 @@ Template.office_sla.helpers
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         current_incident_type = Session.get 'incident_type_selection'
         incident_type_owner_value = page_office["#{current_incident_type}_incident_owner"]
-        # console.log incident_type_owner_value
         return incident_type_owner_value
     sla_settings_doc: ->    
-        console.log @
         rule_doc = Template.currentData()
 
         sla_setting_doc = 
@@ -116,7 +107,6 @@ Template.office_sla.helpers
                 escalation_number: rule_doc.number
                 incident_type:Session.get('incident_type_selection')
             
-        console.log sla_setting_doc
         unless sla_setting_doc
             Docs.insert
                 type:'sla_setting'
@@ -132,15 +122,12 @@ Template.incident_owner_select.helpers
 
     selected_user: ->
         sla_setting_doc = Template.currentData()
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
 
         context = Template.currentData(0)
         context = Template.parentData(1)
         context = Template.parentData(2)
         # office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         if sla_setting_doc.incident_owner
-            # console.log office_doc["#{context.key}"]
             Meteor.users.findOne
                 username: sla_setting_doc.incident_owner
         else
@@ -153,24 +140,14 @@ Template.incident_owner_select.onCreated ()->
     
 Template.incident_owner_select.events
     'click .select_office_user': (e,t) ->
-        # console.log e
-        # console.log t
-        # console.log @
         sla_setting_doc = Template.currentData()
-        # console.log Template.parentData(0)
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
         # key = Template.parentData(0).key
         # searched_value = doc["#{template.data.key}"]
         # office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        # console.log key
-        # console.log @username
         
         
         Docs.update sla_setting_doc._id,
             $set: incident_owner: @username
-        # console.log Docs.findOne(office_doc_id)["#{key}"]
         # $(e.currentTarget).closest('#office_username_query').val ''
         t.user_results.set null
 
@@ -188,14 +165,6 @@ Template.incident_owner_select.events
 
     'click .pull_user': (e,t)->
         context = Template.currentData()
-        console.log e
-        console.log t
-        console.log @
-        console.log Template.currentData()
-        console.log Template.parentData(0)
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
-        console.log Template.parentData(3)
         
         swal {
             title: "Remove #{context.incident_owner} as incident owner?"

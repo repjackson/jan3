@@ -1,9 +1,4 @@
 Meteor.methods
-    calculate_child_count: (doc_id)->
-        child_count = Docs.find(parent_id: doc_id).count()
-        Docs.update doc_id, 
-            $set: child_count: child_count
-    
     calculate_request_count: (doc_id)->
         request_count = Docs.find(service_id: doc_id).count()
         Docs.update doc_id, 
@@ -83,47 +78,6 @@ Meteor.methods
     #             location_lng: result.lng
                 
                 
-    notify_user_about_document: (doc_id, recipient_id)->
-        doc = Docs.findOne doc_id
-        parent = Docs.findOne doc.parent_id
-        recipient = Meteor.users.findOne recipient_id
-        
-        
-        doc_link = "/view/#{doc._id}"
-        notification = 
-            Docs.findOne
-                type:'notification'
-                object_id:doc_id
-                recipient_id:recipient_id
-        if notification
-            throw new Meteor.Error 500, 'User already notified.'
-            return
-        else
-            Docs.insert
-                type:'notification'
-                object_id:doc_id
-                recipient_id:recipient_id
-                content: 
-                    "<p>#{Meteor.user().name()} has notified you about <a href=#{doc_link}>#{parent.title} entry</a>.</p>"
-                
-                
-    remove_notification: (doc_id, recipient_id)->
-        doc = Docs.findOne doc_id
-        recipient = Meteor.users.findOne recipient_id
-        
-        notification = 
-            Docs.findOne
-                type:'notification'
-                object_id:doc_id
-                recipient_id:recipient_id
-        
-        if notification 
-            Docs.remove notification._id
-        else
-                
-        return
-        
-        
     assign_user: (doc_id, user)->
         doc = Docs.findOne doc_id
         Docs.update doc_id,

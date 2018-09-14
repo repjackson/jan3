@@ -5,7 +5,6 @@ Template.account_settings.onCreated ->
     @autorun -> Meteor.subscribe 'my_profile', FlowRouter.getParam('user_id') 
 
 # Template.account_settings.onRendered ->
-#     console.log Meteor.users.findOne(FlowRouter.getParam('user_id'))
 
 Template.account_settings.helpers
 
@@ -16,7 +15,6 @@ Template.account_settings.events
         if new_username and user.username != new_username
             Meteor.call 'update_username', new_username, (error, result) ->
                 if error
-                    # console.log 'updateUsername', error
                     Bert.alert "Error Updating Username: #{error.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert result, 'success', 'growl-top-right'
@@ -29,7 +27,6 @@ Template.account_settings.events
             if new_username and user.username != new_username
                 Meteor.call 'update_username', new_username, (error, result) ->
                     if error
-                        # console.log 'updateUsername', error
                         Bert.alert "Error Updating Username: #{error.reason}", 'danger', 'growl-top-right'
                     else
                         Bert.alert result, 'success', 'growl-top-right'
@@ -58,7 +55,6 @@ Template.account_settings.events
         if valid_email
             Meteor.call 'update_email', new_email, (error, result) ->
                 if error
-                    # console.log 'updateUsername', error
                     Bert.alert "Error Adding Email: #{error.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert result, 'success', 'growl-top-right'
@@ -78,7 +74,6 @@ Template.change_password_widget.events
         if new_password
             Accounts.changePassword old_password, new_password, (error, result) ->
                 if error
-                    # console.log 'updateUsername', error
                     Bert.alert "Error Updating Password: #{error.reason}", 'danger', 'growl-top-right'
                 else
                     Bert.alert "Changed Password", 'success', 'growl-top-right'
@@ -92,7 +87,6 @@ Template.change_password_widget.events
             if new_password
                 Accounts.changePassword old_password, new_password, (error, result) ->
                     if error
-                        # console.log 'updateUsername', error
                         Bert.alert "Error Updating Password: #{error.reason}", 'danger', 'growl-top-right'
                     else
                         Bert.alert "Changed Password", 'success', 'growl-top-right'

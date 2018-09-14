@@ -33,7 +33,6 @@ Template.schema_edit.events
             confirmButtonColor: '#da5347'
         }, =>
             doc = Docs.findOne FlowRouter.getParam('doc_id')
-            # console.log doc
             Docs.remove doc._id, ->
                 FlowRouter.go "/schemas"
 
@@ -70,7 +69,6 @@ Template.field_edit.events
         #     if err
         #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
         #     else
-        #         console.log res
         #         $(e.currentTarget).closest('.field_slug').val res
         #         Meteor.call 'update_field_slug', doc_id, @, res, (err,res)=>
 
@@ -79,7 +77,6 @@ Template.field_edit.events
     'change .field_slug': (e,t)->
         text_value = e.currentTarget.value
         doc_id = FlowRouter.getParam('doc_id')
-        # console.log text_value
         Meteor.call 'update_field_slug', doc_id, @, text_value, (err,res)=>
             # if err
             #     Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
@@ -91,11 +88,6 @@ Template.field_edit.events
 Template.schema_doc.helpers
     schema_fields: -> 
         # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log current_doc["#{@key}"]
-        console.log @
-        console.log Template.parentData()
-        console.log Template.parentData(2)
-        # console.log Template.parentData()["#{@key}"]
         
         # if Template.parentData().type is @value then 'active' else 'basic'
 
@@ -116,10 +108,6 @@ Template.select_field_key_value.events
 Template.select_field_key_value.helpers
     select_field_key_value_button_class: -> 
         # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        # console.log current_doc["#{@key}"]
-        # console.log @
-        # console.log Template.parentData()
-        # console.log Template.parentData()["#{@key}"]
         
         if Template.parentData()["#{@key}"] is @value then 'active' else 'basic'
     # 'change .field_type': (e,t)->

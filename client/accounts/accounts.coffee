@@ -102,7 +102,6 @@ Template.login.events
                 # Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
                 Meteor.call 'find_office_from_jpid', '15793131',(err,res)->
                     if err then console.error err
-                        # console.log res
                 FlowRouter.go "/p/office_incidents/15793131"                
             
     'click #login_demo_customer': ->
@@ -137,7 +136,6 @@ Template.register_customer.helpers
             Docs.findOne 
                 type:'customer'
                 "ev.ID": Session.get('customer_jpid')
-        # console.log doc
         doc
     
     office_doc: ->
@@ -145,7 +143,6 @@ Template.register_customer.helpers
             Docs.findOne 
                 type:'office'
                 "ev.ID": Session.get('office_jpid')
-        # console.log doc
         doc
 
     user_found: -> Session.get 'username_found'
@@ -182,19 +179,15 @@ Template.register_customer.events
         
         if username        
             options.username = username
-            # console.log username
         if password        
             options.password = password
-            # console.log password
         if email
             options.email = email
-            # console.log email
         options.customer_jpid = customer_jpid
         options.franchisee_jpid = franchisee_jpid
         options.office_jpid = office_jpid
         options.roles = ['customer']
         
-        console.log 'office jpid from client', office_jpid
         
         Accounts.createUser(options, (err,res)=>
             if err
@@ -210,7 +203,6 @@ Template.register_customer.events
                 #         Docs.findOne
                 #             type:'office'
                 #             "ev.ID": office_jpid
-                #     console.log office_doc
         )
     
     'keyup #username': (e,t)->
@@ -239,35 +231,28 @@ Template.register_customer.events
     'keyup #password_one': (e,t)->
         password_one = $('#password_one').val()
         Session.set 'session_password_one', password_one
-        console.log password_one
                 
     'keyup #password_two': (e,t)->
         password_two = $('#password_two').val()
         Session.set 'session_password_two', password_one
-        console.log password_two
                 
     'keyup #customer_jpid': (e,t)->
         customer_jpid = $('#customer_jpid').val()
-        # console.log customer_jpid
         Meteor.call 'find_customer_by_jpid', customer_jpid, (err,res)->
             if err 
                 Session.set 'jpid_lookup_status', err.error
             else
-                # console.log res
                 Session.set 'account_selected', true
                 Session.set 'customer_jpid', res.ev.ID
-                # console.log Session.get 'customer_jpid'
                 Session.set 'jpid_lookup_status', "Found JPID #{customer_jpid}."
                 Meteor.call 'find_franchisee_from_customer_jpid', customer_jpid, (err,res)=>
                     if err then console.error err
                     else
-                        console.log 'franchisee?', res
                         if res and res.ev
                             Session.set 'franchisee_jpid', res.ev.ID
                 Meteor.call 'find_office_from_customer_jpid', customer_jpid, (err,res)=>
                     if err then console.error err
                     else
-                        # console.log 'office?', res
                         Session.set 'office_jpid', res.ev.ID
         found_customer_doc = 
             Docs.findOne 
@@ -275,10 +260,8 @@ Template.register_customer.events
                 "ev.ID": customer_jpid
             
         if found_customer_doc
-            console.log 'account selected'
         else 
             Session.set 'account_selected', false
-            # console.log 'no account selected'
     
 
 Template.register_office.onCreated ->
@@ -298,7 +281,6 @@ Template.register_office.helpers
             Docs.findOne 
                 type:'office'
                 # "ev.ID": Session.get('office_jpid')
-        # console.log doc
         doc
 
 
@@ -329,16 +311,12 @@ Template.register_office.events
         
         if username        
             options.username = username
-            console.log username
         if password        
             options.password = password
-            console.log password
         if email
             options.email = email
-            console.log email
         if office_jpid        
             options.office_jpid = office_jpid
-            console.log office_jpid
             options.roles = ['office']
 
         
@@ -348,7 +326,6 @@ Template.register_office.events
             Docs.findOne
                 type:'office'
                 "ev.ID": office_jpid
-        console.log office_doc
         Accounts.createUser(options, (err,res)=>
             if err
                 Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
@@ -385,12 +362,10 @@ Template.register_office.events
     'keyup #password_one': (e,t)->
         password_one = $('#password_one').val()
         Session.set 'session_password_one', password_one
-        console.log password_one
                 
     'keyup #password_two': (e,t)->
         password_two = $('#password_two').val()
         Session.set 'session_password_two', password_one
-        console.log password_two
                 
     
     'keyup #office_jpid': (e,t)->
@@ -403,10 +378,8 @@ Template.register_office.events
             
         if found_office_doc
             Session.set 'account_selected', true
-            console.log 'account selected'
         else 
             Session.set 'account_selected', false
-            console.log 'no account selected'
         # Meteor.call 'check_password_two', password_two, (err, res)->
         #     if err then console.error err
         #     else 

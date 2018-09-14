@@ -91,11 +91,18 @@ Template.nav.events
         Session.set('editing_mode',!Session.get('editing_mode'))
     
 Template.nav.onCreated ->
-    @autorun -> Meteor.subscribe 'my_customer_account'
-    @autorun -> Meteor.subscribe 'my_franchisee'
-    @autorun -> Meteor.subscribe 'my_office'
-    @autorun -> Meteor.subscribe 'me'
-    @autorun -> Meteor.subscribe 'admin_nav_pages'
-    @autorun -> Meteor.subscribe 'customer_nav_pages'
-    @autorun -> Meteor.subscribe 'office_nav_pages'
+    user = Meteor.user()
+    if user
+        @autorun -> Meteor.subscribe 'me'
+        if user.roles
+            if 'customer' in user.roles
+                @autorun -> Meteor.subscribe 'my_customer_account'
+                @autorun -> Meteor.subscribe 'my_franchisee'
+                @autorun -> Meteor.subscribe 'my_office'
+                @autorun -> Meteor.subscribe 'customer_nav_pages'
+            if 'office' in user.roles
+                @autorun -> Meteor.subscribe 'my_office'
+                @autorun -> Meteor.subscribe 'office_nav_pages'
+            if 'admin' in user.roles
+                @autorun -> Meteor.subscribe 'admin_nav_pages'
     

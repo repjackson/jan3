@@ -106,12 +106,9 @@ template(name='page')
                         +edit_page_text_field key='slug' label='Slug'
                         +edit_number_field key='number' label='Rank'
                 +edit_array_field key='tags'
-                +set_page_key_value key='admin_nav' value=true label='Admin Nav Visible'
-                +set_page_key_value key='admin_nav' value=false label='Admin Hidden'
-                +set_page_key_value key='office_nav' value=true label='Office Nav Visible'
-                +set_page_key_value key='office_nav' value=false label='Office Hidden'
-                +set_page_key_value key='customer_nav' value=true label='Customer Nav Visible'
-                +set_page_key_value key='customer_nav' value=false label='Customer Hidden'
+                +toggle_boolean key='admin_nav' yes_label='Admin Nav' no_label='Admin Nav'
+                +toggle_boolean key='office_nav' yes_label='Office Nav' no_label='Office Nav'
+                +toggle_boolean key='customer_nav' yes_label='Customer Nav' no_label='Customer Nav'
                 // +edit_page_text_field key='root_grid_classes' label='Root Grid Classes'
                 // #add_row.ui.button add row
                 // .ui.header Rows

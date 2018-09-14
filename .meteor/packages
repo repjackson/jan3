@@ -41,7 +41,6 @@ pacreach:jade
 coffeescript
 juliancwirko:postcss
 percolate:synced-cron
-meteorhacks:aggregate
 manuel:reactivearray
 random@1.1.0
 modules@0.12.2

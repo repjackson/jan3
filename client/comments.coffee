@@ -15,7 +15,6 @@ Template.comments.events
         e.preventDefault()
         comment = $('#new_comment').val().trim()
         if e.which is 13 #enter
-            # console.log comment
             $('#new_comment').val ''
             new_comment_id = 
                 Docs.insert
@@ -25,9 +24,7 @@ Template.comments.events
             Meteor.call 'create_alert', 'comment', @_id, new_comment_id, (err,res)->
                 if err then console.error err
                 else
-                    # console.log res
     'click .delete_comment': ->
         if confirm 'delete comment?'
             Docs.remove @_id
-            # console.log @_id
             

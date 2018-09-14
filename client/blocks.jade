@@ -807,7 +807,8 @@ template(name='edit_block')
             a.item(data-tab='filter') 
                 i.filter.icon
                 |Filter
-            a.item(data-tab='mode') Mode
+            a.item(data-tab='schema') Schema
+            a.item(data-tab='view_type') View Type
             a.item(data-tab='fields') Fields
         .ui.bottom.attached.active.tab.secondary.segment(data-tab='general')
             i.remove_block.remove.link.icon(title='remove block')
@@ -864,14 +865,13 @@ template(name='edit_block')
                 +set_key_value key='filter_value' value=true label='true'
                 +set_key_value key='filter_value' value=false label='false'
         // unless custom_template
-        .ui.bottom.attached.tab.secondary.segment(data-tab='mode')
-            .ui.header Doc Type
+        .ui.bottom.attached.tab.secondary.segment(data-tab='schema')
             each schemas
                 +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
             .ui.header View Mode
             +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
             +set_key_value key='view_mode' value='list' label='List' icon='list'
-            .ui.header View Mode
+        .ui.bottom.attached.tab.secondary.segment(data-tab='view_type')
             +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
             +set_key_value key='view_mode' value='list' label='List' icon='list'
             +set_key_value key='view_mode' value='comments' label='Comments' icon='comments'
@@ -879,18 +879,11 @@ template(name='edit_block')
             +set_key_value key='view_mode' value='header' label='Header'
             +set_key_value key='view_mode' value='cards' label='Cards'
             +set_key_value key='view_mode' value='sla_settings' label='SLA Settings'
-            if is_table
-                .ui.secondary.segment
-                    div Stat Type
-                    +set_key_value key='table_stat_type' value='total' label='Total'
-                    // +set_key_value key='table_stat_type' value='active' label='Active'
-                    +set_key_value key='table_stat_type' value='office' label='Office'
-                    div
-                    +set_key_value key='view_table_header' value=true label='View Header'
-                    +set_key_value key='view_table_header' value=false label='Hide Header'
-                    div
-                    +set_key_value key='view_table_footer' value=true label='View Footer'
-                    +set_key_value key='view_table_footer' value=false label='Hide Footer'
+            ui.header Stat Type
+            +set_key_value key='table_stat_type' value='total' label='Total'
+            // +set_key_value key='table_stat_type' value='active' label='Active'
+            +set_key_value key='table_stat_type' value='office' label='Office'
+            +toggle_boolean key='view_table_header' yes_label='Table Header Shown' no_label='Table Header Hidden'
         .ui.bottom.attached.tab.secondary.segment(data-tab='fields')
             h4 Available Schema Fields
             each schema_doc.fields

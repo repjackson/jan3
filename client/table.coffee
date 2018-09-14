@@ -1,11 +1,5 @@
 Template.block.events
     'click .set_page_number': (e,t)->
-        console.log @
-        console.log Template.currentData()
-        console.log Template.parentData(0)
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
-        
         t.page_number.set @number
         int_page_size = parseInt(t.page_size.get())
         skip_amount = @number*int_page_size-int_page_size
@@ -13,12 +7,6 @@ Template.block.events
     
     
     'click .increment_page': (e,t)->
-        console.log @
-        console.log Template.currentData()
-        console.log Template.parentData(0)
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
-
         current_page = t.page_number.get()
         next_page = current_page+1
         t.page_number.set next_page
@@ -113,16 +101,9 @@ Template.block.helpers
         if Template.instance().page_number.get() is @number then 'active' else ''
         
     count_amount: ->
-        console.log @
-        console.log Template.currentData()
-        console.log Template.parentData(0)
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
         count_stat = Stats.findOne
             doc_type:@children_doc_type
             stat_type:@table_stat_type
-        console.log 'count_stat', count_stat
-        # console.log 'this', @
             
         if count_stat
             count_stat.amount
@@ -135,17 +116,12 @@ Template.block.helpers
         count_stat = Stats.findOne
             doc_type:@children_doc_type
             stat_type:@table_stat_type
-        console.log count_stat
         if count_stat
-            # console.log count_stat
             if count_stat.amount > 0
-                # console.log 'true'
                 true
             else
-                # console.log 'false'
                 false
         else
-            # console.log '2false'
             false
     show_20: ->
         count_stat = Stats.findOne

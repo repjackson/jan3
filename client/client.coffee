@@ -9,22 +9,15 @@ FlowRouter.notFound =
 
 FlowRouter.route('/', {
     triggersEnter: [(context, redirect) ->
-        console.log context
-        console.log redirect
         user = Meteor.user()
-        console.log 'user1',user
         
         if user
-            console.log 'user2',user
             if user.roles 
                 if 'customer' in user.roles
-                    console.log 'found customer'
                     redirect '/p/customer_dashboard' 
                 else if 'admin' in user.roles
-                    console.log 'found admin'
                     redirect '/p/admin' 
                 else if 'office' in user.roles
-                    console.log 'found office'
                     redirect "/p/office_incidents/#{user.office_jpid}" 
         else
             redirect '/login' 
@@ -56,7 +49,6 @@ Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
 
 Template.registerHelper 'is_editing', () -> 
-    # console.log 'this', @
     Session.equals 'editing_id', @_id
 
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
@@ -83,13 +75,11 @@ Template.registerHelper 'overdue', () ->
         
 Template.registerHelper 'my_office_link', () ->  
     user = Meteor.user()
-    # console.log 'franch_doc', franch_doc
     if user
         if user.office_jpid
             # users_office = Docs.findOne
             #     "ev.ID": user.office_jpid
             #     type:'office'
-            # # console.log users_office
             # users_office
             return "/p/office_incidents/#{user.office_jpid}"
 
@@ -99,7 +89,6 @@ Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()
 Template.registerHelper 'is_closed', () -> @status is 'closed'
 
 Template.registerHelper 'databank_docs': ->  
-    console.log @
     Docs.find { type:Session.get('selected_doc_type')}
 
 
@@ -114,24 +103,20 @@ Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 
 Template.registerHelper 'my_office', () -> 
     user = Meteor.user()
-    # console.log 'franch_doc', franch_doc
     if user
         if user.office_jpid
             users_office = Docs.findOne
                 "ev.ID": user.office_jpid
                 type:'office'
-            # console.log users_office
             users_office
         # if user.customer_jpid
         #     customer_doc = Docs.findOne
         #         "ev.ID": user.customer_jpid
         #         type:'customer'
-        #     console.log customer_doc
         #     if customer_doc
         #         users_office = Docs.findOne
         #             "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
         #             type:'office'
-        #         console.log users_office
         #         users_office
         #     else null
     else null
@@ -182,7 +167,6 @@ Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 
 
 Template.registerHelper 'block_field_value', ->
-    # console.log @
     sla_setting = Template.parentData(0)
     field_key = Template.parentData(3).key
     value = sla_setting["#{field_key}"]
@@ -192,32 +176,21 @@ Template.registerHelper 'block_field_value', ->
 # Meteor.startup ->
 #     # HTTP.call('get',"https://avalon.extraview.net/jan-pro/ExtraView/ev_api.action?user_id=zpeckham&password=jpi19&statevar=get_roles", (err,res)->
 #     HTTP.call('get',"http://www.npr.org/rss/podcast.php?id=510307", (err,res)->
-#         if err then console.log 'ERROR', err
 #         else
-#             console.log res
 #     )
 # Template.registerHelper 'slug_value', () -> 
 #     doc_field = Template.parentData(2)
 #     current_doc = Template.parentData(3)
-#     # console.log @key
-#     console.log Template.parentData(1)
-#     console.log Template.parentData(2)
-#     console.log Template.parentData(3)
-#     # console.log Template.parentData(4)
-#     # console.log Template.parentData(5)
-#     console.log @
 #     current_doc["#{@slug}"]
 
 Template.registerHelper 'page_key_value', () -> 
     # doc_field = Template.parentData(2)
-    # console.log @
     current_doc = Docs.findOne FlowRouter.getParam('doc_id')
     if current_doc
         current_doc["#{@key}"]
         
 Template.registerHelper 'page_slug_key_value', () -> 
     # doc_field = Template.parentData(2)
-    # console.log @
     page = Docs.findOne 
         type:'page'
         slug:FlowRouter.getParam('page_slug')
@@ -227,7 +200,6 @@ Template.registerHelper 'page_slug_key_value', () ->
         
 Template.registerHelper 'page_jpid_key_value', () -> 
     # doc_field = Template.parentData(2)
-    # console.log @
     page = Docs.findOne 
         "ev.ID":FlowRouter.getParam('jpid')
     if page
@@ -256,7 +228,6 @@ Template.registerHelper 'user_key_value', () ->
 # Template.registerHelper 'user_key_value', () -> 
 #     # doc_field = Template.parentData(2)
 #     current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
-#     console.log Template.parentData()
 #     Meteor.users. 
 #         current_user["#{@key}"]
         
