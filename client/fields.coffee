@@ -83,10 +83,7 @@ Template.edit_number_field.events
         
 Template.block_edit_number.events
     'change #number_field': (e,t)->
-        console.log @
         child_doc = Template.parentData(0)
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
         field_object = Template.parentData(3)
         field_key = Template.parentData(3).key
         number_value = parseInt e.currentTarget.value
@@ -132,12 +129,8 @@ Template.block_boolean_toggle.events
           
 Template.block_list_dropdown.events
     'click .select_dropdown_item': (e,t)->
-        # console.log @slug
-        # console.log Template.parentData(0)
         field_object = Template.parentData(3)
         child_doc = Template.parentData(0)
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
         field_key = Template.parentData(3).key
         Docs.update child_doc._id,
             { $set: "#{field_key}": @slug }
@@ -184,9 +177,6 @@ Template.edit_textarea.events
 Template.edit_textarea.helpers
     'key_value': () -> 
         doc_field = Template.parentData(0)
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
         if FlowRouter.getParam('jpid')
             current_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         if FlowRouter.getParam('doc_id')
@@ -433,12 +423,6 @@ Template.cell_text_edit.helpers
     editing_cell: -> Template.instance().editing_mode.get()
 
     cell_value: ->
-        # console.log 'this', @
-        # console.log 'current data', Template.currentData()
-        # console.log 'parent 0', Template.parentData()
-        # console.log 'parent 1', Template.parentData(1)
-        # console.log 'parent 2', Template.parentData(2)
-        # console.log 'parent 3', Template.parentData(3)
         cell_object = Template.parentData(3)
         @["#{cell_object.key}"]
 

@@ -59,7 +59,6 @@ Template.full_doc_history.helpers
         
 Template.doc_history_event.helpers
     # event_icon_name: ->
-    #     # console.log @event_type
     #     icon = ""
     #     if @event_type
     #         result = switch @event_type

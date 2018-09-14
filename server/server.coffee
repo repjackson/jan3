@@ -1,9 +1,7 @@
 Meteor.users.allow
     update: (userId, doc, fields, modifier) ->
         true
-        # # console.log 'user ' + userId + 'wants to modify doc' + doc._id
         # if userId and doc._id == userId
-        #     # console.log 'user allowed to modify own account'
         #     true
 
 Cloudinary.config
@@ -24,9 +22,6 @@ Meteor.startup(() =>
 
 
 Accounts.onCreateUser (options=null, user)=>
-    # console.log 'trying to update new user with options', options
-    console.log 'trying to update new user ', user
-    console.log 'with options ', options
     if options
         edited_user = Object.assign({
             customer_jpid:options.customer_jpid
@@ -58,8 +53,6 @@ SyncedCron.add
     job: -> 
         Meteor.call 'update_escalation_statuses', (err,res)->
             if err then console.error err
-            # else
-                # console.log 'res:',res
 
 
 SyncedCron.add({
@@ -70,8 +63,6 @@ SyncedCron.add({
         job: -> 
             Meteor.call 'get_recent_customers', (err, res)->
                 if err then console.error err
-                else
-                    console.log 'update customers res:',res
     },{
         name: 'Update users'
         schedule: (parser) ->
@@ -80,8 +71,6 @@ SyncedCron.add({
         job: -> 
             Meteor.call 'sync_ev_users', (err, res)->
                 if err then console.error err
-                else
-                    console.log 'user sync res:',res
     },{
     },{
         name: 'Update franchisee'
@@ -91,8 +80,6 @@ SyncedCron.add({
         job: -> 
             Meteor.call 'get_recent_franchisees', (err, res)->
                 if err then console.error err
-                else
-                    console.log 'update franchisees res:',res
     },{
         name: 'Update office'
         schedule: (parser) ->
@@ -101,8 +88,6 @@ SyncedCron.add({
         job: -> 
             Meteor.call 'get_recent_offices', (err, res)->
                 if err then console.error err
-                else
-                    console.log 'update offices res:',res
     }
 )
 

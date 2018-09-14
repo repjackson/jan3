@@ -1,19 +1,14 @@
 Meteor.methods
     assign_incident_owner_after_submission: (incident_doc_id)->
-        # console.log incident_doc_id
         incident_doc = Docs.findOne incident_doc_id
-        # console.log incident_doc
         incidents_office =
             Docs.findOne
                 "ev.MASTER_LICENSEE": incident_doc.incident_office_name
                 type:'office'
-        # console.log incidents_office
         if incidents_office
             incident_owner = incidents_office["#{incident_doc.incident_type}_incident_owner"]
-            # console.log incident_owner
             if incident_owner
                 owner_user = Meteor.users.findOne username:incident_owner
-                # console.log 'owner_user', owner_user
                 Docs.update incident_doc_id,
                     $addToSet: assigned_to: owner_user._id
                     $set: assignment_timestamp:Date.now()
@@ -34,7 +29,6 @@ Meteor.methods
         Meteor.call 'create_event', incident_doc_id, 'unassignment', "#{username} marked task complete and was unassigned."
         # assign owner if no one else
         updated_doc = Docs.findOne incident_doc_id
-        console.log updated_doc.assigned_to.length
         if updated_doc.assigned_to.length is 0
             incident_office = Docs.findOne({type:'office', "ev.ID":updated_doc.office_jpid})
             owner_value = incident_office["#{incident_doc.incident_type}_incident_owner"]
@@ -120,7 +114,6 @@ Meteor.methods
             type:'franchisee'
         }
             
-        # console.log 'franchisee', franchisee 
         office_doc = Docs.findOne {
             "ev.MASTER_LICENSEE":incident.incident_office_name
             type:'office'
@@ -130,7 +123,6 @@ Meteor.methods
         
         initial_franchisee_value = office_doc["escalation_1_#{incident.incident_type}_contact_franchisee"]
         initial_customer_value = office_doc["escalation_1_#{incident.incident_type}_contact_customer"]
-        # console.log 'initial_secondary_contact_value', initial_secondary_contact_value
         mail_fields = {
             to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
@@ -199,7 +191,6 @@ Meteor.methods
             type:'franchisee'
         }
             
-        # console.log 'franchisee', franchisee 
         office_doc = Docs.findOne {
             "ev.MASTER_LICENSEE":incident.incident_office_name
             type:'office'
@@ -211,11 +202,7 @@ Meteor.methods
         escalation_franchisee_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_contact_franchisee"]
         escalation_customer_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_contact_customer"]
         
-        # console.log escalation_franchisee_value
         
-        # console.log "escalation_#{incident.level}_secondary_contact"
-        # console.log 'incident_owner_username',incident_owner_username
-        # console.log 'escalation_secondary_contact_value',escalation_secondary_contact_value
         mail_fields = {
             to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"

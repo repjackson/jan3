@@ -1,20 +1,11 @@
 Meteor.methods
     call_lodestar: ->
         HTTP.call 'GET',"https://sandbox.lodestarbpm.com/test/api-test.php", (err,res)->
-            if err then console.log err 
+            if err then console.error err 
             else 
                 body = res.content
                 json = JSON.parse body
                 
-                console.log json
-                console.log 'type', typeof json
-                console.log 'keys', _.keys(json)
-                for thing in json
-                    console.log thing
-                
-                for office in json.offices
-                    console.log office
-
 
 
     sync_ev_users: ()->
@@ -34,16 +25,13 @@ Meteor.methods
         
         for user_string in split_res
             split_user = user_string.split '|'
-            console.log split_user
             if split_user[0]
                 found_user = 
                     Meteor.users.findOne 
                         username:split_user[0]
                 if found_user
-                    console.log 'during sync, found user', split_user[0]
                     Meteor.call 'get_user_info', split_user[0]
                 else
-                    console.log 'need to add user', split_user[0]
                     options = {}
                     options.profile = {}
                     options.username = split_user[0]
@@ -51,17 +39,13 @@ Meteor.methods
                     options.profile.last_name = split_user[2]
                     result = Accounts.createUser(options)
                     if result
-                        console.log 'add user result', result
-                        console.log 'added user', options.username
                         Meteor.call 'get_user_info', options.username
     get_user_info: (username)->
         # users_cursor = Meteor.users.find({}).fetch()
         # for each_user in users_cursor
 
         user_doc = Meteor.users.findOne username:username
-        # console.log each_user
         # if each_user.ev.LAST_NAME
-        #     console.log 'skipping existing ev', each_user.username
         # else 
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers: "User-Agent": "Meteor/1.0"
@@ -70,8 +54,6 @@ Meteor.methods
                 password:'j@NhU8'
                 statevar:'get_user_info'
                 login_id: username
-                # console.log 'new id', new_id
-        # console.log res
         if res.content.includes("denied")
             throw new Meteor.Error('permission denied', "Permission denied to get user")
         else
@@ -221,8 +203,6 @@ Meteor.methods
                             type: 'special_service'
                             jpid: doc.ID
                     if existing_service_doc
-                        console.log "existing special_service #{existing_service_doc.ev.FRANCHISEE}"
-                        # console.log doc
                         Docs.update existing_service_doc._id,
                             $set:
                                 ev: doc
@@ -231,7 +211,6 @@ Meteor.methods
                             type:'special_service'
                             jpid: doc.ID
                             ev: doc
-                        console.log "added #{doc.ID}"
     
     get_ev_finance: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -246,7 +225,6 @@ Meteor.methods
                 page_length:'10000'
                 record_start:'10000'
                 record_count:'10000'
-        # console.log res
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
@@ -256,12 +234,9 @@ Meteor.methods
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                     # doc.type = 'customer'
-                    # console.log doc
                     existing_finance_doc = 
                         Docs.findOne "ev.BILL_QB_INVOICE": doc.BILL_QB_INVOICE
                     if existing_finance_doc
-                        console.log "existing finance #{existing_finance_doc}"
-                        # console.log doc
                         Docs.update existing_finance_doc._id,
                             $set:
                                 ev: doc
@@ -269,7 +244,6 @@ Meteor.methods
                         new_finance_doc = Docs.insert 
                             type:'finance'
                             ev: doc
-                        console.log "added #{doc.CUSTOMER} invoice" 
     
     sync_offices: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -285,35 +259,28 @@ Meteor.methods
                 record_start:'1'
                 record_count:'250'
         # return res.content
-        # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
         #         # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
         #         # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
         #         # new_id = Docs.insert 
-        #         # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    console.log doc
                     # doc.type = 'customer'
                     existing_office_doc = 
                         Docs.findOne 
                             type: 'office'
                             "ev.ID": doc.ID
                     if existing_office_doc
-                        console.log "existing office #{existing_office_doc.ev.MASTER_LICENSEE}"
-                        # console.log doc
                         Docs.update existing_office_doc._id,
                             $set: ev: doc
                     else                    
                         new_office_doc = Docs.insert 
                             type:'office'
                             ev: doc
-                        console.log "added #{doc.ID}"
     
     sync_customers: () ->
-        console.log 'starting customer sync'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
@@ -327,24 +294,20 @@ Meteor.methods
                 record_start:'1'
                 record_count:'40000'
         # return res.content
-        # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
                 # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
                 # new_id = Docs.insert 
-                # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    console.log doc
                     # doc.type = 'customer'
                     existing_customer_doc = 
                         Docs.findOne 
                             type: 'customer'
                             "ev.CUST_NAME": doc.CUST_NAME
                     if existing_customer_doc
-                        console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
                         Docs.update existing_customer_doc._id,
                             $set:
                                 ev: doc
@@ -352,10 +315,8 @@ Meteor.methods
                         new_customer_doc = Docs.insert 
                             type: 'customer'
                             ev: doc
-                        console.log "added #{doc.CUST_NAME}"
                         
     sync_ny_customers: () ->
-        console.log 'starting ny customer sync'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
@@ -369,24 +330,20 @@ Meteor.methods
                 record_start:'1'
                 record_count:'1000'
         # return res.content
-        # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
                 # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
                 # new_id = Docs.insert 
-                # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # console.log doc
                     # doc.type = 'customer'
                     existing_customer_doc = 
                         Docs.findOne 
                             type: 'customer'
                             "ev.CUST_NAME": doc.CUST_NAME
                     if existing_customer_doc
-                        console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
                         Docs.update existing_customer_doc._id,
                             $set:
                                 ev: doc
@@ -394,10 +351,8 @@ Meteor.methods
                         new_customer_doc = Docs.insert 
                             type: 'customer'
                             ev: doc
-                        console.log "added #{doc.CUST_NAME}: #{doc.MASTER_LICENSEE}"
                         
     # sync_ny_statements: () ->
-    #     console.log 'starting ny statement sync'
     #     res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
     #         headers:"User-Agent": "Meteor/1.0"
     #         params:
@@ -411,24 +366,20 @@ Meteor.methods
     #             record_start:'1'
     #             record_count:'500'
     #     # return res.content
-    #     # console.log res.content
     #     xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
     #         if err then console.error('errors',err)
     #         else
     #             # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
     #             # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
     #             # new_id = Docs.insert 
-    #             # console.log 'new id', new_id
     #         if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
     #             for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-    #                 console.log doc
     #                 # doc.type = 'statment'
     #                 existing_statment_doc = 
     #                     Docs.findOne 
     #                         type: 'statment'
     #                         "ev.CUST_NAME": doc.CUST_NAME
     #                 if existing_statment_doc
-    #                     console.log "existing statment #{existing_statment_doc.ev.CUST_NAME}"
     #                     Docs.update existing_statment_doc._id,
     #                         $set:
     #                             ev: doc
@@ -436,11 +387,9 @@ Meteor.methods
     #                     new_statment_doc = Docs.insert 
     #                         type: 'statment'
     #                         ev: doc
-    #                     console.log "added #{doc.CUST_NAME}"
                         
                         
 #     list_attachments: (id) ->
-#         console.log 'starting ny statement sync'
 #         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
 #             headers:"User-Agent": "Meteor/1.0"
 #             params:
@@ -450,24 +399,20 @@ Meteor.methods
 #                 username_display:'ID'
 #                 id:id
 #         # return res.content
-#         console.log res.content
 # #         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
 # #             if err then console.error('errors',err)
 # #             else
 # #                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
 # #                 # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
 # #                 # new_id = Docs.insert 
-# #                 # console.log 'new id', new_id
 # #             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
 # #                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-# #                     console.log doc
 # #                     # doc.type = 'statment'
 # #                     existing_statment_doc = 
 # #                         Docs.findOne 
 # #                             type: 'statment'
 # #                             "ev.CUST_NAME": doc.CUST_NAME
 # #                     if existing_statment_doc
-# #                         console.log "existing statment #{existing_statment_doc.ev.CUST_NAME}"
 # #                         Docs.update existing_statment_doc._id,
 # #                             $set:
 # #                                 ev: doc
@@ -475,12 +420,10 @@ Meteor.methods
 # #                         new_statment_doc = Docs.insert 
 # #                             type: 'statment'
 # #                             ev: doc
-# #                         console.log "added #{doc.CUST_NAME}"
 
 
 
     get_recent_customers: () ->
-        console.log 'starting recent customers update'
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
             headers:"User-Agent": "Meteor/1.0"
             params:
@@ -494,28 +437,23 @@ Meteor.methods
                 record_start:'1'
                 record_count:'1000'
         # return res.content
-        # console.log res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
             else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
                 # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
                 # new_id = Docs.insert 
-                # console.log 'new id', new_id
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
                 for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # console.log doc
                     # doc.type = 'customer'
                     existing_customer_doc = 
                         Docs.findOne 
                             type: 'customer'
                             "ev.CUST_NAME": doc.CUST_NAME
                     if existing_customer_doc
-                        console.log "existing customer #{existing_customer_doc.ev.CUST_NAME}"
                         Docs.update existing_customer_doc._id,
                             $set: ev: doc
                     unless existing_customer_doc                    
                         new_customer_doc = Docs.insert 
                             type: 'customer'
                             ev: doc
-                        console.log "added #{doc.CUST_NAME}: #{doc.MASTER_LICENSEE}"

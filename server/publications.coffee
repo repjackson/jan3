@@ -23,7 +23,6 @@ Meteor.publish 'type', (type)->
         
 Meteor.publish 'block_docs', (
     block_doc_id, 
-    tags
     filter_key=null, 
     filter_value=null, 
     query=null, 
@@ -37,7 +36,6 @@ Meteor.publish 'block_docs', (
         page_doc = Docs.findOne "ev.ID":page_jpid
         match = {}
         match.type = block.children_doc_type
-        if tags.length > 0 then match.tags = $all: tags
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
         calculated_value =

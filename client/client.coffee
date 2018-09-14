@@ -126,10 +126,6 @@ Template.registerHelper 'is_current_route', (name) ->
     if FlowRouter.current().route.name is name then 'active' else ''
     
     
-Template.registerHelper 'tag_class', () -> 
-    if selected_tags.array() and @valueOf() in selected_tags.array() then 'blue' else 'basic'
-    
-    
 Template.registerHelper 'is_admin', () -> 
     if Meteor.user() and Meteor.user().roles
         'admin' in Meteor.user().roles

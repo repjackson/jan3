@@ -271,7 +271,6 @@ Meteor.methods
         customer_doc = Docs.findOne
             "ev.ID": customer_jpid
             type:'customer'
-        console.log customer_doc
         if customer_doc and customer_doc.ev.FRANCHISEE
             found_franchisee = Docs.findOne
                 "ev.FRANCHISEE": customer_doc.ev.FRANCHISEE
@@ -405,23 +404,15 @@ Meteor.methods
             { $set: "fields.$.title": title }
 
     update_field_slug: (doc_id, field_object, slug)->
-        # console.log doc_id
-        # console.log field_object
-        # console.log slug
         Docs.update { _id:doc_id, fields:field_object },
             { $set: "fields.$.slug": slug }
 
     pull_schema_field: (schema_doc_id, field_object)->
-        # console.log doc_id
-        # console.log field_object
-        # console.log slug
         Docs.update { _id:schema_doc_id },
             { $pull: "fields": field_object }
 
 
     update_field_key_value: (doc_id, field_object, key, value)->
-        # console.log 'updating field', field_object, key
-        # console.log value
         Docs.update { _id:doc_id, fields:field_object },
             { $set: "fields.$.#{key}": value }
 
@@ -430,20 +421,12 @@ Meteor.methods
     slugify: (doc_id, field_object, title)->
         slug = title.toString().toLowerCase().replace(/\s+/g, '_').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '_').replace(/^-+/, '').replace(/-+$/,'')
         return slug
-        # console.log field_object
-        # console.log doc_id
         # # Docs.update { _id:doc_id, fields:field_object },
         # Docs.update { _id:doc_id, fields:field_object },
         #     { $set: "fields.$.slug": slug }
         
         
     update_sla_setting: (office_jpid, incident_type, escalation_number, key, value)->
-        console.log 'trying to update sla setting'
-        console.log office_jpid
-        console.log incident_type
-        console.log escalation_number
-        console.log key
-        console.log value
         
         sla_doc= Docs.update {
             type;'sla_setting'
@@ -451,5 +434,3 @@ Meteor.methods
             incident_type:incident_type
             escalation_number:escalation_number
         }, { $set: "#{key}":value }, {upsert:true}
-        if sla_doc
-            console.log sla_doc

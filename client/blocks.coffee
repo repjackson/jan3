@@ -680,7 +680,6 @@ Template.block.onCreated ->
     @autorun -> Meteor.subscribe 'stat', match_object
     @autorun => Meteor.subscribe 'block_docs', 
         @data._id, 
-        selected_tags.array()
         @data.filter_key, 
         @data.filter_value, 
         Session.get('query'), 
