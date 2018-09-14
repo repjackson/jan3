@@ -216,3 +216,13 @@ template(name='edit_image_field')
         //         label or Choose Cloudinary Image Id
         //         input#input_image_id(type='text')
         
+
+
+template(name='cell_text_edit')
+    if editing_cell
+        .ui.fluid.icon.input
+            input.cell_val(type='text' value=cell_value )
+            i.save_field.link.checkmark.icon
+    else
+        |#{cell_value}
+        i.edit_field.link.spaced.small.pencil.icon

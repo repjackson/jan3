@@ -384,8 +384,6 @@ Template.edit_array_field.events
     #     $('.new_entry').val('')
    
     'keyup .new_entry': (e,t)->
-        
-
         e.preventDefault()
         # val = $('.new_entry').val().toLowerCase().trim()                    
         val = $(e.currentTarget).closest('.new_entry').val().toLowerCase().trim()   
@@ -407,7 +405,6 @@ Template.edit_array_field.events
 
 
     'click .doc_tag': (e,t)->
-
         tag = @valueOf()
         Docs.update FlowRouter.getParam('doc_id'),
             $pull: "#{Template.parentData(0).key}": tag
@@ -428,3 +425,30 @@ Template.edit_array_field.helpers
     #         }
     #         ]
     # }
+
+Template.cell_text_edit.onCreated ->
+    @editing_mode = new ReactiveVar false
+
+Template.cell_text_edit.helpers
+    editing_cell: -> Template.instance().editing_mode.get()
+
+    cell_value: ->
+        # console.log 'this', @
+        # console.log 'current data', Template.currentData()
+        # console.log 'parent 0', Template.parentData()
+        # console.log 'parent 1', Template.parentData(1)
+        # console.log 'parent 2', Template.parentData(2)
+        # console.log 'parent 3', Template.parentData(3)
+        cell_object = Template.parentData(3)
+        @["#{cell_object.key}"]
+
+Template.cell_text_edit.events
+    'click .edit_field': (e,t)-> t.editing_mode.set true
+    'click .save_field': (e,t)-> t.editing_mode.set false
+
+    'change .cell_val': (e,t)->
+        cell_object = Template.parentData(3)
+        
+        text_value = e.currentTarget.value
+        Docs.update @_id,
+            { $set: "#{cell_object.key}": text_value }

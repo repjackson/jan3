@@ -3,12 +3,8 @@ Template.office_dashboard.helpers
 
 
 Template.office_employees.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('jpid')
     @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('jpid'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
     @autorun => Meteor.subscribe 'office_employee_count', FlowRouter.getParam('jpid')
-    Session.set('page_size',10)
-    Session.set('skip',0)
-    Session.set 'page_number', 1
 
 Template.office_employees.onRendered ->
     Meteor.setTimeout ->
