@@ -368,55 +368,18 @@ template(name='call_method')
         else
             |#{name}
     
-
-    
-template(name='mini_inline_sprite')
-    img.ui.mini.inline.spaced.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-template(name='mini_sprite')
-    img.ui.mini.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-template(name='tiny_sprite')
-    img.ui.tiny.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-template(name='avatar_sprite')
-    img.ui.avatar.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-template(name='small_sprite')
-    img.ui.small.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-template(name='medium_sprite')
-    img.ui.medium.image(src="https://png.icons8.com/color/100/000000/#{name}.png" class=classes title=tooltip)
-template(name='dots')
-    img(src="https://png.icons8.com/hide/#{name}/100/000000" class=classes title=tooltip)
-
 template(name='dusk_icon')
     img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
 template(name='icon')
     img.ui.mini.image(src="https://png.icons8.com/office/80/000000/#{name}.png" class=classes data-content=popup title=title)
-    // unless currentUser
-    //     img.ui.tiny.image(src="https://png.icons8.com/color/96/000000/#{name}.png" class=classes)
-    // if is_customer
-    //     img.ui.mini.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes)
-    // if is_admin
-    //     img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes)
-    // if is_office
-    //     img.ui.mini.image(src="https://png.icons8.com/office/64/000000/#{name}.png" class=classes)
 
 
 template(name='iconlarge')
     img.ui.image(src="https://png.icons8.com/office/80/000000/#{name}.png")
-    // if is_customer
-    //     img.ui.image(src="https://png.icons8.com/office/60/000000/#{name}.png")
-    // else
-    //     img.ui.image(src="https://png.icons8.com/ultraviolet/60/000000/#{name}.png")
 
 template(name='iconsmall')
     img.ui.mini.inline.image(src="https://png.icons8.com/office/80/000000/#{name}.png" class=classes)
-    // unless currentUser
-    //     img.ui.mini.inline.image(src="https://png.icons8.com/color/96/000000/#{name}.png" class=classes)
-    // if is_customer
-    //     img.ui.mini.inline.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes)
-    // if is_admin
-    //     img.ui.mini.inline.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes)
-    // if is_office
-    //     img.ui.mini.inline.image(src="https://png.icons8.com/office/64/000000/#{name}.png" class=classes)
 
 
 
@@ -802,19 +765,27 @@ template(name='edit_block')
         h3.ui.header 
             +icon name=icon
             |Edit #{title}
-        .ui.top.attached.tabular.pointing.secondary.menu
-            a.active.item(data-tab='general') General
+        .ui.top.attached.tabular.secondary.menu
+            a.active.item(data-tab='general') 
+                i.pencil.icon
+                |General
             a.item(data-tab='filter') 
                 i.filter.icon
                 |Filter
-            a.item(data-tab='schema') Schema
-            a.item(data-tab='view_type') View Type
-            a.item(data-tab='fields') Fields
+            a.item(data-tab='schema') 
+                i.fork.icon
+                |Schema
+            a.item(data-tab='view') 
+                i.object.group.icon
+                |View
+            a.item(data-tab='fields') 
+                i.list.ui.icon
+                |Fields
         .ui.bottom.attached.active.tab.secondary.segment(data-tab='general')
             i.remove_block.remove.link.icon(title='remove block')
             +toggle_boolean key='published' yes_label='Published' no_label='Private'
-            +toggle_boolean key='view_title' yes_label='Title Visible' no_label='Title Hidden'
-            +toggle_boolean key='view_add_button' yes_label='Show Add Button' no_label='Hide Add Button'
+            +toggle_boolean key='view_title' yes_label='Title' no_label='No Title'
+            +toggle_boolean key='view_add_button' yes_label='Add Button' no_label='No Add Button'
             | Block Rank
             +set_key_value key='rank' value=1 label='1'
             +set_key_value key='rank' value=2 label='2'
@@ -868,22 +839,13 @@ template(name='edit_block')
         .ui.bottom.attached.tab.secondary.segment(data-tab='schema')
             each schemas
                 +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
-            .ui.header View Mode
-            +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
-            +set_key_value key='view_mode' value='list' label='List' icon='list'
-        .ui.bottom.attached.tab.secondary.segment(data-tab='view_type')
-            +set_key_value key='view_mode' value='table' label='Table' icon='data-sheet-filled'
-            +set_key_value key='view_mode' value='list' label='List' icon='list'
-            +set_key_value key='view_mode' value='comments' label='Comments' icon='comments'
-            +set_key_value key='view_mode' value='grid' label='Grid' icon='grid'
-            +set_key_value key='view_mode' value='header' label='Header'
-            +set_key_value key='view_mode' value='cards' label='Cards'
-            +set_key_value key='view_mode' value='sla_settings' label='SLA Settings'
-            ui.header Stat Type
+            .ui.header Stat Type
             +set_key_value key='table_stat_type' value='total' label='Total'
-            // +set_key_value key='table_stat_type' value='active' label='Active'
             +set_key_value key='table_stat_type' value='office' label='Office'
-            +toggle_boolean key='view_table_header' yes_label='Table Header Shown' no_label='Table Header Hidden'
+        .ui.bottom.attached.tab.secondary.segment(data-tab='view')
+            each views
+                +set_key_value_2 key='view' value=slug label=title icon=icon
+            +toggle_boolean key='view_table_header' yes_label='Table Header' no_label='No Table Header'
         .ui.bottom.attached.tab.secondary.segment(data-tab='fields')
             h4 Available Schema Fields
             each schema_doc.fields

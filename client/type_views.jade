@@ -274,22 +274,19 @@ template(name='schema_view')
                 .ui.header Slug: #{slug}
                 each tags
                     .ui.label #{this}
-                +comments
-            .twelve.wide.column
-                | !{html}
                 .ui.header Fields
                 .ui.list
                     each fields
                         .item #{title} (#{slug}) [#{type}]
-                .ui.secondary.segment
-                    .ui.header #{title} hi Docs
-                    +add_button type=slug
-                    .ui.stackable.three.cards
-                        each schema_docs
-                            +doc_card
-                            // +Template.dynamic template=single_view
+            .twelve.wide.column
+                .ui.header #{title} Docs
+                +add_button type=slug
+                .ui.stackable.three.cards
+                    each schema_docs
+                        +doc_card
+                        // +Template.dynamic template=single_view
 
-                            // +schema_doc
+                        // +schema_doc
                 
                 
 template(name='schema_selector')

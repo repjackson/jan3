@@ -3,7 +3,6 @@ Meteor.publish 'stats', ->
 
 # Meteor.publish 'stat', (doc_type, stat_type)->
 Meteor.publish 'stat', (match_object)->
-    # console.log 'match_object', match_object
     Meteor.call 'calculate_stat', match_object
     Stats.find match_object
 
@@ -91,13 +90,11 @@ Meteor.methods
     calculate_stat: (stat_match_object)->
         count_match_object = {}
         if stat_match_object
-            # console.log 'calc stat with', stat_match_object
             if stat_match_object.stat_type and stat_match_object.stat_type is 'office'
                 office_doc = Docs.findOne
                     type:'office'
                     "ev.ID":stat_match_object.jpid
                 if office_doc
-                    console.log office_doc
                     switch stat_match_object.doc_type
                         when 'incident' then count_match_object.incident_office_name = office_doc.ev.MASTER_LICENSEE
                         when 'franchisee' then count_match_object["ev.MASTER_LICENSEE"] = office_doc.ev.MASTER_LICENSEE
@@ -110,7 +107,5 @@ Meteor.methods
                 count_match_object["ev.ACCOUNT_STATUS"] = 'ACTIVE'
             count = 
                 Docs.find(count_match_object).count()
-            # console.log 'calculated_count', count
-            # console.log 'calculated_count ob', count_match_object
             Stats.update(stat_match_object, { $set:amount:count },{ upsert:true })
     

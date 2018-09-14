@@ -225,4 +225,6 @@ template(name='cell_text_edit')
             i.save_field.link.checkmark.icon
     else
         |#{cell_value}
-        i.edit_field.link.spaced.small.pencil.icon
+        &nbsp;
+        if editing_mode
+            i.edit_field.link.small.pencil.icon

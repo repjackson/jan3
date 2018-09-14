@@ -645,9 +645,9 @@ Template.blocks.helpers
 
 Template.edit_block.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'schema'
+    @autorun => Meteor.subscribe 'type', 'view'
 
 Template.block.onCreated ->
-    # Meteor.subscribe 'type', 'event_type'
     # Meteor.subscribe('facet', 
     #     selected_tags.array()
     #     selected_author_ids.array()
@@ -695,6 +695,7 @@ Template.block.onCreated ->
     
 Template.edit_block.helpers
     schemas: -> Docs.find type:'schema'
+    views: -> Docs.find type:'view'
 Template.block.helpers
     sort_descending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
@@ -787,12 +788,12 @@ Template.edit_block.helpers
             values
         
 Template.block.helpers
-    is_table: -> @view_mode is 'table'    
-    is_list: -> @view_mode is 'list'    
-    is_comments: -> @view_mode is 'comments'    
-    is_grid: -> @view_mode is 'grid'    
-    is_cards: -> @view_mode is 'cards'    
-    is_sla_settings: -> @view_mode is 'sla_settings'    
+    is_table: -> @view is 'table'    
+    is_list: -> @view is 'list'    
+    is_comments: -> @view is 'comments'    
+    is_grid: -> @view is 'grid'    
+    is_cards: -> @view is 'cards'    
+    is_sla_settings: -> @view is 'sla_settings'    
         
 Template.block.events
     'click .add_block_child': (e,t)->
