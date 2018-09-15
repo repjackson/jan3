@@ -97,7 +97,6 @@ Template.registerHelper 'long_format', (input) -> moment(input).format('MMMM Do 
 
 Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getParam('doc_id')
 
-Template.registerHelper 'current_page', () -> Session.get 'page_number'
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 

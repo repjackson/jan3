@@ -88,11 +88,17 @@ Template.block.helpers
 
     show_decrement: -> Template.instance().page_number.get()>1
     
-    show_increment: -> Template.instance().page_number.get() < Template.instance().number_of_pages.get()
+    show_increment: -> 
+        current_page = Template.instance().page_number.get() 
+        number_of_pages = Template.instance().number_of_pages.get() 
+        console.log 'current_page', current_page
+        console.log 'number_of_pages', number_of_pages
+        current_page < number_of_pages
 
     show_10_decrement: -> Template.instance().page_number.get() >  10
 
-
+    current_page: -> 
+        current_page = Template.instance().page_number.get() 
 
     skip_amount: -> parseInt(Template.instance().skip.get())+1
     end_result: -> Template.instance().skip.get() + 1 + Template.instance().page_size.get()
@@ -174,6 +180,7 @@ Template.block.helpers
             while page<number_of_pages
                 pages.push {number:page+1}
                 page++
+            Template.instance().number_of_pages.set number_of_pages
             return pages
 
 

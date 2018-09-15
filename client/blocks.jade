@@ -608,8 +608,8 @@ template(name='assignment_widget')
 template(name='blocks')
     if editing_mode
         #add_block.ui.button(title="Add block with #{tags}")
-            i.fork.icon
-            |Add Child Block
+            i.plus.icon
+            |Child Block
     each blocks
         +block 
                                             
@@ -628,7 +628,7 @@ template(name='block')
                     .ui.add_block_child.icon.button
                         i.plus.icon
                 if is_cards
-                    .ui.centered.three.cards
+                    .ui.centered.three.stackable.cards
                         each children
                             .ui.card
                                 if title
@@ -725,7 +725,7 @@ template(name='block')
                                             else
                                                 | #{child_schema_field_value}
                 if is_grid
-                    .ui.equal.width.four.column.grid
+                    .ui.equal.width.four.column.stackable.grid
                         each children
                             .column
                                 .ui.secondary.segment
@@ -763,7 +763,7 @@ template(name='edit_block')
     .ui.tertiary.segment
         h3.ui.header 
             +icon name=icon
-            |Edit #{title}
+            |Edit '#{title}' Block
         .ui.top.attached.tabular.secondary.menu
             a.active.item(data-tab='general') 
                 i.pencil.icon

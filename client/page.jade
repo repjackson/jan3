@@ -53,22 +53,24 @@ template(name='page')
             if editing_mode
                 .ui.fluid.tertiary.segment.editing_segment
                     .ui.header 
+                        a(href='/p/pages' title='Admin Pages')
+                            i.clone.link.icon
                         if icon 
                             +icon name=icon
-                        |Edit Page
+                        |Edit '#{title}' Page
                     .ui.form
                         .fields
                             +edit_page_text_field key='title' label='Title'
                             +edit_page_text_field key='icon' label='Icon'
                             +edit_page_text_field key='slug' label='Slug'
                             +edit_number_field key='number' label='Rank'
-                    +edit_array_field key='tags'
+                    // +edit_array_field key='tags'
                     +toggle_boolean key='admin_nav' yes_label='Admin Nav' no_label='Admin Nav'
                     +toggle_boolean key='office_nav' yes_label='Office Nav' no_label='Office Nav'
                     +toggle_boolean key='customer_nav' yes_label='Customer Nav' no_label='Customer Nav'
             +blocks
     else
         if editing_mode
-            .ui.container
-                h3.ui.header No Page found with #{current_page_slug}.
+            .ui.basic.center.aligned.segment
+                h3.ui.header No Page with #{current_page_slug}.
                 #create_page.ui.button Create
