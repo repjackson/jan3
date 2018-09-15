@@ -37,10 +37,6 @@ Template.user_view.helpers
 Template.user_view.events
 
 
-Template.users.events
-    'click .sync_ev_users': ->
-        Meteor.call 'sync_ev_users',(err,res)->
-            if err then console.error err
 
 Template.user_view.events
     'click .get_user_info': ->

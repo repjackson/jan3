@@ -662,15 +662,14 @@ template(name='block')
                                     .four.wide.column
                                         .table_stats #{skip_amount}-#{end_result} / #{count_amount}
                                     .four.wide.column
-                                        .ui.compact.buttons
-                                            if show_10
-                                                .set_10.ui.button(class="{{page_size_button_class '10'}}" title='View 10') 10
-                                            if show_20
-                                                .set_20.ui.button(class="{{page_size_button_class '20'}}" title='View 20') 20
-                                            if show_50
-                                                .set_50.ui.button(class="{{page_size_button_class '50'}}" title='View 50') 50
-                                            if show_100
-                                                .set_100.ui.button(class="{{page_size_button_class '100'}}" title='View 100') 100
+                                        if show_10
+                                            .set_10.ui.basic.compact.button(class="{{page_size_button_class '10'}}" title='View 10') 10
+                                        if show_20
+                                            .set_20.ui.basic.compact.button(class="{{page_size_button_class '20'}}" title='View 20') 20
+                                        if show_50
+                                            .set_50.ui.basic.compact.button(class="{{page_size_button_class '50'}}" title='View 50') 50
+                                        if show_100
+                                            .set_100.ui.basic.compact.button(class="{{page_size_button_class '100'}}" title='View 100') 100
                                     .four.wide.column
                                         if pages
                                             .ui.right.floated.pagination.small.menu
