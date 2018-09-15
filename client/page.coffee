@@ -24,13 +24,12 @@ Template.page.onCreated ->
     @autorun => Meteor.subscribe 'blocks_by_page_slug', FlowRouter.getParam('page_slug')
 
     
-    
-# Template.page_view.helpers
-#     page_doc: -> 
-#         FlowRouter.watchPathChange();
-#         currentContext = FlowRouter.current();
-#         Docs.findOne currentContext.params.doc_id
-    
+Template.page.events
+    'click #create_page': ->
+        slug = FlowRouter.getParam('page_slug')
+        Docs.insert
+            type:'page'
+            slug:slug
     
 Template.page.helpers
     page_doc: -> 
@@ -39,6 +38,8 @@ Template.page.helpers
         Docs.findOne
             type:'page'
             slug: FlowRouter.getParam('page_slug')
+    
+    current_page_slug: -> FlowRouter.getParam('page_slug')
     
     
 Template.dev.events
@@ -56,25 +57,3 @@ Template.dev.events
             if err then console.error err
     
     
-# Template.page_view.events
-    # 'click #add_row': ->
-    #     current_page = Docs.findOne FlowRouter.getParam('doc_id')
-    #     next_row_number = current_page.rows.length+1
-    #     Docs.update FlowRouter.getParam('doc_id'),
-    #         $addToSet:
-    #             rows: { 
-    #                 number:next_row_number
-    #             }
-    # 'click .add_column': ->
-    #     current_page = Docs.findOne FlowRouter.getParam('doc_id')
-    #     Meteor.call 'add_column', FlowRouter.getParam('doc_id'), @, 'row_class', row_class_value
-        
-        
-            
-    # 'click .remove_row': ->
-    #     Docs.update FlowRouter.getParam('doc_id'),
-    #         $pull: rows: @
-        
-    # 'blur .row_class': (e,t)->
-    #     row_class_value = e.currentTarget.value
-    #     Meteor.call 'update_row_key', FlowRouter.getParam('doc_id'), @, 'row_class', row_class_value

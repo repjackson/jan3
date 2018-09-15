@@ -51,9 +51,6 @@ template(name='customer_view')
                 +blocks tags='customer,service,special_service'
                 +blocks tags='customer,service,service_request'
                 +blocks tags='customer,activity'
-
-
-
                 
 template(name='my_customer_account_card')
     .ui.card
@@ -187,27 +184,12 @@ template(name='schema_field_edit')
                 .ui.labeled.two.wide.input
                     .ui.basic.label Description
                     input.action_description(type='text' value=description)
-    
-        // +edit_text_field key='key' label='Slug (lowercase title)'
-        // +edit_text_field key='type' label='Type'
-        // div Table Cell Class
-        //     +select_field_key_value key='table_cell_class' value='active' label='Active'
-        //     +select_field_key_value key='table_cell_class' value='' label='None'
         +toggle_field_boolean key='ev_subset' label='EV Subset'
         div
         strong Type
         each fields
             +select_field_key_value key='field_type' value=slug icon=icon label=title
         
-        // +select_field_key_value key='field_type' value='single_reference' label='Single Reference'
-        // +select_field_key_value key='field_type' value='number' label='Number'
-        // +select_field_key_value key='field_type' value='address' label='Address'
-        // +select_field_key_value key='field_type' value='phone' label='Phone'
-        // +select_field_key_value key='field_type' value='html' label='HTML'
-        // +select_field_key_value key='field_type' value='file' label='File'
-        // +select_field_key_value key='field_type' value='user_reference' label='User Reference'
-        // +select_field_key_value key='field_type' value='email' label='Email'
-        // +select_field_key_value key='field_type' value='boolean' label='Boolean'
 
 template(name='action_edit')
     .ui.segment
@@ -234,7 +216,7 @@ template(name='action_edit')
 
 
 template(name='select_field_key_value')
-    .select_field_key_value.ui.small.compact.button(class=select_field_key_value_button_class) 
+    .select_field_key_value.ui.compact.button(class=select_field_key_value_button_class) 
         if icon
             i.icon
                 +icon name=icon
@@ -260,7 +242,7 @@ template(name='schema_view')
             .three.wide.column
                 +edit_button
         .row
-            .four.wide.column
+            .three.wide.column
                 +add_button type=slug
                 h3.ui.header Title: #{title}
                 h3.ui.header Slug: #{slug}
@@ -270,8 +252,8 @@ template(name='schema_view')
                 .ui.list
                     each fields
                         .item #{title} (#{slug}) [#{type}]
-            .twelve.wide.column
-                .ui.stackable.three.cards
+            .thirteen.wide.column
+                .ui.stackable.four.cards
                     each schema_docs
                         +doc_card
                         // +Template.dynamic template=single_view
@@ -292,8 +274,3 @@ template(name='schema_doc')
                 +Template.dynamic template=view_field_template
                 |{{ key_value key=slug}}
                 .ui.label slug:#{slug}
-                
-                
-                
-template(name='view_email') 
-    |#{email}

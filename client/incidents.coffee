@@ -1,9 +1,3 @@
-FlowRouter.route '/p/customer_incidents', 
-    name:'customer_incidents'
-    action: -> BlazeLayout.render 'layout', main:'customer_incidents'
-
-    
-
 Template.add_incident_button.events
     'click #add_incident': ->
         user = Meteor.user()
@@ -353,29 +347,4 @@ Template.sla_rule_doc.events
 Template.full_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
 
-Template.incident_tasks.helpers
-    incident_tasks: ->
-        Docs.find {
-            type: 'incident_task'
-            parent_id: FlowRouter.getParam 'doc_id'
-        }, sort:timestamp:-1
-
-
-Template.incident_tasks.events
-    'click #add_incident_task': ->
-        new_incident_task_id = 
-            Docs.insert
-                type: 'incident_task'
-                parent_id: FlowRouter.getParam 'doc_id'
-        FlowRouter.go "/edit/#{new_incident_task_id}"
-        
-        
-        
-Template.incident_task_edit.onCreated ->
-    @autorun -> Meteor.subscribe 'type','action'
-        
-Template.incident_task_edit.helpers
-    incident: -> Doc.findOne FlowRouter.getParam 'doc_id'
-    action_docs: -> Docs.find type:'action'
-    
     

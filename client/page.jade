@@ -47,90 +47,28 @@ template(name='dev')
 
 
 
-// template(name='page_view')
-//     with page_doc
-//         if editing_mode
-//             .ui.fluid.tertiary.segment.editing_segment
-//                 .ui.header 
-//                     +icon name='user-shield'
-//                     |Edit #{title} Page
-//                 .ui.form
-//                     .fields
-//                         +edit_page_text_field key='title' label='Title'
-//                         +edit_page_text_field key='icon' label='Icon'
-//                         +edit_page_text_field key='slug' label='Slug'
-//                 if icon 
-//                     +icon name=icon
-//                 +edit_array_field key='tags'
-//                 +set_page_key_value key='admin_nav' value=true label='Admin Nav Visible'
-//                 +set_page_key_value key='admin_nav' value=false label='Hidden'
-//                 // +edit_page_text_field key='root_grid_classes' label='Root Grid Classes'
-//                 // #add_row.ui.button add row
-//                 // .ui.header Rows
-//                 // .ui.vertical.segments
-//                 //     each rows
-//                 //         .segment
-//                 //             |#{number} 
-//                 //             input.row_class(type='text' value=row_class placeholder='row class')
-//                 //             .add_column.ui.button add column
-//                 //             each columns
-//                 //                 |#{number} 
-//                 //                 input.column_class(type='text' value=column_class)
-//                 //             i.remove_row.remove.icon
-//         .ui.padded.stackable.grid
-//             .centered.middle.aligned.row
-//                 .three.wide.center.aligned.column
-//                     if is_admin
-//                         +link_button link='/p/admin' icon='user-shield' label='Admin'
-//                 .ten.wide.column
-//                     h2.ui.center.aligned.grey.header 
-//                         +icon name=icon
-//                         | #{title}
-//                 .three.wide.right.aligned.column
-//             .centered.row
-//         +blocks parent_id=_id
-        
-        
 template(name='page')
-    with page_doc
+    if page_doc
+        with page_doc
+            if editing_mode
+                .ui.fluid.tertiary.segment.editing_segment
+                    .ui.header 
+                        if icon 
+                            +icon name=icon
+                        |Edit Page
+                    .ui.form
+                        .fields
+                            +edit_page_text_field key='title' label='Title'
+                            +edit_page_text_field key='icon' label='Icon'
+                            +edit_page_text_field key='slug' label='Slug'
+                            +edit_number_field key='number' label='Rank'
+                    +edit_array_field key='tags'
+                    +toggle_boolean key='admin_nav' yes_label='Admin Nav' no_label='Admin Nav'
+                    +toggle_boolean key='office_nav' yes_label='Office Nav' no_label='Office Nav'
+                    +toggle_boolean key='customer_nav' yes_label='Customer Nav' no_label='Customer Nav'
+            +blocks
+    else
         if editing_mode
-            .ui.fluid.tertiary.segment.editing_segment
-                .ui.header 
-                    if icon 
-                        +icon name=icon
-                    |Edit Page
-                .ui.form
-                    .fields
-                        +edit_page_text_field key='title' label='Title'
-                        +edit_page_text_field key='icon' label='Icon'
-                        +edit_page_text_field key='slug' label='Slug'
-                        +edit_number_field key='number' label='Rank'
-                +edit_array_field key='tags'
-                +toggle_boolean key='admin_nav' yes_label='Admin Nav' no_label='Admin Nav'
-                +toggle_boolean key='office_nav' yes_label='Office Nav' no_label='Office Nav'
-                +toggle_boolean key='customer_nav' yes_label='Customer Nav' no_label='Customer Nav'
-                // +edit_page_text_field key='root_grid_classes' label='Root Grid Classes'
-                // #add_row.ui.button add row
-                // .ui.header Rows
-                // .ui.vertical.segments
-                //     each rows
-                //         .segment
-                //             |#{number} 
-                //             input.row_class(type='text' value=row_class placeholder='row class')
-                //             .add_column.ui.button add column
-                //             each columns
-                //                 |#{number} 
-                //                 input.column_class(type='text' value=column_class)
-                //             i.remove_row.remove.icon
-        // .ui.padded.stackable.grid
-        //     .centered.middle.aligned.row
-        //         .three.wide.center.aligned.column
-        //             if is_admin
-        //                 +link_button link='/p/admin' icon='user-shield' label='Admin'
-        //         .ten.wide.column
-        //             h2.ui.center.aligned.grey.header 
-        //                 +icon name=icon
-        //                 | #{title}
-        //         .three.wide.right.aligned.column
-        //     .centered.row
-        +blocks
+            .ui.container
+                h3.ui.header No Page found with #{current_page_slug}.
+                #create_page.ui.button Create
