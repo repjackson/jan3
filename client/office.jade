@@ -1,22 +1,3 @@
-// template(name='office_header')
-//     with office_doc
-//         .ui.padded.stackable.middle.aligned.grid
-//             // .centered.middle.aligned.row
-//             //     .three.wide.center.aligned.column
-//             //         if is_admin
-//             //             +link_button link='/offices' icon='building' label='Offices'
-//             //     .ten.wide.column
-//             //         h1.ui.center.aligned.header 
-//             //             +icon name='building'
-//             //             |#{ev.MASTER_LICENSEE} #{current_name}
-//             //     .three.wide.right.aligned.column
-//             //         // #calc_office_stats.ui.button Calc Office Stats
-//             unless is_office
-//                 .centered.row
-//                     .sixteen.wide.column
-//                         unless is_customer
-//                             +office_nav
-
 template(name='office_dashboard')
     .ui.padded.stackable.grid
         .row
@@ -61,52 +42,6 @@ template(name='office_dashboard')
                     +blocks tags='office,dashboard,messages'
                     +blocks tags='office,dashboard,comments'
 
-
-template(name='office_employees')
-    .ui.padded.grid
-        // .middle.aligned.row
-        //     +table_header stat_type='office_employees'   
-        .centered.row
-            .sixteen.wide.column
-                table.ui.striped.fixed.single.line.table
-                    thead
-                        +sort_column_header key='username' label='Username'
-                        +sort_column_header key='profile.first_name' label='First Name'
-                        +sort_column_header key='profile.last_name' label='Last Name'
-                        +sort_column_header key='profile.title' label='Title'
-                        +sort_column_header key='profile.function' label='Function'
-                        +sort_column_header key='ev.WORK_TELEPHONE' label='Phone'
-                        +sort_column_header key='email' label='Email' classes='three wide'
-                        th.one.wide(title="Show profile on customer's Dashboard") Public
-                        // th.one.wide Edit
-                        // th.one.wide View
-                    tbody
-                        each office_employees
-                            tr
-                                td.selectable
-                                    a(href="/user/#{username}" title="View #{username} Profile") 
-                                        if profile.image_id
-                                            img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                            .ui.popup
-                                                img.ui.small.image(src="{{c.url profile.image_id height=500 width=500 crop='fill' gravity='face'}}")
-                                        |#{username}
-                                td.selectable(title="View #{username} Profile") 
-                                    a(href="/user/#{username}") 
-                                        |#{profile.first_name} 
-                                td.selectable(title='View Profile')
-                                    a(href="/user/#{username}") 
-                                        |#{profile.last_name}
-                                td #{profile.title}
-                                td #{profile.function}
-                                td #{ev.WORK_TELEPHONE}
-                                td #{email}
-                                td 
-                                    +toggle_user_published
-                                // td 
-                                //     +edit_user_button 
-                                // td 
-                                //     +view_user_button
-                    +table_footer columns='8' stat_type='office_employees'   
 
 
 

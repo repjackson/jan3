@@ -646,6 +646,7 @@ Template.blocks.helpers
 Template.edit_block.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'schema'
     @autorun => Meteor.subscribe 'type', 'view'
+    @autorun => Meteor.subscribe 'type', 'collection'
 
 Template.block.onCreated ->
     # Meteor.subscribe('facet', 
@@ -678,7 +679,7 @@ Template.block.onCreated ->
     match_object.doc_type = @data.children_doc_type
     match_object.stat_type = @data.table_stat_type
     @autorun -> Meteor.subscribe 'stat', match_object
-    @autorun => Meteor.subscribe 'block_docs', 
+    @autorun => Meteor.subscribe 'block_children', 
         @data._id, 
         @data.filter_key, 
         @data.filter_value, 
@@ -696,6 +697,8 @@ Template.block.onCreated ->
 Template.edit_block.helpers
     schemas: -> Docs.find type:'schema'
     views: -> Docs.find type:'view'
+    collections: -> Docs.find type:'collection'
+
 Template.block.helpers
     sort_descending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
@@ -710,17 +713,22 @@ Template.block.helpers
 
     children: -> 
         temp = Template.instance() 
-        if @hard_limit
-            Docs.find { type:@children_doc_type
-                },{ 
-                    sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
-                    limit:parseInt(@hard_limit)
-                    }
+        if @children_collection is 'users'
+            Meteor.users.find {_id:$ne:Meteor.userId()},{ 
+                sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
+                }
         else
-            Docs.find { type:@children_doc_type
-                },{ 
-                    sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
-                    }
+            if @hard_limit
+                Docs.find { type:@children_doc_type
+                    },{ 
+                        sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
+                        limit:parseInt(@hard_limit)
+                        }
+            else
+                Docs.find { type:@children_doc_type
+                    },{ 
+                        sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
+                        }
 
     can_view_block: ->
         if @published

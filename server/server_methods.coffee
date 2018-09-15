@@ -413,6 +413,9 @@ Meteor.methods
 
 
     update_field_key_value: (doc_id, field_object, key, value)->
+        console.log field_object
+        console.log key
+        console.log value
         Docs.update { _id:doc_id, fields:field_object },
             { $set: "fields.$.#{key}": value }
 

@@ -33,8 +33,8 @@ template(name='toggle_boolean')
 
 
 template(name='save_button')
-    a.ui.large.icon.button(href="/v/#{_id}") 
-        i.large.green.checkmark.icon
+    a.ui.icon.button(href="/v/#{_id}") 
+        i.green.checkmark.icon
         // | Save
         
 template(name='edit_button')
@@ -775,6 +775,9 @@ template(name='edit_block')
             a.item(data-tab='schema') 
                 i.fork.icon
                 |Schema
+            a.item(data-tab='collection') 
+                i.database.icon
+                |Collection
             a.item(data-tab='view') 
                 i.object.group.icon
                 |View
@@ -786,7 +789,7 @@ template(name='edit_block')
             +toggle_boolean key='published' yes_label='Published' no_label='Private'
             +toggle_boolean key='view_title' yes_label='Title' no_label='No Title'
             +toggle_boolean key='view_add_button' yes_label='Add Button' no_label='No Add Button'
-            | Block Rank
+            | Order
             +set_key_value key='rank' value=1 label='1'
             +set_key_value key='rank' value=2 label='2'
             +set_key_value key='rank' value=3 label='3'
@@ -836,6 +839,9 @@ template(name='edit_block')
                 +set_key_value key='filter_value' value=true label='true'
                 +set_key_value key='filter_value' value=false label='false'
         // unless custom_template
+        .ui.bottom.attached.tab.secondary.segment(data-tab='collection')
+            each collections
+                +set_key_value_2 key='children_collection' value=slug label=title icon=icon
         .ui.bottom.attached.tab.secondary.segment(data-tab='schema')
             each schemas
                 +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
@@ -964,7 +970,7 @@ template(name='set_field_key_value')
         
         
 template(name='set_key_value_2')
-    .set_key_value.ui.compact.button(class=set_value_button_class) 
+    .set_key_value.ui.button(class=set_value_button_class) 
         if icon
             i.icon
                 +icon name=icon
@@ -978,3 +984,11 @@ template(name='event_type_icon')
     else
         +icon name='commit-git'
         |#{event_type}
+
+
+
+template(name='user_avatar')
+    img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
+    .ui.popup
+        img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
+    // a(href="/user/#{username}") #{first_name} #{last_name}

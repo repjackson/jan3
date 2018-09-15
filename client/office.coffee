@@ -2,26 +2,6 @@ Template.office_dashboard.helpers
     office_doc: -> Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
 
 
-Template.office_employees.onCreated ->
-    @autorun -> Meteor.subscribe 'office_employees', FlowRouter.getParam('jpid'), Session.get('query'), parseInt(Session.get('page_size')),Session.get('sort_key'), Session.get('sort_direction'), parseInt(Session.get('skip'))
-    @autorun => Meteor.subscribe 'office_employee_count', FlowRouter.getParam('jpid')
-
-Template.office_employees.onRendered ->
-    Meteor.setTimeout ->
-        $('img').popup()
-    , 1000
-
-Template.office_employees.helpers    
-    office_employees: ->  
-        page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        if page_office
-            Meteor.users.find {
-                "ev.COMPANY_NAME": page_office.ev.MASTER_LICENSEE
-            },{ sort:"#{Session.get('sort_key')}":parseInt("#{Session.get('sort_direction')}") }
-
-
-
-
 Template.office_service_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'service'
     

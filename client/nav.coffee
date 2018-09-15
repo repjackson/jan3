@@ -92,17 +92,7 @@ Template.nav.events
     
 Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'me'
-    user = Meteor.user()
-    if Meteor.user()
-        if Meteor.user().roles
-            if 'customer' in Meteor.user().roles
-                @autorun -> Meteor.subscribe 'my_customer_account'
-                @autorun -> Meteor.subscribe 'my_franchisee'
-                @autorun -> Meteor.subscribe 'my_office'
-                @autorun -> Meteor.subscribe 'customer_nav_pages'
-            if 'office' in Meteor.user().roles
-                @autorun -> Meteor.subscribe 'my_office'
-                @autorun -> Meteor.subscribe 'office_nav_pages'
-            if 'admin' in Meteor.user().roles
-                @autorun -> Meteor.subscribe 'admin_nav_pages'
-    
+    @autorun -> Meteor.subscribe 'nav_items'
+    @autorun -> Meteor.subscribe 'my_customer_account'
+    @autorun -> Meteor.subscribe 'my_franchisee'
+    @autorun -> Meteor.subscribe 'my_office'

@@ -59,7 +59,7 @@
 //                                     td #{ev.FRANCHISEE}
 //                                     td(title='Short Name') #{ev.FRANCH_NAME}
 //                                     td #{ev.FRANCH_EMAIL}
-//                                     td #{ev.TELE_CELL} #{profile.phone}
+//                                     td #{ev.TELE_CELL} #{phone}
 //                                     td
 //                                         a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
 //                                             // i.mail.icon
@@ -128,19 +128,19 @@ template(name='dashboard_office_contacts_list')
             each office_contacts
                 tr
                     td 
-                        img.ui.avatar.image(src="{{c.url profile.image_id height=200 width=200 crop='fill' gravity='face'}}")
+                        img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
                         .ui.popup
-                            img.ui.small.image(src="{{c.url profile.image_id height=500 width=500 crop='fill' gravity='face'}}")
-                        a(href="/user/#{username}") #{profile.first_name} #{profile.last_name}
+                            img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
+                        a(href="/user/#{username}") #{first_name} #{last_name}
                         .ui.popup
-                            img.ui.small.image(src="{{c.url profile.image_id height=500 width=500 crop='fill' gravity='face'}}")
+                            img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
                     td 
-                        div #{profile.title}
+                        div #{title}
                         div 
-                            strong #{profile.function}
+                            strong #{function}
                     td 
                         div #{ev.JOB_TITLE}
-                        div #{ev.WORK_TELEPHONE} #{ev.TELE_CELL} #{profile.phone}
+                        div #{ev.WORK_TELEPHONE} #{ev.TELE_CELL} #{phone}
                         div #{email}
                     td
                         a(href="mailto:#{email}" target='_window' title="Email #{name}")

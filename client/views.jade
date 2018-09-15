@@ -150,6 +150,9 @@ template(name='schema_edit')
                     i.trash.icon
         .centered.row
             .four.wide.column
+                #add_field.ui.button
+                    i.plus.icon
+                    | Field
                 .ui.form
                     +edit_text_field key='title' label='Title'
                     +edit_text_field key='slug' label='Slug'
@@ -157,12 +160,8 @@ template(name='schema_edit')
                     +edit_array_field key='tags'
                     // +reference_type_multiple key='field_ids' label='Fields' type='field'
             .twelve.wide.column
-                #add_field.ui.button
-                    i.plus.icon
-                    | Field
-                .ui.vertical.segments
-                    each fields
-                        +field_edit
+                each fields
+                    +schema_field_edit
                 #add_action.ui.button
                     i.plus.icon
                     | Action
@@ -171,46 +170,44 @@ template(name='schema_edit')
                         +action_edit
                     
                     
-template(name='field_edit')
+template(name='schema_field_edit')
     .ui.segment
+        i.remove_field.link.remove.icon
         .ui.form
             .two.fields
                 .field
                     .ui.labeled.input
-                        .ui.label Title
+                        .ui.basic.label Title
                         input.field_title(type='text' value=title)
                 .field
                     .ui.labeled.input
-                        .ui.label Slug
+                        .ui.basic.label Slug
                         input.field_slug(type='text' value=slug)
-                .field
-                    .ui.labeled.two.wide.input
-                        .ui.label Description
-                        input.action_description(type='text' value=description)
-
+            .field
+                .ui.labeled.two.wide.input
+                    .ui.basic.label Description
+                    input.action_description(type='text' value=description)
+    
         // +edit_text_field key='key' label='Slug (lowercase title)'
         // +edit_text_field key='type' label='Type'
         // div Table Cell Class
         //     +select_field_key_value key='table_cell_class' value='active' label='Active'
         //     +select_field_key_value key='table_cell_class' value='' label='None'
-        div Ev Subset
-            +select_field_key_value key='ev_subset' value=true label='True'
-            +select_field_key_value key='ev_subset' value=false label='False'
-        div Field Type
-            +select_field_key_value key='field_type' value='date' label='Date'
-            +select_field_key_value key='field_type' value='text' label='Text'
-            +select_field_key_value key='field_type' value='multiple_reference' label='Multiple References'
-            +select_field_key_value key='field_type' value='single_reference' label='Single Reference'
-            +select_field_key_value key='field_type' value='number' label='Number'
-            +select_field_key_value key='field_type' value='address' label='Address'
-            +select_field_key_value key='field_type' value='phone' label='Phone'
-            +select_field_key_value key='field_type' value='html' label='HTML'
-            +select_field_key_value key='field_type' value='file' label='File'
-            +select_field_key_value key='field_type' value='user_reference' label='User Reference'
-            +select_field_key_value key='field_type' value='email' label='Email'
-            +select_field_key_value key='field_type' value='boolean' label='Boolean'
-        .remove_field.ui.icon.large.button
-            i.remove.icon
+        +toggle_field_boolean key='ev_subset' label='EV Subset'
+        div
+        strong Type
+        each fields
+            +select_field_key_value key='field_type' value=slug icon=icon label=title
+        
+        // +select_field_key_value key='field_type' value='single_reference' label='Single Reference'
+        // +select_field_key_value key='field_type' value='number' label='Number'
+        // +select_field_key_value key='field_type' value='address' label='Address'
+        // +select_field_key_value key='field_type' value='phone' label='Phone'
+        // +select_field_key_value key='field_type' value='html' label='HTML'
+        // +select_field_key_value key='field_type' value='file' label='File'
+        // +select_field_key_value key='field_type' value='user_reference' label='User Reference'
+        // +select_field_key_value key='field_type' value='email' label='Email'
+        // +select_field_key_value key='field_type' value='boolean' label='Boolean'
 
 template(name='action_edit')
     .ui.segment
@@ -234,24 +231,18 @@ template(name='action_edit')
         // div Table Cell Class
         //     +select_field_key_value key='table_cell_class' value='active' label='Active'
         //     +select_field_key_value key='table_cell_class' value='' label='None'
-        div Action Type
-            +select_field_key_value key='field_type' value='date' label='Date'
-            +select_field_key_value key='field_type' value='text' label='Text'
-            +select_field_key_value key='field_type' value='multiple_reference' label='Multiple References'
-            +select_field_key_value key='field_type' value='single_reference' label='Single Reference'
-            +select_field_key_value key='field_type' value='number' label='Number'
-            +select_field_key_value key='field_type' value='address' label='Address'
-            +select_field_key_value key='field_type' value='phone' label='Phone'
-            +select_field_key_value key='field_type' value='html' label='HTML'
-            +select_field_key_value key='field_type' value='file' label='File'
-            +select_field_key_value key='field_type' value='user_reference' label='User Reference'
-            +select_field_key_value key='field_type' value='email' label='Email'
-        .remove_field.ui.icon.large.button
-            i.remove.icon
 
 
 template(name='select_field_key_value')
-    .select_field_key_value.ui.small.compact.button(class=select_field_key_value_button_class) #{label}
+    .select_field_key_value.ui.small.compact.button(class=select_field_key_value_button_class) 
+        if icon
+            i.icon
+                +icon name=icon
+        |#{label}
+
+        
+template(name='toggle_field_boolean')
+    .toggle_field_boolean.ui.small.compact.button(class=field_boolean_class) #{label}
 
         
 
@@ -270,8 +261,9 @@ template(name='schema_view')
                 +edit_button
         .row
             .four.wide.column
-                .ui.header Title: #{title}
-                .ui.header Slug: #{slug}
+                +add_button type=slug
+                h3.ui.header Title: #{title}
+                h3.ui.header Slug: #{slug}
                 each tags
                     .ui.label #{this}
                 .ui.header Fields
@@ -279,8 +271,6 @@ template(name='schema_view')
                     each fields
                         .item #{title} (#{slug}) [#{type}]
             .twelve.wide.column
-                .ui.header #{title} Docs
-                +add_button type=slug
                 .ui.stackable.three.cards
                     each schema_docs
                         +doc_card
@@ -302,3 +292,8 @@ template(name='schema_doc')
                 +Template.dynamic template=view_field_template
                 |{{ key_value key=slug}}
                 .ui.label slug:#{slug}
+                
+                
+                
+template(name='view_email') 
+    |#{email}

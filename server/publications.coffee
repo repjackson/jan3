@@ -1,27 +1,7 @@
-# Meteor.publish 'type', (type, query=null, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
-#     if query
-#         Docs.find {
-#             type: type
-#             $text: $search: query
-#         },{
-#             skip: skip
-#             limit:limit
-#             sort:"#{sort_key}":parseInt("#{sort_direction}")
-#         }
-#     else
-#         Docs.find {
-#             type:type
-#         },{
-#             skip: skip
-#             limit:limit
-#             sort:"#{sort_key}":parseInt("#{sort_direction}")
-#         }
-
-        
 Meteor.publish 'type', (type)->
     Docs.find type:type
         
-Meteor.publish 'block_docs', (
+Meteor.publish 'block_children', (
     block_doc_id, 
     filter_key=null, 
     filter_value=null, 
@@ -33,11 +13,16 @@ Meteor.publish 'block_docs', (
     status
     page_jpid)->
         block = Docs.findOne block_doc_id
-        page_doc = Docs.findOne "ev.ID":page_jpid
+        collection = if block.children_collection is 'users' then "Meteor.users" else "Docs"
+        console.log 'collection', collection
+        if page_jpid
+            page_doc = Docs.findOne "ev.ID":page_jpid
         match = {}
-        match.type = block.children_doc_type
+        unless block.children_collection is 'users'
+            match.type = block.children_doc_type
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
+        console.log filter_key
         calculated_value =
             switch filter_value
                 # user
@@ -64,31 +49,46 @@ Meteor.publish 'block_docs', (
                     found_franchisee.ev.FRANCHISEE
                 # page
                 when "{current_page_jpid}" 
-                    page_jpid
+                    if page_jpid
+                        page_jpid
                 when "{current_page_customer_name}"
                     if page_doc
                         page_doc.ev.CUST_NAME
                 when "{current_page_office_name}"
-                    page_doc.ev.MASTER_LICENSEE
+                    if page_doc
+                        page_doc.ev.MASTER_LICENSEE
                 when "{current_page_franchisee_name}"
-                    if page_doc.ev.FRANCHISEE.length > 0
-                        page_doc.ev.FRANCHISEE
-                    if page_doc.ev.FRANCHISEE.length is 0
-                        @stop()
+                    if page_doc
+                        if page_doc.ev.FRANCHISEE.length > 0
+                            page_doc.ev.FRANCHISEE
+                        if page_doc.ev.FRANCHISEE.length is 0
+                            @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
+        console.log filter_value
         user = Meteor.user()
-        if user and user.roles
-            # unless 'customer' in user.roles
-            match.submitted = $ne: false
+        unless block.children_collection is 'users' 
+            if user and user.roles
+                # unless 'customer' in user.roles
+                match.submitted = $ne: false
                 
         if -1 > limit > 100
             limit = 100
-        Docs.find match,{
-            skip: skip
-            limit:limit
-            sort:"#{sort_key}":parseInt("#{sort_direction}")
-        }
+            
+        console.log match    
+        if block.children_collection is 'users' 
+            Meteor.users.find match,{
+                skip: skip
+                limit:limit
+                sort:"#{sort_key}":parseInt("#{sort_direction}")
+            }
+    
+        else
+            Docs.find match,{
+                skip: skip
+                limit:limit
+                sort:"#{sort_key}":parseInt("#{sort_direction}")
+            }
             
 
 Meteor.publish 'assigned_to_users', (incident_doc_id)->
@@ -102,7 +102,18 @@ Meteor.publish 'office_events', (office_doc_id)->
     Docs.find {type:'event'}, limit:10
         
         
-        
+Meteor.publish 'nav_items', ->
+    user = Meteor.user()
+    if user
+        if user.roles
+            if 'customer' in Meteor.user().roles then key='customer_nav'
+            if 'office' in Meteor.user().roles then key='office_nav'
+            if 'admin' in Meteor.user().roles then key='admin_nav'
+    
+            Docs.find
+                type:'page'
+                "#{key}":true
+            
 # Meteor.publish 'my_customer_account_doc', ->
 #     if Meteor.user()
 #         cust_id = Meteor.user().customer_jpid
@@ -125,23 +136,6 @@ Meteor.publish 'events', (doc_type, limit=10, sort_key='timestamp', sort_directi
         type: 'event'
         doc_type:doc_type
     },{
-            skip: skip
-            limit:limit
-            sort:"#{sort_key}":parseInt("#{sort_direction}")
-        }
-    
-Meteor.publish 'all_users', (query, limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
-    if query 
-        Meteor.users.find {
-            $text: $search: query
-        },{
-            skip: skip
-            limit:limit
-            sort:"#{sort_key}":parseInt("#{sort_direction}")
-        }
-    else
-        Meteor.users.find {
-        },{
             skip: skip
             limit:limit
             sort:"#{sort_key}":parseInt("#{sort_direction}")
@@ -179,30 +173,6 @@ Meteor.publish 'static_office_employees', (office_jpid)->
     Meteor.users.find
         "profile.office_name": office_doc.ev.MASTER_LICENSEE
 
-Meteor.publish 'office_employees', (office_jpid, query, limit=1000, sort_key='public', sort_direction=1, skip=0)->
-    office_doc = Docs.findOne "ev.ID":office_jpid
-    match = {}
-    if query then match
-    if query 
-        Meteor.users.find {
-            "ev.COMPANY_NAME": office_doc.ev.MASTER_LICENSEE
-            $text: $search: query
-        },{
-            skip: skip
-            limit:limit
-            sort:"#{sort_key}":parseInt("#{sort_direction}")
-        }
-    else
-        Meteor.users.find {
-            "ev.COMPANY_NAME": office_doc.ev.MASTER_LICENSEE
-        },{
-            skip: skip
-            limit:limit
-            sort:"#{sort_key}":parseInt("#{sort_direction}")
-        }
-    
-
-    
     
 
 Meteor.publish 'users_docs',(username) ->
@@ -452,10 +422,6 @@ Meteor.publish 'comments', (doc_id)->
 
 
 
-Meteor.publish 'block_children', (type)->
-    Docs.find { type:type }, limit:5
-
-
 
 Meteor.publish 'schema_doc', (child_doc_id)->
     doc = Docs.findOne child_doc_id
@@ -476,20 +442,6 @@ Meteor.publish 'service_child_requests', (service_id)->
         
         
     
-    
-Meteor.publish 'offices', (name_filter='', limit=100, sort_key='timestamp', sort_direction=1, skip=0)->
-    int_direction = parseInt sort_direction
-    int_skip = parseInt skip
-    int_limit = parseInt limit
-    Docs.find({
-        type: 'office'
-        "ev.MASTER_LICENSEE": {$regex:"#{name_filter}", $options: 'i'}
-        },{
-            skip: int_skip
-            limit:int_limit
-            sort:"#{sort_key}":int_direction
-        })
-        
     
 
 Meteor.publish 'assigned_users', (doc_id)->
@@ -522,22 +474,8 @@ Meteor.publish 'events_by_type', (type)->
     Docs.find   
         type:'event'
         event_type:type
+       
             
-            
-Meteor.publish 'admin_nav_pages', ()->
-    Docs.find
-        type:'page'
-        admin_nav:true
-            
-Meteor.publish 'office_nav_pages', ()->
-    Docs.find
-        type:'page'
-        office_nav:true
-            
-Meteor.publish 'customer_nav_pages', ()->
-    Docs.find
-        type:'page'
-        customer_nav:true
             
             
 Meteor.publish 'page_by_slug', (slug)->
@@ -555,9 +493,4 @@ Meteor.publish 'office_sla_settings', (jpid)->
     Docs.find
         type:'sla_setting'
         office_jpid:jpid
-            
-            
-            
-            
-            
             

@@ -44,8 +44,13 @@ Template.schema_edit.events
                     title: 'New Field'
                     type: 'text'
 
+Template.schema_field_edit.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'field'
 
-Template.field_edit.events
+Template.schema_field_edit.helpers
+    fields: -> Docs.find type:'field'
+
+Template.schema_field_edit.events
     'click .remove_field': -> 
         if confirm "Remove #{@label} field?"
             schema_doc_id = FlowRouter.getParam('doc_id')
@@ -89,7 +94,7 @@ Template.schema_doc.helpers
     schema_fields: -> 
         # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
         
-        # if Template.parentData().type is @value then 'active' else 'basic'
+        # if Template.parentData().type is @value then 'blue' else 'basic'
 
     view_field_template: -> "view_#{@type}_field"
         
@@ -97,24 +102,27 @@ Template.schema_doc.helpers
 Template.select_field_key_value.events
     'click .select_field_key_value': ->
         field = Template.parentData()
+        field_object = Template.parentData(2)
         doc_id = FlowRouter.getParam('doc_id')
-        Meteor.call 'update_field_key_value', doc_id, field, @key, @value, (err,res)=>
-            # if err
-            #     Bert.alert "Error updating field type to #{@value}: #{err.reason}", 'danger', 'growl-top-right'
-            # else
-            #     Bert.alert "Updated field type to #{@value}", 'success', 'growl-top-right'
+        Meteor.call 'update_field_key_value', doc_id, field_object, @key, @value
 
+
+Template.toggle_field_boolean.events
+    'click .toggle_field_boolean': ->
+        parent = Template.parentData()
+
+        toggled_value = !parent["#{@key}"]
+        field = Template.parentData()
+        doc_id = FlowRouter.getParam('doc_id')
+        Meteor.call 'update_field_key_value', doc_id, field, @key, toggled_value
+
+Template.toggle_field_boolean.helpers
+    field_boolean_class: -> 
+        if Template.parentData()["#{@key}"] is true then 'blue' else 'basic'
 
 Template.select_field_key_value.helpers
     select_field_key_value_button_class: -> 
-        # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
-        
-        if Template.parentData()["#{@key}"] is @value then 'active' else 'basic'
-    # 'change .field_type': (e,t)->
-    #     text_value = e.currentTarget.value
-    #     Docs.update FlowRouter.getParam('doc_id'),
-    #         { $set: "#{@key}": text_value }
-    #         , (err,res)=>
+        if Template.parentData(2)["#{@key}"] is @value then 'blue' else 'basic'
 
 
 
