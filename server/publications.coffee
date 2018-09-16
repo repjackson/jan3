@@ -14,7 +14,7 @@ Meteor.publish 'block_children', (
     page_jpid)->
         block = Docs.findOne block_doc_id
         collection = if block.children_collection is 'users' then "Meteor.users" else "Docs"
-        console.log 'collection', collection
+        # console.log 'collection', collection
         if page_jpid
             page_doc = Docs.findOne "ev.ID":page_jpid
         match = {}
@@ -22,7 +22,7 @@ Meteor.publish 'block_children', (
             match.type = block.children_doc_type
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
-        console.log filter_key
+        # console.log filter_key
         calculated_value =
             switch filter_value
                 # user
@@ -65,7 +65,7 @@ Meteor.publish 'block_children', (
                             @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
-        console.log filter_value
+        # console.log filter_value
         user = Meteor.user()
         unless block.children_collection is 'users' 
             if user and user.roles
@@ -75,7 +75,7 @@ Meteor.publish 'block_children', (
         if -1 > limit > 100
             limit = 100
             
-        console.log match    
+        # console.log match    
         if block.children_collection is 'users' 
             Meteor.users.find match,{
                 skip: skip

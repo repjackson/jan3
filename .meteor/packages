@@ -4,6 +4,7 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
+qualia:one
 meteor-base@1.4.0             # Packages every Meteor app needs to have
 mongo@1.5.0                   # The database Meteor supports right now
 session@1.1.7                 # Client-side reactive dictionary for your app
@@ -36,7 +37,6 @@ http@1.4.1
 underscore@1.0.10
 peerlibrary:xml2js
 cunneen:mailgun
-ecmascript@0.11.1
 pacreach:jade
 coffeescript
 juliancwirko:postcss
@@ -46,5 +46,3 @@ random@1.1.0
 modules@0.12.2
 meteorhacks:ssr
 email
-dynamic-import
-mizzao:user-status

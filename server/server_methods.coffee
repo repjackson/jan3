@@ -430,10 +430,20 @@ Meteor.methods
         
         
     update_sla_setting: (office_jpid, incident_type, escalation_number, key, value)->
-        
         sla_doc= Docs.update {
             type;'sla_setting'
             office_jpid:office_jpid
             incident_type:incident_type
             escalation_number:escalation_number
         }, { $set: "#{key}":value }, {upsert:true}
+        
+        
+    set_incident_owner: (office_jpid, incident_type, username)->
+        Docs.update {
+            type:'sla_setting'
+            office_jpid:office_jpid
+            incident_type:incident_type
+        }, { $set: incident_owner:username }, {multi:true}
+        
+        
+        

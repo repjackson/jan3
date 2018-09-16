@@ -61,6 +61,19 @@ Template.office_sla.events
         Session.set 'incident_type_selection', @slug
 
             
+    'click .add_sla_setting_doc': (e,t)->
+        # console.log 'this', @
+        
+        # console.log 'current', Template.currentData()
+        # console.log 'parent', Template.parentData(1)
+        # console.log 'parent', Template.parentData(2)
+
+        Docs.insert
+            type:'sla_setting'
+            escalation_number: @number
+            office_jpid:FlowRouter.getParam('jpid')      
+            incident_type:Session.get('incident_type_selection')
+        # sla_setting_doc
 
     
 Template.office_sla.helpers
@@ -78,23 +91,25 @@ Template.office_sla.helpers
         current_incident_type = Session.get 'incident_type_selection'
         incident_type_owner_value = page_office["#{current_incident_type}_incident_owner"]
         return incident_type_owner_value
+    
     sla_settings_doc: ->    
         rule_doc = Template.currentData()
-
+        # console.log 'rule doc', rule_doc
         sla_setting_doc = 
-            Docs.findOne 
+            Docs.findOne {
                 type:'sla_setting'
                 escalation_number: rule_doc.number
+                office_jpid:FlowRouter.getParam('jpid') 
                 incident_type:Session.get('incident_type_selection')
-            
-        unless sla_setting_doc
-            Docs.insert
-                type:'sla_setting'
-                escalation_number: rule_doc.number
-                office_jpid:FlowRouter.getParam 'jpid'                
-                incident_type:Session.get('incident_type_selection')
-        sla_setting_doc
-
+            }
+        return sla_setting_doc
+    
+    
+    
+    
+Template.incident_owner_select.onCreated ()->
+    @user_results = new ReactiveVar( [] )
+    
 Template.incident_owner_select.helpers
     user_results: ->
         user_results = Template.instance().user_results.get()
@@ -103,9 +118,6 @@ Template.incident_owner_select.helpers
     selected_user: ->
         sla_setting_doc = Template.currentData()
 
-        context = Template.currentData(0)
-        context = Template.parentData(1)
-        context = Template.parentData(2)
         # office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         if sla_setting_doc.incident_owner
             Meteor.users.findOne
@@ -113,31 +125,22 @@ Template.incident_owner_select.helpers
         else
             false
         
-        
-        
-Template.incident_owner_select.onCreated ()->
-    @user_results = new ReactiveVar( [] )
-    
 Template.incident_owner_select.events
-    'click .select_office_user': (e,t) ->
+    'click .select_owner': (e,t) ->
         sla_setting_doc = Template.currentData()
         # key = Template.parentData(0).key
         # searched_value = doc["#{template.data.key}"]
         # office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        
-        
-        Docs.update sla_setting_doc._id,
-            $set: incident_owner: @username
-        # $(e.currentTarget).closest('#office_username_query').val ''
+        Meteor.call('set_incident_owner', FlowRouter.getParam('jpid'), Session.get('incident_type_selection'), @username)
         t.user_results.set null
 
 
-    'keyup #office_username_query': (e,t)->
-        office_username_query = $(e.currentTarget).closest('#office_username_query').val().trim()
-        # $('#office_username_query').val ''
-        Session.set 'office_username_query', office_username_query
+    'keyup #query_owner': (e,t)->
+        owner_val = $(e.currentTarget).closest('#query_owner').val().trim()
+        # $('#query_owner').val ''
+        # Session.set 'query_owner', owner_val
         current_office_id = FlowRouter.getParam('jpid')
-        Meteor.call 'lookup_office_user_by_username_and_office_jpid', current_office_id, office_username_query, (err,res)=>
+        Meteor.call 'lookup_office_user_by_username_and_office_jpid', current_office_id, owner_val, (err,res)=>
             if err then console.error err
             else
                 t.user_results.set res
@@ -154,20 +157,91 @@ Template.incident_owner_select.events
             showCancelButton: true
             closeOnConfirm: true
             cancelButtonText: 'Cancel'
-            confirmButtonText: 'Unassign'
+            confirmButtonText: 'Remove'
             confirmButtonColor: '#da5347'
         }, =>
             Docs.update context._id,
                 $unset: incident_owner: 1
 
 
-Template.view_sla_contact.helpers
-    selected_contact: ->
-        context = Template.currentData(0)
-        office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        if office_doc["#{context.key}"]
-            Meteor.users.findOne
-                username: office_doc["#{context.key}"]
+
+
+Template.secondary_contact_widget.onCreated ()->
+    @user_results = new ReactiveVar( [] )
+    
+Template.secondary_contact_widget.events
+    'click .select_secondary': (e,t) ->
+        sla_setting_doc = Template.currentData()
+        # key = Template.parentData(0).key
+        # searched_value = doc["#{template.data.key}"]
+        # office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
+        
+        Docs.update sla_setting_doc._id,
+            $set: secondary_contact: @username
+        # $(e.currentTarget).closest('#office_username_query').val ''
+        t.user_results.set null
+
+
+    'keyup #secondary_input': (e,t)->
+        input_val = $(e.currentTarget).closest('#secondary_input').val().trim()
+        # $('#office_username_query').val ''
+        current_office_jpid = FlowRouter.getParam('jpid')
+        Meteor.call 'lookup_office_user_by_username_and_office_jpid', current_office_jpid, input_val, (err,res)=>
+            if err then console.error err
+            else
+                t.user_results.set res
+
+
+    'click .pull_secondary': (e,t)->
+        context = Template.currentData()
+        
+        swal {
+            title: "Remove #{context.secondary_contact} as secondary contact?"
+            # text: 'Confirm delete?'
+            type: 'info'
+            animation: false
+            showCancelButton: true
+            closeOnConfirm: true
+            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Unassign'
+            confirmButtonColor: '#da5347'
+        }, =>
+            Docs.update context._id,
+                $unset: secondary_contact: 1
+
+Template.secondary_contact_widget.helpers
+    user_results: ->
+        user_results = Template.instance().user_results.get()
+        user_results
+
+    selected_user: ->
+        sla_setting_doc = Template.currentData(0)
+
+        # office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
+        if sla_setting_doc.secondary_contact
+            found = Meteor.users.findOne
+                username: sla_setting_doc.secondary_contact
+            console.log found
+            return found
         else
             false
+        
+    secondary_contact: ->
+        sla_setting_doc = Template.currentData(0)
+        sla_setting_doc.secondary_contact
+
+
+
+
+
+
+# Template.view_sla_contact.helpers
+#     selected_contact: ->
+#         context = Template.currentData(0)
+#         office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
+#         if office_doc["#{context.key}"]
+#             Meteor.users.findOne
+#                 username: office_doc["#{context.key}"]
+#         else
+#             false
         
