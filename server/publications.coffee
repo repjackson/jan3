@@ -11,12 +11,21 @@ Meteor.publish 'block_children', (
     sort_direction=1, 
     skip=0,
     status
-    page_jpid)->
+    page_jpid
+    doc_id)->
         block = Docs.findOne block_doc_id
         collection = if block.children_collection is 'users' then "Meteor.users" else "Docs"
         # console.log 'collection', collection
+        console.log block.filter_source
+        
         if page_jpid
             page_doc = Docs.findOne "ev.ID":page_jpid
+        if doc_id
+            doc_object = Docs.findOne doc_id
+            # console.log 'doc_object', doc_object
+        else
+            console.log 'no doc_object'
+            
         match = {}
         unless block.children_collection is 'users'
             match.type = block.children_doc_type
@@ -51,6 +60,9 @@ Meteor.publish 'block_children', (
                 when "{current_page_jpid}" 
                     if page_jpid
                         page_jpid
+                when "{current_page_doc_id}" 
+                    if doc_id
+                        doc_id
                 when "{current_page_customer_name}"
                     if page_doc
                         page_doc.ev.CUST_NAME
@@ -75,7 +87,7 @@ Meteor.publish 'block_children', (
         if -1 > limit > 100
             limit = 100
             
-        # console.log match    
+        console.log match    
         if block.children_collection is 'users' 
             Meteor.users.find match,{
                 skip: skip

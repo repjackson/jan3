@@ -724,6 +724,9 @@ template(name='block')
                                 |Dev
                         .three.wide.right.aligned.column
             if editing_mode
+                .toggle_editing_block.ui.icon.button
+                    i.pencil.icon
+            if editing_block
                 +edit_block
 
 template(name='edit_block')
@@ -780,14 +783,23 @@ template(name='edit_block')
                 div
                 +edit_block_text_field label='Filter Key' key='filter_key'
                 +set_key_value key='filter_key' value='_id' label='_id'
+                +set_key_value key='filter_key' value='ev.ID' label='ev.ID'
                 +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
                 +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
                 +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
                 +set_key_value key='filter_key' value='office_jpid' label='office_jpid'
                 +set_key_value key='filter_key' value='customer_jpid' label='customer_jpid'
                 +set_key_value key='filter_key' value='franchisee_jpid' label='franchisee_jpid'
+                div Source
+                +set_key_value key='filter_source' value='{page_slug}' label='Page Slug'
+                +set_key_value key='filter_source' value='{doc_id}' label='Doc ID'
+                div Source Key
+                +set_key_value key='source_key' value='customer_jpid' label='customer_jpid'
                 div
                 +edit_block_text_field label='Filter Value' key='filter_value'
+                +set_key_value key='filter_value' value='{source_key}' label='Source Key'
+                +set_key_value key='filter_value' value=true label='true'
+                +set_key_value key='filter_value' value=false label='false'
                 div
                 i.user.icon
                 +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
@@ -802,8 +814,10 @@ template(name='edit_block')
                 +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
                 +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
                 +set_key_value key='filter_value' value='{current_page_jpid}' label='Current Page JPID'
-                +set_key_value key='filter_value' value=true label='true'
-                +set_key_value key='filter_value' value=false label='false'
+                div
+                i.document.icon
+                +set_key_value key='filter_value' value='{current_doc_}' label='Current Page Doc ID'
+                +set_key_value key='filter_value' value='{current_page_doc_id}' label='Current Page Doc ID'
         // unless custom_template
         .ui.bottom.attached.tab.secondary.segment(data-tab='collection')
             each collections

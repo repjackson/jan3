@@ -2,9 +2,13 @@ FlowRouter.route '/dev', action: ->
     BlazeLayout.render 'layout', 
         main: 'dev'
         
-FlowRouter.route '/p/:page_slug/:jpid?', action: ->
-    BlazeLayout.render 'layout', 
-        main: 'page'
+FlowRouter.route '/p/:page_slug/:jpid?', 
+    action: (params, query_params)->
+        console.log 'params', params
+        console.log 'query_params', query_params
+
+        BlazeLayout.render 'layout', 
+            main: 'page'
         
 Template.dev.onCreated ->
     @autorun => Meteor.subscribe 'events_by_type', 'sms'

@@ -26,7 +26,7 @@ template(name='nav')
                 a.item(href='/p/admin' data-content='Admin' class="{{ active_route 'admin' }}" )
                     i.large.icon
                         +icon name='user-shield'
-                a#toggle_editing.item(href='#')
+                #toggle_editing.item
                     i.large.icon
                         if editing_mode
                             +icon name='toggle-on'

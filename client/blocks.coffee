@@ -216,7 +216,6 @@ Template.toggle_sla_boolean.helpers
         sla_doc = Template.parentData(1)
         # console.log Template.parentData(2)
         # console.log Template.parentData(3)
-        console.log sla_doc["#{@key}"]
         if sla_doc["#{@key}"] is true then 'active'
         else 'basic'
 
@@ -658,6 +657,8 @@ Template.edit_block.onCreated ->
     @autorun => Meteor.subscribe 'type', 'collection'
 
 Template.block.onCreated ->
+    @editing_block = new ReactiveVar false
+
     # Meteor.subscribe('facet', 
     #     selected_tags.array()
     #     selected_author_ids.array()
@@ -681,6 +682,8 @@ Template.block.onCreated ->
     match_object = {}
     if FlowRouter.getParam 'jpid'
         match_object.jpid = FlowRouter.getParam 'jpid'
+    if FlowRouter.getQueryParam 'doc_id'
+        match_object.doc_id = FlowRouter.getQueryParam 'doc_id'
     if @data.filter_status is "ACTIVE"
         match_object.active = true
     else
@@ -698,7 +701,8 @@ Template.block.onCreated ->
         @sort_direction.get(),
         @skip.get(),
         @data.filter_status,
-        FlowRouter.getParam('jpid')
+        FlowRouter.getParam('jpid'),
+        FlowRouter.getQueryParam('doc_id')
 
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
     
@@ -709,6 +713,8 @@ Template.edit_block.helpers
     collections: -> Docs.find type:'collection'
 
 Template.block.helpers
+    editing_block: -> Template.instance().editing_block.get()
+
     sort_descending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
         temp = Template.instance() 
@@ -813,6 +819,9 @@ Template.block.helpers
     is_sla_settings: -> @view is 'sla_settings'    
         
 Template.block.events
+    'click .toggle_editing_block': (e,t)->
+        t.editing_block.set(!t.editing_block.get())
+
     'click .add_block_child': (e,t)->
         if FlowRouter.getParam('jpid')
             new_id = Docs.insert 
