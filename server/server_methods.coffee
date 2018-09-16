@@ -238,11 +238,6 @@ Meteor.methods
         
         
         
-    count_current_incident_number: ->
-        incident_count = Docs.find(type:'incident').count()
-        return incident_count
-        
-        
     find_customer_by_jpid: (customer_jpid)->
         found = 
             Docs.findOne

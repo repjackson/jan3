@@ -66,6 +66,8 @@ template(name='page')
                             +edit_number_field key='number' label='Rank'
                     // +edit_array_field key='tags'
                     +toggle_boolean key='show_header' yes_label='Header' 
+                    if show_header
+                        +edit_page_text_field key='header_template' label='Header Template'
                     +toggle_boolean key='admin_nav' yes_label='Admin Nav'
                     +toggle_boolean key='office_nav' yes_label='Office Nav'
                     +toggle_boolean key='customer_nav' yes_label='Customer Nav'
@@ -74,11 +76,14 @@ template(name='page')
                         +toggle_boolean key='right_column' yes_label='Right Column'
             .ui.padded.stackable.grid
                 if show_header
-                    .centered.row
-                        .center.aligned.sixteen.wide.column
-                            h2.ui.center.aligned.header 
-                                +icon name=icon
-                                |#{title}
+                    if header_template
+                        +Template.dynamic template=header_template
+                    else
+                        .centered.row
+                            .center.aligned.sixteen.wide.column
+                                h2.ui.center.aligned.header 
+                                    +icon name=icon
+                                    |#{title}
                 if left_column
                     .four.wide.column
                         +blocks position='left'

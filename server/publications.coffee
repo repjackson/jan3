@@ -22,6 +22,9 @@ Meteor.publish 'block_children', (
                 filter_source_doc = Docs.findOne "ev.ID":page_jpid
             else if block.filter_source is "{doc_id}"
                 filter_source_doc = Docs.findOne doc_id
+            else if block.filter_source is "{current_user}"
+                console.log 'hi'
+                filter_source_doc = Meteor.user()
         if page_jpid
             page_doc = Docs.findOne "ev.ID":page_jpid
         if doc_id
@@ -39,8 +42,11 @@ Meteor.publish 'block_children', (
         calculated_value =
             switch filter_value
                 when "{source_key}"
-                    if block.filter_source_key
-                        filter_source_doc["#{block.filter_source_key}"]
+                    result = filter_source_doc["#{block.filter_source_key}"]
+                    # console.log 'looking up', block.filter_source_key
+                    # console.log 'from', filter_source_doc
+                    # console.log 'result', result
+                    # return result
                 when "{current_user_customer_name}"
                     found_customer = Docs.findOne
                         type:'customer'
@@ -69,7 +75,7 @@ Meteor.publish 'block_children', (
         if -1 > limit > 100
             limit = 100
             
-        console.log match    
+        # console.log 'match', match    
         if block.children_collection is 'users' 
             Meteor.users.find match,{
                 skip: skip
@@ -419,9 +425,10 @@ Meteor.publish 'comments', (doc_id)->
 
 Meteor.publish 'schema_doc', (child_doc_id)->
     doc = Docs.findOne child_doc_id
-    Docs.find
-        type:'schema'
-        slug:doc.type
+    if doc
+        Docs.find
+            type:'schema'
+            slug:doc.type
 
 Meteor.publish 'schema_doc_by_type', (doc_type)->
     Docs.find

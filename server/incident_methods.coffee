@@ -302,3 +302,29 @@ Meteor.methods
         for event_doc in cursor.fetch()
             Docs.remove event_doc._id
             
+
+    log_ticket: ()->
+        my_customer_ob = Meteor.user().users_customer()
+        user = Meteor.user()
+        console.log my_customer_ob
+        if my_customer_ob
+            incident_count = Docs.find(type:'incident').count()
+            console.log incident_count
+            if incident_count
+                # console.log incident_count
+                next_incident_number = incident_count + 1
+                new_incident_id = 
+                    Docs.insert
+                        type: 'incident'
+                        incident_number: next_incident_number
+                        franchisee_jpid: user.franchisee_jpid
+                        office_jpid: user.office_jpid
+                        customer_jpid: user.customer_jpid
+                        customer_name: my_customer_ob.ev.CUST_NAME
+                        incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
+                        incident_franchisee: my_customer_ob.ev.FRANCHISEE
+                        level: 1
+                        open: true
+                        submitted: false
+                console.log 'new incident id', new_incident_id
+                return new_incident_id

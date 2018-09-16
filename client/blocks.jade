@@ -572,7 +572,8 @@ template(name='blocks')
     if editing_mode
         #add_block.ui.button(title="Add Block #{tags}")
             i.plus.icon
-            |Child Block
+            |Block
+    div
     each blocks
         +block 
                                             
@@ -687,7 +688,9 @@ template(name='block')
                                             if field_template
                                                 +Template.dynamic template=field_template data=..
                                             else
-                                                | #{child_schema_field_value}
+                                                |#{label}
+                                                |&nbsp;
+                                                strong #{child_schema_field_value}
                 if is_grid
                     .ui.equal.width.four.column.stackable.grid
                         each children
@@ -758,19 +761,13 @@ template(name='edit_block')
             +toggle_boolean key='published' yes_label='Published' no_label='Private'
             +toggle_boolean key='view_title' yes_label='Title' no_label='No Title'
             +toggle_boolean key='view_add_button' yes_label='Add Button' no_label='No Add Button'
-            | Order
-            +set_key_value key='rank' value=1 label='1'
-            +set_key_value key='rank' value=2 label='2'
-            +set_key_value key='rank' value=3 label='3'
-            +set_key_value key='rank' value=4 label='4'
-            +set_key_value key='rank' value=5 label='5'
-            .ui.form
-                +edit_block_text_field label='Title' key='title'
-                +edit_block_text_field label='Icon' key='icon'
-                +edit_block_text_field label='Classes' key='block_classes'
-                +edit_block_text_field label='Slug' key='slug'
-                +edit_block_text_field label='Parent Slug' key='parent_slug'
-                +edit_block_text_field label='Custom Template' key='custom_template'
+            +edit_block_text_field key='rank' label='Vertical Rank'
+            +edit_block_text_field label='Title' key='title'
+            +edit_block_text_field label='Icon' key='icon'
+            +edit_block_text_field label='Classes' key='block_classes'
+            +edit_block_text_field label='Slug' key='slug'
+            +edit_block_text_field label='Parent Slug' key='parent_slug'
+            +edit_block_text_field label='Custom Template' key='custom_template'
             h5 doc id #{_id}
         .ui.tab.secondary.segment(data-tab='filter')
             .ui.form
@@ -950,3 +947,13 @@ template(name='user_avatar')
     .ui.popup
         img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
     // a(href="/user/#{username}") #{first_name} #{last_name}
+
+
+template(name='view_incident_link')
+    if is_admin
+        a.ui.icon.button(href="/p/incident_admin_view?doc_id=#{_id}")
+            i.right.chevron.icon
+    if is_customer
+        a.ui.icon.button(href="/p/incident_customer_view?doc_id=#{_id}")
+            i.right.chevron.icon
+        

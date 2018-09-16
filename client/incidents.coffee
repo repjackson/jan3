@@ -1,27 +1,10 @@
 Template.add_incident_button.events
     'click #add_incident': ->
-        user = Meteor.user()
-        my_customer_ob = Meteor.user().users_customer()
-        if my_customer_ob
-            Meteor.call 'count_current_incident_number', (err,incident_count)=>
-                if err then console.error err
-                else
-                    console.log incident_count
-                    next_incident_number = incident_count + 1
-                    new_incident_id = 
-                        Docs.insert
-                            type: 'incident'
-                            incident_number: next_incident_number
-                            franchisee_jpid: user.franchisee_jpid
-                            office_jpid: user.office_jpid
-                            customer_jpid: user.customer_jpid
-                            customer_name: my_customer_ob.ev.CUST_NAME
-                            incident_office_name: my_customer_ob.ev.MASTER_LICENSEE
-                            incident_franchisee: my_customer_ob.ev.FRANCHISEE
-                            level: 1
-                            open: true
-                            submitted: false
-                    FlowRouter.go "/v/#{new_incident_id}"
+        Meteor.call 'log_ticket', (err,res)->
+            if err then console.error err
+            else
+                console.log 'res', res
+                FlowRouter.go "/v/#{res}"
 
 
 Template.incident_type_label.onRendered ->

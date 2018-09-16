@@ -654,7 +654,7 @@ Template.blocks.helpers
             Docs.find {
                 type:'block'
                 parent_slug:FlowRouter.getParam('page_slug')
-                horizontal_position:$ne:'left'
+                horizontal_position:$nin:['left','right']
             }, sort:rank:1
             
 # Template.block.onRendered ->
@@ -918,6 +918,8 @@ Template.blocks.events
 
         Docs.insert
             type:'block'
+            position:@position
+            title:'new block'
             parent_slug:FlowRouter.getParam('page_slug') 
             fields: []
     
