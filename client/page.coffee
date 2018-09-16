@@ -4,9 +4,6 @@ FlowRouter.route '/dev', action: ->
         
 FlowRouter.route '/p/:page_slug/:jpid?', 
     action: (params, query_params)->
-        console.log 'params', params
-        console.log 'query_params', query_params
-
         BlazeLayout.render 'layout', 
             main: 'page'
         
