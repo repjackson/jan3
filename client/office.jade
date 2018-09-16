@@ -72,14 +72,9 @@ template(name='office_sla')
                 tr  
                     th Level
                     th Escalation Hours
-                    th Contact Customer
-                    th Contact Franchisee
+                    th Contact Customer/Franchisee
                     th Owner
-                    th Email Owner
-                    th SMS Owner
                     th Secondary Contact
-                    th Email Secondary
-                    th SMS Secondary
             tbody
                 each rule_docs
                     tr  
@@ -88,8 +83,6 @@ template(name='office_sla')
                             with sla_settings_doc
                                 if is_initial
                                     td
-                                    td
-                                        +toggle_sla_boolean key='contact_customer' label='Customer' icon='headset'
                                 else 
                                     td 
                                         // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
@@ -97,27 +90,24 @@ template(name='office_sla')
                                         +set_sla_key_value key=hours_key value=2 label='2'
                                         +set_sla_key_value key=hours_key value=4 label='4'
                                         +set_sla_key_value key=hours_key value=12 label='12'
-                                    td
                                 td
+                                    if is_initial
+                                        +toggle_sla_boolean key='contact_customer' label='Customer' icon='headset'
                                     +toggle_sla_boolean key='contact_franchisee' label='Franchisee' icon='business'
                                 if is_initial
                                     td
                                         +incident_owner_select
-                                    td
+                                        div
                                         +toggle_sla_boolean key='email_owner' label='Email' icon='envelope'
-                                    td
                                         +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment'
                                 else
-                                    td Owner
+                                    td
                                         if incident_owner
                                             .ui.large.basic.label #{incident_owner}
-                                    td
-                                    td
-                                td Secondary
+                                td 
                                     +secondary_contact_widget
-                                td
+                                    div
                                     +toggle_sla_boolean key='email_secondary' label='Email' icon='envelope'
-                                td
                                     +toggle_sla_boolean key='sms_secondary' label='SMS' icon='comment'
                         else
                             td No settings file
@@ -157,10 +147,10 @@ template(name='incident_owner_select')
                                 strong #{profile.first_name} #{profile.last_name}
                                 |#{username}
     if incident_owner
-        .ui.header #{incident_owner}
+        strong #{incident_owner}
         |&nbsp;
-        .ui.icon.compact.small.button.pull_user
-            i.remove.icon
+        small
+            i.pull_user.remove.link.icon
 
 
 // template(name='view_sla_contact')
@@ -192,10 +182,9 @@ template(name='secondary_contact_widget')
                                 strong #{profile.first_name} #{profile.last_name}
                                 |#{username}
     if secondary_contact
-        .ui.header #{secondary_contact}
+        strong #{secondary_contact}
+        i.remove.link.pull_secondary.icon
         // div(title="@#{username}")
         //     if profile.image_id
         //         img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
         //     |#{profile.first_name} #{profile.last_name}
-        .ui.icon.compact.button.pull_secondary
-            i.remove.icon
