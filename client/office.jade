@@ -71,8 +71,8 @@ template(name='office_sla')
             thead
                 tr  
                     th Level
-                    th Contact Customer
                     th Escalation Hours
+                    th Contact Customer
                     th Contact Franchisee
                     th Owner
                     th Email Owner
@@ -86,8 +86,8 @@ template(name='office_sla')
                         td #{title}
                         if sla_settings_doc
                             with sla_settings_doc
-                                td #{escalation_hours}
                                 if is_initial
+                                    td
                                     td
                                         +toggle_sla_boolean key='contact_customer' label='Customer' icon='headset'
                                 else 
@@ -97,20 +97,22 @@ template(name='office_sla')
                                         +set_sla_key_value key=hours_key value=2 label='2'
                                         +set_sla_key_value key=hours_key value=4 label='4'
                                         +set_sla_key_value key=hours_key value=12 label='12'
+                                    td
                                 td
                                     +toggle_sla_boolean key='contact_franchisee' label='Franchisee' icon='business'
                                 if is_initial
                                     td
                                         +incident_owner_select
+                                    td
+                                        +toggle_sla_boolean key='email_owner' label='Email' icon='envelope'
+                                    td
+                                        +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment'
                                 else
                                     td Owner
                                         if incident_owner
                                             .ui.large.basic.label #{incident_owner}
-                                            h5.ui.header Using Default Primary Contact
-                                td
-                                    +toggle_sla_boolean key='email_owner' label='Email' icon='envelope'
-                                td
-                                    +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment'
+                                    td
+                                    td
                                 td Secondary
                                     +secondary_contact_widget
                                 td

@@ -197,15 +197,19 @@ Template.toggle_key.events
                 $set: "#{@key}": true
 
 
-Template.toggle_sla_boolean.onRendered ->
-    Meteor.setTimeout ->
-        $('.checkbox').checkbox(
-            # onChecked: -> 
-            # onUnchecked: ->
-        )
-    , 500
 
-        
+Template.set_sla_key_value.events
+    'click .set_page_key_value': ->
+        sla_doc = Template.parentData(1)
+        Docs.update sla_doc._id,
+            { $set: "#{@key}": @value }
+
+Template.set_sla_key_value.helpers
+    set_value_button_class: ->
+        sla_doc = Template.parentData(1)
+        if sla_doc["#{@key}"] is @value then 'active' else 'basic'
+
+
 Template.toggle_sla_boolean.helpers
     toggle_boolean_button_class: -> 
         # console.log @

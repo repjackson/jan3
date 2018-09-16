@@ -28,26 +28,6 @@ Template.office_service_settings.events
     
     
     
-Template.set_sla_key_value.events
-    'click .set_page_key_value': ->
-        rule_doc = Template.currentData()
-        current_sla_doc = 
-            Docs.findOne 
-                type:'sla_config'
-                office_jpid:FlowRouter.getParam('jpid')
-                escalation_number: rule_doc.number
-        # Docs.update page._id,
-        #     { $set: "#{@key}": @value }
-
-Template.set_sla_key_value.helpers
-    set_value_button_class: ->
-        current_sla_doc = 
-            Docs.findOne
-                type:'sla_config'
-        # page = Docs.findOne 
-        #     type:'page'
-        #     slug:FlowRouter.getParam('page_slug')
-        # if page["#{@key}"] is @value then 'inverted blue' else 'basic'
 
 Template.office_sla.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'incident_type'
