@@ -28,7 +28,7 @@ template(name='toggle_boolean')
     if is_on
         #turn_off.ui.active.compact.button #{yes_label}
     else
-        #turn_on.ui.compact.basic.button #{no_label}
+        #turn_on.ui.compact.basic.button #{yes_label}
 
 
 
@@ -579,18 +579,15 @@ template(name='blocks')
 template(name='block')
     if can_view_block
         .ui(class=block_classes)
-            .ui.grid
+            if view_title
+                .ui.header
+                    if icon
+                        +icon name=icon
+                    |#{title}
+            if view_add_button
                 .row
-                    .left.aligned.ten.wide.column
-                        if view_title
-                            .ui.header
-                                if icon
-                                    +icon name=icon
-                                |#{title}
-                    .right.aligned.six.wide.column
-                        if view_add_button
-                            .ui.add_block_child.icon.button
-                                i.plus.icon
+                    .ui.add_block_child.icon.button
+                        i.plus.icon
             if custom_template
                 +Template.dynamic template=custom_template
             else
@@ -684,7 +681,7 @@ template(name='block')
                     .ui.divided.list
                         each children
                             .item
-                                .ui.horizontal.list
+                                .ui.list
                                     each ../fields
                                         .item
                                             if field_template
@@ -734,7 +731,7 @@ template(name='edit_block')
         h3.ui.header 
             +icon name=icon
             |Edit '#{title}' Block
-        .ui.top.attached.tabular.secondary.menu
+        .ui.secondary.stackable.menu
             a.active.item(data-tab='general') 
                 i.pencil.icon
                 |General
@@ -747,13 +744,16 @@ template(name='edit_block')
             a.item(data-tab='collection') 
                 i.database.icon
                 |Collection
+            a.item(data-tab='layout') 
+                i.th.list.icon
+                |Layout
             a.item(data-tab='view') 
                 i.object.group.icon
                 |View
             a.item(data-tab='fields') 
                 i.list.ui.icon
                 |Fields
-        .ui.bottom.attached.active.tab.secondary.segment(data-tab='general')
+        .ui.active.tab.secondary.segment(data-tab='general')
             i.remove_block.remove.link.icon(title='remove block')
             +toggle_boolean key='published' yes_label='Published' no_label='Private'
             +toggle_boolean key='view_title' yes_label='Title' no_label='No Title'
@@ -765,16 +765,14 @@ template(name='edit_block')
             +set_key_value key='rank' value=4 label='4'
             +set_key_value key='rank' value=5 label='5'
             .ui.form
-                .fields
-                    +edit_block_text_field label='Title' key='title'
-                    +edit_block_text_field label='Icon' key='icon'
-                    +edit_block_text_field label='Classes' key='block_classes'
-                .fields
-                    +edit_block_text_field label='Slug' key='slug'
-                    +edit_block_text_field label='Parent Slug' key='parent_slug'
-                    +edit_block_text_field label='Custom Template' key='custom_template'
+                +edit_block_text_field label='Title' key='title'
+                +edit_block_text_field label='Icon' key='icon'
+                +edit_block_text_field label='Classes' key='block_classes'
+                +edit_block_text_field label='Slug' key='slug'
+                +edit_block_text_field label='Parent Slug' key='parent_slug'
+                +edit_block_text_field label='Custom Template' key='custom_template'
             h5 doc id #{_id}
-        .ui.bottom.attached.tab.secondary.segment(data-tab='filter')
+        .ui.tab.secondary.segment(data-tab='filter')
             .ui.form
                 +edit_block_text_field label='Hard Limit' key='hard_limit'
                 +edit_block_text_field label='Soft Limit' key='limit'
@@ -795,20 +793,20 @@ template(name='edit_block')
                 div
                 +edit_block_text_field key='filter_source_key' label='Filter Source Key'
         // unless custom_template
-        .ui.bottom.attached.tab.secondary.segment(data-tab='collection')
+        .ui.tab.secondary.segment(data-tab='collection')
             each collections
                 +set_key_value_2 key='children_collection' value=slug label=title icon=icon
-        .ui.bottom.attached.tab.secondary.segment(data-tab='schema')
+        .ui.tab.secondary.segment(data-tab='schema')
             each schemas
                 +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
             .ui.header Stat Type
             +set_key_value key='table_stat_type' value='total' label='Total'
             +set_key_value key='table_stat_type' value='office' label='Office'
-        .ui.bottom.attached.tab.secondary.segment(data-tab='view')
+        .ui.tab.secondary.segment(data-tab='view')
             each views
                 +set_key_value_2 key='view' value=slug label=title icon=icon
             +toggle_boolean key='view_table_header' yes_label='Table Header' no_label='No Table Header'
-        .ui.bottom.attached.tab.secondary.segment(data-tab='fields')
+        .ui.tab.secondary.segment(data-tab='fields')
             h4 Available Schema Fields
             each schema_doc.fields
                 if show_schema_field
@@ -845,7 +843,11 @@ template(name='edit_block')
                                     +set_field_key_value key='sortable' value=false label='N'
                                 td 
                                     i.remove_schema_field.remove.link.icon
-
+        .ui.tab.secondary.segment(data-tab='layout')
+            +set_key_value key='horizontal_position' value='left' label='left'
+            +set_key_value key='horizontal_position' value='center' label='center'
+            +set_key_value key='horizontal_position' value='right' label='right'
+            
 
      
 template(name='child_card')

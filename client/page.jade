@@ -65,12 +65,34 @@ template(name='page')
                             +edit_page_text_field key='slug' label='Slug'
                             +edit_number_field key='number' label='Rank'
                     // +edit_array_field key='tags'
-                    +toggle_boolean key='admin_nav' yes_label='Admin Nav' no_label='Admin Nav'
-                    +toggle_boolean key='office_nav' yes_label='Office Nav' no_label='Office Nav'
-                    +toggle_boolean key='customer_nav' yes_label='Customer Nav' no_label='Customer Nav'
+                    +toggle_boolean key='show_header' yes_label='Header' 
+                    +toggle_boolean key='admin_nav' yes_label='Admin Nav'
+                    +toggle_boolean key='office_nav' yes_label='Office Nav'
+                    +toggle_boolean key='customer_nav' yes_label='Customer Nav'
+                    +toggle_boolean key='left_column' yes_label='Left Column'
+                    if left_column
+                        +toggle_boolean key='right_column' yes_label='Right Column'
             .ui.padded.stackable.grid
-                .ui.sixteen.wide.column
-                    +blocks
+                if show_header
+                    .centered.row
+                        .center.aligned.sixteen.wide.column
+                            h2.ui.center.aligned.header 
+                                +icon name=icon
+                                |#{title}
+                if left_column
+                    .four.wide.column
+                        +blocks position='left'
+                    unless right_column
+                        .ui.twelve.wide.column
+                            +blocks position='center'
+                    if right_column
+                        .ui.eight.wide.column
+                            +blocks position='center'
+                        .ui.four.wide.column
+                            +blocks position='right'
+                else
+                    .ui.sixteen.wide.column
+                        +blocks position='center'
     else
         if editing_mode
             .ui.basic.center.aligned.segment

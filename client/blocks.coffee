@@ -638,10 +638,25 @@ Template.blocks.helpers
         #     split_tags = @tags.split ','
         # else
         #     split_tags = @tags
-        Docs.find {
-            type:'block'
-            parent_slug:FlowRouter.getParam('page_slug')
-        }, sort:rank:1
+        if @position is 'left'
+            Docs.find {
+                type:'block'
+                parent_slug:FlowRouter.getParam('page_slug')
+                horizontal_position:'left'
+            }, sort:rank:1
+        else if @position is 'right'
+            Docs.find {
+                type:'block'
+                parent_slug:FlowRouter.getParam('page_slug')
+                horizontal_position:'right'
+            }, sort:rank:1
+        else
+            Docs.find {
+                type:'block'
+                parent_slug:FlowRouter.getParam('page_slug')
+                horizontal_position:$ne:'left'
+            }, sort:rank:1
+            
 # Template.block.onRendered ->
 #     Meteor.setTimeout ->
 #         $('.accordion').accordion();
@@ -763,7 +778,7 @@ Template.block.helpers
         
 Template.edit_block.onRendered ->
     Meteor.setTimeout ->
-        $('.tabular.menu .item').tab()
+        $('.stackable.menu .item').tab()
     , 400
     
     
