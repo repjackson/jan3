@@ -97,14 +97,10 @@ template(name='reference_type_multiple')
                 i.search.icon
                 // +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder="add..."
 
-template(name='toggle_boolean_checkbox')      
-    .ui.form
-        .field
-            .ui.toggle.checkbox
-                input(type='checkbox' name=key checked=page_jpid_key_value)
-                label
-                    |#{label}
-        .field
+template(name='toggle_sla_boolean')      
+    .ui.trigger.button(class=toggle_boolean_button_class)
+        +icon name=icon
+        
         
 
 
@@ -574,7 +570,7 @@ template(name='assignment_widget')
                                             
 template(name='blocks')
     if editing_mode
-        #add_block.ui.button(title="Add block with #{tags}")
+        #add_block.ui.button(title="Add Block #{tags}")
             i.plus.icon
             |Child Block
     each blocks
@@ -583,17 +579,21 @@ template(name='blocks')
 template(name='block')
     if can_view_block
         .ui(class=block_classes)
-            if view_title
-                .ui.header
-                    if icon
-                        +icon name=icon
-                    |#{title}
+            .ui.grid
+                .row
+                    .left.aligned.ten.wide.column
+                        if view_title
+                            .ui.header
+                                if icon
+                                    +icon name=icon
+                                |#{title}
+                    .right.aligned.six.wide.column
+                        if view_add_button
+                            .ui.add_block_child.icon.button
+                                i.plus.icon
             if custom_template
                 +Template.dynamic template=custom_template
             else
-                if view_add_button
-                    .ui.add_block_child.icon.button
-                        i.plus.icon
                 if is_cards
                     .ui.centered.three.stackable.cards
                         each children

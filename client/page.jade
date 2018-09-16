@@ -68,7 +68,9 @@ template(name='page')
                     +toggle_boolean key='admin_nav' yes_label='Admin Nav' no_label='Admin Nav'
                     +toggle_boolean key='office_nav' yes_label='Office Nav' no_label='Office Nav'
                     +toggle_boolean key='customer_nav' yes_label='Customer Nav' no_label='Customer Nav'
-            +blocks
+            .ui.padded.stackable.grid
+                .ui.sixteen.wide.column
+                    +blocks
     else
         if editing_mode
             .ui.basic.center.aligned.segment

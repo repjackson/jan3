@@ -197,7 +197,7 @@ Template.toggle_key.events
                 $set: "#{@key}": true
 
 
-Template.toggle_boolean_checkbox.onRendered ->
+Template.toggle_sla_boolean.onRendered ->
     Meteor.setTimeout ->
         $('.checkbox').checkbox(
             # onChecked: -> 
@@ -206,20 +206,25 @@ Template.toggle_boolean_checkbox.onRendered ->
     , 500
 
         
-Template.toggle_boolean_checkbox.helpers
-    toggle_key_button_class: -> 
-        current_doc = Docs.findOne 
-            type:'page'
-            slug:FlowRouter.getParam('page_slug')
-        if @value
-            if current_doc["#{@key}"] is true then 'primary'
-        # else if current_doc["#{@key}"] is true then 'active' else 'basic'
-        else ''
+Template.toggle_sla_boolean.helpers
+    toggle_boolean_button_class: -> 
+        # console.log @
+        sla_doc = Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        console.log sla_doc["#{@key}"]
+        if sla_doc["#{@key}"] is true then 'active'
+        else 'basic'
 
-Template.toggle_boolean_checkbox.events
-    'click .ui.toggle.checkbox': (e,t)->
-        doc_id = FlowRouter.getParam('doc_id')
-        checkbox_value = $("input[name=#{@key}]").is(":checked")
+Template.toggle_sla_boolean.events
+    'click .trigger': (e,t)->
+        sla_doc = Template.parentData(1)
+        console.log @
+        console.log sla_doc
+        if sla_doc
+            boolean_value = sla_doc["#{@key}"]
+            console.log boolean_value
+            
         # if @value
         #     Docs.update {_id:doc_id}, 
         #         { $set: "#{@key}": "#{@value}" },
@@ -232,8 +237,8 @@ Template.toggle_boolean_checkbox.events
         #                     parent_id: doc_id
         #                     text:"changed #{@key} to #{@value}."
         #                 Bert.alert "Changed #{@key} to #{@value}", 'success', 'growl-top-right'
-        Docs.update doc_id, 
-            $set: "#{@key}": checkbox_value
+        Docs.update sla_doc._id, 
+            $set: "#{@key}": !boolean_value
                         
 Template.toggle_user_published.events
     'click #toggle_button': (e,t)->

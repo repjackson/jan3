@@ -67,51 +67,59 @@ template(name='office_sla')
                     +icon name=icon
             |#{title}
     if selected_incident_type
-        // .ui.header Default Contact for #{selected_incident_type}
-        each rule_docs
-            .ui.secondary.segment
-                h4.ui.header #{title} 
-                    // for #{selected_incident_type} Rules
-                if sla_settings_doc
-                    with sla_settings_doc
-                        .ui.three.column.stackable.grid
-                            .column
+        table.ui.celled.table
+            thead
+                tr  
+                    th Level
+                    th Contact Customer
+                    th Escalation Hours
+                    th Contact Franchisee
+                    th Owner
+                    th Email Owner
+                    th SMS Owner
+                    th Secondary Contact
+                    th Email Secondary
+                    th SMS Secondary
+            tbody
+                each rule_docs
+                    tr  
+                        td #{title}
+                        if sla_settings_doc
+                            with sla_settings_doc
+                                td #{escalation_hours}
                                 if is_initial
-                                    +toggle_boolean_checkbox key=customer_toggle_key label='Customer' icon='headset'
+                                    td
+                                        +toggle_sla_boolean key='contact_customer' label='Customer' icon='headset'
                                 else 
-                                    strong Escalation Hours &nbsp;
-                                    // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
-                                    +set_sla_key_value key=hours_key value=1 label='1'
-                                    +set_sla_key_value key=hours_key value=2 label='2'
-                                    +set_sla_key_value key=hours_key value=4 label='4'
-                                    +set_sla_key_value key=hours_key value=12 label='12'
-                                    .ui.hidden.divider
-                                +toggle_boolean_checkbox key=franchisee_toggle_key label='Franchisee' icon='business'
-                            .column
-                                strong Owner
+                                    td 
+                                        // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
+                                        +set_sla_key_value key=hours_key value=1 label='1'
+                                        +set_sla_key_value key=hours_key value=2 label='2'
+                                        +set_sla_key_value key=hours_key value=4 label='4'
+                                        +set_sla_key_value key=hours_key value=12 label='12'
+                                td
+                                    +toggle_sla_boolean key='contact_franchisee' label='Franchisee' icon='business'
                                 if is_initial
-                                    +incident_owner_select
-                                    .ui.hidden.fitted.divider
-                                    +toggle_boolean_checkbox key='email_owner' label='Email' icon='envelope'
-                                    .ui.hidden.fitted.divider
-                                    +toggle_boolean_checkbox key='sms_owner' label='SMS' icon='comment'
+                                    td
+                                        +incident_owner_select
                                 else
-                                    if incident_owner
-                                        .ui.large.basic.label #{incident_owner}
-                                //     h5.ui.header Using Default Primary Contact
-                                // else
-                                //     .ui.hidden.fitted.divider
-                                //     +office_username_query key=primary_contact_key label='Select Primary Contact'
-                            .column
-                                strong Secondary
-                                +secondary_contact_widget
-                                .ui.hidden.fitted.divider
-                                +toggle_boolean_checkbox key='email_secondary' label='Email' icon='envelope'
-                                .ui.hidden.fitted.divider
-                                +toggle_boolean_checkbox key='sms_secondary' label='SMS' icon='comment'
-                else
-                    h5.ui.header No settings file
-                        .add_sla_setting_doc.ui.button Create
+                                    td Owner
+                                        if incident_owner
+                                            .ui.large.basic.label #{incident_owner}
+                                            h5.ui.header Using Default Primary Contact
+                                td
+                                    +toggle_sla_boolean key='email_owner' label='Email' icon='envelope'
+                                td
+                                    +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment'
+                                td Secondary
+                                    +secondary_contact_widget
+                                td
+                                    +toggle_sla_boolean key='email_secondary' label='Email' icon='envelope'
+                                td
+                                    +toggle_sla_boolean key='sms_secondary' label='SMS' icon='comment'
+                        else
+                            td No settings file
+                                .add_sla_setting_doc.ui.button Create
 
 
 template(name='office_service_settings')
@@ -147,8 +155,9 @@ template(name='incident_owner_select')
                                 strong #{profile.first_name} #{profile.last_name}
                                 |#{username}
     if incident_owner
-        strong #{incident_owner}
-        .ui.icon.compact.button.pull_user
+        .ui.header #{incident_owner}
+        |&nbsp;
+        .ui.icon.compact.small.button.pull_user
             i.remove.icon
 
 
@@ -186,5 +195,5 @@ template(name='secondary_contact_widget')
         //     if profile.image_id
         //         img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
         //     |#{profile.first_name} #{profile.last_name}
-        // .ui.icon.compact.button.pull_secondary
-        //     i.remove.icon
+        .ui.icon.compact.button.pull_secondary
+            i.remove.icon
