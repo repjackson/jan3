@@ -126,7 +126,11 @@ template(name='set_session_item')
         
 
 template(name='toggle_key')
-    .toggle_key.ui.compact.button(class=toggle_key_button_class) #{label}
+    .toggle_key.ui.button(class=toggle_key_button_class)
+        if icon
+            i.icon
+                +icon name=icon
+        |#{label}
 
 
 template(name='view_full_button')

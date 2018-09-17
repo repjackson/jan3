@@ -3,7 +3,7 @@
 
 Template.edit_image_field.events
     "change input[type='file']": (e) ->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getQueryParam('doc_id')
         files = e.currentTarget.files
 
 
@@ -27,7 +27,7 @@ Template.edit_image_field.events
 
     'keydown #input_image_id': (e,t)->
         if e.which is 13
-            doc_id = FlowRouter.getParam('doc_id')
+            doc_id = FlowRouter.getQueryParam('doc_id')
             image_id = $('#input_image_id').val().toLowerCase().trim()
             if image_id.length > 0
                 Docs.update doc_id,
@@ -50,7 +50,7 @@ Template.edit_image_field.events
             Meteor.call "c.delete_by_public_id", @image_id, (err,res) ->
                 if not err
                     # Do Stuff with res
-                    Docs.update FlowRouter.getParam('doc_id'), 
+                    Docs.update FlowRouter.getQueryParam('doc_id'), 
                         $unset: image_id: 1
 
                 else
@@ -59,7 +59,7 @@ Template.edit_image_field.events
     # 		Cloudinary.delete "37hr", (err,res) ->
     # 		    if err 
     # 		    else
-    #                 # Docs.update FlowRouter.getParam('doc_id'), 
+    #                 # Docs.update FlowRouter.getQueryParam('doc_id'), 
     #                 #     $unset: image_id: 1
 
     # Template.edit_image.helpers
@@ -163,7 +163,7 @@ Template.edit_textarea.events
     'blur .textarea': (e,t)->
         textarea_value = $(e.currentTarget).closest('.textarea').val()
         update_textarea = ->
-            doc_id = FlowRouter.getParam('doc_id')
+            doc_id = FlowRouter.getQueryParam('doc_id')
             Docs.update doc_id,
                 { $set: "#{t.data.key}": textarea_value }
         debounced = _.debounce(update_textarea, 500)
@@ -179,7 +179,7 @@ Template.edit_textarea.helpers
         doc_field = Template.parentData(0)
         if FlowRouter.getParam('jpid')
             current_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        if FlowRouter.getParam('doc_id')
+        if FlowRouter.getQueryParam('doc_id')
             current_doc = Docs.findOne FlowRouter.getParam('jpid')
         if current_doc
             if doc_field.key
@@ -209,7 +209,7 @@ Template.edit_timerange_field.onRendered ->
 Template.edit_timerange_field.events
     'blur #time_start': (e,t)->
         value = $('#time_start').calendar('get date')
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update FlowRouter.getQueryParam('doc_id'),
             {$set: time_start: value}
             , (err,res)=>
                 if err
@@ -218,7 +218,7 @@ Template.edit_timerange_field.events
                     Bert.alert "Updated Start Time", 'success', 'growl-top-right'
     'blur #time_end': (e,t)->
         value = $('#time_end').calendar('get date')
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update FlowRouter.getQueryParam('doc_id'),
             {$set: time_end: value}
             , (err,res)=>
                 if err
@@ -244,7 +244,7 @@ Template.edit_datetime_field.events
     'blur #datetime_field': (e,t)->
         datetime_value = e.currentTarget.value
         value = $('#datetime_field').calendar('get date')
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update FlowRouter.getQueryParam('doc_id'),
             { $set: "#{@key}": datetime_value } 
             , (err,res)=>
                 if err
@@ -256,7 +256,7 @@ Template.edit_datetime_field.events
 Template.edit_date_field.events
     'blur #date_field': (e,t)->
         date_value = e.currentTarget.value
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update FlowRouter.getQueryParam('doc_id'),
             { $set: "#{@key}": date_value } 
             , (err,res)=>
                 if err
@@ -268,7 +268,7 @@ Template.edit_date_field.events
 Template.edit_text_field.events
     'change #text_field': (e,t)->
         text_value = e.currentTarget.value
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update FlowRouter.getQueryParam('doc_id'),
             { $set: "#{@key}": text_value }
             , (err,res)=>
                 if err
@@ -319,7 +319,7 @@ Template.edit_user_text_field.events
 #     'blur .froala-container': (e,t)->
 #         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         
-#         doc_id = FlowRouter.getParam('doc_id')
+#         doc_id = FlowRouter.getQueryParam('doc_id')
 #         # short = truncate(html, 5, { byWords: true })
 #         Docs.update doc_id,
 #             $set: 
@@ -338,7 +338,7 @@ Template.edit_user_text_field.events
 
 # Template.edit_html_field.helpers
 #     getFEContext: ->
-#         @current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         @current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
 #         self = @
 #         {
 #             _value: self.current_doc.incident_details
@@ -353,7 +353,7 @@ Template.edit_user_text_field.events
 
 # Template.edit_html.helpers
 #     getFEContext: ->
-#         @current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+#         @current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
 #         self = @
 #         {
 #             _value: self.current_doc.html
@@ -381,7 +381,7 @@ Template.edit_array_field.events
         switch e.which
             when 13 #enter
                 unless val.length is 0
-                    Docs.update FlowRouter.getParam('doc_id'),
+                    Docs.update FlowRouter.getQueryParam('doc_id'),
                         $addToSet: "#{@key}": val
                     # $('.new_entry').val ''
                     $(e.currentTarget).closest('.new_entry').val('')
@@ -396,7 +396,7 @@ Template.edit_array_field.events
 
     'click .doc_tag': (e,t)->
         tag = @valueOf()
-        Docs.update FlowRouter.getParam('doc_id'),
+        Docs.update FlowRouter.getQueryParam('doc_id'),
             $pull: "#{Template.parentData(0).key}": tag
         t.$('.new_entry').val(tag)
         

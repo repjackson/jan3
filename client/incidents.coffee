@@ -57,28 +57,29 @@ Template.level_icon.helpers
 Template.submit_incident.onCreated ->
     @autorun -> Meteor.subscribe 'type','incident_type'
 #     @autorun -> Meteor.subscribe 'type','rule'
-#     @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
+#     @autorun -> Meteor.subscribe 'incident', FlowRouter.getQueryParam('doc_id')
 
 
 # Template.submit_incident.onRendered ->
 #     target_username = FlowRouter.getQueryParam 'username'
 #     if target_username
-#         Meteor.call 'unassign_user_from_incident', FlowRouter.getParam('doc_id'), target_username, (err,res)->
+#         Meteor.call 'unassign_user_from_incident', FlowRouter.getQueryParam('doc_id'), target_username, (err,res)->
 #             if err then console.error err
 #             else
 #                 Bert.alert "Unassigning user: #{target_username}", 'info', 'growl-top-right'
-#     # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getParam('doc_id')
+#     # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getQueryParam('doc_id')
 
 Template.submit_incident.helpers
     incident_type_docs: -> Docs.find type:'incident_type'
-#     can_submit: -> 
-#         user = Meteor.user()
-#         is_customer = user and user.roles and ('customer' in user.roles)
-#         @service_date and @incident_details and @incident_type and is_customer and not @submitted
+    can_submit: -> 
+        incident_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        user = Meteor.user()
+        is_customer = user and user.roles and ('customer' in user.roles)
+        incident_doc.service_date and incident_doc.incident_details and incident_doc.incident_type and is_customer
     
 #     can_edit_core: ->
 #         user = Meteor.user()
-#         doc_id = FlowRouter.getParam 'doc_id'
+#         doc_id = FlowRouter.getQueryParam 'doc_id'
 #         incident = Docs.findOne doc_id
 #         if user and user.roles and 'customer' in user.roles
 #             if incident.submitted is true
@@ -94,35 +95,36 @@ Template.submit_incident.helpers
 #             type:'feedback_response'
             
     
-# Template.submit_incident.events
+Template.submit_incident.events
 #     'click #submit_feedback': ->
-#         new_response_id = Docs.insert({type:'feedback_response', parent_id:FlowRouter.getParam('doc_id')})
+#         new_response_id = Docs.insert({type:'feedback_response', parent_id:FlowRouter.getQueryParam('doc_id')})
 #         FlowRouter.go("/edit/#{new_response_id}")
 
-#     'click .submit': -> 
-#         doc_id = FlowRouter.getParam 'doc_id'
-#         incident = Docs.findOne doc_id
+    'click .submit': -> 
+        doc_id = FlowRouter.getQueryParam 'doc_id'
+        incident = Docs.findOne doc_id
         
-#         incidents_office =
-#             Docs.findOne
-#                 "ev.MASTER_LICENSEE": incident.incident_office_name
-#                 type:'office'
-#         if incidents_office
-#             escalation_hours = incidents_office["escalation_1_#{incident.incident_type}_hours"]
-#             Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_hours} hours according to #{incident.incident_office_name} initial rules."
-#             Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_1_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_1_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
-#         Docs.update doc_id,
-#             $set:
-#                 submitted:true
-#                 submitted_datetime: Date.now()
-#                 last_updated_datetime: Date.now()
-#         Meteor.call 'assign_incident_owner_after_submission', doc_id
-#         Meteor.call 'create_event', doc_id, 'submit', "submitted the incident."
-#         Meteor.call 'email_about_incident_submission', incident._id
+        incidents_office =
+            Docs.findOne
+                "ev.MASTER_LICENSEE": incident.incident_office_name
+                type:'office'
+        if incidents_office
+            escalation_hours = incidents_office["escalation_1_#{incident.incident_type}_hours"]
+            Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_hours} hours according to #{incident.incident_office_name} initial rules."
+            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_1_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_1_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
+        Docs.update doc_id,
+            $set:
+                submitted:true
+                submitted_datetime: Date.now()
+                last_updated_datetime: Date.now()
+        Meteor.call 'assign_incident_owner_after_submission', doc_id
+        Meteor.call 'create_event', doc_id, 'submit', "submitted the incident."
+        Meteor.call 'email_about_incident_submission', incident._id
 
+        FlowRouter.go "/p/incident_customer_view?doc_id=#{doc_id}"
 
 #     'click .unsubmit': -> 
-#         doc_id = FlowRouter.getParam 'doc_id'
+#         doc_id = FlowRouter.getQueryParam 'doc_id'
 #         incident = Docs.findOne doc_id
 #         Docs.update doc_id,
 #             $set:
@@ -132,7 +134,7 @@ Template.submit_incident.helpers
 #         Meteor.call 'create_event', doc_id, 'unsubmit', "unsubmitted the incident."
         
 #     'click .close_incident': ->
-#         doc_id = FlowRouter.getParam 'doc_id'
+#         doc_id = FlowRouter.getQueryParam 'doc_id'
 #         incident = Docs.findOne doc_id
         
 #         $('.ui.confirm_close.modal').modal(
@@ -151,7 +153,7 @@ Template.submit_incident.helpers
 
        
 #     'click .reopen_incident': ->
-#         doc_id = FlowRouter.getParam 'doc_id'
+#         doc_id = FlowRouter.getQueryParam 'doc_id'
 #         incident = Docs.findOne doc_id
 
 #         if confirm 'Reopen incident?'        
@@ -165,7 +167,7 @@ Template.submit_incident.helpers
        
        
 #     'click #run_single_escalation_check': ->
-#         Meteor.call 'single_escalation_check', FlowRouter.getParam 'doc_id', (err,res)->
+#         Meteor.call 'single_escalation_check', FlowRouter.getQueryParam 'doc_id', (err,res)->
 #             if err 
 #                 console.dir err
 #                 Bert.alert "#{err.reason}.", 'info', 'growl-top-right'
@@ -184,7 +186,7 @@ Template.submit_incident.helpers
 #             confirmButtonText: 'Remove'
 #             confirmButtonColor: '#da5347'
 #         }, =>
-#             doc_id = FlowRouter.getParam('doc_id')
+#             doc_id = FlowRouter.getQueryParam('doc_id')
 #             Docs.remove doc_id
 #             Meteor.call 'clear_incident_events', doc_id, ->
 #             FlowRouter.go '/p/admin_incidents'
@@ -209,24 +211,24 @@ Template.submit_incident.helpers
 Template.incident_sla_widget.helpers
     sla_rule_docs: -> Docs.find {type:'rule'}, sort:number:1
     incident_doc: ->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
 
 Template.sla_rule_doc.helpers
     is_initial: -> @number is 1   
 
     can_escalate: -> 
-        doc_id = FlowRouter.getParam 'doc_id'
+        doc_id = FlowRouter.getQueryParam 'doc_id'
         incident = Docs.findOne doc_id
         return incident.level is (@number-1)
         
     is_level: -> 
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
         if incident
             incident.level is (@number)
     escalation_level_card_class: ->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
         if incident
             if incident.level is @number 
@@ -234,10 +236,10 @@ Template.sla_rule_doc.helpers
             else
                 ''
     incident_doc: ->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
     hours_value: ->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
         if incident and incident.office_jpid
             incident_office = Docs.findOne
@@ -246,7 +248,7 @@ Template.sla_rule_doc.helpers
             incident_office["escalation_#{@number}_#{incident.incident_type}_hours"]
 
     franchisee_toggle_value: ->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
         if incident and incident.office_jpid
             incident_office = Docs.findOne
@@ -255,7 +257,7 @@ Template.sla_rule_doc.helpers
             incident_office["escalation_#{@number}_#{incident.incident_type}_contact_franchisee"]
     
     primary_contact_value: ->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
         if incident and incident.office_jpid
             incident_office = Docs.findOne
@@ -265,7 +267,7 @@ Template.sla_rule_doc.helpers
 
     
     secondary_contact_value: ->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
         if incident and incident.office_jpid
             incident_office = Docs.findOne
@@ -276,7 +278,7 @@ Template.sla_rule_doc.helpers
 
 Template.sla_rule_doc.events
     'click .set_level': (e,t)->
-        doc_id = FlowRouter.getParam('doc_id')
+        doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
         type = incident.incident_type
         Meteor.call 'find_office_from_customer_jpid', incident.customer_jpid, (err,res)=>
@@ -325,6 +327,6 @@ Template.sla_rule_doc.events
             
             
 Template.full_doc_history.onCreated ->
-    @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getParam('doc_id')
+    @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getQueryParam('doc_id')
 
     

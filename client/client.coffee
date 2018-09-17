@@ -95,7 +95,7 @@ Template.registerHelper 'databank_docs': ->
 Template.registerHelper 'from_now', (input) -> moment(input).fromNow()
 Template.registerHelper 'long_format', (input) -> moment(input).format('MMMM Do h:mma')
 
-Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getParam('doc_id')
+Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getQueryParam('doc_id')
 
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
@@ -180,7 +180,7 @@ Template.registerHelper 'block_field_value', ->
 
 Template.registerHelper 'page_key_value', () -> 
     # doc_field = Template.parentData(2)
-    current_doc = Docs.findOne FlowRouter.getParam('doc_id')
+    current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
     if current_doc
         current_doc["#{@key}"]
         

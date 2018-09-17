@@ -1,8 +1,8 @@
 Template.comments.onCreated ->
-    @autorun -> Meteor.subscribe 'comments', FlowRouter.getParam('doc_id')
+    @autorun -> Meteor.subscribe 'comments', FlowRouter.getQueryParam('doc_id')
 
 Template.comments.helpers
-    comments: -> Docs.find { parent_id:FlowRouter.getParam('doc_id'), type:'comment'}
+    comments: -> Docs.find { parent_id:FlowRouter.getQueryParam('doc_id'), type:'comment'}
 
 
 Template.comments.onRendered ->

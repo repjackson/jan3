@@ -60,7 +60,14 @@ template(name='submit_incident')
         +icon name='category'
         |Type
     each incident_type_docs
-        +toggle_key key='incident_type' value=slug label=title
+        +toggle_key key='incident_type' value=slug label=title icon=icon
     +edit_textarea label='Details' key='incident_details' icon='view-details'
     // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
     +edit_datetime_field key='service_date' label='Service Time'
+    .ui.hidden.divider
+    if can_submit
+        .submit.ui.fluid.green.button
+            |Submit
+    else
+        .ui.fluid.green.disabled.button
+            |Submit

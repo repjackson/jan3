@@ -17,12 +17,13 @@ Template.dev.helpers
 
 # Template.page_view.onCreated ->
 #     # location.reload() 
-#     @autorun => Meteor.subscribe 'blocks', FlowRouter.getParam('doc_id')
+#     @autorun => Meteor.subscribe 'blocks', FlowRouter.getQueryParam('doc_id')
 
     
 Template.page.onCreated ->
     @autorun => Meteor.subscribe 'page_by_slug', FlowRouter.getParam('page_slug')
     @autorun => Meteor.subscribe 'blocks_by_page_slug', FlowRouter.getParam('page_slug')
+    @autorun => Meteor.subscribe 'doc', FlowRouter.getQueryParam('doc_id')
 
     
 Template.page.events

@@ -23,7 +23,7 @@ Template.request_service_button.events
 
 
 Template.service_view.onCreated ->
-    @autorun => Meteor.subscribe 'service_child_requests', FlowRouter.getParam('doc_id')
+    @autorun => Meteor.subscribe 'service_child_requests', FlowRouter.getQueryParam('doc_id')
 
 Template.service_child_requests.helpers
     child_requests: ->
@@ -43,7 +43,7 @@ Template.service_edit.events
             confirmButtonText: 'Delete'
             confirmButtonColor: '#da5347'
         }, =>
-            doc = Docs.findOne FlowRouter.getParam('doc_id')
+            doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
             Docs.remove doc._id, ->
                 FlowRouter.go "/services"
 
@@ -62,12 +62,12 @@ Template.service_request_edit.events
             confirmButtonText: 'Delete'
             confirmButtonColor: '#da5347'
         }, =>
-            doc = Docs.findOne FlowRouter.getParam('doc_id')
+            doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
             Docs.remove doc._id, ->
                 FlowRouter.go "/services"
     
     'click #submit_request': ->
-        doc_id = FlowRouter.getParam 'doc_id'
+        doc_id = FlowRouter.getQueryParam 'doc_id'
         request = Docs.findOne doc_id
         
         service = Docs.findOne request.service_id

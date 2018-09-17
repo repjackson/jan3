@@ -157,7 +157,7 @@ Template.call_method.events
 Template.toggle_key.helpers
     toggle_key_button_class: -> 
         current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        
+        console.log @
         if @value
             if current_doc["#{@key}"] is @value then 'primary'
         # else if current_doc["#{@key}"] is true then 'active' else 'basic'
