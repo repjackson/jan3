@@ -536,3 +536,19 @@ Meteor.publish 'office_sla_settings', (jpid)->
         type:'sla_setting'
         office_jpid:jpid
             
+            
+Meteor.publish 'incident_sla_docs', (incident_doc_id)->
+    incident = Docs.findOne incident_doc_id
+    Docs.find
+        type:'sla_setting'
+        office_jpid:incident.office_jpid
+        incident_type:incident.incident_type
+            
+            
+Meteor.publish 'office_employees_from_incident_doc_id', (incident_doc_id)->
+    incident = Docs.findOne incident_doc_id
+    office_doc = Docs.findOne "ev.ID":incident.office_jpid
+    Meteor.users.find
+        "ev.COMPANY_NAME": office_doc.ev.MASTER_LICENSEE
+            
+            

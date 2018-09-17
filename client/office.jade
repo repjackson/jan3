@@ -39,20 +39,20 @@ template(name='office_sla')
                                 else 
                                     td 
                                         // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
-                                        +set_sla_key_value key=hours_key value=1 label='1'
-                                        +set_sla_key_value key=hours_key value=2 label='2'
-                                        +set_sla_key_value key=hours_key value=4 label='4'
-                                        +set_sla_key_value key=hours_key value=12 label='12'
+                                        +set_sla_key_value key='escalation_hours' value=1 label='1'
+                                        +set_sla_key_value key='escalation_hours' value=2 label='2'
+                                        +set_sla_key_value key='escalation_hours' value=4 label='4'
+                                        +set_sla_key_value key='escalation_hours' value=12 label='12'
                                 td
                                     if is_initial
-                                        +toggle_sla_boolean key='contact_customer' label='Customer' icon='headset'
-                                    +toggle_sla_boolean key='contact_franchisee' label='Franchisee' icon='business'
+                                        +toggle_sla_boolean key='contact_customer' label='Customer' icon='headset' title='Contact Customer'
+                                    +toggle_sla_boolean key='contact_franchisee' label='Franchisee' icon='business' title='Contact Franchisee'
                                 if is_initial
                                     td
                                         +incident_owner_select
                                         div
-                                        +toggle_sla_boolean key='email_owner' label='Email' icon='envelope'
-                                        +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment'
+                                        +toggle_sla_boolean key='email_owner' label='Email' icon='open-envelope' title='Email Owner'
+                                        +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment' title='Text Owner'
                                 else
                                     td
                                         if incident_owner
@@ -60,8 +60,8 @@ template(name='office_sla')
                                 td 
                                     +secondary_contact_widget
                                     div
-                                    +toggle_sla_boolean key='email_secondary' label='Email' icon='envelope'
-                                    +toggle_sla_boolean key='sms_secondary' label='SMS' icon='comment'
+                                    +toggle_sla_boolean key='email_secondary' label='Email' icon='open-envelope' title='Email Secondary'
+                                    +toggle_sla_boolean key='sms_secondary' label='SMS' icon='comment' title='Text Secondary'
                         else
                             td No settings file
                                 .add_sla_setting_doc.ui.button Create
@@ -105,14 +105,6 @@ template(name='incident_owner_select')
         i.pull_user.remove.link.icon(title="Clear #{incident_owner}")
 
 
-// template(name='view_sla_contact')
-//     // .ui.header SLA Contact #{key}
-//     with selected_contact
-//         .ui.header
-//             |#{profile.first_name} #{profile.last_name}
-//         .description
-//             | @#{username}
-//             div #{ev.EMAIL}
 
 template(name='secondary_contact_widget')
     unless secondary_contact

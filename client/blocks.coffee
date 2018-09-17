@@ -107,7 +107,7 @@ Template.reference_type_multiple.events
 
 
 # Template.set_view_mode.helpers
-#     view_mode_button_class: -> if Session.equals('view_mode', @view) then 'active' else ''
+#     view_mode_button_class: -> if Session.equals('view_mode', @view) then 'primary' else ''
 
 # Template.set_view_mode.events
 #     'click #set_view_mode': -> Session.set 'view_mode', @view
@@ -160,7 +160,7 @@ Template.toggle_key.helpers
         console.log @
         if @value
             if current_doc["#{@key}"] is @value then 'primary'
-        # else if current_doc["#{@key}"] is true then 'active' else 'basic'
+        # else if current_doc["#{@key}"] is true then 'primary' else 'basic'
         else ''
 
 Template.toggle_key.events
@@ -191,13 +191,17 @@ Template.toggle_key.events
 Template.set_sla_key_value.events
     'click .set_page_key_value': ->
         sla_doc = Template.parentData(1)
+        # console.log @
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
         Docs.update sla_doc._id,
             { $set: "#{@key}": @value }
 
 Template.set_sla_key_value.helpers
     set_value_button_class: ->
         sla_doc = Template.parentData(1)
-        if sla_doc["#{@key}"] is @value then 'active' else 'basic'
+        if sla_doc["#{@key}"] is @value then 'primary' else 'basic'
 
 
 Template.toggle_sla_boolean.helpers
@@ -206,7 +210,7 @@ Template.toggle_sla_boolean.helpers
         sla_doc = Template.parentData(1)
         # console.log Template.parentData(2)
         # console.log Template.parentData(3)
-        if sla_doc["#{@key}"] is true then 'active'
+        if sla_doc["#{@key}"] is true then 'primary'
         else 'basic'
 
 Template.toggle_sla_boolean.events
@@ -555,6 +559,9 @@ Template.assignment_widget.onCreated ()->
     @autorun => Meteor.subscribe 'assigned_users', FlowRouter.getQueryParam('doc_id')
     @user_results = new ReactiveVar( [] )
 Template.assignment_widget.events
+    'click .clear_results': (e,t)->
+        t.user_results.set null
+
     'keyup #multiple_user_select_input': (e,t)->
         multiple_user_select_input_value = $(e.currentTarget).closest('#multiple_user_select_input').val().trim()
         current_incident = Docs.findOne FlowRouter.getQueryParam('doc_id')
@@ -892,7 +899,7 @@ Template.edit_block.events
 
         button=e.currentTarget.id
 
-        $("#"+button).addClass('active');
+        $("#"+button).addClass('primary');
 
         $.tab('change tab', tab_name)
 
@@ -976,7 +983,7 @@ Template.set_key_value_2.events
     
 Template.set_key_value.helpers
     set_value_button_class: -> 
-        if Template.parentData()["#{@key}"] is @value then 'active' else 'basic'
+        if Template.parentData()["#{@key}"] is @value then 'primary' else 'basic'
 
     
 Template.set_page_key_value.helpers
@@ -989,7 +996,7 @@ Template.set_page_key_value.helpers
     
 Template.set_key_value_2.helpers
     set_value_button_class: -> 
-        if Template.parentData(2)["#{@key}"] is @value then 'active' else 'basic'
+        if Template.parentData(2)["#{@key}"] is @value then 'primary' else 'basic'
 
     
 Template.edit_block_text_field.helpers 
@@ -1031,6 +1038,21 @@ Template.edit_block_number_field.events
 Template.set_field_key_value.events 
     'click .set_field_key_value': (e,t)->
         Meteor.call 'update_block_field', Template.parentData(2)._id, Template.parentData(), @key, @value
+
+Template.toggle_block_field_boolean.events 
+    'click .toggle_block_field_boolean': (e,t)->
+        Meteor.call 'update_block_field', Template.parentData(2)._id, Template.parentData(), @key, true
+
+Template.toggle_block_field_boolean.helpers 
+    toggle_value_button_class: -> 
+        # console.log @
+        # console.log Template.currentData()
+        # console.log Template.parentData(0)
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        if Template.parentData(2)["#{@key}"] is true then 'primary' else 'basic'
+
 
 
 Template.view_button.helpers

@@ -330,3 +330,31 @@ Template.full_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getQueryParam('doc_id')
 
     
+    
+
+
+Template.sla_tester.onCreated ->
+    @autorun =>  Meteor.subscribe 'incident_sla_docs', FlowRouter.getQueryParam('doc_id')
+    @autorun =>  Meteor.subscribe 'office_employees_from_incident_doc_id', FlowRouter.getQueryParam('doc_id')
+Template.sla_tester.events
+    'click .check_escalation': ->
+        Meteor.call 'single_escalation_check', FlowRouter.getQueryParam('doc_id')
+        
+    'click .escalate_incident': ->
+        Meteor.call 'escalate_incident', FlowRouter.getQueryParam('doc_id')
+        
+Template.sla_tester.helpers
+    sla_docs: -> 
+        incident = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        if incident
+            Docs.find {
+                type:'sla_setting'
+                office_jpid:incident.office_jpid
+                incident_type:incident.incident_type
+                }, sort:escalation_number:1
+    
+Template.view_sla_contact.helpers
+    user_ob: ->
+        Meteor.users.findOne
+            username: @username
+            

@@ -65,9 +65,52 @@ template(name='submit_incident')
     // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
     +edit_datetime_field key='service_date' label='Service Time'
     .ui.hidden.divider
-    if can_submit
-        .submit.ui.fluid.green.button
-            |Submit
-    else
-        .ui.fluid.green.disabled.button
-            |Submit
+    .submit.ui.fluid.green.button
+        |Submit
+    // if can_submit
+    // else
+    //     .ui.fluid.green.disabled.button
+    //         |Submit
+
+
+
+template(name='sla_tester')
+    i.large.refresh.check_escalation.link.icon(title='Manually Check Escalation')
+    i.large.sort.numeric.down.escalate_incident.link.icon(title='Manually Escalate')
+    each sla_docs
+        .ui.secondary.segment
+            h3.ui.header Level #{escalation_number}
+                span(title='Escalation Hours') (#{escalation_hours})
+            i.large.link.asterisk.simulate_escalation.icon(title="Simulate Escalation to Level #{escalation_number")
+            .ui.secondary.segment
+                | Owner
+                +view_sla_contact username=incident_owner
+                if contact_customer
+                    i.money.large.icon(title='Contact Customer')
+                if contact_franchisee
+                    i.truck.large.icon(title='Contact Franchisee')
+                // .item Type #{incident_type}
+                if email_owner
+                    i.mail.large.icon(title='Email Owner')
+                if sms_owner
+                    i.phone.large.icon(title='SMS Owner')
+            .ui.secondary.segment
+                |Secondary
+                +view_sla_contact username=secondary_contact
+                if email_secondary
+                    i.mail.large.icon(title='Email secondary')
+                if sms_secondary
+                    i.phone.large.icon(title='SMS secondary')
+                
+
+template(name='view_sla_contact')
+    // .ui.header SLA Contact #{key}
+    with user_ob
+        h3.ui.header
+            |#{first_name} #{last_name}
+            small @#{username}
+        div #{ev.EMAIL}
+        div #{ev.WORK_TELEPHONE}
+        div #{ev.HOME_TELEPHONE}
+              
+                    

@@ -245,38 +245,38 @@ Meteor.methods
         Meteor.call 'send_email', mail_fields
 
 
-    single_escalation_check: (incident_id)->
-        incident = Docs.findOne incident_id
-        if incident.level is 4
-            return
-            # Meteor.call 'create_event', incident_id, 'max_level_notice', "Incident is at max level 4, not escalating."
-        else
-            incident_office =
-                Docs.findOne
-                    "ev.MASTER_LICENSEE": incident.incident_office_name
-                    type:'office'
-            current_level = incident.level
-            next_level = current_level + 1
+    # single_escalation_check: (incident_id)->
+    #     incident = Docs.findOne incident_id
+    #     if incident.level is 4
+    #         return
+    #         # Meteor.call 'create_event', incident_id, 'max_level_notice', "Incident is at max level 4, not escalating."
+    #     else
+    #         incident_office =
+    #             Docs.findOne
+    #                 "ev.MASTER_LICENSEE": incident.incident_office_name
+    #                 type:'office'
+    #         current_level = incident.level
+    #         next_level = current_level + 1
 
-            last_updated = incident.updated
-            existing_hours_value = incident_office["escalation_#{next_level}_#{incident.incident_type}_hours"]
-            if existing_hours_value 
-                hours_value = existing_hours_value
-            else 
-                hours_value = 2
-                Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation hours found, using 2 as the default."
+    #         last_updated = incident.updated
+    #         existing_hours_value = incident_office["escalation_#{next_level}_#{incident.incident_type}_hours"]
+    #         if existing_hours_value 
+    #             hours_value = existing_hours_value
+    #         else 
+    #             hours_value = 2
+    #             Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation hours found, using 2 as the default."
             
-            now = Date.now()
-            updated_now_difference = now-last_updated
-            seconds_elapsed = Math.floor(updated_now_difference/1000)
-            hours_elapsed = Math.floor(seconds_elapsed/60)
-            escalation_calculation = hours_elapsed - hours_value
-            if hours_elapsed < hours_value
-                Meteor.call 'create_event', incident_id, 'not-escalate', "#{hours_elapsed} hours have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
-                # continue
-            else    
-                Meteor.call 'create_event', incident_id, 'escalate', "#{hours_elapsed} hours have elapsed, more than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, escalating."
-                Meteor.call 'escalate_incident', incident._id, ->
+    #         now = Date.now()
+    #         updated_now_difference = now-last_updated
+    #         seconds_elapsed = Math.floor(updated_now_difference/1000)
+    #         hours_elapsed = Math.floor(seconds_elapsed/60)
+    #         escalation_calculation = hours_elapsed - hours_value
+    #         if hours_elapsed < hours_value
+    #             Meteor.call 'create_event', incident_id, 'not-escalate', "#{hours_elapsed} hours have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
+    #             # continue
+    #         else    
+    #             Meteor.call 'create_event', incident_id, 'escalate', "#{hours_elapsed} hours have elapsed, more than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, escalating."
+    #             Meteor.call 'escalate_incident', incident._id, ->
             
     escalate_incident: (doc_id)-> 
         incident = Docs.findOne doc_id

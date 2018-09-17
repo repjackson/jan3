@@ -23,6 +23,10 @@ Template.office_service_settings.events
                     $set: services: [@slug]
     
     
+Template.toggle_sla_boolean.onRendered ->
+    Meteor.setTimeout ->
+        $('.button').popup()
+    , 400
     
 
 Template.office_sla.onCreated ->
@@ -211,13 +215,3 @@ Template.secondary_contact_widget.helpers
 
 
 
-# Template.view_sla_contact.helpers
-#     selected_contact: ->
-#         context = Template.currentData(0)
-#         office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-#         if office_doc["#{context.key}"]
-#             Meteor.users.findOne
-#                 username: office_doc["#{context.key}"]
-#         else
-#             false
-        
