@@ -22,8 +22,7 @@ Template.customer_menu.events
         Meteor.call 'log_ticket', (err,res)->
             if err then console.error err
             else
-                console.log 'res', res
-                FlowRouter.go "/v/#{res}"
+                FlowRouter.go "/p/submit_incident?doc_id=#{res}"
 
 
 Template.dashboard_office_contacts_list.onCreated ->

@@ -3,8 +3,7 @@ Template.add_incident_button.events
         Meteor.call 'log_ticket', (err,res)->
             if err then console.error err
             else
-                console.log 'res', res
-                FlowRouter.go "/v/#{res}"
+                FlowRouter.go "/p/submit_incident?doc_id=#{res}"
 
 
 Template.incident_type_label.onRendered ->
@@ -42,7 +41,6 @@ Template.incident_type_label.helpers
 
 Template.level_icon.helpers
     level_icon_name: ->
-        # console.log @
         switch @level
             when 1 then '1-c'
             when 2 then '2-c'
@@ -56,15 +54,14 @@ Template.level_icon.helpers
 
 
 
-# Template.incident_view.onCreated ->
-#     @autorun -> Meteor.subscribe 'type','incident_type'
+Template.submit_incident.onCreated ->
+    @autorun -> Meteor.subscribe 'type','incident_type'
 #     @autorun -> Meteor.subscribe 'type','rule'
 #     @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
 
 
-# Template.incident_view.onRendered ->
+# Template.submit_incident.onRendered ->
 #     target_username = FlowRouter.getQueryParam 'username'
-#     # console.log 'target username?',target_username
 #     if target_username
 #         Meteor.call 'unassign_user_from_incident', FlowRouter.getParam('doc_id'), target_username, (err,res)->
 #             if err then console.error err
@@ -72,8 +69,8 @@ Template.level_icon.helpers
 #                 Bert.alert "Unassigning user: #{target_username}", 'info', 'growl-top-right'
 #     # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getParam('doc_id')
 
-# Template.incident_view.helpers
-#     incident_type_docs: -> Docs.find type:'incident_type'
+Template.submit_incident.helpers
+    incident_type_docs: -> Docs.find type:'incident_type'
 #     can_submit: -> 
 #         user = Meteor.user()
 #         is_customer = user and user.roles and ('customer' in user.roles)
@@ -97,7 +94,7 @@ Template.level_icon.helpers
 #             type:'feedback_response'
             
     
-# Template.incident_view.events
+# Template.submit_incident.events
 #     'click #submit_feedback': ->
 #         new_response_id = Docs.insert({type:'feedback_response', parent_id:FlowRouter.getParam('doc_id')})
 #         FlowRouter.go("/edit/#{new_response_id}")

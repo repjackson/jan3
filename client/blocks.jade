@@ -136,19 +136,6 @@ template(name='view_full_button')
                         
             
 
-template(name='incidents_by_type')
-    .ui.secondary.segment
-        .ui.header 
-            i.exclamation.circle.icon
-            | Incidents
-        .ui.list
-            each typed_incidents
-                .item
-                    img.ui.avatar.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                    .content
-                        a.header(href="/v/#{_id}") ##{incident_number} 
-                        .description
-                            |#{when}
             
 template(name='associated_users')
     .ui.list
@@ -445,7 +432,7 @@ template(name='customer_card')
     .ui.card
         with customer_doc
             .content
-                a.ui.header(href="/v/#{_id}")
+                a.ui.header(href="/p/customer?doc_id=#{_id}")
                     +icon name='headset'
                     |Customer Account
             .content

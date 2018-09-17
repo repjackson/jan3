@@ -53,3 +53,14 @@ template(name='sla_rule_doc')
         strong #{secondary_contact_value} 
             //     .ui.disabled.button Can't Set #{number}
             
+            
+            
+template(name='submit_incident')
+    .ui.header 
+        +icon name='category'
+        |Type
+    each incident_type_docs
+        +toggle_key key='incident_type' value=slug label=title
+    +edit_textarea label='Details' key='incident_details' icon='view-details'
+    // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
+    +edit_datetime_field key='service_date' label='Service Time'

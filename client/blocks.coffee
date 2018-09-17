@@ -152,16 +152,6 @@ Template.call_method.events
                 
                 
             
-Template.incidents_by_type.onCreated ->
-    @autorun =>  Meteor.subscribe 'docs', [], 'incident'
-Template.incidents_by_type.helpers
-    typed_incidents: -> 
-        incident_type_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        Docs.find {
-            type:'incident'
-            incident_type:incident_type_doc.slug
-        }, sort:timestamp:-1
-        
         
         
 Template.toggle_key.helpers
@@ -1044,5 +1034,4 @@ Template.set_field_key_value.events
 
 
 Template.view_button.helpers
-    url:-> 
-        "/p/#{@type}_view?doc_id=#{@_id}"
+    url:-> "/p/#{@type}?doc_id=#{@_id}"

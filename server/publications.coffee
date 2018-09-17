@@ -26,8 +26,10 @@ Meteor.publish 'block_children', (
                 console.log 'hi'
                 filter_source_doc = Meteor.user()
         if page_jpid
-            page_doc = Docs.findOne "ev.ID":page_jpid
-        if doc_id
+            console.log 'found page', page_jpid
+            doc_object = Docs.findOne "ev.ID":page_jpid
+            console.log 'doc_ob', doc_object
+        else if doc_id
             doc_object = Docs.findOne doc_id
             # console.log 'doc_object', doc_object
         else
@@ -86,11 +88,13 @@ Meteor.publish 'block_children', (
                         if doc_object.ev.CUST_NAME.length is 0
                             @stop()
                 when "{current_page_office_name}"
-                    if doc_object
-                        if doc_object.ev.MASTER_LICENSEE.length > 0
-                            doc_object.ev.MASTER_LICENSEE
-                        if doc_object.ev.MASTER_LICENSEE.length is 0
-                            @stop()
+                    # console.log 'office name', doc_object.ev.MASTER_LICENSEE
+                    # if doc_object
+                    #     if doc_object.ev.MASTER_LICENSEE.length > 0
+                    #         doc_object.ev.MASTER_LICENSEE
+                    #     if doc_object.ev.MASTER_LICENSEE.length is 0
+                    #         @stop()
+                    doc_object.ev.MASTER_LICENSEE
                 when "{current_page_franchisee_name}"
                     if doc_object
                         if doc_object.ev.FRANCHISEE.length > 0
@@ -99,8 +103,8 @@ Meteor.publish 'block_children', (
                             @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
-        # console.log 'filter_value', filter_value
-        # console.log 'calc', calculated_value
+        console.log 'filter_value', filter_value
+        console.log 'calc', calculated_value
         user = Meteor.user()
         unless block.children_collection is 'users' 
             if user and user.roles

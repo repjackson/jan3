@@ -75,7 +75,6 @@ Template.doc_card.helpers
         found = Docs.findOne
             type:'schema'
             slug:@type
-        # console.log found
         found
     
 

@@ -63,8 +63,7 @@ Template.nav.events
         Meteor.call 'log_ticket', (err,res)->
             if err then console.error err
             else
-                console.log 'res', res
-                FlowRouter.go "/v/#{res}"
+                FlowRouter.go "/p/submit_incident?doc_id=#{res}"
 
 
     'click #toggle_dev': ->
@@ -78,3 +77,9 @@ Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'my_customer_account'
     @autorun -> Meteor.subscribe 'my_franchisee'
     @autorun -> Meteor.subscribe 'my_office'
+
+
+Template.nav.onRendered ->
+    Meteor.setTimeout ->
+        $('.item').popup()
+    , 1000

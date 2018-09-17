@@ -277,7 +277,7 @@ Template.edit_text_field.events
                     Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 Template.edit_page_text_field.events
-    'change #text_field': (e,t)->
+    'change .text_field': (e,t)->
         text_value = e.currentTarget.value
         page = Docs.findOne slug:FlowRouter.getParam('page_slug')
         Docs.update page._id,
