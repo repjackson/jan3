@@ -35,16 +35,16 @@ Template.login.events
             if err
                 Bert.alert "Error Logging in #{username}: #{err.reason}", 'info', 'growl-top-right'
             else
-                Meteor.call 'redirect_office_after_login', (err,res)->
-                    if 'office' in res.user.roles
-                        # Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
-                        FlowRouter.go "/p/office_incidents/#{res.office_jpid}"        
-                    else if 'customer' in res.user.roles
-                        # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                        FlowRouter.go "/p/customer_dashboard"    
-                    else    
-                        # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                        FlowRouter.go "/p/customer_dashboard"    
+                # console.log 'res', Meteor.user()
+                if 'office' in Meteor.user().roles
+                    # Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
+                    FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
+                else if 'customer' in Meteor.user().roles
+                    # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                    FlowRouter.go "/p/customer_dashboard"    
+                else    
+                    # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                    FlowRouter.go "/p/customer_dashboard"    
     
     'keyup .password': (e,t)->
         if e.which is 13 #enter
@@ -56,16 +56,16 @@ Template.login.events
                 if err
                     Bert.alert "Error Logging in #{username}: #{err.reason}", 'info', 'growl-top-right'
                 else
-                    Meteor.call 'redirect_office_after_login', (err,res)->
-                        if 'office' in res.user.roles
-                            # Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
-                            FlowRouter.go "/office/#{res.office._id}"        
-                        else if 'customer' in res.user.roles
-                            # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                            FlowRouter.go "/p/customer_dashboard"    
-                        else    
-                            # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                            FlowRouter.go "/p/customer_dashboard"    
+                    # console.log 'res', Meteor.user()
+                    if 'office' in Meteor.user().roles
+                        # Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
+                        FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
+                    else if 'customer' in Meteor.user().roles
+                        # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                        FlowRouter.go "/p/customer_dashboard"    
+                    else    
+                        # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                        FlowRouter.go "/p/customer_dashboard"    
             
     'keyup .username': (e,t)->
         if e.which is 13 #enter
@@ -77,16 +77,16 @@ Template.login.events
                 if err
                     Bert.alert "Error Logging in #{username}: #{err.reason}", 'info', 'growl-top-right'
                 else
-                    Meteor.call 'redirect_office_after_login', (err,res)->
-                        if 'office' in res.user.roles
-                            # Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
-                            FlowRouter.go "/p/office_incidents/#{res.user.office_jpid}"        
-                        else if 'customer' in res.user.roles
-                            # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                            FlowRouter.go "/p/customer_dashboard"    
-                        else    
-                            # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
-                            FlowRouter.go "/p/customer_dashboard"    
+                    # console.log 'res', Meteor.user()
+                    if 'office' in Meteor.user().roles
+                        # Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
+                        FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
+                    else if 'customer' in Meteor.user().roles
+                        # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                        FlowRouter.go "/p/customer_dashboard"    
+                    else    
+                        # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
+                        FlowRouter.go "/p/customer_dashboard"    
             
     'click #login_demo_admin': ->
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->

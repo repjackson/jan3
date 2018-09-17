@@ -16,7 +16,7 @@ Meteor.publish 'block_children', (
         block = Docs.findOne block_doc_id
         collection = if block.children_collection is 'users' then "Meteor.users" else "Docs"
         # console.log 'collection', collection
-        console.log block.filter_source
+        # console.log block.filter_source
         if block.filter_source
             if block.filter_source is "{page_slug}"
                 filter_source_doc = Docs.findOne "ev.ID":page_jpid
@@ -26,9 +26,9 @@ Meteor.publish 'block_children', (
                 console.log 'hi'
                 filter_source_doc = Meteor.user()
         if page_jpid
-            console.log 'found page', page_jpid
+            # console.log 'found page', page_jpid
             doc_object = Docs.findOne "ev.ID":page_jpid
-            console.log 'doc_ob', doc_object
+            # console.log 'doc_ob', doc_object
         else if doc_id
             doc_object = Docs.findOne doc_id
             # console.log 'doc_object', doc_object
@@ -103,8 +103,8 @@ Meteor.publish 'block_children', (
                             @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
-        console.log 'filter_value', filter_value
-        console.log 'calc', calculated_value
+        # console.log 'filter_value', filter_value
+        # console.log 'calc', calculated_value
         user = Meteor.user()
         unless block.children_collection is 'users' 
             if user and user.roles
@@ -114,7 +114,7 @@ Meteor.publish 'block_children', (
         if -1 > limit > 100
             limit = 100
             
-        console.log 'match', match    
+        # console.log 'match', match    
         if block.children_collection is 'users' 
             Meteor.users.find match,{
                 skip: skip
