@@ -56,141 +56,141 @@ Template.level_icon.helpers
 
 
 
-Template.incident_view.onCreated ->
-    @autorun -> Meteor.subscribe 'type','incident_type'
-    @autorun -> Meteor.subscribe 'type','rule'
-    @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
+# Template.incident_view.onCreated ->
+#     @autorun -> Meteor.subscribe 'type','incident_type'
+#     @autorun -> Meteor.subscribe 'type','rule'
+#     @autorun -> Meteor.subscribe 'incident', FlowRouter.getParam('doc_id')
 
 
-Template.incident_view.onRendered ->
-    target_username = FlowRouter.getQueryParam 'username'
-    # console.log 'target username?',target_username
-    if target_username
-        Meteor.call 'unassign_user_from_incident', FlowRouter.getParam('doc_id'), target_username, (err,res)->
-            if err then console.error err
-            else
-                Bert.alert "Unassigning user: #{target_username}", 'info', 'growl-top-right'
-    # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getParam('doc_id')
+# Template.incident_view.onRendered ->
+#     target_username = FlowRouter.getQueryParam 'username'
+#     # console.log 'target username?',target_username
+#     if target_username
+#         Meteor.call 'unassign_user_from_incident', FlowRouter.getParam('doc_id'), target_username, (err,res)->
+#             if err then console.error err
+#             else
+#                 Bert.alert "Unassigning user: #{target_username}", 'info', 'growl-top-right'
+#     # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getParam('doc_id')
 
-Template.incident_view.helpers
-    incident_type_docs: -> Docs.find type:'incident_type'
-    can_submit: -> 
-        user = Meteor.user()
-        is_customer = user and user.roles and ('customer' in user.roles)
-        @service_date and @incident_details and @incident_type and is_customer and not @submitted
+# Template.incident_view.helpers
+#     incident_type_docs: -> Docs.find type:'incident_type'
+#     can_submit: -> 
+#         user = Meteor.user()
+#         is_customer = user and user.roles and ('customer' in user.roles)
+#         @service_date and @incident_details and @incident_type and is_customer and not @submitted
     
-    can_edit_core: ->
-        user = Meteor.user()
-        doc_id = FlowRouter.getParam 'doc_id'
-        incident = Docs.findOne doc_id
-        if user and user.roles and 'customer' in user.roles
-            if incident.submitted is true
-                return false
-            else
-                return true
-        else
-            return false
+#     can_edit_core: ->
+#         user = Meteor.user()
+#         doc_id = FlowRouter.getParam 'doc_id'
+#         incident = Docs.findOne doc_id
+#         if user and user.roles and 'customer' in user.roles
+#             if incident.submitted is true
+#                 return false
+#             else
+#                 return true
+#         else
+#             return false
             
             
-    feedback_doc: ->
-        Docs.findOne
-            type:'feedback_response'
+#     feedback_doc: ->
+#         Docs.findOne
+#             type:'feedback_response'
             
     
-Template.incident_view.events
-    'click #submit_feedback': ->
-        new_response_id = Docs.insert({type:'feedback_response', parent_id:FlowRouter.getParam('doc_id')})
-        FlowRouter.go("/edit/#{new_response_id}")
+# Template.incident_view.events
+#     'click #submit_feedback': ->
+#         new_response_id = Docs.insert({type:'feedback_response', parent_id:FlowRouter.getParam('doc_id')})
+#         FlowRouter.go("/edit/#{new_response_id}")
 
-    'click .submit': -> 
-        doc_id = FlowRouter.getParam 'doc_id'
-        incident = Docs.findOne doc_id
+#     'click .submit': -> 
+#         doc_id = FlowRouter.getParam 'doc_id'
+#         incident = Docs.findOne doc_id
         
-        incidents_office =
-            Docs.findOne
-                "ev.MASTER_LICENSEE": incident.incident_office_name
-                type:'office'
-        if incidents_office
-            escalation_hours = incidents_office["escalation_1_#{incident.incident_type}_hours"]
-            Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_hours} hours according to #{incident.incident_office_name} initial rules."
-            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_1_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_1_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
-        Docs.update doc_id,
-            $set:
-                submitted:true
-                submitted_datetime: Date.now()
-                last_updated_datetime: Date.now()
-        Meteor.call 'assign_incident_owner_after_submission', doc_id
-        Meteor.call 'create_event', doc_id, 'submit', "submitted the incident."
-        Meteor.call 'email_about_incident_submission', incident._id
+#         incidents_office =
+#             Docs.findOne
+#                 "ev.MASTER_LICENSEE": incident.incident_office_name
+#                 type:'office'
+#         if incidents_office
+#             escalation_hours = incidents_office["escalation_1_#{incident.incident_type}_hours"]
+#             Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_hours} hours according to #{incident.incident_office_name} initial rules."
+#             Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_1_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_1_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
+#         Docs.update doc_id,
+#             $set:
+#                 submitted:true
+#                 submitted_datetime: Date.now()
+#                 last_updated_datetime: Date.now()
+#         Meteor.call 'assign_incident_owner_after_submission', doc_id
+#         Meteor.call 'create_event', doc_id, 'submit', "submitted the incident."
+#         Meteor.call 'email_about_incident_submission', incident._id
 
 
-    'click .unsubmit': -> 
-        doc_id = FlowRouter.getParam 'doc_id'
-        incident = Docs.findOne doc_id
-        Docs.update doc_id,
-            $set:
-                submitted:false
-                submitted_datetime: null
-                updated: Date.now()
-        Meteor.call 'create_event', doc_id, 'unsubmit', "unsubmitted the incident."
+#     'click .unsubmit': -> 
+#         doc_id = FlowRouter.getParam 'doc_id'
+#         incident = Docs.findOne doc_id
+#         Docs.update doc_id,
+#             $set:
+#                 submitted:false
+#                 submitted_datetime: null
+#                 updated: Date.now()
+#         Meteor.call 'create_event', doc_id, 'unsubmit', "unsubmitted the incident."
         
-    'click .close_incident': ->
-        doc_id = FlowRouter.getParam 'doc_id'
-        incident = Docs.findOne doc_id
+#     'click .close_incident': ->
+#         doc_id = FlowRouter.getParam 'doc_id'
+#         incident = Docs.findOne doc_id
         
-        $('.ui.confirm_close.modal').modal(
-            inverted: false
-            # transition: 'vertical flip'
-            # observeChanges: true
-            duration: 400
-            onApprove : ()->
-                Docs.update doc_id,
-                    $set:
-                        open:false
-                        updated: Date.now()
-                        closed_datetime: Date.now()
-                Meteor.call 'create_event', doc_id, 'close', "closed the incident."
-            ).modal('show')
+#         $('.ui.confirm_close.modal').modal(
+#             inverted: false
+#             # transition: 'vertical flip'
+#             # observeChanges: true
+#             duration: 400
+#             onApprove : ()->
+#                 Docs.update doc_id,
+#                     $set:
+#                         open:false
+#                         updated: Date.now()
+#                         closed_datetime: Date.now()
+#                 Meteor.call 'create_event', doc_id, 'close', "closed the incident."
+#             ).modal('show')
 
        
-    'click .reopen_incident': ->
-        doc_id = FlowRouter.getParam 'doc_id'
-        incident = Docs.findOne doc_id
+#     'click .reopen_incident': ->
+#         doc_id = FlowRouter.getParam 'doc_id'
+#         incident = Docs.findOne doc_id
 
-        if confirm 'Reopen incident?'        
-            Docs.update doc_id,
-                $set:
-                    open:true
-                    # closed_datetime: Date.now()
-                    updated: Date.now()
-            Meteor.call 'create_event', doc_id, 'open', "reopened the incident."
+#         if confirm 'Reopen incident?'        
+#             Docs.update doc_id,
+#                 $set:
+#                     open:true
+#                     # closed_datetime: Date.now()
+#                     updated: Date.now()
+#             Meteor.call 'create_event', doc_id, 'open', "reopened the incident."
 
        
        
-    'click #run_single_escalation_check': ->
-        Meteor.call 'single_escalation_check', FlowRouter.getParam 'doc_id', (err,res)->
-            if err 
-                console.dir err
-                Bert.alert "#{err.reason}.", 'info', 'growl-top-right'
-            else
-                Bert.alert "#{res}.", 'success', 'growl-top-right'
+#     'click #run_single_escalation_check': ->
+#         Meteor.call 'single_escalation_check', FlowRouter.getParam 'doc_id', (err,res)->
+#             if err 
+#                 console.dir err
+#                 Bert.alert "#{err.reason}.", 'info', 'growl-top-right'
+#             else
+#                 Bert.alert "#{res}.", 'success', 'growl-top-right'
         
-    'click .remove_incident': ->
-        swal {
-            title: "Remove Incident?"
-            # text: 'Confirm delete?'
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Remove'
-            confirmButtonColor: '#da5347'
-        }, =>
-            doc_id = FlowRouter.getParam('doc_id')
-            Docs.remove doc_id
-            Meteor.call 'clear_incident_events', doc_id, ->
-            FlowRouter.go '/p/admin_incidents'
+#     'click .remove_incident': ->
+#         swal {
+#             title: "Remove Incident?"
+#             # text: 'Confirm delete?'
+#             type: 'info'
+#             animation: false
+#             showCancelButton: true
+#             closeOnConfirm: true
+#             cancelButtonText: 'Cancel'
+#             confirmButtonText: 'Remove'
+#             confirmButtonColor: '#da5347'
+#         }, =>
+#             doc_id = FlowRouter.getParam('doc_id')
+#             Docs.remove doc_id
+#             Meteor.call 'clear_incident_events', doc_id, ->
+#             FlowRouter.go '/p/admin_incidents'
 
         
 # Template.incident_sla_widget.onRendered ->

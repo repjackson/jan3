@@ -728,7 +728,7 @@ Template.edit_block.helpers
     collections: -> Docs.find type:'collection'
 
 Template.block.helpers
-    editing_block: -> Template.instance().editing_block.get()
+    editing_block: -> Template.instance().editing_block.get() and Session.get('editing_mode')
 
     sort_descending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
