@@ -62,6 +62,32 @@ Meteor.publish 'block_children', (
                         type:'franchisee'
                         "ev.ID":Meteor.user().franchisee_jpid
                     found_franchisee.ev.FRANCHISEE
+                # user
+                when "{current_user_customer_jpid}" 
+                    Meteor.user().customer_jpid
+                when "{current_user_office_jpid}" 
+                    Meteor.user().office_jpid
+                when "{current_user_franchisee_jpid}" 
+                    Meteor.user().franchisee_jpid
+                # page
+                when "{current_page_jpid}" 
+                    if page_jpid
+                        page_jpid
+                when "{current_page_doc_id}" 
+                    if doc_id
+                        doc_id
+                when "{current_page_customer_name}"
+                    if page_doc
+                        page_doc.ev.CUST_NAME
+                when "{current_page_office_name}"
+                    if page_doc
+                        page_doc.ev.MASTER_LICENSEE
+                when "{current_page_franchisee_name}"
+                    if page_doc
+                        if page_doc.ev.FRANCHISEE.length > 0
+                            page_doc.ev.FRANCHISEE
+                        if page_doc.ev.FRANCHISEE.length is 0
+                            @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
         # console.log 'filter_value', filter_value
