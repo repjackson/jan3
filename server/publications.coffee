@@ -42,11 +42,14 @@ Meteor.publish 'block_children', (
         calculated_value =
             switch filter_value
                 when "{source_key}"
-                    result = filter_source_doc["#{block.filter_source_key}"]
-                    # console.log 'looking up', block.filter_source_key
-                    # console.log 'from', filter_source_doc
-                    # console.log 'result', result
-                    # return result
+                    if block.filter_key_ev_subset
+                        result = filter_source_doc.ev["#{block.filter_source_key}"]
+                    else
+                        result = filter_source_doc["#{block.filter_source_key}"]
+                    console.log 'looking up', block.filter_source_key
+                    console.log 'from', filter_source_doc
+                    console.log 'result', result
+                    result
                 when "{current_user_customer_name}"
                     found_customer = Docs.findOne
                         type:'customer'
@@ -77,16 +80,22 @@ Meteor.publish 'block_children', (
                     if doc_id
                         doc_id
                 when "{current_page_customer_name}"
-                    if page_doc
-                        page_doc.ev.CUST_NAME
+                    if doc_object
+                        if doc_object.ev.CUST_NAME.length > 0
+                            doc_object.ev.CUST_NAME
+                        if doc_object.ev.CUST_NAME.length is 0
+                            @stop()
                 when "{current_page_office_name}"
-                    if page_doc
-                        page_doc.ev.MASTER_LICENSEE
+                    if doc_object
+                        if doc_object.ev.MASTER_LICENSEE.length > 0
+                            doc_object.ev.MASTER_LICENSEE
+                        if doc_object.ev.MASTER_LICENSEE.length is 0
+                            @stop()
                 when "{current_page_franchisee_name}"
-                    if page_doc
-                        if page_doc.ev.FRANCHISEE.length > 0
-                            page_doc.ev.FRANCHISEE
-                        if page_doc.ev.FRANCHISEE.length is 0
+                    if doc_object
+                        if doc_object.ev.FRANCHISEE.length > 0
+                            doc_object.ev.FRANCHISEE
+                        if doc_object.ev.FRANCHISEE.length is 0
                             @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
@@ -101,7 +110,7 @@ Meteor.publish 'block_children', (
         if -1 > limit > 100
             limit = 100
             
-        # console.log 'match', match    
+        console.log 'match', match    
         if block.children_collection is 'users' 
             Meteor.users.find match,{
                 skip: skip
@@ -263,27 +272,29 @@ Meteor.publish 'author', (user_id)->
 # user connected accounts 
 Meteor.publish 'my_customer_account', ->
     user = Meteor.user()
-    if user and user.customer_jpid and user.roles and 'customer' in user.roles
-        Docs.find
-            "ev.ID": user.customer_jpid
-            type:'customer'
+    if user and user.customer_jpid and user.roles 
+        if 'customer' in user.roles
+            Docs.find
+                "ev.ID": user.customer_jpid
+                type:'customer'
         
 Meteor.publish 'my_franchisee', ->
     user = Meteor.user()
-    if user and user.franchisee_jpid and user.roles and 'customer' in user.roles
-        Docs.find
-            "ev.ID": user.franchisee_jpid
-            type:'franchisee'
+    if user and user.franchisee_jpid and user.roles
+        if 'customer' in user.roles
+            Docs.find
+                "ev.ID": user.franchisee_jpid
+                type:'franchisee'
         
 Meteor.publish 'my_office', ->
     user = Meteor.user()
     if user 
-        if user.office_jpid and user.roles and 'office' or 'customer' in user.roles
-            Docs.find
-                "ev.ID": user.office_jpid
-                type:'office'
-    else
-        
+        if user.office_jpid and user.roles 
+            if 'office' or 'customer' in user.roles
+                Docs.find
+                    "ev.ID": user.office_jpid
+                    type:'office'
+            
 Meteor.publish 'my_special_services', ->
     user = Meteor.user()
     if user and user.customer_jpid

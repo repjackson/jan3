@@ -1,50 +1,3 @@
-template(name='office_dashboard')
-    .ui.padded.stackable.grid
-        .row
-            with office_doc
-                .four.wide.column
-                    .ui.secondary.segment
-                        .ui.list
-                            .item ##{ev.ID}
-                            // .item Office Name
-                            //     strong #{ev.MASTER_LICENSEE}
-                            .item Owner
-                                strong #{ev.MASTER_OFFICE_OWNER}
-                            .item Manager
-                                strong #{ev.MASTER_OFFICE_MANAGER}
-                            // .item Last Updated
-                            //     strong #{ev.TIMESTAMP}
-                            .item #{ev.TELEPHONE}
-                            .item 
-                                |#{ev.ADDR_STREET} #{ev.ADDR_STREET_2} #{ev.ADDR_CITY} #{ev.ADDR_STATE} #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-                                a(href=office_map_address target='_blank')
-                                    i.external.icon
-                    +blocks tags='office,dashboard,finance'
-                    +blocks tags='office,dashboard,service_requests'
-                    .ui.secondary.segment
-                        .ui.header
-                            +icon name='bar-chart'
-                            |Stats
-                        .ui.list
-                            .item Incidents
-                                +view_stat doc_type='incident' stat_type='office_incidents' 
-                            .item Franchisees
-                                +view_stat doc_type='franchisee' stat_type='office_franchisees' 
-                            .item Customers
-                                +view_stat doc_type='customer' stat_type='office_customers' 
-                            .item Employees
-                                +view_stat stat_type='office_employees' 
-                .eight.wide.column
-                    +blocks tags='office,dashboard,feed'
-                    +blocks tags='office,dashboard,incidents'
-                    +blocks tags='office,dashboard,incident_feedback'
-                .four.wide.column
-                    +blocks tags='office,dashboard,messages'
-                    +blocks tags='office,dashboard,comments'
-
-
-
-
 template(name='office_messages')
     .ui.stackable.padded.grid
         .sixteen.wide.column
@@ -147,10 +100,9 @@ template(name='incident_owner_select')
                                 strong #{profile.first_name} #{profile.last_name}
                                 |#{username}
     if incident_owner
-        strong #{incident_owner}
-        |&nbsp;
-        small
-            i.pull_user.remove.link.icon
+        a(href="/user/#{incident_owner}") 
+            h3.ui.header #{incident_owner}
+        i.pull_user.remove.link.icon(title="Clear #{incident_owner}")
 
 
 // template(name='view_sla_contact')
@@ -182,8 +134,9 @@ template(name='secondary_contact_widget')
                                 strong #{profile.first_name} #{profile.last_name}
                                 |#{username}
     if secondary_contact
-        strong #{secondary_contact}
-        i.remove.link.pull_secondary.icon
+        a(href="/user/#{secondary_contact}") 
+            h3.ui.header #{secondary_contact}
+        i.remove.link.pull_secondary.icon(title="Clear #{secondary_contact}")
         // div(title="@#{username}")
         //     if profile.image_id
         //         img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")

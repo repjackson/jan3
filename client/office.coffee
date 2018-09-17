@@ -1,7 +1,3 @@
-Template.office_dashboard.helpers
-    office_doc: -> Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-
-
 Template.office_service_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'service'
     

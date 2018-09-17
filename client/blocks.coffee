@@ -644,19 +644,19 @@ Template.blocks.helpers
                 type:'block'
                 parent_slug:FlowRouter.getParam('page_slug')
                 horizontal_position:'left'
-            }, sort:rank:-1
+            }, sort:rank:1
         else if @position is 'right'
             Docs.find {
                 type:'block'
                 parent_slug:FlowRouter.getParam('page_slug')
                 horizontal_position:'right'
-            }, sort:rank:-1
+            }, sort:rank:1
         else
             Docs.find {
                 type:'block'
                 parent_slug:FlowRouter.getParam('page_slug')
                 horizontal_position:$nin:['left','right']
-            }, sort:rank:-1
+            }, sort:rank:1
             
 Template.block.onRendered ->
     Meteor.setTimeout ->
@@ -732,6 +732,13 @@ Template.block.helpers
     editing_block: -> Template.instance().editing_block.get() and Session.get('editing_mode')
     editing_button_class: -> if Template.instance().editing_block.get() is true then 'primary' else ''
 
+    block_class: ->
+        if @published
+            @block_classes
+        else
+            @block_classes+" disabled"
+
+
     sort_descending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
         temp = Template.instance() 
@@ -750,17 +757,19 @@ Template.block.helpers
                 sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
                 }
         else
+            match = {}
+            match.type = @children_doc_type
+            if @filter_key is '_id'
+                match._id = FlowRouter.getQueryParam 'doc_id'    
             if @hard_limit
-                Docs.find { type:@children_doc_type
-                    },{ 
+                Docs.find match,
+                    { 
                         sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
                         limit:parseInt(@hard_limit)
                         }
             else
-                Docs.find { type:@children_doc_type
-                    },{ 
-                        sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
-                        }
+                Docs.find match,
+                    { sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") }
 
     can_view_block: ->
         if @published
@@ -778,6 +787,63 @@ Template.block.helpers
         else
             child_doc["#{@key}"]
         
+    is_table: -> @view is 'table'    
+    is_list: -> @view is 'list'    
+    is_comments: -> @view is 'comments'    
+    is_grid: -> @view is 'grid'    
+    is_cards: -> @view is 'cards'    
+    is_sla_settings: -> @view is 'sla_settings'    
+
+    can_lower: -> @rank>1
+
+Template.block.events
+    'click .raise_block':->
+        Docs.update @_id,
+            $inc:rank:1
+            
+    'click .lower_block':->
+        Docs.update @_id,
+            $inc:rank:-1
+            
+    
+
+
+    'click .toggle_editing_block': (e,t)->
+        t.editing_block.set(!t.editing_block.get())
+
+    'click .add_block_child': (e,t)->
+        if FlowRouter.getParam('jpid')
+            new_id = Docs.insert 
+                type:@children_doc_type
+                office_jpid:FlowRouter.getParam('jpid')
+        else
+            new_id = Docs.insert 
+                type:@children_doc_type
+        # FlowRouter.go("/edit/#{_id}")
+    
+    
+    'click .move_up': ->
+        current = Template.currentData()
+        current_index = current.fields.indexOf @ 
+        next_index = current+1
+        Meteor.call 'move', current._id, current.fields, current_index, next_index
+        
+        
+    'click .move_down': ->
+        current = Template.currentData()
+        current_index = current.fields.indexOf @ 
+        lower_index = current-1
+        Meteor.call 'move', current._id, current.fields, current_index, lower_index
+
+    'click .sort_by': (e,t)->
+        key = if @ev_subset then "ev.#{@key}" else @key
+        t.sort_key.set key
+        if t.sort_direction.get() is -1
+            t.sort_direction.set 1
+        else
+            t.sort_direction.set -1
+
+
 Template.edit_block.onRendered ->
     Meteor.setTimeout ->
         $.tab()
@@ -827,49 +893,7 @@ Template.edit_block.helpers
                 #     values.push Template.currentData()["#{field.key}"]
             values
         
-Template.block.helpers
-    is_table: -> @view is 'table'    
-    is_list: -> @view is 'list'    
-    is_comments: -> @view is 'comments'    
-    is_grid: -> @view is 'grid'    
-    is_cards: -> @view is 'cards'    
-    is_sla_settings: -> @view is 'sla_settings'    
         
-Template.block.events
-    'click .toggle_editing_block': (e,t)->
-        t.editing_block.set(!t.editing_block.get())
-
-    'click .add_block_child': (e,t)->
-        if FlowRouter.getParam('jpid')
-            new_id = Docs.insert 
-                type:@children_doc_type
-                office_jpid:FlowRouter.getParam('jpid')
-        else
-            new_id = Docs.insert 
-                type:@children_doc_type
-        # FlowRouter.go("/edit/#{_id}")
-    
-    
-    'click .move_up': ->
-        current = Template.currentData()
-        current_index = current.fields.indexOf @ 
-        next_index = current+1
-        Meteor.call 'move', current._id, current.fields, current_index, next_index
-        
-        
-    'click .move_down': ->
-        current = Template.currentData()
-        current_index = current.fields.indexOf @ 
-        lower_index = current-1
-        Meteor.call 'move', current._id, current.fields, current_index, lower_index
-
-    'click .sort_by': (e,t)->
-        key = if @ev_subset then "ev.#{@key}" else @key
-        t.sort_key.set key
-        if t.sort_direction.get() is -1
-            t.sort_direction.set 1
-        else
-            t.sort_direction.set -1
     
 Template.edit_block.events
     'click .tab_nav': (e,t)->
@@ -928,26 +952,17 @@ Template.blocks.events
         #     split_tags = @tags.split ','
         # else
         #     split_tags = @tags
-        
-
         Docs.insert
             type:'block'
             position:@position
             title:'new block'
+            published:false
+            block_classes:'ui secondary segment'
+            view_title:true
             parent_slug:FlowRouter.getParam('page_slug') 
             fields: []
     
     
-Template.edit_block_text_field.events
-    'change .text_field': (e,t)->
-        text_value = e.currentTarget.value
-        Docs.update Template.parentData()._id,
-            { $set: "#{@key}": text_value }
-            # , (err,res)=>
-            #     if err
-            #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-            #     else
-            #         Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
     
 Template.set_key_value.events
     'click .set_key_value': ->
@@ -992,8 +1007,42 @@ Template.edit_block_text_field.helpers
         block_doc = Template.parentData()
         if block_doc
             block_doc["#{@key}"]
+Template.edit_block_text_field.events
+    'change .text_field': (e,t)->
+        text_value = e.currentTarget.value
+        Docs.update Template.parentData()._id,
+            { $set: "#{@key}": text_value }
+            # , (err,res)=>
+            #     if err
+            #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
+            #     else
+            #         Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
+
+
+Template.edit_block_number_field.helpers 
+    block_key_value: () -> 
+        block_doc = Template.parentData()
+        if block_doc
+            block_doc["#{@key}"]
+Template.edit_block_number_field.events
+    'change .number_field': (e,t)->
+        number_value = parseInt e.currentTarget.value
+        Docs.update Template.parentData()._id,
+            { $set: "#{@key}": number_value }
+            # , (err,res)=>
+            #     if err
+            #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
+            #     else
+            #         Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
+
+
 
 
 Template.set_field_key_value.events 
     'click .set_field_key_value': (e,t)->
         Meteor.call 'update_block_field', Template.parentData(2)._id, Template.parentData(), @key, @value
+
+
+Template.view_button.helpers
+    url:-> 
+        "/p/#{@type}_view?doc_id=#{@_id}"
