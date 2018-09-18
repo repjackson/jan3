@@ -1,19 +1,19 @@
 Template.schema_edit.onCreated ->
-    @autorun -> Meteor.subscribe 'doc', FlowRouter.getQueryParam('doc_id')
+    @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 Template.schema_view.onCreated ->
-    doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+    doc = Docs.findOne FlowRouter.getParam('doc_id')
     if doc
         @autorun -> Meteor.subscribe 'type', doc.slug
 
 # Template.schema_edit.helpers
-#     schema: -> Doc.findOne FlowRouter.getQueryParam('doc_id')
+#     schema: -> Doc.findOne FlowRouter.getParam('doc_id')
     
 Template.schema_view.helpers
     schema_docs: -> 
-        schema = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        schema = Docs.findOne FlowRouter.getParam('doc_id')
         Docs.find type:schema.slug
     single_view: -> 
-        schema = Docs.findOne FlowRouter.getQueryParam('doc_id') 
+        schema = Docs.findOne FlowRouter.getParam('doc_id') 
         return "#{schema.slug}_single"
 
 Template.schema_view.events
@@ -32,13 +32,13 @@ Template.schema_edit.events
             confirmButtonText: 'Delete'
             confirmButtonColor: '#da5347'
         }, =>
-            doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+            doc = Docs.findOne FlowRouter.getParam('doc_id')
             Docs.remove doc._id, ->
                 FlowRouter.go "/schemas"
 
 
     'click #add_field': ->
-        Docs.update FlowRouter.getQueryParam('doc_id'),
+        Docs.update FlowRouter.getParam('doc_id'),
             $addToSet: 
                 fields: 
                     title: 'New Field'
@@ -53,7 +53,7 @@ Template.schema_field_edit.helpers
 Template.schema_field_edit.events
     'click .remove_field': -> 
         if confirm "Remove #{@label} field?"
-            schema_doc_id = FlowRouter.getQueryParam('doc_id')
+            schema_doc_id = FlowRouter.getParam('doc_id')
             Meteor.call 'pull_schema_field', schema_doc_id, @, (err,res)=>
                 if err
                     Bert.alert "Error pulling #{@label}: #{err.reason}", 'danger', 'growl-top-right'
@@ -64,7 +64,7 @@ Template.schema_field_edit.events
     'change .field_title': (e,t)->
         self = @
         new_title = e.currentTarget.value
-        doc_id = FlowRouter.getQueryParam('doc_id')
+        doc_id = FlowRouter.getParam('doc_id')
         Meteor.call 'update_field_title', doc_id, @, new_title, (err,res)=>
             # if err
             #     Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
@@ -81,7 +81,7 @@ Template.schema_field_edit.events
 
     'change .field_slug': (e,t)->
         text_value = e.currentTarget.value
-        doc_id = FlowRouter.getQueryParam('doc_id')
+        doc_id = FlowRouter.getParam('doc_id')
         Meteor.call 'update_field_slug', doc_id, @, text_value, (err,res)=>
             # if err
             #     Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
@@ -92,7 +92,7 @@ Template.schema_field_edit.events
 
 Template.schema_doc.helpers
     schema_fields: -> 
-        # current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
         
         # if Template.parentData().type is @value then 'blue' else 'basic'
 
@@ -103,7 +103,7 @@ Template.select_field_key_value.events
     'click .select_field_key_value': ->
         field = Template.parentData()
         field_object = Template.parentData(2)
-        doc_id = FlowRouter.getQueryParam('doc_id')
+        doc_id = FlowRouter.getParam('doc_id')
         Meteor.call 'update_field_key_value', doc_id, field_object, @key, @value
 
 
@@ -113,7 +113,7 @@ Template.toggle_field_boolean.events
 
         toggled_value = !parent["#{@key}"]
         field = Template.parentData()
-        doc_id = FlowRouter.getQueryParam('doc_id')
+        doc_id = FlowRouter.getParam('doc_id')
         Meteor.call 'update_field_key_value', doc_id, field, @key, toggled_value
 
 Template.toggle_field_boolean.helpers

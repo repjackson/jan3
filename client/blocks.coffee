@@ -681,7 +681,7 @@ Template.block.onCreated ->
     #     )
     @page_number = new ReactiveVar(1)
     @sort_key = new ReactiveVar('timestamp')
-    @sort_direction = new ReactiveVar(1)
+    @sort_direction = new ReactiveVar(-1)
     @number_of_pages = new ReactiveVar(1)
     @page_size = new ReactiveVar(10)
     @skip = new ReactiveVar(0)
@@ -746,6 +746,14 @@ Template.block.helpers
         temp = Template.instance() 
         if temp.sort_direction.get() is -1 and temp.sort_key.get() is key 
             return true
+
+    comment_children: -> 
+        temp = Template.instance() 
+        match.type = @children_doc_type
+        Docs.find {_id:$ne:Meteor.userId()},{ 
+            sort:"timestamp":parseInt("#{temp.sort_direction.get()}") 
+            }
+
 
     children: -> 
         temp = Template.instance() 

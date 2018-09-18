@@ -48,9 +48,9 @@ Meteor.publish 'block_children', (
                         result = filter_source_doc.ev["#{block.filter_source_key}"]
                     else
                         result = filter_source_doc["#{block.filter_source_key}"]
-                    console.log 'looking up', block.filter_source_key
-                    console.log 'from', filter_source_doc
-                    console.log 'result', result
+                    # console.log 'looking up', block.filter_source_key
+                    # console.log 'from', filter_source_doc
+                    # console.log 'result', result
                     result
                 when "{current_user_customer_name}"
                     found_customer = Docs.findOne
@@ -240,15 +240,15 @@ Meteor.publish 'my_profile', ->
 
 
 Meteor.publish 'user', (username)->
-    Meteor.users.find username:username,
-        fields:
-            profile: 1
-            username: 1
-            ev:1
-            published:1
-            customer_jpid:1
-            franchisee_jpid:1
-            office_jpid:1
+    Meteor.users.find username:username
+        # fields:
+        #     profile: 1
+        #     username: 1
+        #     ev:1
+        #     published:1
+        #     customer_jpid:1
+        #     franchisee_jpid:1
+        #     office_jpid:1
             
 Meteor.publish 'user_profile', (user_id)->
     Meteor.users.find user_id,

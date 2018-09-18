@@ -113,6 +113,7 @@ template(name='doc_history_event')
             .metadata
                 .date {{ long_format timestamp }}
                 .rating(title='Event Type') #{event_type}
+                .date #{when}
                 // i.building.icon(title='Office')
                 // i.money.icon(title='Customer')
                 // i.user.icon(title='Author')

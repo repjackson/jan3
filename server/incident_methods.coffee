@@ -46,11 +46,12 @@ Meteor.methods
         for incident in open_incidents.fetch()
             Meteor.call 'single_escalation_check', incident._id
          
-    single_escalation_check: (incident_id)->
-        incident = Docs.findOne incident_id
+    single_escalation_check: (incident_doc_id)->
+        incident = Docs.findOne incident_doc_id
+        console.log 'checking escalation ', incident_doc_id
         if incident.level is 4
-            return
-            # Meteor.call 'create_event', incident_id, 'max_level_notice', "Incident is at max level 4, not escalating."
+            console.log 'error 4'
+            throw new Meteor.Error 'max_level_notice', "Incident is at max level 4, not escalating."
         else
             incident_office =
                 Docs.findOne
@@ -58,25 +59,40 @@ Meteor.methods
                     type:'office'
             current_level = incident.level
             next_level = current_level + 1
-
             last_updated = incident.updated
-            existing_hours_value = incident_office["escalation_#{next_level}_#{incident.incident_type}_hours"]
-            if existing_hours_value 
-                hours_value = existing_hours_value
+
+            escalation_doc = 
+                Docs.findOne
+                    type:'sla_setting'
+                    escalation_number:next_level
+                    incident_type:incident.incident_type
+                    office_jpid:incident.office_jpid
+
+            console.log escalation_doc
+            if escalation_doc.escalation_hours 
+                hours_value = escalation_doc.escalation_hours
             else 
                 hours_value = 2
-                Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation hours found, using 2 as the default."
+                Meteor.call 'create_event', incident_doc_id, 'setting_default_escalation_time', "No escalation hours found, using 2 as the default."
                 
             now = Date.now()
             updated_now_difference = now-last_updated
             seconds_elapsed = Math.floor(updated_now_difference/1000)
             hours_elapsed = Math.floor(seconds_elapsed/60)
             escalation_calculation = hours_elapsed - hours_value
+            
+            incident_type_doc = Docs.findOne
+                type:'incident_type'
+                slug:incident.incident_type
+        
+
+            
+            
             if hours_elapsed < hours_value
-                Meteor.call 'create_event', incident_id, 'not-escalate', "#{hours_elapsed} hours have elapsed, less than #{hours_value} in level #{next_level} #{incident.incident_type} rules, not escalating."
+                Meteor.call 'create_event', incident_doc_id, 'not-escalate', "#{hours_elapsed} hours have elapsed, less than #{hours_value} in level #{next_level} '#{incident_type_doc.title}' rules, not escalating."
                 # continue
             else    
-                Meteor.call 'create_event', incident_id, 'escalate', "#{hours_elapsed} hours have elapsed, more than #{hours_value} in level #{next_level} #{incident.incident_type} rules, escalating."
+                Meteor.call 'create_event', incident_doc_id, 'escalate', "#{hours_elapsed} hours have elapsed, more than #{hours_value} in level #{next_level} '#{incident_type_doc.title}' rules, escalating."
                 Meteor.call 'escalate_incident', incident._id, ->
             
     escalate_incident: (doc_id)-> 
@@ -95,16 +111,16 @@ Meteor.methods
             Meteor.call 'email_about_escalation', doc_id
 
 
-    clear_incident_events: (incident_id)->
+    clear_incident_events: (incident_doc_id)->
         cursor = Docs.find
-            parent_id: incident_id
+            parent_id: incident_doc_id
             type:'event'
         for event_doc in cursor.fetch()
             Docs.remove event_doc._id
             
             
-    email_about_incident_submission: (incident_id)->
-        incident = Docs.findOne incident_id
+    email_about_incident_submission: (incident_doc_id)->
+        incident = Docs.findOne incident_doc_id
         customer = Docs.findOne {
             "ev.ID":incident.customer_jpid
             type:'customer'
@@ -143,12 +159,12 @@ Meteor.methods
                 <h5>Customer: #{initial_customer_value}, #{customer.ev.CUST_NAME} at #{customer.ev.CUST_CONTACT_EMAIL}</h5>
             "
         }
-        Meteor.call 'create_event', incident_id, 'emailed_owner', "#{incident_owner_username} emailed as the incident owner after initial submission."
-        Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{initial_secondary_contact_value} emailed as the secondary contact for initial submission."
+        Meteor.call 'create_event', incident_doc_id, 'emailed_owner', "#{incident_owner_username} emailed as the incident owner after initial submission."
+        Meteor.call 'create_event', incident_doc_id, 'emailed_secondary_contact', "#{initial_secondary_contact_value} emailed as the secondary contact for initial submission."
         if initial_franchisee_value
-            Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed after incident submission."
+            Meteor.call 'create_event', incident_doc_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed after incident submission."
         if initial_customer_value
-            Meteor.call 'create_event', incident_id, 'emailed_customer_contact', "Customer #{customer.ev.CUST_NAME} emailed after incident submission."
+            Meteor.call 'create_event', incident_doc_id, 'emailed_customer_contact', "Customer #{customer.ev.CUST_NAME} emailed after incident submission."
 
         Meteor.call 'send_email', mail_fields
     
@@ -180,29 +196,35 @@ Meteor.methods
         Meteor.call 'send_email', mail_fields
 
     
-    email_about_escalation: (incident_id)->
-        incident = Docs.findOne incident_id
+    email_about_escalation: (incident_doc_id)->
+        incident = Docs.findOne incident_doc_id
+        
         customer = Docs.findOne {
             "ev.ID":incident.customer_jpid
             type:'customer'
         }
-        franchisee = Docs.findOne {
-            "ev.FRANCHISEE":customer.ev.FRANCHISEE
-            type:'franchisee'
-        }
+        if incident.franchisee_jpid
+            franchisee = Docs.findOne {
+                "ev.ID":incident.franchisee_jpid
+                type:'franchisee'
+            }
             
         office_doc = Docs.findOne {
-            "ev.MASTER_LICENSEE":incident.incident_office_name
+            "ev.ID":incident.office_jpid
             type:'office'
         }
-        # escalation_1_primary_contact_franchisee: true,
-        incident_owner_username = office_doc["#{incident.incident_type}_incident_owner"]
-        escalation_secondary_contact_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_secondary_contact"]
-        
-        escalation_franchisee_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_contact_franchisee"]
-        escalation_customer_value = office_doc["escalation_#{incident.level}_#{incident.incident_type}_contact_customer"]
+
         
         
+        
+        sla = 
+            Docs.findOne
+                type:'sla_setting'
+                escalation_number:incident.level
+                incident_type:incident.incident_type
+                office_jpid:incident.office_jpid
+
+
         mail_fields = {
             to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
@@ -219,37 +241,53 @@ Meteor.methods
                 </ul>
                 <h4>This will notify</h4>
                 <ul>
-                    <li>Incident Owner: #{incident_owner_username}</li>
-                    <li>Secondary Office Contact: #{escalation_secondary_contact_value}</li>
-                    <li>Franchisee: #{escalation_franchisee_value}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</li>
+                    <li>Incident Owner: #{sla.incident_owner}</li>
+                    <li>Secondary Office Contact: #{sla.secondary_contact}</li>
+                    <li>Franchisee: #{sla.contact_franchisee}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</li>
                 </ul>
             "
         }
         
+        incident_type_doc = Docs.findOne
+            type:'incident_type'
+            slug:incident.incident_type
+        
         sms_owner_value = true
         
-        Meteor.call 'send_message', incident_owner_username, 'system_escalation_bot', "You are being notified as the incident owner for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
-        Meteor.call 'send_message', escalation_secondary_contact_value, 'system_escalation_bot', "You are being notified as secondary contact for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
+        Meteor.call 'send_message', sla.incident_owner, 'system_escalation_bot', "You are being notified as the incident owner for a '#{incident_type_doc.title}' escalation to level #{incident.level} from #{incident.customer_name}."
+        Meteor.call 'send_message', sla.secondary_contact, 'system_escalation_bot', "You are being notified as secondary contact for a '#{incident_type_doc.title}' escalation to level #{incident.level} from #{incident.customer_name}."
         
-        Meteor.call 'create_event', incident_id, 'emailed_incident_owner', "#{incident_owner_username} emailed as the incident owner for a #{incident.incident_type} escalation to level #{incident.level}."
-        Meteor.call 'create_event', incident_id, 'emailed_secondary_contact', "#{escalation_secondary_contact_value} emailed as the secondary contact for a #{incident.incident_type} escalation to level #{incident.level}."
-        if escalation_franchisee_value
-            Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a #{incident.incident_type} escalation to level #{incident.level}."
-            Meteor.call 'send_message', franchisee.ev.FRANCHISEE, 'system_escalation_bot', "You are being notified as the franchisee for a #{incident.incident_type} escalation to level #{incident.level} from #{incident.customer_name}."
-        if escalation_customer_value
-            Meteor.call 'create_event', incident_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a #{incident.incident_type} escalation to level #{incident.level}."
+        if sla.sms_owner
+            Meteor.call 'send_sms', '+19705790321', "#{sla.incident_owner}, one of your incidents escalated to #{incident.level}." 
+        # if sla.email_owner
+        Meteor.call 'create_event', incident_doc_id, 'emailed_incident_owner', "#{sla.incident_owner} emailed as the incident owner for a '#{incident_type_doc.title}' escalation to level #{incident.level}."
+        
+        new_event_id = 
+            Docs.insert 
+                type:'event'
+                parent_id:incident_doc_id
+        
+        if sla.sms_secondary
+            Meteor.call 'send_sms', '+19705790321', "#{sla.secondary_contact}, one of your incidents escalated to #{incident.level}." 
+        if sla.email_secondary
+            Meteor.call 'create_event', incident_doc_id, 'emailed_secondary_contact', "#{sla.secondary_contact} emailed as the secondary contact for a '#{incident_type_doc.title}' escalation to level #{incident.level}."
+        
+        
+        if sla.contact_franchisee
+            Meteor.call 'create_event', incident_doc_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a '#{incident_type_doc.title}' escalation to level #{incident.level}."
+            Meteor.call 'send_message', franchisee.ev.FRANCHISEE, 'system_escalation_bot', "You are being notified as the franchisee for a '#{incident_type_doc.title}' escalation to level #{incident.level} from #{incident.customer_name}."
+        if sla.contact_customer
+            Meteor.call 'create_event', incident_doc_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a '#{incident_type_doc.title}' escalation to level #{incident.level}."
             Meteor.call 'send_message', incident.customer_name, 'system_escalation_bot', "You are being notified as the customer for an incident submission."
-        if sms_owner_value
-            Meteor.call 'send_sms', '+19705790321', "#{incident_owner_username}, one of your incidents escalated to #{incident.level}." 
 
         Meteor.call 'send_email', mail_fields
 
 
-    # single_escalation_check: (incident_id)->
-    #     incident = Docs.findOne incident_id
+    # single_escalation_check: (incident_doc_id)->
+    #     incident = Docs.findOne incident_doc_id
     #     if incident.level is 4
     #         return
-    #         # Meteor.call 'create_event', incident_id, 'max_level_notice', "Incident is at max level 4, not escalating."
+    #         # Meteor.call 'create_event', incident_doc_id, 'max_level_notice', "Incident is at max level 4, not escalating."
     #     else
     #         incident_office =
     #             Docs.findOne
@@ -264,7 +302,7 @@ Meteor.methods
     #             hours_value = existing_hours_value
     #         else 
     #             hours_value = 2
-    #             Meteor.call 'create_event', incident_id, 'setting_default_escalation_time', "No escalation hours found, using 2 as the default."
+    #             Meteor.call 'create_event', incident_doc_id, 'setting_default_escalation_time', "No escalation hours found, using 2 as the default."
             
     #         now = Date.now()
     #         updated_now_difference = now-last_updated
@@ -272,10 +310,10 @@ Meteor.methods
     #         hours_elapsed = Math.floor(seconds_elapsed/60)
     #         escalation_calculation = hours_elapsed - hours_value
     #         if hours_elapsed < hours_value
-    #             Meteor.call 'create_event', incident_id, 'not-escalate', "#{hours_elapsed} hours have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
+    #             Meteor.call 'create_event', incident_doc_id, 'not-escalate', "#{hours_elapsed} hours have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
     #             # continue
     #         else    
-    #             Meteor.call 'create_event', incident_id, 'escalate', "#{hours_elapsed} hours have elapsed, more than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, escalating."
+    #             Meteor.call 'create_event', incident_doc_id, 'escalate', "#{hours_elapsed} hours have elapsed, more than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, escalating."
     #             Meteor.call 'escalate_incident', incident._id, ->
             
     escalate_incident: (doc_id)-> 
@@ -295,9 +333,9 @@ Meteor.methods
             Meteor.call 'text_about_escalation', doc_id
 
 
-    clear_incident_events: (incident_id)->
+    clear_incident_events: (incident_doc_id)->
         cursor = Docs.find
-            parent_id: incident_id
+            parent_id: incident_doc_id
             type:'event'
         for event_doc in cursor.fetch()
             Docs.remove event_doc._id
@@ -313,7 +351,7 @@ Meteor.methods
             if incident_count
                 # console.log incident_count
                 next_incident_number = incident_count + 1
-                new_incident_id = 
+                new_incident_doc_id = 
                     Docs.insert
                         type: 'incident'
                         incident_number: next_incident_number
@@ -326,5 +364,5 @@ Meteor.methods
                         level: 1
                         open: true
                         submitted: false
-                console.log 'new incident id', new_incident_id
-                return new_incident_id
+                console.log 'new incident id', new_incident_doc_id
+                return new_incident_doc_id

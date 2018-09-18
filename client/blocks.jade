@@ -833,6 +833,10 @@ template(name='edit_block')
             each views
                 +set_key_value_2 key='view' value=slug label=title icon=icon
             +toggle_boolean key='view_table_header' yes_label='Table Header' no_label='No Table Header'
+            +edit_block_text_field key='default_sort_key' label='Default Sort Key'
+            +set_key_value key='default_sort_direction' value='-1' label='-1'
+            +set_key_value key='default_sort_direction' value='1' label='1'
+            
         .ui.tab(data-tab='fields')
             h4 Available Schema Fields
             each schema_doc.fields
@@ -975,10 +979,10 @@ template(name='set_key_value_2')
 template(name='event_type_icon')
     if event_type_doc.icon
         +icon name=event_type_doc.icon
-        |#{event_type}
+        // |#{event_type}
     else
         +icon name='commit-git'
-        |#{event_type}
+        // |#{event_type}
 
 
 
