@@ -32,15 +32,16 @@ Meteor.publish 'block_children', (
         else if doc_id
             doc_object = Docs.findOne doc_id
             # console.log 'doc_object', doc_object
-        else
-            console.log 'no doc_object'
+        # else
+        #     console.log 'no doc_object'
             
         match = {}
         unless block.children_collection is 'users'
             match.type = block.children_doc_type
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
-        # console.log filter_key
+        if block.children_doc_type is 'event'
+            console.log filter_key
         calculated_value =
             switch filter_value
                 when "{source_key}"
@@ -48,9 +49,10 @@ Meteor.publish 'block_children', (
                         result = filter_source_doc.ev["#{block.filter_source_key}"]
                     else
                         result = filter_source_doc["#{block.filter_source_key}"]
-                    # console.log 'looking up', block.filter_source_key
-                    # console.log 'from', filter_source_doc
-                    # console.log 'result', result
+                    if block.children_doc_type is 'event'
+                        console.log 'looking up', block.filter_source_key
+                        console.log 'from', filter_source_doc
+                        console.log 'result', result
                     result
                 when "{current_user_customer_name}"
                     found_customer = Docs.findOne
@@ -103,8 +105,9 @@ Meteor.publish 'block_children', (
                             @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
-        # console.log 'filter_value', filter_value
-        # console.log 'calc', calculated_value
+        if block.children_doc_type is 'event'
+            console.log 'filter_value', filter_value
+            console.log 'calc', calculated_value
         user = Meteor.user()
         unless block.children_collection is 'users' 
             if user and user.roles
@@ -113,8 +116,8 @@ Meteor.publish 'block_children', (
                 
         if -1 > limit > 100
             limit = 100
-            
-        # console.log 'match', match    
+        if block.children_doc_type is 'event'
+            console.log 'match', match    
         if block.children_collection is 'users' 
             Meteor.users.find match,{
                 skip: skip
@@ -136,9 +139,6 @@ Meteor.publish 'assigned_to_users', (incident_doc_id)->
         Meteor.users.find 
             _id: $in: incident_doc.assigned_to
         
-        
-Meteor.publish 'office_events', (office_doc_id)->
-    Docs.find {type:'event'}, limit:10
         
         
 Meteor.publish 'nav_items', ->
@@ -385,60 +385,60 @@ publishComposite 'me', ()->
     {
         find: -> 
             Meteor.users.find @userId
-        children: [
-            {
-                find: (user)-> 
-                    # users customer account
-                    if user.profile 
-                        if user.customer_jpid
-                            Docs.find
-                                "ev.ID": user.customer_jpid
-                                type:'customer'
-                        if user.office_jpid
-                            Docs.find
-                                "ev.ID": user.office_jpid
-                                type:'office'
+        # children: [
+        #     {
+        #         find: (user)-> 
+        #             # users customer account
+        #             if user.profile 
+        #                 if user.customer_jpid
+        #                     Docs.find
+        #                         "ev.ID": user.customer_jpid
+        #                         type:'customer'
+        #                 if user.office_jpid
+        #                     Docs.find
+        #                         "ev.ID": user.office_jpid
+        #                         type:'office'
                             
-                # children: [
-                #     # {
-                #     #     find: (customer)-> 
-                #     #         # parent incidents
-                #     #         Docs.find
-                #     #             customer_jpid: customer.jpid
-                #     #             type:'incident'
-                #     # }
-                #     # {
-                #     #     find: (customer)-> 
-                #     #         # parent franchisee
-                #     #         Docs.find
-                #     #             franchisee: customer.franchisee
-                #     #             type:'franchisee'
-                #     # }
-                #     # {
-                #     #     find: (customer)-> 
-                #     #         # special services
-                #     #         Docs.find
-                #     #             "ev.CUSTOMER": customer.cust_name
-                #     #             type:'special_service'
-                #     # }
-                #     # {
-                #     #     find: (customer)-> 
-                #     #         # grandparent office
-                #     #         Docs.find
-                #     #             # "ev.MASTER_LICENSEE": customer.ev.MASTER_LICENSEE
-                #     #             type:'office'
-                #     #     # children: [
-                #     #     #     {
-                #     #     #         find: (office)-> 
-                #     #     #             # offices users
-                #     #     #             # Meteor.users.find
-                #     #     #             #     "profile.office_name": office.ev.MASTER_OFFICE_NAME
-                #     #     #     }
-                #     #     # ]
-                #     # }
-                # ]    
-            }
-        ]
+        #         # children: [
+        #         #     # {
+        #         #     #     find: (customer)-> 
+        #         #     #         # parent incidents
+        #         #     #         Docs.find
+        #         #     #             customer_jpid: customer.jpid
+        #         #     #             type:'incident'
+        #         #     # }
+        #         #     # {
+        #         #     #     find: (customer)-> 
+        #         #     #         # parent franchisee
+        #         #     #         Docs.find
+        #         #     #             franchisee: customer.franchisee
+        #         #     #             type:'franchisee'
+        #         #     # }
+        #         #     # {
+        #         #     #     find: (customer)-> 
+        #         #     #         # special services
+        #         #     #         Docs.find
+        #         #     #             "ev.CUSTOMER": customer.cust_name
+        #         #     #             type:'special_service'
+        #         #     # }
+        #         #     # {
+        #         #     #     find: (customer)-> 
+        #         #     #         # grandparent office
+        #         #     #         Docs.find
+        #         #     #             # "ev.MASTER_LICENSEE": customer.ev.MASTER_LICENSEE
+        #         #     #             type:'office'
+        #         #     #     # children: [
+        #         #     #     #     {
+        #         #     #     #         find: (office)-> 
+        #         #     #     #             # offices users
+        #         #     #     #             # Meteor.users.find
+        #         #     #     #             #     "profile.office_name": office.ev.MASTER_OFFICE_NAME
+        #         #     #     #     }
+        #         #     #     # ]
+        #         #     # }
+        #         # ]    
+        #     }
+        # ]
     }
 Meteor.publish 'comments', (doc_id)->
     Docs.find

@@ -75,12 +75,15 @@ template(name='submit_incident')
 
 
 template(name='sla_tester')
-    i.large.refresh.check_escalation.link.icon(title='Manually Check Escalation')
-    i.large.sort.numeric.down.escalate_incident.link.icon(title='Manually Escalate')
+    .ui.small.icon.check_escalation.button(title='Manually Check Escalation')
+        i.refresh.link.icon
+    .ui.small.icon.escalate_incident.button(title='Manually Escalate')
+        i.sort.numeric.down.link.icon
     each sla_docs
         strong Level #{escalation_number}
             span(title='Escalation Hours') (#{escalation_hours} hours)
-        i.large.link.left.arrow.set_level.icon(title="Set level to #{escalation_number}")
+        .ui.small.icon.set_level.button(title="Set level to #{escalation_number}")
+            i.link.left.arrow.icon
         .ui.secondary.segment
             | Owner
             +view_sla_contact username=incident_owner

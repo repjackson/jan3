@@ -20,10 +20,10 @@ Template.add_button.events
         FlowRouter.go "/edit/#{id}"
 
 
-Template.reference_type_single.onCreated ->
-    @autorun =>  Meteor.subscribe 'type', @data.type
-Template.reference_type_multiple.onCreated ->
-    @autorun =>  Meteor.subscribe 'type', @data.type
+# Template.reference_type_single.onCreated ->
+#     @autorun =>  Meteor.subscribe 'type', @data.type
+# Template.reference_type_multiple.onCreated ->
+#     @autorun =>  Meteor.subscribe 'type', @data.type
 
 Template.associated_users.onCreated ->
     @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
@@ -54,7 +54,7 @@ Template.incident_assignment_cell.helpers
 
 
 
-Template.reference_type_single.helpers
+# Template.reference_type_single.helpers
     # settings: -> 
     #     {
     #         position: 'bottom'
@@ -70,7 +70,7 @@ Template.reference_type_single.helpers
     #         ]
     #     }
 
-Template.reference_type_multiple.helpers
+# Template.reference_type_multiple.helpers
     # settings: -> 
     #     {
     #         position: 'bottom'
@@ -87,7 +87,7 @@ Template.reference_type_multiple.helpers
     #     }
 
 
-Template.reference_type_single.events
+# Template.reference_type_single.events
     # 'autocompleteselect #search': (event, template, doc) ->
     #     searched_value = doc["#{template.data.key}"]
     #     Docs.update FlowRouter.getQueryParam('doc_id'),
@@ -96,7 +96,7 @@ Template.reference_type_single.events
 
 
 
-Template.reference_type_multiple.events
+# Template.reference_type_multiple.events
     # 'autocompleteselect #search': (event, template, doc) ->
     #     searched_value = doc["#{template.data.key}"]
     #     Docs.update FlowRouter.getQueryParam('doc_id'),
@@ -112,26 +112,26 @@ Template.reference_type_multiple.events
 # Template.set_view_mode.events
 #     'click #set_view_mode': -> Session.set 'view_mode', @view
             
-Template.set_session_button.events
-    'click .set_session_filter': -> Session.set "#{@key}", @value
+# Template.set_session_button.events
+#     'click .set_session_filter': -> Session.set "#{@key}", @value
             
-Template.set_session_button.helpers
-    filter_class: -> 
-        if Session.equals("#{@key}","all") 
-            if @value is 'all'
-                'primary' 
-            else
-                'basic'
-        else if Session.get("#{@key}")
-            if Session.equals("#{@key}", parseInt(@value))
-                'primary'
-            else
-                'basic'
+# Template.set_session_button.helpers
+#     filter_class: -> 
+#         if Session.equals("#{@key}","all") 
+#             if @value is 'all'
+#                 'primary' 
+#             else
+#                 'basic'
+#         else if Session.get("#{@key}")
+#             if Session.equals("#{@key}", parseInt(@value))
+#                 'primary'
+#             else
+#                 'basic'
             
             
             
-Template.set_session_item.events
-    'click .set_session_filter': -> Session.set "#{@key}", @value
+# Template.set_session_item.events
+#     'click .set_session_filter': -> Session.set "#{@key}", @value
             
 
             
@@ -157,7 +157,6 @@ Template.call_method.events
 Template.toggle_key.helpers
     toggle_key_button_class: -> 
         current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        console.log @
         if @value
             if current_doc["#{@key}"] is @value then 'primary'
         # else if current_doc["#{@key}"] is true then 'primary' else 'basic'
@@ -349,116 +348,116 @@ Template.multiple_user_select.helpers
     
 
 
-Template.many_doc_select.onCreated ->
-    @autorun =>  Meteor.subscribe 'type', 'customer'
-Template.many_doc_select.events
-    'autocompleteselect #search': (event, template, selected_doc) ->
-        key = Template.parentData(0).key
-        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        # searched_value = doc["#{template.data.key}"]
-        Meteor.call 'doc_array_add', page_doc._id, key, selected_doc, (err,res)=>
-            if err
-                Bert.alert "Error Assigning #{selected_doc.text}: #{err.reason}", 'danger', 'growl-top-right'
-            else
-                Bert.alert "Assigned #{selected_doc.text}.", 'success', 'growl-top-right'
-        $('#search').val ''
+# Template.many_doc_select.onCreated ->
+#     @autorun =>  Meteor.subscribe 'type', 'customer'
+# Template.many_doc_select.events
+#     'autocompleteselect #search': (event, template, selected_doc) ->
+#         key = Template.parentData(0).key
+#         page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+#         # searched_value = doc["#{template.data.key}"]
+#         Meteor.call 'doc_array_add', page_doc._id, key, selected_doc, (err,res)=>
+#             if err
+#                 Bert.alert "Error Assigning #{selected_doc.text}: #{err.reason}", 'danger', 'growl-top-right'
+#             else
+#                 Bert.alert "Assigned #{selected_doc.text}.", 'success', 'growl-top-right'
+#         $('#search').val ''
 
-    'click .pull_doc': ->
-        context = Template.currentData(0)
-        swal {
-            title: "Remove #{@title} #{@text}?"
-            # text: 'Confirm delete?'
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Unassign'
-            confirmButtonColor: '#da5347'
-        }, =>
-            page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-            Meteor.call 'doc_array_pull', page_doc._id, context.key, @, (err,res)=>
-                if err
-                    Bert.alert "Error removing #{@title} #{@text}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Removed #{@title} #{@text}.", 'success', 'growl-top-right'
+#     'click .pull_doc': ->
+#         context = Template.currentData(0)
+#         swal {
+#             title: "Remove #{@title} #{@text}?"
+#             # text: 'Confirm delete?'
+#             type: 'info'
+#             animation: false
+#             showCancelButton: true
+#             closeOnConfirm: true
+#             cancelButtonText: 'Cancel'
+#             confirmButtonText: 'Unassign'
+#             confirmButtonColor: '#da5347'
+#         }, =>
+#             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+#             Meteor.call 'doc_array_pull', page_doc._id, context.key, @, (err,res)=>
+#                 if err
+#                     Bert.alert "Error removing #{@title} #{@text}: #{err.reason}", 'danger', 'growl-top-right'
+#                 else
+#                     Bert.alert "Removed #{@title} #{@text}.", 'success', 'growl-top-right'
     
-Template.single_doc_select.onCreated ->
-    @autorun =>  Meteor.subscribe 'type', 'customer'
-Template.single_doc_select.events
-    'autocompleteselect #search': (event, template, selected_doc) ->
-        save_key = Template.parentData(0).save_key
-        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        # searched_value = doc["#{template.data.key}"]
-        Meteor.call 'link_doc', page_doc._id, save_key, selected_doc, (err,res)=>
-            if err
-                Bert.alert "Error Assigning #{selected_doc.cust_name}: #{err.reason}", 'danger', 'growl-top-right'
-            else
-                Bert.alert "Assigned #{selected_doc.cust_name}.", 'success', 'growl-top-right'
-        $('#search').val ''
+# Template.single_doc_select.onCreated ->
+#     @autorun =>  Meteor.subscribe 'type', 'customer'
+# Template.single_doc_select.events
+#     'autocompleteselect #search': (event, template, selected_doc) ->
+#         save_key = Template.parentData(0).save_key
+#         page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+#         # searched_value = doc["#{template.data.key}"]
+#         Meteor.call 'link_doc', page_doc._id, save_key, selected_doc, (err,res)=>
+#             if err
+#                 Bert.alert "Error Assigning #{selected_doc.cust_name}: #{err.reason}", 'danger', 'growl-top-right'
+#             else
+#                 Bert.alert "Assigned #{selected_doc.cust_name}.", 'success', 'growl-top-right'
+#         $('#search').val ''
 
-    'click .remove_doc': ->
-        context = Template.currentData(0)
-        swal {
-            title: "Remove #{@cust_name}?"
-            # text: 'Confirm delete?'
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Unassign'
-            confirmButtonColor: '#da5347'
-        }, =>
-            page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-            Meteor.call 'unlink_doc', page_doc._id, context.save_key, @, (err,res)=>
-                if err
-                    Bert.alert "Error removing #{@cust_name}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Removed #{@cust_name}.", 'success', 'growl-top-right'
+#     'click .remove_doc': ->
+#         context = Template.currentData(0)
+#         swal {
+#             title: "Remove #{@cust_name}?"
+#             # text: 'Confirm delete?'
+#             type: 'info'
+#             animation: false
+#             showCancelButton: true
+#             closeOnConfirm: true
+#             cancelButtonText: 'Cancel'
+#             confirmButtonText: 'Unassign'
+#             confirmButtonColor: '#da5347'
+#         }, =>
+#             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+#             Meteor.call 'unlink_doc', page_doc._id, context.save_key, @, (err,res)=>
+#                 if err
+#                     Bert.alert "Error removing #{@cust_name}: #{err.reason}", 'danger', 'growl-top-right'
+#                 else
+#                     Bert.alert "Removed #{@cust_name}.", 'success', 'growl-top-right'
     
-Template.single_doc_select.helpers
-    settings: -> 
-        {
-            position: 'bottom'
-            limit: 10
-            rules: [
-                {
-                    collection: Docs
-                    field: "#{@search_key}"
-                    matchAll: true
-                    filter: { type: "#{@type}" }
-                    template: Template.doc_result
-                }
-            ]
-        }
+# Template.single_doc_select.helpers
+#     settings: -> 
+#         {
+#             position: 'bottom'
+#             limit: 10
+#             rules: [
+#                 {
+#                     collection: Docs
+#                     field: "#{@search_key}"
+#                     matchAll: true
+#                     filter: { type: "#{@type}" }
+#                     template: Template.doc_result
+#                 }
+#             ]
+#         }
 
-    selected_doc: ->
-        context = Template.currentData(0)
-        parent_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        doc = 
-            Docs.findOne _id: parent_doc["#{context.save_key}"]
-        doc
+#     selected_doc: ->
+#         context = Template.currentData(0)
+#         parent_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+#         doc = 
+#             Docs.findOne _id: parent_doc["#{context.save_key}"]
+#         doc
         
-Template.single_doc_view.onCreated ->
-    @autorun =>  Meteor.subscribe 'incident', FlowRouter.getQueryParam('doc_id')
-Template.single_doc_view.helpers
-    selected_doc: ->
-        context = Template.currentData(0)
-        parent_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        doc = 
-            Docs.findOne 
-                "ev.ID": parent_doc["#{context.key}"]
-        doc
-Template.view_multiple_user.onCreated ->
-    @autorun =>  Meteor.subscribe 'users'
+# Template.single_doc_view.onCreated ->
+#     @autorun =>  Meteor.subscribe 'incident', FlowRouter.getQueryParam('doc_id')
+# Template.single_doc_view.helpers
+#     selected_doc: ->
+#         context = Template.currentData(0)
+#         parent_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+#         doc = 
+#             Docs.findOne 
+#                 "ev.ID": parent_doc["#{context.key}"]
+#         doc
+# Template.view_multiple_user.onCreated ->
+#     @autorun =>  Meteor.subscribe 'users'
 
-Template.view_multiple_user.helpers
-    user_array_users: ->
-        context = Template.parentData(1)
-        parent_doc = Docs.findOne context._id
-        Meteor.users.find
-            _id: $in: parent_doc["#{@key}"]
+# Template.view_multiple_user.helpers
+#     user_array_users: ->
+#         context = Template.parentData(1)
+#         parent_doc = Docs.findOne context._id
+#         Meteor.users.find
+#             _id: $in: parent_doc["#{@key}"]
 
 
 Template.doc_result.onCreated ->
@@ -624,7 +623,7 @@ Template.assignment_widget.helpers
 Template.author_info.onCreated ->
     @autorun => Meteor.subscribe 'author', @data.author_id
 
-Template.blocks.onCreated ->
+# Template.blocks.onCreated ->
     # if @data.tags and typeof @data.tags is 'string'
     #     split_tags = @data.tags.split ','
     # else
@@ -763,7 +762,19 @@ Template.block.helpers
                 }
         else
             match = {}
+            if @filter_value is "{source_key}"
+                context_doc = Docs.findOne FlowRouter.getQueryParam 'doc_id'
+                if context_doc
+                    result = context_doc["#{@filter_source_key}"]
+                    if @children_doc_type is 'event'
+                        console.log @filter_key
+                        console.log @filter_source_key
+                        console.log result
+                        match["#{@filter_key}"] = result
+                    
             match.type = @children_doc_type
+            if @children_doc_type is 'event'
+                console.log 'match', match
             if @filter_key is '_id'
                 match._id = FlowRouter.getQueryParam 'doc_id'    
             if @hard_limit
@@ -851,7 +862,7 @@ Template.block.events
 
 Template.edit_block.onRendered ->
     Meteor.setTimeout ->
-        $.tab()
+        $('.tabular.menu .item').tab()
     , 400
     
     

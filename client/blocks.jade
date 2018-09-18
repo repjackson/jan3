@@ -26,9 +26,15 @@ template(name='list_item')
 
 template(name='toggle_boolean')
     if is_on
-        #turn_off.ui.active.compact.button #{yes_label}
+        #turn_off.ui.active.compact.button 
+            if icon
+                i.icon(class=icon)
+            |#{yes_label}
     else
-        #turn_on.ui.compact.basic.button #{yes_label}
+        #turn_on.ui.compact.basic.button
+            if icon
+                i.icon(class=icon)
+            |#{yes_label}
 
 
 
@@ -156,21 +162,20 @@ template(name='associated_users')
             
 template(name='incident_assignment_cell')
     // td(class=incident_assignment_cell_class)
-    td
-        if overdue
-            +icon name='expired' classes='inline' title='Over 5 Hours'
-        if response
-            |#{response}
-        .ui.list
-            each assigned_users
-                .item
-                    // .image
-                    //     img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                    .content
-                        .header
-                            |#{profile.first_name} #{profile.last_name}
-                        .description
-                            | @#{username}
+    if overdue
+        +icon name='expired' classes='inline' title='Over 5 Hours'
+    if response
+        |#{response}
+    .ui.list
+        each assigned_users
+            .item
+                // .image
+                //     img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                .content
+                    .header
+                        |#{profile.first_name} #{profile.last_name}
+                    .description
+                        | @#{username}
             
             
           
@@ -731,29 +736,28 @@ template(name='edit_block')
         h3.ui.header 
             +icon name=icon
             |Edit '#{title}' Block
-            
-        a.ui.basic.button.active.tab_nav(data-tab='general') 
-            i.pencil.icon
-            |General
-        a.ui.basic.button.tab_nav(data-tab='filter') 
-            i.filter.icon
-            |Filter
-        a.ui.basic.button.tab_nav(data-tab='schema') 
-            i.fork.icon
-            |Schema
-        a.ui.basic.button.tab_nav(data-tab='collection') 
-            i.database.icon
-            |Collection
-        a.ui.basic.button.tab_nav(data-tab='layout') 
-            i.th.list.icon
-            |Layout
-        a.ui.basic.button.tab_nav(data-tab='view') 
-            i.object.group.icon
-            |View
-        a.ui.basic.button.tab_nav(data-tab='fields') 
-            i.list.ui.icon
-            |Fields
-        .ui.divider
+        .ui.compact.tabular.menu
+            a.ui.compact.basic.button.active.tab_nav(data-tab='general') 
+                i.pencil.icon
+                |General
+            a.ui.compact.basic.button.tab_nav(data-tab='filter') 
+                i.filter.icon
+                |Filter
+            a.ui.compact.basic.button.tab_nav(data-tab='schema') 
+                i.fork.icon
+                |Schema
+            a.ui.compact.basic.button.tab_nav(data-tab='collection') 
+                i.database.icon
+                |Collection
+            a.ui.compact.basic.button.tab_nav(data-tab='layout') 
+                i.th.list.icon
+                |Layout
+            a.ui.compact.basic.button.tab_nav(data-tab='view') 
+                i.object.group.icon
+                |View
+            a.ui.compact.basic.button.tab_nav(data-tab='fields') 
+                i.list.ui.icon
+                |Fields
         .ui.active.tab(data-tab='general')
             i.remove_block.remove.link.icon(title='remove block')
             +toggle_boolean key='published' yes_label='Published'
@@ -782,7 +786,7 @@ template(name='edit_block')
                 +set_key_value key='filter_source' value='{current_user}' label='Current User'
                 +toggle_boolean key='filter_key_ev_subset' yes_label='Filter Key EV'
                 div
-                +edit_block_text_field label='Filter Key' key='filter_key'
+                +edit_block_text_field label='Parent Key' key='filter_key'
                 +set_key_value key='filter_key' value='_id' label='_id'
                 +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
                 +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
@@ -796,6 +800,7 @@ template(name='edit_block')
                 +set_key_value key='filter_value' value=true label='true'
                 +set_key_value key='filter_value' value=false label='false'
                 div
+                h5 Calculated Filter Value
                 div
                 i.user.icon
                 +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'

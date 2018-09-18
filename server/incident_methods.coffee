@@ -1,41 +1,73 @@
 Meteor.methods
     assign_incident_owner_after_submission: (incident_doc_id)->
-        incident_doc = Docs.findOne incident_doc_id
-        incidents_office =
+        incident = Docs.findOne incident_doc_id
+        sla = 
             Docs.findOne
-                "ev.MASTER_LICENSEE": incident_doc.incident_office_name
-                type:'office'
-        if incidents_office
-            incident_owner = incidents_office["#{incident_doc.incident_type}_incident_owner"]
-            if incident_owner
-                owner_user = Meteor.users.findOne username:incident_owner
-                Docs.update incident_doc_id,
-                    $addToSet: assigned_to: owner_user._id
-                    $set: assignment_timestamp:Date.now()
-                # escalation_hours = incidents_office["escalation_1_#{incident.incident_type}_hours"]
-                Meteor.call 'create_event', incident_doc_id, 'assignment', "Owner #{owner_user.username} automatically assigned after submission."
-                Meteor.call 'create_event', incident_doc_id, 'timestamp_update', "Assignment timestamp updated."
-        else
-            throw new Meteor.Error 'no incident office found, cant run escalation rules'
+                type:'sla_setting'
+                escalation_number:1
+                incident_type:incident.incident_type
+                office_jpid:incident.office_jpid
+        # console.log 'found submission sla', sla        
+        if sla.incident_owner
+            owner_user = Meteor.users.findOne username:sla.incident_owner
+            Docs.update incident_doc_id,
+                $addToSet: assigned_to: owner_user._id
+                $set: assignment_timestamp:Date.now()
+            # escalation_hours = incidents_office["escalation_1_#{incident.incident_type}_hours"]
+            Meteor.call 'create_event', incident_doc_id, 'assignment', "Incident owner #{sla.incident_owner} automatically assigned after submission."
+            Meteor.call 'create_event', incident_doc_id, 'timestamp_update', "Assignment timestamp updated."
+        # else
+        #     throw new Meteor.Error 'no incident office found, cant run escalation rules'
     
     
+    submit_incident: (incident_doc_id)->
+        incident = Docs.findOne incident_doc_id
+    
+        sla = 
+            Docs.findOne
+                type:'sla_setting'
+                escalation_number:1
+                incident_type:incident.incident_type
+                office_jpid:incident.office_jpid
+                
+        if sla.escalation_hours
+            Meteor.call 'create_event', incident_doc_id, 'submit', "Incident will escalate in #{sla.escalation_hours} hours according to #{incident.incident_office_name} initial rules."
+        if sla
+            Meteor.call 'create_event', incident_doc_id, 'submit', "Incident submitted. #{sla.incident_owner} and #{sla.secondary_contact} have been notified per #{incident.incident_office_name} rules."
+        Docs.update incident_doc_id,
+            $set:
+                submitted:true
+                submitted_datetime: Date.now()
+                last_updated_datetime: Date.now()
+        Meteor.call 'assign_incident_owner_after_submission', incident_doc_id
+        Meteor.call 'create_event', incident_doc_id, 'submit', "submitted the incident."
+        Meteor.call 'email_about_incident_submission', incident_doc_id
+
     
     unassign_user_from_incident: (incident_doc_id, username)->
-        owner_user = Meteor.users.findOne username:username
-        incident_doc = Docs.findOne incident_doc_id
+        removed_user = Meteor.users.findOne username:username
+        incident = Docs.findOne incident_doc_id
         Docs.update incident_doc_id,
-            $pull: assigned_to: owner_user._id
+            $pull: assigned_to: removed_user._id
             $set: assignment_timestamp:Date.now()
         Meteor.call 'create_event', incident_doc_id, 'unassignment', "#{username} marked task complete and was unassigned."
         # assign owner if no one else
         updated_doc = Docs.findOne incident_doc_id
         if updated_doc.assigned_to.length is 0
             incident_office = Docs.findOne({type:'office', "ev.ID":updated_doc.office_jpid})
-            owner_value = incident_office["#{incident_doc.incident_type}_incident_owner"]
-            owner_user = Meteor.users.findOne username:owner_value
+            
+            sla = 
+                Docs.findOne
+                    type:'sla_setting'
+                    escalation_number:incident.level
+                    incident_type:incident.incident_type
+                    office_jpid:incident.office_jpid
+
+            
+            owner_user = Meteor.users.findOne username:sla.incident_owner
             Docs.update incident_doc_id, 
-                $addToSet:assigned_to:[owner_user._id]
-            Meteor.call 'create_event', incident_doc_id, 'assignment', "Owner #{username} reassigned after completed task by #{username}."
+                $addToSet:assigned_to:owner_user._id
+            Meteor.call 'create_event', incident_doc_id, 'assignment', "Owner #{sla.incident_owner} reassigned after completed task by #{username}."
                 
             
     update_escalation_statuses: ->
@@ -61,16 +93,16 @@ Meteor.methods
             next_level = current_level + 1
             last_updated = incident.updated
 
-            escalation_doc = 
+            sla = 
                 Docs.findOne
                     type:'sla_setting'
                     escalation_number:next_level
                     incident_type:incident.incident_type
                     office_jpid:incident.office_jpid
 
-            console.log escalation_doc
-            if escalation_doc.escalation_hours 
-                hours_value = escalation_doc.escalation_hours
+            console.log sla
+            if sla.escalation_hours 
+                hours_value = sla.escalation_hours
             else 
                 hours_value = 2
                 Meteor.call 'create_event', incident_doc_id, 'setting_default_escalation_time', "No escalation hours found, using 2 as the default."
@@ -121,24 +153,33 @@ Meteor.methods
             
     email_about_incident_submission: (incident_doc_id)->
         incident = Docs.findOne incident_doc_id
+        
         customer = Docs.findOne {
             "ev.ID":incident.customer_jpid
             type:'customer'
         }
-        franchisee = Docs.findOne {
-            "ev.FRANCHISEE":customer.ev.FRANCHISEE
-            type:'franchisee'
-        }
+        if incident.franchisee_jpid
+            franchisee = Docs.findOne {
+                "ev.ID":incident.franchisee_jpid
+                type:'franchisee'
+            }
             
         office_doc = Docs.findOne {
-            "ev.MASTER_LICENSEE":incident.incident_office_name
+            "ev.ID":incident.office_jpid
             type:'office'
         }
-        incident_owner_username = office_doc["#{incident.incident_type}_incident_owner"]
-        initial_secondary_contact_value = office_doc["escalation_1_#{incident.incident_type}_secondary_contact"]
+
         
-        initial_franchisee_value = office_doc["escalation_1_#{incident.incident_type}_contact_franchisee"]
-        initial_customer_value = office_doc["escalation_1_#{incident.incident_type}_contact_customer"]
+        
+        
+        sla = 
+            Docs.findOne
+                type:'sla_setting'
+                escalation_number:incident.level
+                incident_type:incident.incident_type
+                office_jpid:incident.office_jpid
+        
+        
         mail_fields = {
             to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
@@ -153,47 +194,26 @@ Meteor.methods
                 <h5>Status: #{incident.status}</h5>
                 <h5>Service Date: #{incident.service_date}</h5>
                 <h4>This will notify</h4>
-                <h5>Incident Owner: #{incident_owner_username}</h5>
-                <h5>Secondary Office Contact: #{initial_secondary_contact_value}</h5>
-                <h5>Franchisee: #{initial_franchisee_value}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
-                <h5>Customer: #{initial_customer_value}, #{customer.ev.CUST_NAME} at #{customer.ev.CUST_CONTACT_EMAIL}</h5>
+                <h5>Incident Owner: #{sla.incident_owner}</h5>
+                <h5>Secondary Office Contact: #{sla.secondary_contact}</h5>
+                <h5>Franchisee: #{sla.contact_franchisee}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
+                <h5>Customer: #{sla.contact_customer}, #{customer.ev.CUST_NAME} at #{customer.ev.CUST_CONTACT_EMAIL}</h5>
             "
         }
-        Meteor.call 'create_event', incident_doc_id, 'emailed_owner', "#{incident_owner_username} emailed as the incident owner after initial submission."
-        Meteor.call 'create_event', incident_doc_id, 'emailed_secondary_contact', "#{initial_secondary_contact_value} emailed as the secondary contact for initial submission."
-        if initial_franchisee_value
+        Meteor.call 'create_event', incident_doc_id, 'emailed_owner', "#{sla.incident_owner} emailed as the incident owner after initial submission."
+        Meteor.call 'create_event', incident_doc_id, 'emailed_secondary_contact', "#{sla.secondary_contact} emailed as the secondary contact for initial submission."
+        if sla.sms_owner
+            Meteor.call 'send_sms', '+19176643297', "#{sla.incident_owner}, one of your incidents from #{incident.customer_name} escalated to #{incident.level}." 
+
+        
+        if sla.contact_franchisee
             Meteor.call 'create_event', incident_doc_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed after incident submission."
-        if initial_customer_value
+        if sla.contact_customer
             Meteor.call 'create_event', incident_doc_id, 'emailed_customer_contact', "Customer #{customer.ev.CUST_NAME} emailed after incident submission."
 
         Meteor.call 'send_email', mail_fields
     
     
-    send_email_about_incident_assignment:(incident_doc_id, username)->
-        incident_doc = Docs.findOne incident_doc_id
-        
-        assigned_to_user = Meteor.users.findOne username:username
-        incident_link = "https://www.jan.meteorapp.com/v/#{incident_doc._id}"
-        unnassign_self_link = "https://www.jan.meteorapp.com/v/#{incident_doc._id}?username=#{assigned_to_user.username}"
-        
-        mail_fields = {
-            # to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>", "<#{assigned_to_user.emails[0].address}>"]
-            to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
-            from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
-            subject: "#{assigned_to_user.username} Assigned to Incident"
-            html: "<h4>#{assigned_to_user.username}, you have been assigned to incident ##{incident_doc.incident_number} from customer: #{incident_doc.customer_name}.</h4>
-                <h5>Type: #{incident_doc.incident_type}</h5>
-                <h5>Number: #{incident_doc.incident_number}</h5>
-                <h5>Details: #{incident_doc.incident_details}</h5>
-                <h5>Timestamp: #{incident_doc.timestamp}</h5>
-                <h5>Office: #{incident_doc.incident_office_name}</h5>
-                <h5>Open: #{incident_doc.open}</h5>
-                <h5>Service Date: #{incident_doc.service_date}</h5>
-                <p>View the incident <a href=#{incident_link}>here</a>.</p>
-                <p>Mark task complete <a href=#{unnassign_self_link}>here</a>.</p>
-            "
-        }
-        Meteor.call 'send_email', mail_fields
 
     
     email_about_escalation: (incident_doc_id)->
@@ -214,9 +234,6 @@ Meteor.methods
             type:'office'
         }
 
-        
-        
-        
         sla = 
             Docs.findOne
                 type:'sla_setting'
@@ -252,26 +269,28 @@ Meteor.methods
             type:'incident_type'
             slug:incident.incident_type
         
-        sms_owner_value = true
         
         Meteor.call 'send_message', sla.incident_owner, 'system_escalation_bot', "You are being notified as the incident owner for a '#{incident_type_doc.title}' escalation to level #{incident.level} from #{incident.customer_name}."
         Meteor.call 'send_message', sla.secondary_contact, 'system_escalation_bot', "You are being notified as secondary contact for a '#{incident_type_doc.title}' escalation to level #{incident.level} from #{incident.customer_name}."
         
         if sla.sms_owner
-            Meteor.call 'send_sms', '+19705790321', "#{sla.incident_owner}, one of your incidents escalated to #{incident.level}." 
+            Meteor.call 'send_sms', '+19176643297', "#{sla.incident_owner}, one of your incidents from #{incident.customer_name} escalated to #{incident.level}." 
         # if sla.email_owner
         Meteor.call 'create_event', incident_doc_id, 'emailed_incident_owner', "#{sla.incident_owner} emailed as the incident owner for a '#{incident_type_doc.title}' escalation to level #{incident.level}."
         
-        new_event_id = 
-            Docs.insert 
-                type:'event'
-                parent_id:incident_doc_id
+        # new_event_id = 
+        #     Docs.insert 
+        #         type:'event'
+        #         parent_id:incident_doc_id
         
         if sla.sms_secondary
-            Meteor.call 'send_sms', '+19705790321', "#{sla.secondary_contact}, one of your incidents escalated to #{incident.level}." 
+            Meteor.call 'create_event', incident_doc_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a '#{incident_type_doc.title}' escalation to level #{incident.level}."
+            Meteor.call 'send_sms', '+19176643297', "#{sla.secondary_contact}, one of your incidents from #{incident.customer_name} escalated to #{incident.level}." 
         if sla.email_secondary
             Meteor.call 'create_event', incident_doc_id, 'emailed_secondary_contact', "#{sla.secondary_contact} emailed as the secondary contact for a '#{incident_type_doc.title}' escalation to level #{incident.level}."
-        
+        if sla.sms_owner
+            Meteor.call 'send_sms', '+19176643297', "#{sla.incident_owner}, one of your incidents from #{incident.customer_name} escalated to #{incident.level}." 
+
         
         if sla.contact_franchisee
             Meteor.call 'create_event', incident_doc_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a '#{incident_type_doc.title}' escalation to level #{incident.level}."
@@ -283,39 +302,6 @@ Meteor.methods
         Meteor.call 'send_email', mail_fields
 
 
-    # single_escalation_check: (incident_doc_id)->
-    #     incident = Docs.findOne incident_doc_id
-    #     if incident.level is 4
-    #         return
-    #         # Meteor.call 'create_event', incident_doc_id, 'max_level_notice', "Incident is at max level 4, not escalating."
-    #     else
-    #         incident_office =
-    #             Docs.findOne
-    #                 "ev.MASTER_LICENSEE": incident.incident_office_name
-    #                 type:'office'
-    #         current_level = incident.level
-    #         next_level = current_level + 1
-
-    #         last_updated = incident.updated
-    #         existing_hours_value = incident_office["escalation_#{next_level}_#{incident.incident_type}_hours"]
-    #         if existing_hours_value 
-    #             hours_value = existing_hours_value
-    #         else 
-    #             hours_value = 2
-    #             Meteor.call 'create_event', incident_doc_id, 'setting_default_escalation_time', "No escalation hours found, using 2 as the default."
-            
-    #         now = Date.now()
-    #         updated_now_difference = now-last_updated
-    #         seconds_elapsed = Math.floor(updated_now_difference/1000)
-    #         hours_elapsed = Math.floor(seconds_elapsed/60)
-    #         escalation_calculation = hours_elapsed - hours_value
-    #         if hours_elapsed < hours_value
-    #             Meteor.call 'create_event', incident_doc_id, 'not-escalate', "#{hours_elapsed} hours have elapsed, less than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, not escalating."
-    #             # continue
-    #         else    
-    #             Meteor.call 'create_event', incident_doc_id, 'escalate', "#{hours_elapsed} hours have elapsed, more than #{hours_value} in the escalations level #{next_level} #{incident.incident_type} rules, escalating."
-    #             Meteor.call 'escalate_incident', incident._id, ->
-            
     escalate_incident: (doc_id)-> 
         incident = Docs.findOne doc_id
         current_level = incident.level

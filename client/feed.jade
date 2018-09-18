@@ -114,6 +114,8 @@ template(name='doc_history_event')
                 .date {{ long_format timestamp }}
                 .rating(title='Event Type') #{event_type}
                 .date #{when}
+                if is_dev
+                    .id #{parent_id}
                 // i.building.icon(title='Office')
                 // i.money.icon(title='Customer')
                 // i.user.icon(title='Author')

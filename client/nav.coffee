@@ -80,6 +80,6 @@ Template.nav.onCreated ->
 
 
 Template.nav.onRendered ->
-    Meteor.setTimeout ->
-        $('.item').popup()
-    , 1000
+    # Meteor.setTimeout ->
+    #     $('.item').popup()
+    # , 1000

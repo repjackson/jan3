@@ -34,7 +34,7 @@ Template.schema_edit.events
         }, =>
             doc = Docs.findOne FlowRouter.getParam('doc_id')
             Docs.remove doc._id, ->
-                FlowRouter.go "/schemas"
+                FlowRouter.go "/p/schemas"
 
 
     'click #add_field': ->
