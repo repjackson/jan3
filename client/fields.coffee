@@ -6,7 +6,6 @@ Template.edit_image_field.events
         doc_id = FlowRouter.getQueryParam('doc_id')
         files = e.currentTarget.files
 
-
         Cloudinary.upload files[0],
             # folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
             # type:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
@@ -14,15 +13,9 @@ Template.edit_image_field.events
                 # console.dir res
                 if err
                     console.error 'Error uploading', err
-                    Bert.alert "Error uploading #{@label}: #{err}", 'danger', 'growl-top-right'
                 else
                     Docs.update doc_id, 
                         { $set: image_id: res.public_id }
-                        , (err,res)=>
-                            if err
-                                Bert.alert "Error Updating Image: #{err.reason}", 'danger', 'growl-top-right'
-                            else
-                                Bert.alert "Updated Image", 'success', 'growl-top-right'
                 return
 
     'keydown #input_image_id': (e,t)->
@@ -52,7 +45,6 @@ Template.edit_image_field.events
                     # Do Stuff with res
                     Docs.update FlowRouter.getQueryParam('doc_id'), 
                         $unset: image_id: 1
-
                 else
                     throw new Meteor.Error "it failed"
 
@@ -74,11 +66,6 @@ Template.edit_number_field.events
         number_value = parseInt e.currentTarget.value
         Docs.update page._id,
             { $set: "#{@key}": number_value }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
             
         
 Template.block_edit_number.events
@@ -89,11 +76,6 @@ Template.block_edit_number.events
         number_value = parseInt e.currentTarget.value
         Docs.update child_doc._id,
             { $set: "#{field_object.key}": number_value }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{field_object.label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{field_object.label}", 'success', 'growl-top-right'
           
 Template.block_edit_text_field.events
     'blur .block_text_field': (e,t)->
@@ -103,11 +85,6 @@ Template.block_edit_text_field.events
         field_key = Template.parentData(3).key
         Docs.update child_doc._id,
             { $set: "#{field_key}": text_value }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{field_object.label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{field_object.label}", 'success', 'growl-top-right'
           
           
 Template.block_boolean_toggle.events
@@ -118,11 +95,6 @@ Template.block_boolean_toggle.events
         negative_value = !child_doc["#{field_key}"]
         Docs.update child_doc._id,
             { $set: "#{field_key}": negative_value }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{field_object.label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{field_object.label}", 'success', 'growl-top-right'
           
           
           
@@ -134,11 +106,6 @@ Template.block_list_dropdown.events
         field_key = Template.parentData(3).key
         Docs.update child_doc._id,
             { $set: "#{field_key}": @slug }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{field_object.label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{field_object.label}", 'success', 'growl-top-right'
           
           
 Template.block_list_dropdown.onCreated ->
@@ -154,11 +121,6 @@ Template.block_list_dropdown.helpers
         Docs.find type:'incident_type'
           
           
-          
-          
-          
-          
-            
 Template.edit_textarea.events
     'blur .textarea': (e,t)->
         textarea_value = $(e.currentTarget).closest('.textarea').val()
@@ -168,11 +130,6 @@ Template.edit_textarea.events
                 { $set: "#{t.data.key}": textarea_value }
         debounced = _.debounce(update_textarea, 500)
         debounced()
-            # , (err,res)=>
-            #     if err
-            #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-            #     else
-            #         Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 Template.edit_textarea.helpers
     'key_value': () -> 
@@ -211,20 +168,10 @@ Template.edit_timerange_field.events
         value = $('#time_start').calendar('get date')
         Docs.update FlowRouter.getQueryParam('doc_id'),
             {$set: time_start: value}
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating Start Time: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated Start Time", 'success', 'growl-top-right'
     'blur #time_end': (e,t)->
         value = $('#time_end').calendar('get date')
         Docs.update FlowRouter.getQueryParam('doc_id'),
             {$set: time_end: value}
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating End Time: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated End Time", 'success', 'growl-top-right'
 
 
 Template.edit_datetime_field.onRendered ->
@@ -246,11 +193,6 @@ Template.edit_datetime_field.events
         value = $('#datetime_field').calendar('get date')
         Docs.update FlowRouter.getQueryParam('doc_id'),
             { $set: "#{@key}": datetime_value } 
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 
 Template.edit_date_field.events
@@ -258,11 +200,6 @@ Template.edit_date_field.events
         date_value = e.currentTarget.value
         Docs.update FlowRouter.getQueryParam('doc_id'),
             { $set: "#{@key}": date_value } 
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 
 Template.edit_text_field.events
@@ -270,11 +207,6 @@ Template.edit_text_field.events
         text_value = e.currentTarget.value
         Docs.update FlowRouter.getQueryParam('doc_id'),
             { $set: "#{@key}": text_value }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 Template.edit_page_text_field.events
     'change .text_field': (e,t)->
@@ -282,36 +214,18 @@ Template.edit_page_text_field.events
         page = Docs.findOne slug:FlowRouter.getParam('page_slug')
         Docs.update page._id,
             { $set: "#{@key}": text_value }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 Template.edit_profile_text_field.events
     'change #text_field': (e,t)->
         text_value = e.currentTarget.value
         Meteor.users.update FlowRouter.getParam('user_id'),
             { $set: "profile.#{@key}": text_value }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 Template.edit_user_text_field.events
     'change #text_field': (e,t)->
         text_value = e.currentTarget.value
         Meteor.users.update FlowRouter.getParam('user_id'),
             { $set: "#{@key}": text_value }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
-
-
-
 
 
 

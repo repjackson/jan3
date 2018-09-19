@@ -66,7 +66,6 @@ Template.submit_incident.onCreated ->
 #         Meteor.call 'unassign_user_from_incident', FlowRouter.getQueryParam('doc_id'), target_username, (err,res)->
 #             if err then console.error err
 #             else
-#                 Bert.alert "Unassigning user: #{target_username}", 'info', 'growl-top-right'
 #     # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getQueryParam('doc_id')
 
 Template.submit_incident.helpers
@@ -166,9 +165,7 @@ Template.submit_incident.events
 #         Meteor.call 'single_escalation_check', FlowRouter.getQueryParam 'doc_id', (err,res)->
 #             if err 
 #                 console.dir err
-#                 Bert.alert "#{err.reason}.", 'info', 'growl-top-right'
 #             else
-#                 Bert.alert "#{res}.", 'success', 'growl-top-right'
         
 #     'click .remove_incident': ->
 #         swal {
@@ -286,11 +283,7 @@ Template.sla_tester.onCreated ->
     @autorun =>  Meteor.subscribe 'office_employees_from_incident_doc_id', FlowRouter.getQueryParam('doc_id')
 Template.sla_tester.events
     'click .check_escalation': ->
-        Meteor.call 'single_escalation_check', FlowRouter.getQueryParam('doc_id'), (err,res)->
-            if err 
-                Bert.alert "#{err.reason}.", 'info', 'growl-top-right'
-            else
-                Bert.alert "#{res}.", 'success', 'growl-top-right'
+        Meteor.call 'single_escalation_check', FlowRouter.getQueryParam('doc_id')
                 
         
     'click .escalate_incident': ->

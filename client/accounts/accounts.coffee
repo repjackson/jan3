@@ -32,18 +32,13 @@ Template.login.events
         username = $('.username').val()
         password = $('.password').val()
         Meteor.loginWithPassword username, password, (err,res)->
-            if err
-                Bert.alert "Error Logging in #{username}: #{err.reason}", 'info', 'growl-top-right'
-            else
+            if res
                 # console.log 'res', Meteor.user()
                 if 'office' in Meteor.user().roles
-                    # Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
                     FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
                 else if 'customer' in Meteor.user().roles
-                    # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                     FlowRouter.go "/p/customer_dashboard"    
                 else    
-                    # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                     FlowRouter.go "/p/customer_dashboard"    
     
     'keyup .password': (e,t)->
@@ -53,18 +48,13 @@ Template.login.events
             username = $('.username').val()
             password = $('.password').val()
             Meteor.loginWithPassword username, password, (err,res)->
-                if err
-                    Bert.alert "Error Logging in #{username}: #{err.reason}", 'info', 'growl-top-right'
-                else
+                if res
                     # console.log 'res', Meteor.user()
                     if 'office' in Meteor.user().roles
-                        # Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
                         FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
                     else if 'customer' in Meteor.user().roles
-                        # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                         FlowRouter.go "/p/customer_dashboard"    
                     else    
-                        # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                         FlowRouter.go "/p/customer_dashboard"    
             
     'keyup .username': (e,t)->
@@ -74,32 +64,25 @@ Template.login.events
             username = $('.username').val()
             password = $('.password').val()
             Meteor.loginWithPassword username, password, (err,res)->
-                if err
-                    Bert.alert "Error Logging in #{username}: #{err.reason}", 'info', 'growl-top-right'
-                else
+                if res
                     # console.log 'res', Meteor.user()
                     if 'office' in Meteor.user().roles
-                        # Bert.alert "Logged in office user: #{Meteor.user().username}. Redirecting to office account.", 'success', 'growl-top-right'
                         FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
                     else if 'customer' in Meteor.user().roles
-                        # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                         FlowRouter.go "/p/customer_dashboard"    
                     else    
-                        # Bert.alert "Logged in #{Meteor.user().username}.", 'success', 'growl-top-right'
                         FlowRouter.go "/p/customer_dashboard"    
             
     'click #login_demo_admin': ->
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->
             if err then console.error err
             else
-                # Bert.alert "Logged in as Demo Admin. Redirecting to dashboard.", 'success', 'growl-top-right'
                 FlowRouter.go '/p/admin'                
             
     'click #login_demo_office': ->
         Meteor.loginWithPassword 'demo_office', 'demoofficepassword', (err,res)->
             if err then console.error err
             else
-                # Bert.alert "Logged in #{Meteor.user().username}. Redirecting to dashboard.", 'success', 'growl-top-right'
                 Meteor.call 'find_office_from_jpid', '15793131',(err,res)->
                     if err then console.error err
                 FlowRouter.go "/p/office_incidents/15793131"                
@@ -108,7 +91,6 @@ Template.login.events
         Meteor.loginWithPassword 'demo_customer', 'democustomerpassword', (err,res)->
             if err then console.error err
             else
-                # Bert.alert "Logged in as Demo Customer. Redirecting to dashboard.", 'success', 'growl-top-right'
                 FlowRouter.go '/p/customer_dashboard'                
             
             
@@ -190,19 +172,15 @@ Template.register_customer.events
         
         
         Accounts.createUser(options, (err,res)=>
-            if err
-                Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
-            else
-                Bert.alert "Registered new customer user: #{username}. Redirecting to dashboard.", 'success', 'growl-top-right'
-                # Meteor.call 'refresh_customer_jpids', username
-                FlowRouter.go '/p/customer_dashboard'                
-                # if current_role is 'customer'
-                #     Meteor.call 'refresh_customer_jpids', user.username
-                # if current_role is 'office'
-                #     office_doc = 
-                #         Docs.findOne
-                #             type:'office'
-                #             "ev.ID": office_jpid
+            # Meteor.call 'refresh_customer_jpids', username
+            FlowRouter.go '/p/customer_dashboard'                
+            # if current_role is 'customer'
+            #     Meteor.call 'refresh_customer_jpids', user.username
+            # if current_role is 'office'
+            #     office_doc = 
+            #         Docs.findOne
+            #             type:'office'
+            #             "ev.ID": office_jpid
         )
     
     'keyup #username': (e,t)->
@@ -328,9 +306,7 @@ Template.register_office.events
                 "ev.ID": office_jpid
         Accounts.createUser(options, (err,res)=>
             if err
-                Bert.alert "Error Registering #{username}: #{err.reason}", 'info', 'growl-top-right'
             else
-                Bert.alert "Registered new office user: #{username}. Redirecting to office page.", 'success', 'growl-bottom-right'
                 # Meteor.call 
                 FlowRouter.go "/p/office_incidents/#{office_jpid}/"                
         )

@@ -35,20 +35,8 @@ Template.user_view.helpers
     
 
 Template.user_view.events
-
-
-
-Template.user_view.events
     'click .get_user_info': ->
-        Meteor.call 'get_user_info', FlowRouter.getParam('username'), (err,res)->
-            if err 
-                Bert.alert "#{err.reason}", 'danger', 'growl-top-right'
-            # else
-                # console.dir res
+        Meteor.call 'get_user_info', FlowRouter.getParam('username')
     'click #refresh_customer_jpids': ->
-        Meteor.call 'refresh_customer_jpids', FlowRouter.getParam('username'), (err,res)->
-            if err 
-                Bert.alert "#{err.reason}", 'danger', 'growl-top-right'
-            # else
-                # console.dir res
+        Meteor.call 'refresh_customer_jpids', FlowRouter.getParam('username')
         

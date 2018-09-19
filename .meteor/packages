@@ -29,7 +29,6 @@ reactive-var@1.0.11
 kevohagan:sweetalert
 raix:handlebar-helpers
 matb33:collection-hooks
-themeteorchef:bert
 less@2.7.12
 reywood:publish-composite
 tomwasd:flow-router-autoscroll

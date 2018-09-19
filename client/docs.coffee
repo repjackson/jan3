@@ -60,11 +60,6 @@ Template.doc_edit.events
         text_value = e.currentTarget.value
         Docs.update FlowRouter.getParam('doc_id'),
             { $set: "#{@slug}": text_value }
-            , (err,res)=>
-                if err
-                    Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 
 Template.doc_card.onCreated ->

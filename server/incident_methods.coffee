@@ -168,8 +168,6 @@ Meteor.methods
             "ev.ID":incident.office_jpid
             type:'office'
         }
-
-        
         
         
         sla = 
@@ -316,7 +314,6 @@ Meteor.methods
                     updated: Date.now()
             Meteor.call 'create_event', doc_id, 'escalate', "Automatic escalation from #{current_level} to #{next_level}."
             Meteor.call 'email_about_escalation', doc_id
-            Meteor.call 'text_about_escalation', doc_id
 
 
     clear_incident_events: (incident_doc_id)->

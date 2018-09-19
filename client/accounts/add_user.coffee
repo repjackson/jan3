@@ -30,9 +30,6 @@ Template.add_user.events
         
         
         Accounts.createUser options, (err,res)=>
-            if err
-                Bert.alert "Error creating user: #{error.reason}", 'danger', 'growl-top-right'
-            else
-                Bert.alert "Logged in #{options.username}. Redirecting to profile page.", 'success', 'growl-top-right'
+            unless err   
                 FlowRouter.go "/user/#{options.username}"                
         

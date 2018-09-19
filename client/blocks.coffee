@@ -169,14 +169,11 @@ Template.toggle_key.events
             Docs.update {_id:doc_id}, 
                 { $set: "#{@key}": "#{@value}" },
                 (err,res)=>
-                    if err
-                        Bert.alert "Error changing #{@key} to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
-                    else
+                    unless err
                         Docs.insert
                             type:'event'
                             parent_id: doc_id
                             text:"changed #{@key} to #{@value}."
-                        Bert.alert "Changed #{@key} to #{@value}", 'success', 'growl-top-right'
                         
         else if Template.parentData()["#{@key}"] is true
             Docs.update doc_id, 
@@ -226,13 +223,11 @@ Template.toggle_sla_boolean.events
         #         { $set: "#{@key}": "#{@value}" },
         #         (err,res)=>
         #             if err
-        #                 Bert.alert "Error changing #{@key} to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
         #             else
         #                 Docs.insert
         #                     type:'event'
         #                     parent_id: doc_id
         #                     text:"changed #{@key} to #{@value}."
-        #                 Bert.alert "Changed #{@key} to #{@value}", 'success', 'growl-top-right'
         Docs.update sla_doc._id, 
             $set: "#{@key}": !boolean_value
                         
@@ -244,13 +239,11 @@ Template.toggle_user_published.events
         #         { $set: "#{@key}": "#{@value}" },
         #         (err,res)=>
         #             if err
-        #                 Bert.alert "Error changing #{@key} to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
         #             else
         #                 Docs.insert
         #                     type:'event'
         #                     parent_id: doc_id
         #                     text:"changed #{@key} to #{@value}."
-        #                 Bert.alert "Changed #{@key} to #{@value}", 'success', 'growl-top-right'
         
         Meteor.users.update @_id, 
             $set: published: !@published
@@ -269,13 +262,11 @@ Template.radio_item.events
         #         { $set: "#{@key}": "#{@value}" },
         #         (err,res)=>
         #             if err
-        #                 Bert.alert "Error changing #{@key} to #{@value}: #{error.reason}", 'danger', 'growl-top-right'
         #             else
         #                 Docs.insert
         #                     type:'event'
         #                     parent_id: doc_id
         #                     text:"changed #{@key} to #{@value}."
-        #                 Bert.alert "Changed #{@key} to #{@value}", 'success', 'growl-top-right'
         Docs.update doc_id, 
             $set: "#{@key}": radio_item_value
                         
@@ -301,9 +292,7 @@ Template.multiple_user_select.events
         # searched_value = doc["#{template.data.key}"]
         Meteor.call 'user_array_add', page_doc._id, key, @, (err,res)=>
             if err
-                Bert.alert "Error Assigning #{@username}: #{err.reason}", 'danger', 'growl-top-right'
             else
-                Bert.alert "Assigned #{@username}.", 'success', 'growl-top-right'
         $('#multiple_user_select_input').val ''
         t.user_results.set null
         if key is 'assigned_to'
@@ -330,11 +319,7 @@ Template.multiple_user_select.events
             confirmButtonColor: '#da5347'
         }, =>
             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-            Meteor.call 'user_array_pull', page_doc._id, context.key, @, (err,res)=>
-                if err
-                    Bert.alert "Error removing #{@username}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Removed #{@username}.", 'success', 'growl-top-right'
+            Meteor.call 'user_array_pull', page_doc._id, context.key, @
     
 Template.multiple_user_select.helpers
     user_results: ->
@@ -356,10 +341,6 @@ Template.multiple_user_select.helpers
 #         page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
 #         # searched_value = doc["#{template.data.key}"]
 #         Meteor.call 'doc_array_add', page_doc._id, key, selected_doc, (err,res)=>
-#             if err
-#                 Bert.alert "Error Assigning #{selected_doc.text}: #{err.reason}", 'danger', 'growl-top-right'
-#             else
-#                 Bert.alert "Assigned #{selected_doc.text}.", 'success', 'growl-top-right'
 #         $('#search').val ''
 
 #     'click .pull_doc': ->
@@ -378,9 +359,7 @@ Template.multiple_user_select.helpers
 #             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
 #             Meteor.call 'doc_array_pull', page_doc._id, context.key, @, (err,res)=>
 #                 if err
-#                     Bert.alert "Error removing #{@title} #{@text}: #{err.reason}", 'danger', 'growl-top-right'
 #                 else
-#                     Bert.alert "Removed #{@title} #{@text}.", 'success', 'growl-top-right'
     
 # Template.single_doc_select.onCreated ->
 #     @autorun =>  Meteor.subscribe 'type', 'customer'
@@ -390,10 +369,6 @@ Template.multiple_user_select.helpers
 #         page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
 #         # searched_value = doc["#{template.data.key}"]
 #         Meteor.call 'link_doc', page_doc._id, save_key, selected_doc, (err,res)=>
-#             if err
-#                 Bert.alert "Error Assigning #{selected_doc.cust_name}: #{err.reason}", 'danger', 'growl-top-right'
-#             else
-#                 Bert.alert "Assigned #{selected_doc.cust_name}.", 'success', 'growl-top-right'
 #         $('#search').val ''
 
 #     'click .remove_doc': ->
@@ -412,9 +387,7 @@ Template.multiple_user_select.helpers
 #             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
 #             Meteor.call 'unlink_doc', page_doc._id, context.save_key, @, (err,res)=>
 #                 if err
-#                     Bert.alert "Error removing #{@cust_name}: #{err.reason}", 'danger', 'growl-top-right'
 #                 else
-#                     Bert.alert "Removed #{@cust_name}.", 'success', 'growl-top-right'
     
 # Template.single_doc_select.helpers
 #     settings: -> 
@@ -575,9 +548,7 @@ Template.assignment_widget.events
         # searched_value = doc["#{template.data.key}"]
         Meteor.call 'assign_user', page_doc._id, @, (err,res)=>
             if err
-                Bert.alert "Error Assigning #{@username}: #{err.reason}", 'danger', 'growl-top-right'
             else
-                Bert.alert "Assigned #{@username}.", 'success', 'growl-top-right'
         $('#multiple_user_select_input').val ''
         t.user_results.set null
         if page_doc.type is 'task'
@@ -603,11 +574,7 @@ Template.assignment_widget.events
             confirmButtonColor: '#da5347'
         }, =>
             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-            Meteor.call 'unassign_user', page_doc._id, @, (err,res)=>
-                if err
-                    Bert.alert "Error removing #{@username}: #{err.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Removed #{@username}.", 'success', 'growl-top-right'
+            Meteor.call 'unassign_user', page_doc._id, @
     
 Template.assignment_widget.helpers
     user_results: ->
@@ -767,9 +734,9 @@ Template.block.helpers
                 if context_doc
                     result = context_doc["#{@filter_source_key}"]
                     if @children_doc_type is 'event'
-                        console.log @filter_key
-                        console.log @filter_source_key
-                        console.log result
+                        # console.log @filter_key
+                        # console.log @filter_source_key
+                        # console.log result
                         match["#{@filter_key}"] = result
                     
             match.type = @children_doc_type
@@ -820,9 +787,6 @@ Template.block.events
     'click .lower_block':->
         Docs.update @_id,
             $inc:rank:-1
-            
-    
-
 
     'click .toggle_editing_block': (e,t)->
         t.editing_block.set(!t.editing_block.get())
@@ -996,7 +960,6 @@ Template.set_page_key_value.events
     
 Template.set_key_value_2.events
     'click .set_key_value': ->
-        
         Docs.update Template.parentData(2)._id,
             { $set: "#{@key}": @value }
     
@@ -1028,11 +991,6 @@ Template.edit_block_text_field.events
         text_value = e.currentTarget.value
         Docs.update Template.parentData()._id,
             { $set: "#{@key}": text_value }
-            # , (err,res)=>
-            #     if err
-            #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-            #     else
-            #         Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
 
 
 Template.edit_block_number_field.helpers 
@@ -1045,13 +1003,6 @@ Template.edit_block_number_field.events
         number_value = parseInt e.currentTarget.value
         Docs.update Template.parentData()._id,
             { $set: "#{@key}": number_value }
-            # , (err,res)=>
-            #     if err
-            #         Bert.alert "Error Updating #{@label}: #{err.reason}", 'danger', 'growl-top-right'
-            #     else
-            #         Bert.alert "Updated #{@label}", 'success', 'growl-top-right'
-
-
 
 
 Template.set_field_key_value.events 

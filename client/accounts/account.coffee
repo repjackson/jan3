@@ -13,24 +13,14 @@ Template.account_settings.events
         new_username = $('#new_username').val().trim()
         user = Meteor.user()
         if new_username and user.username != new_username
-            Meteor.call 'update_username', new_username, (error, result) ->
-                if error
-                    Bert.alert "Error Updating Username: #{error.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert result, 'success', 'growl-top-right'
-                return
+            Meteor.call 'update_username', new_username
 
     'keydown #new_username': (e,t)->
         if e.which is 13
             new_username = $('#new_username').val().trim()
             user = Meteor.user()
             if new_username and user.username != new_username
-                Meteor.call 'update_username', new_username, (error, result) ->
-                    if error
-                        Bert.alert "Error Updating Username: #{error.reason}", 'danger', 'growl-top-right'
-                    else
-                        Bert.alert result, 'success', 'growl-top-right'
-                    return
+                Meteor.call 'update_username', new_username
     
     
     # 'click #test_email': ->
@@ -53,16 +43,10 @@ Template.account_settings.events
         valid_email = re.test(new_email)
         
         if valid_email
-            Meteor.call 'update_email', new_email, (error, result) ->
-                if error
-                    Bert.alert "Error Adding Email: #{error.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert result, 'success', 'growl-top-right'
-                return
+            Meteor.call 'update_email', new_email
                 
     'click .send_verification_email': (e,t)->
-        Meteor.call 'verify_email', Meteor.userId(), ->
-            Bert.alert 'Verification Email Sent', 'success', 'growl-top-right'
+        Meteor.call 'verify_email', Meteor.userId()
             
             
             
@@ -72,12 +56,7 @@ Template.change_password_widget.events
         new_password = $('#new_password').val().trim()
         user = Meteor.user()
         if new_password
-            Accounts.changePassword old_password, new_password, (error, result) ->
-                if error
-                    Bert.alert "Error Updating Password: #{error.reason}", 'danger', 'growl-top-right'
-                else
-                    Bert.alert "Changed Password", 'success', 'growl-top-right'
-                return
+            Accounts.changePassword old_password, new_password
 
     'keydown #new_password': (e,t)->
         if e.which is 13
@@ -85,10 +64,5 @@ Template.change_password_widget.events
             new_password = $('#new_password').val().trim()
             user = Meteor.user()
             if new_password
-                Accounts.changePassword old_password, new_password, (error, result) ->
-                    if error
-                        Bert.alert "Error Updating Password: #{error.reason}", 'danger', 'growl-top-right'
-                    else
-                        Bert.alert "Changed Password", 'success', 'growl-top-right'
-                    return
+                Accounts.changePassword old_password, new_password
             

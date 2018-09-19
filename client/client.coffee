@@ -35,15 +35,6 @@ Session.setDefault('query',null)
 Session.setDefault('dev_mode',false)
 Session.setDefault('editing_mode',false)
 
-Bert.defaults =
-    hideDelay: 2000
-    #   Accepts: a number in milliseconds.
-    style: 'growl-bottom-right'
-    # Accepts: fixed-top, fixed-bottom, growl-top-left,   growl-top-right,
-    # growl-bottom-left, growl-bottom-right.
-    type: 'default'
-#   // Accepts: default, success, info, warning, danger.
-
 
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
@@ -89,7 +80,7 @@ Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()
 Template.registerHelper 'is_closed', () -> @status is 'closed'
 
 Template.registerHelper 'databank_docs': ->  
-    Docs.find { type:Session.get('selected_doc_type')}
+    Docs.find { type:Session.get('selected_doc_type') }
 
 
 Template.registerHelper 'from_now', (input) -> moment(input).fromNow()
