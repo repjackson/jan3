@@ -121,12 +121,12 @@ Template.incident_assignment_cell.helpers
 #             if @value is 'all'
 #                 'primary' 
 #             else
-#                 'basic'
+#                 ''
 #         else if Session.get("#{@key}")
 #             if Session.equals("#{@key}", parseInt(@value))
 #                 'primary'
 #             else
-#                 'basic'
+#                 ''
             
             
             
@@ -159,7 +159,7 @@ Template.toggle_key.helpers
         current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
         if @value
             if current_doc["#{@key}"] is @value then 'primary'
-        # else if current_doc["#{@key}"] is true then 'primary' else 'basic'
+        # else if current_doc["#{@key}"] is true then 'primary' else ''
         else ''
 
 Template.toggle_key.events
@@ -197,7 +197,7 @@ Template.set_sla_key_value.events
 Template.set_sla_key_value.helpers
     set_value_button_class: ->
         sla_doc = Template.parentData(1)
-        if sla_doc["#{@key}"] is @value then 'primary' else 'basic'
+        if sla_doc["#{@key}"] is @value then 'primary' else ''
 
 
 Template.toggle_sla_boolean.helpers
@@ -207,7 +207,7 @@ Template.toggle_sla_boolean.helpers
         # console.log Template.parentData(2)
         # console.log Template.parentData(3)
         if sla_doc["#{@key}"] is true then 'primary'
-        else 'basic'
+        else ''
 
 Template.toggle_sla_boolean.events
     'click .trigger': (e,t)->
@@ -909,10 +909,13 @@ Template.edit_block.events
 
     'click .add_field_doc': ->
         block = Template.currentData()
+        field_count = Docs.find(type:'display_field').count()
         Docs.insert
             type:'display_field'
             block_id: @_id
-        
+            rank:field_count+1
+            
+            
     'click .delete_field': ->
         console.log @
         if confirm 'Remove field?'
@@ -922,24 +925,19 @@ Template.edit_block.events
     'click .remove_block': ->
         if confirm 'Remove block?'
             Docs.remove @_id
-    'click .add_blank_field': ->
-        block = Template.currentData()
-        new_field_object = {
-            key:''
-            label:''
-            ev_subset:false
-            }
-        Docs.update block._id,
-            $addToSet: fields: new_field_object
 
     'click .add_schema_field': ->
         block = Template.currentData()
+        field_count = Docs.find(type:'display_field').count()
         Docs.insert 
             type:'display_field'
             key:@slug
             label:@title
+            sortable:true
+            visible:true
             ev_subset:@ev_subset
             block_id: block._id
+            rank:field_count+1
     
     'click .remove_schema_field': ->
         if confirm 'Remove field?'
@@ -995,7 +993,7 @@ Template.set_key_value_2.events
     
 Template.set_key_value.helpers
     set_value_button_class: -> 
-        if Template.parentData()["#{@key}"] is @value then 'primary' else 'basic'
+        if Template.parentData()["#{@key}"] is @value then 'primary' else ''
 
     
 Template.set_page_key_value.helpers
@@ -1003,12 +1001,12 @@ Template.set_page_key_value.helpers
         page = Docs.findOne 
             type:'page'
             slug:FlowRouter.getParam('page_slug')
-        if page["#{@key}"] is @value then 'inverted blue' else 'basic'
+        if page["#{@key}"] is @value then 'inverted blue' else ''
 
     
 Template.set_key_value_2.helpers
     set_value_button_class: -> 
-        if Template.parentData(2)["#{@key}"] is @value then 'primary' else 'basic'
+        if Template.parentData(2)["#{@key}"] is @value then 'primary' else ''
 
     
 Template.edit_block_text_field.helpers 
@@ -1051,7 +1049,7 @@ Template.toggle_block_field_boolean.helpers
         # console.log Template.parentData(1)
         # console.log Template.parentData(2)
         # console.log Template.parentData(3)
-        if Template.parentData(2)["#{@key}"] is true then 'primary' else 'basic'
+        if Template.parentData(2)["#{@key}"] is true then 'primary' else ''
 
 
 

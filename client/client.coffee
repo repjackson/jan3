@@ -33,8 +33,11 @@ FlowRouter.route('/', {
 
 Session.setDefault('query',null)
 Session.setDefault('dev_mode',false)
-Session.setDefault('editing_mode',false)
 
+if Meteor.isDevelopment
+    Session.setDefault('editing_mode',true)
+else
+    Session.setDefault('editing_mode',false)
 
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
@@ -62,13 +65,6 @@ Template.registerHelper 'overdue', () ->
 #     if found_unread_count_stat
 #         found_unread_count_stat.amount
         
-        
-@print_context = ->
-    console.log @
-    console.log Template.currentData()
-    console.log Template.parentData(1)
-    console.log Template.parentData(2)
-    console.log Template.parentData(3)
         
         
 Template.registerHelper 'my_office_link', () ->  

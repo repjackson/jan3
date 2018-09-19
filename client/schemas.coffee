@@ -72,7 +72,7 @@ Template.schema_doc.helpers
     schema_fields: -> 
         # current_doc = Docs.findOne FlowRouter.getParam('doc_id')
         
-        # if Template.parentData().type is @value then 'blue' else 'basic'
+        # if Template.parentData().type is @value then 'primary' else ''
 
     view_field_template: -> "view_#{@type}_field"
         
@@ -96,11 +96,11 @@ Template.toggle_field_boolean.events
 
 Template.toggle_field_boolean.helpers
     field_boolean_class: -> 
-        if Template.parentData()["#{@key}"] is true then 'blue' else 'basic'
+        if Template.parentData()["#{@key}"] is true then 'primary' else ''
 
 Template.select_field_key_value.helpers
     select_field_key_value_button_class: -> 
-        if Template.parentData(2)["#{@key}"] is @value then 'blue' else 'basic'
+        if Template.parentData(2)["#{@key}"] is @value then 'primary' else ''
 
 
 

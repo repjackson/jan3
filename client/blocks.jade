@@ -26,12 +26,12 @@ template(name='list_item')
 
 template(name='toggle_boolean')
     if is_on
-        #turn_off.ui.active.compact.button 
+        #turn_off.ui.primary.compact.button 
             if icon
                 i.icon(class=icon)
             |#{yes_label}
     else
-        #turn_on.ui.compact.basic.button
+        #turn_on.ui.compact.button
             if icon
                 i.icon(class=icon)
             |#{yes_label}
@@ -570,7 +570,7 @@ template(name='assignment_widget')
                                             
 template(name='blocks')
     if editing_mode
-        #add_block.ui.button(title="Add Block #{tags}")
+        #add_block.ui.circular.button(title="Add Block #{tags}")
             i.plus.icon
             |Block
     div
@@ -631,13 +631,13 @@ template(name='block')
                                             .table_stats #{skip_amount}-#{end_result} / #{count_amount}
                                         .five.wide.column
                                             if show_10
-                                                .set_10.ui.basic.compact.button(class="{{page_size_button_class '10'}}" title='View 10') 10
+                                                .set_10.ui.compact.button(class="{{page_size_button_class '10'}}" title='View 10') 10
                                             if show_20
-                                                .set_20.ui.basic.compact.button(class="{{page_size_button_class '20'}}" title='View 20') 20
+                                                .set_20.ui.compact.button(class="{{page_size_button_class '20'}}" title='View 20') 20
                                             if show_50
-                                                .set_50.ui.basic.compact.button(class="{{page_size_button_class '50'}}" title='View 50') 50
+                                                .set_50.ui.compact.button(class="{{page_size_button_class '50'}}" title='View 50') 50
                                             if show_100
-                                                .set_100.ui.basic.compact.button(class="{{page_size_button_class '100'}}" title='View 100') 100
+                                                .set_100.ui.compact.button(class="{{page_size_button_class '100'}}" title='View 100') 100
                                         .four.wide.column
                                             if pages
                                                 .ui.right.floated.pagination.small.menu
@@ -728,12 +728,15 @@ template(name='block')
                                     |Dev
                             .three.wide.right.aligned.column
                 if editing_mode
-                    i.chevron.up.raise_block.link.icon
+                    .ui.small.icon.circular.button.raise_block(title='Raise Block')
+                        i.chevron.up.icon
                     |#{rank}
                     if can_lower
-                        i.chevron.down.lower_block.link.icon
-                    .toggle_editing_block.ui.icon.button(class=editing_button_class)
+                        .ui.small.icon.circular.button.lower_block(title='Lower Block')
+                            i.chevron.down.link.icon
+                    .toggle_editing_block.ui.circular.button(class=editing_button_class)
                         i.pencil.icon
+                        |Edit Block
                 if editing_block
                     +edit_block
 
@@ -743,7 +746,7 @@ template(name='edit_block')
             +icon name=icon
             |Edit '#{title}' Block
         .ui.top.attached.tabular.stackable.menu
-            a.ui.item.active.tab_nav(data-tab='general') 
+            a.ui.item.tab_nav(data-tab='general') 
                 i.pencil.icon
                 |General
             a.ui.item.tab_nav(data-tab='filter') 
@@ -761,10 +764,10 @@ template(name='edit_block')
             a.ui.item.tab_nav(data-tab='view') 
                 i.object.group.icon
                 |View
-            a.ui.item.tab_nav(data-tab='fields') 
+            a.ui.item.active.tab_nav(data-tab='fields') 
                 i.list.ui.icon
                 |Fields
-        .ui.active.bottom.attached.segment.tab(data-tab='general')
+        .ui.bottom.attached.segment.tab(data-tab='general')
             i.remove_block.remove.link.icon(title='remove block')
             +toggle_boolean key='published' yes_label='Published'
             +toggle_boolean key='view_title' yes_label='Title'
@@ -848,7 +851,7 @@ template(name='edit_block')
             +set_key_value key='default_sort_direction' value='-1' label='-1'
             +set_key_value key='default_sort_direction' value='1' label='1'
             
-        .ui.bottom.attached.segment.tab(data-tab='fields')
+        .ui.bottom.attached.segment.active.tab(data-tab='fields')
             .add_field_doc.ui.button 
                 i.plus.icon
                 |Blank Field
