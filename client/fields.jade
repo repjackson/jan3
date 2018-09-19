@@ -8,6 +8,35 @@ template(name='edit_text_field')
             .ui.input
                 input#text_field(type='text' value=page_key_value )
 
+
+template(name='edit_text')
+    .ui.fluid.input
+        input.text_val(type='text' value=local_value )
+        
+        
+template(name='edit_int')
+    .ui.fluid.input
+        input.int_val(type='number' min='0' value=local_value )
+        
+        
+template(name='edit_boolean')
+    if is_true
+        #turn_off.ui.primary.compact.icon.button
+            i.checkmark.icon
+    else
+        #turn_on.ui.compact.basic.icon.button
+            i.checkmark.icon
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
 template(name='edit_page_text_field')
     .ui.form
         .field(class=field_class)

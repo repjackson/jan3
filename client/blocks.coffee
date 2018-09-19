@@ -667,21 +667,6 @@ Template.block.onCreated ->
     @autorun => Meteor.subscribe 'block_field_docs', @data._id
     
     
-Template.edit_block.helpers
-    schemas: -> Docs.find type:'schema'
-    views: -> Docs.find type:'view'
-    collections: -> Docs.find type:'collection'
-
-    display_field_schema: ->
-        Docs.findOne
-            type:'schema'
-            slug:'display_field'
-
-    field_docs: ->
-        Docs.find
-            type:'display_field'
-            block_id: @_id 
-
 Template.block.helpers
     editing_block: -> Template.instance().editing_block.get() and Session.get('editing_mode')
     editing_button_class: -> if Template.instance().editing_block.get() is true then 'primary' else ''
@@ -755,7 +740,6 @@ Template.block.helpers
                 false
     child_schema_field_value: ->
         child_doc = Template.parentData(1)
-        
         if @ev_subset
             child_doc.ev["#{@key}"]
         else
@@ -769,7 +753,26 @@ Template.block.helpers
     is_sla_settings: -> @view is 'sla_settings'    
 
     can_lower: -> @rank>1
-
+    
+    field_docs: ->
+        console.log @
+        # console.log Template.currentData()
+        # console.log Template.parentData(0)
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        # console.log Template.parentData(4)
+        # console.log Template.parentData(5)
+        count = Docs.find(
+            type:'display_field'
+            # block_id:@_id
+        ).count()
+        console.log 'count', count
+        Docs.find {
+            type:'display_field'
+        }, sort:rank:1
+            
+            
 Template.block.events
     'click .raise_block':->
         Docs.update @_id,
@@ -817,7 +820,7 @@ Template.block.events
 
 Template.edit_block.onRendered ->
     Meteor.setTimeout ->
-        $('.tabular.menu .item').tab()
+        $('.tabular.menu .tab_nav').tab()
     , 400
     
     
@@ -864,7 +867,34 @@ Template.edit_block.helpers
                 #     values.push Template.currentData()["#{field.key}"]
             values
         
-        
+    schemas: -> Docs.find type:'schema'
+    views: -> Docs.find type:'view'
+    collections: -> Docs.find type:'collection'
+
+    display_field_schema: ->
+        Docs.findOne
+            type:'schema'
+            slug:'display_field'
+
+
+    display_field_value: ->
+        # console.log @
+        # console.log Template.currentData()
+        display_field = Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        # console.log Template.parentData(4)
+        display_field["#{@slug}"]
+
+
+    field_docs: ->
+        Docs.find {
+            type:'display_field'
+            block_id: @_id 
+        }, sort:rank:1
+
+
+ 
     
 Template.edit_block.events
     'click .tab_nav': (e,t)->
@@ -883,6 +913,11 @@ Template.edit_block.events
             type:'display_field'
             block_id: @_id
         
+    'click .delete_field': ->
+        console.log @
+        if confirm 'Remove field?'
+            Docs.remove @_id
+        
 
     'click .remove_block': ->
         if confirm 'Remove block?'
@@ -899,13 +934,12 @@ Template.edit_block.events
 
     'click .add_schema_field': ->
         block = Template.currentData()
-        new_field_object = {
+        Docs.insert 
+            type:'display_field'
             key:@slug
             label:@title
             ev_subset:@ev_subset
-            }
-        Docs.update block._id,
-            $addToSet: fields: new_field_object
+            block_id: block._id
     
     'click .remove_schema_field': ->
         if confirm 'Remove field?'

@@ -656,7 +656,7 @@ template(name='block')
                         table.ui.striped.selectable.fixed.table
                             thead
                                 tr
-                                    each fields
+                                    each field_docs
                                         if sortable
                                             th.sort_by
                                                 |#{label}
@@ -672,12 +672,13 @@ template(name='block')
                             tbody
                                 each children
                                     tr
-                                        each ../fields
-                                            if field_template
-                                                td(style="overflow:visible;") 
-                                                    +Template.dynamic template=field_template data=..
-                                            else
-                                                td(class=table_cell_class) #{child_schema_field_value}
+                                        each field_docs
+                                            // if field_template
+                                            //     td(style="overflow:visible;") 
+                                            //         +Template.dynamic template=field_template data=..
+                                            // else
+                                            //     td(class=table_cell_class) #{child_schema_field_value}
+                                            td(class=table_cell_class) #{child_schema_field_value}
                                             
                             if view_table_footer
                                 +table_footer columns=fields.length doc_type=children_doc_type stat_type=table_stat_type
@@ -741,29 +742,29 @@ template(name='edit_block')
         h3.ui.header 
             +icon name=icon
             |Edit '#{title}' Block
-        .ui.compact.tabular.menu
-            a.ui.compact.basic.button.active.tab_nav(data-tab='general') 
+        .ui.top.attached.tabular.stackable.menu
+            a.ui.item.active.tab_nav(data-tab='general') 
                 i.pencil.icon
                 |General
-            a.ui.compact.basic.button.tab_nav(data-tab='filter') 
+            a.ui.item.tab_nav(data-tab='filter') 
                 i.filter.icon
                 |Filter
-            a.ui.compact.basic.button.tab_nav(data-tab='schema') 
+            a.ui.item.tab_nav(data-tab='schema') 
                 i.fork.icon
                 |Schema
-            a.ui.compact.basic.button.tab_nav(data-tab='collection') 
+            a.ui.item.tab_nav(data-tab='collection') 
                 i.database.icon
                 |Collection
-            a.ui.compact.basic.button.tab_nav(data-tab='layout') 
+            a.ui.item.tab_nav(data-tab='layout') 
                 i.th.list.icon
                 |Layout
-            a.ui.compact.basic.button.tab_nav(data-tab='view') 
+            a.ui.item.tab_nav(data-tab='view') 
                 i.object.group.icon
                 |View
-            a.ui.compact.basic.button.tab_nav(data-tab='fields') 
+            a.ui.item.tab_nav(data-tab='fields') 
                 i.list.ui.icon
                 |Fields
-        .ui.active.tab(data-tab='general')
+        .ui.active.bottom.attached.segment.tab(data-tab='general')
             i.remove_block.remove.link.icon(title='remove block')
             +toggle_boolean key='published' yes_label='Published'
             +toggle_boolean key='view_title' yes_label='Title'
@@ -779,7 +780,7 @@ template(name='edit_block')
                 +edit_block_text_field label='Header Template' key='header_template'
                 +edit_block_text_field label='Custom Template' key='custom_template'
             h5 block id #{_id}
-        .ui.tab(data-tab='filter')
+        .ui.bottom.attached.segment.tab(data-tab='filter')
             .ui.form
                 +edit_block_number_field label='Hard Limit' key='hard_limit'
                 +edit_block_number_field label='Soft Limit' key='limit'
@@ -830,16 +831,16 @@ template(name='edit_block')
                 div
                 +edit_block_text_field key='filter_source_key' label='Filter Source Key'
         // unless custom_template
-        .ui.tab(data-tab='collection')
+        .ui.bottom.attached.segment.tab(data-tab='collection')
             each collections
                 +set_key_value_2 key='children_collection' value=slug label=title icon=icon
-        .ui.tab(data-tab='schema')
+        .ui.bottom.attached.segment.tab(data-tab='schema')
             each schemas
                 +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
             .ui.header Stat Type
             +set_key_value key='table_stat_type' value='total' label='Total'
             +set_key_value key='table_stat_type' value='office' label='Office'
-        .ui.tab(data-tab='view')
+        .ui.bottom.attached.segment.tab(data-tab='view')
             each views
                 +set_key_value_2 key='view' value=slug label=title icon=icon
             +toggle_boolean key='view_table_header' yes_label='Table Header' no_label='No Table Header'
@@ -847,31 +848,35 @@ template(name='edit_block')
             +set_key_value key='default_sort_direction' value='-1' label='-1'
             +set_key_value key='default_sort_direction' value='1' label='1'
             
-        .ui.tab(data-tab='fields')
-            h4 Available Schema Fields
+        .ui.bottom.attached.segment.tab(data-tab='fields')
+            .add_field_doc.ui.button 
+                i.plus.icon
+                |Blank Field
+            strong Schema Fields
             each schema_doc.fields
-                if show_schema_field
-                    .add_schema_field.ui.compact.button #{title}
-            h4 Shown Fields
-                .add_blank_field.ui.icon.button(title='Add Blank Field')
-                    i.plus.icon
+                .add_schema_field.ui.compact.button #{title}
+                // if show_schema_field
+            // h4 Shown Fields
+            //     .add_blank_field.ui.icon.button(title='Add Blank Field')
+            //         i.plus.icon
                     
-            .add_field_doc.ui.button Add Field
-            if fields
-                table.ui.striped.fixed.table
-                    thead
+            table.ui.striped.fixed.table
+                thead
+                    tr
+                        each display_field_schema.fields
+                            th #{title}
+                        th Remove
+                tbody
+                    each field_docs
                         tr
                             each display_field_schema.fields
-                                th #{title}
-                    tbody
-                        each field_docs
-                            tr
-                                each display_field_schema.fields
-                                    td 
-                                        if field_template
-                                            +Template.dynamic template=field_template
-                                        else
-                                            | no template
+                                td 
+                                    if field_template
+                                        +Template.dynamic template=field_template
+                                    else
+                                        | #{display_field_value}
+                            td 
+                                i.delete_field.remove.link.icon
                 // table.ui.striped.fixed.table
                 //     thead
                 //         tr
@@ -902,7 +907,7 @@ template(name='edit_block')
                 //                     +set_field_key_value key='sortable' value=false label='N'
                 //                 td 
                 //                     i.remove_schema_field.remove.link.icon
-        .ui.tab(data-tab='layout')
+        .ui.bottom.attached.segment.tab(data-tab='layout')
             +set_key_value key='horizontal_position' value='left' label='left'
             +set_key_value key='horizontal_position' value='center' label='center'
             +set_key_value key='horizontal_position' value='right' label='right'

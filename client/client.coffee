@@ -63,6 +63,13 @@ Template.registerHelper 'overdue', () ->
 #         found_unread_count_stat.amount
         
         
+@print_context = ->
+    console.log @
+    console.log Template.currentData()
+    console.log Template.parentData(1)
+    console.log Template.parentData(2)
+    console.log Template.parentData(3)
+        
         
 Template.registerHelper 'my_office_link', () ->  
     user = Meteor.user()

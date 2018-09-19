@@ -199,6 +199,66 @@ Template.edit_text_field.events
         Docs.update FlowRouter.getQueryParam('doc_id'),
             { $set: "#{@key}": text_value }
 
+
+
+
+Template.edit_text.events
+    'change .text_val': (e,t)->
+        text_value = e.currentTarget.value
+        display_field = Template.parentData(5)
+        Docs.update display_field._id,
+            { $set: "#{@slug}": text_value }
+
+Template.edit_text.helpers
+    local_value: ->
+        # console.log @
+        # console.log Template.currentData()
+        display_field = Template.parentData(5)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        # console.log Template.parentData(4)
+        # console.log Template.parentData(4)
+        display_field["#{@slug}"]
+
+
+Template.edit_int.events
+    'change .int_val': (e,t)->
+        int_value = parseInt e.currentTarget.value
+        display_field = Template.parentData(5)
+        Docs.update display_field._id,
+            { $set: "#{@slug}": int_value }
+
+Template.edit_int.helpers
+    local_value: ->
+        display_field = Template.parentData(5)
+        display_field["#{@slug}"]
+
+
+Template.edit_boolean.events
+    'click #turn_on': ->
+        display_field = Template.parentData(5)
+        Docs.update display_field._id,
+            { $set: "#{@slug}": true }
+
+    'click #turn_off': ->
+        display_field = Template.parentData(5)
+        Docs.update display_field._id,
+            { $set: "#{@slug}": false }
+
+Template.edit_boolean.helpers
+    is_true: -> 
+        display_field = Template.parentData(5)
+        display_field["#{@slug}"]
+
+
+
+
+
+
+
+
+
+
 Template.edit_page_text_field.events
     'change .text_field': (e,t)->
         text_value = e.currentTarget.value
