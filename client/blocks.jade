@@ -673,12 +673,12 @@ template(name='block')
                                 each children
                                     tr
                                         each field_docs
-                                            // if field_template
-                                            //     td(style="overflow:visible;") 
-                                            //         +Template.dynamic template=field_template data=..
-                                            // else
-                                            //     td(class=table_cell_class) #{child_schema_field_value}
-                                            td(class=table_cell_class) #{child_schema_field_value}
+                                            if display_field_template
+                                                td(style="overflow:visible;") 
+                                                    +Template.dynamic template=display_field_template data=..
+                                            else
+                                                td(class=table_cell_class) #{child_schema_field_value}
+                                            // td(class=table_cell_class) #{child_schema_field_value}
                                             
                             if view_table_footer
                                 +table_footer columns=fields.length doc_type=children_doc_type stat_type=table_stat_type
@@ -854,8 +854,8 @@ template(name='edit_block')
                 |Blank Field
             strong Schema Fields
             each schema_doc.fields
-                .add_schema_field.ui.compact.button #{title}
-                // if show_schema_field
+                if show_schema_field
+                    .add_schema_field.ui.compact.button #{title}
             // h4 Shown Fields
             //     .add_blank_field.ui.icon.button(title='Add Blank Field')
             //         i.plus.icon

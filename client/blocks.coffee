@@ -755,7 +755,7 @@ Template.block.helpers
     can_lower: -> @rank>1
     
     field_docs: ->
-        console.log @
+        # console.log @
         # console.log Template.currentData()
         # console.log Template.parentData(0)
         # console.log Template.parentData(1)
@@ -763,11 +763,11 @@ Template.block.helpers
         # console.log Template.parentData(3)
         # console.log Template.parentData(4)
         # console.log Template.parentData(5)
-        count = Docs.find(
-            type:'display_field'
-            # block_id:@_id
-        ).count()
-        console.log 'count', count
+        # count = Docs.find(
+        #     type:'display_field'
+        #     # block_id:@_id
+        # ).count()
+        # console.log 'count', count
         Docs.find {
             type:'display_field'
         }, sort:rank:1
@@ -837,8 +837,8 @@ Template.edit_block.helpers
                 type:'schema'
                 slug:parent.children_doc_type
             }).fields
-        block_fields = parent.fields
-        selected_keys = _.pluck parent.fields, 'key'
+        block_fields = Docs.find(type:'display_field').fetch()
+        selected_keys = _.pluck block_fields, 'key'
         if @slug in selected_keys then false else true
         
         
