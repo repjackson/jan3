@@ -570,9 +570,8 @@ template(name='assignment_widget')
                                             
 template(name='blocks')
     if editing_mode
-        #add_block.ui.circular.button(title="Add Block #{tags}")
+        #add_block.ui.circular.icon.button(title="Add Block")
             i.plus.icon
-            |Block
     div
     each blocks
         +block 
@@ -656,7 +655,7 @@ template(name='block')
                         table.ui.striped.selectable.fixed.table
                             thead
                                 tr
-                                    each field_docs
+                                    each th_field_docs
                                         if sortable
                                             th.sort_by
                                                 |#{label}
@@ -672,7 +671,7 @@ template(name='block')
                             tbody
                                 each children
                                     tr
-                                        each field_docs
+                                        each children_field_docs
                                             if display_field_template
                                                 td(style="overflow:visible;") 
                                                     +Template.dynamic template=display_field_template data=..
@@ -734,9 +733,8 @@ template(name='block')
                     if can_lower
                         .ui.small.icon.circular.button.lower_block(title='Lower Block')
                             i.chevron.down.link.icon
-                    .toggle_editing_block.ui.circular.button(class=editing_button_class)
+                    .toggle_editing_block.ui.icon.large.circular.button(class=editing_button_class title='Edit Block')
                         i.pencil.icon
-                        |Edit Block
                 if editing_block
                     +edit_block
 

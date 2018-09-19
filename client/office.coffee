@@ -5,7 +5,7 @@ Template.office_service_settings.helpers
     services: -> Docs.find {type:'service'}
     select_service_button_class: ->
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        if @slug in page_office.services then 'blue' else 'basic'
+        if @slug in page_office.services then 'primary' else ''
         
 Template.office_service_settings.events
     'click .select_service': -> 
@@ -61,7 +61,7 @@ Template.office_sla.helpers
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         return page_office
     incident_types: -> Docs.find {type:'incident_type'}
-    select_incident_type_button_class: -> if Session.equals('incident_type_selection', @slug) then 'blue' else 'basic'
+    select_incident_type_button_class: -> if Session.equals('incident_type_selection', @slug) then 'primary' else ''
     selected_incident_type: -> Session.get 'incident_type_selection'
     is_initial: -> Template.parentData().number is 1    
     rule_docs: -> Docs.find {type:'rule'}, sort:number:1

@@ -754,10 +754,10 @@ Template.block.helpers
 
     can_lower: -> @rank>1
     
-    field_docs: ->
-        # console.log @
-        # console.log Template.currentData()
-        # console.log Template.parentData(0)
+    th_field_docs: ->
+        # console.log 'th', @
+        # block = Template.currentData()
+        block = Template.parentData(0)
         # console.log Template.parentData(1)
         # console.log Template.parentData(2)
         # console.log Template.parentData(3)
@@ -770,6 +770,14 @@ Template.block.helpers
         # console.log 'count', count
         Docs.find {
             type:'display_field'
+            block_id: block._id
+        }, sort:rank:1
+            
+    children_field_docs: ->
+        block = Template.parentData(1)
+        Docs.find {
+            type:'display_field'
+            block_id: block._id
         }, sort:rank:1
             
             
