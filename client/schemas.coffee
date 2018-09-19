@@ -21,17 +21,7 @@ Template.schema_view.events
 Template.schema_edit.events
     'click #delete': ->
         template = Template.currentData()
-        swal {
-            title: 'Delete schema?'
-            # text: 'Confirm delete?'
-            type: 'error'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Delete'
-            confirmButtonColor: '#da5347'
-        }, =>
+        if confirm 'Delete schema?'
             doc = Docs.findOne FlowRouter.getParam('doc_id')
             Docs.remove doc._id, ->
                 FlowRouter.go "/p/schemas"

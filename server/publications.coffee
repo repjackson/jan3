@@ -49,10 +49,10 @@ Meteor.publish 'block_children', (
                         result = filter_source_doc.ev["#{block.filter_source_key}"]
                     else
                         result = filter_source_doc["#{block.filter_source_key}"]
-                    if block.children_doc_type is 'event'
-                        console.log 'looking up', block.filter_source_key
-                        console.log 'from', filter_source_doc
-                        console.log 'result', result
+                    # if block.children_doc_type is 'event'
+                        # console.log 'looking up', block.filter_source_key
+                        # console.log 'from', filter_source_doc
+                        # console.log 'result', result
                     result
                 when "{current_user_customer_name}"
                     found_customer = Docs.findOne
@@ -105,9 +105,9 @@ Meteor.publish 'block_children', (
                             @stop()
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
-        if block.children_doc_type is 'event'
-            console.log 'filter_value', filter_value
-            console.log 'calc', calculated_value
+        # if block.children_doc_type is 'event'
+        #     console.log 'filter_value', filter_value
+        #     console.log 'calc', calculated_value
         user = Meteor.user()
         unless block.children_collection is 'users' 
             if user and user.roles
@@ -116,8 +116,8 @@ Meteor.publish 'block_children', (
                 
         if -1 > limit > 100
             limit = 100
-        if block.children_doc_type is 'event'
-            console.log 'match', match    
+        # if block.children_doc_type is 'event'
+        #     console.log 'match', match    
         if block.children_collection is 'users' 
             Meteor.users.find match,{
                 skip: skip

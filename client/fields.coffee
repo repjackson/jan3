@@ -30,16 +30,7 @@ Template.edit_image_field.events
 
 
     'click #remove_photo': ->
-        swal {
-            title: 'Remove Photo?'
-            type: 'warning'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'No'
-            confirmButtonText: 'Remove'
-            confirmButtonColor: '#da5347'
-        }, =>
+        if confirm 'Remove photo?'
             Meteor.call "c.delete_by_public_id", @image_id, (err,res) ->
                 if not err
                     # Do Stuff with res

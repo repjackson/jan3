@@ -129,17 +129,7 @@ Template.incident_owner_select.events
     'click .pull_user': (e,t)->
         context = Template.currentData()
         
-        swal {
-            title: "Remove #{context.incident_owner} as incident owner?"
-            # text: 'Confirm delete?'
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Remove'
-            confirmButtonColor: '#da5347'
-        }, =>
+        if confirm "Remove #{context.incident_owner} as incident owner?"
             Docs.update context._id,
                 $unset: incident_owner: 1
 
@@ -174,18 +164,7 @@ Template.secondary_contact_widget.events
 
     'click .pull_secondary': (e,t)->
         context = Template.currentData()
-        
-        swal {
-            title: "Remove #{context.secondary_contact} as secondary contact?"
-            # text: 'Confirm delete?'
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Unassign'
-            confirmButtonColor: '#da5347'
-        }, =>
+        if confirm "Remove #{context.secondary_contact} as secondary contact?"
             Docs.update context._id,
                 $unset: secondary_contact: 1
 

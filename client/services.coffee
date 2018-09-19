@@ -32,17 +32,7 @@ Template.service_child_requests.helpers
 Template.service_edit.events
     'click #delete': ->
         template = Template.currentData()
-        swal {
-            title: 'Delete service?'
-            # text: 'Confirm delete?'
-            type: 'error'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Delete'
-            confirmButtonColor: '#da5347'
-        }, =>
+        if confirm 'Delete service?'
             doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
             Docs.remove doc._id, ->
                 FlowRouter.go "/services"
@@ -51,17 +41,7 @@ Template.service_edit.events
 Template.service_request_edit.events
     'click #delete': ->
         template = Template.currentData()
-        swal {
-            title: 'Delete Service Request?'
-            # text: 'Confirm delete?'
-            type: 'error'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Delete'
-            confirmButtonColor: '#da5347'
-        }, =>
+        if confirm 'Delete service request?'
             doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
             Docs.remove doc._id, ->
                 FlowRouter.go "/services"

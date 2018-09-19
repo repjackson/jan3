@@ -307,17 +307,7 @@ Template.multiple_user_select.events
     
     'click .pull_user': ->
         context = Template.currentData(0)
-        swal {
-            title: "Remove #{@username}?"
-            # text: 'Confirm delete?'
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Unassign'
-            confirmButtonColor: '#da5347'
-        }, =>
+        if confirm 'Remove user?'
             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
             Meteor.call 'user_array_pull', page_doc._id, context.key, @
     
@@ -562,17 +552,7 @@ Template.assignment_widget.events
     
     'click .pull_user': ->
         context = Template.currentData(0)
-        swal {
-            title: "Remove #{@username}?"
-            # text: 'Confirm delete?'
-            type: 'info'
-            animation: false
-            showCancelButton: true
-            closeOnConfirm: true
-            cancelButtonText: 'Cancel'
-            confirmButtonText: 'Unassign'
-            confirmButtonColor: '#da5347'
-        }, =>
+        if confirm "Remove #{@username}?"
             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
             Meteor.call 'unassign_user', page_doc._id, @
     
@@ -740,8 +720,8 @@ Template.block.helpers
                         match["#{@filter_key}"] = result
                     
             match.type = @children_doc_type
-            if @children_doc_type is 'event'
-                console.log 'match', match
+            # if @children_doc_type is 'event'
+                # console.log 'match', match
             if @filter_key is '_id'
                 match._id = FlowRouter.getQueryParam 'doc_id'    
             if @hard_limit
