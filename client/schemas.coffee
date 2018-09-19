@@ -35,33 +35,36 @@ Template.schema_edit.events
                     type: 'text'
 
 Template.schema_field_edit.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'field'
+    @autorun => Meteor.subscribe 'type', 'field_type'
 
 Template.schema_field_edit.helpers
-    fields: -> Docs.find type:'field'
+    fields: -> Docs.find type:'field_type'
 
 Template.schema_field_edit.events
     'click .remove_field': -> 
         if confirm "Remove #{@label} field?"
             schema_doc_id = FlowRouter.getParam('doc_id')
-            Meteor.call 'pull_schema_field', schema_doc_id, @, (err,res)=>
+            Meteor.call 'pull_schema_field', schema_doc_id, @
 
 
     'change .field_title': (e,t)->
         self = @
         new_title = e.currentTarget.value
         doc_id = FlowRouter.getParam('doc_id')
-        Meteor.call 'update_field_title', doc_id, @, new_title, (err,res)=>
-        # Meteor.call 'slugify', doc_id, @, new_title, (err,res)=>
+        Meteor.call 'update_field_title', doc_id, @, new_title
+        # Meteor.call 'slugify', doc_id, @, new_title
         #         $(e.currentTarget).closest('.field_slug').val res
-        #         Meteor.call 'update_field_slug', doc_id, @, res, (err,res)=>
-
-            
+        #         Meteor.call 'update_field_slug', doc_id, @, res
 
     'change .field_slug': (e,t)->
         text_value = e.currentTarget.value
         doc_id = FlowRouter.getParam('doc_id')
-        Meteor.call 'update_field_slug', doc_id, @, text_value, (err,res)=>
+        Meteor.call 'update_field_slug', doc_id, @, text_value
+
+    'change .field_template': (e,t)->
+        text_value = e.currentTarget.value
+        doc_id = FlowRouter.getParam('doc_id')
+        Meteor.call 'update_field_template', doc_id, @, text_value
 
 
 

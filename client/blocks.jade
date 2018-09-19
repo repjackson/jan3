@@ -54,6 +54,11 @@ template(name='view_button')
     a.ui.icon.button(href=url title='Details')
         i.right.chevron.green.icon
 
+
+template(name='old_view_button')
+    a.ui.icon.button(href="/v/#{_id}" title='Details')
+        i.right.chevron.teal.icon
+
 template(name='icon_view')
     if icon
         +icon name=icon
@@ -850,37 +855,53 @@ template(name='edit_block')
             h4 Shown Fields
                 .add_blank_field.ui.icon.button(title='Add Blank Field')
                     i.plus.icon
+                    
+            .add_field_doc.ui.button Add Field
             if fields
                 table.ui.striped.fixed.table
                     thead
                         tr
-                            th.one.wide #
-                            th Key
-                            th Label
-                            th Template
-                            th Sortable
-                            th Remove
+                            each display_field_schema.fields
+                                th #{title}
                     tbody
-                        each fields
+                        each field_docs
                             tr
-                                td
-                                    i.move_down.chevron.up.link.icon
-                                    // i.move_up.chevron.down.link.icon
-                                td #{key}
-                                td 
-                                    .ui.fluid.small.input
-                                        input.field_label(type='text' value=label)
-                                td 
-                                    .ui.fluid.small.input
-                                        input.field_template(type='text' value=field_template)
-                                td 
-                                    +toggle_block_field_boolean key='sortable' label='Sortable'
-                                    +toggle_block_field_boolean key='editable' label='Editable'
-                                    +set_field_key_value key='sortable' value=true label='Y'
-                                    |#{sortable}
-                                    +set_field_key_value key='sortable' value=false label='N'
-                                td 
-                                    i.remove_schema_field.remove.link.icon
+                                each display_field_schema.fields
+                                    td 
+                                        if field_template
+                                            +Template.dynamic template=field_template
+                                        else
+                                            | no template
+                // table.ui.striped.fixed.table
+                //     thead
+                //         tr
+                //             th.one.wide #
+                //             th Key
+                //             th Label
+                //             th Template
+                //             th Sortable
+                //             th Remove
+                //     tbody
+                //         each fields
+                //             tr
+                //                 td
+                //                     i.move_down.chevron.up.link.icon
+                //                     // i.move_up.chevron.down.link.icon
+                //                 td #{key}
+                //                 td 
+                //                     .ui.fluid.small.input
+                //                         input.field_label(type='text' value=label)
+                //                 td 
+                //                     .ui.fluid.small.input
+                //                         input.field_template(type='text' value=field_template)
+                //                 td 
+                //                     +toggle_block_field_boolean key='sortable' label='Sortable'
+                //                     +toggle_block_field_boolean key='editable' label='Editable'
+                //                     +set_field_key_value key='sortable' value=true label='Y'
+                //                     |#{sortable}
+                //                     +set_field_key_value key='sortable' value=false label='N'
+                //                 td 
+                //                     i.remove_schema_field.remove.link.icon
         .ui.tab(data-tab='layout')
             +set_key_value key='horizontal_position' value='left' label='left'
             +set_key_value key='horizontal_position' value='center' label='center'

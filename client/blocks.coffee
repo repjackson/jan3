@@ -664,12 +664,23 @@ Template.block.onCreated ->
         FlowRouter.getQueryParam('doc_id')
 
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
+    @autorun => Meteor.subscribe 'block_field_docs', @data._id
     
     
 Template.edit_block.helpers
     schemas: -> Docs.find type:'schema'
     views: -> Docs.find type:'view'
     collections: -> Docs.find type:'collection'
+
+    display_field_schema: ->
+        Docs.findOne
+            type:'schema'
+            slug:'display_field'
+
+    field_docs: ->
+        Docs.find
+            type:'display_field'
+            block_id: @_id 
 
 Template.block.helpers
     editing_block: -> Template.instance().editing_block.get() and Session.get('editing_mode')
@@ -866,7 +877,12 @@ Template.edit_block.events
 
         $.tab('change tab', tab_name)
 
-
+    'click .add_field_doc': ->
+        block = Template.currentData()
+        Docs.insert
+            type:'display_field'
+            block_id: @_id
+        
 
     'click .remove_block': ->
         if confirm 'Remove block?'

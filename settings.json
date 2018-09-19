@@ -31,6 +31,10 @@
 			"places": "AIzaSyDjxr1W7FhbxSIlmZKJ9x3tisiG7pmUxt4"
 		}
 	},
+	"mailgun": {
+       "apiKey": "key-202d6a39f8f7dfdd9860dc921f7184d3",
+       "domain": "mg.janhub.com"
+	},
 	"cloudinary_key": "754714459692734",
 	"cloudinary_secret": "rPPXD3rZM_GCjODvh0T70XeDCSw",
 	"MAIL_URL": "smtp://richard%40janhub.com:janhubrichardpassword@smtp.gmail.com:465/",

@@ -11,25 +11,6 @@
 #         emailBody      = "To verify your email address (#{emailAddress}) visit the following link:\n\n#{urlWithoutHash}\n\n If you did not request this verification, please ignore this email. If you feel something is wrong, please contact our support team: #{supportEmail}."
 #         return emailBody
 
-
-
-#     # create_transaction: (service_id, recipient_doc_id, sale_dollar_price=0, sale_point_price=0)->
-#     #     service = Docs.findOne service_id
-#     #     service_author = Meteor.users.findOne service.author_id
-#     #     recipient_doc = Docs.findOne recipient_doc_id
-        
-#     #     requester = Meteor.users.findOne recipient_doc.author_id
-
-#     #     new_transaction_id = Docs.insert
-#     #         type: 'transaction'
-#     #         parent_id: service_id
-#     #         author_id: Meteor.userId()
-#     #         object_id: recipient_doc_id
-#     #         sale_dollar_price: sale_dollar_price
-#     #         sale_point_price: sale_point_price
-
-#     #     message_link = "https://www.toriwebster.com/view/#{new_transaction_id}"
-        
         
         
 Meteor.startup ->
@@ -45,12 +26,12 @@ Meteor.methods
         # Let other method calls from the same client start running,
         # without waiting for the email sending to complete.
         @unblock()
-        Email.send
-            to: mail_fields.to
-            from: mail_fields.from
-            subject: mail_fields.subject
-            text: mail_fields.text
-            html: mail_fields.html
+        # Email.send
+        #     to: mail_fields.to
+        #     from: mail_fields.from
+        #     subject: mail_fields.subject
+        #     text: mail_fields.text
+        #     html: mail_fields.html
 
         # if Meteor.isProduction
         #     Meteor.Mailgun.send
@@ -59,14 +40,14 @@ Meteor.methods
         #         subject: mail_fields.subject
         #         text: mail_fields.text
         #         html: mail_fields.html
-        # if Meteor.isDevelopment
+        if Meteor.isDevelopment
             
-            # Meteor.Mailgun.send
-            #     to: mail_fields.to
-            #     from: mail_fields.from
-            #     subject: mail_fields.subject
-            #     text: mail_fields.text
-            #     html: mail_fields.html
+            Meteor.Mailgun.send
+                to: mail_fields.to
+                from: mail_fields.from
+                subject: mail_fields.subject
+                text: mail_fields.text
+                html: mail_fields.html
         return
         
     send_message: (to_username, from_username, message_text)->    

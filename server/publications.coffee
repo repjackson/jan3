@@ -531,6 +531,11 @@ Meteor.publish 'doc_by_jpid', (jpid)->
         Docs.find
             "ev.ID":jpid
             
+Meteor.publish 'block_field_docs', (block_doc_id)->
+    Docs.find
+        block_id:block_doc_id
+        type:'display_field'
+            
 Meteor.publish 'office_sla_settings', (jpid)->
     Docs.find
         type:'sla_setting'
