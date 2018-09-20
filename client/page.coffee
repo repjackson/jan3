@@ -49,7 +49,14 @@ Template.dev.events
     'click #send_email': (e,t)->
         recipient = $('#recipient_email').val()
         message = $('#email_body').val()
-        Meteor.call 'sendEmail', recipient, 'repjackson@gmail.com', 'test dev portal message', message, (err,res)->
+        data = {
+            to: recipient
+            from: 'repjackson@gmail.com'
+            subject: 'test dev portal message'
+            text: message
+        }
+        
+        Meteor.call 'send_email', data, (err,res)->
             if err then console.error err
     
     'click #send_sms': (e,t)->

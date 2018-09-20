@@ -7,7 +7,6 @@ Meteor.methods
                 escalation_number:1
                 incident_type:incident.incident_type
                 office_jpid:incident.office_jpid
-        # console.log 'found submission sla', sla        
         if sla.incident_owner
             owner_user = Meteor.users.findOne username:sla.incident_owner
             Docs.update incident_doc_id,
@@ -80,9 +79,7 @@ Meteor.methods
          
     single_escalation_check: (incident_doc_id)->
         incident = Docs.findOne incident_doc_id
-        console.log 'checking escalation ', incident_doc_id
         if incident.level is 4
-            console.log 'error 4'
             throw new Meteor.Error 'max_level_notice', "Incident is at max level 4, not escalating."
         else
             incident_office =
@@ -100,7 +97,6 @@ Meteor.methods
                     incident_type:incident.incident_type
                     office_jpid:incident.office_jpid
 
-            console.log sla
             if sla.escalation_hours 
                 hours_value = sla.escalation_hours
             else 
@@ -199,8 +195,6 @@ Meteor.methods
         Meteor.call 'create_event', incident_doc_id, 'emailed_secondary_contact', "#{sla.secondary_contact} emailed as the secondary contact for initial submission."
         if sla.sms_owner
             Meteor.call 'send_sms', '+19176643297', "#{sla.incident_owner}, one of your incidents from #{incident.customer_name} escalated to #{incident.level}." 
-
-        
         if sla.contact_franchisee
             Meteor.call 'create_event', incident_doc_id, 'emailed_franchisee_contact', "Franchisee #{franchisee.ev.FRANCHISEE} emailed after incident submission."
         if sla.contact_customer
@@ -324,12 +318,9 @@ Meteor.methods
     log_ticket: ()->
         my_customer_ob = Meteor.user().users_customer()
         user = Meteor.user()
-        console.log my_customer_ob
         if my_customer_ob
             incident_count = Docs.find(type:'incident').count()
-            console.log incident_count
             if incident_count
-                # console.log incident_count
                 next_incident_number = incident_count + 1
                 new_incident_doc_id = 
                     Docs.insert
@@ -344,5 +335,4 @@ Meteor.methods
                         level: 1
                         open: true
                         submitted: false
-                console.log 'new incident id', new_incident_doc_id
                 return new_incident_doc_id

@@ -32,7 +32,6 @@ tomwasd:flow-router-autoscroll
 http@1.4.1
 underscore@1.0.10
 peerlibrary:xml2js
-cunneen:mailgun
 pacreach:jade
 coffeescript
 juliancwirko:postcss
@@ -41,5 +40,4 @@ manuel:reactivearray
 random@1.1.0
 modules@0.12.2
 meteorhacks:ssr
-email
 lepozepo:cloudinary

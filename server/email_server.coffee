@@ -1,55 +1,25 @@
-# Accounts.emailTemplates.siteName = "Jan-Pro, LLC"
-# Accounts.emailTemplates.from     = "JP Admin <no-reply@jan-pro.com>"
-
-# Accounts.emailTemplates.verifyEmail =
-#     subject: () -> "Jan-Pro Customer Portal Email Verification"
+api_key = Meteor.settings.mailgun.api_key
+domain = Meteor.settings.mailgun.domain
+mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
  
-#     text: ( user, url )->
-#         emailAddress   = user.emails[0].address
-#         urlWithoutHash = url.replace( '#/', '' )
-#         supportEmail   = "support@jan-pro.com"
-#         emailBody      = "To verify your email address (#{emailAddress}) visit the following link:\n\n#{urlWithoutHash}\n\n If you did not request this verification, please ignore this email. If you feel something is wrong, please contact our support team: #{supportEmail}."
-#         return emailBody
-
-        
-        
-# Meteor.startup ->
-#     Meteor.Mailgun.config
-#         username: 'portalmailer@sandbox97641e5041e64bfd943374748157462b.mailgun.org'
-#         password: 'portalmailer'
-#     return
-
-
 Meteor.methods 
     send_email: (mail_fields) ->
-        # check([mail_fields.to, mail_fields.from, mail_fields.subject, mail_fields.text, mail_fields.html], [String]);
-        # Let other method calls from the same client start running,
-        # without waiting for the email sending to complete.
-        console.log 'email'
         @unblock()
-        Email.send
+        data = {
             to: mail_fields.to
             from: mail_fields.from
             subject: mail_fields.subject
             text: mail_fields.text
             html: mail_fields.html
-
+        }
+        console.log 'sending email', data
         # if Meteor.isProduction
-        #     Meteor.Mailgun.send
-        #         to: mail_fields.to
-        #         from: mail_fields.from
-        #         subject: mail_fields.subject
-        #         text: mail_fields.text
-        #         html: mail_fields.html
         # if Meteor.isDevelopment
-            
-        #     Meteor.Mailgun.send
-        #         to: mail_fields.to
-        #         from: mail_fields.from
-        #         subject: mail_fields.subject
-        #         text: mail_fields.text
-        #         html: mail_fields.html
-        # return
+        mailgun.messages().send(data, (error, body)->
+          console.log(body)
+        );
+        return
+        # to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
         
     send_message: (to_username, from_username, message_text)->    
         Docs.insert
@@ -58,17 +28,6 @@ Meteor.methods
             to_username: to_username
             text: message_text
         
-    beta_send_email: (subject, html) ->
-        mail_fields = {
-            to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
-            from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
-            subject: subject
-            html: html
-        }
-        
-        Meteor.call 'send_email', mail_fields
-        
-    
     
     send_email_about_task_assignment:(task_doc_id, username)->
         task_doc = Docs.findOne task_doc_id
@@ -90,8 +49,6 @@ Meteor.methods
             "
         }
         Meteor.call 'send_email', mail_fields
-
-    
  
     send_email_about_incident_assignment:(incident_doc_id, username)->
         incident = Docs.findOne incident_doc_id

@@ -32,7 +32,7 @@
 		}
 	},
 	"mailgun": {
-       "apiKey": "key-202d6a39f8f7dfdd9860dc921f7184d3",
+       "api_key": "key-202d6a39f8f7dfdd9860dc921f7184d3",
        "domain": "mg.janhub.com"
 	},
 	"cloudinary_key": "754714459692734",
@@ -42,7 +42,7 @@
 		"env": {
 			"MONGO_URL": "mongodb://janadmin:jancleaningcustomerpassword@aws-us-east-1-portal.21.dblayer.com:10444/jandb?ssl=true",
 			"ROOT_URL": "https://www.jan.meteorapp.com",
-			"MAIL_URL": "smtp://richard%40janhub.com:janhubrichardpassword@smtp.gmail.com:465/"
+			"MAIL_URL": "smtps://richard%40janhub.com:janhubrichardpassword@smtp.gmail.com:465/"
 		}
 	},
 	"public": {

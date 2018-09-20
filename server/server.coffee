@@ -36,15 +36,6 @@ Accounts.onCreateUser (options=null, user)=>
     return edited_user
 
 
-# Meteor.startup ->
-#     Meteor.Mailgun.config
-#         username: 'zack@janhub.com'
-#         password: 'Sixteen16'
-
-
-
-
-
 
 SyncedCron.config
     log: true
