@@ -34,10 +34,10 @@ underscore@1.0.10
 peerlibrary:xml2js
 pacreach:jade
 coffeescript
-juliancwirko:postcss
 percolate:synced-cron
 manuel:reactivearray
 random@1.1.0
 modules@0.12.2
 meteorhacks:ssr
 lepozepo:cloudinary
+juliancwirko:postcss@=1.2.0

@@ -1,6 +1,10 @@
 template(name='services')
     .ui.stackable.centered.padded.grid
-        
+        .row
+            .ui.center.aligned.header
+                +icon name='housekeeping'
+                | #{currentUser.users_office.ev.MASTER_LICENSEE} Services
+
         .row
             // .four.wide.column
             //     .ui.secondary.segment

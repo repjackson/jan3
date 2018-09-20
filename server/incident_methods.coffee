@@ -23,7 +23,7 @@ Incident_Helpers =
         incident = Docs.findOne incident_doc_id
 
         
-        incident_level_name = if incident_level == 1 then 'intial' else 'level #{incident_level} notifications'
+        incident_level_name = incident_level == 1 ? 'intial' : "level #{incident_level} notifications"
 
         if type is 'owner'
             user_type = 'owner'
