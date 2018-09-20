@@ -220,7 +220,6 @@ Template.sla_rule_doc.helpers
 
 Template.sla_rule_doc.events
     'click .set_level': (e,t)->
-        console.log @
         doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
         type = incident.incident_type
@@ -290,7 +289,6 @@ Template.sla_tester.events
         Meteor.call 'escalate_incident', FlowRouter.getQueryParam('doc_id')
         
     'click .set_level': (e,t)->
-        console.log @
         doc_id = FlowRouter.getQueryParam('doc_id')
         incident = Docs.findOne doc_id
         type = incident.incident_type

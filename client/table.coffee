@@ -91,8 +91,6 @@ Template.block.helpers
     show_increment: -> 
         current_page = Template.instance().page_number.get() 
         number_of_pages = Template.instance().number_of_pages.get() 
-        # console.log 'current_page', current_page
-        # console.log 'number_of_pages', number_of_pages
         current_page < number_of_pages
 
     show_10_decrement: -> Template.instance().page_number.get() >  10

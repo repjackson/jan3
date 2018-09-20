@@ -211,13 +211,7 @@ Template.edit_text.events
 
 Template.edit_text.helpers
     local_value: ->
-        # console.log @
-        # console.log Template.currentData()
         display_field = Template.parentData(5)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
-        # console.log Template.parentData(4)
-        # console.log Template.parentData(4)
         display_field["#{@slug}"]
 
 

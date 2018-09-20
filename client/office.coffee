@@ -42,12 +42,6 @@ Template.office_sla.events
 
             
     'click .add_sla_setting_doc': (e,t)->
-        # console.log 'this', @
-        
-        # console.log 'current', Template.currentData()
-        # console.log 'parent', Template.parentData(1)
-        # console.log 'parent', Template.parentData(2)
-
         Docs.insert
             type:'sla_setting'
             escalation_number: @number
@@ -74,7 +68,6 @@ Template.office_sla.helpers
     
     sla_settings_doc: ->    
         rule_doc = Template.currentData()
-        # console.log 'rule doc', rule_doc
         sla_setting_doc = 
             Docs.findOne {
                 type:'sla_setting'
@@ -180,7 +173,6 @@ Template.secondary_contact_widget.helpers
         if sla_setting_doc.secondary_contact
             found = Meteor.users.findOne
                 username: sla_setting_doc.secondary_contact
-            console.log found
             return found
         else
             false

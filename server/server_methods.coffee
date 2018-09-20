@@ -86,7 +86,7 @@ Meteor.methods
             type:'event'
             parent_id: doc_id
             event_type: 'assignment'
-            text: "#{user.username} was assigned to #{doc.type}"
+            text: "#{user.username} was assigned to #{doc.type}."
         
     user_array_add: (doc_id, key, user)->
         doc = Docs.findOne doc_id
@@ -96,7 +96,7 @@ Meteor.methods
             type:'event'
             parent_id: doc_id
             event_key: key
-            text: "#{user.username} was added to #{key} on #{doc.type}"
+            text: "#{user.username} was added to #{key} on #{doc.type}."
         
         
     user_array_pull: (doc_id, key, user)->
@@ -148,7 +148,7 @@ Meteor.methods
             type:'event'
             parent_id: doc_id
             event_type: 'assignment'
-            text: "#{user.username} was unassigned from #{doc.type}"
+            text: "#{user.username} was unassigned from #{doc.type}."
         
         
     create_event: (parent_id, event_type, action)->

@@ -36,10 +36,10 @@ Accounts.onCreateUser (options=null, user)=>
     return edited_user
 
 
-Meteor.startup ->
-    Meteor.Mailgun.config
-        username: 'zack@janhub.com'
-        password: 'Sixteen16'
+# Meteor.startup ->
+#     Meteor.Mailgun.config
+#         username: 'zack@janhub.com'
+#         password: 'Sixteen16'
 
 
 
@@ -65,7 +65,8 @@ SyncedCron.add
             if err then console.error err
 
 
-SyncedCron.add({
+SyncedCron.add(
+    {
         name: 'Update customers'
         schedule: (parser) ->
             # parser is a later.parse object

@@ -187,10 +187,6 @@ Template.toggle_key.events
 Template.set_sla_key_value.events
     'click .set_page_key_value': ->
         sla_doc = Template.parentData(1)
-        # console.log @
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
         Docs.update sla_doc._id,
             { $set: "#{@key}": @value }
 
@@ -202,21 +198,15 @@ Template.set_sla_key_value.helpers
 
 Template.toggle_sla_boolean.helpers
     toggle_boolean_button_class: -> 
-        # console.log @
         sla_doc = Template.parentData(1)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
         if sla_doc["#{@key}"] is true then 'primary'
         else ''
 
 Template.toggle_sla_boolean.events
     'click .trigger': (e,t)->
         sla_doc = Template.parentData(1)
-        console.log @
-        console.log sla_doc
         if sla_doc
             boolean_value = sla_doc["#{@key}"]
-            console.log boolean_value
             
         # if @value
         #     Docs.update {_id:doc_id}, 
@@ -710,14 +700,10 @@ Template.block.helpers
                 if context_doc
                     result = context_doc["#{@filter_source_key}"]
                     if @children_doc_type is 'event'
-                        # console.log @filter_key
-                        # console.log @filter_source_key
-                        # console.log result
                         match["#{@filter_key}"] = result
                     
             match.type = @children_doc_type
             # if @children_doc_type is 'event'
-                # console.log 'match', match
             if @filter_key is '_id'
                 match._id = FlowRouter.getQueryParam 'doc_id'    
             if @hard_limit
@@ -755,19 +741,12 @@ Template.block.helpers
     can_lower: -> @rank>1
     
     th_field_docs: ->
-        # console.log 'th', @
         # block = Template.currentData()
         block = Template.parentData(0)
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
-        # console.log Template.parentData(4)
-        # console.log Template.parentData(5)
         # count = Docs.find(
         #     type:'display_field'
         #     # block_id:@_id
         # ).count()
-        # console.log 'count', count
         Docs.find {
             type:'display_field'
             block_id: block._id
@@ -886,12 +865,7 @@ Template.edit_block.helpers
 
 
     display_field_value: ->
-        # console.log @
-        # console.log Template.currentData()
         display_field = Template.parentData(1)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
-        # console.log Template.parentData(4)
         display_field["#{@slug}"]
 
 
@@ -907,7 +881,6 @@ Template.edit_block.helpers
 Template.edit_block.events
     'click .tab_nav': (e,t)->
         tab_name = e.target.getAttribute('data-tab')
-        console.log(e.currentTarget.id)
 
         button=e.currentTarget.id
 
@@ -925,7 +898,6 @@ Template.edit_block.events
             
             
     'click .delete_field': ->
-        console.log @
         if confirm 'Remove field?'
             Docs.remove @_id
         
@@ -1051,12 +1023,6 @@ Template.toggle_block_field_boolean.events
 
 Template.toggle_block_field_boolean.helpers 
     toggle_value_button_class: -> 
-        # console.log @
-        # console.log Template.currentData()
-        # console.log Template.parentData(0)
-        # console.log Template.parentData(1)
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
         if Template.parentData(2)["#{@key}"] is true then 'primary' else ''
 
 

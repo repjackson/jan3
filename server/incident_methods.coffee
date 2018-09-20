@@ -110,16 +110,13 @@ Meteor.methods
             now = Date.now()
             updated_now_difference = now-last_updated
             seconds_elapsed = Math.floor(updated_now_difference/1000)
-            hours_elapsed = Math.floor(seconds_elapsed/60)
+            hours_elapsed = Math.floor(seconds_elapsed/60/60)
             escalation_calculation = hours_elapsed - hours_value
             
             incident_type_doc = Docs.findOne
                 type:'incident_type'
                 slug:incident.incident_type
         
-
-            
-            
             if hours_elapsed < hours_value
                 Meteor.call 'create_event', incident_doc_id, 'not-escalate', "#{hours_elapsed} hours have elapsed, less than #{hours_value} in level #{next_level} '#{incident_type_doc.title}' rules, not escalating."
                 # continue

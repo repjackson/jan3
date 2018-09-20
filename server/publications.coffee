@@ -23,7 +23,6 @@ Meteor.publish 'block_children', (
             else if block.filter_source is "{doc_id}"
                 filter_source_doc = Docs.findOne doc_id
             else if block.filter_source is "{current_user}"
-                console.log 'hi'
                 filter_source_doc = Meteor.user()
         if page_jpid
             # console.log 'found page', page_jpid
