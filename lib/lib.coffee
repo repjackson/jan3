@@ -3,22 +3,18 @@
 @Stats = new Meteor.Collection 'stats'
 # @Tags = new Meteor.Collection 'tags'
 
-# @People_tags = new Meteor.Collection 'people_tags'
 
-# @Ancestor_ids = new Meteor.Collection 'ancestor_ids'
-# @Location_tags = new Meteor.Collection 'location_tags'
-# @Intention_tags = new Meteor.Collection 'intention_tags'
-# @Timestamp_tags = new Meteor.Collection 'timestamp_tags'
-# @Watson_keywords = new Meteor.Collection 'watson_keywords'
-# @Watson_concepts = new Meteor.Collection 'watson_concepts'
-# @Author_ids = new Meteor.Collection 'author_ids'
-# @Participant_ids = new Meteor.Collection 'participant_ids'
-# @Upvoter_ids = new Meteor.Collection 'upvoter_ids'
 
 Docs.before.insert (userId, doc)->
-    timestamp = Date.now()
-    doc.timestamp = timestamp
-    doc.updated = timestamp
+    timestamp = doc.timestamp || Date.now();
+    now = moment(timestamp);
+    
+    if !doc.timestamp
+        doc.timestamp = timestamp
+    
+    if !doc.updated
+        doc.updated = timestamp
+        
     doc.long_timestamp = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
     date = moment(timestamp).format('Do')
     weekdaynum = moment(timestamp).isoWeekday()
@@ -33,10 +29,6 @@ Docs.before.insert (userId, doc)->
     # console.log date_array
     doc.timestamp_tags = date_array
     doc.author_id = Meteor.userId()
-    # doc.points = 0
-    # doc.read_by = [Meteor.userId()]
-    # doc.upvoters = []
-    # doc.downvoters = []
 
     return
 

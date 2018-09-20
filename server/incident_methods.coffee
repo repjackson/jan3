@@ -1,3 +1,102 @@
+Incident_Helpers = 
+    geneate_event: (type, incident_doc_id, action, author_id, timestamp) ->
+        author_id = author_id || Meteor.userId()
+        updated = Date.now();
+        
+        event = 
+            type:'event'
+            parent_id: incident_doc_id
+            event_type: type
+            action: action
+            author_id: author_id
+            updated: updated
+        
+        if timestamp
+            #XXX refactor this (similar code in lib.coffee)
+            event.timestamp = timestamp
+            now = moment(timestamp)
+            event.long_timestamp = now.format("dddd, MMMM Do YYYY, h:mm:ss a")
+            date = now.format('Do')
+            weekdaynum = now.isoWeekday()
+            weekday = now.isoWeekday(weekdaynum).format('dddd')
+            month = now.format('MMMM')
+            year = now.format('YYYY')
+        
+            date_array = [weekday, month, date, year]
+            if _
+                date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
+                event.timestamp_tags = date_array
+                
+        return event
+            
+    email_someone: (type, name, email, incident_doc_id, incident_office_name, incident_level, save) -> 
+        incident_level_name = incident_level == 1 ? 'intial' : "level #{incident_level} notifications"
+        
+        if type == 'owner'
+            user_type = 'owner'
+            event_type: 'emailed_incident_owner'
+        else
+            user_type = 'secondary contact'
+            event_type: 'emailed_secondary_contact'
+        
+        #TODO: send email
+        
+        
+        
+        
+        #save the event if asked to
+        event_action = "Incident #{user_type} #{owner_name} has been emailed per #{incident_office_name} #{incident_level_name} rules."
+        
+        if save
+            Docs.insert
+                type:'event'
+                parent_id: incident_doc_id
+                event_type: event_type
+                action: event_action
+        
+        return @geneate_event event_type, incident_doc_id, event_action, author_id, timestamp)
+        
+    text_someone: (type, name, phone_number, incident_doc_id, incident_office_name, incident_level, save) -> 
+        incident_level_name = incident_level == 1 ? 'intial' : "level #{incident_level} notifications"
+        
+        if type == 'owner'
+            user_type = 'owner'
+            event_type: 'texted_incident_owner'
+        else
+            user_type = 'secondary contact'
+            event_type: 'texted_secondary_contact'
+        
+        #TODO: send text
+        
+        
+        
+        
+        #save the event if asked to
+        event_action = "Incident #{user_type} #{owner_name} has been texted per #{incident_office_name} #{incident_level_name} rules."
+        
+        if save
+            Docs.insert
+                type:'event'
+                parent_id: incident_doc_id
+                event_type: event_type
+                action: event_action
+        
+        return @geneate_event event_type, incident_doc_id, event_action, author_id, timestamp)
+        
+    email_owner: (owner_name, owner_email, incident_doc_id, incident_office_name, incident_level, save) -> 
+        return @email_someone 'owner' owner_name, owner_email, incident_doc_id, incident_office_name, incident_level, save
+        
+    text_owner: (owner_name, owner_phone, incident_doc_id, incident_office_name, incident_level, save) -> 
+        return @text_someone 'owner' owner_name, owner_phone, incident_doc_id, incident_office_name, incident_level, save
+        
+    email_secondary: (secondary_name, secondary_email, incident_doc_id, incident_office_name, incident_level, save) -> 
+        return @email_someone 'secondary' secondary_name, secondary_email, incident_doc_id, incident_office_name, incident_level, save
+        
+    text_secondary: (secondary_name, secondary_phone, incident_doc_id, incident_office_name, incident_level, save) -> 
+        return @text_someone 'secondary' secondary_name, secondary_phone, incident_doc_id, incident_office_name, incident_level, save
+    
+
+
 Meteor.methods
     submit_incident: (incident_doc_id)->
         incident = Docs.findOne incident_doc_id
@@ -12,10 +111,44 @@ Meteor.methods
                 office_jpid:incident.office_jpid
                 
         console.log(JSON.stringify(sla, null, 4))
+        
+        user = Meteor.user();
+        
+        events = [
+            Incident_Helpers.geneate_event 'submit', incident_doc_id, "#{user.username} submitted the incident.", user._id, Date.now()
+        ]
                 
         if sla
-            Meteor.call 'create_event', incident_doc_id, 'submit', "Incident submitted. #{sla.incident_owner} and #{sla.secondary_contact} have been notified per #{incident.incident_office_name} rules."
+            #do what needed for owner
+            if sla.email_owner || sla.sms_owner
+                #get owner details
+                #owner_name
+                #owner_email
+                #owner_phone
+                if sla.email_owner
+                    events.push Incident_Helpers.email_owner owner_name, owner_email, incident_doc_id, incident_office_name, incident_level, false
                 
+                if sla.sms_owner
+                    events.push Incident_Helpers.text_owner owner_name, owner_phone, incident_doc_id, incident_office_name, incident_level, false
+            
+            #do what needed for secondary contact
+            if sla.email_secondary || sla.sms_secondary
+                #get owner details
+                #secondary_name
+                #secondary_email
+                #secondary_phone
+                if sla.email_secondary
+                    events.push Incident_Helpers.email_secondary secondary_name, secondary_email, incident_doc_id, incident_office_name, incident_level, false
+                
+                if sla.sms_secondary
+                    events.push Incident_Helpers.text_secondary secondary_name, secondary_phone, incident_doc_id, incident_office_name, incident_level, false
+            
+            #do what needed for customer
+            
+            
+            #do what needed for franchisee
+            
+            
             if sla.escalation_hours
                 Meteor.call 'create_event', incident_doc_id, 'submit', "Incident will escalate in #{sla.escalation_hours} hours according to #{incident.incident_office_name} initial rules."
 
@@ -26,7 +159,9 @@ Meteor.methods
                 submitted_datetime: Date.now()
                 last_updated_datetime: Date.now()
         Meteor.call 'assign_incident_owner_after_submission', incident_doc_id
-        Meteor.call 'create_event', incident_doc_id, 'submit', "submitted the incident."
+
+        
+
         Meteor.call 'notify_about_incident_submission', incident_doc_id
     
     
@@ -56,7 +191,12 @@ Meteor.methods
         Docs.update incident_doc_id,
             $pull: assigned_to: removed_user._id
             $set: assignment_timestamp:Date.now()
-        Meteor.call 'create_event', incident_doc_id, 'unassignment', "#{username} marked task complete and was unassigned."
+        Docs.insert
+            type:'event'
+            parent_id: incident_doc_id
+            event_type: 'unassignment'
+            action: "#{username} marked task complete and was unassigned."
+
         # assign owner if no one else
         updated_doc = Docs.findOne incident_doc_id
         if updated_doc.assigned_to.length is 0
