@@ -49,8 +49,8 @@ SyncedCron.config
 SyncedCron.add
     name: 'Update incident escalations'
     schedule: (parser) ->
-        # parser is a later.parse object
-        parser.text 'every 1 hour'
+        parser.text 'every 10 minutes'
+        # so it catches 1 hour escalations
     job: -> 
         Meteor.call 'update_escalation_statuses', (err,res)->
             if err then console.error err
@@ -60,7 +60,6 @@ SyncedCron.add(
     {
         name: 'Update customers'
         schedule: (parser) ->
-            # parser is a later.parse object
             parser.text 'every 6 hours'
         job: -> 
             Meteor.call 'get_recent_customers', (err, res)->
@@ -68,7 +67,6 @@ SyncedCron.add(
     },{
         name: 'Update users'
         schedule: (parser) ->
-            # parser is a later.parse object
             parser.text 'every 3 hours'
         job: -> 
             Meteor.call 'sync_ev_users', (err, res)->
@@ -77,7 +75,6 @@ SyncedCron.add(
     },{
         name: 'Update franchisee'
         schedule: (parser) ->
-            # parser is a later.parse object
             parser.text 'every 8 hours'
         job: -> 
             Meteor.call 'get_recent_franchisees', (err, res)->
@@ -85,7 +82,6 @@ SyncedCron.add(
     },{
         name: 'Update office'
         schedule: (parser) ->
-            # parser is a later.parse object
             parser.text 'every 6 hours'
         job: -> 
             Meteor.call 'get_recent_offices', (err, res)->

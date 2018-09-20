@@ -47,7 +47,6 @@ Template.office_sla.events
             escalation_number: @number
             office_jpid:FlowRouter.getParam('jpid')      
             incident_type:Session.get('incident_type_selection')
-        # sla_setting_doc
 
     
 Template.office_sla.helpers

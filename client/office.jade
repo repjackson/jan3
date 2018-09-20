@@ -47,16 +47,14 @@ template(name='office_sla')
                                     if is_initial
                                         +toggle_sla_boolean key='contact_customer' label='Customer' icon='headset' title='Contact Customer'
                                     +toggle_sla_boolean key='contact_franchisee' label='Franchisee' icon='business' title='Contact Franchisee'
-                                if is_initial
-                                    td
+                                td
+                                    if is_initial
                                         +incident_owner_select
-                                        div
-                                        +toggle_sla_boolean key='email_owner' label='Email' icon='open-envelope' title='Email Owner'
-                                        +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment' title='Text Owner'
-                                else
-                                    td
+                                    else
                                         if incident_owner
                                             .ui.large.basic.label #{incident_owner}
+                                    +toggle_sla_boolean key='email_owner' label='Email' icon='open-envelope' title='Email Owner'
+                                    +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment' title='Text Owner'
                                 td 
                                     +secondary_contact_widget
                                     div

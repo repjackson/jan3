@@ -97,26 +97,39 @@ Template.submit_incident.helpers
 Template.submit_incident.events
     'click .submit': -> 
         doc_id = FlowRouter.getQueryParam 'doc_id'
-        incident = Docs.findOne doc_id
+        # incident = Docs.findOne doc_id
         
-        incidents_office =
-            Docs.findOne
-                "ev.MASTER_LICENSEE": incident.incident_office_name
-                type:'office'
-        if incidents_office
-            escalation_hours = incidents_office["escalation_1_#{incident.incident_type}_hours"]
-            Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_hours} hours according to #{incident.incident_office_name} initial rules."
-            Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_1_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_1_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
-        Docs.update doc_id,
-            $set:
-                submitted:true
-                submitted_datetime: Date.now()
-                last_updated_datetime: Date.now()
-        Meteor.call 'assign_incident_owner_after_submission', doc_id
-        Meteor.call 'create_event', doc_id, 'submit', "submitted the incident."
-        Meteor.call 'email_about_incident_submission', incident._id
+        # sla = 
+        #     Docs.findOne
+        #         type:'sla_setting'
+        #         escalation_number:1
+        #         incident_type:incident.incident_type
+        #         office_jpid:incident.office_jpid
+                
+        # console.log(JSON.stringify(sla, null, 4))
 
-        FlowRouter.go "/p/incident_customer_view?doc_id=#{doc_id}"
+        
+        
+        # # incidents_office =
+        # #     Docs.findOne
+        # #         "ev.MASTER_LICENSEE": incident.incident_office_name
+        # #         type:'office'
+        # if incidents_office
+        #     # escalation_hours = incidents_office["escalation_1_#{incident.incident_type}_hours"]
+        #     Meteor.call 'create_event', doc_id, 'submit', "Incident will escalate in #{escalation_hours} hours according to #{incident.incident_office_name} initial rules."
+        #     Meteor.call 'create_event', doc_id, 'submit', "Incident submitted. #{incidents_office["escalation_1_#{incident.incident_type}_primary_contact"]} and #{incidents_office["escalation_1_#{incident.incident_type}_secondary_contact"]} have been notified per #{incident.incident_office_name} rules."
+        # Docs.update doc_id,
+        #     $set:
+        #         submitted:true
+        #         submitted_datetime: Date.now()
+        #         last_updated_datetime: Date.now()
+        # Meteor.call 'assign_incident_owner_after_submission', doc_id
+        # Meteor.call 'create_event', doc_id, 'submit', "submitted the incident."
+        # Meteor.call 'notify_about_incident_submission', incident._id
+        
+        Meteor.call 'submit_incident', doc_id, (err,res)->
+            if !err
+                FlowRouter.go "/p/incident_customer_view?doc_id=#{doc_id}"
 
 #     'click .unsubmit': -> 
 #         doc_id = FlowRouter.getQueryParam 'doc_id'
@@ -225,49 +238,6 @@ Template.sla_rule_doc.events
         type = incident.incident_type
         Docs.update doc_id,
             $set: level: @
-        # Meteor.call 'find_office_from_customer_jpid', incident.customer_jpid, (err,res)=>
-        #     if err then console.error err
-        #     else
-        #         office_doc = res 
-        #         # office_doc = Meteor.user().users_customer().parent_franchisee().parent_office()
-        #         primary_contact_string =  "escalation_#{@number}_#{type}_primary_contact"
-        #         secondary_contact_string =  "escalation_#{@number}_#{type}_secondary_contact"
-        #         if primary_contact_string
-        #             primary_contact_target =
-        #                 Meteor.users.findOne
-        #                     username: office_doc["#{primary_contact_string}"]
-        #             primary_username = if primary_contact_target and primary_contact_target.username then primary_contact_target.username else ''
-        #         if secondary_contact_string
-        #             secondary_contact_target =
-        #                 Meteor.users.findOne( username: office_doc["#{secondary_contact_string}"] )
-        #             secondary_username = if secondary_contact_target and secondary_contact_target.username then secondary_contact_target.username else ''
-        #         sla = @
-        #         Docs.update doc_id,
-        #             $set: level:sla.number
-        #         Meteor.call 'email_about_escalation', doc_id
-        #         Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
-        #         # $(e.currentTarget).closest('.ui.incident.modal').modal(
-        #         #     inverted: false
-        #         #     # transition: 'vertical flip'
-        #         #     # observeChanges: true
-        #         #     duration: 400
-        #         #     onApprove : ()=>
-        #         #     ).modal('show')
-                
-        #         # swal {
-        #         #     title: "Change Incident to Level #{@number}?"
-        #         #     text: "This will alert the office primary contact #{primary_contact_string} #{primary_username} and secondary contact #{secondary_contact_string} #{secondary_username}."
-        #         #     type: 'info'
-        #         #     animation: false
-        #         #     showCancelButton: true
-        #         #     closeOnConfirm: true
-        #         #     cancelButtonText: 'Cancel'
-        #         #     confirmButtonText: 'Change'
-        #         #     confirmButtonColor: '#da5347'
-        #         # }, =>
-        #         #     Docs.update doc_id,
-        #         #         $set: level:@number
-        #         #     Meteor.call 'create_event', doc_id, 'level_change', "#{Meteor.user().username} changed level to #{@number}"
             
             
 Template.full_doc_history.onCreated ->
