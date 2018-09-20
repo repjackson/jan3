@@ -7,14 +7,15 @@ template(name='footer')
                     //     a.ui.inverted.header(href='/blog') Dev Log
                     //     div
                     //         a.ui.inverted.header(href='/feed') Global Feed
-                    unless currentUser
-                        .ui.list
-                            .sitemap_list.item Why Jan-Pro
-                            .sitemap_list.item Commercial Cleaning
-                            .sitemap_list.item About Us
-                        .ui.list
-                            .sitemap_list.item Contact Us
-                            .sitemap_list.item Legal/ Privacy Policy
+                    // unless currentUser
+                    img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                    .ui.list
+                        .sitemap_list.item Why JAN-PRO
+                        .sitemap_list.item Commercial Cleaning
+                        .sitemap_list.item About Us
+                    .ui.list
+                        .sitemap_list.item Contact Us
+                        .sitemap_list.item Legal/ Privacy Policy
                             // .sitemap_list.item demo login: demo/password
                     if is_dev
                         +role_switcher
@@ -34,7 +35,7 @@ template(name='footer')
             .centered.row
                 .ui.center.aligned.inverted.grey.header
                     +icon name='copyright'
-                    | 2018 Jan-Pro
+                    | 2018 JAN-PRO Franchising, Inc.
         
         
     // .ui.basic.small.report.modal

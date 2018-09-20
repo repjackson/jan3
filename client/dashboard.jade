@@ -139,18 +139,17 @@ template(name='customer_menu')
 //                         div #{ev.JOB_TITLE}
 //                         div #{ev.WORK_TELEPHONE} #{ev.TELE_CELL} #{phone}
 //                         div #{email}
-//                     td
-//                         a(href="mailto:#{email}" target='_window' title="Email #{name}")
-//                             // i.mail.icon
-//                             +icon name='send'
+template(name='email_user_link')
+    a(href="mailto:#{email}" target='_window' title="Email #{name}")
+        // i.mail.icon
+        +icon name='send'
 //                     // td 
 //                     //     +view_user_button
 
 template(name='small_service_list')
     .ui.secondary.segment
         h4.ui.dividing.header 
-            +icon name='housekeeping'
-            |Other Jan-Pro Services Offered
+            |Other JAN-PRO Services Offered
         .ui.three.column.grid
             each services_offered
                 .column

@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.inverted.blue.top.attached.borderless.menu
+    .nav_bar.ui.top.attached.borderless.inverted.menu
         a.toggle_left_sidebar.icon.item 
             i.bars.icon
         if is_admin
@@ -60,7 +60,7 @@ template(name='nav')
 
 
 template(name='left_sidebar')
-    .ui.left.vertical.sidebar.inverted.blue.thin.menu
+    .ui.left.vertical.sidebar.inverted.nav_bar.thin.menu
         if currentUser
             a.toggle_left_sidebar.header.item(href="/user/#{currentUser.username}")
                 img.ui.centered.mini.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
