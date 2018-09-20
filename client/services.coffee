@@ -7,6 +7,12 @@ Template.services.helpers
     top_requested: -> 
         Docs.find {type:'service'}, 
             sort:request_count:-1
+    services_offered: -> 
+        users_office = Meteor.user().users_office()
+        if users_office
+            Docs.find
+                type:'service'
+                slug: $in: users_office.services
 
 Template.request_service_button.events
     'click .request_service': ->
@@ -42,12 +48,12 @@ Template.service_request_edit.events
     'click #delete': ->
         template = Template.currentData()
         if confirm 'Delete service request?'
-            doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+            doc = Docs.findOne FlowRouter.getParam('doc_id')
             Docs.remove doc._id, ->
                 FlowRouter.go "/services"
     
     'click #submit_request': ->
-        doc_id = FlowRouter.getQueryParam 'doc_id'
+        doc_id = FlowRouter.getParam 'doc_id'
         request = Docs.findOne doc_id
         
         service = Docs.findOne request.service_id
@@ -56,7 +62,7 @@ Template.service_request_edit.events
                 submitted:true
                 submitted_datetime: Date.now()
                 last_updated_datetime: Date.now()
-        Meteor.call 'create_event', doc_id, 'submit_service_request', "submitted the service request for #{service.title}."
+        # Meteor.call 'create_event', doc_id, 'submit_service_request', "submitted the service request for #{service.title}."
         # Meteor.call 'email_about_service_request', request._id
         FlowRouter.go "/v/#{request._id}"
 

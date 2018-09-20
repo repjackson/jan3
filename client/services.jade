@@ -1,78 +1,47 @@
 template(name='services')
     .ui.stackable.centered.padded.grid
-        .middle.aligned.row
-            .three.wide.column
-                if is_admin
-                    +link_button link='/p/admin' icon='user-shield' label='Admin'
-            .ten.wide.column
-                h1.ui.center.aligned.header
-                    +icon name='housekeeping'
-                    | Services
-            .three.wide.right.aligned.column
-                +add_button type='service'
+        
         .row
-            .four.wide.column
-                .ui.secondary.segment
-                    .ui.header
-                        +icon name='leaderboard'
-                        | Most Popular
-                    .ui.list
-                        each top_requested
-                            .item 
-                                if image_id
-                                    img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
-                                if icon
-                                    +icon name=icon
-                                |#{title} #{request_count}
-                .ui.secondary.segment
-                    .ui.header
-                        +icon name='headset'
-                        | Most Requesting Customer
-                .ui.secondary.segment
-                    .ui.header
-                        +icon name='business'
-                        | Most Requested Franchisee
-                .ui.secondary.segment
-                    .ui.header
-                        +icon name='building'
-                        | Most Requested Office
+            // .four.wide.column
+            //     .ui.secondary.segment
+            //         .ui.header
+            //             +icon name='leaderboard'
+            //             | Most Popular
+            //         .ui.list
+            //             each top_requested
+            //                 .item 
+            //                     if image_id
+            //                         img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
+            //                     if icon
+            //                         +icon name=icon
+            //                     |#{title} #{request_count}
+            //     .ui.secondary.segment
+            //         .ui.header
+            //             +icon name='headset'
+            //             | Most Requesting Customer
+            //     .ui.secondary.segment
+            //         .ui.header
+            //             +icon name='business'
+            //             | Most Requested Franchisee
+            //     .ui.secondary.segment
+            //         .ui.header
+            //             +icon name='building'
+            //             | Most Requested Office
             .twelve.wide.column
                 .ui.centered.three.cards
-                    each services
+                    each services_offered
                         +service_card
                 
 template(name='service_card')
     .ui.card
         .content
-            a.header(href="/v/#{_id}") 
-                if image_id
-                    img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
-                    // .right.floated.meta $#{price}
-                if icon
-                    +icon name=icon
+            .header
+                // if image_id
+                //     img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
+                //     // .right.floated.meta $#{price}
+                // if icon
+                //     +icon name=icon
                 |#{title}
-            if is_admin
-                .meta #{slug}
-            .description
-                p #{description}
-        if request_count
-            .content
-                | #{request_count} requests
-        .content
-            +request_service_button
-            a.ui.button(href="/v/#{_id}") 
-                i.large.icon
-                    +iconsmall name='view-details'
-                |Details
-    
-template(name='service_item')
-    .item
-        if image_id
-            a.image(href="/v/#{_id}")
-                img.ui.tiny.image(src="{{c.url image_id height=200 width=200 crop='scale'}}")
-        .content
-            // .right.floated.meta $#{price}
-            a.header(href="/v/#{_id}") #{title}
             if is_admin
                 .meta #{slug}
             .description
@@ -82,10 +51,11 @@ template(name='service_item')
         //         | #{request_count} requests
         .content
             +request_service_button
-            a.ui.button(href="/v/#{_id}") 
-                i.large.icon
-                    +iconsmall name='view-details'
-                |Details
+            // a.ui.button(href="/v/#{_id}") 
+            //     i.large.icon
+            //         +iconsmall name='view-details'
+            //     |Details
+    
     
 template(name='request_service_button')                    
     .request_service.ui.button 
@@ -192,10 +162,7 @@ template(name='service_request_edit')
                     .ui.disabled.button Submitted #{submit_date}
                     +save_button
                 else
-                    if can_submit
-                        #submit_request.ui.button Submit
-                    else
-                        .ui.disabled.button Can't Submit
+                    #submit_request.ui.button Submit
         .centered.row
             .ten.wide.column
                 .ui.form

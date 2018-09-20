@@ -90,50 +90,11 @@ template(name='add_button')
         i.plus.icon
         // +icon name='plus-math'
 
-template(name='reference_type_single')
-    .ui.form
-        .field
-            label #{label}
-            .ui.left.icon.input
-                i.search.icon
-                // +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='search...'
-
-template(name='reference_type_multiple')
-    .ui.form
-        .field
-            label #{label}
-            .ui.left.icon.input
-                i.search.icon
-                // +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder="add..."
 
 template(name='toggle_sla_boolean')      
     .ui.trigger.button(class=toggle_boolean_button_class title=title)
         i.icon
             +iconsmall name=icon
-        
-        
-
-
-template(name="office_result")
-    .item #{office_name} (#{jan_office_id})
-
-template(name="customer_result")
-    .item #{first_name} #{last_name}
-
-
-template(name='set_view_mode')
-    #set_view_mode.ui.icon.button(title=label class=view_mode_button_class)
-        i.icon(class=icon)
-            
-            
-template(name='set_session_button')
-    .set_session_filter.ui.button(class=filter_class)
-        strong #{label}
-        
-template(name='set_session_item')
-    a.set_session_filter.item 
-        |#{label}
-        
         
         
 
@@ -153,17 +114,6 @@ template(name='view_full_button')
             
 
             
-template(name='associated_users')
-    .ui.list
-        each associated_users
-            .item
-                // .image
-                //     img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                .content
-                    .header
-                        |#{profile.first_name} #{profile.last_name}
-                    .description
-                        | @#{username}
             
 template(name='incident_assignment_cell')
     // td(class=incident_assignment_cell_class)
@@ -182,110 +132,6 @@ template(name='incident_assignment_cell')
                     .description
                         | @#{username}
             
-            
-          
-template(name='multiple_user_select')
-    .ui.secondary.segment
-        .ui.header 
-            +icon name=icon
-            |#{label}
-        .ui.form
-            .field
-                .ui.icon.input
-                    i.search.icon
-                    input#multiple_user_select_input(type='text' placeholder='Search Office User')
-            .ui.middle.aligned.selection.animated.list
-                each user_results
-                    .select_user.item
-                        h4.ui.header
-                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            |#{username}
-            .field
-                .ui.list
-                    each user_array_users
-                        .item
-                            .right.floated.content
-                                i.pull_user.remove.red.link.icon
-                            .image
-                                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            .content
-                                h4.ui.header
-                                    |#{profile.first_name} #{profile.last_name}
-                                    | @#{username}
-
-          
-template(name='many_doc_select')
-    .ui.dividing.header #{label}
-    .ui.form
-        .field
-            .ui.left.icon.input
-                i.search.icon
-                // +inputAutocomplete settings=settings id="search" class="ui list" autocomplete="off"
-        .field
-            .ui.list
-                each doc_array_docs
-                    .item
-                        .right.floated.content
-                            i.pull_user.remove.red.link.icon
-                        .content
-                            .header #{title} #{text} #{key} #{cust_name}
-          
-template(name='single_doc_select')
-    .ui.dividing.header #{label}
-    unless selected_doc
-        .ui.form
-            .field
-                .ui.icon.transparent.input
-                    i.handshake.icon
-                    input#multiple_user_select_input(type='text' placeholder='Search Office User')
-    with selected_doc
-        .ui.fluid.card
-            .content
-                .header 
-                    |#{cust_name}
-                    .right.floated
-                        i.remove_doc.remove.red.link.icon
-            .content
-                .ui.list
-                    .item JPID: #{jpid}
-                    .item Tel: #{telephone}
-                    .item Contact Person: #{customer_contact_person}
-                    .item Contact Email: #{customer_contact_email}
-                    .item Franchisee: #{franchisee}
-                    .item Master Licensee: #{master_licensee}
-          
-template(name='single_doc_view')
-    .ui.secondary.segment
-        .ui.header
-            +icon name=icon
-            |#{label}
-        with selected_doc
-            .ui.fluid.card
-                .content
-                    .header 
-                        |#{ev.CUST_NAME}
-                .content
-                    .ui.list
-                        .item JPID: #{ev.ID}
-                        .item #{ev.ADDR_STREET}
-                        .item #{ev.ADDR_CITY}
-          
-template(name='view_multiple_user')
-    .ui.form
-        .field
-            label #{label}
-        .field
-            .ui.list
-                each user_array_users
-                    .item
-                        .image
-                            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        .content
-                            .header
-                                |#{profile.first_name} #{profile.last_name}
-                            .description
-                                | @#{username}
-          
           
             
 template(name='call_phone_button')
@@ -313,16 +159,6 @@ template(name='edit_link')
             input#link(type='text' value=url)
 
 
-template(name='publish_button')
-    .field
-        label Status
-        if published
-            #unpublish.ui.green.button
-                |Published
-        else
-            #publish.ui.button
-                |Private
-
 
 template(name='call_method')
     .call_method.ui.button 
@@ -331,8 +167,6 @@ template(name='call_method')
         else
             |#{name}
     
-template(name='dusk_icon')
-    img.ui.image(src="https://png.icons8.com/dusk/50/000000/#{name}.png")
 
 template(name='icon')
     img.ui.mini.image(src="https://png.icons8.com/office/80/000000/#{name}.png" class=classes data-content=popup title=title)
@@ -345,39 +179,6 @@ template(name='iconsmall')
     img.ui.inline.image(src="https://png.icons8.com/office/24/000000/#{name}.png" class=classes)
 
 
-
-
-
-template(name='view_telephone_field')
-    div
-        a(href="tel:#{TELEPHONE}")
-            i.phone.link.icon
-        strong #{TELEPHONE} 
-            
-            
-// template(name='call_phone_button')
-//     a.ui.fluid.button(href="tel:#{phone_number}") 
-//         i.phone.icon
-//         | Call #{phone_number}
-            
-            
-            
-
-template(name='user_result')
-    .ui.item
-        .image
-        .content
-            .header
-                img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                |#{profile.first_name} #{profile.last_name}
-                small @#{username}
-
-
-template(name='doc_result')
-    with doc_context
-        .ui.item
-            .content
-                .header #{title} #{text} #{cust_name}
                 
 template(name='message_button')                
     .ui.message
@@ -396,45 +197,6 @@ template(name='toggle_user_published')
             i.circle.outline.icon
     
 
-template(name='radio_item')      
-    .field
-        .ui.toggle.checkbox
-            input(type="radio" name=key value=value checked=key_value)
-            label #{label}
-
-
-// template(name='session_delete_button')
-//     unless confirming
-//         .delete.ui.icon.button
-//             i.remove.icon
-//     else
-//         .ui.icon.button.cancel 
-//             i.ban.icon
-//             // |Cancel
-//         .ui.button.confirm 
-//             i.red.trash.icon
-//             |Confirm
-
-
-// template(name='published')
-//     if can_edit
-//         #publish.ui.icon.compact.button(data-tooltip='Publish' class=published_class)
-//             +icon name='visible' classes='ui mini inline image'
-//         #unpublish.ui.icon.compact.button(data-tooltip='Unpublish' class=private_class)
-//             +icon name='invisible' classes='ui mini inline image'
-            
-            
-// template(name='subscribe_button')
-//     if is_participant
-//         #subscribe_button.ui.button(class=subscribe_buton_class)
-//             if subscribed
-//                 +icon48 name='checked' classes='ui mini inline image'
-//                 | Subscribed
-//             else
-//                 +icon48 name='unchecked-checkbox' classes='ui mini inline image'
-//                 |Not Subscribed
-            
-            
 template(name='user_card')
     with author
         img.ui.small.rounded.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")

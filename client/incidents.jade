@@ -24,36 +24,6 @@ template(name='add_incident_button')
         if is_customer
             .ui.secondary.segment Add Office to Profile to Add Incident
 
-
-template(name='incident_sla_widget')
-    .ui.secondary.segment
-        .ui.header 
-            i.user.shield.icon
-            |SLA Rules List for #{incident_doc.incident_type}
-        each sla_rule_docs
-            +sla_rule_doc
-            
-template(name='sla_rule_doc')            
-    .ui.dividing.header 
-        // if is_level
-        //     i.green.checkmark.icon(data-content="Current Level: #{incident_doc.level}")
-        unless is_level
-            .set_level.ui.small.compact.button(data-content="Simulate Escalation to #{number}.") Set Level #{number}
-        |#{name}
-    .content
-        unless is_initial
-            strong Hours: #{hours_value}
-        if franchisee_toggle_value
-            .item Franchisee
-    .content
-        | Primary Contact
-        strong #{primary_contact_value} 
-    .content
-        | Secondary Contact
-        strong #{secondary_contact_value} 
-            //     .ui.disabled.button Can't Set #{number}
-            
-            
             
 template(name='submit_incident')
     .ui.header 
@@ -62,15 +32,10 @@ template(name='submit_incident')
     each incident_type_docs
         +toggle_key key='incident_type' value=slug label=title icon=icon
     +edit_textarea label='Details' key='incident_details' icon='view-details'
-    // +edit_datetime_field key='service_date' label='Service Time' icon='leave'
     +edit_datetime_field key='service_date' label='Service Time'
     .ui.hidden.divider
     .submit.ui.fluid.green.button
         |Submit
-    // if can_submit
-    // else
-    //     .ui.fluid.green.disabled.button
-    //         |Submit
 
 
 
@@ -91,7 +56,6 @@ template(name='sla_tester')
                 i.money.large.icon(title='Contact Customer')
             if contact_franchisee
                 i.truck.large.icon(title='Contact Franchisee')
-            // .item Type #{incident_type}
             if email_owner
                 i.mail.large.icon(title='Email Owner')
             if sms_owner

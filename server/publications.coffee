@@ -1,5 +1,5 @@
 Meteor.publish 'type', (type)->
-    Docs.find type:type
+    Docs.find {type:type}, limit:100
         
 Meteor.publish 'block_children', (
     block_doc_id, 

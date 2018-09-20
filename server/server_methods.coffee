@@ -47,36 +47,6 @@ Meteor.methods
     verify_email: (user_id)->
         Accounts.sendVerificationEmail(user_id)        
         
-    
-    # update_location: (doc_id, result)->
-    #     location_tags = (component.long_name for component in result.address_components)
-    #     parts = result.address_components
-        
-    #     geocode = {}
-    #     for part in parts
-    #         geocode["#{part.types[0]}"] = part.short_name 
-    #     geocode['formatted_address'] = result.formatted_address
-    #     # # street_address = _.where(parts, {types:[ 'street_number' ]})
-    #     # street_address = parts[0].short_name
-
-    #     lowered_location_tags = _.map(location_tags, (tag)->
-    #         tag.toLowerCase()
-    #         )
-
-
-    #     doc = Docs.findOne doc_id
-    #     tags_without_address = _.difference(doc.tags, doc.location_tags)
-    #     tags_with_new = _.union(tags_without_address, lowered_location_tags)
-
-    #     Docs.update doc_id,
-    #         $set:
-    #             tags:tags_with_new
-    #             location_ob:result
-    #             location_tags:lowered_location_tags
-    #             geocode:geocode
-    #             location_lat: result.lat
-    #             location_lng: result.lng
-                
                 
     assign_user: (doc_id, user)->
         doc = Docs.findOne doc_id

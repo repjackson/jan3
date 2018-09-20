@@ -20,19 +20,6 @@ Template.add_button.events
         FlowRouter.go "/edit/#{id}"
 
 
-# Template.reference_type_single.onCreated ->
-#     @autorun =>  Meteor.subscribe 'type', @data.type
-# Template.reference_type_multiple.onCreated ->
-#     @autorun =>  Meteor.subscribe 'type', @data.type
-
-Template.associated_users.onCreated ->
-    @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
-    
-Template.associated_users.helpers
-    associated_users: -> 
-        if @assigned_to
-            Meteor.users.find 
-                _id: $in: @assigned_to
 
 
 Template.incident_assignment_cell.onCreated ->
@@ -52,107 +39,12 @@ Template.incident_assignment_cell.helpers
             Meteor.users.find 
                 _id: $in: @assigned_to
 
-
-
-# Template.reference_type_single.helpers
-    # settings: -> 
-    #     {
-    #         position: 'bottom'
-    #         limit: 10
-    #         rules: [
-    #             {
-    #                 collection: Docs
-    #                 field: "#{@search_field}"
-    #                 matchAll: true
-    #                 filter: { type: "#{@type}" }
-    #                 template: Template.office_result
-    #             }
-    #         ]
-    #     }
-
-# Template.reference_type_multiple.helpers
-    # settings: -> 
-    #     {
-    #         position: 'bottom'
-    #         limit: 10
-    #         rules: [
-    #             {
-    #                 collection: Docs
-    #                 field: "#{@search_field}"
-    #                 matchAll: true
-    #                 filter: { type: "#{@type}" }
-    #                 template: Template.customer_result
-    #             }
-    #         ]
-    #     }
-
-
-# Template.reference_type_single.events
-    # 'autocompleteselect #search': (event, template, doc) ->
-    #     searched_value = doc["#{template.data.key}"]
-    #     Docs.update FlowRouter.getQueryParam('doc_id'),
-    #         $set: "#{template.data.key}": "#{doc._id}"
-    #     $('#search').val ''
-
-
-
-# Template.reference_type_multiple.events
-    # 'autocompleteselect #search': (event, template, doc) ->
-    #     searched_value = doc["#{template.data.key}"]
-    #     Docs.update FlowRouter.getQueryParam('doc_id'),
-    #         $addToSet: "#{template.data.key}": "#{doc._id}"
-    #     $('#search').val ''
-
-
-
-
-# Template.set_view_mode.helpers
-#     view_mode_button_class: -> if Session.equals('view_mode', @view) then 'primary' else ''
-
-# Template.set_view_mode.events
-#     'click #set_view_mode': -> Session.set 'view_mode', @view
-            
-# Template.set_session_button.events
-#     'click .set_session_filter': -> Session.set "#{@key}", @value
-            
-# Template.set_session_button.helpers
-#     filter_class: -> 
-#         if Session.equals("#{@key}","all") 
-#             if @value is 'all'
-#                 'primary' 
-#             else
-#                 ''
-#         else if Session.get("#{@key}")
-#             if Session.equals("#{@key}", parseInt(@value))
-#                 'primary'
-#             else
-#                 ''
-            
-            
-            
-# Template.set_session_item.events
-#     'click .set_session_filter': -> Session.set "#{@key}", @value
-            
-
-            
-# Template.publish_button.events
-#     'click #publish': ->
-#         Docs.update FlowRouter.getQueryParam('doc_id'),
-#             $set: published: true
-
-#     'click #unpublish': ->
-#         Docs.update FlowRouter.getQueryParam('doc_id'),
-#             $set: published: false
-            
             
 Template.call_method.events
     'click .call_method': -> 
         Meteor.call @name, @argument, (err,res)->
             # else
                 
-                
-            
-        
         
 Template.toggle_key.helpers
     toggle_key_button_class: -> 
@@ -167,13 +59,7 @@ Template.toggle_key.events
         doc_id = FlowRouter.getQueryParam('doc_id')
         if @value
             Docs.update {_id:doc_id}, 
-                { $set: "#{@key}": "#{@value}" },
-                (err,res)=>
-                    unless err
-                        Docs.insert
-                            type:'event'
-                            parent_id: doc_id
-                            text:"changed #{@key} to #{@value}."
+                { $set: "#{@key}": "#{@value}" }
                         
         else if Template.parentData()["#{@key}"] is true
             Docs.update doc_id, 
@@ -208,241 +94,17 @@ Template.toggle_sla_boolean.events
         if sla_doc
             boolean_value = sla_doc["#{@key}"]
             
-        # if @value
-        #     Docs.update {_id:doc_id}, 
-        #         { $set: "#{@key}": "#{@value}" },
-        #         (err,res)=>
-        #             if err
-        #             else
-        #                 Docs.insert
-        #                     type:'event'
-        #                     parent_id: doc_id
-        #                     text:"changed #{@key} to #{@value}."
         Docs.update sla_doc._id, 
             $set: "#{@key}": !boolean_value
                         
 Template.toggle_user_published.events
     'click #toggle_button': (e,t)->
         doc_id = FlowRouter.getQueryParam('doc_id')
-        # if @value
-        #     Docs.update {_id:doc_id}, 
-        #         { $set: "#{@key}": "#{@value}" },
-        #         (err,res)=>
-        #             if err
-        #             else
-        #                 Docs.insert
-        #                     type:'event'
-        #                     parent_id: doc_id
-        #                     text:"changed #{@key} to #{@value}."
-        
         Meteor.users.update @_id, 
             $set: published: !@published
                         
 
         
-Template.radio_item.events
-    'click .ui.toggle.checkbox': (e,t)->
-        doc_id = FlowRouter.getQueryParam('doc_id')
-        # checkbox_value = $("input[name=#{@key}]").is(":checked")
-        element = t.find("input:radio[name=#{@key}]:checked");
-        radio_item_value = ($(element).val());
-
-        # if @value
-        #     Docs.update {_id:doc_id}, 
-        #         { $set: "#{@key}": "#{@value}" },
-        #         (err,res)=>
-        #             if err
-        #             else
-        #                 Docs.insert
-        #                     type:'event'
-        #                     parent_id: doc_id
-        #                     text:"changed #{@key} to #{@value}."
-        Docs.update doc_id, 
-            $set: "#{@key}": radio_item_value
-                        
-
-        
-        
- 
-Template.multiple_user_select.onCreated ()->
-    @autorun => Meteor.subscribe 'selected_users', FlowRouter.getQueryParam('doc_id'), @data.key
-    @user_results = new ReactiveVar( [] )
-Template.multiple_user_select.events
-    'keyup #multiple_user_select_input': (e,t)->
-        multiple_user_select_input_value = $(e.currentTarget).closest('#multiple_user_select_input').val().trim()
-        current_incident = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        Meteor.call 'lookup_office_user_by_username_and_officename', current_incident.incident_office_name, multiple_user_select_input_value, (err,res)=>
-            if err then console.error err
-            else
-                t.user_results.set res
-
-    'click .select_user': (e,t) ->
-        key = Template.parentData(0).key
-        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        # searched_value = doc["#{template.data.key}"]
-        Meteor.call 'user_array_add', page_doc._id, key, @, (err,res)=>
-            if err
-            else
-        $('#multiple_user_select_input').val ''
-        t.user_results.set null
-        if key is 'assigned_to'
-            if page_doc.type is 'task'
-                Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to task: #{page_doc.title}."
-                Meteor.call 'send_email_about_task_assignment', page_doc._id, @username
-            else if page_doc.type is 'incident'
-                Docs.update page_doc._id,
-                    $set: assignment_timestamp:Date.now()
-                Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to incident: #{page_doc.title}."
-                Meteor.call 'send_email_about_incident_assignment', page_doc._id, @username
-    
-    'click .pull_user': ->
-        context = Template.currentData(0)
-        if confirm 'Remove user?'
-            page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-            Meteor.call 'user_array_pull', page_doc._id, context.key, @
-    
-Template.multiple_user_select.helpers
-    user_results: ->
-        user_results = Template.instance().user_results.get()
-        user_results
-
-    user_array_users: ->
-        context = Template.currentData(0)
-        parent_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        Meteor.users.find(_id: $in: parent_doc["#{context.key}"])
-    
-
-
-# Template.many_doc_select.onCreated ->
-#     @autorun =>  Meteor.subscribe 'type', 'customer'
-# Template.many_doc_select.events
-#     'autocompleteselect #search': (event, template, selected_doc) ->
-#         key = Template.parentData(0).key
-#         page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-#         # searched_value = doc["#{template.data.key}"]
-#         Meteor.call 'doc_array_add', page_doc._id, key, selected_doc, (err,res)=>
-#         $('#search').val ''
-
-#     'click .pull_doc': ->
-#         context = Template.currentData(0)
-#         swal {
-#             title: "Remove #{@title} #{@text}?"
-#             # text: 'Confirm delete?'
-#             type: 'info'
-#             animation: false
-#             showCancelButton: true
-#             closeOnConfirm: true
-#             cancelButtonText: 'Cancel'
-#             confirmButtonText: 'Unassign'
-#             confirmButtonColor: '#da5347'
-#         }, =>
-#             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-#             Meteor.call 'doc_array_pull', page_doc._id, context.key, @, (err,res)=>
-#                 if err
-#                 else
-    
-# Template.single_doc_select.onCreated ->
-#     @autorun =>  Meteor.subscribe 'type', 'customer'
-# Template.single_doc_select.events
-#     'autocompleteselect #search': (event, template, selected_doc) ->
-#         save_key = Template.parentData(0).save_key
-#         page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-#         # searched_value = doc["#{template.data.key}"]
-#         Meteor.call 'link_doc', page_doc._id, save_key, selected_doc, (err,res)=>
-#         $('#search').val ''
-
-#     'click .remove_doc': ->
-#         context = Template.currentData(0)
-#         swal {
-#             title: "Remove #{@cust_name}?"
-#             # text: 'Confirm delete?'
-#             type: 'info'
-#             animation: false
-#             showCancelButton: true
-#             closeOnConfirm: true
-#             cancelButtonText: 'Cancel'
-#             confirmButtonText: 'Unassign'
-#             confirmButtonColor: '#da5347'
-#         }, =>
-#             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-#             Meteor.call 'unlink_doc', page_doc._id, context.save_key, @, (err,res)=>
-#                 if err
-#                 else
-    
-# Template.single_doc_select.helpers
-#     settings: -> 
-#         {
-#             position: 'bottom'
-#             limit: 10
-#             rules: [
-#                 {
-#                     collection: Docs
-#                     field: "#{@search_key}"
-#                     matchAll: true
-#                     filter: { type: "#{@type}" }
-#                     template: Template.doc_result
-#                 }
-#             ]
-#         }
-
-#     selected_doc: ->
-#         context = Template.currentData(0)
-#         parent_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-#         doc = 
-#             Docs.findOne _id: parent_doc["#{context.save_key}"]
-#         doc
-        
-# Template.single_doc_view.onCreated ->
-#     @autorun =>  Meteor.subscribe 'incident', FlowRouter.getQueryParam('doc_id')
-# Template.single_doc_view.helpers
-#     selected_doc: ->
-#         context = Template.currentData(0)
-#         parent_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-#         doc = 
-#             Docs.findOne 
-#                 "ev.ID": parent_doc["#{context.key}"]
-#         doc
-# Template.view_multiple_user.onCreated ->
-#     @autorun =>  Meteor.subscribe 'users'
-
-# Template.view_multiple_user.helpers
-#     user_array_users: ->
-#         context = Template.parentData(1)
-#         parent_doc = Docs.findOne context._id
-#         Meteor.users.find
-#             _id: $in: parent_doc["#{@key}"]
-
-
-Template.doc_result.onCreated ->
-    @autorun =>  Meteor.subscribe 'doc', @data._id
-
-Template.doc_result.helpers
-    doc_context: ->
-        context = Template.currentData(0)
-        # parent_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        found = Docs.findOne context._id
-        found
-        
-            
-# Template.session_delete_button.onCreated ->
-#     @confirming = new ReactiveVar(false)
-            
-     
-# Template.session_delete_button.helpers
-#     confirming: -> Template.instance().confirming.get()
-# Template.session_delete_button.events
-#     'click .delete': (e,t)-> 
-#         # $(e.currentTarget).closest('.comment').transition('flash')
-#         t.confirming.set true
-
-#     'click .cancel': (e,t)-> t.confirming.set false
-#     'click .confirm': (e,t)-> 
-#         $(e.currentTarget).closest('.comment').transition('fade right')
-#         $(e.currentTarget).closest('.notification_segment').transition('fade right')
-#         Meteor.setTimeout =>
-#             Docs.remove(@_id)
-#         , 1000
-
 
 Template.office_card.onCreated ->
     @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.office_jpid
@@ -480,31 +142,20 @@ Template.franchisee_card.helpers
 
 
 
-Template.view_stat.onCreated ->
-    @autorun =>  Meteor.subscribe 'stat', @data.doc_type, @data.stat_type
-Template.view_stat.helpers
-    stat_value: ->
-        inputs = Template.currentData(0)
-        doc = 
-            Stats.findOne 
-                doc_type:inputs.doc_type
-                stat_type:inputs.stat_type
-        if doc
-            doc.amount
+# Template.view_stat.onCreated ->
+#     @autorun =>  Meteor.subscribe 'stat', @data.doc_type, @data.stat_type
+# Template.view_stat.helpers
+#     stat_value: ->
+#         inputs = Template.currentData(0)
+#         doc = 
+#             Stats.findOne 
+#                 doc_type:inputs.doc_type
+#                 stat_type:inputs.stat_type
+#         if doc
+#             doc.amount
 
 
 
-Template.view_single_user_key.onCreated ->
-    @autorun =>  Meteor.subscribe 'sing_user_key', @data.doc_id, @data.key
-Template.view_single_user_key.helpers
-    stat_value: ->
-        inputs = Template.currentData(0)
-        doc = 
-            Stats.findOne 
-                doc_type:inputs.doc_type
-                stat_type:inputs.stat_type
-        if doc
-            doc.amount
 
 
 Template.assignment_widget.onCreated ()->
@@ -601,6 +252,7 @@ Template.block.onRendered ->
 #     if stat
 
 Template.edit_block.onCreated ->
+    @autorun -> Meteor.subscribe 'schema_doc_by_type', 'display_field'
     @autorun -> Meteor.subscribe 'type', 'schema'
     @autorun => Meteor.subscribe 'type', 'view'
     @autorun => Meteor.subscribe 'type', 'collection'
@@ -859,10 +511,9 @@ Template.edit_block.helpers
     collections: -> Docs.find type:'collection'
 
     display_field_schema: ->
-        Docs.findOne
+        found = Docs.findOne
             type:'schema'
             slug:'display_field'
-
 
     display_field_value: ->
         display_field = Template.parentData(1)

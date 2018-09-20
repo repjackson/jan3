@@ -1,12 +1,12 @@
 Incident_Helpers = 
-    geneate_event: (type, incident_doc_id, action, author_id, timestamp) ->
-        author_id = author_id || Meteor.userId()
+    generate_event: (event_type, incident_doc_id, action, author_id, timestamp) ->
+        author_id = author_id or Meteor.userId()
         updated = Date.now();
         
         event = 
             type:'event'
             parent_id: incident_doc_id
-            event_type: type
+            event_type: event_type
             action: action
             author_id: author_id
             updated: updated
@@ -16,23 +16,16 @@ Incident_Helpers =
             event.timestamp = timestamp
             now = moment(timestamp)
             event.long_timestamp = now.format("dddd, MMMM Do YYYY, h:mm:ss a")
-            date = now.format('Do')
-            weekdaynum = now.isoWeekday()
-            weekday = now.isoWeekday(weekdaynum).format('dddd')
-            month = now.format('MMMM')
-            year = now.format('YYYY')
-        
-            date_array = [weekday, month, date, year]
-            if _
-                date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
-                event.timestamp_tags = date_array
                 
         return event
             
     email_someone: (type, name, email, incident_doc_id, incident_office_name, incident_level, save) -> 
-        incident_level_name = incident_level == 1 ? 'intial' : "level #{incident_level} notifications"
+        incident = Docs.findOne incident_doc_id
+
         
-        if type == 'owner'
+        incident_level_name = if incident_level == 1 then 'intial' else 'level #{incident_level} notifications'
+
+        if type is 'owner'
             user_type = 'owner'
             event_type: 'emailed_incident_owner'
         else
@@ -41,11 +34,8 @@ Incident_Helpers =
         
         #TODO: send email
         
-        
-        
-        
         #save the event if asked to
-        event_action = "Incident #{user_type} #{owner_name} has been emailed per #{incident_office_name} #{incident_level_name} rules."
+        event_action = "Incident #{user_type} #{incident.incident_owner} has been emailed per #{incident.incident_office_name} #{incident_level_name} rules."
         
         if save
             Docs.insert
@@ -54,12 +44,13 @@ Incident_Helpers =
                 event_type: event_type
                 action: event_action
         
-        return @geneate_event event_type, incident_doc_id, event_action, author_id, timestamp)
+        return @generate_event event_type, incident_doc_id, event_action, author_id, timestamp
         
     text_someone: (type, name, phone_number, incident_doc_id, incident_office_name, incident_level, save) -> 
+        incident = Docs.findOne incident_doc_id
         incident_level_name = incident_level == 1 ? 'intial' : "level #{incident_level} notifications"
         
-        if type == 'owner'
+        if type is 'owner'
             user_type = 'owner'
             event_type: 'texted_incident_owner'
         else
@@ -72,7 +63,7 @@ Incident_Helpers =
         
         
         #save the event if asked to
-        event_action = "Incident #{user_type} #{owner_name} has been texted per #{incident_office_name} #{incident_level_name} rules."
+        event_action = "Incident #{user_type} #{incident.incident_owner} has been texted per #{incident.incident_office_name} #{incident_level_name} rules."
         
         if save
             Docs.insert
@@ -81,19 +72,19 @@ Incident_Helpers =
                 event_type: event_type
                 action: event_action
         
-        return @geneate_event event_type, incident_doc_id, event_action, author_id, timestamp)
+        return @generate_event event_type, incident_doc_id, event_action, author_id, timestamp
         
     email_owner: (owner_name, owner_email, incident_doc_id, incident_office_name, incident_level, save) -> 
-        return @email_someone 'owner' owner_name, owner_email, incident_doc_id, incident_office_name, incident_level, save
+        return @email_someone 'owner', owner_name, owner_email, incident_doc_id, incident_office_name, incident_level, save
         
     text_owner: (owner_name, owner_phone, incident_doc_id, incident_office_name, incident_level, save) -> 
-        return @text_someone 'owner' owner_name, owner_phone, incident_doc_id, incident_office_name, incident_level, save
+        return @text_someone 'owner', owner_name, owner_phone, incident_doc_id, incident_office_name, incident_level, save
         
     email_secondary: (secondary_name, secondary_email, incident_doc_id, incident_office_name, incident_level, save) -> 
-        return @email_someone 'secondary' secondary_name, secondary_email, incident_doc_id, incident_office_name, incident_level, save
+        return @email_someone 'secondary', secondary_name, secondary_email, incident_doc_id, incident_office_name, incident_level, save
         
     text_secondary: (secondary_name, secondary_phone, incident_doc_id, incident_office_name, incident_level, save) -> 
-        return @text_someone 'secondary' secondary_name, secondary_phone, incident_doc_id, incident_office_name, incident_level, save
+        return @text_someone 'secondary', secondary_name, secondary_phone, incident_doc_id, incident_office_name, incident_level, save
     
 
 
@@ -115,33 +106,31 @@ Meteor.methods
         user = Meteor.user();
         
         events = [
-            Incident_Helpers.geneate_event 'submit', incident_doc_id, "#{user.username} submitted the incident.", user._id, Date.now()
+            Incident_Helpers.generate_event 'submit', incident_doc_id, "#{user.username} submitted the incident.", user._id, Date.now()
         ]
                 
         if sla
             #do what needed for owner
-            if sla.email_owner || sla.sms_owner
+            if sla.email_owner or sla.sms_owner
                 #get owner details
-                #owner_name
-                #owner_email
-                #owner_phone
+                owner = Meteor.users.findOne username:sla.incident_owner
+                
                 if sla.email_owner
-                    events.push Incident_Helpers.email_owner owner_name, owner_email, incident_doc_id, incident_office_name, incident_level, false
+                    events.push Incident_Helpers.email_owner sla.incident_owner, owner.ev.EMAIL, incident_doc_id, incident.incident_office_name, incident.incident_level, false
                 
                 if sla.sms_owner
-                    events.push Incident_Helpers.text_owner owner_name, owner_phone, incident_doc_id, incident_office_name, incident_level, false
+                    events.push Incident_Helpers.text_owner sla.incident_owner, owner.phone, incident_doc_id, incident.incident_office_name, incident.incident_level, false
             
             #do what needed for secondary contact
-            if sla.email_secondary || sla.sms_secondary
+            if sla.email_secondary or sla.sms_secondary
                 #get owner details
-                #secondary_name
-                #secondary_email
-                #secondary_phone
+                secondary = Meteor.users.findOne username:sla.secondary_contact
+                
                 if sla.email_secondary
-                    events.push Incident_Helpers.email_secondary secondary_name, secondary_email, incident_doc_id, incident_office_name, incident_level, false
+                    events.push Incident_Helpers.email_secondary sla.secondary_contact, secondary.EV.EMAIL, incident_doc_id, incident.incident_office_name, incident.incident_level, false
                 
                 if sla.sms_secondary
-                    events.push Incident_Helpers.text_secondary secondary_name, secondary_phone, incident_doc_id, incident_office_name, incident_level, false
+                    events.push Incident_Helpers.text_secondary sla.secondary_contact, secondary.phone, incident_doc_id, incident.incident_office_name, incident.incident_level, false
             
             #do what needed for customer
             

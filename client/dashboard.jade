@@ -103,8 +103,8 @@ template(name='customer_menu')
             | &nbsp; Log a Ticket
         a.item(href='/p/customer_incidents')
             i.large.icon
-                +iconsmall name='error'
-            | &nbsp; My Incidents
+                +iconsmall name='two-tickets'
+            | &nbsp; My Tickets
         a.item(href='/p/services') 
             i.large.icon
                 +icon name='service-bell'
@@ -149,7 +149,7 @@ template(name='customer_menu')
 template(name='small_service_list')
     .ui.secondary.segment
         h4.ui.dividing.header 
-            +iconsmall name='broom'
+            +icon name='housekeeping'
             |Other Jan-Pro Services Offered
         .ui.three.column.grid
             each services_offered
