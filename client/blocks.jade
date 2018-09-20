@@ -727,14 +727,15 @@ template(name='block')
                                     |Dev
                             .three.wide.right.aligned.column
                 if editing_mode
-                    .ui.small.icon.circular.button.raise_block(title='Raise Block')
-                        i.chevron.up.icon
-                    |#{rank}
                     if can_lower
-                        .ui.small.icon.circular.button.lower_block(title='Lower Block')
-                            i.chevron.down.link.icon
+                        .ui.small.icon.circular.button.lower_block
+                            i.chevron.down.icon
+                    .ui.basic.label #{rank}
+                    .ui.small.icon.circular.button.raise_block
+                        i.chevron.up.icon
                     .toggle_editing_block.ui.icon.large.circular.button(class=editing_button_class title='Edit Block')
                         i.pencil.icon
+                        i.dropdown.icon
                 if editing_block
                     +edit_block
 

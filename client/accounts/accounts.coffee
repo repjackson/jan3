@@ -32,14 +32,13 @@ Template.login.events
         username = $('.username').val()
         password = $('.password').val()
         Meteor.loginWithPassword username, password, (err,res)->
-            if res
-                # console.log 'res', Meteor.user()
-                if 'office' in Meteor.user().roles
-                    FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
-                else if 'customer' in Meteor.user().roles
-                    FlowRouter.go "/p/customer_dashboard"    
-                else    
-                    FlowRouter.go "/p/customer_dashboard"    
+            # console.log 'res', Meteor.user()
+            if 'office' in Meteor.user().roles
+                FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
+            else if 'customer' in Meteor.user().roles
+                FlowRouter.go "/p/customer_dashboard"    
+            else    
+                FlowRouter.go "/p/customer_dashboard"    
     
     'keyup .password': (e,t)->
         if e.which is 13 #enter
@@ -48,14 +47,13 @@ Template.login.events
             username = $('.username').val()
             password = $('.password').val()
             Meteor.loginWithPassword username, password, (err,res)->
-                if res
-                    # console.log 'res', Meteor.user()
-                    if 'office' in Meteor.user().roles
-                        FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
-                    else if 'customer' in Meteor.user().roles
-                        FlowRouter.go "/p/customer_dashboard"    
-                    else    
-                        FlowRouter.go "/p/customer_dashboard"    
+                # console.log 'res', Meteor.user()
+                if 'office' in Meteor.user().roles
+                    FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
+                else if 'customer' in Meteor.user().roles
+                    FlowRouter.go "/p/customer_dashboard"    
+                else    
+                    FlowRouter.go "/p/customer_dashboard"    
             
     'keyup .username': (e,t)->
         if e.which is 13 #enter
@@ -64,14 +62,13 @@ Template.login.events
             username = $('.username').val()
             password = $('.password').val()
             Meteor.loginWithPassword username, password, (err,res)->
-                if res
-                    # console.log 'res', Meteor.user()
-                    if 'office' in Meteor.user().roles
-                        FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
-                    else if 'customer' in Meteor.user().roles
-                        FlowRouter.go "/p/customer_dashboard"    
-                    else    
-                        FlowRouter.go "/p/customer_dashboard"    
+                # console.log 'res', Meteor.user()
+                if 'office' in Meteor.user().roles
+                    FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
+                else if 'customer' in Meteor.user().roles
+                    FlowRouter.go "/p/customer_dashboard"    
+                else    
+                    FlowRouter.go "/p/customer_dashboard"    
             
     'click #login_demo_admin': ->
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->

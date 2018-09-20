@@ -542,6 +542,18 @@ Meteor.publish 'office_sla_settings', (jpid)->
         office_jpid:jpid
             
             
+Meteor.publish 'my_office_messages', ()->
+    if Meteor.user()
+        if Meteor.user().office_jpid
+            Docs.find
+                type:'office_message'
+                office_jpid: Meteor.user().office_jpid
+            
+            
+            
+            
+            
+            
 Meteor.publish 'incident_sla_docs', (incident_doc_id)->
     incident = Docs.findOne incident_doc_id
     Docs.find

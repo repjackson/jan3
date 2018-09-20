@@ -25,23 +25,23 @@ Template.customer_menu.events
                 FlowRouter.go "/p/submit_incident?doc_id=#{res}"
 
 
-Template.dashboard_office_contacts_list.onCreated ->
-    @autorun -> Meteor.subscribe 'my_office_contacts'
+# Template.dashboard_office_contacts_list.onCreated ->
+#     @autorun -> Meteor.subscribe 'my_office_contacts'
     
-Template.dashboard_office_contacts_list.helpers
-    office_contacts: -> 
-        user = Meteor.user()
-        if user and user.customer_jpid
-            customer_doc = Docs.findOne
-                "ev.ID": user.customer_jpid
-                type:'customer'
-                # grandparent office
-            if customer_doc
-                found = Meteor.users.find {
-                    published:true
-                    # "profile.office_name": customer_doc.ev.MASTER_LICENSEE
-                }, limit:100
-                found
+# Template.dashboard_office_contacts_list.helpers
+#     office_contacts: -> 
+#         user = Meteor.user()
+#         if user and user.customer_jpid
+#             customer_doc = Docs.findOne
+#                 "ev.ID": user.customer_jpid
+#                 type:'customer'
+#                 # grandparent office
+#             if customer_doc
+#                 found = Meteor.users.find {
+#                     published:true
+#                     # "profile.office_name": customer_doc.ev.MASTER_LICENSEE
+#                 }, limit:100
+#                 found
 
     
                 
@@ -55,6 +55,15 @@ Template.small_service_list.helpers
             Docs.find
                 type:'service'
                 slug: $in: users_office.services
+                
+                
+                
+Template.dashboard_office_messages.onCreated ->
+    @autorun -> Meteor.subscribe 'my_office_messages'
+Template.dashboard_office_messages.helpers
+    office_messages: -> 
+        Docs.find
+            type:'office_message'
                 
                 
                 

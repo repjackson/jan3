@@ -79,16 +79,16 @@
 //                 +blocks tags='customer,dashboard,office,contacts'
 //         .centered.row
         
-template(name='customer_special_services')        
-    with currentUser.users_customer
-        .ui.horizontal.divided.list
-            // .item #{customer_contact_person}
-            if customer_contact_email
-                .item #{customer_contact_email}
-            .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
-            .item Days of Service: #{customer_days_service_formatted}
-            .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
-    // +blocks tags='customer,dashboard,office,special_services'
+// template(name='customer_special_services')        
+//     with currentUser.users_customer
+//         .ui.horizontal.divided.list
+//             // .item #{customer_contact_person}
+//             if customer_contact_email
+//                 .item #{customer_contact_email}
+//             .item Number of Days of Service: #{ev.CUST_NUM_DAYS_SERVICE}
+//             .item Days of Service: #{customer_days_service_formatted}
+//             .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
+//     // +blocks tags='customer,dashboard,office,special_services'
 
     
 template(name='customer_menu')
@@ -115,36 +115,36 @@ template(name='customer_menu')
         //     | &nbsp; Help
 
                 
-template(name='dashboard_office_contacts_list')
-    h3.ui.header 
-        +icon name='organization'
-        |#{currentUser.users_office.ev.MASTER_LICENSEE} Contacts
+// template(name='dashboard_office_contacts_list')
+//     h3.ui.header 
+//         +icon name='organization'
+//         |#{currentUser.users_office.ev.MASTER_LICENSEE} Contacts
 
-    table.ui.sortable.striped.table
-        tbody
-            each office_contacts
-                tr
-                    td 
-                        img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
-                        .ui.popup
-                            img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
-                        a(href="/user/#{username}") #{first_name} #{last_name}
-                        .ui.popup
-                            img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
-                    td 
-                        div #{title}
-                        div 
-                            strong #{function}
-                    td 
-                        div #{ev.JOB_TITLE}
-                        div #{ev.WORK_TELEPHONE} #{ev.TELE_CELL} #{phone}
-                        div #{email}
-                    td
-                        a(href="mailto:#{email}" target='_window' title="Email #{name}")
-                            // i.mail.icon
-                            +icon name='send'
-                    // td 
-                    //     +view_user_button
+//     table.ui.sortable.striped.table
+//         tbody
+//             each office_contacts
+//                 tr
+//                     td 
+//                         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
+//                         .ui.popup
+//                             img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
+//                         a(href="/user/#{username}") #{first_name} #{last_name}
+//                         .ui.popup
+//                             img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
+//                     td 
+//                         div #{title}
+//                         div 
+//                             strong #{function}
+//                     td 
+//                         div #{ev.JOB_TITLE}
+//                         div #{ev.WORK_TELEPHONE} #{ev.TELE_CELL} #{phone}
+//                         div #{email}
+//                     td
+//                         a(href="mailto:#{email}" target='_window' title="Email #{name}")
+//                             // i.mail.icon
+//                             +icon name='send'
+//                     // td 
+//                     //     +view_user_button
 
 template(name='small_service_list')
     .ui.secondary.segment
@@ -172,39 +172,19 @@ template(name='dashboard_header')
             +customer_menu
 
 
-template(name='office_message')
+template(name='dashboard_office_messages')
     .ui.padded.stackable.grid
-        if currentUser.users_office.customer_message
-            .four.column.row
+        .four.column.row
+            each office_messages
                 .column
                     .ui.floating.message
                         .content
                             .header 
                                 i.large.icon
-                                    +icon name='sms'
-                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Message
+                                    +icon name=icon
+                                |#{currentUser.users_office.ev.MASTER_LICENSEE} #{title}
                         .content
                             p 
-                            p #{currentUser.users_office.customer_message}
-                .column
-                    .ui.floating.message
-                        .content
-                            .header 
-                                i.large.icon
-                                    +icon name='discount'
-                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Promotions
-                        .content
-                            p 
-                            p #{currentUser.users_office.customer_promotions}
-                .column
-                    .ui.floating.message
-                        .content
-                            .header 
-                                i.large.icon
-                                    +icon name='faq'
-                                |#{currentUser.users_office.ev.MASTER_LICENSEE} Help Policy
-                        .content
-                            p 
-                            p #{currentUser.users_office.help_policy}
-                .column
-                    +small_service_list
+                            p #{details}
+            .column
+                +small_service_list

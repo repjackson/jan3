@@ -257,3 +257,19 @@ template(name='cell_text_edit')
         &nbsp;
         if editing_mode
             i.edit_field.link.small.pencil.icon
+            
+            
+template(name='user_cell_text_edit')
+    if editing_cell
+        .ui.fluid.icon.input
+            input.cell_val(type='text' value=cell_value )
+            i.save_field.link.checkmark.icon
+    else
+        |#{cell_value}
+        &nbsp;
+        i.edit_field.link.small.pencil.icon
+            
+            
+            
+            
+            
