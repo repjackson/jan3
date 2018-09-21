@@ -519,12 +519,9 @@ template(name='edit_block')
             a.ui.item.tab_nav(data-tab='collection') 
                 i.database.icon
                 |Collection
-            a.ui.item.tab_nav(data-tab='layout') 
+            a.ui.item.tab_nav(data-tab='display') 
                 i.th.list.icon
-                |Layout
-            a.ui.item.tab_nav(data-tab='view') 
-                i.object.group.icon
-                |View
+                |Display
             a.ui.item.active.tab_nav(data-tab='fields') 
                 i.list.ui.icon
                 |Fields
@@ -586,12 +583,6 @@ template(name='edit_block')
                 +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
                 +set_key_value key='filter_value' value='{current_page_jpid}' label='Current Page JPID'
                 
-                
-                
-                
-                
-                
-                
                 div
                 +edit_block_text_field key='filter_source_key' label='Filter Source Key'
         // unless custom_template
@@ -604,26 +595,26 @@ template(name='edit_block')
             .ui.header Stat Type
             +set_key_value key='table_stat_type' value='total' label='Total'
             +set_key_value key='table_stat_type' value='office' label='Office'
-        .ui.bottom.attached.segment.tab(data-tab='view')
+        .ui.bottom.attached.segment.tab(data-tab='display')
             each views
                 +set_key_value_2 key='view' value=slug label=title icon=icon
             +toggle_boolean key='view_table_header' yes_label='Table Header' no_label='No Table Header'
-            +edit_block_text_field key='default_sort_key' label='Default Sort Key'
+            .ui.form
+                +edit_block_text_field key='default_sort_key' label='Default Sort Key'
             +set_key_value key='default_sort_direction' value='-1' label='-1'
             +set_key_value key='default_sort_direction' value='1' label='1'
             
+            +set_key_value key='horizontal_position' value='left' label='left'
+            +set_key_value key='horizontal_position' value='center' label='center'
+            +set_key_value key='horizontal_position' value='right' label='right'
         .ui.bottom.attached.segment.active.tab(data-tab='fields')
             .add_field_doc.ui.button 
                 i.plus.icon
-                |Blank Field
+                |Blank
             strong Schema Fields
             each schema_doc.fields
                 if show_schema_field
                     .add_schema_field.ui.compact.button #{title}
-            // h4 Shown Fields
-            //     .add_blank_field.ui.icon.button(title='Add Blank Field')
-            //         i.plus.icon
-                    
             table.ui.striped.fixed.table
                 thead
                     tr
@@ -641,40 +632,6 @@ template(name='edit_block')
                                         | #{display_field_value}
                             td 
                                 i.delete_field.remove.link.icon
-                // table.ui.striped.fixed.table
-                //     thead
-                //         tr
-                //             th.one.wide #
-                //             th Key
-                //             th Label
-                //             th Template
-                //             th Sortable
-                //             th Remove
-                //     tbody
-                //         each fields
-                //             tr
-                //                 td
-                //                     i.move_down.chevron.up.link.icon
-                //                     // i.move_up.chevron.down.link.icon
-                //                 td #{key}
-                //                 td 
-                //                     .ui.fluid.small.input
-                //                         input.field_label(type='text' value=label)
-                //                 td 
-                //                     .ui.fluid.small.input
-                //                         input.field_template(type='text' value=field_template)
-                //                 td 
-                //                     +toggle_block_field_boolean key='sortable' label='Sortable'
-                //                     +toggle_block_field_boolean key='editable' label='Editable'
-                //                     +set_field_key_value key='sortable' value=true label='Y'
-                //                     |#{sortable}
-                //                     +set_field_key_value key='sortable' value=false label='N'
-                //                 td 
-                //                     i.remove_schema_field.remove.link.icon
-        .ui.bottom.attached.segment.tab(data-tab='layout')
-            +set_key_value key='horizontal_position' value='left' label='left'
-            +set_key_value key='horizontal_position' value='center' label='center'
-            +set_key_value key='horizontal_position' value='right' label='right'
             
 
      
@@ -796,3 +753,19 @@ template(name='view_incident_link')
         a.ui.icon.button(href="/p/incident_customer_view?doc_id=#{_id}")
             i.right.chevron.icon
 
+
+template(name='ticket_status')
+    with page_context
+        |status: #{status}
+        |open: #{open}
+        if is_dev
+            unless open
+                .reopen.ui.icon.button
+                    i.undo.icon
+        if open
+            +icon name='clock'
+            .close.ui.icon.button
+                i.checkmark.icon
+        else
+            +icon name='ok'
+        

@@ -98,8 +98,9 @@ template(name='page')
                                         // i.left.chevron.icon
                                         | #{left_link_label}
                             .center.aligned.ten.wide.column
-                                h2.ui.center.aligned.header 
-                                    +icon name=icon
+                                h2.ui.center.aligned.header
+                                    if icon
+                                        +icon name=icon
                                     |#{title}
                             .center.aligned.three.wide.column
                 if left_column

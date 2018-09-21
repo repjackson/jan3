@@ -3,11 +3,8 @@ template(name='footer')
         .ui.stackable.equal.height.centered.padded.grid
             .row
                 .four.wide.inverted.column
-                    // if is_admin
-                    //     a.ui.inverted.header(href='/blog') Dev Log
-                    //     div
-                    //         a.ui.inverted.header(href='/feed') Global Feed
-                    // unless currentUser
+                    if is_dev
+                        +role_switcher
                     img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                     .ui.list
                         .sitemap_list.item Why JAN-PRO
@@ -16,12 +13,9 @@ template(name='footer')
                     .ui.list
                         .sitemap_list.item Contact Us
                         .sitemap_list.item Legal/ Privacy Policy
-                            // .sitemap_list.item demo login: demo/password
-                    if is_dev
-                        +role_switcher
                     .ui.hidden.divider
-                    #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
-                        i.bug.icon
+                    // #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
+                    //     i.bug.icon
                 .four.wide.column
                     if is_customer
                         +customer_card customer_jpid=currentUser.customer_jpid
@@ -38,24 +32,8 @@ template(name='footer')
                     | 2018 JAN-PRO Franchising, Inc.
         
         
-    // .ui.basic.small.report.modal
-    //     h3.ui.center.aligned.header
-    //         | Report Bug on #{bug_link}
-    //     .content
-    //         .ui.fluid.input
-    //             input#bug_description(type='text')
-    //     .actions
-    //         .ui.cancel.icon.button
-    //             i.remove.icon
-    //         // if can_submit_bug
-    //         .ui.green.ok.ok_button.large.icon.button
-    //             i.checkmark.large.icon
-        
         
 template(name='role_switcher')
-    .ui.inverted.header 
-        |Role Switcher
-    // h5.ui.inverted.header Switching reloads the page
     each role_docs
         .change_role.ui.button(class=role_button_class)
             |#{slug}

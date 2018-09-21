@@ -161,6 +161,16 @@ Template.franchisee_card.helpers
 Template.assignment_widget.onCreated ()->
     @autorun => Meteor.subscribe 'assigned_users', FlowRouter.getQueryParam('doc_id')
     @user_results = new ReactiveVar( [] )
+
+Template.assignment_widget.onRendered ()->
+    unassigned_username = FlowRouter.getQueryParam 'unassign'
+    if unassigned_username
+        console.log 'found unassign', unassigned_username
+        Meteor.call 'unassign_user_from_incident', FlowRouter.getQueryParam('doc_id'), target_username, (err,res)->
+            if err then console.error err
+
+    
+    
 Template.assignment_widget.events
     'click .clear_results': (e,t)->
         t.user_results.set null
@@ -680,3 +690,22 @@ Template.toggle_block_field_boolean.helpers
 
 Template.view_button.helpers
     url:-> "/p/#{@type}?doc_id=#{@_id}"
+    
+    
+Template.ticket_status.helpers
+    page_context: ->
+        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+Template.ticket_status.events
+    'click .reopen': ->
+        console.log 'hi'
+        Docs.update FlowRouter.getQueryParam('doc_id'),
+            $set: open:true
+            
+    'click .close': ->
+        console.log 'hi'
+        Docs.update FlowRouter.getQueryParam('doc_id'),
+            $set: open:false
+            
+            
+            
+            

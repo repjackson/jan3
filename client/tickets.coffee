@@ -40,13 +40,6 @@ Template.incident_type_label.helpers
             when 'other' then 'grey'
 
 Template.level_icon.helpers
-    level_icon_name: ->
-        switch @level
-            when 1 then '1-c'
-            when 2 then '2-c'
-            when 3 then '3-c'
-            when 4 then '4-c'
-
     is_level_one: -> @level is 1
     is_level_two: -> @level is 2
     is_level_three: -> @level is 3
@@ -59,14 +52,6 @@ Template.submit_incident.onCreated ->
 #     @autorun -> Meteor.subscribe 'type','rule'
 #     @autorun -> Meteor.subscribe 'incident', FlowRouter.getQueryParam('doc_id')
 
-
-# Template.submit_incident.onRendered ->
-#     target_username = FlowRouter.getQueryParam 'username'
-#     if target_username
-#         Meteor.call 'unassign_user_from_incident', FlowRouter.getQueryParam('doc_id'), target_username, (err,res)->
-#             if err then console.error err
-#             else
-#     # @autorun -> Meteor.subscribe 'office_from_incident_id', FlowRouter.getQueryParam('doc_id')
 
 Template.submit_incident.helpers
     incident_type_docs: -> Docs.find type:'incident_type'

@@ -19,7 +19,7 @@ Meteor.methods
           console.log(body)
         );
         return
-        # to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
+        # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
         
     send_message: (to_username, from_username, message_text)->    
         Docs.insert
@@ -59,14 +59,14 @@ Meteor.methods
         
         mail_fields = {
             # to: ["<#{assigned_to_user.emails[0].address}>"]
-            to: 'repjackson@gmail.com'
+            to: ['<repjackson@gmail.com>, <ziedmahdi@gmail.com>']
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Incident Assignment"
             html: "<h4>You have been assigned to incident ##{incident.incident_number} from customer: #{incident.customer_name}.</h4>
                 <h5>Type: #{incident.incident_type}</h5>
                 <h5>Number: #{incident.incident_number}</h5>
                 <h5>Details: #{incident.incident_details}</h5>
-                <h5>Timestamp: #{incident.timestamp}</h5>
+                <h5>Created: #{incident.long_timestamp}</h5>
                 <h5>Office: #{incident.incident_office_name}</h5>
                 <h5>Status: #{incident.status}</h5>
                 <h5>Service Date: #{incident.service_date}</h5>

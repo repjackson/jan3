@@ -150,12 +150,11 @@ template(name='small_service_list')
     .ui.secondary.segment
         h4.ui.dividing.header 
             |Other JAN-PRO Services Offered
-        .ui.three.column.grid
+        .ui.bulleted.list
             each services_offered
-                .column
-                    a.ui.item(href="/v/#{_id}")
-                        img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
-                        |#{title}
+                a.item(href="/v/#{_id}")
+                    // img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
+                    |#{title}
 
 
 template(name='dashboard_header')

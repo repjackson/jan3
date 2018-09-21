@@ -1,57 +1,3 @@
-template(name='customer_view')
-    .ui.padded.stackable.grid
-        .centered.middle.aligned.row
-            .three.wide.center.aligned.column
-                if is_admin
-                    +link_button link='/p/admin_customers' icon='headset' label='Customers'
-            .ten.wide.column
-                h2.ui.center.aligned.grey.header 
-                    +icon name='headset'
-                    |##{ev.ID}
-                    if ev.CUST_NAME
-                        |#{ev.CUST_NAME} 
-                    else
-                        |#{cust_name} 
-                    |Customer
-            .three.wide.right.aligned.column
-                if is_admin
-                    +edit_button
-        .centered.row
-            .four.wide.column
-                .ui.secondary.segment
-                    .ui.list
-                        with ev
-                            .item 
-                                |#{CUST_NAME}
-                            .item Master Licensee
-                                strong #{MASTER_LICENSEE}
-                            .item #
-                                strong #{ID}
-                            .item Contact Person
-                                strong #{CUST_CONT_PERSON}
-                            .item Contact Email
-                                strong #{CUST_CONTACT_EMAIL}
-                            .item Tel
-                                strong #{TELEPHONE}
-                            .item Address
-                                strong #{ADDR_STREET} #{ADDR_STREET_2} #{ADDR_CITY} #{ADDR_STATE}
-                            .item Franchisee
-                                strong #{FRANCHISEE}
-                            .item Number of Days of Service
-                                strong #{CUST_NUM_DAYS_SERVICE}
-                            .item Days Service
-                                strong #{CUST_DAYS_SERVICE}
-                            .item Regular Service Amount
-                                strong #{CUST_REG_SERVICE_AMT}
-            .twelve.wide.column
-                +blocks tags='customer,page,parent_franchisee'
-                +blocks tags='customer,pages,incidents'
-                +blocks tags='users,users'
-                +blocks tags='customer,invoices'
-                +blocks tags='customer,service,special_service'
-                +blocks tags='customer,service,service_request'
-                +blocks tags='customer,activity'
-                
 template(name='my_customer_account_card')
     .ui.card
         with currentUser.users_customer
@@ -150,11 +96,6 @@ template(name='schema_edit')
                 #add_field.ui.button
                     i.plus.icon
                     | Field
-                .ui.form
-                    +edit_text_field key='title' label='Title'
-                    +edit_text_field key='slug' label='Slug'
-                    +edit_text_field key='icon' label='Icon'
-                    +edit_array_field key='tags'
             .twelve.wide.column
                 each fields
                     +schema_field_edit
