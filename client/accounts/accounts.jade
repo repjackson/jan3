@@ -52,51 +52,35 @@ template(name='login')
     .ui.middle.aligned.centered.padded.stackable.grid
         .row
             .twelve.wide.column
-                // img.ui.large.center.aligned.image(src="{{c.url 'white_logo' gravity='face' crop='fill'}}")
                 h1.ui.center.aligned.header 
-                    // +icon name='password'
                     img.ui.spaced.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
                     | JAN-PRO Customer Portal Login
-                // if currentUser
-                //     | Logging out...
-                //     // |You are logged in as #{currentUser.username}
-                unless currentUser
-                    .ui.segment
-                        .ui.grid
-                            .twelve.wide.column
-                                .ui.labeled.fluid.input
-                                    .ui.basic.label Username
-                                    input.username(type='text')
-                                .ui.hidden.divider
-                                .ui.labeled.fluid.input
-                                    .ui.basic.label Password
-                                    input.password(type='password')
-                                .ui.hidden.divider
-                                .field
-                                    unless currentUser
-                                        .login.ui.fluid.jp-green.inverted.button(class=login_button_class title='Login')
-                                            | Login
-                                            // +icon name='internal' classes='ui inline image'
-                            .four.wide.column
-                                #login_demo_customer.ui.fluid.button(class=login_button_class title='Login Demo Customer')
-                                    +iconsmall name='headset' classes='ui inline image'
-                                    | &nbsp; Demo Customer
-                                #login_demo_office.ui.fluid.button(class=login_button_class title='Login Demo Office')
-                                    +iconsmall name='building' classes='ui inline image'
-                                    | &nbsp; Demo Office
-                                #login_demo_admin.ui.fluid.button(class=login_button_class title='Login Demo Admin')
-                                    +iconsmall name='user-shield' classes='ui inline image'
-                                    | &nbsp; Demo Admin
-                else
-                    .ui.center.aligned.basic.segment
-                    if loggingIn
-                        |Logging Out...
-                        .ui.header
-                            |Logged in as #{currentUser.username}
-                        #logout.ui.button
-                            i.icon
-                                +icon name='exit'
-                            |Log Out
+                .ui.segment
+                    .ui.grid
+                        .twelve.wide.column
+                            .ui.labeled.fluid.input
+                                .ui.basic.label Username
+                                input.username(type='text')
+                            .ui.hidden.divider
+                            .ui.labeled.fluid.input
+                                .ui.basic.label Password
+                                input.password(type='password')
+                            .ui.hidden.divider
+                            .field
+                                unless currentUser
+                                    .login.ui.fluid.jp-green.inverted.button(class=login_button_class title='Login')
+                                        | Login
+                                        // +icon name='internal' classes='ui inline image'
+                        .four.wide.column
+                            #login_demo_customer.ui.fluid.button(class=login_button_class title='Login Demo Customer')
+                                +iconsmall name='headset' classes='ui inline image'
+                                | &nbsp; Demo Customer
+                            #login_demo_office.ui.fluid.button(class=login_button_class title='Login Demo Office')
+                                +iconsmall name='building' classes='ui inline image'
+                                | &nbsp; Demo Office
+                            #login_demo_admin.ui.fluid.button(class=login_button_class title='Login Demo Admin')
+                                +iconsmall name='user-shield' classes='ui inline image'
+                                | &nbsp; Demo Admin
                 
 template(name='register_customer')
     .ui.middle.aligned.centered.padded.grid

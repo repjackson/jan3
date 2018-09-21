@@ -5,6 +5,7 @@ mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 Meteor.methods 
     send_email: (mail_fields) ->
         @unblock()
+        
         data = {
             to: mail_fields.to
             from: mail_fields.from
@@ -17,7 +18,7 @@ Meteor.methods
         # if Meteor.isDevelopment
         mailgun.messages().send(data, (error, body)->
           console.log(body)
-        );
+        )
         return
         # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
         
@@ -29,26 +30,26 @@ Meteor.methods
             text: message_text
         
     
-    send_email_about_task_assignment:(task_doc_id, username)->
-        task_doc = Docs.findOne task_doc_id
+    # send_email_about_task_assignment:(task_doc_id, username)->
+    #     task_doc = Docs.findOne task_doc_id
         
-        assigned_to_user = Meteor.users.findOne username:username
-        task_link = "https://www.jan.meteorapp.com/v/#{task_doc._id}"
+    #     assigned_to_user = Meteor.users.findOne username:username
+    #     task_link = "https://www.jan.meteorapp.com/v/#{task_doc._id}"
         
-        mail_fields = {
-            to: ["<#{assigned_to_user.emails[0].address}>"]
-            from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
-            subject: "Task Assignment"
-            html: "<h4>You have been assigned to task #{task_doc.title}..</h4>
-                <ul>
-                    <li>Completed: #{task_doc.complete}</li>
-                    <li>Due Date: #{task_doc.due_date}</li>
-                    <li>Tags: #{task_doc.tags}</li>
-                </ul>
-                <p>view the task <a href=#{task_link}>here</a>.
-            "
-        }
-        Meteor.call 'send_email', mail_fields
+    #     mail_fields = {
+    #         to: ["<#{assigned_to_user.emails[0].address}>"]
+    #         from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
+    #         subject: "Task Assignment"
+    #         html: "<h4>You have been assigned to task #{task_doc.title}..</h4>
+    #             <ul>
+    #                 <li>Completed: #{task_doc.complete}</li>
+    #                 <li>Due Date: #{task_doc.due_date}</li>
+    #                 <li>Tags: #{task_doc.tags}</li>
+    #             </ul>
+    #             <p>view the task <a href=#{task_link}>here</a>.
+    #         "
+    #     }
+    #     Meteor.call 'send_email', mail_fields
  
     send_email_about_incident_assignment:(incident_doc_id, username)->
         incident = Docs.findOne incident_doc_id
@@ -58,8 +59,11 @@ Meteor.methods
         complete_incident_link = "https://www.jan.meteorapp.com/p/incident_admin_view?doc_id=#{incident._id}&mark_complete=true"
         
         mail_fields = {
+            # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
+
             # to: ["<#{assigned_to_user.emails[0].address}>"]
-            to: ['<repjackson@gmail.com>, <ziedmahdi@gmail.com>']
+            # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
+            to: 'repjackson@gmail.com'
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Incident Assignment"
             html: "<h4>You have been assigned to incident ##{incident.incident_number} from customer: #{incident.customer_name}.</h4>

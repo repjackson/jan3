@@ -39,8 +39,8 @@ Meteor.publish 'block_children', (
             match.type = block.children_doc_type
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
-        if block.children_doc_type is 'event'
-            console.log filter_key
+        # if block.children_doc_type is 'event'
+            # console.log filter_key
         calculated_value =
             switch filter_value
                 when "{source_key}"

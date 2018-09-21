@@ -1,6 +1,6 @@
 api_key = Meteor.settings.mailgun.api_key
 domain = Meteor.settings.mailgun.domain
-mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
+mailgun = require('mailgun-js')({apiKey: api_key, domain: domain})
 
 Twilio = require 'twilio'
 twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.token)
@@ -32,7 +32,7 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
         incident_level_name = ''
         emailHtmlStart = ''
         emailSubject = ''
-        if incident.level == 1
+        if incident.level is 1
             incident_level_name = 'initial'
             emailHtmlStart = "<h4>Incident from #{incident.customer_name} submitted by customer.</h4>"
             emailSubject = "Incident from #{incident.customer_name} submitted."
@@ -45,7 +45,7 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
         emailHtmlEnd = "<h5>Type: #{incident.incident_type}</h5>
             <h5>Number: #{incident.incident_number}</h5>
             <h5>Details: #{incident.incident_details}</h5>
-            <h5>Timestamp: #{incident.timestamp}</h5>
+            <h5>Timestamp: #{incident.long_timestamp}</h5>
             <h5>Office: #{incident.incident_office_name}</h5>
             <h5>Open: #{incident.open}</h5>
             <h5>Service Date: #{incident.service_date}</h5>
@@ -82,11 +82,11 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
             text: ''
             html: emailHtmlStart + emailHtmlEnd
         }
+        console.log mail_fields
 
-
-        mailgun.messages().send(mail_fields).catch (error) ->
-            console.error error
-            return
+        # mailgun.messages().send(mail_fields).catch (error) ->
+        #     console.error error
+        #     return
 
         #save the event if asked to
         event_action = "Incident #{user_type} #{name} has been emailed per #{incident.incident_office_name} #{incident_level_name} rules."
@@ -101,11 +101,10 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
         return @generate_event event_type, incident._id, event_action, '', Date.now()
 
     text_someone: (type, name, phone_number, incident_doc_id, incident_office_name, incident_level, save) ->
-
         try
             phone_number format(parse(phone_number, {country: {default: 'US'}}), 'International_plaintext');
         catch err
-            console.error "#{phone_number} is uncorrect"
+            console.error "#{phone_number} is incorrect format"
 
             if Meteor.isProduction
                 return
@@ -114,9 +113,9 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
         body = ""
         if incident_level == 1
             incident_level_name = "initial"
-            body = "Hey #{name}, A new incident has been submitted"
+            body = "#{name}, A new ticket has been submitted"
         else
-            body = "Hey #{name}, An incident has been escalated to level #{incident_level}";
+            body = "#{name}, An ticket has been escalated to level #{incident_level}";
             incident_level_name = "level #{incident_level} notifications"
 
         user_type = 'owner'
@@ -143,7 +142,7 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
         )
 
         #save the event if asked to
-        event_action = "Incident #{user_type} #{name} has been texted per #{incident_office_name} #{incident_level_name} rules."
+        event_action = "Ticket #{user_type} #{name} has been texted per #{incident_office_name} #{incident_level_name} rules."
 
         if save
             Docs.insert
@@ -174,56 +173,32 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
 
     handle_sla: (user_id, incident, escalation_number, mongoBulkOperation) ->
         incident_doc_id = incident._id
-        sla = null
-        franchisee = null
 
         if incident.franchisee_jpid
-            Docs.find($or: [
-                {
-                    type:'sla_setting'
-                    escalation_number: escalation_number
-                    incident_type:incident.incident_type
-                    office_jpid:incident.office_jpid
-                }
-                {
-                    'ev.ID': incident.franchisee_jpid
-                    type: 'franchisee'
-                }
-            ]).forEach (doc) ->
-                if doc.type is 'sla_setting'
-                    sla = doc
-                else
-                    franchisee = doc
-        else
-            sla = Docs.findOne
-                type:'sla_setting'
-                escalation_number: escalation_number
-                incident_type:incident.incident_type
-                office_jpid:incident.office_jpid
+            franchisee = Docs.findOne {
+                'ev.ID': incident.franchisee_jpid
+                type: 'franchisee'
+            }
 
-        owner = null
-        secondary = null
+        sla = Docs.findOne { 
+            type:'sla_setting'
+            escalation_number: escalation_number
+            incident_type:incident.incident_type
+            office_jpid:incident.office_jpid
+        }
+
         user_id = user_id or Meteor.userId()
         customer = null
-        Meteor.users.find($or: [
-            { username: $in: [
-                sla.incident_owner
-                sla.secondary_contact
-            ] }
-            { _id: user_id }
-        ]).forEach (current_user) ->
-            if current_user._id == user_id
-                customer = current_user
-            else if current_user.username == sla.incident_owner
-                owner = current_user
-            else
-                secondary = current_user
-            return
+
+        secondary = Meteor.users.findOne username: sla.secondary_contact
+        owner = Meteor.users.findOne username: sla.incident_owner
+        # primary = Meteor.users.findOne username: sla.primary_contact
+
+        console.log secondary
+        console.log owner
 
         if sla
-            #do what needed for owner
             if sla.email_owner or sla.sms_owner
-
                 if sla.email_owner
                     owner_email = if owner.ev then owner.ev.EMAIL else ''
                     mongoBulkOperation.insert Incident_Helpers.email_owner sla.incident_owner, owner_email, incident, false
@@ -231,9 +206,7 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
                 if sla.sms_owner
                     mongoBulkOperation.insert Incident_Helpers.text_owner sla.incident_owner, owner.phone, incident_doc_id, incident.incident_office_name, incident.level, false
 
-            #do what needed for secondary contact
             if sla.email_secondary or sla.sms_secondary
-
                 if sla.email_secondary
                     secondary_email = if secondary.ev then secondary.ev.EMAIL else ''
                     mongoBulkOperation.insert Incident_Helpers.email_secondary sla.secondary_contact, secondary_email, incident, false
@@ -241,12 +214,10 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
                 if sla.sms_secondary
                     mongoBulkOperation.insert Incident_Helpers.text_secondary sla.secondary_contact, secondary.phone, incident_doc_id, incident.incident_office_name, incident.level, false
 
-            #do what needed for customer
             if sla.contact_customer
                 customer_email = if customer.ev then customer.ev.EMAIL else ''
                 mongoBulkOperation.insert Incident_Helpers.email_customer customer.username, customer_email, incident, false
 
-            #do what needed for franchisee
             if sla.contact_franchisee and franchisee and franchisee.ev
                 mongoBulkOperation.insert Incident_Helpers.email_franchisee franchisee.ev.FRANCH_NAME, franchisee.ev.FRANCH_EMAIL, incident, false
 
@@ -286,7 +257,7 @@ twilio = Twilio(Meteor.settings.private.sms.sid, Meteor.settings.private.sms.tok
 Meteor.methods
     submit_incident: (incident_doc_id)->
         incident = Docs.findOne incident_doc_id
-
+        console.log 'submitting'
         timestamp = Date.now()
 
         mongoBulkOperation = Docs.rawCollection().initializeUnorderedBulkOp();
@@ -304,7 +275,7 @@ Meteor.methods
                 assigned_to: owner._id
 
         mongoBulkOperation.insert Incident_Helpers.generate_event 'submit', incident_doc_id, "#{customer.username} submitted the incident.", customer._id, timestamp - 10
-
+        Meteor.call 'notify_about_incident_submission', incident_doc_id, ->
 
         mongoBulkOperation.execute (error) ->
             if error
@@ -411,7 +382,7 @@ Meteor.methods
 
     notify_about_incident_submission: (incident_doc_id)->
         incident = Docs.findOne incident_doc_id
-
+        console.log 'notifying about ticket submission'
         customer = Docs.findOne {
             "ev.ID":incident.customer_jpid
             type:'customer'
@@ -435,9 +406,10 @@ Meteor.methods
                 incident_type:incident.incident_type
                 office_jpid:incident.office_jpid
 
+            # to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
 
         mail_fields = {
-            to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
+            to: ["ej <repjackson@gmail.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Incident from #{incident.customer_name} submitted."
             text: ''
@@ -468,7 +440,10 @@ Meteor.methods
         if sla.contact_customer
             Meteor.call 'create_event', incident_doc_id, 'emailed_customer_contact', "Customer #{customer.ev.CUST_NAME} emailed after incident submission."
 
-        Meteor.call 'send_email', mail_fields
+
+        console.log mail_fields
+
+        # Meteor.call 'send_email', mail_fields
 
 
 

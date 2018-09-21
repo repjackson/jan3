@@ -31,18 +31,20 @@
 			"places": "AIzaSyDjxr1W7FhbxSIlmZKJ9x3tisiG7pmUxt4"
 		}
 	},
+	"test": {
+		"gmailUsername": "repjackson",
+		"phoneNumber": "+19705790321"
+	},
 	"mailgun": {
        "api_key": "key-202d6a39f8f7dfdd9860dc921f7184d3",
        "domain": "mg.janhub.com"
 	},
 	"cloudinary_key": "754714459692734",
 	"cloudinary_secret": "rPPXD3rZM_GCjODvh0T70XeDCSw",
-	"MAIL_URL": "smtp://richard%40janhub.com:janhubrichardpassword@smtp.gmail.com:465/",
 	"galaxy.meteor.com": {
 		"env": {
-			"MONGO_URL": "mongodb://janadmin:jancleaningcustomerpassword@aws-us-east-1-portal.21.dblayer.com:10444/jandb?ssl=true",
-			"ROOT_URL": "https://www.jan.meteorapp.com",
-			"MAIL_URL": "smtps://richard%40janhub.com:janhubrichardpassword@smtp.gmail.com:465/"
+			"MONGO_URL": "mongodb://richardadmin:richardadminpassword@aws-us-east-1-portal.21.dblayer.com:10444/jandb?ssl=true",
+			"ROOT_URL": "https://www.jan.meteorapp.com"
 		}
 	},
 	"public": {

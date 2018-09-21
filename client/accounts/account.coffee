@@ -23,18 +23,6 @@ Template.account_settings.events
                 Meteor.call 'update_username', new_username
     
     
-    # 'click #test_email': ->
-    #     Meteor.call('send_email',{
-    #         to: 'repjackson@gmail.com',
-    #         from: 'no-reply@where-ever.com',
-    #         subject: 'I really like sending emails with Mailgun!',
-    #         text: 'Mailgun is totally awesome for sending emails!',
-    #         html: 'With meteor it&apos;s easy to set up <strong>HTML</strong> <span style="color:red">emails</span> too.'
-    #       });
-
-    
-    
-    
     'click #add_email': ->
         new_email = $('#new_email').val().trim()
         user = Meteor.user()

@@ -111,8 +111,8 @@ if Meteor.isProduction
     )
 
 
-
-SyncedCron.start()
+if Meteor.isProduction
+    SyncedCron.start()
 
 
 
