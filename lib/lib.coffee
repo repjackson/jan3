@@ -1,19 +1,18 @@
 @Docs = new Meteor.Collection 'docs'
 # @Settings = new Meteor.Collection 'settings'
+@Events = new Meteor.Collection 'events'
 @Stats = new Meteor.Collection 'stats'
 # @Tags = new Meteor.Collection 'tags'
 
 
 
 Docs.before.insert (userId, doc)->
-    timestamp = doc.timestamp || Date.now();
+    timestamp = Date.now();
     now = moment(timestamp);
     
-    if !doc.timestamp
-        doc.timestamp = timestamp
+    doc.timestamp = timestamp
     
-    if !doc.updated
-        doc.updated = timestamp
+    doc.updated = timestamp
         
     doc.long_timestamp = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
     date = moment(timestamp).format('Do')
@@ -56,19 +55,6 @@ Meteor.users.helpers
                 type:'office'
                 "ev.ID": @office_jpid
             return office_doc
-            # else if @customer_jpid
-            #     users_customer = Docs.findOne
-            #         type:'customer'
-            #         "ev.ID": @customer_jpid
-            #     if users_customer
-            #         customers_franchisee = Docs.findOne
-            #             type: 'franchisee'
-            #             "ev.FRANCHISEE": users_customer.ev.FRANCHISEE
-            #         if customers_franchisee
-            #             customers_office = Docs.findOne
-            #                 type:'office'
-            #                 "ev.MASTER_LICENSEE": customers_franchisee.ev.MASTER_LICENSEE
-            #             return customers_office
 
         
     email: -> 
@@ -159,107 +145,3 @@ Meteor.methods
     update_row_key: (page_doc_id, row_object, key, value)->
         Docs.update { _id:page_doc_id, rows:row_object },
             { $set: "rows.$.#{key}": value }
-    
-    
-
-
-    vote_up: (id)->
-        doc = Docs.findOne id
-        if not doc.upvoters
-            Docs.update id,
-                $set: 
-                    upvoters: []
-                    downvoters: []
-        else if Meteor.userId() in doc.upvoters #undo upvote
-            Docs.update id,
-                $pull: upvoters: Meteor.userId()
-                $inc: points: -1
-            Meteor.users.update doc.author_id, $inc: points: -1
-            # Meteor.users.update Meteor.userId(), $inc: points: 1
-
-        else if Meteor.userId() in doc.downvoters #switch downvote to upvote
-            Docs.update id,
-                $pull: downvoters: Meteor.userId()
-                $addToSet: upvoters: Meteor.userId()
-                $inc: points: 2
-            # Meteor.users.update doc.author_id, $inc: points: 2
-
-        else #clean upvote
-            Docs.update id,
-                $addToSet: upvoters: Meteor.userId()
-                $inc: points: 1
-            Meteor.users.update doc.author_id, $inc: points: 1
-            # Meteor.users.update Meteor.userId(), $inc: points: -1
-        # Meteor.call 'generate_upvoted_cloud', Meteor.userId()
-
-    vote_down: (id)->
-        doc = Docs.findOne id
-        if not doc.downvoters
-            Docs.update id,
-                $set: 
-                    upvoters: []
-                    downvoters: []
-        else if Meteor.userId() in doc.downvoters #undo downvote
-            Docs.update id,
-                $pull: downvoters: Meteor.userId()
-                $inc: points: 1
-            # Meteor.users.update doc.author_id, $inc: points: 1
-            # Meteor.users.update Meteor.userId(), $inc: points: 1
-
-        else if Meteor.userId() in doc.upvoters #switch upvote to downvote
-            Docs.update id,
-                $pull: upvoters: Meteor.userId()
-                $addToSet: downvoters: Meteor.userId()
-                $inc: points: -2
-            # Meteor.users.update doc.author_id, $inc: points: -2
-
-        else #clean downvote
-            Docs.update id,
-                $addToSet: downvoters: Meteor.userId()
-                $inc: points: -1
-            # Meteor.users.update doc.author_id, $inc: points: -1
-            # Meteor.users.update Meteor.userId(), $inc: points: -1
-        # Meteor.call 'generate_downvoted_cloud', Meteor.userId()
-
-    # favorite: (doc)->
-    #     if doc.favoriters and Meteor.userId() in doc.favoriters
-    #         Docs.update doc._id,
-    #             $pull: favoriters: Meteor.userId()
-    #             $inc: favorite_count: -1
-    #     else
-    #         Docs.update doc._id,
-    #             $addToSet: favoriters: Meteor.userId()
-    #             $inc: favorite_count: 1
-    
-    # mark_complete: (doc)->
-    #     if doc.completed_ids and Meteor.userId() in doc.completed_ids
-    #         Docs.update doc._id,
-    #             $pull: completed_ids: Meteor.userId()
-    #             $inc: completed_count: -1
-    #     else
-    #         Docs.update doc._id,
-    #             $addToSet: completed_ids: Meteor.userId()
-    #             $inc: completed_count: 1
-    
-    
-    mark_read: (doc)->
-        if doc.read_by and Meteor.userId() in doc.read_by
-            Docs.update doc._id,
-                $pull: read_by: Meteor.userId()
-                $inc: read_count: -1
-        else
-            Docs.update doc._id,
-                $addToSet: read_by: Meteor.userId()
-                $inc: read_count: 1
-    
-    bookmark: (doc)->
-        if doc.bookmarked_ids and Meteor.userId() in doc.bookmarked_ids
-            Docs.update doc._id,
-                $pull: bookmarked_ids: Meteor.userId()
-                $inc: bookmarked_count: -1
-        else
-            Docs.update doc._id,
-                $addToSet: bookmarked_ids: Meteor.userId()
-                $inc: bookmarked_count: 1
-    
-    

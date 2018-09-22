@@ -8,30 +8,30 @@ template(name='level_icon')
     if is_level_four
         img.ui.mini.image(src="/level4icon.png" data-content='Level 4')
                         
-template(name='incident_type_label')    
-    if incident_type_label
-        +icon name=incident_type_icon popup=incident_type_label
-        // .ui.label(class=type_label_class) #{incident_type_label}
+template(name='ticket_type_label')    
+    if ticket_type_label
+        +icon name=ticket_type_icon popup=ticket_type_label
+        // .ui.label(class=type_label_class) #{ticket_type_label}
 
 
 
-template(name='add_incident_button')
+template(name='add_ticket_button')
     if has_user_customer_jpid
-        a.ui.button#add_incident(href='#' data-content='Create New Incident')
+        a.ui.button#add_ticket(href='#' data-content='Create New ticket')
             i.large.green.plus.icon
-            |Log New Incident
+            |Log New ticket
     else
         if is_customer
-            .ui.secondary.segment Add Office to Profile to Add Incident
+            .ui.secondary.segment Add Office to Profile to Add ticket
 
             
-template(name='submit_incident')
+template(name='submit_ticket')
     .ui.header 
         +icon name='category'
         |Type
-    each incident_type_docs
-        +toggle_key key='incident_type' value=slug label=title icon=icon
-    +edit_textarea label='Details' key='incident_details' icon='view-details'
+    each ticket_type_docs
+        +toggle_key key='ticket_type' value=slug label=title icon=icon
+    +edit_textarea label='Details' key='ticket_details' icon='view-details'
     +edit_datetime_field key='service_date' label='Service Time'
     .ui.hidden.divider
     .submit.ui.fluid.green.button
@@ -42,7 +42,7 @@ template(name='submit_incident')
 template(name='sla_tester')
     .ui.small.icon.check_escalation.button(title='Manually Check Escalation')
         i.refresh.link.icon
-    .ui.small.icon.escalate_incident.button(title='Manually Escalate')
+    .ui.small.icon.escalate_ticket.button(title='Manually Escalate')
         i.sort.numeric.down.link.icon
     each sla_docs
         strong Level #{escalation_number}
@@ -51,7 +51,7 @@ template(name='sla_tester')
             i.link.left.arrow.icon
         .ui.secondary.segment
             | Owner
-            +view_sla_contact username=incident_owner
+            +view_sla_contact username=ticket_owner
             if contact_customer
                 i.money.large.icon(title='Contact Customer')
             if contact_franchisee
