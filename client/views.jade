@@ -196,9 +196,9 @@ template(name='schema_view')
                     .ui.card
                         .content
                             .header #{title}
-                // .ui.stackable.four.cards
-                //     each schema_docs
-                //         +doc_card
+                .ui.stackable.four.cards
+                    each schema_docs
+                        +doc_card
                 
 template(name='schema_selector')
     each user_schemas

@@ -108,15 +108,16 @@ Meteor.publish 'block_children', (
         #     console.log 'filter_value', filter_value
         #     console.log 'calc', calculated_value
         user = Meteor.user()
-        unless block.children_collection is 'users' 
-            if user and user.roles
-                # unless 'customer' in user.roles
-                match.submitted = $ne: false
+        
+        
+        # unless block.children_collection is 'users' 
+        #     if user and user.roles
+        #         # unless 'customer' in user.roles
+        #         match.submitted = $ne: false
                 
         if -1 > limit > 100
             limit = 100
-        # if block.children_doc_type is 'event'
-        #     console.log 'match', match    
+        # console.log 'match', match    
         if block.children_collection is 'users' 
             Meteor.users.find match,{
                 skip: skip

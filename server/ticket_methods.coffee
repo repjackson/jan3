@@ -5,8 +5,8 @@ Meteor.methods
             Docs.findOne
                 type:'sla_setting'
                 escalation_number:1
-                ticket_type:ticket.ticket_type
-                office_jpid:ticket.office_jpid
+                # ticket_type:ticket.ticket_type
+                # office_jpid:ticket.office_jpid
         if sla.ticket_owner
             owner_user = Meteor.users.findOne username:sla.ticket_owner
             Docs.update ticket_id,
@@ -25,13 +25,15 @@ Meteor.methods
     
     submit_ticket: (ticket_id)->
         ticket = Docs.findOne ticket_id
-    
+        console.log 'ticket', ticket
         sla = 
             Docs.findOne
                 type:'sla_setting'
-                escalation_number:1
-                ticket_type:ticket.ticket_type
-                office_jpid:ticket.office_jpid
+                # escalation_number:1
+                # ticket_type:ticket.ticket_type
+                # office_jpid:ticket.office_jpid
+        console.log sla        
+                
                 
         if sla.escalation_hours
             Docs.insert
@@ -223,10 +225,12 @@ Meteor.methods
                 <h4>This will notify</h4>
                 <h5>Ticket Owner: #{sla.ticket_owner}</h5>
                 <h5>Secondary Office Contact: #{sla.secondary_contact}</h5>
-                <h5>Franchisee: #{sla.contact_franchisee}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
                 <h5>Customer: #{sla.contact_customer}, #{customer.ev.CUST_NAME} at #{customer.ev.CUST_CONTACT_EMAIL}</h5>
             "
         }
+        
+                        # <h5>Franchisee: #{sla.contact_franchisee}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
+
         Docs.insert
             type:'event'
             parent_id:ticket_id
