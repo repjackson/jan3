@@ -132,11 +132,11 @@ Meteor.publish 'block_children', (
             }
             
 
-Meteor.publish 'assigned_to_users', (incident_doc_id)->
-    incident_doc = Docs.findOne incident_doc_id
-    if incident_doc and incident_doc.assigned_to
+Meteor.publish 'assigned_to_users', (ticket_doc_id)->
+    ticket_doc = Docs.findOne ticket_doc_id
+    if ticket_doc and ticket_doc.assigned_to
         Meteor.users.find 
-            _id: $in: incident_doc.assigned_to
+            _id: $in: ticket_doc.assigned_to
         
         
         
@@ -344,36 +344,36 @@ publishComposite 'doc', (id)->
     }
     
     
-publishComposite 'incident', (id)->
+publishComposite 'ticket', (id)->
     {
         find: -> Docs.find id
         children: [
             {
-                find: (incident)-> Meteor.users.find _id:incident.author_id
+                find: (ticket)-> Meteor.users.find _id:ticket.author_id
             }
             {
-                find: (incident)-> 
+                find: (ticket)-> 
                     # customer doc
                     Docs.find
                         type:'customer'
-                        "ev.ID": incident.customer_jpid
+                        "ev.ID": ticket.customer_jpid
 
             }
             {
-                find: (incident)-> 
+                find: (ticket)-> 
                     Docs.find
-                        "ev.ID": incident.office_jpid
+                        "ev.ID": ticket.office_jpid
                         type:'office'
 
             }
             # {
-            #     find: (incident)-> Docs.find _id:doc.referenced_customer_id
+            #     find: (ticket)-> Docs.find _id:doc.referenced_customer_id
             # }
             {
-                find: (incident)-> 
+                find: (ticket)-> 
                     Docs.find 
                         type:'feedback_response'
-                        parent_id:incident._id
+                        parent_id:ticket._id
             }
         ]
     }
@@ -401,10 +401,10 @@ publishComposite 'me', ()->
         #         # children: [
         #         #     # {
         #         #     #     find: (customer)-> 
-        #         #     #         # parent incidents
+        #         #     #         # parent tickets
         #         #     #         Docs.find
         #         #     #             customer_jpid: customer.jpid
-        #         #     #             type:'incident'
+        #         #     #             type:'ticket'
         #         #     # }
         #         #     # {
         #         #     #     find: (customer)-> 
@@ -553,17 +553,17 @@ Meteor.publish 'my_office_messages', ()->
             
             
             
-Meteor.publish 'incident_sla_docs', (incident_doc_id)->
-    incident = Docs.findOne incident_doc_id
+Meteor.publish 'ticket_sla_docs', (ticket_doc_id)->
+    ticket = Docs.findOne ticket_doc_id
     Docs.find
         type:'sla_setting'
-        office_jpid:incident.office_jpid
-        incident_type:incident.incident_type
+        office_jpid:ticket.office_jpid
+        ticket_type:ticket.ticket_type
             
             
-Meteor.publish 'office_employees_from_incident_doc_id', (incident_doc_id)->
-    incident = Docs.findOne incident_doc_id
-    office_doc = Docs.findOne "ev.ID":incident.office_jpid
+Meteor.publish 'office_employees_from_ticket_doc_id', (ticket_doc_id)->
+    ticket = Docs.findOne ticket_doc_id
+    office_doc = Docs.findOne "ev.ID":ticket.office_jpid
     Meteor.users.find
         "ev.COMPANY_NAME": office_doc.ev.MASTER_LICENSEE
             

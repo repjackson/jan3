@@ -22,11 +22,11 @@ Template.add_button.events
 
 
 
-Template.incident_assignment_cell.onCreated ->
+Template.ticket_assignment_cell.onCreated ->
     @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
     
-Template.incident_assignment_cell.helpers
-    # incident_assignment_cell_class: ->
+Template.ticket_assignment_cell.helpers
+    # ticket_assignment_cell_class: ->
     #     if @assignment_timestamp
     #         now = Date.now()
     #         response = @assignment_timestamp - now
@@ -166,7 +166,7 @@ Template.assignment_widget.onRendered ()->
     unassigned_username = FlowRouter.getQueryParam 'unassign'
     if unassigned_username
         console.log 'found unassign', unassigned_username
-        Meteor.call 'unassign_user_from_incident', FlowRouter.getQueryParam('doc_id'), target_username, (err,res)->
+        Meteor.call 'unassign_user_from_ticket', FlowRouter.getQueryParam('doc_id'), target_username, (err,res)->
             if err then console.error err
 
     
@@ -177,8 +177,8 @@ Template.assignment_widget.events
 
     'keyup #multiple_user_select_input': (e,t)->
         multiple_user_select_input_value = $(e.currentTarget).closest('#multiple_user_select_input').val().trim()
-        current_incident = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        Meteor.call 'lookup_office_user_by_username_and_officename', current_incident.incident_office_name, multiple_user_select_input_value, (err,res)=>
+        current_ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        Meteor.call 'lookup_office_user_by_username_and_officename', current_ticket.ticket_office_name, multiple_user_select_input_value, (err,res)=>
             if err then console.error err
             else
                 t.user_results.set res
@@ -195,11 +195,11 @@ Template.assignment_widget.events
         if page_doc.type is 'task'
             Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to task: #{page_doc.title}."
             Meteor.call 'send_email_about_task_assignment', page_doc._id, @username
-        else if page_doc.type is 'incident'
+        else if page_doc.type is 'ticket'
             Docs.update page_doc._id,
                 $set: assignment_timestamp:Date.now()
-            Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to incident: #{page_doc.title}."
-            Meteor.call 'send_email_about_incident_assignment', page_doc._id, @username
+            Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to ticket: #{page_doc.title}."
+            Meteor.call 'send_email_about_ticket_assignment', page_doc._id, @username
     
     'click .pull_user': ->
         context = Template.currentData(0)

@@ -60,17 +60,17 @@ Meteor.methods
         
         
         
-    calculate_my_incidents_count: ()->
+    calculate_my_tickets_count: ()->
         user = Meteor.user()
         if user and user.customer_jpid
             count = 
                 Docs.find({
                     customer_jpid: user.customer_jpid
-                    type: 'incident'
+                    type: 'ticket'
                 }).count()
         
             Stats.update({
-                doc_type: 'incident'
+                doc_type: 'ticket'
                 stat_type: 'customer'
                 customer_jpid: user.customer_jpid
             }, { $set:amount:count },{ upsert:true })
@@ -96,7 +96,7 @@ Meteor.methods
                     "ev.ID":stat_match_object.jpid
                 if office_doc
                     switch stat_match_object.doc_type
-                        when 'incident' then count_match_object.incident_office_name = office_doc.ev.MASTER_LICENSEE
+                        when 'ticket' then count_match_object.ticket_office_name = office_doc.ev.MASTER_LICENSEE
                         when 'franchisee' then count_match_object["ev.MASTER_LICENSEE"] = office_doc.ev.MASTER_LICENSEE
                         when 'customer' then count_match_object["ev.MASTER_LICENSEE"] = office_doc.ev.MASTER_LICENSEE
                 # count_match_object["ev.ID"] = stat_match_object.jpid

@@ -103,4 +103,4 @@ Template.doc_history_event.helpers
 #     'click #clear_events':
 #         doc_id = FlowRouter.getQueryParam('doc_id')
 #         if confirm 'Clear all events? Irriversible.'
-#             Meteor.call 'clear_incident_events', doc_id
+#             Meteor.call 'clear_ticket_events', doc_id

@@ -64,11 +64,11 @@ template(name='franchisee_view')
                             
                         // .item Master Licensee: 
                         //     strong #{ev.MASTER_LICENSEE}
-                +blocks tags='franchisee,incidents'
-                +blocks tags='franchisee,incident,feedback_response'
+                +blocks tags='franchisee,tickets'
+                +blocks tags='franchisee,ticket,feedback_response'
             .twelve.wide.column
                 +blocks tags='franchisee,page,parent_office'
-                +blocks tags='incidents,franchisee_page'
+                +blocks tags='tickets,franchisee_page'
             // .four.wide.column
             //     +blocks tags='franchisee,message'
             //     +blocks tags='franchisee,comment'
@@ -190,13 +190,15 @@ template(name='schema_view')
                     each fields
                         .item #{title} (#{slug}) [#{type}]
             .thirteen.wide.column
-                .ui.stackable.four.cards
-                    each schema_docs
-                        +doc_card
-                        // +Template.dynamic template=single_view
-
-                        // +schema_doc
-                
+                each field_instances
+                    .add_field_instance.ui.button #{title}
+                each referenced_field_instances
+                    .ui.card
+                        .content
+                            .header #{title}
+                // .ui.stackable.four.cards
+                //     each schema_docs
+                //         +doc_card
                 
 template(name='schema_selector')
     each user_schemas
@@ -211,3 +213,6 @@ template(name='schema_doc')
                 +Template.dynamic template=view_field_template
                 |{{ key_value key=slug}}
                 .ui.label slug:#{slug}
+                
+                
+                

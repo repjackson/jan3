@@ -18,7 +18,7 @@ FlowRouter.route('/', {
                 else if 'admin' in user.roles
                     redirect '/p/admin' 
                 else if 'office' in user.roles
-                    redirect "/p/office_incidents/#{user.office_jpid}" 
+                    redirect "/p/office_tickets/#{user.office_jpid}" 
         else
             redirect '/login' 
     ]
@@ -75,7 +75,7 @@ Template.registerHelper 'my_office_link', () ->
             #     "ev.ID": user.office_jpid
             #     type:'office'
             # users_office
-            return "/p/office_incidents/#{user.office_jpid}"
+            return "/p/office_tickets/#{user.office_jpid}"
 
 Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
 

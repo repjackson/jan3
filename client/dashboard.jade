@@ -68,8 +68,8 @@
 //             .sixteen.wide.column
 //                 h3.ui.header 
 //                     +icon name='error'
-//                     |#{currentUser.users_customer.ev.CUST_NAME} Incidents
-//                 +blocks tags='customer,dashboard,incidents'
+//                     |#{currentUser.users_customer.ev.CUST_NAME} Tickets
+//                 +blocks tags='customer,dashboard,tickets'
 //         .row
 //             .sixteen.wide.column
 //                 +blocks tags='customer,dashboard,invoices'
@@ -101,7 +101,7 @@ template(name='customer_menu')
             i.large.icon
                 +icon name='add-ticket'
             | &nbsp; Log Ticket
-        a.item(href='/p/customer_incidents')
+        a.item(href='/p/customer_tickets')
             i.large.icon
                 +iconsmall name='two-tickets'
             | &nbsp; Tickets

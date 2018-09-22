@@ -1,30 +1,30 @@
 template(name='doc_edit')
     with doc
         +Template.dynamic template=type_edit
-        // if is_dev
-        //     .ui.padded.stackable.centered.grid
-        //         .centered.row
-        //             .three.wide.center.aligned.column
-        //                 +link_button link='/p/admin' icon='database' label='Admin'
-        //             .ten.wide.column
-        //                 h1.ui.center.aligned.grey.header Edit #{doc.title} #{doc.type}
-        //             .three.wide.center.aligned.column
-        //                 a.ui.large.icon.button(href="/v/#{doc._id}") 
-        //                     i.large.green.checkmark.icon
-        //         .row
-        //             .four.wide.column
-        //                 |Type: #{doc.type}
-        //             .eight.wide.column
-        //                 with schema_doc
-        //                     .ui.form
-        //                         each fields
-        //                             .field(class=field_class)
-        //                                 label
-        //                                     if icon
-        //                                         i.icon(class=icon)
-        //                                     |#{title}
-        //                                 .ui.input
-        //                                     input.text_field(type='text' value=slug_value)
+        if is_dev
+            .ui.padded.stackable.centered.grid
+                .centered.row
+                    .three.wide.center.aligned.column
+                        +link_button link='/p/admin' icon='database' label='Admin'
+                    .ten.wide.column
+                        h1.ui.center.aligned.grey.header Edit #{doc.title} #{doc.type}
+                    .three.wide.center.aligned.column
+                        a.ui.large.icon.button(href="/v/#{doc._id}") 
+                            i.large.green.checkmark.icon
+                .row
+                    .four.wide.column
+                        |Type: #{doc.type}
+                    .eight.wide.column
+                        with schema_doc
+                            .ui.form
+                                each fields
+                                    .field(class=field_class)
+                                        label
+                                            if icon
+                                                i.icon(class=icon)
+                                            |#{title}
+                                        .ui.input
+                                            input.text_field(type='text' value=slug_value)
           
                                     
 
@@ -32,24 +32,24 @@ template(name='doc_edit')
 template(name='doc_view')
     with doc
         +Template.dynamic template=type_view
-    // if is_dev
-    //     .ui.padded.stackable.centered.grid
-    //         .centered.row
-    //             .three.wide.center.aligned.column
-    //                 +link_button link='/p/admin' icon='database' label='Admin'
-    //             .ten.wide.column
-    //                 h1.ui.center.aligned.grey.header View #{doc.title} #{doc.type}
-    //             .three.wide.center.aligned.column
-    //                 +edit_button
-    //         .row
-    //             .four.wide.column
-    //                 .ui.header When #{when}
-    //                 +author_info
-    //             .eight.wide.column
-    //                 with schema_doc
-    //                     each fields
-    //                         h4.ui.header #{title}: #{slug_value}
-    //                         // +Template.dynamic template=view_field_template
+    if is_dev
+        .ui.padded.stackable.centered.grid
+            .centered.row
+                .three.wide.center.aligned.column
+                    +link_button link='/p/admin' icon='database' label='Admin'
+                .ten.wide.column
+                    h1.ui.center.aligned.grey.header View #{doc.title} #{doc.type}
+                .three.wide.center.aligned.column
+                    +edit_button
+            .row
+                .four.wide.column
+                    .ui.header When #{when}
+                    +author_info
+                .eight.wide.column
+                    with schema_doc
+                        each fields
+                            h4.ui.header #{title}: #{slug_value}
+                            // +Template.dynamic template=view_field_template
         
     
 template(name='doc_card')
@@ -75,15 +75,15 @@ template(name='doc_card')
         
 
 
-template(name='finance_view')
-    .ui.padded.stackable.grid
-        .centered.row
-            .three.wide.center.aligned.column
-                // +link_button link='/roles' icon='reviewer-female' label='Roles'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header View Invoice
-            .three.wide.center.aligned.column
-                // +edit_button
-        .centered.row
-            .twelve.wide.column
-                +blocks tags='finance,invoice,view,page'
+// template(name='finance_view')
+//     .ui.padded.stackable.grid
+//         .centered.row
+//             .three.wide.center.aligned.column
+//                 // +link_button link='/roles' icon='reviewer-female' label='Roles'
+//             .ten.wide.column
+//                 h1.ui.center.aligned.grey.header View Invoice
+//             .three.wide.center.aligned.column
+//                 // +edit_button
+//         .centered.row
+//             .twelve.wide.column
+//                 +blocks tags='finance,invoice,view,page'

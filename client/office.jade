@@ -13,13 +13,13 @@ template(name='office_messages')
                         
                         
 template(name='office_sla')
-    each incident_types
-        .select_incident_type.ui.button(class=select_incident_type_button_class) 
+    each ticket_types
+        .select_ticket_type.ui.button(class=select_ticket_type_button_class) 
             if icon
                 i.icon  
                     +icon name=icon
             |#{title}
-    if selected_incident_type
+    if selected_ticket_type
         table.ui.celled.table
             thead
                 tr  
@@ -49,10 +49,10 @@ template(name='office_sla')
                                     +toggle_sla_boolean key='contact_franchisee' label='Franchisee' icon='business' title='Contact Franchisee'
                                 td
                                     if is_initial
-                                        +incident_owner_select
+                                        +ticket_owner_select
                                     else
-                                        if incident_owner
-                                            .ui.large.basic.label #{incident_owner}
+                                        if ticket_owner
+                                            .ui.large.basic.label #{ticket_owner}
                                     +toggle_sla_boolean key='email_owner' label='Email' icon='open-envelope' title='Email Owner'
                                     +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment' title='Text Owner'
                                 td 
@@ -81,8 +81,8 @@ template(name='set_sla_key_value')
         |#{label}
         
         
-template(name='incident_owner_select')
-    unless incident_owner
+template(name='ticket_owner_select')
+    unless ticket_owner
         .ui.form
             .field
                 .ui.icon.input
@@ -97,11 +97,11 @@ template(name='incident_owner_select')
                                     img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
                                 strong #{profile.first_name} #{profile.last_name}
                                 |#{username}
-    if incident_owner
+    if ticket_owner
        .ui.large.basic.label     
-            a(href="/user/#{incident_owner}") 
-                | #{incident_owner}
-            i.pull_user.remove.link.icon(title="Clear #{incident_owner}")
+            a(href="/user/#{ticket_owner}") 
+                | #{ticket_owner}
+            i.pull_user.remove.link.icon(title="Clear #{ticket_owner}")
 
 
 

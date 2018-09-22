@@ -30,15 +30,15 @@ Template.toggle_sla_boolean.onRendered ->
     
 
 Template.office_sla.onCreated ->
-    @autorun -> Meteor.subscribe 'type', 'incident_type'
+    @autorun -> Meteor.subscribe 'type', 'ticket_type'
     @autorun -> Meteor.subscribe 'type', 'rule'
     @autorun -> Meteor.subscribe 'office_sla_settings',FlowRouter.getParam('jpid')
     @autorun -> Meteor.subscribe 'static_office_employees', FlowRouter.getParam('jpid')
-    Session.setDefault 'incident_type_selection', 'change_service'
+    Session.setDefault 'ticket_type_selection', 'change_service'
 
 Template.office_sla.events
-    'click .select_incident_type': ->
-        Session.set 'incident_type_selection', @slug
+    'click .select_ticket_type': ->
+        Session.set 'ticket_type_selection', @slug
 
             
     'click .add_sla_setting_doc': (e,t)->
@@ -46,24 +46,24 @@ Template.office_sla.events
             type:'sla_setting'
             escalation_number: @number
             office_jpid:FlowRouter.getParam('jpid')      
-            incident_type:Session.get('incident_type_selection')
+            ticket_type:Session.get('ticket_type_selection')
 
     
 Template.office_sla.helpers
     current_office: ->
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         return page_office
-    incident_types: -> Docs.find {type:'incident_type'}
-    select_incident_type_button_class: -> if Session.equals('incident_type_selection', @slug) then 'primary' else ''
-    selected_incident_type: -> Session.get 'incident_type_selection'
+    ticket_types: -> Docs.find {type:'ticket_type'}
+    select_ticket_type_button_class: -> if Session.equals('ticket_type_selection', @slug) then 'primary' else ''
+    selected_ticket_type: -> Session.get 'ticket_type_selection'
     is_initial: -> Template.parentData().number is 1    
     rule_docs: -> Docs.find {type:'rule'}, sort:number:1
 
-    incident_type_owner_value: ->
+    ticket_type_owner_value: ->
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        current_incident_type = Session.get 'incident_type_selection'
-        incident_type_owner_value = page_office["#{current_incident_type}_incident_owner"]
-        return incident_type_owner_value
+        current_ticket_type = Session.get 'ticket_type_selection'
+        ticket_type_owner_value = page_office["#{current_ticket_type}_ticket_owner"]
+        return ticket_type_owner_value
     
     sla_settings_doc: ->    
         rule_doc = Template.currentData()
@@ -72,17 +72,17 @@ Template.office_sla.helpers
                 type:'sla_setting'
                 escalation_number: rule_doc.number
                 office_jpid:FlowRouter.getParam('jpid') 
-                incident_type:Session.get('incident_type_selection')
+                ticket_type:Session.get('ticket_type_selection')
             }
         return sla_setting_doc
     
     
     
     
-Template.incident_owner_select.onCreated ()->
+Template.ticket_owner_select.onCreated ()->
     @user_results = new ReactiveVar( [] )
     
-Template.incident_owner_select.helpers
+Template.ticket_owner_select.helpers
     user_results: ->
         user_results = Template.instance().user_results.get()
         user_results
@@ -91,19 +91,19 @@ Template.incident_owner_select.helpers
         sla_setting_doc = Template.currentData()
 
         # office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        if sla_setting_doc.incident_owner
+        if sla_setting_doc.ticket_owner
             Meteor.users.findOne
-                username: sla_setting_doc.incident_owner
+                username: sla_setting_doc.ticket_owner
         else
             false
         
-Template.incident_owner_select.events
+Template.ticket_owner_select.events
     'click .select_owner': (e,t) ->
         sla_setting_doc = Template.currentData()
         # key = Template.parentData(0).key
         # searched_value = doc["#{template.data.key}"]
         # office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        Meteor.call('set_incident_owner', FlowRouter.getParam('jpid'), Session.get('incident_type_selection'), @username)
+        Meteor.call('set_ticket_owner', FlowRouter.getParam('jpid'), Session.get('ticket_type_selection'), @username)
         t.user_results.set null
 
 
@@ -121,9 +121,9 @@ Template.incident_owner_select.events
     'click .pull_user': (e,t)->
         context = Template.currentData()
         
-        if confirm "Remove #{context.incident_owner} as incident owner?"
+        if confirm "Remove #{context.ticket_owner} as ticket owner?"
             Docs.update context._id,
-                $unset: incident_owner: 1
+                $unset: ticket_owner: 1
 
 
 

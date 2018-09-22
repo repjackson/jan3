@@ -1,0 +1,30 @@
+template(name='field_instances')
+    .ui.padded.stackable.centered.grid
+        .centered.row
+            .three.wide.column
+                +link_button link='/p/schemas' icon='database' label='Schemas'
+            .ten.wide.column
+                h1.ui.center.aligned.header 
+                    +icon name='field'
+                    |Fields 
+        .row
+            .three.wide.column
+                .add_field_instance.ui.icon.button
+                    i.plus.icon
+            .thirteen.wide.column
+                each field_instances
+                    .ui.segment
+                        .content
+                            .header 
+                                if icon
+                                    +icon name=icon
+                                +edit_field_instance_field key='title' label='Title'
+                                // |#{title}
+                            +edit_field_instance_field key='slug' label='Slug'
+                            +edit_field_instance_field key='icon' label='Icon'
+
+
+template(name='edit_field_instance_field')
+    .ui.fluid.labeled.input
+        .ui.label #{label}
+        input.text_field(type='text' placeholder=label value=field_instance_value)

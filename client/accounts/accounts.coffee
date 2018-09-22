@@ -34,7 +34,7 @@ Template.login.events
         Meteor.loginWithPassword username, password, (err,res)->
             # console.log 'res', Meteor.user()
             if 'office' in Meteor.user().roles
-                FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
+                FlowRouter.go "/p/office_tickets/#{Meteor.user().office_jpid}"        
             else if 'customer' in Meteor.user().roles
                 FlowRouter.go "/p/customer_dashboard"    
             else    
@@ -49,7 +49,7 @@ Template.login.events
             Meteor.loginWithPassword username, password, (err,res)->
                 # console.log 'res', Meteor.user()
                 if 'office' in Meteor.user().roles
-                    FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
+                    FlowRouter.go "/p/office_tickets/#{Meteor.user().office_jpid}"        
                 else if 'customer' in Meteor.user().roles
                     FlowRouter.go "/p/customer_dashboard"    
                 else    
@@ -64,7 +64,7 @@ Template.login.events
             Meteor.loginWithPassword username, password, (err,res)->
                 # console.log 'res', Meteor.user()
                 if 'office' in Meteor.user().roles
-                    FlowRouter.go "/p/office_incidents/#{Meteor.user().office_jpid}"        
+                    FlowRouter.go "/p/office_tickets/#{Meteor.user().office_jpid}"        
                 else if 'customer' in Meteor.user().roles
                     FlowRouter.go "/p/customer_dashboard"    
                 else    
@@ -82,7 +82,7 @@ Template.login.events
             else
                 Meteor.call 'find_office_from_jpid', '15793131',(err,res)->
                     if err then console.error err
-                FlowRouter.go "/p/office_incidents/15793131"                
+                FlowRouter.go "/p/office_tickets/15793131"                
             
     'click #login_demo_customer': ->
         Meteor.loginWithPassword 'demo_customer', 'democustomerpassword', (err,res)->
@@ -305,7 +305,7 @@ Template.register_office.events
             if err
             else
                 # Meteor.call 
-                FlowRouter.go "/p/office_incidents/#{office_jpid}/"                
+                FlowRouter.go "/p/office_tickets/#{office_jpid}/"                
         )
     
     'keyup #username': (e,t)->

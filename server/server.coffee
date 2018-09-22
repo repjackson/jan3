@@ -43,38 +43,14 @@ SyncedCron.config
 
 Meteor.startup () ->
     SyncedCron.add
-        name: 'Update incident escalations'
+        name: 'Update ticket escalations'
         schedule: (parser) ->
             parser.text 'every 10 minutes'
             # so it catches 1 hour escalations
         job: ->
+            Meteor.call 'run_site_escalation_check', (err,res)->
+                if err then console.error err
 
-            SlaSettings = new Mongo.Collection null
-            now = moment()
-
-            Docs.find(
-                type:'sla_setting'
-            ).forEach (sla) ->
-                SlaSettings.insert(sla)
-
-            Docs.find(
-                type: 'incident'
-                open: true,
-                level:
-                    $lte: 3
-            ).forEach (incident) ->
-                sla = SlaSettings.findOne
-                    type:'sla_setting'
-                    escalation_number:incident.level + 1
-                    incident_type:incident.incident_type
-                    office_jpid:incident.office_jpid
-
-                if sla and sla.escalation_hours
-                    last_escalation = moment(incident.escalation_timestamp)
-                    hours_diff = (now.diff last_escalation) / 3600000
-
-                    if hours_diff > sla.escalation_hours
-                        Incident_Helpers.escalate_incident incident, 'Manual'
 
 if Meteor.isProduction
     SyncedCron.add(

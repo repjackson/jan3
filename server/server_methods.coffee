@@ -135,19 +135,19 @@ Meteor.methods
                 event_type: event_type
                 action:action
 
-    create_incident_event: (incident_doc_id, event_type, action)->
-        incident = Docs.findOne incident_doc_id
-        office_doc = Meteor.call 'find_office_from_customer_jpid', incident.ev.ID
-        franchisee_doc = Meteor.call 'find_franchisee_from_customer_jpid', incident.ev.ID
+    create_ticket_event: (ticket_doc_id, event_type, action)->
+        ticket = Docs.findOne ticket_doc_id
+        office_doc = Meteor.call 'find_office_from_customer_jpid', ticket.ev.ID
+        franchisee_doc = Meteor.call 'find_franchisee_from_customer_jpid', ticket.ev.ID
         Docs.insert
             type:'event'
-            parent_id: incident_doc_id
+            parent_id: ticket_doc_id
             event_type: event_type
             action:action
             office_jpid: office_doc.ev.ID
             franchisee_jpid: franchisee_doc.ev.ID
 
-    set_incident_level: (target_id, event_type, level)->
+    set_ticket_level: (target_id, event_type, level)->
         doc = Docs.findOne target_id
         current_user = Meteor.users.findOne @userId
         if doc
@@ -333,18 +333,18 @@ Meteor.methods
     
     
     
-    update_incident_numbers: ->
+    update_ticket_numbers: ->
         unnumbered_count = Docs.find({
-            type:'incident', 
-            incident_number: $exists:false
+            type:'ticket', 
+            ticket_number: $exists:false
         }).count()
         
         
-    update_incident_number: (doc_id)->
-        incident = Docs.findOne doc_id
-        unnumbered_incidents = Docs.find({type:'incident', incident_number:{$exists:false}}).count()
+    update_ticket_number: (doc_id)->
+        ticket = Docs.findOne doc_id
+        unnumbered_tickets = Docs.find({type:'ticket', ticket_number:{$exists:false}}).count()
         Docs.update doc_id,
-            $set:incident_number:unnumbered_incidents
+            $set:ticket_number:unnumbered_tickets
             
     create_complete_task_event: (task_id)->
         Docs.insert
@@ -397,21 +397,21 @@ Meteor.methods
         #     { $set: "fields.$.slug": slug }
         
         
-    update_sla_setting: (office_jpid, incident_type, escalation_number, key, value)->
+    update_sla_setting: (office_jpid, ticket_type, escalation_number, key, value)->
         sla_doc= Docs.update {
             type;'sla_setting'
             office_jpid:office_jpid
-            incident_type:incident_type
+            ticket_type:ticket_type
             escalation_number:escalation_number
         }, { $set: "#{key}":value }, {upsert:true}
         
         
-    set_incident_owner: (office_jpid, incident_type, username)->
+    set_ticket_owner: (office_jpid, ticket_type, username)->
         Docs.update {
             type:'sla_setting'
             office_jpid:office_jpid
-            incident_type:incident_type
-        }, { $set: incident_owner:username }, {multi:true}
+            ticket_type:ticket_type
+        }, { $set: ticket_owner:username }, {multi:true}
         
         
         

@@ -177,7 +177,7 @@ template(name='block_list_dropdown')
         .ui.dropdown.item
             |#{block_field_value}
             .menu
-                each incident_types
+                each ticket_types
                     .select_dropdown_item.item #{title}
 
 
@@ -268,7 +268,6 @@ template(name='user_cell_text_edit')
         |#{cell_value}
         &nbsp;
         i.edit_field.link.small.pencil.icon
-            
             
             
             

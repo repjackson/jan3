@@ -100,7 +100,7 @@ Template.block_list_dropdown.events
           
           
 Template.block_list_dropdown.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'incident_type'
+    @autorun => Meteor.subscribe 'type', 'ticket_type'
 Template.block_list_dropdown.onRendered ->
     Meteor.setTimeout ->
         $('.ui.dropdown').dropdown()
@@ -108,8 +108,8 @@ Template.block_list_dropdown.onRendered ->
 
 
 Template.block_list_dropdown.helpers
-    incident_types: ->
-        Docs.find type:'incident_type'
+    ticket_types: ->
+        Docs.find type:'ticket_type'
           
           
 Template.edit_textarea.events
@@ -292,7 +292,7 @@ Template.edit_user_text_field.events
 #         # doc_id = @doc_id
 
 #         Docs.update @_id,
-#             $set: incident_details: html
+#             $set: ticket_details: html
 
 
 # Template.edit_html_field.helpers
@@ -300,7 +300,7 @@ Template.edit_user_text_field.events
 #         @current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
 #         self = @
 #         {
-#             _value: self.current_doc.incident_details
+#             _value: self.current_doc.ticket_details
 #             _keepMarkers: true
 #             _className: 'froala-reactive-meteorized-override'
 #             toolbarInline: false

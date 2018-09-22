@@ -90,8 +90,13 @@ Meteor.methods
                 text: "Owner #{sla.ticket_owner} reassigned after completed task by #{username}."
     
             
-    update_escalation_statuses: ->
-        open_tickets = Docs.find({type:'ticket', open:true, submitted:true})
+    run_site_escalation_check: ->
+        open_tickets = Docs.find({
+            type:'ticket', 
+            open:true, 
+            submitted:true
+            level: $lte:3
+            })
         open_tickets_count = open_tickets.count()
         Meteor.call 'create_event',null, 'start_escalation_check', "Starting esclation check."
         Meteor.call 'create_event',null, 'ticket_count', "Found #{open_tickets_count} open tickets, checking escalation status."
@@ -100,57 +105,50 @@ Meteor.methods
          
     single_escalation_check: (ticket_id)->
         ticket = Docs.findOne ticket_id
-        if ticket.level is 4
-            throw new Meteor.Error 'max_level_notice', "Ticket is at max level 4, not escalating."
-        else
-            ticket_office =
-                Docs.findOne
-                    "ev.MASTER_LICENSEE": ticket.ticket_office_name
-                    type:'office'
-            current_level = ticket.level
-            next_level = current_level + 1
-            last_updated = ticket.updated
+        current_level = ticket.level
+        next_level = current_level + 1
+        last_updated = ticket.updated
 
-            sla = 
-                Docs.findOne
-                    type:'sla_setting'
-                    escalation_number:next_level
-                    ticket_type:ticket.ticket_type
-                    office_jpid:ticket.office_jpid
+        sla = 
+            Docs.findOne
+                type:'sla_setting'
+                escalation_number:next_level
+                ticket_type:ticket.ticket_type
+                office_jpid:ticket.office_jpid
 
-            if sla.escalation_hours 
-                hours_value = sla.escalation_hours
-            else 
-                hours_value = 2
-                Docs.insert
-                    type:'event'
-                    parent_id: ticket_id
-                    event_type: 'setting_default_escalation_time'
-                    text: "No escalation hours found, using 2 as the default."
-                
-            now = Date.now()
-            updated_now_difference = now-last_updated
-            seconds_elapsed = Math.floor(updated_now_difference/1000)
-            hours_elapsed = Math.floor(seconds_elapsed/60/60)
-            escalation_calculation = hours_elapsed - hours_value
+        if sla.escalation_hours 
+            hours_value = sla.escalation_hours
+        else 
+            hours_value = 2
+            Docs.insert
+                type:'event'
+                parent_id: ticket_id
+                event_type: 'setting_default_escalation_time'
+                text: "No escalation hours found, using 2 as the default."
             
-            ticket_type = Docs.findOne
-                type:'ticket_type'
-                slug:ticket.ticket_type
+        now = Date.now()
+        updated_now_difference = now-last_updated
+        seconds_elapsed = Math.floor(updated_now_difference/1000)
+        hours_elapsed = Math.floor(seconds_elapsed/60/60)
+        escalation_calculation = hours_elapsed - hours_value
         
-            if hours_elapsed < hours_value
-                Docs.insert
-                    type:'event'
-                    parent_id:ticket_id
-                    event_type:'not-escalate'
-                    text: "#{hours_elapsed} hours have elapsed, less than #{hours_value} in level #{next_level} '#{ticket_type.title}' rules, not escalating."
-            else    
-                Docs.insert
-                    type:'event'
-                    parent_id:ticket_id
-                    event_type:'escalate'
-                    text:"#{hours_elapsed} hours have elapsed, more than #{hours_value} in level #{next_level} '#{ticket_type.title}' rules, escalating."
-                Meteor.call 'escalate_ticket', ticket._id, ->
+        ticket_type = Docs.findOne
+            type:'ticket_type'
+            slug:ticket.ticket_type
+    
+        if hours_elapsed < hours_value
+            Docs.insert
+                type:'event'
+                parent_id:ticket_id
+                event_type:'not-escalate'
+                text: "#{hours_elapsed} hours have elapsed, less than #{hours_value} in level #{next_level} '#{ticket_type.title}' rules, not escalating."
+        else    
+            Docs.insert
+                type:'event'
+                parent_id:ticket_id
+                event_type:'escalate'
+                text:"#{hours_elapsed} hours have elapsed, more than #{hours_value} in level #{next_level} '#{ticket_type.title}' rules, escalating."
+            Meteor.call 'escalate_ticket', ticket._id, ->
             
     escalate_ticket: (doc_id)-> 
         ticket = Docs.findOne doc_id

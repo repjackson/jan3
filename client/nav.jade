@@ -36,9 +36,9 @@ template(name='nav')
                     i.large.icon
                         +icon name='database'
             if is_customer
-                a.log_ticket.item(href='#' data-content='Log Incident')
+                a.log_ticket.item(href='#' title='Log Ticket')
                     i.large.icon
-                        +icon name='plus'
+                        +icon name='add-ticket'
             if currentUser
                 a.item(href="/user/#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
                     if currentUser.profile.image_id

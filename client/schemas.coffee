@@ -1,6 +1,8 @@
 Template.schema_edit.onCreated ->
     @autorun -> Meteor.subscribe 'doc', FlowRouter.getParam('doc_id')
 Template.schema_view.onCreated ->
+    @autorun -> Meteor.subscribe 'type', 'field_instance'
+    
     doc = Docs.findOne FlowRouter.getParam('doc_id')
     if doc
         @autorun -> Meteor.subscribe 'type', doc.slug
@@ -9,6 +11,16 @@ Template.schema_view.onCreated ->
 #     schema: -> Doc.findOne FlowRouter.getParam('doc_id')
     
 Template.schema_view.helpers
+    field_instances: ->
+        Docs.find type:'field_instance'
+        
+    referenced_field_instances: ->
+        page_schema = Docs.findOne FlowRouter.getParam 'doc_id'
+        
+        Docs.find 
+            type:'field_instance'
+            _id: $in: page_schema.field_instance_ids
+
     schema_docs: -> 
         schema = Docs.findOne FlowRouter.getParam('doc_id')
         Docs.find type:schema.slug
@@ -17,6 +29,12 @@ Template.schema_view.helpers
         return "#{schema.slug}_single"
 
 Template.schema_view.events
+    'click .add_field_instance': ->
+        page_schema = Docs.findOne FlowRouter.getParam 'doc_id'
+        Docs.update page_schema._id,
+            $addToSet: field_instance_ids: @_id
+
+
 
 Template.schema_edit.events
     'click #delete': ->

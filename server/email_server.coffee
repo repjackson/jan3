@@ -22,41 +22,13 @@ Meteor.methods
         return
         # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
         
-    send_message: (to_username, from_username, message_text)->    
-        Docs.insert
-            type:'message'
-            from_username:from_username
-            to_username: to_username
-            text: message_text
-        
-    
-    # send_email_about_task_assignment:(task_doc_id, username)->
-    #     task_doc = Docs.findOne task_doc_id
-        
-    #     assigned_to_user = Meteor.users.findOne username:username
-    #     task_link = "https://www.jan.meteorapp.com/v/#{task_doc._id}"
-        
-    #     mail_fields = {
-    #         to: ["<#{assigned_to_user.emails[0].address}>"]
-    #         from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
-    #         subject: "Task Assignment"
-    #         html: "<h4>You have been assigned to task #{task_doc.title}..</h4>
-    #             <ul>
-    #                 <li>Completed: #{task_doc.complete}</li>
-    #                 <li>Due Date: #{task_doc.due_date}</li>
-    #                 <li>Tags: #{task_doc.tags}</li>
-    #             </ul>
-    #             <p>view the task <a href=#{task_link}>here</a>.
-    #         "
-    #     }
-    #     Meteor.call 'send_email', mail_fields
  
-    send_email_about_incident_assignment:(incident_doc_id, username)->
-        incident = Docs.findOne incident_doc_id
+    send_email_about_ticket_assignment:(ticket_doc_id, username)->
+        ticket = Docs.findOne ticket_doc_id
         
         assigned_to_user = Meteor.users.findOne username:username
-        incident_link = "https://www.jan.meteorapp.com/p/incident_admin_view?doc_id=#{incident._id}"
-        complete_incident_link = "https://www.jan.meteorapp.com/p/incident_admin_view?doc_id=#{incident._id}&mark_complete=true"
+        ticket_link = "https://www.jan.meteorapp.com/p/ticket_admin_view?doc_id=#{ticket._id}"
+        complete_ticket_link = "https://www.jan.meteorapp.com/p/ticket_admin_view?doc_id=#{ticket._id}&mark_complete=true"
         
         mail_fields = {
             # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
@@ -65,17 +37,17 @@ Meteor.methods
             # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
             to: 'repjackson@gmail.com'
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
-            subject: "Incident Assignment"
-            html: "<h4>You have been assigned to incident ##{incident.incident_number} from customer: #{incident.customer_name}.</h4>
-                <h5>Type: #{incident.incident_type}</h5>
-                <h5>Number: #{incident.incident_number}</h5>
-                <h5>Details: #{incident.incident_details}</h5>
-                <h5>Created: #{incident.long_timestamp}</h5>
-                <h5>Office: #{incident.incident_office_name}</h5>
-                <h5>Status: #{incident.status}</h5>
-                <h5>Service Date: #{incident.service_date}</h5>
-                <p>view the incident <a href=#{incident_link}>here</a>.
-                <p>Mark task complete <a href=#{complete_incident_link}>here</a>.</p>
+            subject: "Ticket Assignment"
+            html: "<h4>You have been assigned to ticket ##{ticket.ticket_number} from customer: #{ticket.customer_name}.</h4>
+                <h5>Type: #{ticket.ticket_type}</h5>
+                <h5>Number: #{ticket.ticket_number}</h5>
+                <h5>Details: #{ticket.ticket_details}</h5>
+                <h5>Created: #{ticket.long_timestamp}</h5>
+                <h5>Office: #{ticket.ticket_office_name}</h5>
+                <h5>Status: #{ticket.status}</h5>
+                <h5>Service Date: #{ticket.service_date}</h5>
+                <p>view the ticket <a href=#{ticket_link}>here</a>.
+                <p>Mark task complete <a href=#{complete_ticket_link}>here</a>.</p>
             "
         }
         Meteor.call 'send_email', mail_fields

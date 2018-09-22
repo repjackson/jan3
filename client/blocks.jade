@@ -70,7 +70,7 @@ template(name='view_page_button')
         i.right.chevron.blue.icon
         
 template(name='view_office_button')
-    a.ui.icon.button(href="/p/office_incidents/#{ev.ID}" data-content='View Office' class=classes) 
+    a.ui.icon.button(href="/p/office_tickets/#{ev.ID}" data-content='View Office' class=classes) 
         // +icon name='details-pane'
         i.right.chevron.green.icon
         
@@ -115,8 +115,8 @@ template(name='view_full_button')
 
             
             
-template(name='incident_assignment_cell')
-    // td(class=incident_assignment_cell_class)
+template(name='ticket_assignment_cell')
+    // td(class=ticket_assignment_cell_class)
     if overdue
         +icon name='expired' classes='inline' title='Over 5 Hours'
     if response
@@ -239,7 +239,7 @@ template(name='office_card')
                         +icon name='building'
                         |Office
                 else
-                    a(href="/p/office_incidents/#{ev.ID}")
+                    a(href="/p/office_tickets/#{ev.ID}")
                         .ui.header 
                             +icon name='building'
                             |Office
@@ -247,7 +247,7 @@ template(name='office_card')
                 if is_customer
                     h4.ui.header #{ev.MASTER_LICENSEE}
                 else
-                    a(href="/p/office_incidents/#{ev.ID}")
+                    a(href="/p/office_tickets/#{ev.ID}")
                         h4.ui.header #{ev.MASTER_LICENSEE}
                 // div ##{ev.ID} 
                 div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
@@ -745,12 +745,12 @@ template(name='user_avatar')
     // a(href="/user/#{username}") #{first_name} #{last_name}
 
 
-template(name='view_incident_link')
+template(name='view_ticket_link')
     unless is_customer
-        a.ui.icon.button(href="/p/incident_admin_view?doc_id=#{_id}")
+        a.ui.icon.button(href="/p/ticket_admin_view?doc_id=#{_id}")
             i.right.chevron.icon
     if is_customer
-        a.ui.icon.button(href="/p/incident_customer_view?doc_id=#{_id}")
+        a.ui.icon.button(href="/p/ticket_customer_view?doc_id=#{_id}")
             i.right.chevron.icon
 
 

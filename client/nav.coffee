@@ -63,7 +63,7 @@ Template.nav.events
         Meteor.call 'log_ticket', (err,res)->
             if err then console.error err
             else
-                FlowRouter.go "/p/submit_incident?doc_id=#{res}"
+                FlowRouter.go "/p/submit_ticket?doc_id=#{res}"
 
 
     'click #toggle_dev': ->
