@@ -448,7 +448,7 @@ template(name='block')
                             each children
                                 .item
                                     .ui.list
-                                        each ../fields
+                                        each children_field_docs
                                             .item
                                                 if field_template
                                                     +Template.dynamic template=field_template data=..
@@ -468,7 +468,7 @@ template(name='block')
                                                         +icon name=icon
                                                 |#{title}    
                                         .ui.list
-                                            each ../fields
+                                            each children_field_docs
                                                 .item
                                                     if field_template
                                                         +Template.dynamic template=field_template data=..
@@ -507,24 +507,16 @@ template(name='edit_block')
             +icon name=icon
             |Edit '#{title}' Block
         .ui.top.attached.tabular.stackable.menu
-            a.ui.item.tab_nav(data-tab='general') 
+            a.ui.icon.item.tab_nav(data-tab='general' title='General') 
                 i.pencil.icon
-                |General
-            a.ui.item.tab_nav(data-tab='filter') 
+            a.ui.item.tab_nav(data-tab='filter' title='Filter') 
                 i.filter.icon
-                |Filter
-            a.ui.item.tab_nav(data-tab='schema') 
+            a.ui.item.tab_nav(data-tab='schema' title='Schema') 
                 i.fork.icon
-                |Schema
-            a.ui.item.tab_nav(data-tab='collection') 
-                i.database.icon
-                |Collection
-            a.ui.item.tab_nav(data-tab='display') 
+            a.ui.item.tab_nav(data-tab='display' title='Display') 
                 i.th.list.icon
-                |Display
-            a.ui.item.active.tab_nav(data-tab='fields') 
+            a.ui.item.active.tab_nav(data-tab='fields' title='Fields') 
                 i.list.ui.icon
-                |Fields
         .ui.bottom.attached.segment.tab(data-tab='general')
             i.remove_block.remove.link.icon(title='remove block')
             +toggle_boolean key='published' yes_label='Published'
@@ -586,10 +578,10 @@ template(name='edit_block')
                 div
                 +edit_block_text_field key='filter_source_key' label='Filter Source Key'
         // unless custom_template
-        .ui.bottom.attached.segment.tab(data-tab='collection')
+        .ui.bottom.attached.segment.tab(data-tab='schema')
             each collections
                 +set_key_value_2 key='children_collection' value=slug label=title icon=icon
-        .ui.bottom.attached.segment.tab(data-tab='schema')
+            div
             each schemas
                 +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
             .ui.header Stat Type
