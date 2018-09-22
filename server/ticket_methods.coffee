@@ -5,8 +5,8 @@ Meteor.methods
             Docs.findOne
                 type:'sla_setting'
                 escalation_number:1
-                # ticket_type:ticket.ticket_type
-                # office_jpid:ticket.office_jpid
+                ticket_type:ticket.ticket_type
+                office_jpid:ticket.office_jpid
         if sla.ticket_owner
             owner_user = Meteor.users.findOne username:sla.ticket_owner
             Docs.update ticket_id,
@@ -25,15 +25,13 @@ Meteor.methods
     
     submit_ticket: (ticket_id)->
         ticket = Docs.findOne ticket_id
-        console.log 'ticket', ticket
         sla = 
             Docs.findOne
                 type:'sla_setting'
-                # escalation_number:1
-                # ticket_type:ticket.ticket_type
-                # office_jpid:ticket.office_jpid
-        console.log sla        
-                
+                escalation_number:1
+                ticket_type:ticket.ticket_type
+                office_jpid:ticket.office_jpid
+        console.log sla
                 
         if sla.escalation_hours
             Docs.insert
@@ -138,13 +136,7 @@ Meteor.methods
             type:'ticket_type'
             slug:ticket.ticket_type
     
-        if hours_elapsed < hours_value
-            Docs.insert
-                type:'event'
-                parent_id:ticket_id
-                event_type:'not-escalate'
-                text: "#{hours_elapsed} hours have elapsed, less than #{hours_value} in level #{next_level} '#{ticket_type.title}' rules, not escalating."
-        else    
+        if hours_elapsed > hours_value
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
@@ -208,7 +200,6 @@ Meteor.methods
                 ticket_type:ticket.ticket_type
                 office_jpid:ticket.office_jpid
         
-        
         mail_fields = {
             to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
@@ -244,11 +235,12 @@ Meteor.methods
         if sla.sms_owner
             Meteor.call 'send_sms', '+19176643297', "#{sla.ticket_owner}, one of your tickets from #{ticket.customer_name} escalated to #{ticket.level}." 
         if sla.contact_franchisee
-            Docs.insert
-                type:'event'
-                parent_id:ticket_id
-                event_type:'emailed_franchisee_contact'
-                text:"Franchisee #{franchisee.ev.FRANCHISEE} emailed after ticket submission."
+            if ticket.franchisee_jpid
+                Docs.insert
+                    type:'event'
+                    parent_id:ticket_id
+                    event_type:'emailed_franchisee_contact'
+                    text:"Franchisee #{franchisee.ev.FRANCHISEE} emailed after ticket submission."
         if sla.contact_customer
             Docs.insert
                 type:'event'
@@ -381,7 +373,6 @@ Meteor.methods
             
 
     log_ticket: ()->
-        console.log 'hi'
         my_customer_ob = Meteor.user().users_customer()
         user = Meteor.user()
         if my_customer_ob
@@ -400,5 +391,4 @@ Meteor.methods
                     level: 1
                     open: true
                     submitted: false
-            console.log new_ticket_id
             return new_ticket_id
