@@ -59,17 +59,17 @@ template(name='table_header')
                         if show_increment
                             a.icon.item.increment_page
                                 i.right.chevron.grey.icon
-                        
+
 
 
 template(name='status_template')
     if open
         // +icon name='open-sign'
-        +icon name='clock' title='Open'
+        +icon name='open-sign' title='Open'
         // i.lock.open.large.icon(title='Open')
     else
         // +icon name='closed-sign'
-        +icon name='checkmark' title='Closed'
+        +icon name='close_sign' title='Closed'
         // i.lock.large.icon(title='Closed')
 
 template(name='submitted_template')
@@ -83,9 +83,9 @@ template(name='search_key')
     .ui.small.icon.input
         i.small.search.icon
         input.search_key(type='text')
-        
-        
-template(name='sort_column_header')    
+
+
+template(name='sort_column_header')
     th.sort_by(class=classes)
         |#{label}
         if sort_descending
@@ -94,8 +94,8 @@ template(name='sort_column_header')
             i.chevron.up.link.blue.icon
         else
             i.sort.link.grey.icon
-                
-template(name='query_input')            
+
+template(name='query_input')
     .ui.icon.fluid.input
         if current_query
             i.clear_search.link.remove.icon
