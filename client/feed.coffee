@@ -1,47 +1,47 @@
 
-            
+
 Template.users_feed.onCreated ->
     @autorun => Meteor.subscribe 'users_feed', FlowRouter.getParam('username')
 
 Template.users_feed.helpers
-    user_feed_events: -> 
+    user_feed_events: ->
         Docs.find {type:'event'}, sort:timestamp:-1
 Template.users_feed_event.events
-    'click .remove_event': -> 
+    'click .remove_event': ->
         if confirm 'Delete User Event?'
             Docs.remove @_id
 
-            
+
 Template.feed.onCreated ->
     # @autorun => Meteor.subscribe 'events', @data.doc_type
 
 Template.feed.helpers
-    event_docs: -> 
+    event_docs: ->
         context = Template.currentData()
         # Docs.find {type:'event', doc_type:context.doc_type}, sort:timestamp:-1
         Docs.find {type:'event'}, sort:timestamp:-1
 Template.feed.events
-    'click .remove_event': -> 
+    'click .remove_event': ->
         if confirm 'Delete Event?'
             Docs.remove @_id
 
 
 
-            
+
 Template.small_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', @data._id, 1
 Template.small_doc_history.helpers
     doc_history_events: ->
-        cursor = 
+        cursor =
             Docs.find {
                 parent_id: Template.currentData()._id
                 type:'event'
-            }, 
+            },
                 sort:timestamp:-1
                 limit: 1
-        
-        
-            
+
+
+
 Template.full_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', @data._id
     @autorun =>  Meteor.subscribe 'type', 'event_type'
@@ -55,8 +55,8 @@ Template.full_doc_history.helpers
             parent_id: Template.currentData()._id
             type:'event'
         }, sort:timestamp:-1
-        
-        
+
+
 Template.doc_history_event.helpers
     # event_icon_name: ->
     #     icon = ""
@@ -77,9 +77,9 @@ Template.doc_history_event.helpers
     #             when 'not-escalate' then icon.concat 'do-not-disturb'
     #             when 'level_change' then icon.concat 'positive-dynamic'
     #             else 'commit-git'
-    #     else if @event_key 
+    #     else if @event_key
     #         result = ' add-user-male'
-            
+
     # show_author: ->
     #     result = switch @event_type
     #         when 'escalate' then false
@@ -97,12 +97,11 @@ Template.doc_history_event.helpers
     #         when 'not-escalate' then false
     #         when 'level_change' then true
     #         else false
-            
-        
+
+
 Template.doc_history_event.events
-    'click .remove_event': -> 
-        if confirm 'Delete Event?'
-            Docs.remove @_id
+    'click .remove_event': ->
+        Docs.remove @_id
 
 # Template.full_doc_history.events
 #     'click #clear_events':

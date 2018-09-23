@@ -1,22 +1,22 @@
 confirmation modals after user interactions
-submit for processing 
-    
+submit for processing
+
 
 http://avalon.extraview.net/jan-pro-sandbox/ExtraView/ev_api.action?user_id=JPI&password=JPI&statevar=run_report&username_display=ID&api_reverse_lookup=NO&id=30461&page_length=100&record_start=1&record_count=&persist_handle=xxx&field1=value&field2=value2
 j@NhU8
 http://ext-jan-pro.extraview.net/jan-pro/ExtraView
 
+Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace
 
-
-western carolinamississippi central onterio 
+western carolinamississippi central onterio
 customer
     my customer accountsfranchisee
     office
     contact
     basically just customer page
 
-    my office card not accurate 
-    
+    my office card not accurate
+
 checkbox on employees table to show info
 
 
@@ -82,7 +82,7 @@ if youre lonely then build alfred into the best friend.  like poe.  why not
 
 service notesmake ecommerce agame
 requests equals points
-chart difference.  so rate of change is the comparitive metric.  green/red  percent difference over last week/month 
+chart difference.  so rate of change is the comparitive metric.  green/red  percent difference over last week/month
 competition for office, franchisee, global ranking, per serviceoffice page view start i dashboard
 
 you're only allowed to talk to tori through the site

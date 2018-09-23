@@ -36,12 +36,12 @@ template(name='franchisee_view')
                 if is_admin
                     +link_button link='/p/admin_franchisees' icon='business' label='Franchisees'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header 
+                h1.ui.center.aligned.grey.header
                     +icon name='business'
                     if ev.FRANCHISEE
-                        |#{ev.FRANCHISEE} 
+                        |#{ev.FRANCHISEE}
                     else if ev.FRANCH_NAME
-                        |#{ev.FRANCH_NAME} 
+                        |#{ev.FRANCH_NAME}
                     |Franchisee
             .three.wide.right.aligned.column
                 // +edit_button
@@ -51,18 +51,18 @@ template(name='franchisee_view')
                     .ui.large.list
                         .item ##{ev.ID}
                         if ev.FRANCH_EMAIL
-                            .item 
+                            .item
                                 i.grey.envelope.icon
                                 |#{ev.FRANCH_EMAIL}
                         if ev.FRANCH_NAME
                             .item(title='Short Name')
                                 | #{ev.FRANCH_NAME}
                         if ev.TELE_CELL
-                            .item 
+                            .item
                                 i.grey.phone.icon
                                 |#{ev.TELE_CELL}
-                            
-                        // .item Master Licensee: 
+
+                        // .item Master Licensee:
                         //     strong #{ev.MASTER_LICENSEE}
                 +blocks tags='franchisee,tickets'
                 +blocks tags='franchisee,ticket,feedback_response'
@@ -84,7 +84,7 @@ template(name='schema_edit')
             .three.wide.column
                 +save_button
             .ten.wide.column
-                h1.ui.center.aligned.grey.header 
+                h1.ui.center.aligned.grey.header
                     if icon
                         +icon name=icon
                     |Edit '#{title}' Schema
@@ -105,8 +105,8 @@ template(name='schema_edit')
                 .ui.vertical.segments
                     each actions
                         +action_edit
-                    
-                    
+
+
 template(name='schema_field_edit')
     .ui.segment
         i.remove_field.link.remove.icon
@@ -129,7 +129,7 @@ template(name='schema_field_edit')
         strong Type
         each fields
             +select_field_key_value key='field_type' value=slug icon=icon label=title
-        
+
 
 template(name='action_edit')
     .ui.segment
@@ -156,19 +156,19 @@ template(name='action_edit')
 
 
 template(name='select_field_key_value')
-    .select_field_key_value.ui.compact.button(class=select_field_key_value_button_class) 
+    .select_field_key_value.ui.compact.button(class=select_field_key_value_button_class)
         if icon
             i.icon
                 +icon name=icon
         |#{label}
 
-        
+
 template(name='toggle_field_boolean')
     .toggle_field_boolean.ui.small.compact.button(class=field_boolean_class) #{label}
 
-        
 
-        
+
+
 template(name='schema_view')
     .ui.padded.stackable.centered.grid
         .centered.row
@@ -199,12 +199,12 @@ template(name='schema_view')
                 .ui.stackable.four.cards
                     each schema_docs
                         +doc_card
-                
+
 template(name='schema_selector')
     each user_schemas
-        .toggle_schema.ui.button #{title}            
-        
-        
+        .toggle_schema.ui.button #{title}
+
+
 template(name='schema_doc')
     .ui.card
         .content
@@ -213,6 +213,9 @@ template(name='schema_doc')
                 +Template.dynamic template=view_field_template
                 |{{ key_value key=slug}}
                 .ui.label slug:#{slug}
-                
-                
-                
+
+
+template(name='comments_view')
+    .ui.comments
+        each children
+            +doc_history_event

@@ -3,30 +3,30 @@ template(name='author_info')
         if profile.image_id
             img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
         |&nbsp;
-        a(href="/user/#{username}") #{username} 
+        a(href="/user/#{username}") #{username}
         // +staus_indicator
     // .ui.sub.header #{when}
 
 template(name='when_template')
     |#{when}
-    
+
 template(name='last_updated_template')
     |{{ long_format last_updated_datetime }}
-    
-    
+
+
 
 template(name='list_item')
     .item
         i.icon(class=icon title=key)
         .content
-            .description 
+            .description
                 |#{label}
                 strong #{key_value}
 
 
 template(name='toggle_boolean')
     if is_on
-        #turn_off.ui.primary.compact.button 
+        #turn_off.ui.primary.compact.button
             if icon
                 i.icon(class=icon)
             |#{yes_label}
@@ -39,12 +39,12 @@ template(name='toggle_boolean')
 
 
 template(name='save_button')
-    a.ui.icon.button(href="/v/#{_id}") 
+    a.ui.icon.button(href="/v/#{_id}")
         i.green.checkmark.icon
         // | Save
-        
+
 template(name='edit_button')
-    a.ui.icon.button(href="/edit/#{_id}" title='Edit' class=classes) 
+    a.ui.icon.button(href="/edit/#{_id}" title='Edit' class=classes)
         i.pencil.icon
             // +icon name='pencil'
         // i.pencil.icon
@@ -62,41 +62,41 @@ template(name='old_view_button')
 template(name='icon_view')
     if icon
         +icon name=icon
-        
-        
+
+
 template(name='view_page_button')
-    a.ui.icon.button(href="/p/#{slug}" data-content='View Page' class=classes) 
+    a.ui.icon.button(href="/p/#{slug}" data-content='View Page' class=classes)
         // +icon name='details-pane'
         i.right.chevron.blue.icon
-        
+
 template(name='view_office_button')
-    a.ui.icon.button(href="/p/office_tickets/#{ev.ID}" data-content='View Office' class=classes) 
+    a.ui.icon.button(href="/p/office_tickets/#{ev.ID}" data-content='View Office' class=classes)
         // +icon name='details-pane'
         i.right.chevron.green.icon
-        
+
 template(name='view_user_button')
-    a.ui.icon.button(href="/user/#{username}" title="View #{username}" class=classes) 
+    a.ui.icon.button(href="/user/#{username}" title="View #{username}" class=classes)
         // +avatar_sprite name='chevron-right'
         // +icon name='circled-chevron-right'
         i.right.chevron.green.icon
-        
+
 template(name='edit_user_button')
-    a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}" class=classes) 
+    a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}" class=classes)
         // +icon name='circled-chevron-right'
         i.pencil.icon
-        
+
 template(name='add_button')
     #add.ui.icon.button(title='Add')
         i.plus.icon
         // +icon name='plus-math'
 
 
-template(name='toggle_sla_boolean')      
+template(name='toggle_sla_boolean')
     .ui.trigger.button(class=toggle_boolean_button_class title=title)
         i.icon
             +iconsmall name=icon
-        
-        
+
+
 
 template(name='toggle_key')
     .toggle_key.ui.button(class=toggle_key_button_class)
@@ -110,11 +110,11 @@ template(name='view_full_button')
     a.floated.right(href="/v/#{_id}")
         // i.right.chevron.link.icon
         | View
-                        
-            
 
-            
-            
+
+
+
+
 template(name='ticket_assignment_cell')
     // td(class=ticket_assignment_cell_class)
     if overdue
@@ -131,17 +131,17 @@ template(name='ticket_assignment_cell')
                         |#{profile.first_name} #{profile.last_name}
                     .description
                         | @#{username}
-            
-          
-            
+
+
+
 template(name='call_phone_button')
-    a.ui.fluid.button(href="tel:#{phone_number}") 
+    a.ui.fluid.button(href="tel:#{phone_number}")
         i.phone.icon
         | Call #{phone_number}
-            
-            
-            
-template(name='link_button')    
+
+
+
+template(name='link_button')
     a.ui.button(href=link title=label)
         // i.icon(class=icon)
         if icon
@@ -150,7 +150,7 @@ template(name='link_button')
         // i.left.chevron.icon
         | #{label}
 
-        
+
 template(name='edit_link')
     .field
         label link (include http://)
@@ -161,12 +161,12 @@ template(name='edit_link')
 
 
 template(name='call_method')
-    .call_method.ui.button 
+    .call_method.ui.button
         if label
             |#{label}
         else
             |#{name}
-    
+
 
 template(name='icon')
     img.ui.mini.image(src="https://png.icons8.com/office/80/000000/#{name}.png" class=classes data-content=popup title=title)
@@ -179,14 +179,14 @@ template(name='iconsmall')
     img.ui.inline.image(src="https://png.icons8.com/office/24/000000/#{name}.png" class=classes)
 
 
-                
-template(name='message_button')                
+
+template(name='message_button')
     .ui.message
         .ui.header
             +icon name=icon
             a(href=link) #{label}
 
-                    
+
 
 
 template(name='toggle_user_published')
@@ -195,12 +195,12 @@ template(name='toggle_user_published')
             i.green.circle.icon
         else
             i.circle.outline.icon
-    
+
 
 template(name='user_card')
     with author
         img.ui.small.rounded.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-        a(href="/user/#{username}") 
+        a(href="/user/#{username}")
             h4.ui.header #{first_name} #{last_name} @#{username}
             h5 #{ev.COMPANY_NAME}
             h5 #{ev.EMAIL}
@@ -235,12 +235,12 @@ template(name='office_card')
         with office_doc
             .content
                 if is_customer
-                    .ui.header 
+                    .ui.header
                         +icon name='building'
                         |Office
                 else
                     a(href="/p/office_tickets/#{ev.ID}")
-                        .ui.header 
+                        .ui.header
                             +icon name='building'
                             |Office
             .content
@@ -249,21 +249,21 @@ template(name='office_card')
                 else
                     a(href="/p/office_tickets/#{ev.ID}")
                         h4.ui.header #{ev.MASTER_LICENSEE}
-                // div ##{ev.ID} 
-                div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2} 
+                // div ##{ev.ID}
+                div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2}
                 div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
                 div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                 div
                     a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
 
 
-        
+
 template(name='franchisee_card')
     .ui.card
         with franchisee_doc
             .content
                 a(href="/v/#{_id}")
-                    .ui.header 
+                    .ui.header
                         +icon name='conference'
                         |Franchisee
             .content
@@ -287,7 +287,7 @@ template(name='view_single_user_key')
         if profile.image_id
             img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
         |&nbsp;
-        a(href="/user/#{username}") #{username} 
+        a(href="/user/#{username}") #{username}
         // +staus_indicator
     // .ui.sub.header #{when}
 
@@ -308,7 +308,7 @@ template(name='assignment_widget')
                     i.search.icon
                 input#multiple_user_select_input(type='text' placeholder='Search Office User')
         if user_results
-            .ui.segment        
+            .ui.segment
                 .ui.middle.aligned.selection.animated.list
                     each user_results
                         .select_user.item
@@ -329,15 +329,15 @@ template(name='assignment_widget')
                                 | @#{username}
 
 
-                                            
+
 template(name='blocks')
     if editing_mode
         #add_block.ui.circular.icon.button(title="Add Block")
             i.plus.icon
     div
     each blocks
-        +block 
-                                            
+        +block
+
 template(name='block')
     if can_view_block
         .ui(class=block_class)
@@ -346,7 +346,7 @@ template(name='block')
                     if icon
                         +icon name=icon
                     |#{title}
-            .active.content(class=body_classes)        
+            .active.content(class=body_classes)
                 if view_add_button
                     .row
                         .ui.add_block_child.icon.button
@@ -365,7 +365,7 @@ template(name='block')
                                             a.grey.header(href="/v/#{_id}")
                                                 if icon
                                                     +icon name=icon
-                                                |#{title} 
+                                                |#{title}
                                     .content
                                         .ui.list
                                             each ../fields
@@ -413,7 +413,7 @@ template(name='block')
                                                     if show_increment
                                                         a.icon.item.increment_page
                                                             i.right.chevron.grey.icon
-                        
+
                         table.ui.striped.selectable.fixed.table
                             thead
                                 tr
@@ -435,12 +435,12 @@ template(name='block')
                                     tr
                                         each children_field_docs
                                             if display_field_template
-                                                td(style="overflow:visible;") 
+                                                td(style="overflow:visible;")
                                                     +Template.dynamic template=display_field_template data=..
                                             else
                                                 td(class=table_cell_class) #{child_schema_field_value}
                                             // td(class=table_cell_class) #{child_schema_field_value}
-                                            
+
                             if view_table_footer
                                 +table_footer columns=fields.length doc_type=children_doc_type stat_type=table_stat_type
                     if is_list
@@ -464,9 +464,9 @@ template(name='block')
                                         if title
                                             a.ui.header(href="/p/#{slug}")
                                                 if icon
-                                                    i.icon  
+                                                    i.icon
                                                         +icon name=icon
-                                                |#{title}    
+                                                |#{title}
                                         .ui.list
                                             each children_field_docs
                                                 .item
@@ -475,16 +475,14 @@ template(name='block')
                                                     else
                                                         | #{child_schema_field_value}
                     if is_comments
-                        .ui.comments
-                            each children
-                                +doc_history_event
+                        +comments_view children=children
                     if is_header
                         .centered.middle.aligned.row
                             .three.wide.center.aligned.column
                                 if is_admin
                                     +link_button link='/p/admin' icon='user-shield' label='Admin'
                             .ten.wide.column
-                                h2.ui.center.aligned.grey.header 
+                                h2.ui.center.aligned.grey.header
                                     +icon name='code'
                                     |Dev
                             .three.wide.right.aligned.column
@@ -503,19 +501,19 @@ template(name='block')
 
 template(name='edit_block')
     .ui.secondary.blue.segment
-        h3.ui.header 
+        h3.ui.header
             +icon name=icon
             |Edit '#{title}' Block
         .ui.top.attached.tabular.stackable.menu
-            a.ui.icon.item.tab_nav(data-tab='general' title='General') 
+            a.ui.icon.item.tab_nav(data-tab='general' title='General')
                 i.pencil.icon
-            a.ui.item.tab_nav(data-tab='filter' title='Filter') 
+            a.ui.item.tab_nav(data-tab='filter' title='Filter')
                 i.filter.icon
-            a.ui.item.tab_nav(data-tab='schema' title='Schema') 
+            a.ui.item.tab_nav(data-tab='schema' title='Schema')
                 i.fork.icon
-            a.ui.item.tab_nav(data-tab='display' title='Display') 
+            a.ui.item.tab_nav(data-tab='display' title='Display')
                 i.th.list.icon
-            a.ui.item.active.tab_nav(data-tab='fields' title='Fields') 
+            a.ui.item.active.tab_nav(data-tab='fields' title='Fields')
                 i.list.ui.icon
         .ui.bottom.attached.segment.tab(data-tab='general')
             i.remove_block.remove.link.icon(title='remove block')
@@ -574,7 +572,7 @@ template(name='edit_block')
                 +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
                 +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
                 +set_key_value key='filter_value' value='{current_page_jpid}' label='Current Page JPID'
-                
+
                 div
                 +edit_block_text_field key='filter_source_key' label='Filter Source Key'
         // unless custom_template
@@ -595,12 +593,12 @@ template(name='edit_block')
                 +edit_block_text_field key='default_sort_key' label='Default Sort Key'
             +set_key_value key='default_sort_direction' value='-1' label='-1'
             +set_key_value key='default_sort_direction' value='1' label='1'
-            
+
             +set_key_value key='horizontal_position' value='left' label='left'
             +set_key_value key='horizontal_position' value='center' label='center'
             +set_key_value key='horizontal_position' value='right' label='right'
         .ui.bottom.attached.segment.active.tab(data-tab='fields')
-            .add_field_doc.ui.button 
+            .add_field_doc.ui.button
                 i.plus.icon
                 |Blank
             strong Schema Fields
@@ -617,20 +615,20 @@ template(name='edit_block')
                     each field_docs
                         tr
                             each display_field_schema.fields
-                                td 
+                                td
                                     if field_template
                                         +Template.dynamic template=field_template
                                     else
                                         | #{display_field_value}
-                            td 
+                            td
                                 i.delete_field.remove.link.icon
-            
 
-     
+
+
 template(name='child_card')
     .ui.card
         .content
-            a.header(href="/v/#{_id}") 
+            a.header(href="/v/#{_id}")
                 if image_id
                     img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
                     // .right.floated.meta $#{price}
@@ -646,11 +644,11 @@ template(name='child_card')
                 | #{request_count} requests
         .content
             +request_service_button
-            a.ui.button(href="/v/#{_id}") 
+            a.ui.button(href="/v/#{_id}")
                 i.large.icon
                     +iconsmall name='view-details'
                 |Details
-    
+
 template(name='child_item')
     .item
         if image_id
@@ -668,58 +666,58 @@ template(name='child_item')
         //         | #{request_count} requests
         .content
             +request_service_button
-            a.ui.button(href="/v/#{_id}") 
+            a.ui.button(href="/v/#{_id}")
                 i.large.icon
                     +iconsmall name='view-details'
                 |Details
-     
-     
-     
-        
+
+
+
+
 template(name='edit_block_text_field')
     .inline.field
         label #{label}
         input.text_field(type='text' value=block_key_value)
-        
+
 template(name='edit_block_number_field')
     .inline.field
         label #{label}
         input.number_field(type='number' min='0' value=block_key_value)
-        
-        
-        
+
+
+
 template(name='set_key_value')
-    .set_key_value.ui.small.compact.button(class=set_value_button_class) 
+    .set_key_value.ui.small.compact.button(class=set_value_button_class)
         if icon
             i.icon
                 +icon name=icon
         |#{label}
-        
-        
+
+
 template(name='set_page_key_value')
-    .set_page_key_value.ui.compact.button(class=set_value_button_class) 
+    .set_page_key_value.ui.compact.button(class=set_value_button_class)
         if icon
             i.icon
                 +icon name=icon
         |#{label}
 
 
-        
+
 template(name='set_field_key_value')
     .set_field_key_value.ui.compact.button(class=set_value_button_class) #{label}
-        
+
 template(name='toggle_block_field_boolean')
     .toggle_block_field_boolean.ui.compact.button(class=toggle_value_button_class) #{label}
-        
-        
+
+
 template(name='set_key_value_2')
-    .set_key_value.ui.button(class=set_value_button_class) 
+    .set_key_value.ui.button(class=set_value_button_class)
         if icon
             i.icon
                 +icon name=icon
         |#{label}
-        
-        
+
+
 template(name='event_type_icon')
     if event_type_doc.icon
         +icon name=event_type_doc.icon
@@ -760,4 +758,5 @@ template(name='ticket_status')
                 i.checkmark.icon
         else
             +icon name='ok'
-        
+
+

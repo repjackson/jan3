@@ -7,8 +7,8 @@ template(name='level_icon')
         img.ui.mini.image(src="/level3icon.png" data-content='Level 3')
     if is_level_four
         img.ui.mini.image(src="/level4icon.png" data-content='Level 4')
-                        
-template(name='ticket_type_label')    
+
+template(name='ticket_type_label')
     if ticket_type_label
         +icon name=ticket_type_icon popup=ticket_type_label
         // .ui.label(class=type_label_class) #{ticket_type_label}
@@ -24,9 +24,9 @@ template(name='add_ticket_button')
         if is_customer
             .ui.secondary.segment Add Office to Profile to Add ticket
 
-            
+
 template(name='submit_ticket')
-    .ui.header 
+    .ui.header
         +icon name='category'
         |Type
     each ticket_type_docs
@@ -34,7 +34,7 @@ template(name='submit_ticket')
     +edit_textarea label='Details' key='ticket_details' icon='view-details'
     +edit_datetime_field key='service_date' label='Service Time'
     .ui.hidden.divider
-    .submit.ui.fluid.green.button
+    .submit.ui.fluid.jp-green.inverted.button
         |Submit
 
 
@@ -53,21 +53,21 @@ template(name='sla_tester')
             | Owner
             +view_sla_contact username=ticket_owner
             if contact_customer
-                i.money.large.icon(title='Contact Customer')
+                i.money.icon(title='Contact Customer')
             if contact_franchisee
-                i.truck.large.icon(title='Contact Franchisee')
+                i.truck.icon(title='Contact Franchisee')
             if email_owner
-                i.mail.large.icon(title='Email Owner')
+                i.mail.icon(title='Email Owner')
             if sms_owner
-                i.phone.large.icon(title='SMS Owner')
+                i.phone.icon(title='SMS Owner')
         .ui.secondary.segment
             |Secondary
             +view_sla_contact username=secondary_contact
             if email_secondary
-                i.mail.large.icon(title='Email secondary')
+                i.mail.icon(title='Email secondary')
             if sms_secondary
-                i.phone.large.icon(title='SMS secondary')
-        .ui.divider                
+                i.phone.icon(title='SMS secondary')
+        .ui.divider
 
 template(name='view_sla_contact')
     // .ui.header SLA Contact #{key}
@@ -79,5 +79,4 @@ template(name='view_sla_contact')
         div #{ev.WORK_TELEPHONE}
         div #{ev.HOME_TELEPHONE}
         div #{phone}
-              
-                    
+

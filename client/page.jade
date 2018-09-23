@@ -5,7 +5,7 @@ template(name='dev')
                 if is_admin
                     +link_button link='/p/admin' icon='user-shield' label='Admin'
             .ten.wide.column
-                h2.ui.center.aligned.grey.header 
+                h2.ui.center.aligned.grey.header
                     +icon name='code'
                     |Dev
             .three.wide.right.aligned.column
@@ -33,7 +33,7 @@ template(name='dev')
                 each events
                     .ui.comment
                         .content
-                            .author 
+                            .author
                                 +author_info
                             .metadata
                                 span.date #{when}
@@ -51,37 +51,7 @@ template(name='page')
     if page_doc
         with page_doc
             if editing_mode
-                .ui.fluid.tertiary.segment.editing_segment
-                    .ui.header 
-                        a(href='/p/pages' title='Admin Pages')
-                            i.clone.link.icon
-                        if icon 
-                            +icon name=icon
-                        |Edit '#{title}' Page
-                    .ui.form
-                        .fields
-                            +edit_page_text_field key='title' label='Title'
-                            +edit_page_text_field key='icon' label='Icon'
-                            +edit_page_text_field key='slug' label='Slug'
-                            +edit_number_field key='number' label='Rank'
-                            if show_header
-                                +edit_page_text_field key='header_template' label='Header Template'
-                    // +edit_array_field key='tags'
-                    +toggle_boolean key='show_header' yes_label='Header' icon='ellipsis horizontal'
-                    +toggle_boolean key='admin_nav' yes_label='Admin Nav' icon='user shield'
-                    +toggle_boolean key='office_nav' yes_label='Office Nav' icon='building'
-                    +toggle_boolean key='customer_nav' yes_label='Customer Nav' icon='money'
-                    +toggle_boolean key='left_column' yes_label='Left Column' icon='outdent'
-                    if left_column
-                        +toggle_boolean key='right_column' yes_label='Right Column' icon='indent'
-                    +toggle_boolean key='left_link' yes_label='Left Link' icon='linkify'
-                    if left_link
-                        h5 Left Link
-                        .ui.form
-                            .fields
-                                +edit_page_text_field key='left_link_url' label='Url' icon='linkify'
-                                +edit_page_text_field key='left_link_icon' label='Icon' icon='image'
-                                +edit_page_text_field key='left_link_label' label='Label' icon='code'
+                +page_edit data=page_doc
             .ui.padded.stackable.grid
                 if show_header
                     if header_template
@@ -122,3 +92,39 @@ template(name='page')
             .ui.basic.center.aligned.segment
                 h3.ui.header No Page with #{current_page_slug}.
                 #create_page.ui.button Create
+
+
+template(name='page_edit')
+    with page_doc
+        .ui.fluid.tertiary.segment.editing_segment.accordion
+            .ui.header.title
+                a(href='/p/pages' title='Admin Pages')
+                    i.clone.link.icon
+                if icon
+                    +icon name=icon
+                |Edit '#{title}' Page
+            .content
+                .ui.form
+                    .fields
+                        +edit_page_text_field key='title' label='Title'
+                        +edit_page_text_field key='icon' label='Icon'
+                        +edit_page_text_field key='slug' label='Slug'
+                        +edit_number_field key='number' label='Rank'
+                        if show_header
+                            +edit_page_text_field key='header_template' label='Header Template'
+                // +edit_array_field key='tags'
+                +toggle_boolean key='show_header' yes_label='Header' icon='ellipsis horizontal'
+                +toggle_boolean key='admin_nav' yes_label='Admin Nav' icon='user shield'
+                +toggle_boolean key='office_nav' yes_label='Office Nav' icon='building'
+                +toggle_boolean key='customer_nav' yes_label='Customer Nav' icon='money'
+                +toggle_boolean key='left_column' yes_label='Left Column' icon='outdent'
+                if left_column
+                    +toggle_boolean key='right_column' yes_label='Right Column' icon='indent'
+                +toggle_boolean key='left_link' yes_label='Left Link' icon='linkify'
+                if left_link
+                    h5 Left Link
+                    .ui.form
+                        .fields
+                            +edit_page_text_field key='left_link_url' label='Url' icon='linkify'
+                            +edit_page_text_field key='left_link_icon' label='Icon' icon='image'
+                            +edit_page_text_field key='left_link_label' label='Label' icon='code'
