@@ -1,12 +1,12 @@
 template(name='nav')
     .nav_bar.ui.top.attached.borderless.inverted.menu
-        a.toggle_left_sidebar.icon.item 
+        a.toggle_left_sidebar.icon.item
             i.bars.icon
         if is_admin
             each admin_nav_items
                 a.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
-                    i.large.icon
-                        +icon name=icon
+                    // i.large.icon
+                    //     +icon name=icon
                     .mobile.hidden &nbsp; #{title}
         else if is_customer
             each customer_nav_items
@@ -23,18 +23,13 @@ template(name='nav')
                     .mobile.hidden &nbsp; #{title}
         .right.menu
             if is_dev
-                a.item(href='/p/admin' data-content='Admin' class="{{ active_route 'admin' }}" )
-                    i.large.icon
-                        +icon name='user-shield'
-                #toggle_editing.item
-                    i.large.icon
-                        if editing_mode
-                            +icon name='toggle-on'
-                        else
-                            +icon name='toggle-off'
-                a.item(href='/p/schemas' data-content='Schemas' class="{{ active_route 'schemas' }}" )
-                    i.large.icon
-                        +icon name='database'
+                #toggle_editing.icon.item
+                    if editing_mode
+                        i.teal.pencil.link.icon
+                    else
+                        i.pencil.link.icon
+                a.icon.item(href='/p/schemas' data-content='Schemas' class="{{ active_route 'schemas' }}" )
+                    i.database.icon
             if is_customer
                 a.log_ticket.item(href='#' title='Log Ticket')
                     i.large.icon
@@ -47,9 +42,11 @@ template(name='nav')
                     else
                         i.user.icon
                     .mobile.hidden &nbsp; #{currentUser.username}
-                a#logout.ui.item(href='#') 
-                    i.large.icon
-                        +icon name='logout-rounded'
+                a#logout.ui.icon.item(href='#')
+                    if signing_out
+                        i.notched.circle.loading.icon
+                    else
+                        i.sign.out.alternate.icon
             else
                 a.item(href='/login')
                     i.large.icon
@@ -66,13 +63,11 @@ template(name='left_sidebar')
                 img.ui.centered.mini.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 |#{currentUser.username}
         if is_customer
-            a.header.toggle_left_sidebar.item(href='/') 
+            a.header.toggle_left_sidebar.item(href='/')
                 |Dashboard
         if is_admin
             each admin_nav_items
                 a.toggle_left_sidebar.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
-                    i.large.icon
-                        +icon name=icon
                     |#{title}
         else if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
@@ -90,16 +85,16 @@ template(name='left_sidebar')
             //         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}" )
             //     else
             //         i.user.icon
-            // a#logout.ui.toggle_sidebar.item(href='#') 
+            // a#logout.ui.toggle_sidebar.item(href='#')
             //     i.large.icon
             //         +mini_sprite name='edit'
             //     | Sign Out
         if currentUser
-            a#logout.ui.item(href='#') 
+            a#logout.ui.item(href='#')
                 | Sign Out
-                i.right.chevron.large.icon
+                i.sign.out.alternate.icon
         else
-            a.ui.toggle_sidebar.item(href='/login') 
+            a.ui.toggle_sidebar.item(href='/login')
                 // i.large.icon
                 //     +mini_sprite name='enter'
                 | Log In

@@ -3,24 +3,24 @@ $.cloudinary.config
 
 FlowRouter.notFound =
     action: ->
-        BlazeLayout.render 'layout', 
+        BlazeLayout.render 'layout',
             main: 'not_found'
 
 
 FlowRouter.route('/', {
     triggersEnter: [(context, redirect) ->
         user = Meteor.user()
-        
+
         if user
-            if user.roles 
+            if user.roles
                 if 'customer' in user.roles
-                    redirect '/p/customer_dashboard' 
+                    redirect '/p/customer_dashboard'
                 else if 'admin' in user.roles
-                    redirect '/p/admin' 
+                    redirect '/p/admin'
                 else if 'office' in user.roles
-                    redirect "/p/office_tickets/#{user.office_jpid}" 
+                    redirect "/p/office_tickets/#{user.office_jpid}"
         else
-            redirect '/login' 
+            redirect '/login'
     ]
 })
 
@@ -42,12 +42,12 @@ else
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
 
-Template.registerHelper 'is_editing', () -> 
+Template.registerHelper 'is_editing', () ->
     Session.equals 'editing_id', @_id
 
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
 
-Template.registerHelper 'overdue', () -> 
+Template.registerHelper 'overdue', () ->
     if @assignment_timestamp
         now = Date.now()
         response = @assignment_timestamp - now
@@ -56,7 +56,7 @@ Template.registerHelper 'overdue', () ->
         if hour_amount<-5 then true else false
 
 
-# Template.registerHelper 'unread_count', () ->  
+# Template.registerHelper 'unread_count', () ->
 #     found_unread_count_stat = Stats.findOne({
 #         doc_type:'message'
 #         stat_type:'unread'
@@ -64,10 +64,10 @@ Template.registerHelper 'overdue', () ->
 #     })
 #     if found_unread_count_stat
 #         found_unread_count_stat.amount
-        
-        
-        
-Template.registerHelper 'my_office_link', () ->  
+
+
+
+Template.registerHelper 'my_office_link', () ->
     user = Meteor.user()
     if user
         if user.office_jpid
@@ -79,10 +79,9 @@ Template.registerHelper 'my_office_link', () ->
 
 Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
 
-Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()         
-Template.registerHelper 'is_closed', () -> @status is 'closed'
+Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()
 
-Template.registerHelper 'databank_docs': ->  
+Template.registerHelper 'databank_docs': ->
     Docs.find { type:Session.get('selected_doc_type') }
 
 
@@ -94,7 +93,7 @@ Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getQueryParam('doc_
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 
-Template.registerHelper 'my_office', () -> 
+Template.registerHelper 'my_office', () ->
     user = Meteor.user()
     if user
         if user.office_jpid
@@ -115,41 +114,41 @@ Template.registerHelper 'my_office', () ->
     else null
 
 
-Template.registerHelper 'is_current_route', (name) -> 
+Template.registerHelper 'is_current_route', (name) ->
     if FlowRouter.current().route.name is name then 'active' else ''
-    
-    
-Template.registerHelper 'is_admin', () -> 
+
+
+Template.registerHelper 'is_admin', () ->
     if Meteor.user() and Meteor.user().roles
         'admin' in Meteor.user().roles
-Template.registerHelper 'is_dev', () -> 
+Template.registerHelper 'is_dev', () ->
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles
 Template.registerHelper 'dev_mode', ()->
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles and Session.get('dev_mode')
-        
-        
+
+
 Template.registerHelper 'editing_mode', ()->
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles and Session.get('editing_mode')
-        
-        
-        
-Template.registerHelper 'is_editor', () -> 
+
+
+
+Template.registerHelper 'is_editor', () ->
     if Meteor.user() and Meteor.user().roles
         'admin' in Meteor.user().roles
-Template.registerHelper 'is_office', () -> 
+Template.registerHelper 'is_office', () ->
     if Meteor.user() and Meteor.user().roles
         'office' in Meteor.user().roles
-Template.registerHelper 'is_customer', () -> 
+Template.registerHelper 'is_customer', () ->
     if Meteor.user() and Meteor.user().roles
         'customer' in Meteor.user().roles
-        
+
 Template.registerHelper 'user_is_customer', () -> @roles and 'customer' in @roles
 Template.registerHelper 'user_is_office', () -> @roles and 'office' in @roles
-        
-Template.registerHelper 'has_user_customer_jpid', () -> 
+
+Template.registerHelper 'has_user_customer_jpid', () ->
     Meteor.user() and Meteor.user().customer_jpid
 
 Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
@@ -167,59 +166,59 @@ Template.registerHelper 'block_field_value', ->
 #     HTTP.call('get',"http://www.npr.org/rss/podcast.php?id=510307", (err,res)->
 #         else
 #     )
-# Template.registerHelper 'slug_value', () -> 
+# Template.registerHelper 'slug_value', () ->
 #     doc_field = Template.parentData(2)
 #     current_doc = Template.parentData(3)
 #     current_doc["#{@slug}"]
 
-Template.registerHelper 'page_key_value', () -> 
+Template.registerHelper 'page_key_value', () ->
     # doc_field = Template.parentData(2)
     current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
     if current_doc
         current_doc["#{@key}"]
-        
-Template.registerHelper 'page_slug_key_value', () -> 
+
+Template.registerHelper 'page_slug_key_value', () ->
     # doc_field = Template.parentData(2)
-    page = Docs.findOne 
+    page = Docs.findOne
         type:'page'
         slug:FlowRouter.getParam('page_slug')
     if page
         page["#{@key}"]
-        
-        
-Template.registerHelper 'page_jpid_key_value', () -> 
+
+
+Template.registerHelper 'page_jpid_key_value', () ->
     # doc_field = Template.parentData(2)
-    page = Docs.findOne 
+    page = Docs.findOne
         "ev.ID":FlowRouter.getParam('jpid')
     if page
         page["#{@key}"]
-        
-        
-        
-        
-Template.registerHelper 'active_route', (slug) -> 
-    if FlowRouter.getParam('page_slug') is slug then 'active' else ''
-        
 
 
-Template.registerHelper 'profile_key_value', () -> 
+
+
+# Template.registerHelper 'active_route', (slug) ->
+#     if FlowRouter.getParam('page_slug') is slug then 'active' else ''
+
+
+
+Template.registerHelper 'profile_key_value', () ->
     # doc_field = Template.parentData(2)
     current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
     if current_user
         current_user.profile["#{@key}"]
-        
-Template.registerHelper 'user_key_value', () -> 
+
+Template.registerHelper 'user_key_value', () ->
     # doc_field = Template.parentData(2)
     current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
     if current_user
         current_user["#{@key}"]
-        
-# Template.registerHelper 'user_key_value', () -> 
+
+# Template.registerHelper 'user_key_value', () ->
 #     # doc_field = Template.parentData(2)
 #     current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
-#     Meteor.users. 
+#     Meteor.users.
 #         current_user["#{@key}"]
-        
+
 Template.left_sidebar.onRendered ->
     @autorun =>
         if @subscriptionsReady()
@@ -232,7 +231,7 @@ Template.left_sidebar.onRendered ->
                     })
                     .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')
             , 750
-            
+
     # if @subscriptionsReady()
     #         Meteor.setTimeout ->
     #             $('.context.example .ui.right.sidebar')
@@ -244,4 +243,3 @@ Template.left_sidebar.onRendered ->
     #                 .sidebar('attach events', '.toggle_right_sidebar.item')
     #                 # .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')
     #         , 1500
-            

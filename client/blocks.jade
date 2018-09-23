@@ -495,13 +495,12 @@ template(name='block')
                 if editing_mode
                     if can_lower
                         .ui.small.icon.circular.button.lower_block
-                            i.chevron.down.icon
-                    .ui.basic.label #{rank}
+                            i.chevron.up.icon
+                    // .ui.basic.label #{rank}
                     .ui.small.icon.circular.button.raise_block
-                        i.chevron.up.icon
+                        i.chevron.down.icon
                     .toggle_editing_block.ui.icon.large.circular.button(class=editing_button_class title='Edit Block')
                         i.pencil.icon
-                        i.dropdown.icon
                 if editing_block
                     +edit_block
 
@@ -752,13 +751,13 @@ template(name='view_ticket_link')
 template(name='ticket_status')
     with page_context
         .ui.header
+            |Status
             +status_template
         if open
             .close.ui.button
-                i.checkmark.icon
                 |Close
         else
-            .reopen.ui.icon.button
+            .reopen.ui.icon.button(title='Reopen')
                 i.undo.icon
 
 

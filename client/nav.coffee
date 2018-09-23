@@ -1,11 +1,23 @@
 Template.left_sidebar.events
-    'click #logout': (e,t)-> 
+    'click #logout': (e,t)->
         e.preventDefault()
-        Meteor.logout()
-        FlowRouter.go '/login'
+        Meteor.logout ->
+            FlowRouter.go '/login'
 
-    
+Template.nav.onCreated ->
+    @signing_out = new ReactiveVar false
+
 Template.nav.helpers
+    signing_out: ->
+        if Template.instance().signing_out.get() is true then 'loading' else ''
+
+    active_route: (slug)->
+        if Template.instance().signing_out.get() is true
+            'disabled'
+        else
+            if FlowRouter.getParam('page_slug') is slug then 'active' else ''
+
+
     my_office_doc: ->
         user = Meteor.user()
         if user and user.office_jpid
@@ -54,10 +66,12 @@ Template.left_sidebar.helpers
 
 
 Template.nav.events
-    'click #logout': (e,t)-> 
+    'click #logout': (e,t)->
         e.preventDefault()
-        Meteor.logout()
-        FlowRouter.go '/login'
+        t.signing_out.set true
+        Meteor.logout ->
+            FlowRouter.go '/login'
+            t.signing_out.set false
 
     'click .log_ticket': (e,t)->
         Meteor.call 'log_ticket', (err,res)->
@@ -70,7 +84,7 @@ Template.nav.events
         Session.set('dev_mode',!Session.get('dev_mode'))
     'click #toggle_editing': ->
         Session.set('editing_mode',!Session.get('editing_mode'))
-    
+
 Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'me'
     @autorun -> Meteor.subscribe 'nav_items'
