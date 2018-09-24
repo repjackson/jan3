@@ -7,7 +7,6 @@ Meteor.methods
                 escalation_number:1
                 ticket_type:ticket.ticket_type
                 office_jpid:ticket.office_jpid
-        console.log sla
 
         if sla.escalation_hours
             Docs.insert
@@ -230,6 +229,13 @@ Meteor.methods
                 recipient_username: sla.ticket_office
                 event_type: 'sms_owner'
                 text:"SMS sent to #{sla.ticket_owner} about #{ticket.customer_name} escalation to #{ticket.level}."
+            Docs.insert
+                type:'message'
+                message_type:'sms'
+                recipient_type:'owner'
+                to: sla.ticket_owner
+                body: "#{sla.ticket_owner}, you're being notified as the owner for a '#{ticket_type.title}' ticket submission."
+                ticket_id: ticket_id
 
         if sla.email_owner
             Docs.insert
@@ -237,14 +243,21 @@ Meteor.methods
                 parent_id:ticket_id
                 event_type:'emailed_owner'
                 text:"Email sent to owner #{sla.ticket_owner} after ticket submission."
+            Docs.insert
+                type:'message'
+                message_type:'email'
+                recipient_type:'owner'
+                to: sla.ticket_owner
+                body: "#{sla.secondary_contact}, you're being notified as the owner for a '#{ticket_type.title}' ticket submission."
+                ticket_id: ticket_id
 
         if sla.email_secondary
             Docs.insert
                 type:'message'
                 message_type:'email'
-                recipient_type:'office'
+                recipient_type:'secondary'
                 to: sla.secondary_contact
-                body: "#{sla.secondary_contact}, you're being notified as the secondary contact for a ticket submission."
+                body: "#{sla.secondary_contact}, you're being notified as the secondary contact for a '#{ticket_type.title}' ticket submission."
                 ticket_id: ticket_id
             Docs.insert
                 type:'event'
@@ -288,7 +301,7 @@ Meteor.methods
                 message_type:'sms'
                 recipient_type:'customer'
                 to: customer.ev.CUST_NAME
-                body: "#{customer.ev.CUST_NAME}, your ticket #{ticket.ticket_number} was submitted."
+                body: "#{customer.ev.CUST_NAME}, your ticket ##{ticket.ticket_number} was submitted."
                 ticket_id: ticket_id
             Docs.insert
                 type:'event'
