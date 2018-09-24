@@ -132,16 +132,20 @@ Meteor.methods
         updated_now_difference = now-last_updated
         console.log 'updated_now_difference', updated_now_difference
         seconds_elapsed = Math.floor(updated_now_difference/1000)
-        hours_elapsed = Math.floor(seconds_elapsed/60/60)
-        escalation_calculation = hours_elapsed - hours_value
+        minutes_elapsed = Math.floor(seconds_elapsed/60)
+        hours_elapsed = Number.parseFloat((seconds_elapsed/60/60)).toFixed(1)
+        sla_minutes = hours_value*60
+        escalation_calculation = minutes_elapsed - sla_minutes
+        # escalation_calculation = hours_elapsed - hours_value
 
 
         console.log 'new calc'
+        console.log 'minutes_elapsed', minutes_elapsed
+        console.log 'sla_minutes', sla_minutes
+        console.log 'hours elapsed', hours_elapsed
         console.log 'escalation calc', escalation_calculation
-        console.log 'hours_value', hours_value
-        console.log 'hours_elapsed', hours_elapsed
 
-        if hours_elapsed > hours_value
+        if minutes_elapsed > sla_minutes
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
