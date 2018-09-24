@@ -24,12 +24,6 @@ FlowRouter.route('/', {
     ]
 })
 
-# Meteor.startup( () =>
-#     GoogleMaps.load
-#         key: 'AIzaSyAK_vkvxDH5vsqGkd0Qn-dDmq-rShTA7UA',
-#         libraries: 'places'
-# )
-
 
 Session.setDefault('query',null)
 Session.setDefault('dev_mode',false)
@@ -56,14 +50,9 @@ Template.registerHelper 'overdue', () ->
         if hour_amount<-5 then true else false
 
 
-# Template.registerHelper 'unread_count', () ->
-#     found_unread_count_stat = Stats.findOne({
-#         doc_type:'message'
-#         stat_type:'unread'
-#         username:Meteor.user().username
-#     })
-#     if found_unread_count_stat
-#         found_unread_count_stat.amount
+
+Template.registerHelper 'active_route', (slug) ->
+    if FlowRouter.getParam('page_slug') and FlowRouter.getParam('page_slug') is slug then 'active' else ''
 
 
 

@@ -38,7 +38,7 @@ Meteor.methods
             # to: ["<#{assigned_to_user.emails[0].address}>"]
             to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
-            subject: "Ticket Assignment"
+            subject: "#{username} you have been assigned to ticket ##{ticket.ticket_number} from customer: #{ticket.customer_name}."
             html: "<h4>#{username}, you have been assigned to ticket ##{ticket.ticket_number} from customer: #{ticket.customer_name}.</h4>
                 <ul>
                     <li>Type: #{ticket.ticket_type}</li>

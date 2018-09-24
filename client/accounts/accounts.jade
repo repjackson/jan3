@@ -65,9 +65,9 @@ template(name='login')
                                 input.password(type='password')
                             .ui.hidden.divider
                             .field
-                                unless currentUser
-                                    .login.ui.fluid.jp-green.inverted.button(class=login_button_class title='Login')
-                                        | LOGIN
+                                // unless currentUser
+                                .login.ui.fluid.jp-green.inverted.button(class=login_button_class title='Login')
+                                    | LOGIN
                         .four.wide.column
                             .ui.center.aligned.header Demo
                             #login_demo_customer.ui.fluid.button(class=demo_class title='Login Demo Customer')

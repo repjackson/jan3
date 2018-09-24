@@ -97,7 +97,7 @@ Meteor.methods
             level: $lte:3
             })
         open_tickets_count = open_tickets.count()
-        console.log
+        console.log open_tickets_count
         for ticket in open_tickets.fetch()
             Meteor.call 'single_escalation_check', ticket._id
 
@@ -124,11 +124,15 @@ Meteor.methods
                 event_type: 'setting_default_escalation_time'
                 text: "No escalation hours found, using 2 as the default."
 
+        console.log 'hours value', hours_value
+
         now = Date.now()
         updated_now_difference = now-last_updated
         seconds_elapsed = Math.floor(updated_now_difference/1000)
         hours_elapsed = Math.floor(seconds_elapsed/60/60)
         escalation_calculation = hours_elapsed - hours_value
+
+        console.log 'escalation calc', escalation_calculation
 
         ticket_type = Docs.findOne
             type:'ticket_type'
@@ -141,6 +145,9 @@ Meteor.methods
                 event_type:'escalate'
                 text:"#{hours_elapsed} hours have elapsed, more than #{hours_value} in level #{next_level} '#{ticket_type.title}' rules, escalating."
             Meteor.call 'escalate_ticket', ticket._id, ->
+        else
+            console.log 'not escalating', ticket_id
+
 
     escalate_ticket: (doc_id)->
         ticket = Docs.findOne doc_id

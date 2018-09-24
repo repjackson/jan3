@@ -66,8 +66,8 @@ Template.submit_ticket.events
     'click .submit': ->
         doc_id = FlowRouter.getQueryParam 'doc_id'
 
-        Meteor.call 'submit_ticket', doc_id, (err,res)->
         FlowRouter.go "/p/ticket_customer_view?doc_id=#{doc_id}"
+        Meteor.call 'submit_ticket', doc_id, (err,res)->
 
 
 Template.sla_tester.onCreated ->

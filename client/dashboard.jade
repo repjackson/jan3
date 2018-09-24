@@ -15,32 +15,32 @@
 //                 .column
 //                     .ui.floating.message
 //                         .content
-//                             .header 
+//                             .header
 //                                 i.large.icon
 //                                     +icon name='sms'
 //                                 |#{currentUser.users_office.ev.MASTER_LICENSEE} Message
 //                         .content
-//                             p 
+//                             p
 //                             p #{currentUser.users_office.customer_message}
 //                 .column
 //                     .ui.floating.message
 //                         .content
-//                             .header 
+//                             .header
 //                                 i.large.icon
 //                                     +icon name='discount'
 //                                 |#{currentUser.users_office.ev.MASTER_LICENSEE} Promotions
 //                         .content
-//                             p 
+//                             p
 //                             p #{currentUser.users_office.customer_promotions}
 //                 .column
 //                     .ui.floating.message
 //                         .content
-//                             .header 
+//                             .header
 //                                 i.large.icon
 //                                     +icon name='faq'
 //                                 |#{currentUser.users_office.ev.MASTER_LICENSEE} Help Policy
 //                         .content
-//                             p 
+//                             p
 //                             p #{currentUser.users_office.help_policy}
 //                 .column
 //                     +small_service_list
@@ -49,7 +49,7 @@
 //             with currentUser.users_customer.parent_franchisee
 //                 .sixteen.wide.column
 //                     .ui.secondary.segment
-//                         h3.ui.header 
+//                         h3.ui.header
 //                             +icon name='conference'
 //                             // |#{ev.FRANCHISEE} Franchisee Contact
 //                             |Your Local Owner / Operator
@@ -66,7 +66,7 @@
 //                                             +icon name='send'
 //         .row
 //             .sixteen.wide.column
-//                 h3.ui.header 
+//                 h3.ui.header
 //                     +icon name='error'
 //                     |#{currentUser.users_customer.ev.CUST_NAME} Tickets
 //                 +blocks tags='customer,dashboard,tickets'
@@ -78,8 +78,8 @@
 //                 +dashboard_office_contacts_list
 //                 +blocks tags='customer,dashboard,office,contacts'
 //         .centered.row
-        
-// template(name='customer_special_services')        
+
+// template(name='customer_special_services')
 //     with currentUser.users_customer
 //         .ui.horizontal.divided.list
 //             // .item #{customer_contact_person}
@@ -90,14 +90,14 @@
 //             .item Regular Service Amount: $#{ev.CUST_REG_SERVICE_AMT}
 //     // +blocks tags='customer,dashboard,office,special_services'
 
-    
+
 template(name='customer_menu')
     .ui.five.item.stackable.large.menu
-        a.item(href='/account/settings') 
+        a.item(href='/account/settings')
             i.large.icon
                 +icon name='settings'
             | &nbsp; Account
-        a.log_ticket.item(href='#') 
+        a.log_ticket.item(href='#')
             i.large.icon
                 +icon name='add-ticket'
             | &nbsp; Log Ticket
@@ -105,18 +105,18 @@ template(name='customer_menu')
             i.large.icon
                 +iconsmall name='two-tickets'
             | &nbsp; Tickets
-        a.item(href='/p/services') 
+        a.item(href='/p/customer_services')
             i.large.icon
                 +icon name='service-bell'
             | &nbsp; Request Service
-        // a.item(href='/help') 
+        // a.item(href='/help')
         //     i.big.icon
         //         +icon name='help'
         //     | &nbsp; Help
 
-                
+
 // template(name='dashboard_office_contacts_list')
-//     h3.ui.header 
+//     h3.ui.header
 //         +icon name='organization'
 //         |#{currentUser.users_office.ev.MASTER_LICENSEE} Contacts
 
@@ -124,18 +124,18 @@ template(name='customer_menu')
 //         tbody
 //             each office_contacts
 //                 tr
-//                     td 
+//                     td
 //                         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
 //                         .ui.popup
 //                             img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
 //                         a(href="/user/#{username}") #{first_name} #{last_name}
 //                         .ui.popup
 //                             img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
-//                     td 
+//                     td
 //                         div #{title}
-//                         div 
+//                         div
 //                             strong #{function}
-//                     td 
+//                     td
 //                         div #{ev.JOB_TITLE}
 //                         div #{ev.WORK_TELEPHONE} #{ev.TELE_CELL} #{phone}
 //                         div #{email}
@@ -143,12 +143,12 @@ template(name='email_user_link')
     a(href="mailto:#{email}" target='_window' title="Email #{name}")
         // i.mail.icon
         +icon name='send'
-//                     // td 
+//                     // td
 //                     //     +view_user_button
 
 template(name='small_service_list')
     .ui.secondary.segment
-        h4.ui.dividing.header 
+        h4.ui.dividing.header
             |Other JAN-PRO Services Offered
         .ui.bulleted.list
             each services_offered
@@ -177,12 +177,12 @@ template(name='dashboard_office_messages')
                 .column
                     .ui.floating.message
                         .content
-                            .header 
+                            .header
                                 i.large.icon
                                     +icon name=icon
                                 |#{currentUser.users_office.ev.MASTER_LICENSEE} #{title}
                         .content
-                            p 
+                            p
                             p #{details}
             .column
                 +small_service_list

@@ -1,26 +1,25 @@
 template(name='comments')
-    .ui.secondary.segment
-        .ui.header 
-            +icon name='comments'
-            |#{comment_count} Comments
-        .ui.fluid.left.icon.input
-            i.plus.icon
-            input#new_comment(type='text' placeholder='Add...')
-        .ui.comments
-            each comments
-                .comment
-                    a.avatar(href="/user/#{author.username}")
-                        if author.profile.image_id
-                            img.ui.avatar.spaced.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        else
-                            i.user.icon
-                    .content
-                        a.author(href="/user/#{author.username}") #{author.username}
-                        .metadata
-                            span.date #{when}
-                        .text
-                            p #{text}
-                        .actions
-                            // a.reply Reply
-                            if is_admin
-                                a.delete_comment delete
+    .ui.header
+        +icon name='comments'
+        |#{comment_count} Comments
+    .ui.fluid.left.icon.input
+        i.plus.icon
+        input#new_comment(type='text' placeholder='Add...')
+    .ui.comments
+        each comments
+            .comment
+                a.avatar(href="/user/#{author.username}")
+                    if author.profile.image_id
+                        img.ui.avatar.spaced.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    else
+                        i.user.icon
+                .content
+                    a.author(href="/user/#{author.username}") #{author.username}
+                    .metadata
+                        span.date #{when}
+                    .text
+                        p #{text}
+                    .actions
+                        // a.reply Reply
+                        if is_admin
+                            a.delete_comment delete

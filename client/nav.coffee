@@ -11,11 +11,11 @@ Template.nav.helpers
     signing_out: ->
         if Template.instance().signing_out.get() is true then 'loading' else ''
 
-    active_route: (slug)->
-        if Template.instance().signing_out.get() is true
-            'disabled'
-        else
-            if FlowRouter.getParam('page_slug') is slug then 'active' else ''
+    # active_route: (slug)->
+    #     if Template.instance().signing_out.get() is true
+    #         'disabled'
+    #     else
+    #         if FlowRouter.getParam('page_slug') is slug then 'active' else ''
 
 
     my_office_doc: ->

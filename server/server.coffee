@@ -48,6 +48,7 @@ Meteor.startup () ->
             parser.text 'every 10 minutes'
             # so it catches 1 hour escalations
         job: ->
+            console.log 'running site escalation check'
             Meteor.call 'run_site_escalation_check', (err,res)->
                 if err then console.error err
 
