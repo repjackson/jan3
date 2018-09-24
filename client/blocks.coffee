@@ -802,7 +802,6 @@ Template.feedback_widget.events
 
     'blur .feedback_details': (e,t)->
         details = e.currentTarget.value
-        console.log details
         feedback_doc = Docs.findOne
             type:'feedback'
             parent_id: FlowRouter.getQueryParam('doc_id')
@@ -815,19 +814,3 @@ Template.feedback_widget.events
             parent_id: FlowRouter.getQueryParam('doc_id')
         Docs.update feedback_doc._id,
             $set:submitted:true
-
-
-    'click .close': ->
-        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        Docs.update FlowRouter.getQueryParam('doc_id'),
-            $set: open:false
-        Docs.insert
-            type:'event'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-            event_type:'ticket_close'
-            text:"#{Meteor.user().username} closed ticket."
-        Docs.insert
-            type:'event'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-            event_type:'emailed_customer_contact'
-            text:"Customer #{ticket.customer_name} emailed about ticket close."

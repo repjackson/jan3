@@ -215,7 +215,7 @@ Meteor.methods
                 office_jpid:ticket.office_jpid
 
         mail_fields = {
-            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<andrew.forrest@premiumfranchisebrands.com>"]
+            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>", "<andrew.forrest@premiumfranchisebrands.com>","<brad@janhub.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Ticket from #{ticket.customer_name} submitted."
             text: ''
@@ -356,13 +356,15 @@ Meteor.methods
         owner = Meteor.users.findOne username: sla.ticket_owner
 
         mail_fields = {
-            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>", "<andrew.forrest@premiumfranchisebrands.com>"]
+            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>", "<andrew.forrest@premiumfranchisebrands.com>","<brad@janhub.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Ticket from #{ticket.customer_name} escalated to #{ticket.level}."
             text: ''
             html: "<h4>Ticket from #{ticket.customer_name} escalated to #{ticket.level}.</h4>
                 <ul>
+                    <li>##{ticket.ticket_number}</li>
                     <li>Type: #{ticket.ticket_type}</li>
+                    <li>Created: #{ticket.long_timestamp}</li>
                     <li>Details: #{ticket.ticket_details}</li>
                     <li>Office: #{ticket.ticket_office_name}</li>
                     <li>Open: #{ticket.open}</li>

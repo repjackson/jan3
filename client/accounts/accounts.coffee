@@ -39,6 +39,8 @@ Template.login.events
         username = $('.username').val()
         password = $('.password').val()
         Meteor.loginWithPassword username, password, (err,res)->
+            if err
+                alert err
             if Meteor.user()
                 if Meteor.user().roles
                     if 'office' in Meteor.user().roles
@@ -56,6 +58,8 @@ Template.login.events
             username = $('.username').val()
             password = $('.password').val()
             Meteor.loginWithPassword username, password, (err,res)->
+                if err
+                    alert err
                 # console.log 'res', Meteor.user()
                 if Meteor.user()
                     if Meteor.user().roles
@@ -173,6 +177,8 @@ Template.register_customer.events
 
 
         Accounts.createUser(options, (err,res)=>
+            if err
+                alert err
             # Meteor.call 'refresh_customer_jpids', username
             FlowRouter.go '/p/customer_dashboard'
             # if current_role is 'customer'
@@ -307,6 +313,7 @@ Template.register_office.events
                 "ev.ID": office_jpid
         Accounts.createUser(options, (err,res)=>
             if err
+                alert err
             else
                 # Meteor.call
                 FlowRouter.go "/p/office_tickets/#{office_jpid}/"

@@ -1,16 +1,16 @@
 Template.office_service_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'service'
-    
+
 Template.office_service_settings.helpers
     services: -> Docs.find {type:'service'}
     select_service_button_class: ->
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         if @slug in page_office.services then 'primary' else ''
-        
+
 Template.office_service_settings.events
-    'click .select_service': -> 
+    'click .select_service': ->
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        if page_office 
+        if page_office
             if page_office.services
                 if @slug in page_office.services
                     Docs.update page_office._id,
@@ -18,16 +18,16 @@ Template.office_service_settings.events
                 else
                     Docs.update page_office._id,
                         $addToSet: services: @slug
-            else    
+            else
                 Docs.update page_office._id,
                     $set: services: [@slug]
-    
-    
+
+
 Template.toggle_sla_boolean.onRendered ->
     Meteor.setTimeout ->
         $('.button').popup()
     , 400
-    
+
 
 Template.office_sla.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'ticket_type'
@@ -40,15 +40,15 @@ Template.office_sla.events
     'click .select_ticket_type': ->
         Session.set 'ticket_type_selection', @slug
 
-            
+
     'click .add_sla_setting_doc': (e,t)->
         Docs.insert
             type:'sla_setting'
             escalation_number: @number
-            office_jpid:FlowRouter.getParam('jpid')      
+            office_jpid:FlowRouter.getParam('jpid')
             ticket_type:Session.get('ticket_type_selection')
 
-    
+
 Template.office_sla.helpers
     current_office: ->
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
@@ -56,7 +56,7 @@ Template.office_sla.helpers
     ticket_types: -> Docs.find {type:'ticket_type'}
     select_ticket_type_button_class: -> if Session.equals('ticket_type_selection', @slug) then 'primary' else ''
     selected_ticket_type: -> Session.get 'ticket_type_selection'
-    is_initial: -> Template.parentData().number is 1    
+    is_initial: -> Template.parentData().number is 1
     rule_docs: -> Docs.find {type:'rule'}, sort:number:1
 
     ticket_type_owner_value: ->
@@ -64,24 +64,24 @@ Template.office_sla.helpers
         current_ticket_type = Session.get 'ticket_type_selection'
         ticket_type_owner_value = page_office["#{current_ticket_type}_ticket_owner"]
         return ticket_type_owner_value
-    
-    sla_settings_doc: ->    
+
+    sla_settings_doc: ->
         rule_doc = Template.currentData()
-        sla_setting_doc = 
+        sla_setting_doc =
             Docs.findOne {
                 type:'sla_setting'
                 escalation_number: rule_doc.number
-                office_jpid:FlowRouter.getParam('jpid') 
+                office_jpid:FlowRouter.getParam('jpid')
                 ticket_type:Session.get('ticket_type_selection')
             }
         return sla_setting_doc
-    
-    
-    
-    
+
+
+
+
 Template.ticket_owner_select.onCreated ()->
     @user_results = new ReactiveVar( [] )
-    
+
 Template.ticket_owner_select.helpers
     user_results: ->
         user_results = Template.instance().user_results.get()
@@ -96,8 +96,11 @@ Template.ticket_owner_select.helpers
                 username: sla_setting_doc.ticket_owner
         else
             false
-        
+
 Template.ticket_owner_select.events
+    'click .clear_results': (e,t)->
+        t.user_results.set null
+
     'click .select_owner': (e,t) ->
         sla_setting_doc = Template.currentData()
         # key = Template.parentData(0).key
@@ -120,7 +123,7 @@ Template.ticket_owner_select.events
 
     'click .pull_user': (e,t)->
         context = Template.currentData()
-        
+
         if confirm "Remove #{context.ticket_owner} as ticket owner?"
             Docs.update context._id,
                 $unset: ticket_owner: 1
@@ -130,14 +133,17 @@ Template.ticket_owner_select.events
 
 Template.secondary_contact_widget.onCreated ()->
     @user_results = new ReactiveVar( [] )
-    
+
 Template.secondary_contact_widget.events
+    'click .clear_results': (e,t)->
+        t.user_results.set null
+
     'click .select_secondary': (e,t) ->
         sla_setting_doc = Template.currentData()
         # key = Template.parentData(0).key
         # searched_value = doc["#{template.data.key}"]
         # office_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        
+
         Docs.update sla_setting_doc._id,
             $set: secondary_contact: @username
         # $(e.currentTarget).closest('#office_username_query').val ''
@@ -158,7 +164,10 @@ Template.secondary_contact_widget.events
         context = Template.currentData()
         if confirm "Remove #{context.secondary_contact} as secondary contact?"
             Docs.update context._id,
-                $unset: secondary_contact: 1
+                $unset:
+                    secondary_contact: 1
+                    sms_secondary: 1
+                    email_secondary: 1
 
 Template.secondary_contact_widget.helpers
     user_results: ->
@@ -175,7 +184,7 @@ Template.secondary_contact_widget.helpers
             return found
         else
             false
-        
+
     secondary_contact: ->
         sla_setting_doc = Template.currentData(0)
         sla_setting_doc.secondary_contact

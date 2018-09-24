@@ -10,19 +10,19 @@ template(name='office_messages')
                         +edit_textarea key='customer_promotions' label='Customer Dashboard Promotions Message' icon='megaphone'
                     .five.wide.column
                         +edit_textarea key='help_policy' label='Customer Dashboard Help Policy' icon='info'
-                        
-                        
+
+
 template(name='office_sla')
     each ticket_types
-        .select_ticket_type.ui.button(class=select_ticket_type_button_class) 
+        .select_ticket_type.ui.button(class=select_ticket_type_button_class)
             if icon
-                i.icon  
+                i.icon
                     +icon name=icon
             |#{title}
     if selected_ticket_type
         table.ui.celled.table
             thead
-                tr  
+                tr
                     th Level
                     th Escalation Hours
                     th Contact Customer/Franchisee
@@ -30,14 +30,14 @@ template(name='office_sla')
                     th Secondary Contact
             tbody
                 each rule_docs
-                    tr  
+                    tr
                         td #{title}
                         if sla_settings_doc
                             with sla_settings_doc
                                 if is_initial
                                     td
-                                else 
-                                    td 
+                                else
+                                    td
                                         // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
                                         +set_sla_key_value key='escalation_hours' value=1 label='1'
                                         +set_sla_key_value key='escalation_hours' value=2 label='2'
@@ -55,11 +55,12 @@ template(name='office_sla')
                                             .ui.large.basic.label #{ticket_owner}
                                     +toggle_sla_boolean key='email_owner' label='Email' icon='open-envelope' title='Email Owner'
                                     +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment' title='Text Owner'
-                                td 
+                                td
                                     +secondary_contact_widget
-                                    div
-                                    +toggle_sla_boolean key='email_secondary' label='Email' icon='open-envelope' title='Email Secondary'
-                                    +toggle_sla_boolean key='sms_secondary' label='SMS' icon='comment' title='Text Secondary'
+                                    if secondary_contact
+                                        div
+                                        +toggle_sla_boolean key='email_secondary' label='Email' icon='open-envelope' title='Email Secondary'
+                                        +toggle_sla_boolean key='sms_secondary' label='SMS' icon='comment' title='Text Secondary'
                         else
                             td No settings file
                                 .add_sla_setting_doc.ui.button Create
@@ -69,37 +70,40 @@ template(name='office_service_settings')
     // h5.ui.header Select which to offer customers.
     each services
         if title
-            .select_service.ui.button(class=select_service_button_class) 
+            .select_service.ui.button(class=select_service_button_class)
                 // if icon
                 //     +icon name=icon classes='ui spaced image'
                 |#{title}
-            
-            
-            
+
+
+
 template(name='set_sla_key_value')
-    .set_page_key_value.ui.compact.button(class=set_value_button_class) 
+    .set_page_key_value.ui.compact.button(class=set_value_button_class)
         |#{label}
-        
-        
+
+
 template(name='ticket_owner_select')
     unless ticket_owner
         .ui.form
             .field
                 .ui.icon.input
-                    i.search.icon
+                    if user_results
+                        i.link.remove.icon.clear_results
+                    else
+                        i.search.icon
                     input#query_owner(type='text' placeholder='Select Owner...')
             if user_results
-                .ui.secondary.segment
+                .ui.segment
                     .ui.middle.aligned.selection.animated.list
                         each user_results
-                            .select_owner.basic.large.label.item 
-                                if profile.image_id
-                                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                strong #{profile.first_name} #{profile.last_name}
-                                |#{username}
+                            .select_owner.basic.large.label.item
+                                if image_id
+                                    img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                strong #{first_name} #{last_name}
+                                small #{username}
     if ticket_owner
-       .ui.large.basic.label     
-            a(href="/user/#{ticket_owner}") 
+       .ui.large.basic.label
+            a(href="/user/#{ticket_owner}")
                 | #{ticket_owner}
             i.pull_user.remove.link.icon(title="Clear #{ticket_owner}")
 
@@ -107,26 +111,29 @@ template(name='ticket_owner_select')
 
 template(name='secondary_contact_widget')
     unless secondary_contact
-        // h5.ui.header 
+        // h5.ui.header
         //     i.user.grey.icon
         //     |#{label}
         .ui.form
             .field
                 .ui.icon.input
-                    i.search.icon
+                    if user_results
+                        i.link.remove.icon.clear_results
+                    else
+                        i.search.icon
                     input#secondary_input(type='text' placeholder=label)
             if user_results
-                .ui.secondary.segment
+                .ui.segment
                     .ui.middle.aligned.selection.animated.list
                         each user_results
-                            .select_secondary.basic.large.label.item 
-                                if profile.image_id
-                                    img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                strong #{profile.first_name} #{profile.last_name}
-                                |#{username}
+                            .select_secondary.basic.large.label.item
+                                if image_id
+                                    img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                strong #{first_name} #{last_name}
+                                small #{username}
     if secondary_contact
         .ui.large.basic.label
-            a(href="/user/#{secondary_contact}") 
+            a(href="/user/#{secondary_contact}")
                 | #{secondary_contact}
             i.remove.link.pull_secondary.icon(title="Clear #{secondary_contact}")
         // div(title="@#{username}")

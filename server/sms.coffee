@@ -16,7 +16,7 @@ Meteor.methods
                 if err
                     throw new Meteor.Error 'text_not_sent', 'error sending text'
                 else
-                    console.log 'Twilio response', res
+                    console.log 'Twilio response for zack', res
             )
             twilio.messages.create({
                 to: '+19705790321',
@@ -25,8 +25,28 @@ Meteor.methods
             }, (err,res)->
                 if err
                     throw new Meteor.Error 'text_not_sent', 'error sending text'
-                else
-                    console.log 'Twilio response', res
+                # else
+                #     console.log 'Twilio response for eric', res
+            )
+            twilio.messages.create({
+                to: '+14043880793',
+                from: '+18442525977'
+                body: body
+            }, (err,res)->
+                if err
+                    throw new Meteor.Error 'text_not_sent', 'error sending text'
+                # else
+                #     console.log 'Twilio response for andrew', res
+            )
+            twilio.messages.create({
+                to: '+12127291100',
+                from: '+18442525977'
+                body: body
+            }, (err,res)->
+                if err
+                    throw new Meteor.Error 'text_not_sent', 'error sending text'
+                # else
+                #     console.log 'Twilio response for brad', res
             )
         new_event_id = Docs.insert
             type:'event'
