@@ -228,11 +228,19 @@ Meteor.methods
                     <li>Office: #{ticket.ticket_office_name}</li>
                     <li>Status: #{ticket.status}</li>
                     <li>Service Date: #{ticket.service_date}</li>
-                    <h4>This will notify</h4>
-                    <li>Ticket Owner: #{sla.ticket_owner}</li>
-                    <li>Secondary Office Contact: #{sla.secondary_contact}</li>
-                    <li>Customer: #{sla.contact_customer}, #{customer.ev.CUST_NAME} at #{customer.ev.CUST_CONTACT_EMAIL}</li>
                 </ul>
+                <h4>Owner: #{sla.ticket_owner}</h4>
+                <p>SMS Owner: #{sla.sms_owner}</p>
+                <p>Email Owner: #{sla.email_owner}</p>
+                <h4>Secondary: #{sla.secondary_contact}</h4>
+                <p>SMS Secondary: #{sla.sms_secondary}</p>
+                <p>Email Secondary: #{sla.email_secondary}</p>
+                <h4>Franchisee: #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h4>
+                <p> Email Franchisee: #{sla.contact_franchisee}</p>
+
+                <h4>Customer: #{customer.ev.CUST_NAME} at email: #{customer.ev.CUST_CONTACT_EMAIL}</h4>
+                <p> Email Customer: #{sla.contact_customer}</p>
+
             "
         }
 
@@ -371,12 +379,18 @@ Meteor.methods
                     <li>Submitted: #{ticket.submitted}</li>
                     <li>Service Date: #{ticket.service_date}</li>
                 </ul>
-                <h4>This will notify</h4>
-                <ul>
-                    <li>Ticket Owner: #{sla.ticket_owner}</li>
-                    <li>Secondary Office Contact: #{sla.secondary_contact}</li>
-                    <li>Franchisee: #{sla.contact_franchisee}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</li>
-                </ul>
+                <h4>Owner: #{sla.ticket_owner}</h4>
+                <p>SMS Owner: #{sla.sms_owner}</p>
+                <p>Email Owner: #{sla.email_owner}</p>
+                <h4>Secondary: #{sla.secondary_contact}</h4>
+                <p>SMS Secondary: #{sla.sms_secondary}</p>
+                <p>Email Secondary: #{sla.email_secondary}</p>
+                <h4>Franchisee: #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h4>
+                <p> Email Franchisee: #{sla.contact_franchisee}</p>
+
+                <h4>Customer: #{customer.ev.CUST_NAME} at email: #{customer.ev.CUST_CONTACT_EMAIL}</h4>
+                <p> Email Customer: #{sla.contact_customer}</p>
+
             "
         }
 

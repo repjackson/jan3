@@ -166,8 +166,9 @@ Template.secondary_contact_widget.events
             Docs.update context._id,
                 $unset:
                     secondary_contact: 1
-                    sms_secondary: 1
-                    email_secondary: 1
+                $set:
+                    sms_secondary: false
+                    email_secondary: false
 
 Template.secondary_contact_widget.helpers
     user_results: ->
