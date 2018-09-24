@@ -112,11 +112,11 @@ Meteor.publish 'block_children', (
         #     console.log 'calc', calculated_value
         user = Meteor.user()
 
-
-        unless block.children_collection is 'users'
-            if user and user.roles
-                # unless 'customer' in user.roles
-                match.submitted = $ne: false
+        if block.children_collection
+            unless block.children_collection is 'users'
+                if user and user.roles
+                    # unless 'customer' in user.roles
+                    match.submitted = $ne: false
 
         if -1 > limit > 100
             limit = 100
@@ -376,7 +376,7 @@ publishComposite 'ticket', (id)->
             {
                 find: (ticket)->
                     Docs.find
-                        type:'feedback_response'
+                        type:'feedback'
                         parent_id:ticket._id
             }
         ]
@@ -572,3 +572,7 @@ Meteor.publish 'office_employees_from_ticket_doc_id', (ticket_doc_id)->
         "ev.COMPANY_NAME": office_doc.ev.MASTER_LICENSEE
 
 
+Meteor.publish 'feedback_doc', (ticket_id)->
+    Docs.find
+        type:'feedback'
+        parent_id: ticket_id

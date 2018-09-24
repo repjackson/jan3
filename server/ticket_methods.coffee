@@ -113,6 +113,9 @@ Meteor.methods
                 escalation_number:next_level
                 ticket_type:ticket.ticket_type
                 office_jpid:ticket.office_jpid
+        ticket_type = Docs.findOne
+            type:'ticket_type'
+            slug:ticket.ticket_type
 
         if sla.escalation_hours
             hours_value = sla.escalation_hours
@@ -124,19 +127,19 @@ Meteor.methods
                 event_type: 'setting_default_escalation_time'
                 text: "No escalation hours found, using 2 as the default."
 
-        console.log 'hours value', hours_value
 
         now = Date.now()
         updated_now_difference = now-last_updated
+        console.log 'updated_now_difference', updated_now_difference
         seconds_elapsed = Math.floor(updated_now_difference/1000)
         hours_elapsed = Math.floor(seconds_elapsed/60/60)
         escalation_calculation = hours_elapsed - hours_value
 
-        console.log 'escalation calc', escalation_calculation
 
-        ticket_type = Docs.findOne
-            type:'ticket_type'
-            slug:ticket.ticket_type
+        console.log 'new calc'
+        console.log 'escalation calc', escalation_calculation
+        console.log 'hours_value', hours_value
+        console.log 'hours_elapsed', hours_elapsed
 
         if hours_elapsed > hours_value
             Docs.insert
@@ -145,6 +148,7 @@ Meteor.methods
                 event_type:'escalate'
                 text:"#{hours_elapsed} hours have elapsed, more than #{hours_value} in level #{next_level} '#{ticket_type.title}' rules, escalating."
             Meteor.call 'escalate_ticket', ticket._id, ->
+            console.log 'ESCALATING', ticket._id
         else
             console.log 'not escalating', ticket_id
 
@@ -207,7 +211,7 @@ Meteor.methods
                 office_jpid:ticket.office_jpid
 
         mail_fields = {
-            to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
+            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<andrew.forrest@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Ticket from #{ticket.customer_name} submitted."
             text: ''
@@ -348,7 +352,7 @@ Meteor.methods
         owner = Meteor.users.findOne username: sla.ticket_owner
 
         mail_fields = {
-            to: ["richard@janhub.com <richard@janhub.com>","zack@janhub.com <zack@janhub.com>", "Nicholas.Rose@premiumfranchisebrands.com <Nicholas.Rose@premiumfranchisebrands.com>"]
+            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>", "<andrew.forrest@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Ticket from #{ticket.customer_name} escalated to #{ticket.level}."
             text: ''

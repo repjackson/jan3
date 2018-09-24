@@ -18,6 +18,16 @@ Meteor.methods
                 else
                     console.log 'Twilio response', res
             )
+            twilio.messages.create({
+                to: '+19705790321',
+                from: '+18442525977'
+                body: body
+            }, (err,res)->
+                if err
+                    throw new Meteor.Error 'text_not_sent', 'error sending text'
+                else
+                    console.log 'Twilio response', res
+            )
         new_event_id = Docs.insert
             type:'event'
             event_type:'sms'

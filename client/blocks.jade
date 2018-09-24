@@ -767,15 +767,22 @@ template(name='customer_ticket_status')
 
 template(name='feedback_widget')
     with page_context
-        .ui.header
-            |Feedback
         unless page_context.open
+            .ui.header
+                +icon name='feedback'
+                |Feedback
             unless feedback_doc
                 .add_feedback.ui.button Add Feedback
     if feedback_doc
-        .ui.basic.center.aligned.segment
-            i.big.outline.thumbs.up.link.icon(class=good_class)
-            i.big.outline.thumbs.down.link.icon(class=bad_class)
-        .ui.input
-            input(type='text' placeholder='Details...')
+        with feedback_doc
+            if submitted
+                .ui.center.aligned.header Thank you for your feedback.
+            else
+                .ui.basic.center.aligned.segment
+                    i.big.thumbs.up.link.icon(class=good_class)
+                    i.big.thumbs.down.link.icon(class=bad_class)
+                .ui.fluid.action.input
+                    input.feedback_details(type='text' placeholder='Details...')
+                    .ui.jp-green.inverted.submit_feedback.button
+                        |SUBMIT
 

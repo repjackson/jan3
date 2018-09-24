@@ -763,18 +763,20 @@ Template.feedback_widget.helpers
         feedback_doc = Docs.findOne
             type:'feedback'
             parent_id: FlowRouter.getQueryParam('doc_id')
-        if feedback_doc.rating and feedback_doc.rating is 'good'
-            'green'
-        else
-            'grey'
+        if feedback_doc.rating
+            if feedback_doc.rating is 'good'
+                'green'
+            else
+                'grey outline'
     bad_class: ->
         feedback_doc = Docs.findOne
             type:'feedback'
             parent_id: FlowRouter.getQueryParam('doc_id')
-        if feedback_doc.rating and feedback_doc.rating is 'bad'
-            'red'
-        else
-            'grey'
+        if feedback_doc.rating
+            if feedback_doc.rating is 'bad'
+                'red'
+            else
+                'grey outline'
 Template.feedback_widget.events
     'click .add_feedback': ->
         ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
@@ -797,6 +799,22 @@ Template.feedback_widget.events
             parent_id: FlowRouter.getQueryParam('doc_id')
         Docs.update feedback_doc._id,
             $set: rating: 'bad'
+
+    'blur .feedback_details': (e,t)->
+        details = e.currentTarget.value
+        console.log details
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        Docs.update feedback_doc._id,
+            $set:details:details
+
+    'click .submit_feedback': (e,t)->
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        Docs.update feedback_doc._id,
+            $set:submitted:true
 
 
     'click .close': ->
