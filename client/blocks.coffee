@@ -746,3 +746,70 @@ Template.customer_ticket_status.events
             parent_id: FlowRouter.getQueryParam('doc_id')
             event_type:'emailed_customer_contact'
             text:"Customer #{ticket.customer_name} emailed about ticket close."
+
+
+Template.feedback_widget.onCreated ->
+    @autorun => Meteor.subscribe 'feedback_doc', FlowRouter.getQueryParam('doc_id')
+Template.feedback_widget.helpers
+    page_context: ->
+        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+
+    feedback_doc: ->
+        Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+
+    good_class: ->
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        if feedback_doc.rating and feedback_doc.rating is 'good'
+            'green'
+        else
+            'grey'
+    bad_class: ->
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        if feedback_doc.rating and feedback_doc.rating is 'bad'
+            'red'
+        else
+            'grey'
+Template.feedback_widget.events
+    'click .add_feedback': ->
+        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        Docs.update FlowRouter.getQueryParam('doc_id'),
+            $set: feedback:true
+        Docs.insert
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+
+    'click .thumbs.up': ->
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        Docs.update feedback_doc._id,
+            $set: rating: 'good'
+
+    'click .thumbs.down': ->
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        Docs.update feedback_doc._id,
+            $set: rating: 'bad'
+
+
+    'click .close': ->
+        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        Docs.update FlowRouter.getQueryParam('doc_id'),
+            $set: open:false
+        Docs.insert
+            type:'event'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+            event_type:'ticket_close'
+            text:"#{Meteor.user().username} closed ticket."
+        Docs.insert
+            type:'event'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+            event_type:'emailed_customer_contact'
+            text:"Customer #{ticket.customer_name} emailed about ticket close."

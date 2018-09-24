@@ -765,4 +765,17 @@ template(name='customer_ticket_status')
                 +iconsmall name='checkmark'
                 |Close
 
+template(name='feedback_widget')
+    with page_context
+        .ui.header
+            |Feedback
+        unless page_context.open
+            unless feedback_doc
+                .add_feedback.ui.button Add Feedback
+    if feedback_doc
+        .ui.basic.center.aligned.segment
+            i.big.outline.thumbs.up.link.icon(class=good_class)
+            i.big.outline.thumbs.down.link.icon(class=bad_class)
+        .ui.input
+            input(type='text' placeholder='Details...')
 
