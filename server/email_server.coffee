@@ -18,9 +18,11 @@ Meteor.methods
             mailgun.messages().send data, (error, body)->
               console.log(body)
         if Meteor.isDevelopment
+            mailgun.messages().send data, (error, body)->
+              console.log(body)
             console.log 'sending email in dev', data
         return
-        # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
+        # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>"]
 
 
     send_email_about_ticket_assignment:(ticket_doc_id, username)->
@@ -28,16 +30,16 @@ Meteor.methods
 
         assigned_to_user = Meteor.users.findOne username:username
         ticket_link = "https://www.jan.meteorapp.com/p/ticket_admin_view?doc_id=#{ticket._id}"
-        complete_ticket_link = "https://www.jan.meteorapp.com/p/ticket_admin_view?doc_id=#{ticket._id}&mark_complete=true"
+        complete_ticket_link = "https://www.jan.meteorapp.com/p/ticket_admin_view?doc_id=#{ticket._id}&unassign=#{username}"
 
         mail_fields = {
-            # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
+            # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>"]
 
             # to: ["<#{assigned_to_user.emails[0].address}>"]
-            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
+            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Ticket Assignment"
-            html: "<h4>You have been assigned to ticket ##{ticket.ticket_number} from customer: #{ticket.customer_name}.</h4>
+            html: "<h4>#{username}, you have been assigned to ticket ##{ticket.ticket_number} from customer: #{ticket.customer_name}.</h4>
                 <ul>
                     <li>Type: #{ticket.ticket_type}</li>
                     <li>Number: #{ticket.ticket_number}</li>

@@ -93,10 +93,11 @@ Meteor.methods
         open_tickets = Docs.find({
             type:'ticket',
             open:true,
-            submitted:true
+            submitted:true,
             level: $lte:3
             })
         open_tickets_count = open_tickets.count()
+        console.log
         for ticket in open_tickets.fetch()
             Meteor.call 'single_escalation_check', ticket._id
 
@@ -309,7 +310,7 @@ Meteor.methods
                 event_type:'emailed_customer_contact'
                 text:"Email sent to customer #{customer.ev.CUST_NAME} after ticket submission."
 
-        # Meteor.call 'send_email', mail_fields
+        Meteor.call 'send_email', mail_fields
 
     notify_about_escalation: (ticket_id)->
         ticket = Docs.findOne ticket_id
@@ -456,7 +457,7 @@ Meteor.methods
                 event_type: 'emailed_customer'
                 text:"#{customer.ev.CUST_NAME} a '#{ticket_type.title}' ticket escalated to level #{ticket.level}."
 
-        # Meteor.call 'send_email', mail_fields
+        Meteor.call 'send_email', mail_fields
 
 
     escalate_ticket: (ticket_id)->
