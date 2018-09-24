@@ -36,17 +36,15 @@ template(name='reset_password')
                         label Username
                         input#username(type='text')
                     .field
-                        #reset_password_by_username.ui.fluid.button
-                            +iconsmall name='available-updates'
-                            | Reset password by Username
+                        #reset_password_by_username.ui.fluid.inverted.jp-green.button
+                            | Reset by Username
                 .ui.form
                     .field
                         label Email
                         input#email(type='email')
                     .field
-                        #reset_password_by_email.ui.fluid.button
-                            +iconsmall name='available-updates'
-                            | Reset password by Email
+                        #reset_password_by_email.ui.fluid.inverted.jp-green.button
+                            | Reset by Email
 
 template(name='login')
     .ui.middle.aligned.centered.padded.stackable.grid
@@ -160,8 +158,8 @@ template(name='register_customer')
                         //         |Passwords Don't Match
 
                     if can_submit
-                        #register.ui.fluid.button
-                            |Register
+                        #register.ui.fluid.inverted.jp-green.button
+                            |Register Customer
 
 
 
@@ -227,7 +225,7 @@ template(name='register_office')
                             //         |Passwords Don't Match
 
                             if can_submit
-                                #register_office.ui.fluid.button
+                                #register_office.ui.fluid.inverted.jp-green.button
                                     |Register Office
 
 

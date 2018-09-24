@@ -179,7 +179,7 @@ template(name='schema_view')
             .three.wide.column
                 +edit_button
         .row
-            .three.wide.column
+            .two.wide.column
                 +add_button type=slug
                 h3.ui.header Title: #{title}
                 h3.ui.header Slug: #{slug}
@@ -189,14 +189,14 @@ template(name='schema_view')
                 .ui.list
                     each fields
                         .item #{title} (#{slug}) [#{type}]
-            .thirteen.wide.column
+            .fourteen.wide.column
                 each field_instances
                     .add_field_instance.ui.button #{title}
                 each referenced_field_instances
                     .ui.card
                         .content
                             .header #{title}
-                .ui.stackable.four.cards
+                .ui.stackable.five.cards
                     each schema_docs
                         +doc_card
 

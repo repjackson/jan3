@@ -34,8 +34,7 @@ Meteor.methods
             # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
 
             # to: ["<#{assigned_to_user.emails[0].address}>"]
-            # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
-            to: 'repjackson@gmail.com'
+            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<ziedmahdi@gmail.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "Ticket Assignment"
             html: "<h4>You have been assigned to ticket ##{ticket.ticket_number} from customer: #{ticket.customer_name}.</h4>
@@ -48,7 +47,7 @@ Meteor.methods
                     <li>Open: #{ticket.open}</li>
                     <li>Service Date: #{ticket.service_date}</li>
                 </ul>
-                <p>view the ticket <a href=#{ticket_link}>here</a>.
+                <p>View the ticket <a href=#{ticket_link}>here</a>.
                 <p>Mark task complete <a href=#{complete_ticket_link}>here</a>.</p>
             "
         }

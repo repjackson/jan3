@@ -25,7 +25,7 @@ Meteor.methods
             type:'event'
             parent_id:ticket_id
             event_type:'submit'
-            text: "#{Meteor.user().username} submitted the ticket."
+            text: "#{Meteor.user().username} submitted ticket."
         Meteor.call 'notify_about_ticket_submission', ticket_id
 
     assign_ticket_owner_after_submission: (ticket_id)->
@@ -177,18 +177,19 @@ Meteor.methods
 
         customer = Docs.findOne {
             "ev.ID":ticket.customer_jpid
-            type:'customer'
-        }
+            type:'customer' }
         if ticket.franchisee_jpid
             franchisee = Docs.findOne {
                 "ev.ID":ticket.franchisee_jpid
-                type:'franchisee'
-            }
+                type:'franchisee' }
 
         office_doc = Docs.findOne {
             "ev.ID":ticket.office_jpid
-            type:'office'
-        }
+            type:'office' }
+
+        ticket_type = Docs.findOne
+            type:'ticket_type'
+            slug:ticket.ticket_type
 
 
         sla =
@@ -204,55 +205,98 @@ Meteor.methods
             subject: "Ticket from #{ticket.customer_name} submitted."
             text: ''
             html: "<h4>Ticket from #{ticket.customer_name} submitted by customer.</h4>
-                <h5>Type: #{ticket.ticket_type}</h5>
-                <h5>Number: #{ticket.ticket_number}</h5>
-                <h5>Details: #{ticket.ticket_details}</h5>
-                <h5>Timestamp: #{ticket.timestamp}</h5>
-                <h5>Office: #{ticket.ticket_office_name}</h5>
-                <h5>Status: #{ticket.status}</h5>
-                <h5>Service Date: #{ticket.service_date}</h5>
-                <h4>This will notify</h4>
-                <h5>Ticket Owner: #{sla.ticket_owner}</h5>
-                <h5>Secondary Office Contact: #{sla.secondary_contact}</h5>
-                <h5>Customer: #{sla.contact_customer}, #{customer.ev.CUST_NAME} at #{customer.ev.CUST_CONTACT_EMAIL}</h5>
+                <ul>
+                    <li>Type: #{ticket.ticket_type}</li>
+                    <li>Number: #{ticket.ticket_number}</li>
+                    <li>Details: #{ticket.ticket_details}</li>
+                    <li>Timestamp: #{ticket.long_timestamp}</li>
+                    <li>Office: #{ticket.ticket_office_name}</li>
+                    <li>Status: #{ticket.status}</li>
+                    <li>Service Date: #{ticket.service_date}</li>
+                    <h4>This will notify</h4>
+                    <li>Ticket Owner: #{sla.ticket_owner}</li>
+                    <li>Secondary Office Contact: #{sla.secondary_contact}</li>
+                    <li>Customer: #{sla.contact_customer}, #{customer.ev.CUST_NAME} at #{customer.ev.CUST_CONTACT_EMAIL}</li>
+                </ul>
             "
         }
 
                         # <h5>Franchisee: #{sla.contact_franchisee}, #{franchisee.ev.FRANCHISEE} at #{franchisee.ev.FRANCH_EMAIL}</h5>
+        if sla.sms_owner
+            Meteor.call 'send_sms', '+19176643297', "#{sla.ticket_owner}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} was submitted."
+            Docs.insert
+                type:'event'
+                parent_id:ticket_id
+                recipient_username: sla.ticket_office
+                event_type: 'sms_owner'
+                text:"SMS sent to #{sla.ticket_owner} about #{ticket.customer_name} escalation to #{ticket.level}."
+
         if sla.email_owner
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
                 event_type:'emailed_owner'
                 text:"Email sent to owner #{sla.ticket_owner} after ticket submission."
+
         if sla.email_secondary
+            Docs.insert
+                type:'message'
+                message_type:'email'
+                recipient_type:'office'
+                to: sla.secondary_contact
+                body: "#{sla.secondary_contact}, you're being notified as the secondary contact for a ticket submission."
+                ticket_id: ticket_id
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
                 event_type:'emailed_secondary_contact'
                 text:"Email sent to secondary contact #{sla.secondary_contact} after ticket submission."
-        if sla.sms_owner
-            Meteor.call 'send_sms', '+19176643297', "#{sla.ticket_owner}, one of your tickets from #{ticket.customer_name} escalated to #{ticket.level}."
+
+        if sla.sms_secondary
+            Meteor.call 'send_sms', '+19176643297', "#{sla.secondary_contact}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} was submitted."
+            Docs.insert
+                type:'message'
+                message_type:'sms'
+                to: sla.secondary_contact
+                recipient_type:'office'
+                body: "#{sla.secondary_contact}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} was submitted."
+                ticket_id: ticket_id
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
-                event_type:'sms_owner'
-                text:"SMS sent to #{sla.ticket_owner} after ticket submission."
+                event_type:'sms_secondary'
+                text:"SMS sent to secondary contact #{sla.secondary_contact} for ticket submission."
+
         if sla.contact_franchisee
             if ticket.franchisee_jpid
+                Docs.insert
+                    type:'message'
+                    message_type:'sms'
+                    recipient_type:'franchisee'
+                    to: sla.secondary_contact
+                    body: "#{franchisee.ev.FRANCHISEE}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} was submitted."
+                    ticket_id: ticket_id
                 Docs.insert
                     type:'event'
                     parent_id:ticket_id
                     event_type:'emailed_franchisee_contact'
                     text:"Email sent to franchisee #{franchisee.ev.FRANCHISEE} after ticket submission."
+
         if sla.contact_customer
+            Docs.insert
+                type:'message'
+                message_type:'sms'
+                recipient_type:'customer'
+                to: customer.ev.CUST_NAME
+                body: "#{customer.ev.CUST_NAME}, your ticket #{ticket.ticket_number} was submitted."
+                ticket_id: ticket_id
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
                 event_type:'emailed_customer_contact'
-                text:"Email send to customer #{customer.ev.CUST_NAME} after ticket submission."
+                text:"Email sent to customer #{customer.ev.CUST_NAME} after ticket submission."
 
-        Meteor.call 'send_email', mail_fields
+        # Meteor.call 'send_email', mail_fields
 
     notify_about_escalation: (ticket_id)->
         ticket = Docs.findOne ticket_id
@@ -310,48 +354,96 @@ Meteor.methods
             slug:ticket.ticket_type
 
 
+
         if sla.sms_owner
-            Meteor.call 'send_sms', '+19176643297', "#{sla.ticket_owner}, one of your tickets from #{ticket.customer_name} escalated to #{ticket.level}."
+            # Meteor.call 'send_sms', '+19176643297', "#{sla.ticket_owner}, your ticket from #{ticket.customer_name} escalated to #{ticket.level}."
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
                 recipient_username: sla.ticket_office
+                event_type: 'sms_owner'
                 text:"SMS sent to #{sla.ticket_owner} about #{ticket.customer_name} escalation to #{ticket.level}."
+            Docs.insert
+                type:'message'
+                message_type:'sms'
+                recipient_type:'owner'
+                to: sla.ticket_owner
+                body: "#{sla.ticket_owner}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} escalated to #{ticket.level}."
+                ticket_id: ticket_id
+
+
         if sla.email_owner
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
                 event_type:'emailed_ticket_owner'
                 text:"#{sla.ticket_owner} emailed as the ticket owner for a '#{ticket_type.title}' escalation to level #{ticket.level}."
+            Docs.insert
+                type:'message'
+                message_type:'email'
+                recipient_type:'owner'
+                to: sla.ticket_owner
+                body: "#{sla.ticket_owner}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} escalated to #{ticket.level}."
+                ticket_id: ticket_id
+
         if sla.sms_secondary
-            Meteor.call 'send_sms', '+19176643297', "#{sla.secondary_contact}, one of your tickets from #{ticket.customer_name} escalated to #{ticket.level}."
+            Meteor.call 'send_sms', '+19176643297', "#{sla.secondary_contact}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} escalated to #{ticket.level}."
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
-                event_type:'emailed_franchisee_contact'
-                text:"Franchisee #{franchisee.ev.FRANCHISEE} emailed for a '#{ticket_type.title}' escalation to level #{ticket.level}."
+                event_type:'sms_secondary'
+                text:"SMS sent to #{sla.secondary_contact} for a '#{ticket_type.title}' escalation to level #{ticket.level}."
+            Docs.insert
+                type:'message'
+                message_type:'sms'
+                recipient_type:'secondary'
+                to: sla.secondary_contact
+                body: "#{sla.secondary_contact}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} escalated to #{ticket.level}."
+                ticket_id: ticket_id
+
         if sla.email_secondary
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
-                event_type: 'emailed_secondary_contact'
-                text: "#{sla.secondary_contact} emailed as the secondary contact for a '#{ticket_type.title}' escalation to level #{ticket.level}."
+                event_type: 'email_secondary'
+                text: "SMS sent to #{sla.secondary_contact}, secondary contact for a '#{ticket_type.title}' escalation to level #{ticket.level}."
+            Docs.insert
+                type:'message'
+                message_type:'email'
+                recipient_type:'secondary'
+                to: sla.secondary_contact
+                body: "#{sla.secondary_contact}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} escalated to #{ticket.level}."
+                ticket_id: ticket_id
+
         if sla.contact_franchisee
-            Meteor.call 'send_message', franchisee.ev.FRANCHISEE, 'system_escalation_bot', "You are being notified as the franchisee for a '#{ticket_type.title}' escalation to level #{ticket.level} from #{ticket.customer_name}."
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
                 event_type: 'emailed_franchisee'
-                text: "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a '#{ticket_type.title}' escalation to level #{ticket.level}."
+                text: "Email sent to franchisee #{franchisee.ev.FRANCHISEE} for a '#{ticket_type.title}' escalation to level #{ticket.level}."
+            Docs.insert
+                type:'message'
+                message_type:'email'
+                recipient_type:'secondary'
+                to: sla.secondary_contact
+                body: "#{franchisee.ev.FRANCHISEE}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} escalated to #{ticket.level}."
+                ticket_id: ticket_id
+
         if sla.contact_customer
-            Meteor.call 'send_message', ticket.customer_name, 'system_escalation_bot', "You are being notified as the customer for an ticket submission."
+            Docs.insert
+                type:'message'
+                message_type:'email'
+                recipient_type:'secondary'
+                to: sla.secondary_contact
+                body: "#{franchisee.ev.FRANCHISEE}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} escalated to #{ticket.level}."
+                ticket_id: ticket_id
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
                 event_type: 'emailed_customer'
-                text: "Franchisee #{franchisee.ev.FRANCHISEE} emailed for a '#{ticket_type.title}' escalation to level #{ticket.level}."
+                text:"#{customer.ev.CUST_NAME} a '#{ticket_type.title}' ticket escalated to level #{ticket.level}."
 
-        Meteor.call 'send_email', mail_fields
+        # Meteor.call 'send_email', mail_fields
 
 
     escalate_ticket: (ticket_id)->

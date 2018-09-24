@@ -15,26 +15,22 @@ template(name='nav')
                         +icon name=icon
                     .mobile.hidden &nbsp; #{title}
         else if is_office
-            // with currentUser.users_customer.parent_franchisee.parent_office
             each office_nav_items
                 a.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
-                    i.large.icon
-                        +icon name=icon
                     .mobile.hidden &nbsp; #{title}
         .right.menu
             if is_dev
-                #toggle_editing.icon.item
-                    if editing_mode
-                        i.teal.pencil.link.icon
-                    else
-                        i.pencil.link.icon
+                if editing_mode
+                    #toggle_editing.icon.active.item
+                        i.teal.pencil.link.bordered.icon
+                else
+                    #toggle_editing.icon.item
+                        i.pencil.link.bordered.icon
                 a.icon.item(href='/p/schemas' data-content='Schemas' class="{{ active_route 'schemas' }}" )
                     i.database.icon
-            if is_customer
-                a.log_ticket.item(href='#' title='Log Ticket')
-                    i.large.icon
-                        +icon name='add-ticket'
             if currentUser
+                a.icon.item(href='/p/messages' data-content='Messages' class="{{ active_route 'messages' }}" )
+                    i.envelope.icon
                 a.item(href="/user/#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
                     if currentUser.profile.image_id
                         i.large.icon

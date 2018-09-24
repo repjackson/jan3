@@ -4,7 +4,7 @@
 
 .nav_bar.ui.menu {
   /*border: 0px solid transparent; */
-  border: none !important; 
+  border: none !important;
   /*background: #01336C; //dark blue*/
   background: rgba(0, 20, 137) !important;
   box-shadow: none
@@ -13,12 +13,12 @@
 
 .jp-green {
   background: rgba(132, 189, 0) !important;
-  
+
 }
 
 #sub_nav.ui.inverted.menu {
   /*border: 0px solid transparent; */
-  border: none !important; 
+  border: none !important;
   background: #0a4a7b;
   box-shadow: none
 }
@@ -33,7 +33,7 @@ body {
 .ui.header{
   font-family: 'Ubuntu', sans-serif !important;
 }
-  
+
 .map-container {
     width: 800px;
     max-width: 100%;
@@ -98,7 +98,7 @@ body {
     font-size: 150%;
     line-height: 130%;
 }
-  
+
 .ui.button, .ui.label.tag {
   margin-top: .2em !important;
         margin-bottom: .2em !important;
@@ -118,9 +118,9 @@ body {
 /*  }*/
 
 #dash_header.masthead {
-  /*background: rgba(0,20,137,1);*/
-  background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(13,31,137,1) 50%,rgba(52,65,135,0.5) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001489', endColorstr='#36344187',GradientType=0 );
+  background: rgba(0,20,137,1);
+  /*background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(13,31,137,1) 50%,rgba(52,65,135,0.5) 100%);*/
+  /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001489', endColorstr='#36344187',GradientType=0 );*/
 
   margin: 0em;
   width: 100% !important;
@@ -320,7 +320,7 @@ body {
 /*    display: inline-block;*/
 /*     line-height: 1.2142em;*/
 /*    min-height:   0.714286em;*/
-  
+
 /*    outline: 0 none;*/
 /*    padding: 0.3em;*/
 /*    transform: rotateZ(0deg);*/
@@ -328,24 +328,24 @@ body {
 /*    white-space: normal;*/
 /*    word-wrap: break-word; */
 /*	 }*/
-  
+
 /*  .dataTables_wrapper .dataTables_filter {*/
 /*	text-align: right; */
-   
+
 /*    color: rgba(0, 0, 0, 0.87);*/
 /*    display: inline-flex;*/
 /*    position: relative;*/
 /*   }*/
-	
+
 /*   .dataTables_wrapper .dataTables_filter input {*/
 /*	  margin-left: 0.5em; */
 /*   }*/
-  
+
 /*  .dataTables_wrapper .dataTables_info {*/
 /*	clear: both;*/
 /*	padding-top: 0.755em; */
 /*   }*/
-   
+
 /*.dataTables_filter input {*/
 /*    background: #fff none repeat scroll 0 0;*/
 /*    border: 1px solid rgba(34, 36, 38, 0.15);*/

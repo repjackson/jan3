@@ -8,14 +8,14 @@ Template.toggle_boolean.events
         Docs.update data_doc._id, $set: "#{@key}": false
 
 Template.toggle_boolean.helpers
-    is_on: -> 
+    is_on: ->
         # page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
         data_doc = Template.parentData()
         data_doc["#{@key}"]
 
 
 Template.add_button.events
-    'click #add': -> 
+    'click #add': ->
         id = Docs.insert type:@type
         FlowRouter.go "/edit/#{id}"
 
@@ -24,7 +24,7 @@ Template.add_button.events
 
 Template.ticket_assignment_cell.onCreated ->
     @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
-    
+
 Template.ticket_assignment_cell.helpers
     # ticket_assignment_cell_class: ->
     #     if @assignment_timestamp
@@ -34,20 +34,20 @@ Template.ticket_assignment_cell.helpers
     #         hour_amount = moment.duration(response).asHours()
     #         if hour_amount<-5 then 'negative' else 'positive'
 
-    assigned_users: -> 
+    assigned_users: ->
         if @assigned_to
-            Meteor.users.find 
+            Meteor.users.find
                 _id: $in: @assigned_to
 
-            
+
 Template.call_method.events
-    'click .call_method': -> 
+    'click .call_method': ->
         Meteor.call @name, @argument, (err,res)->
             # else
-                
-        
+
+
 Template.toggle_key.helpers
-    toggle_key_button_class: -> 
+    toggle_key_button_class: ->
         current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
         if @value
             if current_doc["#{@key}"] is @value then 'primary'
@@ -58,14 +58,14 @@ Template.toggle_key.events
     'click .toggle_key': ->
         doc_id = FlowRouter.getQueryParam('doc_id')
         if @value
-            Docs.update {_id:doc_id}, 
+            Docs.update {_id:doc_id},
                 { $set: "#{@key}": "#{@value}" }
-                        
+
         else if Template.parentData()["#{@key}"] is true
-            Docs.update doc_id, 
+            Docs.update doc_id,
                 $set: "#{@key}": false
         else
-            Docs.update doc_id, 
+            Docs.update doc_id,
                 $set: "#{@key}": true
 
 
@@ -83,7 +83,7 @@ Template.set_sla_key_value.helpers
 
 
 Template.toggle_sla_boolean.helpers
-    toggle_boolean_button_class: -> 
+    toggle_boolean_button_class: ->
         sla_doc = Template.parentData(1)
         if sla_doc["#{@key}"] is true then 'primary'
         else ''
@@ -93,37 +93,37 @@ Template.toggle_sla_boolean.events
         sla_doc = Template.parentData(1)
         if sla_doc
             boolean_value = sla_doc["#{@key}"]
-            
-        Docs.update sla_doc._id, 
+
+        Docs.update sla_doc._id,
             $set: "#{@key}": !boolean_value
-                        
+
 Template.toggle_user_published.events
     'click #toggle_button': (e,t)->
         doc_id = FlowRouter.getQueryParam('doc_id')
-        Meteor.users.update @_id, 
+        Meteor.users.update @_id,
             $set: published: !@published
-                        
 
-        
+
+
 
 Template.office_card.onCreated ->
     @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.office_jpid
 Template.office_card.helpers
     office_doc: ->
         context = Template.currentData(0)
-        doc = 
-            Docs.findOne 
+        doc =
+            Docs.findOne
                 type:'office'
                 "ev.ID": context.office_jpid
         doc
-        
+
 Template.customer_card.onCreated ->
     @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.customer_jpid
 Template.customer_card.helpers
     customer_doc: ->
         context = Template.currentData(0)
-        doc = 
-            Docs.findOne 
+        doc =
+            Docs.findOne
                 type:'customer'
                 "ev.ID": context.customer_jpid
         doc
@@ -134,8 +134,8 @@ Template.franchisee_card.onCreated ->
 Template.franchisee_card.helpers
     franchisee_doc: ->
         context = Template.currentData(0)
-        doc = 
-            Docs.findOne 
+        doc =
+            Docs.findOne
                 type:'franchisee'
                 "ev.ID": context.franchisee_jpid
         doc
@@ -147,8 +147,8 @@ Template.franchisee_card.helpers
 # Template.view_stat.helpers
 #     stat_value: ->
 #         inputs = Template.currentData(0)
-#         doc = 
-#             Stats.findOne 
+#         doc =
+#             Stats.findOne
 #                 doc_type:inputs.doc_type
 #                 stat_type:inputs.stat_type
 #         if doc
@@ -169,8 +169,8 @@ Template.assignment_widget.onRendered ()->
         Meteor.call 'unassign_user_from_ticket', FlowRouter.getQueryParam('doc_id'), target_username, (err,res)->
             if err then console.error err
 
-    
-    
+
+
 Template.assignment_widget.events
     'click .clear_results': (e,t)->
         t.user_results.set null
@@ -200,13 +200,13 @@ Template.assignment_widget.events
                 $set: assignment_timestamp:Date.now()
             Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to ticket: #{page_doc.title}."
             Meteor.call 'send_email_about_ticket_assignment', page_doc._id, @username
-    
+
     'click .pull_user': ->
         context = Template.currentData(0)
         if confirm "Remove #{@username}?"
             page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
             Meteor.call 'unassign_user', page_doc._id, @
-    
+
 Template.assignment_widget.helpers
     user_results: ->
         user_results = Template.instance().user_results.get()
@@ -228,7 +228,7 @@ Template.author_info.onCreated ->
     #     split_tags = @data.tags
 
 Template.blocks.helpers
-    blocks: -> 
+    blocks: ->
         # if @tags and typeof @tags is 'string'
         #     split_tags = @tags.split ','
         # else
@@ -251,7 +251,7 @@ Template.blocks.helpers
                 parent_slug:FlowRouter.getParam('page_slug')
                 horizontal_position:$nin:['left','right']
             }, sort:rank:1
-            
+
 Template.block.onRendered ->
     Meteor.setTimeout ->
         $('.accordion').accordion();
@@ -270,7 +270,7 @@ Template.edit_block.onCreated ->
 Template.block.onCreated ->
     @editing_block = new ReactiveVar false
 
-    # Meteor.subscribe('facet', 
+    # Meteor.subscribe('facet',
     #     selected_tags.array()
     #     selected_author_ids.array()
     #     selected_location_tags.array()
@@ -302,11 +302,11 @@ Template.block.onCreated ->
     match_object.doc_type = @data.children_doc_type
     match_object.stat_type = @data.table_stat_type
     @autorun -> Meteor.subscribe 'stat', match_object
-    @autorun => Meteor.subscribe 'block_children', 
-        @data._id, 
-        @data.filter_key, 
-        @data.filter_value, 
-        Session.get('query'), 
+    @autorun => Meteor.subscribe 'block_children',
+        @data._id,
+        @data.filter_key,
+        @data.filter_value,
+        Session.get('query'),
         @page_size.get(),
         @sort_key.get(),
         @sort_direction.get(),
@@ -317,8 +317,8 @@ Template.block.onCreated ->
 
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
     @autorun => Meteor.subscribe 'block_field_docs', @data._id
-    
-    
+
+
 Template.block.helpers
     editing_block: -> Template.instance().editing_block.get() and Session.get('editing_mode')
     editing_button_class: -> if Template.instance().editing_block.get() is true then 'primary' else ''
@@ -332,28 +332,28 @@ Template.block.helpers
 
     sort_descending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
-        temp = Template.instance() 
-        if temp.sort_direction.get() is 1 and temp.sort_key.get() is key 
+        temp = Template.instance()
+        if temp.sort_direction.get() is 1 and temp.sort_key.get() is key
             return true
     sort_ascending: ->
         key = if @ev_subset then "ev.#{@key}" else @key
-        temp = Template.instance() 
-        if temp.sort_direction.get() is -1 and temp.sort_key.get() is key 
+        temp = Template.instance()
+        if temp.sort_direction.get() is -1 and temp.sort_key.get() is key
             return true
 
-    comment_children: -> 
-        temp = Template.instance() 
+    comment_children: ->
+        temp = Template.instance()
         match.type = @children_doc_type
-        Docs.find {_id:$ne:Meteor.userId()},{ 
-            sort:"timestamp":parseInt("#{temp.sort_direction.get()}") 
+        Docs.find {_id:$ne:Meteor.userId()},{
+            sort:"timestamp":parseInt("#{temp.sort_direction.get()}")
             }
 
 
-    children: -> 
-        temp = Template.instance() 
+    children: ->
+        temp = Template.instance()
         if @children_collection is 'users'
-            Meteor.users.find {_id:$ne:Meteor.userId()},{ 
-                sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
+            Meteor.users.find {_id:$ne:Meteor.userId()},{
+                sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}")
                 }
         else
             match = {}
@@ -363,15 +363,15 @@ Template.block.helpers
                     result = context_doc["#{@filter_source_key}"]
                     if @children_doc_type is 'event'
                         match["#{@filter_key}"] = result
-                    
+
             match.type = @children_doc_type
             # if @children_doc_type is 'event'
             if @filter_key is '_id'
-                match._id = FlowRouter.getQueryParam 'doc_id'    
+                match._id = FlowRouter.getQueryParam 'doc_id'
             if @hard_limit
                 Docs.find match,
-                    { 
-                        sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}") 
+                    {
+                        sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}")
                         limit:parseInt(@hard_limit)
                         }
             else
@@ -392,16 +392,16 @@ Template.block.helpers
             child_doc.ev["#{@key}"]
         else
             child_doc["#{@key}"]
-        
-    is_table: -> @view is 'table'    
-    is_list: -> @view is 'list'    
-    is_comments: -> @view is 'comments'    
-    is_grid: -> @view is 'grid'    
-    is_cards: -> @view is 'cards'    
-    is_sla_settings: -> @view is 'sla_settings'    
+
+    is_table: -> @view is 'table'
+    is_list: -> @view is 'list'
+    is_comments: -> @view is 'comments'
+    is_grid: -> @view is 'grid'
+    is_cards: -> @view is 'cards'
+    is_sla_settings: -> @view is 'sla_settings'
 
     can_lower: -> @rank>1
-    
+
     th_field_docs: ->
         # block = Template.currentData()
         block = Template.parentData(0)
@@ -413,20 +413,20 @@ Template.block.helpers
             type:'display_field'
             block_id: block._id
         }, sort:rank:1
-            
+
     children_field_docs: ->
         block = Template.parentData(1)
         Docs.find {
             type:'display_field'
             block_id: block._id
         }, sort:rank:1
-            
-            
+
+
 Template.block.events
     'click .raise_block':->
         Docs.update @_id,
             $inc:rank:1
-            
+
     'click .lower_block':->
         Docs.update @_id,
             $inc:rank:-1
@@ -436,25 +436,25 @@ Template.block.events
 
     'click .add_block_child': (e,t)->
         if FlowRouter.getParam('jpid')
-            new_id = Docs.insert 
+            new_id = Docs.insert
                 type:@children_doc_type
                 office_jpid:FlowRouter.getParam('jpid')
         else
-            new_id = Docs.insert 
+            new_id = Docs.insert
                 type:@children_doc_type
         # FlowRouter.go("/edit/#{_id}")
-    
-    
+
+
     'click .move_up': ->
         current = Template.currentData()
-        current_index = current.fields.indexOf @ 
+        current_index = current.fields.indexOf @
         next_index = current+1
         Meteor.call 'move', current._id, current.fields, current_index, next_index
-        
-        
+
+
     'click .move_down': ->
         current = Template.currentData()
-        current_index = current.fields.indexOf @ 
+        current_index = current.fields.indexOf @
         lower_index = current-1
         Meteor.call 'move', current._id, current.fields, current_index, lower_index
 
@@ -471,17 +471,17 @@ Template.edit_block.onRendered ->
     Meteor.setTimeout ->
         $('.tabular.menu .tab_nav').tab()
     , 400
-    
-    
+
+
 Template.edit_block.helpers
     schema_doc: ->
         Docs.findOne
             type:'schema'
             slug:@children_doc_type
-        
+
     show_schema_field: ->
         parent = Template.parentData()
-        schema_fields = 
+        schema_fields =
             Docs.findOne({
                 type:'schema'
                 slug:parent.children_doc_type
@@ -489,18 +489,18 @@ Template.edit_block.helpers
         block_fields = Docs.find(type:'display_field').fetch()
         selected_keys = _.pluck block_fields, 'key'
         if @slug in selected_keys then false else true
-        
-        
-    schema_doc_fields: -> 
+
+
+    schema_doc_fields: ->
         block_doc = Template.parentData(1)
-        schema_doc = Docs.findOne 
+        schema_doc = Docs.findOne
             type:'schema'
             slug: block_doc.children_doc_type
         if schema_doc
             schema_doc.fields
-        
-        
-        
+
+
+
     values: ->
         schema_doc = Docs.findOne
             type:'schema'
@@ -515,7 +515,7 @@ Template.edit_block.helpers
                 # else
                 #     values.push Template.currentData()["#{field.key}"]
             values
-        
+
     schemas: -> Docs.find type:'schema'
     views: -> Docs.find type:'view'
     collections: -> Docs.find type:'collection'
@@ -533,12 +533,12 @@ Template.edit_block.helpers
     field_docs: ->
         Docs.find {
             type:'display_field'
-            block_id: @_id 
+            block_id: @_id
         }, sort:rank:1
 
 
- 
-    
+
+
 Template.edit_block.events
     'click .tab_nav': (e,t)->
         tab_name = e.target.getAttribute('data-tab')
@@ -556,12 +556,12 @@ Template.edit_block.events
             type:'display_field'
             block_id: @_id
             rank:field_count+1
-            
-            
+
+
     'click .delete_field': ->
         if confirm 'Remove field?'
             Docs.remove @_id
-        
+
 
     'click .remove_block': ->
         if confirm 'Remove block?'
@@ -570,7 +570,7 @@ Template.edit_block.events
     'click .add_schema_field': ->
         block = Template.currentData()
         field_count = Docs.find(type:'display_field').count()
-        Docs.insert 
+        Docs.insert
             type:'display_field'
             key:@slug
             label:@title
@@ -579,7 +579,7 @@ Template.edit_block.events
             ev_subset:@ev_subset
             block_id: block._id
             rank:field_count+1
-    
+
     'click .remove_schema_field': ->
         if confirm 'Remove field?'
             block = Template.currentData()
@@ -608,50 +608,50 @@ Template.blocks.events
             published:false
             block_classes:'ui secondary segment'
             view_title:true
-            parent_slug:FlowRouter.getParam('page_slug') 
+            parent_slug:FlowRouter.getParam('page_slug')
             fields: []
-    
-    
-    
+
+
+
 Template.set_key_value.events
     'click .set_key_value': ->
         Docs.update Template.parentData(1)._id,
             { $set: "#{@key}": @value }
-            
-            
+
+
 Template.set_page_key_value.events
     'click .set_page_key_value': ->
-        page = Docs.findOne 
+        page = Docs.findOne
             type:'page'
             slug:FlowRouter.getParam('page_slug')
         Docs.update page._id,
             { $set: "#{@key}": @value }
-    
+
 Template.set_key_value_2.events
     'click .set_key_value': ->
         Docs.update Template.parentData(2)._id,
             { $set: "#{@key}": @value }
-    
+
 Template.set_key_value.helpers
-    set_value_button_class: -> 
+    set_value_button_class: ->
         if Template.parentData()["#{@key}"] is @value then 'primary' else ''
 
-    
+
 Template.set_page_key_value.helpers
     set_value_button_class: ->
-        page = Docs.findOne 
+        page = Docs.findOne
             type:'page'
             slug:FlowRouter.getParam('page_slug')
         if page["#{@key}"] is @value then 'inverted blue' else ''
 
-    
+
 Template.set_key_value_2.helpers
-    set_value_button_class: -> 
+    set_value_button_class: ->
         if Template.parentData(2)["#{@key}"] is @value then 'primary' else ''
 
-    
-Template.edit_block_text_field.helpers 
-    block_key_value: () -> 
+
+Template.edit_block_text_field.helpers
+    block_key_value: () ->
         block_doc = Template.parentData()
         if block_doc
             block_doc["#{@key}"]
@@ -662,8 +662,8 @@ Template.edit_block_text_field.events
             { $set: "#{@key}": text_value }
 
 
-Template.edit_block_number_field.helpers 
-    block_key_value: () -> 
+Template.edit_block_number_field.helpers
+    block_key_value: () ->
         block_doc = Template.parentData()
         if block_doc
             block_doc["#{@key}"]
@@ -674,38 +674,77 @@ Template.edit_block_number_field.events
             { $set: "#{@key}": number_value }
 
 
-Template.set_field_key_value.events 
+Template.set_field_key_value.events
     'click .set_field_key_value': (e,t)->
         Meteor.call 'update_block_field', Template.parentData(2)._id, Template.parentData(), @key, @value
 
-Template.toggle_block_field_boolean.events 
+Template.toggle_block_field_boolean.events
     'click .toggle_block_field_boolean': (e,t)->
         Meteor.call 'update_block_field', Template.parentData(2)._id, Template.parentData(), @key, true
 
-Template.toggle_block_field_boolean.helpers 
-    toggle_value_button_class: -> 
+Template.toggle_block_field_boolean.helpers
+    toggle_value_button_class: ->
         if Template.parentData(2)["#{@key}"] is true then 'primary' else ''
 
 
 
 Template.view_button.helpers
     url:-> "/p/#{@type}?doc_id=#{@_id}"
-    
-    
+
+
 Template.ticket_status.helpers
     page_context: ->
         page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
 Template.ticket_status.events
     'click .reopen': ->
-        console.log 'hi'
         Docs.update FlowRouter.getQueryParam('doc_id'),
             $set: open:true
-            
+
     'click .close': ->
-        console.log 'hi'
+        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
         Docs.update FlowRouter.getQueryParam('doc_id'),
             $set: open:false
-            
-            
-            
-            
+        Docs.insert
+            type:'event'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+            event_type:'ticket_close'
+            text:"#{Meteor.user().username} closed ticket."
+        Docs.insert
+            type:'event'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+            event_type:'emailed_customer_contact'
+            text:"Customer #{ticket.customer_name} emailed about ticket close."
+
+
+Template.customer_ticket_status.helpers
+    page_context: ->
+        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+
+    feedback: ->
+        Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+
+Template.customer_ticket_status.events
+    'click .add_feedback': ->
+        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        Docs.update FlowRouter.getQueryParam('doc_id'),
+            $set: feedback:true
+        Docs.insert
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+
+    'click .close': ->
+        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        Docs.update FlowRouter.getQueryParam('doc_id'),
+            $set: open:false
+        Docs.insert
+            type:'event'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+            event_type:'ticket_close'
+            text:"#{Meteor.user().username} closed ticket."
+        Docs.insert
+            type:'event'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+            event_type:'emailed_customer_contact'
+            text:"Customer #{ticket.customer_name} emailed about ticket close."

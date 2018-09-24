@@ -332,7 +332,7 @@ template(name='assignment_widget')
 
 template(name='blocks')
     if editing_mode
-        #add_block.ui.circular.icon.button(title="Add Block")
+        #add_block.ui.icon.button(title="Add Block")
             i.plus.icon
     div
     each blocks
@@ -379,8 +379,6 @@ template(name='block')
                                             .ui.icon.button(title=title)
                                                 i.icon
                                                     +icon name=icon
-                                        // +edit_button
-                                        // +view_button
                     if is_table
                         if view_table_header
                             .middle.aligned.row
@@ -494,13 +492,9 @@ template(name='block')
                             .three.wide.right.aligned.column
                 if editing_mode
                     if can_lower
-                        .ui.small.icon.circular.button.lower_block
-                            i.chevron.up.icon
-                    // .ui.basic.label #{rank}
-                    .ui.small.icon.circular.button.raise_block
-                        i.chevron.down.icon
-                    .toggle_editing_block.ui.icon.large.circular.button(class=editing_button_class title='Edit Block')
-                        i.pencil.icon
+                        i.chevron.up.icon.link.lower_block
+                    i.chevron.down.icon.link.raise_block
+                    i.toggle_editing_block.pencil.link.icon(class=editing_button_class title='Edit Block')
                 if editing_block
                     +edit_block
 
@@ -580,7 +574,6 @@ template(name='edit_block')
 
                 div
                 +edit_block_text_field key='filter_source_key' label='Filter Source Key'
-        // unless custom_template
         .ui.bottom.attached.segment.tab(data-tab='schema')
             each collections
                 +set_key_value_2 key='children_collection' value=slug label=title icon=icon
@@ -755,9 +748,21 @@ template(name='ticket_status')
             +status_template
         if open
             .close.ui.button
+                +iconsmall name='checkmark'
                 |Close
         else
             .reopen.ui.icon.button(title='Reopen')
                 i.undo.icon
+
+
+template(name='customer_ticket_status')
+    with page_context
+        .ui.header
+            |Status
+            +status_template
+        if open
+            .close.ui.button
+                +iconsmall name='checkmark'
+                |Close
 
 
