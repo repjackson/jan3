@@ -62,10 +62,11 @@ Meteor.publish 'block_children', (
                         "ev.ID":Meteor.user().customer_jpid
                     found_customer.ev.CUST_NAME
                 when "{current_user_office_name}"
-                    found_office = Docs.findOne
-                        type:'office'
-                        "ev.ID":Meteor.user().office_jpid
-                    found_office.ev.MASTER_LICENSEE
+                    if Meteor.user()
+                        found_office = Docs.findOne
+                            type:'office'
+                            "ev.ID":Meteor.user().office_jpid
+                        found_office.ev.MASTER_LICENSEE
                 when "{current_user_franchisee_name}"
                     found_franchisee = Docs.findOne
                         type:'franchisee'
@@ -316,16 +317,15 @@ Meteor.publish 'my_special_services', ->
 
 Meteor.publish 'my_office_contacts', ()->
     user = Meteor.user()
-    if user
-        if 'customer' in user.roles
-            if user.customer_jpid
-                customer_doc = Docs.findOne
-                    "ev.ID": user.customer_jpid
-                    type:'customer'
-                Meteor.users.find {
-                    published: true
-                    "profile.office_name": customer_doc.ev.MASTER_LICENSEE
-                }
+    if Meteor.user()
+        if Meteor.user().customer_jpid
+            customer_doc = Docs.findOne
+                "ev.ID": Meteor.user().customer_jpid
+                type:'customer'
+            Meteor.users.find {
+                published: true
+                "ev.COMPANY_NAME": customer_doc.ev.MASTER_LICENSEE
+            }
 
 
 publishComposite 'doc', (id)->

@@ -115,30 +115,32 @@ template(name='customer_menu')
         //     | &nbsp; Help
 
 
-// template(name='dashboard_office_contacts_list')
-//     h3.ui.header
-//         +icon name='organization'
-//         |#{currentUser.users_office.ev.MASTER_LICENSEE} Contacts
+template(name='dashboard_office_contacts_list')
+    h3.ui.header
+        +icon name='organization'
+        |#{currentUser.users_office.ev.MASTER_LICENSEE} Contacts
 
-//     table.ui.sortable.striped.table
-//         tbody
-//             each office_contacts
-//                 tr
-//                     td
-//                         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
-//                         .ui.popup
-//                             img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
-//                         a(href="/user/#{username}") #{first_name} #{last_name}
-//                         .ui.popup
-//                             img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
-//                     td
-//                         div #{title}
-//                         div
-//                             strong #{function}
-//                     td
-//                         div #{ev.JOB_TITLE}
-//                         div #{ev.WORK_TELEPHONE} #{ev.TELE_CELL} #{phone}
-//                         div #{email}
+    table.ui.sortable.striped.table
+        tbody
+            each office_contacts
+                tr
+                    td
+                        img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
+                        .ui.popup
+                            img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
+                        a(href="/user/#{username}") #{first_name} #{last_name}
+                        .ui.popup
+                            img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
+                    td
+                        div #{title}
+                        div
+                            strong #{function}
+                    td
+                        div #{ev.JOB_TITLE}
+                        div #{ev.WORK_TELEPHONE} #{ev.TELE_CELL} #{phone}
+                        div #{email}
+                    td
+                        +email_user_link
 template(name='email_user_link')
     a(href="mailto:#{email}" target='_window' title="Email #{name}")
         // i.mail.icon

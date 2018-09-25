@@ -226,7 +226,7 @@ Meteor.methods
                     <li>Details: #{ticket.ticket_details}</li>
                     <li>Timestamp: #{ticket.long_timestamp}</li>
                     <li>Office: #{ticket.ticket_office_name}</li>
-                    <li>Status: #{ticket.status}</li>
+                    <li>Open: #{ticket.open}</li>
                     <li>Service Date: #{ticket.service_date}</li>
                 </ul>
                 <h4>Owner: #{sla.ticket_owner}</h4>
