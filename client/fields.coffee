@@ -267,12 +267,6 @@ Template.edit_page_text_field.events
         Docs.update page._id,
             { $set: "#{@key}": text_value }
 
-Template.edit_profile_text_field.events
-    'change #text_field': (e,t)->
-        text_value = e.currentTarget.value
-        Meteor.users.update FlowRouter.getParam('user_id'),
-            { $set: "#{@key}": text_value }
-
 Template.edit_user_text_field.events
     'change #text_field': (e,t)->
         text_value = e.currentTarget.value

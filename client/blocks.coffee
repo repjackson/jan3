@@ -335,7 +335,7 @@ Template.block.onCreated ->
 
 Template.block.helpers
     editing_block: -> Template.instance().editing_block.get() and Session.get('editing_mode')
-    editing_button_class: -> if Template.instance().editing_block.get() is true then 'primary' else ''
+    editing_button_class: -> if Template.instance().editing_block.get() is true then 'blue' else ''
 
     block_class: ->
         if @published
@@ -747,7 +747,7 @@ Template.customer_ticket_status.events
             $set: feedback:true
         Docs.insert
             type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
+            ticket_id: FlowRouter.getQueryParam('doc_id')
 
     'click .close': ->
         ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')

@@ -32,11 +32,11 @@ template(name='footer')
                         +office_card office_jpid=currentUser.office_jpid
             .centered.row
                 .ui.center.aligned.inverted.grey.header
-                    +icon name='copyright'
+                    i.copyright.outline.icon
                     | 2018 JAN-PRO Franchising, Inc.
-        
-        
-        
+
+
+
 template(name='role_switcher')
     each role_docs
         .change_role.ui.compact.button(class=role_button_class)

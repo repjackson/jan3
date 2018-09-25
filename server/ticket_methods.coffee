@@ -295,7 +295,7 @@ Meteor.methods
                 type:'message'
                 message_type:'sms'
                 to: sla.secondary_contact
-                recipient_type:'office'
+                recipient_type:'secondary'
                 body: "#{sla.secondary_contact}, a '#{ticket_type.title}' ticket from #{ticket.customer_name} was submitted."
                 ticket_id: ticket_id
             Docs.insert

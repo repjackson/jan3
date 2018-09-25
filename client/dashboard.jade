@@ -103,7 +103,7 @@ template(name='customer_menu')
             | &nbsp; Log Ticket
         a.item(href='/p/customer_tickets')
             i.large.icon
-                +iconsmall name='two-tickets'
+                +icon name='two-tickets'
             | &nbsp; Tickets
         a.item(href='/p/customer_services')
             i.large.icon
@@ -173,18 +173,17 @@ template(name='dashboard_header')
 
 
 template(name='dashboard_office_messages')
-    .ui.padded.stackable.grid
-        .four.column.row
-            each office_messages
-                .column
-                    .ui.floating.message
-                        .content
-                            .header
-                                i.large.icon
-                                    +icon name=icon
-                                |#{currentUser.users_office.ev.MASTER_LICENSEE} #{title}
-                        .content
-                            p
-                            p #{details}
-            .column
+    .ui.stackable.grid
+        .row
+            .twelve.wide.column
+                .ui.three.cards
+                    each office_messages
+                        .card
+                            .content
+                                +icon name=icon classes='ui right floated inline'
+                                .header
+                                    |#{currentUser.users_office.ev.MASTER_LICENSEE} #{title}
+                                p
+                                p #{details}
+            .four.wide.column
                 +small_service_list

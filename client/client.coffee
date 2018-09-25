@@ -190,12 +190,6 @@ Template.registerHelper 'page_jpid_key_value', () ->
 
 
 
-Template.registerHelper 'profile_key_value', () ->
-    # doc_field = Template.parentData(2)
-    current_user = Meteor.users.findOne FlowRouter.getParam('user_id')
-    if current_user
-        current_user["#{@key}"]
-
 Template.registerHelper 'user_key_value', () ->
     # doc_field = Template.parentData(2)
     current_user = Meteor.users.findOne FlowRouter.getParam('user_id')

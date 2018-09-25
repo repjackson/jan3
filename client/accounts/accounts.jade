@@ -12,15 +12,16 @@ template(name='accounts_nav')
         a.item(href='/')
             img.ui.avatar.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
             | &nbsp; Home
-        +menu_item link='/login' label='Login' icon='sign in' name='login'
-        +menu_item link='/reset_password' label='Reset Password' icon='redo' name='reset_password'
-        +menu_item link='/register_customer' label='New Customer' icon='id badge' name='register_customer'
-        +menu_item link='/register_office' label='New Office' icon='address card' name='register_office'
+        +menu_item link='/login' label='Login' icon='internal' name='login'
+        +menu_item link='/reset_password' label='Reset Password' icon='available-updates' name='reset_password'
+        +menu_item link='/register_customer' label='Customer' icon='plus-math' name='register_customer'
+        +menu_item link='/register_office' label='Office' icon='plus-math' name='register_office'
 
 template(name='menu_item')
     a.item(href=link class="{{ active_route slug }}")
         // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-        i.large.icon(class=icon)
+        i.icon
+            +icon name=icon
         | &nbsp; #{label}
 
 template(name='reset_password')

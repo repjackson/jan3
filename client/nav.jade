@@ -17,14 +17,15 @@ template(name='nav')
         else if is_office
             each office_nav_items
                 a.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
+                    i.icon(class=icon)
                     .mobile.hidden &nbsp; #{title}
         .right.menu
             if is_dev
                 if editing_mode
-                    #toggle_editing.icon.active.item
+                    #toggle_editing.icon.active.large.item
                         i.teal.pencil.link.bordered.icon
                 else
-                    #toggle_editing.icon.item
+                    #toggle_editing.icon.large.item
                         i.pencil.link.bordered.icon
                 a.icon.item(href='/p/schemas' data-content='Schemas' class="{{ active_route 'schemas' }}" )
                     i.database.icon

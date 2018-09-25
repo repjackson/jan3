@@ -27,20 +27,20 @@ template(name='user_edit')
             .eight.wide.column
                 .ui.transparent.form
                     .field
-                        +edit_profile_text_field key='first_name' label='First Name'
+                        +edit_user_text_field key='first_name' label='First Name'
                     .field
-                        +edit_profile_text_field key='last_name' label='Last Name'
+                        +edit_user_text_field key='last_name' label='Last Name'
                     .field
-                        +edit_profile_text_field key='title' label='Job Title'
+                        +edit_user_text_field key='title' label='Job Title'
                     .field
-                        +edit_profile_text_field key='function' label='Job Function'
+                        +edit_user_text_field key='function' label='Job Function'
                     .field
                         label Email
                         each edit_user.emails
                             .ui.basic.label #{address}
 
                     .field
-                        +edit_profile_text_field key='phone' label='Phone' icon='phone'
+                        +edit_user_text_field key='phone' label='Phone' icon='phone'
                     if user_is_customer
                         +lookup_customer
                         +edit_user_text_field key='customer_jpid' label='Connected Customer JP ID'
@@ -50,7 +50,7 @@ template(name='user_edit')
                         if office_jpid
                             h5 Office ID: #{office_id}
                     if user_is_office
-                        +edit_profile_text_field key='office_jpid' label='Connected Office JP ID'
+                        +edit_user_text_field key='office_jpid' label='Connected Office JP ID'
             .four.wide.column
                 .ui.header Roles
                 each roles

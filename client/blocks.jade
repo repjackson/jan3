@@ -169,14 +169,14 @@ template(name='call_method')
 
 
 template(name='icon')
-    img.ui.mini.image(src="https://png.icons8.com/office/80/000000/#{name}.png" class=classes data-content=popup title=title)
+    img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes data-content=popup title=title)
 
 
 template(name='iconlarge')
-    img.ui.image(src="https://png.icons8.com/office/80/000000/#{name}.png")
+    img.ui.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png")
 
 template(name='iconsmall')
-    img.ui.inline.image(src="https://png.icons8.com/office/24/000000/#{name}.png" class=classes)
+    img.ui.inline.image(src="https://png.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes)
 
 
 
@@ -498,11 +498,12 @@ template(name='block')
                     if can_move_left
                         i.move_left.chevron.left.circular.link.icon
                     if can_lower
-                        i.chevron.up.circular.link.icon.lower_block
-                    i.chevron.down.icon.raise_block
+                        i.chevron.up.circular.link.circular.icon.lower_block
+                    i.chevron.down.circular.icon.raise_block
                     if can_move_right
                         i.move_right.chevron.right.circular.link.icon
-                    i.toggle_editing_block.pencil.circular.link.icon(class=editing_button_class title='Edit Block')
+                    .toggle_editing_block.ui.small.circular.icon.button(class=editing_button_class title='Edit Block')
+                        i.pencil.icon
                 if editing_block
                     +edit_block
 

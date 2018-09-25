@@ -64,13 +64,9 @@ template(name='table_header')
 
 template(name='status_template')
     if open
-        // +icon name='open-sign'
-        +icon name='open-sign' title='Open'
-        // i.lock.open.large.icon(title='Open')
+        +icon name='unchecked-checkbox' title='Open'
     else
-        // +icon name='closed-sign'
-        +icon name='close_sign' title='Closed'
-        // i.lock.large.icon(title='Closed')
+        +icon name='checked-checkbox' title='Closed'
 
 template(name='submitted_template')
     if submitted

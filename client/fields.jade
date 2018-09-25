@@ -12,13 +12,13 @@ template(name='edit_text_field')
 template(name='edit_text')
     .ui.fluid.input
         input.text_val(type='text' value=local_value )
-        
-        
+
+
 template(name='edit_int')
     .ui.fluid.input
         input.int_val(type='number' min='0' value=local_value )
-        
-        
+
+
 template(name='edit_boolean')
     if is_true
         #turn_off.ui.primary.compact.icon.button
@@ -26,16 +26,16 @@ template(name='edit_boolean')
     else
         #turn_on.ui.compact.icon.button
             i.checkmark.icon
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
+
+
 
 template(name='edit_page_text_field')
     .ui.form
@@ -47,17 +47,7 @@ template(name='edit_page_text_field')
             .ui.input
                 input.text_field(type='text' value=page_slug_key_value )
 
-        
-template(name='edit_profile_text_field')
-    .ui.form
-        .inline.field(class=field_class)
-            label
-                if icon
-                    i.icon(class=icon)
-                |#{label}
-        input#text_field(type='text' value=profile_key_value )
 
-        
 template(name='edit_user_text_field')
     .ui.form
         .inline.field(class=field_class)
@@ -67,33 +57,33 @@ template(name='edit_user_text_field')
                 |#{label}
         input#text_field(type='text' value=user_key_value )
 
-        
+
 template(name='view_text_field')
     h4.ui.header #{title}: #{slug_value}
-        
+
 // template(name='edit_html_field')
 //     .field
 //         .froala-container
 //             +froalaReactive getFEContext
-        
+
 template(name='edit_html')
     .field
         .froala-container
             +froalaReactive getFEContext
-        
-        
-template(name='edit_date_field')            
-    .ui.dividing.header 
+
+
+template(name='edit_date_field')
+    .ui.dividing.header
         +icon name='calendar'
         |#{label}
     .field
         .ui.icon.fluid.input
             if icon
                 i.icon(class=icon)
-            input#date_field(type='date' value=key_value)        
+            input#date_field(type='date' value=key_value)
 
-template(name='view_date_field')            
-    .ui.dividing.header 
+template(name='view_date_field')
+    .ui.dividing.header
         +icon name='calendar'
         |#{label}
     h4.ui.header
@@ -102,17 +92,17 @@ template(name='view_date_field')
         |#{key_value}
 
 
-template(name='edit_datetime_field')       
-    h3 
+template(name='edit_datetime_field')
+    h3
         i.big.icon
             +icon name='calendar'
         |#{label}
     #semcal.ui.calendar
         .ui.left.icon.fluid.input
             i.clock.icon
-            input#datetime_field(type='text' value=key_value)        
+            input#datetime_field(type='text' value=key_value)
 
-template(name='edit_timerange_field') 
+template(name='edit_timerange_field')
     // h3
     //     |Time Range
         // i.clock.icon
@@ -122,22 +112,22 @@ template(name='edit_timerange_field')
             #time_start.ui.calendar
                 .ui.left.icon.input
                     i.hourglass.start.icon
-                    input#time_start_input(type='text' value=time_start)        
+                    input#time_start_input(type='text' value=time_start)
         // .field
         //     // label End
         //     #time_end.ui.calendar
         //         .ui.left.icon.input
         //             i.hourglass.end.icon
-        //             input#time_end_input(type='text' value=time_end)        
+        //             input#time_end_input(type='text' value=time_end)
 
 
 template(name='edit_number_field')
     .ui.form
         .field(class=field_class)
-            label 
+            label
                 if icon
                     i.icon
-                        +icon name=icon 
+                        +icon name=icon
                 |#{label}
             .ui.input
                 input#number_field(type='number' min=min max=max value=page_slug_key_value)
@@ -151,7 +141,7 @@ template(name='block_edit_number')
                 input#number_field(type='number' min='0' max='24' value=block_field_value)
 
 
-template(name='block_boolean_toggle')      
+template(name='block_boolean_toggle')
     .ui.icon.button.toggle_field_boolean(class=block_field_value title=title)
         if block_field_value
             i.green.checkmark.icon
@@ -193,7 +183,7 @@ template(name='view_numeric_field')
 
 
 template(name='edit_textarea')
-    .ui.header 
+    .ui.header
         if icon
             +icon name=icon
         |#{label}
@@ -202,16 +192,16 @@ template(name='edit_textarea')
             textarea.textarea(rows='5') #{page_key_value}
 
 
-        
+
 template(name='view_array_field')
     if field_value
         .ui.segment
             each field_value
                 .ui.large.label #{this}
-    
-    
+
+
 template(name='edit_array_field')
-    .ui.header 
+    .ui.header
         // i.tags.icon
         |#{label}
     .ui.input
@@ -230,7 +220,7 @@ template(name='edit_array_field')
 
 template(name='edit_image_field')
     .ui.secondary.segment
-        .ui.header 
+        .ui.header
             +icon name='picture'
             |Image
         if image_id
@@ -244,7 +234,7 @@ template(name='edit_image_field')
         //     .field
         //         label or Choose Cloudinary Image Id
         //         input#input_image_id(type='text')
-        
+
 
 
 template(name='cell_text_edit')
@@ -257,8 +247,8 @@ template(name='cell_text_edit')
         &nbsp;
         if editing_mode
             i.edit_field.link.small.pencil.icon
-            
-            
+
+
 template(name='user_cell_text_edit')
     if editing_cell
         .ui.fluid.icon.input
@@ -268,7 +258,6 @@ template(name='user_cell_text_edit')
         |#{cell_value}
         &nbsp;
         i.edit_field.link.small.pencil.icon
-            
-            
-            
-            
+
+
+
