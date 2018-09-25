@@ -44,7 +44,7 @@ Template.block.onRendered ->
         $('.accordion').accordion();
     , 500
     Meteor.setTimeout ->
-        $('.dropdown').dropdown();
+        $('.dropdown').dropdown()
     , 500
 
 # Template.block.onRendered ->

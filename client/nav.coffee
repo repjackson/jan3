@@ -7,6 +7,14 @@ Template.left_sidebar.events
 Template.nav.onCreated ->
     @signing_out = new ReactiveVar false
 
+Template.nav.onRendered ->
+    Meteor.setTimeout ->
+        $('.dropdown').dropdown(
+            transition:'drop'
+            )
+    , 500
+
+
 Template.nav.helpers
     signing_out: ->
         if Template.instance().signing_out.get() is true then 'loading' else ''
