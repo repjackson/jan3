@@ -3,13 +3,13 @@ FlowRouter.route '/user/edit/:user_id', action: (params) ->
         main: 'user_edit'
 
 Template.user_edit.onCreated ->
-    @autorun -> Meteor.subscribe 'user_profile', FlowRouter.getParam('user_id') 
+    @autorun -> Meteor.subscribe 'user_profile', FlowRouter.getParam('user_id')
 
 # Template.user_edit.onRendered ->
 #     console.log Meteor.users.findOne(FlowRouter.getParam('user_id'))
 
 Template.user_edit.helpers
-    user: -> Meteor.users.findOne FlowRouter.getParam('user_id')
+    edit_user: -> Meteor.users.findOne FlowRouter.getParam('user_id')
 
 Template.user_edit.events
     'keydown #input_image_id': (e,t)->
@@ -20,8 +20,8 @@ Template.user_edit.events
                 Meteor.users.update user_id,
                     $set: image_id: image_id
                 $('#input_image_id').val('')
-            
-            
+
+
     # "change input[type='file']": (e) ->
     #     files = e.currentTarget.files
     #     Cloudinary.upload files[0],
@@ -40,5 +40,4 @@ Template.user_edit.events
     'click #remove_photo': ->
         if confirm 'Remove Profile Photo?'
             Meteor.users.update FlowRouter.getParam('user_id'),
-                $unset: "profile.image_id": 1
-            
+                $unset: "image_id": 1

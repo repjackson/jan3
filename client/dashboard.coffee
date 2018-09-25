@@ -35,7 +35,6 @@ Template.dashboard_office_contacts_list.helpers
             published:true
             # "profile.office_name": customer_doc.ev.MASTER_LICENSEE
         }, limit:100
-        console.log found.count(), 'found'
         found
 
         # user = Meteor.user()

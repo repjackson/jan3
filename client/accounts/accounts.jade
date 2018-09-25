@@ -12,16 +12,15 @@ template(name='accounts_nav')
         a.item(href='/')
             img.ui.avatar.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
             | &nbsp; Home
-        +menu_item link='/login' label='Login' icon='internal' name='login'
-        +menu_item link='/reset_password' label='Reset Password' icon='available-updates' name='reset_password'
-        +menu_item link='/register_customer' label='Customer' icon='plus-math' name='register_customer'
-        +menu_item link='/register_office' label='Office' icon='plus-math' name='register_office'
+        +menu_item link='/login' label='Login' icon='sign in' name='login'
+        +menu_item link='/reset_password' label='Reset Password' icon='redo' name='reset_password'
+        +menu_item link='/register_customer' label='New Customer' icon='id badge' name='register_customer'
+        +menu_item link='/register_office' label='New Office' icon='address card' name='register_office'
 
 template(name='menu_item')
     a.item(href=link class="{{ active_route slug }}")
         // img.ui.tiny.compact.inline.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-        i.large.icon
-            +icon name=icon
+        i.large.icon(class=icon)
         | &nbsp; #{label}
 
 template(name='reset_password')
@@ -36,14 +35,14 @@ template(name='reset_password')
                         label Username
                         input#username(type='text')
                     .field
-                        #reset_password_by_username.ui.fluid.inverted.jp-green.button
+                        #reset_password_by_username.ui.fluid.inverted.jpgreen.button
                             | Reset by Username
                 .ui.form
                     .field
                         label Email
                         input#email(type='email')
                     .field
-                        #reset_password_by_email.ui.fluid.inverted.jp-green.button
+                        #reset_password_by_email.ui.fluid.inverted.jpgreen.button
                             | Reset by Email
 
 template(name='login')
@@ -66,8 +65,8 @@ template(name='login')
                             .ui.hidden.divider
                             .field
                                 // unless currentUser
-                                .login.ui.fluid.jp-green.inverted.button(class=login_button_class title='Login')
-                                    | LOGIN
+                                .login.ui.fluid.jpgreen.inverted.button(class=login_button_class title='Login')
+                                    | Login
                         .four.wide.column
                             .ui.center.aligned.header Demo
                             #login_demo_customer.ui.fluid.button(class=demo_class title='Login Demo Customer')
@@ -158,7 +157,7 @@ template(name='register_customer')
                         //         |Passwords Don't Match
 
                     if can_submit
-                        #register.ui.fluid.inverted.jp-green.button
+                        #register.ui.fluid.inverted.jpgreen.button
                             |Register Customer
 
 
@@ -225,7 +224,7 @@ template(name='register_office')
                             //         |Passwords Don't Match
 
                             if can_submit
-                                #register_office.ui.fluid.inverted.jp-green.button
+                                #register_office.ui.fluid.inverted.jpgreen.button
                                     |Register Office
 
 

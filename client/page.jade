@@ -75,15 +75,15 @@ template(name='page')
                             .center.aligned.three.wide.column
                 if left_column
                     .four.wide.column
-                        +blocks position='left'
+                        +blocks horizontal_position='left'
                     unless right_column
                         .ui.twelve.wide.column
-                            +blocks position='center'
+                            +blocks horizontal_position='center'
                     if right_column
                         .ui.eight.wide.column
-                            +blocks position='center'
+                            +blocks horizontal_position='center'
                         .ui.four.wide.column
-                            +blocks position='right'
+                            +blocks horizontal_position='right'
                 else
                     .ui.sixteen.wide.column
                         +blocks position='center'

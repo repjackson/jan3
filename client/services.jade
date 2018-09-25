@@ -12,7 +12,7 @@ template(name='services')
             //             | Most Popular
             //         .ui.list
             //             each top_requested
-            //                 .item 
+            //                 .item
             //                     if image_id
             //                         img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
             //                     if icon
@@ -34,7 +34,7 @@ template(name='services')
                 .ui.centered.three.cards
                     each services_offered
                         +service_card
-                
+
 template(name='service_card')
     .ui.card
         .content
@@ -54,53 +54,52 @@ template(name='service_card')
         //         | #{request_count} requests
         .content
             +request_service_button
-            // a.ui.button(href="/v/#{_id}") 
+            // a.ui.button(href="/v/#{_id}")
             //     i.large.icon
             //         +iconsmall name='view-details'
             //     |Details
-    
-    
-template(name='request_service_button')                    
-    .request_service.ui.button 
+
+
+template(name='request_service_button')
+    .request_service.ui.button
         i.large.icon
             +iconsmall name='service-bell'
-        | Request 
-                    
+        | Request
+
 template(name='service_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .three.wide.column
-                +link_button link='/p/services' icon='building' label='Services'
             .ten.wide.column
-                h1.ui.center.aligned.grey.header 
+                h1.ui.center.aligned.grey.header
                     if icon
                         +icon name=icon
                     |'#{title}' Service
             .three.wide.right.aligned.column
-                +edit_button
+                if is_office
+                    +edit_button
         .centered.row
             .four.wide.column
+                .ui.secondary.segment
+                    img.ui.image.inline.item(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                 // .ui.header Price: $#{price}
-                +request_service_button
-                if is_admin
-                    .ui.header Slug: #{slug}
-            .twelve.wide.column
+            .eight.wide.column
                 .ui.secondary.segment
                     .large130 #{description}
-                    img.ui.image.item(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
-                +service_child_requests
-                +full_doc_history
-                
-                
+                    .ui.hidden.divider
+                    +request_service_button
+            .four.wide.column
+
+
 template(name='service_child_requests')
     .ui.secondary.segment
-        .ui.header 
+        .ui.header
             +icon name='service-bell'
             |Requests
         each child_requests
             .ui.secondary.segment
                 .content
-                    .meta.right.floated 
+                    .meta.right.floated
                         +author_info
                     .header #{service_title}
                     .meta #{service_date}
@@ -110,7 +109,7 @@ template(name='service_child_requests')
                 .content
                     +view_button
             .ui.hidden.divider
-                        
+
 template(name='service_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
@@ -132,13 +131,14 @@ template(name='service_edit')
                     // +edit_number_field key='price' label='Price' icon='money'
                     +edit_image_field
                     +edit_textarea key='description' label='Description' icon='details'
-                    
-                    
+
+
 template(name='service_request_view')
     .ui.padded.stackable.grid
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
-                +link_button link='/p/services' icon='building' label='Services'
+                unless is_customer
+                    +link_button link='/p/services' icon='building' label='Services'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header Service Request for #{service_title}
             .three.wide.center.aligned.column
@@ -146,12 +146,9 @@ template(name='service_request_view')
         .row
             .sixteen.wide.column
                 .ui.secondary.segment
-                    .ui.header Date: #{request_date}
+                    // .ui.header Date: #{request_date}
                     .ui.header Details: #{request_details}
-        .centered.row
-            .twelve.wide.column
-                +full_doc_history
-                    
+
 template(name='service_request_edit')
     .ui.padded.stackable.centered.grid
         .centered.row
@@ -165,11 +162,10 @@ template(name='service_request_edit')
                     .ui.disabled.button Submitted #{submit_date}
                     +save_button
                 else
-                    #submit_request.ui.button Submit
+                    #submit_request.ui.jpgreen.inverted.button Submit
         .centered.row
             .ten.wide.column
                 .ui.form
-                    +edit_date_field key='request_date' label='Request Date' icon='calendar'
+                    // +edit_date_field key='request_date' label='Request Date' icon='calendar'
                     +edit_textarea key='request_details' label='Request Details' icon='details'
-                    
-                    
+

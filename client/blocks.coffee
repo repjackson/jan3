@@ -225,19 +225,35 @@ Template.author_info.onCreated ->
     # else
     #     split_tags = @data.tags
 
+Template.blocks.events
+    'click #add_block': (e,t)->
+        # if @tags and typeof @tags is 'string'
+        #     split_tags = @tags.split ','
+        # else
+        #     split_tags = @tags
+        Docs.insert
+            type:'block'
+            horizontal_position:@horizontal_position
+            title:'new block'
+            published:false
+            block_classes:'ui secondary segment'
+            view_title:true
+            parent_slug:FlowRouter.getParam('page_slug')
+            fields: []
+
 Template.blocks.helpers
     blocks: ->
         # if @tags and typeof @tags is 'string'
         #     split_tags = @tags.split ','
         # else
         #     split_tags = @tags
-        if @position is 'left'
+        if @horizontal_position is 'left'
             Docs.find {
                 type:'block'
                 parent_slug:FlowRouter.getParam('page_slug')
                 horizontal_position:'left'
             }, sort:rank:1
-        else if @position is 'right'
+        else if @horizontal_position is 'right'
             Docs.find {
                 type:'block'
                 parent_slug:FlowRouter.getParam('page_slug')
@@ -324,8 +340,8 @@ Template.block.helpers
     block_class: ->
         if @published
             @block_classes
-        else
-            @block_classes+" disabled"
+        # else
+            # @block_classes+" disabled"
 
 
     sort_descending: ->
@@ -399,6 +415,8 @@ Template.block.helpers
     is_sla_settings: -> @view is 'sla_settings'
 
     can_lower: -> @rank>1
+    can_move_left: -> @horizontal_position is 'center' or 'right'
+    can_move_right: -> @horizontal_position is 'center' or 'left'
 
     th_field_docs: ->
         # block = Template.currentData()
@@ -421,6 +439,21 @@ Template.block.helpers
 
 
 Template.block.events
+    'click .move_left': ->
+        if @horizontal_position is 'center'
+            Docs.update @_id,
+                $set:horizontal_position:'left'
+        if @horizontal_position is 'right'
+            Docs.update @_id,
+                $set:horizontal_position:'center'
+    'click .move_right': ->
+        if @horizontal_position is 'center'
+            Docs.update @_id,
+                $set:horizontal_position:'right'
+        if @horizontal_position is 'left'
+            Docs.update @_id,
+                $set:horizontal_position:'center'
+
     'click .raise_block':->
         Docs.update @_id,
             $inc:rank:1
@@ -592,22 +625,6 @@ Template.edit_block.events
         Meteor.call 'update_block_field', Template.currentData()._id, @, 'label', template_value
 
 
-
-Template.blocks.events
-    'click #add_block': (e,t)->
-        # if @tags and typeof @tags is 'string'
-        #     split_tags = @tags.split ','
-        # else
-        #     split_tags = @tags
-        Docs.insert
-            type:'block'
-            position:@position
-            title:'new block'
-            published:false
-            block_classes:'ui secondary segment'
-            view_title:true
-            parent_slug:FlowRouter.getParam('page_slug')
-            fields: []
 
 
 

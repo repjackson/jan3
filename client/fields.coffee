@@ -14,7 +14,7 @@ Template.edit_image_field.events
                 if err
                     console.error 'Error uploading', err
                 else
-                    Docs.update doc_id, 
+                    Docs.update doc_id,
                         { $set: image_id: res.public_id }
                 return
 
@@ -34,15 +34,15 @@ Template.edit_image_field.events
             Meteor.call "c.delete_by_public_id", @image_id, (err,res) ->
                 if not err
                     # Do Stuff with res
-                    Docs.update FlowRouter.getQueryParam('doc_id'), 
+                    Docs.update FlowRouter.getQueryParam('doc_id'),
                         $unset: image_id: 1
                 else
                     throw new Meteor.Error "it failed"
 
     # 		Cloudinary.delete "37hr", (err,res) ->
-    # 		    if err 
+    # 		    if err
     # 		    else
-    #                 # Docs.update FlowRouter.getQueryParam('doc_id'), 
+    #                 # Docs.update FlowRouter.getQueryParam('doc_id'),
     #                 #     $unset: image_id: 1
 
     # Template.edit_image.helpers
@@ -57,8 +57,8 @@ Template.edit_number_field.events
         number_value = parseInt e.currentTarget.value
         Docs.update page._id,
             { $set: "#{@key}": number_value }
-            
-        
+
+
 Template.block_edit_number.events
     'change #number_field': (e,t)->
         child_doc = Template.parentData(0)
@@ -67,7 +67,7 @@ Template.block_edit_number.events
         number_value = parseInt e.currentTarget.value
         Docs.update child_doc._id,
             { $set: "#{field_object.key}": number_value }
-          
+
 Template.block_edit_text_field.events
     'blur .block_text_field': (e,t)->
         text_value = e.currentTarget.value
@@ -76,8 +76,8 @@ Template.block_edit_text_field.events
         field_key = Template.parentData(3).key
         Docs.update child_doc._id,
             { $set: "#{field_key}": text_value }
-          
-          
+
+
 Template.block_boolean_toggle.events
     'click .toggle_field_boolean': (e,t)->
         child_doc = Template.parentData(0)
@@ -86,10 +86,10 @@ Template.block_boolean_toggle.events
         negative_value = !child_doc["#{field_key}"]
         Docs.update child_doc._id,
             { $set: "#{field_key}": negative_value }
-          
-          
-          
-          
+
+
+
+
 Template.block_list_dropdown.events
     'click .select_dropdown_item': (e,t)->
         field_object = Template.parentData(3)
@@ -97,8 +97,8 @@ Template.block_list_dropdown.events
         field_key = Template.parentData(3).key
         Docs.update child_doc._id,
             { $set: "#{field_key}": @slug }
-          
-          
+
+
 Template.block_list_dropdown.onCreated ->
     @autorun => Meteor.subscribe 'type', 'ticket_type'
 Template.block_list_dropdown.onRendered ->
@@ -110,20 +110,23 @@ Template.block_list_dropdown.onRendered ->
 Template.block_list_dropdown.helpers
     ticket_types: ->
         Docs.find type:'ticket_type'
-          
-          
+
+
 Template.edit_textarea.events
     'blur .textarea': (e,t)->
         textarea_value = $(e.currentTarget).closest('.textarea').val()
         update_textarea = ->
-            doc_id = FlowRouter.getQueryParam('doc_id')
-            Docs.update doc_id,
-                { $set: "#{t.data.key}": textarea_value }
+            if FlowRouter.getQueryParam('doc_id')
+                Docs.update FlowRouter.getQueryParam('doc_id'),
+                    { $set: "#{t.data.key}": textarea_value }
+            if FlowRouter.getParam('doc_id')
+                Docs.update FlowRouter.getParam('doc_id'),
+                    { $set: "#{t.data.key}": textarea_value }
         debounced = _.debounce(update_textarea, 500)
         debounced()
 
 Template.edit_textarea.helpers
-    'key_value': () -> 
+    'key_value': () ->
         doc_field = Template.parentData(0)
         if FlowRouter.getParam('jpid')
             current_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
@@ -132,7 +135,7 @@ Template.edit_textarea.helpers
         if current_doc
             if doc_field.key
                 current_doc["#{doc_field.key}"]
-    
+
 
 
 
@@ -183,14 +186,18 @@ Template.edit_datetime_field.events
         datetime_value = e.currentTarget.value
         value = $('#datetime_field').calendar('get date')
         Docs.update FlowRouter.getQueryParam('doc_id'),
-            { $set: "#{@key}": datetime_value } 
+            { $set: "#{@key}": datetime_value }
 
 
 Template.edit_date_field.events
     'blur #date_field': (e,t)->
         date_value = e.currentTarget.value
-        Docs.update FlowRouter.getQueryParam('doc_id'),
-            { $set: "#{@key}": date_value } 
+        if FlowRouter.getQueryParam('doc_id')
+            Docs.update FlowRouter.getQueryParam('doc_id'),
+                { $set: "#{@key}": date_value }
+        if FlowRouter.getParam('doc_id')
+            Docs.update FlowRouter.getParam('doc_id'),
+                { $set: "#{@key}": date_value }
 
 
 Template.edit_text_field.events
@@ -240,7 +247,7 @@ Template.edit_boolean.events
             { $set: "#{@slug}": false }
 
 Template.edit_boolean.helpers
-    is_true: -> 
+    is_true: ->
         display_field = Template.parentData(5)
         display_field["#{@slug}"]
 
@@ -264,7 +271,7 @@ Template.edit_profile_text_field.events
     'change #text_field': (e,t)->
         text_value = e.currentTarget.value
         Meteor.users.update FlowRouter.getParam('user_id'),
-            { $set: "profile.#{@key}": text_value }
+            { $set: "#{@key}": text_value }
 
 Template.edit_user_text_field.events
     'change #text_field': (e,t)->
@@ -277,18 +284,18 @@ Template.edit_user_text_field.events
 # Template.edit_html.events
 #     'blur .froala-container': (e,t)->
 #         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
-        
+
 #         doc_id = FlowRouter.getQueryParam('doc_id')
 #         # short = truncate(html, 5, { byWords: true })
 #         Docs.update doc_id,
-#             $set: 
+#             $set:
 #                 html: html
 
 
 # Template.edit_html_field.events
 #     'blur .froala-container': (e,t)->
 #         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
-        
+
 #         # doc_id = @doc_id
 
 #         Docs.update @_id,
@@ -331,11 +338,11 @@ Template.edit_array_field.events
     #     Docs.update @doc_id,
     #         $addToSet: tags: doc.name
     #     $('.new_entry').val('')
-   
+
     'keyup .new_entry': (e,t)->
         e.preventDefault()
-        # val = $('.new_entry').val().toLowerCase().trim()                    
-        val = $(e.currentTarget).closest('.new_entry').val().toLowerCase().trim()   
+        # val = $('.new_entry').val().toLowerCase().trim()
+        val = $(e.currentTarget).closest('.new_entry').val().toLowerCase().trim()
 
         switch e.which
             when 13 #enter
@@ -358,9 +365,9 @@ Template.edit_array_field.events
         Docs.update FlowRouter.getQueryParam('doc_id'),
             $pull: "#{Template.parentData(0).key}": tag
         t.$('.new_entry').val(tag)
-        
+
 Template.edit_array_field.helpers
-    # editing_mode: -> 
+    # editing_mode: ->
     #     if Session.equals 'editing', true then true else false
     # theme_select_settings: -> {
     #     position: 'top'
@@ -391,7 +398,7 @@ Template.cell_text_edit.events
 
     'change .cell_val': (e,t)->
         cell_object = Template.parentData(3)
-        
+
         text_value = e.currentTarget.value
         Docs.update @_id,
             { $set: "#{cell_object.key}": text_value }
@@ -417,7 +424,7 @@ Template.user_cell_text_edit.events
 
     'change .cell_val': (e,t)->
         cell_object = Template.parentData(3)
-        
+
         text_value = e.currentTarget.value
         Docs.update @_id,
             { $set: "#{cell_object.key}": text_value }

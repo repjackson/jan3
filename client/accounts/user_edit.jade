@@ -1,66 +1,65 @@
 template(name='user_edit')
-    with user
-        .ui.padded.stackable.centered.grid
-            .row
-                .three.wide.center.aligned.column    
-                .ten.wide.column    
-                    h1.ui.center.aligned.grey.header Edit #{profile.first_name} #{profile.last_name}
-                .three.wide.center.aligned.column    
-                    a.ui.icon.button(href="/user/#{user.username}" title="Save #{currentUser.username}")
-                        i.green.large.checkmark.icon
-            .row
-                .four.wide.column    
-                    .ui.form
-                        .field
-                            // .field
-                            //     label Current image_id: #{image_id}
-                            //     input#input_image_id(type='text' placeholder='Change')
-                            if profile.image_id
-                                // label image
-                                .ui.centered.image
-                                    img.ui.image(src="{{c.url profile.image_id width=400 height=400 gravity='face' crop='fill'}}")
-                                    a#remove_photo.ui.right.corner.link.basic.label(href='#')
-                                        i.remove.red.link.icon
-                            else
-                                label Upload Image
-                                input(type='file' name='upload_picture' accept='image/*')
-                .eight.wide.column    
-                    .ui.transparent.form
-                        .field
-                            +edit_profile_text_field key='first_name' label='First Name'
-                        .field
-                            +edit_profile_text_field key='last_name' label='Last Name'
-                        .field
-                            +edit_profile_text_field key='title' label='Job Title'
-                        .field
-                            +edit_profile_text_field key='function' label='Job Function'
-                        .field
-                            label Email
-                            each emails
-                                .ui.basic.label #{address}
-                                
-                        .field
-                            +edit_profile_text_field key='phone' label='Phone' icon='phone'
-                        if user_is_customer
-                            +lookup_customer
-                            +edit_user_text_field key='customer_jpid' label='Connected Customer JP ID'
-                            +edit_user_text_field key='office_jpid' label='Connected Office JP ID'
-                            if profile.franchisee_jpid
-                                h5 Franchisee: #{profile.franchisee_jpid}
-                            if office_jpid
-                                h5 Office ID: #{profile.office_id}
-                        if user_is_office
-                            +edit_profile_text_field key='office_jpid' label='Connected Office JP ID'
-                .four.wide.column    
-                    .ui.dividing.header Admin
-                    .ui.header Roles
-                    each roles
-                        .ui.large.basic.label #{this}
-                    if user_is_office
-                        +office_card office_jpid=office_jpid
+    .ui.padded.stackable.centered.grid
+        .row
+            .three.wide.center.aligned.column
+            .ten.wide.column
+                h1.ui.center.aligned.grey.header
+                    |Edit #{edit_user.first_name} #{edit_user.last_name} @#{edit_user.username}
+            .three.wide.center.aligned.column
+                a.ui.icon.button(href="/user/#{edit_user.username}" title="Save #{edit_user.username}")
+                    i.green.large.checkmark.icon
+        .row
+            .four.wide.column
+                .ui.form
+                    .field
+                        // .field
+                        //     label Current image_id: #{image_id}
+                        //     input#input_image_id(type='text' placeholder='Change')
+                        if edit_user.image_id
+                            // label image
+                            .ui.centered.image
+                                img.ui.image(src="{{c.url edit_user.image_id width=400 height=400 gravity='face' crop='fill'}}")
+                                a#remove_photo.ui.right.corner.link.basic.label(href='#')
+                                    i.remove.red.link.icon
+                        else
+                            label Upload Image
+                            input(type='file' name='upload_picture' accept='image/*')
+            .eight.wide.column
+                .ui.transparent.form
+                    .field
+                        +edit_profile_text_field key='first_name' label='First Name'
+                    .field
+                        +edit_profile_text_field key='last_name' label='Last Name'
+                    .field
+                        +edit_profile_text_field key='title' label='Job Title'
+                    .field
+                        +edit_profile_text_field key='function' label='Job Function'
+                    .field
+                        label Email
+                        each edit_user.emails
+                            .ui.basic.label #{address}
+
+                    .field
+                        +edit_profile_text_field key='phone' label='Phone' icon='phone'
                     if user_is_customer
-                        +customer_card customer_jpid=customer_jpid                    
-                        
-                        
+                        +lookup_customer
+                        +edit_user_text_field key='customer_jpid' label='Connected Customer JP ID'
+                        +edit_user_text_field key='office_jpid' label='Connected Office JP ID'
+                        if profile.franchisee_jpid
+                            h5 Franchisee: #{franchisee_jpid}
+                        if office_jpid
+                            h5 Office ID: #{office_id}
+                    if user_is_office
+                        +edit_profile_text_field key='office_jpid' label='Connected Office JP ID'
+            .four.wide.column
+                .ui.header Roles
+                each roles
+                    .ui.large.basic.label #{this}
+                if user_is_office
+                    +office_card office_jpid=office_jpid
+                if user_is_customer
+                    +customer_card customer_jpid=customer_jpid
+
+
 template(name='lookup_customer')
     .ui.header Lookup Customer

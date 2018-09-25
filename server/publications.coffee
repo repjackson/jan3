@@ -57,10 +57,13 @@ Meteor.publish 'block_children', (
                     else
                         console.log 'no filter source doc for block id', block_doc_id
                 when "{current_user_customer_name}"
-                    found_customer = Docs.findOne
-                        type:'customer'
-                        "ev.ID":Meteor.user().customer_jpid
-                    found_customer.ev.CUST_NAME
+                    # console.log 'cust name'
+                    if Meteor.user()
+                        found_customer = Docs.findOne
+                            type:'customer'
+                            "ev.ID":Meteor.user().customer_jpid
+                        # console.log found_customer
+                        found_customer.ev.CUST_NAME
                 when "{current_user_office_name}"
                     if Meteor.user()
                         found_office = Docs.findOne
@@ -214,7 +217,7 @@ Meteor.publish 'has_key_value', (key, value)->
 Meteor.publish 'static_office_employees', (office_jpid)->
     office_doc = Docs.findOne "ev.ID":office_jpid
     Meteor.users.find
-        "profile.office_name": office_doc.ev.MASTER_LICENSEE
+        "office_name": office_doc.ev.MASTER_LICENSEE
 
 
 
@@ -255,15 +258,7 @@ Meteor.publish 'user', (username)->
         #     office_jpid:1
 
 Meteor.publish 'user_profile', (user_id)->
-    Meteor.users.find user_id,
-        fields:
-            profile: 1
-            username: 1
-            ev:1
-            published:1
-            customer_jpid:1
-            franchisee_jpid:1
-            office_jpid:1
+    Meteor.users.find user_id
 
 Meteor.publish 'author', (user_id)->
     Meteor.users.find user_id,
@@ -435,7 +430,7 @@ publishComposite 'me', ()->
         #         #     #     #         find: (office)->
         #         #     #     #             # offices users
         #         #     #     #             # Meteor.users.find
-        #         #     #     #             #     "profile.office_name": office.ev.MASTER_OFFICE_NAME
+        #         #     #     #             #     "office_name": office.ev.MASTER_OFFICE_NAME
         #         #     #     #     }
         #         #     #     # ]
         #         #     # }

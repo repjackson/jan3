@@ -6,8 +6,8 @@ template(name='user_view')
                     if is_admin
                         +link_button link='/p/users' icon='groups' label='Users' classes='centered'
                 .eight.wide.center.aligned.column
-                    h1.ui.header 
-                        |#{profile.first_name} #{profile.last_name} 
+                    h1.ui.header
+                        |#{first_name} #{last_name}
                         small @#{username}
                 .four.wide.right.aligned.column
                     if is_dev
@@ -17,8 +17,8 @@ template(name='user_view')
                         i.pencil.icon
             .row
                 .four.wide.column
-                    if profile.image_id
-                        img.ui.medium.image.item(src="{{c.url profile.image_id width=500 height=500 gravity='face' crop='fill'}}")
+                    if image_id
+                        img.ui.medium.image.item(src="{{c.url image_id width=500 height=500 gravity='face' crop='fill'}}")
                     if is_user
                         a.ui.fluid.button(href='/account/settings')
                             i.cog.icon
@@ -28,16 +28,16 @@ template(name='user_view')
                     .ui.list
                         if customer_jpid
                             .item
-                                strong Customer JPID 
+                                strong Customer JPID
                                 | #{customer_jpid}
-                    +user_events                    
+                    +user_events
                     // +users_docs
                 .four.wide.column
                     .ui.secondary.segment
-                        .ui.header 
+                        .ui.header
                             +icon name='contacts'
                             | Contact
-                        .ui.header Phone: #{ev.TELE_CELL} #{profile.phone}
+                        .ui.header Phone: #{ev.TELE_CELL} #{phone}
                         .ui.header Role
                             each roles
                                 .ui.basic.label #{this}
@@ -49,80 +49,80 @@ template(name='user_view')
                         +franchisee_card
                     if office_jpid
                         +office_card
-    
-                
-template(name='user_ev_info')        
+
+
+template(name='user_ev_info')
     .ui.secondary.segment
-        .ui.header 
+        .ui.header
             +icon name='database'
             | ExtraView Info
         .ui.list
             with ev
                 if LOGIN_ID
-                    .item Username: 
+                    .item Username:
                         strong #{LOGIN_ID}
                 if LAST_NAME
-                    .item Last: 
+                    .item Last:
                         strong #{LAST_NAME}
                 if FIRST_NAME
-                    .item First: 
+                    .item First:
                         strong #{FIRST_NAME}
                 if JOB_TITLE
-                    .item Job Title: 
+                    .item Job Title:
                         strong #{JOB_TITLE}
                 if WORK_TELEPHONE
-                    .item Work Tel: 
+                    .item Work Tel:
                         strong #{WORK_TELEPHONE}
                 if HOME_TELEPHONE
-                    .item Home Tel: 
+                    .item Home Tel:
                         strong #{HOME_TELEPHONE}
                 if CELL_PHONE
-                    .item Cell: 
+                    .item Cell:
                         strong #{CELL_PHONE}
                 if COMPANY_NAME
-                    .item Company: 
+                    .item Company:
                         strong #{COMPANY_NAME}
                 if ADDRESS_LINE1
-                    .item Address: 
+                    .item Address:
                         strong #{ADDRESS_LINE1}
                 if ADDRESS_LINE2
-                    .item  
+                    .item
                         strong #{ADDRESS_LINE2}
                 if CITY
-                    .item  
+                    .item
                         strong #{CITY}
                 if STATE
                     .item
                         strong #{STATE}
                 if POSTAL_CODE
-                    .item 
+                    .item
                         strong #{POSTAL_CODE}
                 if COUNTRY
                     .item Country
                         strong #{COUNTRY}
                 if EMAIL
-                    .item Email: 
+                    .item Email:
                         strong #{EMAIL}
                 if TIMEZONE
-                    .item Timezone: 
+                    .item Timezone:
                         strong #{TIMEZONE}
                 if ALPHA_TIMEZONE
-                    .item Alpha Timezone: 
+                    .item Alpha Timezone:
                         strong #{ALPHA_TIMEZONE}
                 if REGION
-                    .item Region: 
+                    .item Region:
                         strong #{REGION}
                 if VARIANT
-                    .item Variant: 
+                    .item Variant:
                         strong #{VARIANT}
                 if AREA_ID
-                    .item Area ID: 
+                    .item Area ID:
                         strong #{AREA_ID}
                 // if EMAIL_ON
-                //     .item EMAIL_ON: 
+                //     .item EMAIL_ON:
                 //         strong #{EMAIL_ON}
                 if LANGUAGE
-                    .item Language: 
+                    .item Language:
                         strong #{LANGUAGE}
 template(name='users_docs')
     .ui.header Users Docs
@@ -134,18 +134,17 @@ template(name='users_docs')
                     td #{title}
                     td
                         +view_button
-                        
-                        
+
+
 template(name='user_events')
     .ui.secondary.segment
-        .ui.header 
+        .ui.header
             +icon name='clock'
             | Events
         .ui.comments
             each user_events
                 +doc_history_event
 
-            
-            
-            
-            
+
+
+
