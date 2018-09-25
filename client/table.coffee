@@ -98,6 +98,8 @@ Template.block.helpers
     current_page: ->
         current_page = Template.instance().page_number.get()
 
+    current_page_size: -> Template.instance().page_size.get()
+
     skip_amount: -> parseInt(Template.instance().skip.get())+1
     end_result: -> Template.instance().skip.get() + 1 + Template.instance().page_size.get()
 

@@ -22,8 +22,8 @@ template(name='event_view')
                             +mark_read_link
                             if is_dev
                                 i.remove_event.remove.link.icon
-                                
-                    
+
+
 template(name='users_feed')
     h1.ui.header
         +icon name='rss'
@@ -31,8 +31,8 @@ template(name='users_feed')
     .ui.comments
         each feed_events
             +doc_history_event
-                        
-                        
+
+
 template(name='users_feed_event')
     .event
         .label
@@ -47,19 +47,8 @@ template(name='users_feed_event')
                 +mark_read_link
                 if is_dev
                     i.remove_event.remove.link.icon
-                    
-                    
-template(name='feed')
-    .ui.header
-        if icon
-            +icon name=icon
-        | #{title}
-    .ui.comments
-        each event_docs
-            +doc_history_event
-                        
-                        
-                        
+
+
 
 template(name='event')
     // .event
@@ -90,7 +79,7 @@ template(name='event')
 
 template(name='full_doc_history')
     .ui.secondary.segment
-        .ui.header 
+        .ui.header
             +icon name='activity-feed'
             |Events
             // if is_admin
@@ -98,7 +87,7 @@ template(name='full_doc_history')
         .ui.comments
             each doc_history_events
                 +doc_history_event
-                
+
 template(name='doc_history_event')
     .comment
         .avatar
@@ -123,15 +112,15 @@ template(name='doc_history_event')
             .actions
                 if is_dev
                     i.remove_event.remove.link.icon
-        
-                
-                
+
+
+
 template(name='small_doc_history')
     // .ui.header History
     .ui.feed
         each doc_history_events
             +small_history_event
-                
+
 template(name='small_history_event')
     .event
         .content
@@ -139,4 +128,27 @@ template(name='small_history_event')
                 |#{action} #{text}
             .summary
                 .date {{long_format timestamp}}
-                
+
+
+
+
+
+template(name='feed')
+    .ui.feed
+        each feed_events
+            +feed_event
+
+template(name='feed_event')
+    .event
+        .label
+            if icon
+                i.icon(class=event_type.icon)
+        .content
+            .summary
+                |#{text} #{action} #{body}
+                a.user #{author.username}
+                .date #{when}
+            .meta
+                a.like Office
+                a.like Ticket
+                a.like Customer

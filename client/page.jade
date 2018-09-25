@@ -93,6 +93,8 @@ template(name='page')
                 .ui.basic.center.aligned.segment
                     h3.ui.header No Page with #{current_page_slug}.
                     #create_page.ui.button Create
+    else
+        .ui.active.loader
 
 
 template(name='page_edit')

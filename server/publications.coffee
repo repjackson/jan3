@@ -1,5 +1,9 @@
-Meteor.publish 'type', (type)->
-    Docs.find {type:type}, limit:100
+Meteor.publish 'type', (type, limit)->
+    if limit
+        limit_val = limit
+    else
+        limit_val = 100
+    Docs.find {type:type}, limit:limit_val
 
 Meteor.publish 'block_children', (
     block_doc_id,

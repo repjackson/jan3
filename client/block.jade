@@ -1,0 +1,308 @@
+template(name='blocks')
+    if editing_mode
+        #add_block.ui.icon.button(title="Add Block")
+            i.plus.icon
+    div
+    each blocks
+        +block
+
+template(name='block')
+    if can_view_block
+        .ui(class=block_class)
+            unless published
+                i.eye.slash.icon
+            .ui.header.title
+                if view_title
+                    if icon
+                        +icon name=icon
+                    |#{title}
+            .active.content(class=body_classes)
+                if view_add_button
+                    .row
+                        .ui.add_block_child.icon.button
+                            i.plus.icon
+                if custom_template
+                    +Template.dynamic template=custom_template
+                else
+                    if header_template
+                        +Template.dynamic template=header_template
+                    if is_cards
+                        .ui.centered.three.stackable.cards
+                            each children
+                                .ui.card
+                                    if title
+                                        .content
+                                            a.grey.header(href="/v/#{_id}")
+                                                if icon
+                                                    +icon name=icon
+                                                |#{title}
+                                    .content
+                                        .ui.list
+                                            each ../fields
+                                                .item
+                                                    if field_template
+                                                        +Template.dynamic template=field_template data=..
+                                                    else
+                                                        | #{child_schema_field_value}
+                                    .content
+                                        each ../actions
+                                            .ui.icon.button(title=title)
+                                                i.icon
+                                                    +icon name=icon
+                    if is_table
+                        if view_table_header
+                            .middle.aligned.row
+                                .ui.middle.aligned.stackable.grid
+                                    .four.wide.column
+                                        +query_input
+                                    if no_query
+                                        .three.wide.column
+                                            .table_stats #{skip_amount}-#{end_result} / #{count_amount}
+                                        .five.wide.column
+                                            span
+                                                unless hide_limit_options
+                                                    // |View
+                                                    // |&nbsp;
+                                                    .ui.inline.dropdown
+                                                        .default.text 10
+                                                        i.dropdown.icon
+                                                        .menu
+                                                            if show_10
+                                                                .item.set_10 10
+                                                            if show_20
+                                                                .item.set_20 20
+                                                            if show_50
+                                                                .item.set_50 50
+                                                            if show_100
+                                                                .item.set_100 100
+
+                                                    |results
+                                        .four.wide.column
+                                            if pages
+                                                .ui.right.floated.pagination.small.menu
+                                                    if show_decrement
+                                                        a.icon.item.decrement_page
+                                                            i.left.chevron.grey.icon
+                                                    .ui.simple.dropdown.item
+                                                        | #{current_page}
+                                                        .menu
+                                                            each pages
+                                                                a.set_page_number.item(class=pagination_item_class) #{number}
+                                                    if show_increment
+                                                        a.icon.item.increment_page
+                                                            i.right.chevron.grey.icon
+
+                        table.ui.striped.selectable.fixed.table
+                            thead
+                                tr
+                                    each th_field_docs
+                                        if visible
+                                            if sortable
+                                                th.sort_by
+                                                    |#{label}
+                                                    if sort_descending
+                                                        i.chevron.down.link.blue.icon
+                                                    else if sort_ascending
+                                                        i.chevron.up.link.blue.icon
+                                                    else
+                                                        i.sort.link.grey.icon
+                                            else
+                                                th
+                                                    |#{label}
+                            tbody
+                                each children
+                                    tr
+                                        each children_field_docs
+                                            if visible
+                                                if display_field_template
+                                                    td(style="overflow:visible;")
+                                                        +Template.dynamic template=display_field_template data=..
+                                                else
+                                                    td(class=table_cell_class) #{child_schema_field_value}
+                                                // td(class=table_cell_class) #{child_schema_field_value}
+
+                            if view_table_footer
+                                +table_footer columns=fields.length doc_type=children_doc_type stat_type=table_stat_type
+                    if is_list
+                        .ui.divided.list
+                            each children
+                                .item
+                                    .ui.list
+                                        each children_field_docs
+                                            if visible
+                                                .item
+                                                    if display_field_template
+                                                        |#{label}
+                                                        |&nbsp;
+                                                        +Template.dynamic template=display_field_template data=..
+                                                    else
+                                                        |#{label}
+                                                        |&nbsp;
+                                                        strong #{child_schema_field_value}
+                    if is_grid
+                        .ui.equal.width.four.column.stackable.grid
+                            each children
+                                .column
+                                    .ui.secondary.segment
+                                        if title
+                                            a.ui.header(href="/p/#{slug}")
+                                                if icon
+                                                    i.icon
+                                                        +icon name=icon
+                                                |#{title}
+                                        .ui.list
+                                            each children_field_docs
+                                                if visible
+                                                    .item
+                                                        if field_template
+                                                            +Template.dynamic template=field_template data=..
+                                                        else
+                                                            | #{child_schema_field_value}
+                    if is_comments
+                        +comments_view children=children
+                    if is_header
+                        .centered.middle.aligned.row
+                            .three.wide.center.aligned.column
+                                if is_admin
+                                    +link_button link='/p/admin' icon='user-shield' label='Admin'
+                            .ten.wide.column
+                                h2.ui.center.aligned.grey.header
+                                    +icon name='code'
+                                    |Dev
+                            .three.wide.right.aligned.column
+                if editing_mode
+                    if can_move_left
+                        i.move_left.chevron.left.circular.link.icon
+                    if can_lower
+                        i.chevron.up.circular.link.circular.icon.lower_block
+                    i.chevron.down.circular.icon.raise_block
+                    if can_move_right
+                        i.move_right.chevron.right.circular.link.icon
+                    .toggle_editing_block.ui.small.circular.icon.button(class=editing_button_class title='Edit Block')
+                        i.pencil.icon
+                if editing_block
+                    +edit_block
+
+template(name='edit_block')
+    .ui.secondary.blue.segment
+        h3.ui.header
+            +icon name=icon
+            |Edit '#{title}' Block
+        .ui.top.attached.tabular.stackable.menu
+            a.ui.icon.item.tab_nav(data-tab='general' title='General')
+                i.pencil.icon
+            a.ui.item.tab_nav(data-tab='filter' title='Filter')
+                i.filter.icon
+            a.ui.item.tab_nav(data-tab='schema' title='Schema')
+                i.fork.icon
+            a.ui.item.tab_nav(data-tab='display' title='Display')
+                i.th.list.icon
+            a.ui.item.active.tab_nav(data-tab='fields' title='Fields')
+                i.list.ui.icon
+        .ui.bottom.attached.segment.tab(data-tab='general')
+            i.remove_block.remove.link.icon(title='remove block')
+            +toggle_boolean key='published' yes_label='Published'
+            +toggle_boolean key='view_title' yes_label='Title'
+            +toggle_boolean key='view_add_button' yes_label='Add Button'
+            .ui.form
+                +edit_block_text_field label='Title' key='title'
+                +edit_block_text_field label='Icon' key='icon'
+                +edit_block_text_field label='Block Classes' key='block_classes'
+                +edit_block_text_field label='Body Classes' key='body_classes'
+                +edit_block_text_field label='Slug' key='slug'
+                +edit_block_number_field key='rank' label='Vertical Rank'
+                +edit_block_text_field label='Parent Slug' key='parent_slug'
+                +edit_block_text_field label='Header Template' key='header_template'
+                +edit_block_text_field label='Custom Template' key='custom_template'
+            h5 block id #{_id}
+        .ui.bottom.attached.segment.tab(data-tab='filter')
+            .ui.form
+                +edit_block_number_field label='Hard Limit' key='hard_limit'
+                +edit_block_number_field label='Soft Limit' key='limit'
+                +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
+                +set_key_value key='filter_status' value="" label='All'
+                div Source
+                +set_key_value key='filter_source' value='{page_slug}' label='Page Slug'
+                +set_key_value key='filter_source' value='{doc_id}' label='Doc ID'
+                +set_key_value key='filter_source' value='{current_user}' label='Current User'
+                +toggle_boolean key='filter_key_ev_subset' yes_label='Filter Key EV'
+                div
+                +edit_block_text_field label='Parent Key' key='filter_key'
+                +set_key_value key='filter_key' value='_id' label='_id'
+                +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
+                +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
+                +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
+                +set_key_value key='filter_key' value='office_jpid' label='office_jpid'
+                +set_key_value key='filter_key' value='customer_jpid' label='customer_jpid'
+                +set_key_value key='filter_key' value='franchisee_jpid' label='franchisee_jpid'
+                div
+                +edit_block_text_field label='Filter Value' key='filter_value'
+                +set_key_value key='filter_value' value='{source_key}' label='Source Key'
+                +set_key_value key='filter_value' value=true label='true'
+                +set_key_value key='filter_value' value=false label='false'
+                div
+                h5 Calculated Filter Value
+                div
+                i.user.icon
+                +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
+                +set_key_value key='filter_value' value='{current_user_customer_jpid}' label='Current User Customer JPID'
+                +set_key_value key='filter_value' value='{current_user_office_jpid}' label='Current User Office JPID'
+                +set_key_value key='filter_value' value='{current_user_office_name}' label='Current User Office Name'
+                +set_key_value key='filter_value' value='{current_user_franchisee_jpid}' label='Current User Franchisee JPID'
+                +set_key_value key='filter_value' value='{current_user_franchisee_name}' label='Current User Franchisee Name'
+                div
+                i.clone.icon
+                +set_key_value key='filter_value' value='{current_page_customer_name}' label='Current Page Customer Name'
+                +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
+                +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
+                +set_key_value key='filter_value' value='{current_page_jpid}' label='Current Page JPID'
+
+                div
+                +edit_block_text_field key='filter_source_key' label='Filter Source Key'
+        .ui.bottom.attached.segment.tab(data-tab='schema')
+            each collections
+                +set_key_value_2 key='children_collection' value=slug label=title icon=icon
+            div
+            each schemas
+                +set_key_value_2 key='children_doc_type' value=slug label=title icon=icon
+            .ui.header Stat Type
+            +set_key_value key='table_stat_type' value='total' label='Total'
+            +set_key_value key='table_stat_type' value='office' label='Office'
+        .ui.bottom.attached.segment.tab(data-tab='display')
+            each views
+                +set_key_value_2 key='view' value=slug label=title icon=icon
+            +toggle_boolean key='view_table_header' yes_label='Table Header' no_label='No Table Header'
+            if view_table_header
+                +toggle_boolean key='hide_limit_options' yes_label='Hide Page Size Options' no_label='Page Size Options'
+            .ui.form
+                +edit_block_text_field key='default_sort_key' label='Default Sort Key'
+            +set_key_value key='default_sort_direction' value='-1' label='-1'
+            +set_key_value key='default_sort_direction' value='1' label='1'
+            div
+            +set_key_value key='horizontal_position' value='left' label='left' icon='sort-left'
+            +set_key_value key='horizontal_position' value='center' label='center' icon='sort-down'
+            +set_key_value key='horizontal_position' value='right' label='right' icon='sort-right'
+        .ui.bottom.attached.segment.active.tab(data-tab='fields')
+            .add_field_doc(title='Add Blank Field')
+                +icon name='add-row'
+            strong Schema Fields
+            each schema_doc.fields
+                if show_schema_field
+                    .add_schema_field.ui.compact.button #{title}
+            table.ui.striped.fixed.table
+                thead
+                    tr
+                        each display_field_schema.fields
+                            th #{title}
+                        th Remove
+                tbody
+                    each field_docs
+                        tr
+                            each display_field_schema.fields
+                                td
+                                    if field_template
+                                        +Template.dynamic template=field_template
+                                    else
+                                        | #{display_field_value}
+                            td
+                                +delete_button

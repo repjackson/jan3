@@ -13,7 +13,7 @@
     "divider": true,
     "dropdown": true,
     "embed": false,
-    "feed": false,
+    "feed": true,
     "flag": false,
     "form": true,
     "grid": true,
