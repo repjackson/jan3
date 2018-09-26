@@ -255,11 +255,6 @@ Template.edit_boolean.helpers
 
 
 
-
-
-
-
-
 Template.edit_page_text_field.events
     'change .text_field': (e,t)->
         text_value = e.currentTarget.value
@@ -376,26 +371,7 @@ Template.edit_array_field.helpers
     #         ]
     # }
 
-Template.cell_text_edit.onCreated ->
-    @editing_mode = new ReactiveVar false
 
-Template.cell_text_edit.helpers
-    editing_cell: -> Template.instance().editing_mode.get()
-
-    cell_value: ->
-        cell_object = Template.parentData(3)
-        @["#{cell_object.key}"]
-
-Template.cell_text_edit.events
-    'click .edit_field': (e,t)-> t.editing_mode.set true
-    'click .save_field': (e,t)-> t.editing_mode.set false
-
-    'change .cell_val': (e,t)->
-        cell_object = Template.parentData(3)
-
-        text_value = e.currentTarget.value
-        Docs.update @_id,
-            { $set: "#{cell_object.key}": text_value }
 
 
 

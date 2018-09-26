@@ -46,7 +46,6 @@ template(name='dev')
                     a(href='/p/#{slug}') go
 
 
-
 template(name='page')
     if Template.subscriptionsReady
         if page_doc
@@ -100,14 +99,13 @@ template(name='page')
 template(name='page_edit')
     with page_doc
         .ui.fluid.secondary.segment.editing_segment.accordion
-            .ui.header.title
+            .title
                 a(href='/p/pages' title='Admin Pages')
                     i.clone.link.icon
-                if icon
-                    +icon name=icon
-                |Edit '#{title}' Page
+                |Edit '#{title}'
                 i.dropdown.icon
             .content
+                i#add_block.plus.circular.link.icon
                 .ui.form
                     .fields
                         +edit_page_text_field key='title' label='Title'

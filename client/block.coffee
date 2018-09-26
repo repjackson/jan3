@@ -1,4 +1,4 @@
-Template.blocks.events
+Template.page_edit.events
     'click #add_block': (e,t)->
         # if @tags and typeof @tags is 'string'
         #     split_tags = @tags.split ','

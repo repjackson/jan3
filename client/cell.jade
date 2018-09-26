@@ -1,0 +1,21 @@
+template(name='cell_boolean')
+    if is_true
+        #turn_off.ui.primary.compact.icon.button
+            i.checkmark.icon
+    else
+        #turn_on.ui.compact.icon.button
+            i.circle.outline.icon
+
+
+
+template(name='cell_text_edit')
+    if editing_cell
+        .ui.fluid.icon.input
+            input.cell_val(type='text' value=cell_value )
+            i.save_field.link.checkmark.icon
+    else
+        |#{cell_value}
+        &nbsp;
+        if editing_mode
+            i.edit_field.link.small.pencil.icon
+
