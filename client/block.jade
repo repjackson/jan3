@@ -53,7 +53,8 @@ template(name='block')
                             .middle.aligned.row
                                 .ui.middle.aligned.stackable.grid
                                     .four.wide.column
-                                        +query_input
+                                        unless hide_search
+                                            +query_input
                                     if no_query
                                         .three.wide.column
                                             .table_stats #{skip_amount}-#{end_result} / #{count_amount}
@@ -273,6 +274,7 @@ template(name='edit_block')
             +toggle_boolean key='view_table_header' yes_label='Table Header' no_label='No Table Header'
             if view_table_header
                 +toggle_boolean key='hide_limit_options' yes_label='Hide Page Size Options' no_label='Page Size Options'
+                +toggle_boolean key='hide_search' yes_label='Hide Search' no_label='Hide Search'
             .ui.form
                 +edit_block_text_field key='default_sort_key' label='Default Sort Key'
             +set_key_value key='default_sort_direction' value='-1' label='-1'

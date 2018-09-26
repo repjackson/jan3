@@ -105,7 +105,6 @@ template(name='page_edit')
                 |Edit '#{title}'
                 i.dropdown.icon
             .content
-                i#add_block.plus.circular.link.icon
                 .ui.form
                     .fields
                         +edit_page_text_field key='title' label='Title'
@@ -115,6 +114,9 @@ template(name='page_edit')
                         if show_header
                             +edit_page_text_field key='header_template' label='Header Template'
                 // +edit_array_field key='tags'
+                #add_block.ui.compact.button
+                    i.plus.icon
+                    | Block
                 +toggle_boolean key='show_header' yes_label='Header' icon='ellipsis horizontal'
                 +toggle_boolean key='admin_nav' yes_label='Admin Nav' icon='user shield'
                 +toggle_boolean key='office_nav' yes_label='Office Nav' icon='building'

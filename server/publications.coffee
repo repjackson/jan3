@@ -129,12 +129,37 @@ Meteor.publish 'block_children', (
         if -1 > limit > 100
             limit = 100
         # console.log 'match', match
+
+
+        # theme_tag_cloud = Docs.aggregate [
+        #     { $match: match }
+        #     { $project: tags: 1 }
+        #     { $unwind: "$tags" }
+        #     { $group: _id: '$tags', count: $sum: 1 }
+        #     { $match: _id: $nin: selected_tags }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $limit: 20 }
+        #     { $project: _id: 0, name: '$_id', count: 1 }
+        #     ]
+        # # console.log 'theme theme_tag_cloud, ', theme_tag_cloud
+        # theme_tag_cloud.forEach (tag, i) ->
+        #     self.added 'tags', Random.id(),
+        #         name: tag.name
+        #         count: tag.count
+        #         index: i
+
+
         if block.children_collection is 'users'
-            Meteor.users.find match,{
+            console.log 'users'
+            console.log 'match', match
+            console.log 'sort key', sort_key
+            cursor = Meteor.users.find match,{
                 skip: skip
                 limit:limit
                 sort:"#{sort_key}":parseInt("#{sort_direction}")
             }
+            console.log 'count', cursor.count()
+            cursor
 
         else
             Docs.find match,{

@@ -7,8 +7,17 @@ template(name='user_view')
                         +link_button link='/p/users' icon='groups' label='Users' classes='centered'
                 .eight.wide.center.aligned.column
                     h1.ui.header
-                        |#{first_name} #{last_name}
-                        small @#{username}
+                        if ev.FIRST_NAME
+                            |#{ev.FIRST_NAME}
+                        if ev.LAST_NAME
+                            |#{ev.LAST_NAME}
+                        else
+                            |#{first_name} #{last_name}
+                        small @
+                            if ev.USERNAME
+                                |#{ev.USERNAME}
+                            else
+                                |#{username}
                 .four.wide.right.aligned.column
                     if is_dev
                         .get_user_info.ui.icon.button(title='Refresh User Info')

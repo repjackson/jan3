@@ -108,16 +108,20 @@ Template.login.helpers
 
 
 
+Template.register_customer.onCreated ->
+    @autorun =>  Meteor.subscribe 'doc_by_jpid', Session.get('customer_jpid')
+    @autorun =>  Meteor.subscribe 'doc_by_jpid', Session.get('office_jpid')
+    @registering = new ReactiveVar false
+    @can_register = new ReactiveVar false
+
 Template.register_customer.onRendered ->
     Session.setDefault 'customer_jpid', null
     Session.setDefault 'account_selected', false
 
-Template.register_customer.onCreated ->
-    @autorun =>  Meteor.subscribe 'doc_by_jpid', Session.get('customer_jpid')
-    @autorun =>  Meteor.subscribe 'doc_by_jpid', Session.get('office_jpid')
-
-
 Template.register_customer.helpers
+    register_button_class: ->
+        if Template.instance().registering.get() is true then 'loading disabled' else ''
+
     customer_doc: ->
         doc =
             Docs.findOne
@@ -146,11 +150,9 @@ Template.register_customer.helpers
         password_two = Session.get 'password_two'
         if password_one.length and password_one is password_two then true else false
 
-    can_submit: ->
-        true
-        # # password_two = Session.get 'password_two'
-        # session_customer_jpid = Session.get 'customer_jpid'
-        # if Session.get('session_username') and Session.get('session_password_one') and Session.get('session_email') and Session.get('session_customer_jpid') then true else false
+    can_register: ->
+        Template.instance().can_register.get()
+
 
 Template.register_customer.events
     'click #register': (e,t)->
@@ -179,19 +181,23 @@ Template.register_customer.events
         Accounts.createUser(options, (err,res)=>
             if err
                 alert err
-            # Meteor.call 'refresh_customer_jpids', username
-            FlowRouter.go '/p/customer_dashboard'
-            # if current_role is 'customer'
-            #     Meteor.call 'refresh_customer_jpids', user.username
-            # if current_role is 'office'
-            #     office_doc =
-            #         Docs.findOne
-            #             type:'office'
-            #             "ev.ID": office_jpid
+            else
+                FlowRouter.go '/p/customer_dashboard'
+                Docs.insert
+                    type:'message'
+                    username:options.username
+                    text: "#{options.username} Customer registered to JPID #{options.customer_jpid}"
+                # if current_role is 'customer'
+                #     Meteor.call 'refresh_customer_jpids', user.username
+                # if current_role is 'office'
+                #     office_doc =
+                #         Docs.findOne
+                #             type:'office'
+                #             "ev.ID": office_jpid
         )
 
     'keyup #username': (e,t)->
-        username = $('#username').val()
+        username = $('#username').val().trim()
         Session.set 'session_username', username
         Meteor.call 'check_username', username, (err, res)->
             if err then console.error err
@@ -222,7 +228,7 @@ Template.register_customer.events
         Session.set 'session_password_two', password_one
 
     'keyup #customer_jpid': (e,t)->
-        customer_jpid = $('#customer_jpid').val()
+        customer_jpid = $('#customer_jpid').val().trim()
         Meteor.call 'find_customer_by_jpid', customer_jpid, (err,res)->
             if err
                 Session.set 'jpid_lookup_status', err.error
@@ -230,6 +236,7 @@ Template.register_customer.events
                 Session.set 'account_selected', true
                 Session.set 'customer_jpid', res.ev.ID
                 Session.set 'jpid_lookup_status', "Found JPID #{customer_jpid}."
+                t.can_register.set true
                 Meteor.call 'find_franchisee_from_customer_jpid', customer_jpid, (err,res)=>
                     if err then console.error err
                     else
@@ -268,16 +275,12 @@ Template.register_office.helpers
                 # "ev.ID": Session.get('office_jpid')
         doc
 
-
     jpid_lookup_status: -> Session.get 'jpid_lookup_status'
-
     account_selected:  -> Session.get 'account_selected'
-
     passwords_match: ->
         password_one = Session.get 'password_one'
         password_two = Session.get 'password_two'
         if password_one.length and password_one is password_two then true else false
-
     can_submit: ->
         true
         # # password_two = Session.get 'password_two'

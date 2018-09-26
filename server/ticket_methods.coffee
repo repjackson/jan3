@@ -265,7 +265,7 @@ Meteor.methods
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
-                event_type:'emailed_owner'
+                event_type:'email_owner'
                 text:"Email sent to owner #{sla.ticket_owner} after ticket submission."
             Docs.insert
                 type:'message'
@@ -286,7 +286,7 @@ Meteor.methods
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
-                event_type:'emailed_secondary_contact'
+                event_type:'email_secondary'
                 text:"Email sent to secondary contact #{sla.secondary_contact} after ticket submission."
 
         if sla.sms_secondary
@@ -316,7 +316,7 @@ Meteor.methods
                 Docs.insert
                     type:'event'
                     parent_id:ticket_id
-                    event_type:'emailed_franchisee_contact'
+                    event_type:'email_franchisee'
                     text:"Email sent to franchisee #{franchisee.ev.FRANCHISEE} after ticket submission."
 
         if sla.contact_customer
@@ -330,7 +330,7 @@ Meteor.methods
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
-                event_type:'emailed_customer_contact'
+                event_type:'email_customer'
                 text:"Email sent to customer #{customer.ev.CUST_NAME} after ticket submission."
 
         Meteor.call 'send_email', mail_fields
@@ -421,7 +421,7 @@ Meteor.methods
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
-                event_type:'emailed_ticket_owner'
+                event_type:'email_owner'
                 text:"#{sla.ticket_owner} emailed as the ticket owner for a '#{ticket_type.title}' escalation to level #{ticket.level}."
             Docs.insert
                 type:'message'
@@ -464,7 +464,7 @@ Meteor.methods
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
-                event_type: 'emailed_franchisee'
+                event_type: 'email_franchisee'
                 text: "Email sent to franchisee #{franchisee.ev.FRANCHISEE} for a '#{ticket_type.title}' escalation to level #{ticket.level}."
             Docs.insert
                 type:'message'
@@ -485,7 +485,7 @@ Meteor.methods
             Docs.insert
                 type:'event'
                 parent_id:ticket_id
-                event_type: 'emailed_customer'
+                event_type: 'email_customer'
                 text:"#{customer.ev.CUST_NAME} a '#{ticket_type.title}' ticket escalated to level #{ticket.level}."
 
         Meteor.call 'send_email', mail_fields

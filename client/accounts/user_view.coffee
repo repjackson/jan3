@@ -6,7 +6,7 @@ FlowRouter.route '/user/:username',
 
 
 Template.user_view.onCreated ->
-    @autorun -> Meteor.subscribe 'user_profile', FlowRouter.getParam('username')
+    @autorun -> Meteor.subscribe 'user', FlowRouter.getParam('username')
 
 Template.users_docs.onCreated ->
     @autorun -> Meteor.subscribe 'users_docs', FlowRouter.getParam('username')

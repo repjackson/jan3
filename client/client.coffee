@@ -60,6 +60,12 @@ Template.registerHelper 'overdue', () ->
 
 
 
+Template.registerHelper 'cell_value', () ->
+    cell_object = Template.parentData(3)
+    @["#{cell_object.key}"]
+
+
+
 Template.registerHelper 'active_route', (slug) ->
     if FlowRouter.getParam('page_slug') and FlowRouter.getParam('page_slug') is slug then 'active' else ''
 

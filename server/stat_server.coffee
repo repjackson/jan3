@@ -3,7 +3,7 @@ Meteor.publish 'stats', ->
 
 # Meteor.publish 'stat', (doc_type, stat_type)->
 Meteor.publish 'stat', (match_object)->
-    console.log 'match_object', match_object
+    # console.log 'match_object', match_object
     Meteor.call 'calculate_stat', match_object
     Stats.find match_object, limit:100
 

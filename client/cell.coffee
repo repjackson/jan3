@@ -24,9 +24,6 @@ Template.cell_text_edit.onCreated ->
 Template.cell_text_edit.helpers
     editing_cell: -> Template.instance().editing_mode.get()
 
-    cell_value: ->
-        cell_object = Template.parentData(3)
-        @["#{cell_object.key}"]
 
 Template.cell_text_edit.events
     'click .edit_field': (e,t)-> t.editing_mode.set true
@@ -39,3 +36,21 @@ Template.cell_text_edit.events
         Docs.update @_id,
             { $set: "#{cell_object.key}": text_value }
 
+
+
+Template.cell_date.events
+    'blur #date_field': (e,t)->
+        date_value = e.currentTarget.value
+        cell_object = Template.parentData(3)
+
+        Docs.update @_id,
+            { $set: "#{cell_object.key}": date_value }
+
+
+
+Template.cell_number.events
+    'change #number_field': (e,t)->
+        number_value = parseInt e.currentTarget.value
+        cell_object = Template.parentData(3)
+        Docs.update @_id,
+            { $set: "#{cell_object.key}": number_value }

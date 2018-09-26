@@ -19,3 +19,17 @@ template(name='cell_text_edit')
         if editing_mode
             i.edit_field.link.small.pencil.icon
 
+
+
+template(name='cell_number')
+    .ui.fluid.input
+        input#cell_number(type='number' min='0' value=cell_value)
+
+
+
+
+template(name='cell_date')
+    .ui.icon.fluid.input
+        input#date_field(type='date' value=cell_value)
+
+
