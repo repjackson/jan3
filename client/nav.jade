@@ -21,12 +21,13 @@ template(name='nav')
                     .mobile.hidden &nbsp; #{title}
         .right.menu
             if is_dev
-                if editing_mode
-                    #toggle_editing.icon.active.large.item
-                        i.teal.pencil.link.bordered.icon
-                else
-                    #toggle_editing.icon.large.item
-                        i.pencil.link.bordered.icon
+                .mobile.only
+                    if editing_mode
+                        #toggle_editing.icon.active.large.item
+                            i.teal.pencil.link.bordered.icon
+                    else
+                        #toggle_editing.icon.large.item
+                            i.pencil.link.bordered.icon
                 a.icon.item(href='/p/schemas' data-content='Schemas' class="{{ active_route 'schemas' }}" )
                     i.database.icon
             if currentUser

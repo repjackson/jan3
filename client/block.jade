@@ -1,7 +1,7 @@
 template(name='blocks')
     if editing_mode
-        #add_block.ui.icon.button(title="Add Block")
-            i.plus.icon
+        #add_block.ui.icon.circular.button(title="Add Block")
+            i.teal.plus.icon
     div
     each blocks
         +block
@@ -18,9 +18,8 @@ template(name='block')
                     |#{title}
             .active.content(class=body_classes)
                 if view_add_button
-                    .row
-                        .ui.add_block_child.icon.button
-                            i.plus.icon
+                    .ui.add_block_child.icon.button
+                        i.plus.icon
                 if custom_template
                     +Template.dynamic template=custom_template
                 else

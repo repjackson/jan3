@@ -25,8 +25,17 @@ FlowRouter.route('/', {
 })
 
 
+globalHotkeys = new Hotkeys()
+globalHotkeys.add
+	combo : "ctrl+shift+e"
+	eventType: "keydown"
+	callback : ()->
+	    if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles
+            Session.set('editing_mode',!Session.get('editing_mode'))
+
+
+
 Session.setDefault('query',null)
-Session.setDefault('dev_mode',false)
 
 if Meteor.isDevelopment
     Session.setDefault('editing_mode',true)

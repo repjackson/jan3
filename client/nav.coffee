@@ -87,9 +87,6 @@ Template.nav.events
             else
                 FlowRouter.go "/p/submit_ticket?doc_id=#{res}"
 
-
-    'click #toggle_dev': ->
-        Session.set('dev_mode',!Session.get('dev_mode'))
     'click #toggle_editing': ->
         Session.set('editing_mode',!Session.get('editing_mode'))
 

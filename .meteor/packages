@@ -41,3 +41,4 @@ modules@0.12.2
 meteorhacks:ssr
 lepozepo:cloudinary
 juliancwirko:postcss@=1.2.0
+flowkey:hotkeys
