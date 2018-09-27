@@ -64,9 +64,9 @@ template(name='table_header')
 
 template(name='status_template')
     if open
-        +icon name='unchecked-checkbox' title='Open'
+        +icon name='inactive-state' title='Open'
     else
-        +icon name='checked-checkbox' title='Closed'
+        +icon name='ok' title='Closed'
 
 template(name='submitted_template')
     if submitted

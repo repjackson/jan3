@@ -206,6 +206,9 @@ Template.assignment_widget.events
             Meteor.call 'unassign_user', page_doc._id, @
 
 Template.assignment_widget.helpers
+    ticket_assignment_timestamp: ->
+        parent_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        parent_doc.assignment_timestamp
     user_results: ->
         user_results = Template.instance().user_results.get()
         user_results

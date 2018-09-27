@@ -189,17 +189,18 @@ template(name='edit_block')
             +icon name=icon
             |Edit '#{title}' Block
         .ui.top.attached.tabular.stackable.menu
-            a.ui.icon.item.tab_nav(data-tab='general' title='General')
+            a.ui.icon.active.item.tab_nav(data-tab='general' title='General')
                 i.pencil.icon
-            a.ui.item.tab_nav(data-tab='filter' title='Filter')
-                i.filter.icon
-            a.ui.item.tab_nav(data-tab='schema' title='Schema')
-                i.fork.icon
-            a.ui.item.tab_nav(data-tab='display' title='Display')
-                i.th.list.icon
-            a.ui.item.active.tab_nav(data-tab='fields' title='Fields')
-                i.list.ui.icon
-        .ui.bottom.attached.segment.tab(data-tab='general')
+            unless custom_template
+                a.ui.item.tab_nav(data-tab='filter' title='Filter')
+                    i.filter.icon
+                a.ui.item.tab_nav(data-tab='schema' title='Schema')
+                    i.fork.icon
+                a.ui.item.tab_nav(data-tab='display' title='Display')
+                    i.th.list.icon
+                a.ui.item.tab_nav(data-tab='fields' title='Fields')
+                    i.list.ui.icon
+        .ui.bottom.attached.segment.active.tab(data-tab='general')
             i.remove_block.remove.link.icon(title='remove block')
             +toggle_boolean key='published' yes_label='Published'
             +toggle_boolean key='view_title' yes_label='Title'
@@ -283,7 +284,7 @@ template(name='edit_block')
             +set_key_value key='horizontal_position' value='left' label='left' icon='sort-left'
             +set_key_value key='horizontal_position' value='center' label='center' icon='sort-down'
             +set_key_value key='horizontal_position' value='right' label='right' icon='sort-right'
-        .ui.bottom.attached.segment.active.tab(data-tab='fields')
+        .ui.bottom.attached.segment.tab(data-tab='fields')
             .add_field_doc(title='Add Blank Field')
                 +icon name='add-row'
             strong Schema Fields

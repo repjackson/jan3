@@ -295,8 +295,8 @@ template(name='view_single_user_key')
 
 
 template(name='assignment_widget')
-    p Last Assigned {{ long_format assignment_timestamp }}
-    p {{ from_now assignment_timestamp }}
+    p Last Assigned {{ long_format ticket_assignment_timestamp }}
+    p {{ from_now ticket_assignment_timestamp }}
     // if overdue
     //     |overdue
     // else
@@ -322,13 +322,13 @@ template(name='assignment_widget')
                 each assigned_users
                     .item
                         .right.floated.content
-                            i.pull_user.remove.red.link.icon
+                            i.pull_user.remove.link.icon
                         .image
                             img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
                         .content
                             h4.ui.header
                                 |#{first_name} #{last_name}
-                                | @#{username}
+                                small @#{username}
 
 
 template(name='edit_block_text_field')
@@ -404,8 +404,8 @@ template(name='view_ticket_link')
 template(name='ticket_status')
     with page_context
         .ui.header
-            |Status
             +status_template
+            |Status
         if open
             .close.ui.button
                 +iconsmall name='checkmark'

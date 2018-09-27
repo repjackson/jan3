@@ -90,7 +90,9 @@ Template.registerHelper 'databank_docs': ->
 
 
 Template.registerHelper 'from_now', (input) -> moment(input).fromNow()
-Template.registerHelper 'long_format', (input) -> moment(input).format('MMMM Do h:mma')
+Template.registerHelper 'long_format', (input) ->
+    if input
+        moment(input).format('MMMM Do h:mma')
 
 Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getQueryParam('doc_id')
 
