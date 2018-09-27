@@ -70,32 +70,32 @@ Template.submit_ticket.events
         Meteor.call 'submit_ticket', doc_id, (err,res)->
 
 
-Template.sla_tester.onCreated ->
-    @autorun =>  Meteor.subscribe 'ticket_sla_docs', FlowRouter.getQueryParam('doc_id')
-    @autorun =>  Meteor.subscribe 'office_employees_from_ticket_doc_id', FlowRouter.getQueryParam('doc_id')
-Template.sla_tester.events
-    'click .check_escalation': ->
-        Meteor.call 'single_escalation_check', FlowRouter.getQueryParam('doc_id')
+# Template.sla_tester.onCreated ->
+#     @autorun =>  Meteor.subscribe 'ticket_sla_docs', FlowRouter.getQueryParam('doc_id')
+#     @autorun =>  Meteor.subscribe 'office_employees_from_ticket_doc_id', FlowRouter.getQueryParam('doc_id')
+# Template.sla_tester.events
+#     'click .check_escalation': ->
+#         Meteor.call 'single_escalation_check', FlowRouter.getQueryParam('doc_id')
 
-    'click .escalate_ticket': ->
-        Meteor.call 'escalate_ticket', FlowRouter.getQueryParam('doc_id')
+#     'click .escalate_ticket': ->
+#         Meteor.call 'escalate_ticket', FlowRouter.getQueryParam('doc_id')
 
-    'click .set_level': (e,t)->
-        doc_id = FlowRouter.getQueryParam('doc_id')
-        ticket = Docs.findOne doc_id
-        type = ticket.ticket_type
-        Docs.update doc_id,
-            $set: level: @escalation_number
+#     'click .set_level': (e,t)->
+#         doc_id = FlowRouter.getQueryParam('doc_id')
+#         ticket = Docs.findOne doc_id
+#         type = ticket.ticket_type
+#         Docs.update doc_id,
+#             $set: level: @escalation_number
 
-Template.sla_tester.helpers
-    sla_docs: ->
-        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        if ticket
-            Docs.find {
-                type:'sla_setting'
-                office_jpid:ticket.office_jpid
-                ticket_type:ticket.ticket_type
-                }, sort:escalation_number:1
+# Template.sla_tester.helpers
+#     sla_docs: ->
+#         ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
+#         if ticket
+#             Docs.find {
+#                 type:'sla_setting'
+#                 office_jpid:ticket.office_jpid
+#                 ticket_type:ticket.ticket_type
+#                 }, sort:escalation_number:1
 
 Template.view_sla_contact.helpers
     user_ob: ->

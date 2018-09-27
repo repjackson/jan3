@@ -8,7 +8,8 @@ template(name='author_info')
     // .ui.sub.header #{when}
 
 template(name='when_template')
-    |#{when}
+    div(title="{{ long_format timestamp }}")
+        |#{when}
 
 template(name='last_updated_template')
     |{{ long_format last_updated_datetime }}
@@ -369,9 +370,10 @@ template(name='ticket_status')
             .finish_closing.ui.fluid.jpgreen.inverted.button
                 |Submit
         unless open
-            strong Closed {{ long_format close_timestamp }} by #{close_author} with note:
-            p
-            p #{close_details}
+            if close_timestamp
+                strong Closed {{ long_format close_timestamp }} by #{close_author} with note:
+                p
+                p #{close_details}
         unless open
             if editing_mode
                 i.reopen.link.undo.icon(title='Reopen')

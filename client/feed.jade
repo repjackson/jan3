@@ -99,18 +99,18 @@ template(name='doc_history_event')
         .content
             if show_author
                 a.user #{author.username}
+            .text #{action} #{text}
             .metadata
-                .date {{ long_format timestamp }}
-                .rating(title='Event Type') #{event_type}
-                .date #{when}
+                // .date {{ long_format timestamp }}
+                .date(title="{{ long_format timestamp }}") #{when}
                 if editing_mode
+                    .rating(title='Event Type') #{event_type}
                     .id #{parent_id}
                 // i.building.icon(title='Office')
                 // i.money.icon(title='Customer')
                 // i.user.icon(title='Author')
-            .text #{action} #{text}
             .actions
-                if is_dev
+                if editing_mode
                     i.remove_event.remove.link.icon
 
 

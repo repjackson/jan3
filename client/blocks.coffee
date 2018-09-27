@@ -329,10 +329,11 @@ Template.ticket_status.events
         t.is_closing.set(!t.is_closing.get())
 
     'click .finish_closing': (e,t)->
-        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        ticket_id = FlowRouter.getQueryParam('doc_id')
+        ticket = Docs.findOne ticket_id
 
         details_val = t.$('#close_details').val()
-        Docs.update FlowRouter.getQueryParam('doc_id'),
+        Docs.update ticket_id,
             $set:
                 open:false
                 close_timestamp: Date.now()
@@ -340,14 +341,20 @@ Template.ticket_status.events
                 close_author: Meteor.user().username
         Docs.insert
             type:'event'
-            parent_id: FlowRouter.getQueryParam('doc_id')
+            parent_id: ticket_id
             event_type:'ticket_close'
             text:"#{Meteor.user().username} closed ticket with note: #{details_val}"
+            ticket_id: ticket_id
+            office_jpid: ticket.office_jpid
+            customer_jpid: ticket.customer_jpid
         Docs.insert
             type:'event'
-            parent_id: FlowRouter.getQueryParam('doc_id')
+            parent_id: ticket_id
             event_type:'emailed_customer_contact'
             text:"Customer '#{ticket.customer_name}' emailed about ticket close."
+            ticket_id: ticket_id
+            office_jpid: ticket.office_jpid
+            customer_jpid: ticket.customer_jpid
         t.is_closing.set false
 
 

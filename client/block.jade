@@ -186,7 +186,8 @@ template(name='block')
 template(name='edit_block')
     .ui.secondary.blue.segment
         h3.ui.header
-            +icon name=icon
+            if icon
+                +icon name=icon
             |Edit '#{title}' Block
         .ui.top.attached.tabular.stackable.menu
             a.ui.icon.active.item.tab_nav(data-tab='general' title='General')

@@ -40,35 +40,35 @@ template(name='submit_ticket')
 
 
 
-template(name='sla_tester')
-    .ui.small.icon.check_escalation.button(title='Manually Check Escalation')
-        i.refresh.link.icon
-    .ui.small.icon.escalate_ticket.button(title='Manually Escalate')
-        i.sort.numeric.down.link.icon
-    each sla_docs
-        strong Level #{escalation_number}
-            span(title='Escalation Hours') (#{escalation_hours} hours)
-        .ui.small.icon.set_level.button(title="Set level to #{escalation_number}")
-            i.link.left.arrow.icon
-        .ui.secondary.segment
-            | Owner
-            +view_sla_contact username=ticket_owner
-            if contact_customer
-                i.money.icon(title='Contact Customer')
-            if contact_franchisee
-                i.truck.icon(title='Contact Franchisee')
-            if email_owner
-                i.mail.icon(title='Email Owner')
-            if sms_owner
-                i.phone.icon(title='SMS Owner')
-        .ui.secondary.segment
-            |Secondary
-            +view_sla_contact username=secondary_contact
-            if email_secondary
-                i.mail.icon(title='Email secondary')
-            if sms_secondary
-                i.phone.icon(title='SMS secondary')
-        .ui.divider
+// template(name='sla_tester')
+//     .ui.small.icon.check_escalation.button(title='Manually Check Escalation')
+//         i.refresh.link.icon
+//     .ui.small.icon.escalate_ticket.button(title='Manually Escalate')
+//         i.sort.numeric.down.link.icon
+//     each sla_docs
+//         strong Level #{escalation_number}
+//             span(title='Escalation Hours') (#{escalation_hours} hours)
+//         .ui.small.icon.set_level.button(title="Set level to #{escalation_number}")
+//             i.link.left.arrow.icon
+//         .ui.secondary.segment
+//             | Owner
+//             +view_sla_contact username=ticket_owner
+//             if contact_customer
+//                 i.money.icon(title='Contact Customer')
+//             if contact_franchisee
+//                 i.truck.icon(title='Contact Franchisee')
+//             if email_owner
+//                 i.mail.icon(title='Email Owner')
+//             if sms_owner
+//                 i.phone.icon(title='SMS Owner')
+//         .ui.secondary.segment
+//             |Secondary
+//             +view_sla_contact username=secondary_contact
+//             if email_secondary
+//                 i.mail.icon(title='Email secondary')
+//             if sms_secondary
+//                 i.phone.icon(title='SMS secondary')
+//         .ui.divider
 
 template(name='view_sla_contact')
     // .ui.header SLA Contact #{key}
@@ -81,3 +81,13 @@ template(name='view_sla_contact')
         div #{ev.HOME_TELEPHONE}
         div #{phone}
 
+
+
+template(name='complete_ticket_task')
+    .ui.form
+        .field
+            label Task Completion Notes
+            textarea#completion_notes(rows='5')
+        .field
+            .ui.fluid.jpgreen.inverted.button
+                |Submit
