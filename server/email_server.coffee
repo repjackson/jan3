@@ -18,8 +18,8 @@ Meteor.methods
             mailgun.messages().send data, (error, body)->
               console.log(body)
         if Meteor.isDevelopment
-            mailgun.messages().send data, (error, body)->
-              console.log(body)
+            # mailgun.messages().send data, (error, body)->
+            #   console.log(body)
             console.log 'sending email in dev', data
         return
         # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>"]

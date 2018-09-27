@@ -25,14 +25,16 @@
 
 body {
   /*margin-top:52px;*/
-  font-family: "Open Sans",sans-serif;
-  /*font-family: 'Ubuntu', sans-serif !important;*/
+  /*font-family: "Open Sans",sans-serif;*/
+  font-family: 'Ubuntu', sans-serif !important;
   min-height: 500px;
   background: #f4f7f9;
 }
+
 .ui.header{
   font-family: 'Ubuntu', sans-serif !important;
 }
+
 
 .map-container {
     width: 800px;

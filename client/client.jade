@@ -17,6 +17,9 @@ head
     link(href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css" rel="stylesheet" type="text/css")
     script(src="https://code.jquery.com/jquery-2.1.4.js")
 
+    link(href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet")
+
+
     meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='black')
@@ -38,18 +41,18 @@ template(name='layout')
 template(name='not_found')
     .ui.text.container
         .ui.hidden.divider
-        h1.ui.center.aligned.header 
+        h1.ui.center.aligned.header
             |Not Found
 
 
 template(name='staus_indicator')
-    if online 
-        // .ui.label(class='{{labelClass}}') 
+    if online
+        // .ui.label(class='{{labelClass}}')
         img.ui.avatar.image(src="https://png.icons8.com/connection-status-on/color/48" title='Online' width="48" height="48")
         // |Online
     else if idle
         .ui.label(class='{{labelClass}}') Idle
-        // else 
+        // else
         //     |Offline
 
 template(name='no_data')

@@ -11,8 +11,8 @@ template(name='block')
         .ui(class=block_class)
             unless published
                 i.eye.slash.icon
-            .ui.header.title
-                if view_title
+            if view_title
+                .ui.header.title
                     if icon
                         +icon name=icon
                     |#{title}

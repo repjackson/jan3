@@ -208,7 +208,8 @@ Template.assignment_widget.events
 Template.assignment_widget.helpers
     ticket_assignment_timestamp: ->
         parent_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        parent_doc.assignment_timestamp
+        if parent_doc
+            parent_doc.assignment_timestamp
     user_results: ->
         user_results = Template.instance().user_results.get()
         user_results
@@ -311,62 +312,43 @@ Template.view_button.helpers
     url:-> "/p/#{@type}?doc_id=#{@_id}"
 
 
+Template.ticket_status.onCreated ->
+    @is_closing = new ReactiveVar false
 Template.ticket_status.helpers
-    page_context: ->
-        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+    ticket: -> Docs.findOne FlowRouter.getQueryParam('doc_id')
+    is_closing: -> Template.instance().is_closing.get()
+    closing_class: -> if Template.instance().is_closing.get() is true then 'active' else ''
+
+
 Template.ticket_status.events
     'click .reopen': ->
         Docs.update FlowRouter.getQueryParam('doc_id'),
             $set: open:true
 
-    'click .close': ->
+    'click .start_closing': (e,t)->
+        t.is_closing.set(!t.is_closing.get())
+
+    'click .finish_closing': (e,t)->
         ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
+
+        details_val = t.$('#close_details').val()
         Docs.update FlowRouter.getQueryParam('doc_id'),
-            $set: open:false
+            $set:
+                open:false
+                close_timestamp: Date.now()
+                close_details: details_val
+                close_author: Meteor.user().username
         Docs.insert
             type:'event'
             parent_id: FlowRouter.getQueryParam('doc_id')
             event_type:'ticket_close'
-            text:"#{Meteor.user().username} closed ticket."
+            text:"#{Meteor.user().username} closed ticket with note: #{details_val}"
         Docs.insert
             type:'event'
             parent_id: FlowRouter.getQueryParam('doc_id')
             event_type:'emailed_customer_contact'
-            text:"Customer #{ticket.customer_name} emailed about ticket close."
-
-
-Template.customer_ticket_status.helpers
-    page_context: ->
-        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-
-    feedback: ->
-        Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-
-Template.customer_ticket_status.events
-    'click .add_feedback': ->
-        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        Docs.update FlowRouter.getQueryParam('doc_id'),
-            $set: feedback:true
-        Docs.insert
-            type:'feedback'
-            ticket_id: FlowRouter.getQueryParam('doc_id')
-
-    'click .close': ->
-        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        Docs.update FlowRouter.getQueryParam('doc_id'),
-            $set: open:false
-        Docs.insert
-            type:'event'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-            event_type:'ticket_close'
-            text:"#{Meteor.user().username} closed ticket."
-        Docs.insert
-            type:'event'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-            event_type:'emailed_customer_contact'
-            text:"Customer #{ticket.customer_name} emailed about ticket close."
+            text:"Customer '#{ticket.customer_name}' emailed about ticket close."
+        t.is_closing.set false
 
 
 Template.feedback_widget.onCreated ->

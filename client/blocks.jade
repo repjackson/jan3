@@ -13,8 +13,6 @@ template(name='when_template')
 template(name='last_updated_template')
     |{{ long_format last_updated_datetime }}
 
-
-
 template(name='list_item')
     .item
         i.icon(class=icon title=key)
@@ -22,7 +20,6 @@ template(name='list_item')
             .description
                 |#{label}
                 strong #{key_value}
-
 
 template(name='toggle_boolean')
     if is_on
@@ -35,8 +32,6 @@ template(name='toggle_boolean')
             if icon
                 i.icon(class=icon)
             |#{yes_label}
-
-
 
 template(name='save_button')
     a.ui.icon.button(href="/v/#{_id}")
@@ -54,7 +49,6 @@ template(name='view_button')
     a.ui.icon.button(href=url title='Details')
         i.right.chevron.green.icon
 
-
 template(name='old_view_button')
     a.ui.icon.button(href="/v/#{_id}" title='Details')
         i.right.chevron.teal.icon
@@ -62,7 +56,6 @@ template(name='old_view_button')
 template(name='icon_view')
     if icon
         +icon name=icon
-
 
 template(name='view_page_button')
     a.ui.icon.button(href="/p/#{slug}" data-content='View Page' class=classes)
@@ -90,13 +83,10 @@ template(name='add_button')
         i.plus.icon
         // +icon name='plus-math'
 
-
 template(name='toggle_sla_boolean')
     .ui.trigger.button(class=toggle_boolean_button_class title=title)
         i.icon
             +iconsmall name=icon
-
-
 
 template(name='toggle_key')
     .toggle_key.ui.button(class=toggle_key_button_class)
@@ -105,15 +95,10 @@ template(name='toggle_key')
                 +icon name=icon
         |#{label}
 
-
 template(name='view_full_button')
     a.floated.right(href="/v/#{_id}")
         // i.right.chevron.link.icon
         | View
-
-
-
-
 
 template(name='ticket_assignment_cell')
     // td(class=ticket_assignment_cell_class)
@@ -134,14 +119,10 @@ template(name='ticket_assignment_cell')
                     .description
                         | @#{username}
 
-
-
 template(name='call_phone_button')
     a.ui.fluid.button(href="tel:#{phone_number}")
         i.phone.icon
         | Call #{phone_number}
-
-
 
 template(name='link_button')
     a.ui.button(href=link title=label)
@@ -152,15 +133,12 @@ template(name='link_button')
         // i.left.chevron.icon
         | #{label}
 
-
 template(name='edit_link')
     .field
         label link (include http://)
         .ui.left.icon.input
             i.linkify.icon
             input#link(type='text' value=url)
-
-
 
 template(name='call_method')
     .call_method.ui.button
@@ -169,10 +147,8 @@ template(name='call_method')
         else
             |#{name}
 
-
 template(name='icon')
     img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes data-content=popup title=title)
-
 
 template(name='iconlarge')
     img.ui.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png")
@@ -180,16 +156,11 @@ template(name='iconlarge')
 template(name='iconsmall')
     img.ui.inline.image(src="https://png.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes)
 
-
-
 template(name='message_button')
     .ui.message
         .ui.header
             +icon name=icon
             a(href=link) #{label}
-
-
-
 
 template(name='toggle_user_published')
     #toggle_button.ui.icon.button(class=classes)
@@ -197,7 +168,6 @@ template(name='toggle_user_published')
             i.green.circle.icon
         else
             i.circle.outline.icon
-
 
 template(name='user_card')
     with author
@@ -231,7 +201,6 @@ template(name='customer_card')
             //     div Office
             //         strong #{ev.MASTER_LICENSEE}
 
-
 template(name='office_card')
     .ui.card
         with office_doc
@@ -258,8 +227,6 @@ template(name='office_card')
                 div
                     a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
 
-
-
 template(name='franchisee_card')
     .ui.card
         with franchisee_doc
@@ -278,11 +245,8 @@ template(name='franchisee_card')
                     .item(title='Call Number')
                         a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
 
-
-
 template(name='view_stat')
     |#{stat_value}
-
 
 template(name='view_single_user_key')
     with single_user
@@ -293,10 +257,8 @@ template(name='view_single_user_key')
         // +staus_indicator
     // .ui.sub.header #{when}
 
-
 template(name='assignment_widget')
-    p Last Assigned {{ long_format ticket_assignment_timestamp }}
-    p {{ from_now ticket_assignment_timestamp }}
+    p(title="{{ from_now ticket_assignment_timestamp }}") Last Assigned {{ long_format ticket_assignment_timestamp }}
     // if overdue
     //     |overdue
     // else
@@ -330,7 +292,6 @@ template(name='assignment_widget')
                                 |#{first_name} #{last_name}
                                 small @#{username}
 
-
 template(name='edit_block_text_field')
     .inline.field
         label #{label}
@@ -341,15 +302,12 @@ template(name='edit_block_number_field')
         label #{label}
         input.number_field(type='number' min='0' value=block_key_value)
 
-
-
 template(name='set_key_value')
     .set_key_value.ui.small.compact.button(class=set_value_button_class)
         if icon
             i.icon
                 +icon name=icon
         |#{label}
-
 
 template(name='set_page_key_value')
     .set_page_key_value.ui.compact.button(class=set_value_button_class)
@@ -358,14 +316,11 @@ template(name='set_page_key_value')
                 +icon name=icon
         |#{label}
 
-
-
 template(name='set_field_key_value')
     .set_field_key_value.ui.compact.button(class=set_value_button_class) #{label}
 
 template(name='toggle_block_field_boolean')
     .toggle_block_field_boolean.ui.compact.button(class=toggle_value_button_class) #{label}
-
 
 template(name='set_key_value_2')
     .set_key_value.ui.button(class=set_value_button_class)
@@ -373,7 +328,6 @@ template(name='set_key_value_2')
             i.icon
                 +icon name=icon
         |#{label}
-
 
 template(name='event_type_icon')
     if event_type_doc.icon
@@ -383,14 +337,11 @@ template(name='event_type_icon')
         +icon name='commit-git'
         // |#{event_type}
 
-
-
 template(name='user_avatar')
     img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
     .ui.popup
         img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
     // a(href="/user/#{username}") #{first_name} #{last_name}
-
 
 template(name='view_ticket_link')
     unless is_customer
@@ -400,30 +351,30 @@ template(name='view_ticket_link')
         a.ui.icon.button(href="/p/ticket_customer_view?doc_id=#{_id}")
             i.right.chevron.icon
 
-
 template(name='ticket_status')
-    with page_context
-        .ui.header
+    .ui.header
+        with ticket
             +status_template
-            |Status
-        if open
-            .close.ui.button
-                +iconsmall name='checkmark'
-                |Close
-        else
-            .reopen.ui.icon.button(title='Reopen')
-                i.undo.icon
-
-
-template(name='customer_ticket_status')
-    with page_context
-        .ui.header
-            |Status
-            +status_template
-        if open
-            .close.ui.button
-                +iconsmall name='checkmark'
-                |Close
+        |Status
+    if ticket.open
+        .start_closing.ui.small.compact.fluid.button(title='Close' class=closing_class)
+            +iconsmall name='checkmark'
+            // |&nbsp; Close
+    with ticket
+        if is_closing
+            .ui.form
+                .field
+                    label Details
+                    textarea#close_details(rows='2')
+            .finish_closing.ui.fluid.jpgreen.inverted.button
+                |Submit
+        unless open
+            strong Closed {{ long_format close_timestamp }} by #{close_author} with note:
+            p
+            p #{close_details}
+        unless open
+            if editing_mode
+                i.reopen.link.undo.icon(title='Reopen')
 
 template(name='feedback_widget')
     with page_context
@@ -445,4 +396,3 @@ template(name='feedback_widget')
                     input.feedback_details(type='text' placeholder='Details...')
                     .ui.jpgreen.inverted.submit_feedback.button
                         |SUBMIT
-
