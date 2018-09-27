@@ -4,19 +4,19 @@ template(name='nav')
             i.bars.icon
         if is_admin
             each admin_nav_items
-                a.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
+                a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
                     i.icon
                         +icon name=icon
                     .mobile.hidden &nbsp; #{title}
         else if is_customer
             each customer_nav_items
-                a.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
+                a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
                     i.large.icon
                         +icon name=icon
                     .mobile.hidden &nbsp; #{title}
         else if is_office
             each office_nav_items
-                a.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
+                a.mobile.hidden.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
                     i.icon(class=icon)
                     .mobile.hidden &nbsp; #{title}
         .right.menu
