@@ -121,7 +121,7 @@ body {
 
 #dash_header.masthead {
   /*background: rgba(0,20,137,1);*/
-  background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 96%,rgba(132,189,0,1) 97%, rgba(132,189,0,1) 100%);
+  background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%);
   margin: 0em;
   width: 100% !important;
   padding: 1rem 0rem 0;

@@ -52,12 +52,10 @@ template(name='block')
                         if view_table_header
                             .middle.aligned.row
                                 .ui.middle.aligned.stackable.grid
-                                    .four.wide.column
-                                        unless hide_search
+                                    unless hide_search
+                                        .four.wide.column
                                             +query_input
                                     if no_query
-                                        .three.wide.column
-                                            .table_stats #{skip_amount}-#{end_result} / #{count_amount}
                                         .five.wide.column
                                             span
                                                 unless hide_limit_options
@@ -77,7 +75,9 @@ template(name='block')
                                                                 .item.set_100 100
 
                                                     |results
-                                        .four.wide.column
+                                        .two.wide.right.floated.column
+                                            span.table_stats(style="vertical-align:middle;") #{skip_amount}-#{end_result} / #{count_amount}
+                                        .four.wide.right.floated.column
                                             if pages
                                                 .ui.right.floated.pagination.small.menu
                                                     if show_decrement
