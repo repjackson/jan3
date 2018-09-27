@@ -26,25 +26,32 @@ template(name='menu_item')
 
 template(name='reset_password')
     .ui.middle.aligned.centered.padded.grid
-        .twelve.wide.column
+        .ten.wide.column
             h1.ui.center.aligned.header
                 +icon name='forgot-password'
                 | Reset Password
             .ui.segment
-                .ui.form
-                    .field
-                        label Username
-                        input#username(type='text')
-                    .field
-                        #reset_password_by_username.ui.fluid.inverted.jpgreen.button
-                            .large120 Reset by Username
-                .ui.form
-                    .field
-                        label Email
-                        input#email(type='email')
-                    .field
-                        #reset_password_by_email.ui.fluid.inverted.jpgreen.button
-                            .large120 Reset by Email
+                .ui.very.relaxed.two.column.grid
+                    .column
+                        .ui.form
+                            .field
+                                // label Username
+                                input#username(type='text')
+                            .field
+                                #reset_password_by_username.ui.fluid.inverted.jpgreen.button
+                                    .large120 by Username
+                    .column
+                        .ui.form
+                            .field
+                                // label Email
+                                input#email(type='email')
+                            .field
+                                #reset_password_by_email.ui.fluid.inverted.jpgreen.button
+                                    .large120 by Email
+                .ui.vertical.divider
+                    |or
+
+
 
 template(name='login')
     .ui.middle.aligned.centered.padded.stackable.grid
@@ -79,13 +86,30 @@ template(name='login')
                         //         | &nbsp; Admin
 
 template(name='register_customer')
-    .ui.middle.aligned.centered.padded.grid
+    .ui.centered.padded.grid
         .row
             h1.ui.center.aligned.header
-                +icon name='headset'
+                +icon name='add-user-male'
                 |Register Customer
         .row
-            .ten.wide.column
+            .four.wide.column
+                if account_selected
+                    .ui.centered.cards
+                        .ui.green.card
+                            with customer_doc
+                                .content
+                                    // .ui.header
+                                    //     |Customer
+                                    .ui.medium.header #{ev.CUST_NAME}
+                                    .ui.list
+                                        .item ##{ev.ID}
+                                        .item #{ev.CUST_CONT_PERSON}
+                                        .item #{ev.CUST_CONTACT_EMAIL}
+                                        .item #{ev.TELEPHONE}
+                                        .item #{ev.ADDR_STREET}
+                                        .item #{ev.ADDR_STREET_2}
+                                        .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+            .eight.wide.column
                 .ui.segment
                     .ui.large.form
                         .field
@@ -93,22 +117,6 @@ template(name='register_customer')
                             input#customer_jpid(type='text' value=session_customer_jpid)
                             // if jpid_lookup_status
                             //     |#{jpid_lookup_status}
-                        if account_selected
-                            .ui.centered.cards
-                                .ui.green.card
-                                    with customer_doc
-                                        .content
-                                            .ui.header
-                                                |Customer
-                                            h4.ui.header #{ev.CUST_NAME}
-                                            .ui.list
-                                                .item ##{ev.ID}
-                                                .item #{ev.CUST_CONT_PERSON}
-                                                .item #{ev.CUST_CONTACT_EMAIL}
-                                                .item #{ev.TELEPHONE}
-                                                .item #{ev.ADDR_STREET}
-                                                .item #{ev.ADDR_STREET_2}
-                                                .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
                                 // .ui.card
                                 //     with office_doc
                                 //         .content
@@ -158,36 +166,38 @@ template(name='register_customer')
                     if can_register
                         #register.ui.fluid.inverted.jpgreen.button(class=register_button_class)
                             .large120 Register Customer
+            .four.wide.column
 
 
 
 
 template(name='register_office')
-    .ui.middle.aligned.centered.padded.grid
+    .ui.centered.padded.grid
         .row
             h1.ui.center.aligned.header
-                +icon name='small-business'
+                +icon name='add-user-male'
                 |Register Office
         .row
-            .ten.wide.column
+            .four.wide.column
+                with office_doc
+                    .ui.centered.cards
+                        .ui.card
+                            .content
+                                .ui.header
+                                    +icon name='building'
+                                    |Office
+                                h4.ui.header #{ev.MASTER_LICENSEE}
+                                div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2}
+                                div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                                div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                                div #{ev.TELEPHONE}
+            .eight.wide.column
                 .ui.segment
                     .ui.large.form
                         .field
                             label Office JPID
                             input#office_jpid(type='text' value=session_office_jpid)
                         // if account_selected
-                        with office_doc
-                            .ui.centered.cards
-                                .ui.card
-                                    .content
-                                        .ui.header
-                                            +icon name='building'
-                                            |Office
-                                        h4.ui.header #{ev.MASTER_LICENSEE}
-                                        div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2}
-                                        div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                                        div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-                                        div #{ev.TELEPHONE}
                         if office_doc
                             .field
                                 label Username
@@ -226,6 +236,7 @@ template(name='register_office')
                             if can_submit
                                 #register_office.ui.fluid.inverted.jpgreen.button
                                     .large120 Register Office
+            .four.wide.column
 
 
 
