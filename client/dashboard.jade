@@ -43,7 +43,7 @@
 //                             p
 //                             p #{currentUser.users_office.help_policy}
 //                 .column
-//                     +small_service_list
+//                     +dashboard_service_list
 
 //         .row
 //             with currentUser.users_customer.parent_franchisee
@@ -148,16 +148,6 @@ template(name='email_user_link')
 //                     // td
 //                     //     +view_user_button
 
-template(name='small_service_list')
-    .ui.secondary.segment
-        h4.ui.dividing.header
-            |Other JAN-PRO Services Offered
-        .ui.bulleted.list
-            each services_offered
-                a.item(href="/v/#{_id}")
-                    // img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
-                    |#{title}
-
 
 template(name='dashboard_header')
     #dash_header.ui.vertical.masthead.center.aligned.segment
@@ -186,4 +176,15 @@ template(name='dashboard_office_messages')
                                 p
                                 p #{details}
             .four.wide.column
-                +small_service_list
+                +dashboard_service_list
+
+
+template(name='dashboard_service_list')
+    .ui.secondary.segment
+        h4.ui.dividing.header
+            |Other JAN-PRO Services Offered
+        .ui.bulleted.list
+            each services_offered
+                a.item(href="/v/#{_id}")
+                    // img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
+                    |#{title}

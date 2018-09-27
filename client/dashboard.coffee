@@ -53,9 +53,9 @@ Template.dashboard_office_contacts_list.helpers
 
 
 
-Template.small_service_list.onCreated ->
+Template.dashboard_service_list.onCreated ->
     @autorun -> Meteor.subscribe 'type','service'
-Template.small_service_list.helpers
+Template.dashboard_service_list.helpers
     services_offered: ->
         users_office = Meteor.user().users_office()
         if users_office
