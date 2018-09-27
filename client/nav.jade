@@ -32,15 +32,12 @@ template(name='nav')
                     i.database.icon
             if currentUser
                 .ui.dropdown.inverted.blue.item
-                    if signing_out
-                        i.notched.circle.loading.icon
+                    if currentUser.image_id
+                        i.large.icon
+                            img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
-                        if currentUser.profile.image_id
-                            i.large.icon
-                                img.ui.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        else
-                            i.user.icon
-                        |#{currentUser.username}
+                        i.user.icon
+                    |#{currentUser.username}
                     .inverted.blue.menu
                         a.nav_bar.item(href='/p/messages' class="{{ active_route 'messages' }}" )
                             i.envelope.icon
@@ -54,6 +51,11 @@ template(name='nav')
                         a#logout.nav_bar.item(href='#')
                             i.sign.out.alternate.icon
                             |Log Out
+                a#logout.nav_bar.item(href='#')
+                    if signing_out
+                        i.notched.circle.loading.icon
+                    else
+                        i.sign.out.alternate.icon
             else
                 a.item(href='/login')
                     i.large.icon
@@ -67,7 +69,7 @@ template(name='left_sidebar')
     .ui.left.vertical.sidebar.inverted.nav_bar.thin.menu
         if currentUser
             a.toggle_left_sidebar.header.item(href="/user/#{currentUser.username}")
-                img.ui.centered.mini.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                img.ui.centered.mini.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 |#{currentUser.username}
         if is_customer
             a.header.toggle_left_sidebar.item(href='/')

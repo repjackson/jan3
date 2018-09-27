@@ -58,14 +58,14 @@ if Meteor.isProduction
         {
             name: 'Update customers'
             schedule: (parser) ->
-                parser.text 'every 6 hours'
+                parser.text 'every 1 hours'
             job: ->
                 Meteor.call 'get_recent_customers', (err, res)->
                     if err then console.error err
         },{
             name: 'Update users'
             schedule: (parser) ->
-                parser.text 'every 3 hours'
+                parser.text 'every 1 hours'
             job: ->
                 Meteor.call 'sync_ev_users', (err, res)->
                     if err then console.error err
@@ -73,14 +73,14 @@ if Meteor.isProduction
         },{
             name: 'Update franchisee'
             schedule: (parser) ->
-                parser.text 'every 8 hours'
+                parser.text 'every 1 hours'
             job: ->
                 Meteor.call 'get_recent_franchisees', (err, res)->
                     if err then console.error err
         },{
             name: 'Update office'
             schedule: (parser) ->
-                parser.text 'every 6 hours'
+                parser.text 'every 1 hours'
             job: ->
                 Meteor.call 'get_recent_offices', (err, res)->
                     if err then console.error err

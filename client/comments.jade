@@ -9,8 +9,8 @@ template(name='comments')
         each comments
             .comment
                 a.avatar(href="/user/#{author.username}")
-                    if author.profile.image_id
-                        img.ui.avatar.spaced.image(src="{{c.url author.profile.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    if author.image_id
+                        img.ui.avatar.spaced.image(src="{{c.url author.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
                 .content

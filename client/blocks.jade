@@ -1,7 +1,7 @@
 template(name='author_info')
     with author
-        if profile.image_id
-            img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        if image_id
+            img.ui.avatar.spaced.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
         |&nbsp;
         a(href="/user/#{username}") #{username}
         // +staus_indicator
@@ -125,10 +125,12 @@ template(name='ticket_assignment_cell')
         each assigned_users
             .item
                 // .image
-                //     img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                //     img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
                 .content
                     .header
-                        |#{profile.first_name} #{profile.last_name}
+                        // if image_id
+                        //     img.ui.avatar.spaced.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        |#{first_name} #{last_name}
                     .description
                         | @#{username}
 
@@ -199,7 +201,7 @@ template(name='toggle_user_published')
 
 template(name='user_card')
     with author
-        img.ui.small.rounded.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        img.ui.small.rounded.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
         a(href="/user/#{username}")
             h4.ui.header #{first_name} #{last_name} @#{username}
             h5 #{ev.COMPANY_NAME}
@@ -284,8 +286,8 @@ template(name='view_stat')
 
 template(name='view_single_user_key')
     with single_user
-        if profile.image_id
-            img.ui.avatar.spaced.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+        if image_id
+            img.ui.avatar.spaced.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
         |&nbsp;
         a(href="/user/#{username}") #{username}
         // +staus_indicator
@@ -327,59 +329,6 @@ template(name='assignment_widget')
                             h4.ui.header
                                 |#{first_name} #{last_name}
                                 | @#{username}
-
-
-
-
-
-
-template(name='child_card')
-    .ui.card
-        .content
-            a.header(href="/v/#{_id}")
-                if image_id
-                    img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
-                    // .right.floated.meta $#{price}
-                if icon
-                    +icon name=icon
-                |#{title}
-            if is_admin
-                .meta #{slug}
-            .description
-                p #{description}
-        if request_count
-            .content
-                | #{request_count} requests
-        .content
-            +request_service_button
-            a.ui.button(href="/v/#{_id}")
-                i.large.icon
-                    +iconsmall name='view-details'
-                |Details
-
-template(name='child_item')
-    .item
-        if image_id
-            a.image(href="/v/#{_id}")
-                img.ui.tiny.image(src="{{c.url image_id height=200 width=200 crop='scale'}}")
-        .content
-            // .right.floated.meta $#{price}
-            a.header(href="/v/#{_id}") #{title}
-            if is_admin
-                .meta #{slug}
-            .description
-                p #{description}
-        // if request_count
-        //     .content
-        //         | #{request_count} requests
-        .content
-            +request_service_button
-            a.ui.button(href="/v/#{_id}")
-                i.large.icon
-                    +iconsmall name='view-details'
-                |Details
-
-
 
 
 template(name='edit_block_text_field')

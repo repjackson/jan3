@@ -39,6 +39,7 @@ Meteor.methods
                     result = Accounts.createUser(options)
                     if result
                         Meteor.call 'get_user_info', options.username
+
     get_user_info: (username)->
         # users_cursor = Meteor.users.find({}).fetch()
         # for each_user in users_cursor
@@ -64,7 +65,9 @@ Meteor.methods
                 save_json["#{split_key_value[0]}"] = split_key_value[1]
             if user_doc
                 Meteor.users.update user_doc._id,
-                    $set: ev: save_json
+                    $set:
+                        ev: save_json
+
             else
                 # Meteor.users.insert
 

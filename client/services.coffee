@@ -4,21 +4,21 @@ Template.services.onCreated ->
 Template.services.helpers
     services: -> Docs.find type:'service'
 
-    top_requested: -> 
-        Docs.find {type:'service'}, 
+    top_requested: ->
+        Docs.find {type:'service'},
             sort:request_count:-1
-    services_offered: -> 
+    services_offered: ->
         users_office = Meteor.user().users_office()
         if users_office
             Docs.find
                 type:'service'
                 slug: $in: users_office.services
 
-Template.request_service_button.events
+Template.service_card.events
     'click .request_service': ->
         current_customer_jpid = Meteor.user().customer_jpid
-        new_request_id = 
-            Docs.insert 
+        new_request_id =
+            Docs.insert
                 type:'service_request'
                 service_id:@_id
                 service_title:@title
@@ -51,11 +51,11 @@ Template.service_request_edit.events
             doc = Docs.findOne FlowRouter.getParam('doc_id')
             Docs.remove doc._id, ->
                 FlowRouter.go "/services"
-    
+
     'click #submit_request': ->
         doc_id = FlowRouter.getParam 'doc_id'
         request = Docs.findOne doc_id
-        
+
         service = Docs.findOne request.service_id
         Docs.update doc_id,
             $set:

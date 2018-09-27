@@ -13,7 +13,7 @@
 #             if customer_doc
 #                 found = Meteor.users.find {
 #                     published:true
-#                     # "profile.office_name": customer_doc.ev.MASTER_LICENSEE
+#                     # "office_name": customer_doc.ev.MASTER_LICENSEE
 #                 }, limit:100
 #                 found
 
@@ -33,7 +33,7 @@ Template.dashboard_office_contacts_list.helpers
     office_contacts: ->
         found = Meteor.users.find {
             published:true
-            # "profile.office_name": customer_doc.ev.MASTER_LICENSEE
+            # "office_name": customer_doc.ev.MASTER_LICENSEE
         }, limit:100
         found
 
@@ -46,7 +46,7 @@ Template.dashboard_office_contacts_list.helpers
         #     if customer_doc
         #         found = Meteor.users.find {
         #             published:true
-        #             # "profile.office_name": customer_doc.ev.MASTER_LICENSEE
+        #             # "office_name": customer_doc.ev.MASTER_LICENSEE
         #         }, limit:100
         #         console.log found.count(), 'found'
 

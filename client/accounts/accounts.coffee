@@ -254,6 +254,7 @@ Template.register_customer.events
         if found_customer_doc
         else
             Session.set 'account_selected', false
+            t.can_register.set false
 
 
 Template.register_office.onCreated ->

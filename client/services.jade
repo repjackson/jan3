@@ -1,7 +1,7 @@
 template(name='services')
     .ui.stackable.centered.padded.grid
         .row
-            .ui.center.aligned.header
+            .ui.large.center.aligned.header
                 +icon name='shopping-cart'
                 | #{currentUser.users_office.ev.MASTER_LICENSEE} Services
         .row
@@ -39,32 +39,16 @@ template(name='service_card')
     .ui.card
         .content
             .header
-                // if image_id
-                //     img.ui.avatar.image(src="{{c.url image_id height=100 width=100 crop='scale'}}")
-                //     // .right.floated.meta $#{price}
-                // if icon
-                //     +icon name=icon
                 |#{title}
             if is_admin
                 .meta #{slug}
             .description
                 p #{description}
-        // if request_count
-        //     .content
-        //         | #{request_count} requests
         .content
-            +request_service_button
-            // a.ui.button(href="/v/#{_id}")
-            //     i.large.icon
-            //         +iconsmall name='view-details'
-            //     |Details
-
-
-template(name='request_service_button')
-    .request_service.ui.button
-        i.large.icon
-            +iconsmall name='service-bell'
-        | Request
+            .request_service.ui.button
+                i.large.icon
+                    +iconsmall name='service-bell'
+                | Request
 
 template(name='service_view')
     .ui.padded.stackable.grid

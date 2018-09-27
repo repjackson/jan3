@@ -164,6 +164,13 @@ Template.registerHelper 'block_field_value', ->
     value = sla_setting["#{field_key}"]
 
 
+Template.registerHelper 'owner', () ->
+    Meteor.users.findOne username:@ticket_owner
+Template.registerHelper 'secondary', () ->
+    Meteor.users.findOne username:@secondary_contact
+
+
+
 
 # Meteor.startup ->
 #     # HTTP.call('get',"https://avalon.extraview.net/jan-pro/ExtraView/ev_api.action?user_id=zpeckham&password=jpi19&statevar=get_roles", (err,res)->
