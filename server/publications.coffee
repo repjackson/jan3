@@ -150,15 +150,15 @@ Meteor.publish 'block_children', (
 
 
         if block.children_collection is 'users'
-            console.log 'users'
-            console.log 'match', match
-            console.log 'sort key', sort_key
+            # console.log 'users'
+            # console.log 'match', match
+            # console.log 'sort key', sort_key
             cursor = Meteor.users.find match,{
                 skip: skip
                 limit:limit
                 sort:"#{sort_key}":parseInt("#{sort_direction}")
             }
-            console.log 'count', cursor.count()
+            # console.log 'count', cursor.count()
             cursor
 
         else

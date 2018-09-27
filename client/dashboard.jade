@@ -1,49 +1,3 @@
-// template(name='dashboard')
-//     #dash_header.ui.vertical.masthead.center.aligned.padded.segment
-//         .ui.container
-//             img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-//             h2.ui.inverted.header Customer Portal
-//             unless currentUser
-//                 a.ui.center.aligned.big.inverted.blue.button(href='/login')
-//                     |Login to see Dashboard
-//                     i.right.arrow.icon
-//         if is_customer
-//             +customer_menu
-//     .ui.padded.stackable.grid
-//         if currentUser.users_office.customer_message
-//             .four.column.row
-//                 .column
-//                     .ui.floating.message
-//                         .content
-//                             .header
-//                                 i.large.icon
-//                                     +icon name='sms'
-//                                 |#{currentUser.users_office.ev.MASTER_LICENSEE} Message
-//                         .content
-//                             p
-//                             p #{currentUser.users_office.customer_message}
-//                 .column
-//                     .ui.floating.message
-//                         .content
-//                             .header
-//                                 i.large.icon
-//                                     +icon name='discount'
-//                                 |#{currentUser.users_office.ev.MASTER_LICENSEE} Promotions
-//                         .content
-//                             p
-//                             p #{currentUser.users_office.customer_promotions}
-//                 .column
-//                     .ui.floating.message
-//                         .content
-//                             .header
-//                                 i.large.icon
-//                                     +icon name='faq'
-//                                 |#{currentUser.users_office.ev.MASTER_LICENSEE} Help Policy
-//                         .content
-//                             p
-//                             p #{currentUser.users_office.help_policy}
-//                 .column
-//                     +dashboard_service_list
 
 //         .row
 //             with currentUser.users_customer.parent_franchisee
@@ -64,20 +18,6 @@
 //                                         a(href="mailto:#{ev.FRANCH_EMAIL}" target='_window' title="Email #{franchisee}")
 //                                             // i.mail.icon
 //                                             +icon name='send'
-//         .row
-//             .sixteen.wide.column
-//                 h3.ui.header
-//                     +icon name='error'
-//                     |#{currentUser.users_customer.ev.CUST_NAME} Tickets
-//                 +blocks tags='customer,dashboard,tickets'
-//         .row
-//             .sixteen.wide.column
-//                 +blocks tags='customer,dashboard,invoices'
-//         .centered.row
-//             .sixteen.wide.column
-//                 +dashboard_office_contacts_list
-//                 +blocks tags='customer,dashboard,office,contacts'
-//         .centered.row
 
 // template(name='customer_special_services')
 //     with currentUser.users_customer
@@ -92,7 +32,7 @@
 
 
 template(name='customer_menu')
-    .ui.five.item.stackable.large.menu
+    .ui.four.item.stackable.menu
         a.item(href='/account/settings')
             i.large.icon
                 +icon name='settings'
@@ -158,8 +98,8 @@ template(name='dashboard_header')
                 a.ui.center.aligned.big.inverted.blue.button(href='/login')
                     |Login to see Dashboard
                     i.right.arrow.icon
-        if is_customer
-            +customer_menu
+            if is_customer
+                +customer_menu
 
 
 template(name='dashboard_office_messages')
@@ -185,6 +125,6 @@ template(name='dashboard_service_list')
             |Other JAN-PRO Services Offered
         .ui.bulleted.list
             each services_offered
-                a.item(href="/v/#{_id}")
+                a.service_popup.item
                     // img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
                     |#{title}

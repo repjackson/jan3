@@ -98,16 +98,16 @@ template(name='block')
                                     each th_field_docs
                                         if visible
                                             if sortable
-                                                th.sort_by
+                                                th.sort_by.single.line
                                                     |#{label}
                                                     if sort_descending
-                                                        i.chevron.down.link.blue.icon
+                                                        i.chevron.down.link.icon
                                                     else if sort_ascending
-                                                        i.chevron.up.link.blue.icon
+                                                        i.chevron.up.link.icon
                                                     else
                                                         i.sort.link.grey.icon
                                             else
-                                                th
+                                                th.single.line
                                                     |#{label}
                             tbody
                                 each children

@@ -26,13 +26,13 @@
 body {
   /*margin-top:52px;*/
   /*font-family: "Open Sans",sans-serif;*/
-  font-family: 'Rubik', sans-serif !important;
+  font-family: 'Lato', sans-serif !important;
   min-height: 500px;
   background: #f4f7f9;
 }
 
 .ui.header{
-  font-family: 'Rubik', sans-serif !important;
+  font-family: 'Lato', sans-serif !important;
 }
 
 
@@ -120,10 +120,8 @@ body {
 /*  }*/
 
 #dash_header.masthead {
-  background: rgba(0,20,137,1);
-  /*background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(13,31,137,1) 50%,rgba(52,65,135,0.5) 100%);*/
-  /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001489', endColorstr='#36344187',GradientType=0 );*/
-
+  /*background: rgba(0,20,137,1);*/
+  background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 96%,rgba(132,189,0,1) 97%, rgba(132,189,0,1) 100%);
   margin: 0em;
   width: 100% !important;
   padding: 1rem 0rem 0;
