@@ -6,7 +6,7 @@ Template.page_edit.events
         #     split_tags = @tags
         Docs.insert
             type:'block'
-            horizontal_position:@horizontal_position
+            horizontal_position:'center'
             title:'new block'
             published:false
             block_classes:'ui secondary segment'
@@ -16,10 +16,6 @@ Template.page_edit.events
 
 Template.blocks.helpers
     blocks: ->
-        # if @tags and typeof @tags is 'string'
-        #     split_tags = @tags.split ','
-        # else
-        #     split_tags = @tags
         if @horizontal_position is 'left'
             Docs.find {
                 type:'block'

@@ -57,9 +57,9 @@ template(name='complete_ticket_task')
     .ui.form
         .field
             label Task Completion Notes
-            textarea#completion_notes(rows='5')
+            textarea#completion_details(rows='3')
         .field
-            .ui.fluid.jpgreen.inverted.button
+            .ui.submit_completion_task.fluid.jpgreen.inverted.button
                 |Submit
 
 
@@ -115,3 +115,8 @@ template(name='feedback_widget')
                     input.feedback_details(type='text' placeholder='Details...')
                     .ui.jpgreen.inverted.submit_feedback.button
                         |SUBMIT
+
+
+template(name='ticket_close_user_info')
+    with completing_user
+        .ui.header #{ev.FIRST_NAME} #{ev.LAST_NAME} @#{username}

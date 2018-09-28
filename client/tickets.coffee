@@ -196,11 +196,38 @@ Template.feedback_widget.events
             $set:submitted:true
 
 
-
+Template.complete_ticket_task.onCreated ()->
+    doc_id = FlowRouter.getQueryParam 'doc_id'
+    @autorun => Meteor.subscribe 'doc', doc_id
 
 Template.complete_ticket_task.onRendered ()->
-    unassigned_username = FlowRouter.getQueryParam 'unassign'
-    if unassigned_username
-        console.log 'found unassign', unassigned_username
-        Meteor.call 'unassign_user_from_ticket', FlowRouter.getQueryParam('doc_id'), unassigned_username, (err,res)->
+    @autorun () =>
+        if @subscriptionsReady()
+            doc_id = FlowRouter.getQueryParam 'doc_id'
+            if ticket
+                ticket = Docs.findOne doc_id
+            # if unassigned_username
+                # console.log 'found unassign', unassigned_username
+
+
+Template.complete_ticket_task.events
+    'click .submit_completion_task': (e,t)->
+        completion_details = t.$('#completion_details').val()
+        unassigned_username = FlowRouter.getQueryParam 'unassign'
+        console.log completion_details
+        ticket_id = FlowRouter.getQueryParam('doc_id')
+        Meteor.call 'complete_ticket_task', ticket_id, unassigned_username, completion_details, (err,res)->
             if err then console.error err
+            else
+                FlowRouter.go("/p/ticket_admin_view?doc_id=#{ticket_id}")
+
+Template.ticket_close_user_info.onCreated ()->
+    unassign_username = FlowRouter.getQueryParam 'unassign'
+    @autorun => Meteor.subscribe 'user', unassign_username
+
+Template.ticket_close_user_info.helpers
+    completing_user: ->
+        unassign_username = FlowRouter.getQueryParam 'unassign'
+        Meteor.users.findOne username:unassign_username
+
+

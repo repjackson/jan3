@@ -52,7 +52,7 @@ Meteor.methods
                 text:"Assignment timestamp updated."
 
 
-    unassign_user_from_ticket: (ticket_id, username)->
+    complete_ticket_task: (ticket_id, username, completion_details)->
         removed_user = Meteor.users.findOne username:username
         ticket = Docs.findOne ticket_id
         Docs.update ticket_id,
@@ -62,7 +62,12 @@ Meteor.methods
             type:'event'
             parent_id:ticket_id
             event_type:'unassignment'
-            text: "#{username} marked task complete and was unassigned."
+            text: "#{username} completed task with note: #{completion_details}."
+            ticket_id:ticket_id
+            office_jpid:ticket.office_jpid
+            customer_jpid: ticket.customer_jpid
+
+
         # assign owner if no one else
         updated_doc = Docs.findOne ticket_id
         if updated_doc.assigned_to.length is 0

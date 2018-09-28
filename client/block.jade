@@ -92,7 +92,7 @@ template(name='block')
                                                         a.icon.item.increment_page
                                                             i.right.chevron.grey.icon
 
-                        table.ui.striped.table
+                        table.ui.striped.table(class=table_classes)
                             thead
                                 tr
                                     each th_field_docs
@@ -278,6 +278,7 @@ template(name='edit_block')
                 +toggle_boolean key='hide_limit_options' yes_label='Hide Page Size Options' no_label='Page Size Options'
                 +toggle_boolean key='hide_search' yes_label='Hide Search' no_label='Hide Search'
             .ui.form
+                +edit_block_text_field key='table_classes' label='Table Classes'
                 +edit_block_text_field key='default_sort_key' label='Default Sort Key'
             +set_key_value key='default_sort_direction' value='-1' label='-1'
             +set_key_value key='default_sort_direction' value='1' label='1'
