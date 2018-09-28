@@ -193,5 +193,8 @@ Template.secondary_contact_widget.helpers
 
 
 
+Template.office_roles.helpers
+    office_employees: -> Meteor.users.find()
+
 
 

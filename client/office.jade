@@ -1,3 +1,18 @@
+template(name='office_roles')
+    .ui.form
+        .field
+            label Office Manager
+            select.ui.dropdown
+                option(value='') Select Employee
+                each office_employees
+                    option(value=username)
+                        if image_id
+                            img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        |#{ev.FIRST_NAME} #{ev.LAST_NAME} @#{username}
+
+
+
+
 template(name='office_messages')
     .ui.stackable.padded.grid
         .sixteen.wide.column
@@ -126,7 +141,7 @@ template(name='ticket_owner_select')
                         | #{owner.first_name} #{owner.last_name}
                     |#{ticket_owner}
                 .content
-                    i.pull_user.remove.link.icon(title="Remove #{ticket_owner}")
+                    i.pull_user.remove.circular.link.icon(title="Remove #{ticket_owner}")
 
 
 
@@ -165,4 +180,4 @@ template(name='secondary_contact_widget')
             //         img.ui.avatar.image(src="{{c.url secondary.image_id width=100 height=100 gravity='face' crop='fill'}}")
             //     |#{secondary.first_name} #{secondary.last_name}
             // | #{secondary_contact}
-        i.remove.link.pull_secondary.icon(title="Clear #{secondary_contact}")
+        i.remove.link.pull_secondary.circular.icon(title="Clear #{secondary_contact}")

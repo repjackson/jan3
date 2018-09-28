@@ -30,13 +30,13 @@ Meteor.methods
 
         assigned_to_user = Meteor.users.findOne username:username
         ticket_link = "https://www.jan.meteorapp.com/p/ticket_admin_view?doc_id=#{ticket._id}"
-        complete_ticket_link = "https://www.jan.meteorapp.com/p/ticket_admin_view?doc_id=#{ticket._id}&unassign=#{username}"
+        complete_ticket_link = "https://www.jan.meteorapp.com/p/complete_ticket_task?doc_id=#{ticket._id}&unassign=#{username}"
 
         mail_fields = {
             # to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>"]
 
             # to: ["<#{assigned_to_user.emails[0].address}>"]
-            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>", "<andrew.forrest@premiumfranchisebrands.com>","<brad@janhub.com>","<colin.bates@jan-pro.com>","<hendra.oey@jan-pro.com>"]
+            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<brad@janhub.com>","<colin.bates@jan-pro.com>","<hendra.oey@jan-pro.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "#{username} you have been assigned to ticket ##{ticket.ticket_number} from customer: #{ticket.customer_name}."
             html: "<h4>#{username}, you have been assigned to ticket ##{ticket.ticket_number} from customer: #{ticket.customer_name}.</h4>

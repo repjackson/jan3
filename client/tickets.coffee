@@ -194,3 +194,13 @@ Template.feedback_widget.events
             parent_id: FlowRouter.getQueryParam('doc_id')
         Docs.update feedback_doc._id,
             $set:submitted:true
+
+
+
+
+Template.complete_ticket_task.onRendered ()->
+    unassigned_username = FlowRouter.getQueryParam 'unassign'
+    if unassigned_username
+        console.log 'found unassign', unassigned_username
+        Meteor.call 'unassign_user_from_ticket', FlowRouter.getQueryParam('doc_id'), unassigned_username, (err,res)->
+            if err then console.error err

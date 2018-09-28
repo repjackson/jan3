@@ -29,16 +29,6 @@ Meteor.methods
                 #     console.log 'Twilio response for eric', res
             )
             twilio.messages.create({
-                to: '+14043880793',
-                from: '+18442525977'
-                body: body
-            }, (err,res)->
-                if err
-                    throw new Meteor.Error 'text_not_sent', 'error sending text'
-                # else
-                #     console.log 'Twilio response for andrew', res
-            )
-            twilio.messages.create({
                 to: '+14162580012',
                 from: '+18442525977'
                 body: body

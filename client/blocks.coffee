@@ -162,12 +162,6 @@ Template.assignment_widget.onCreated ()->
     @autorun => Meteor.subscribe 'assigned_users', FlowRouter.getQueryParam('doc_id')
     @user_results = new ReactiveVar( [] )
 
-Template.assignment_widget.onRendered ()->
-    unassigned_username = FlowRouter.getQueryParam 'unassign'
-    if unassigned_username
-        console.log 'found unassign', unassigned_username
-        Meteor.call 'unassign_user_from_ticket', FlowRouter.getQueryParam('doc_id'), unassigned_username, (err,res)->
-            if err then console.error err
 
 
 
