@@ -65,6 +65,10 @@ Template.doc_history_event.events
     'click .remove_event': ->
         Docs.remove @_id
 
+Template.doc_history_event.helpers
+    is_escalation: -> @event_type is 'escalate'
+
+
 # Template.full_doc_history.events
 #     'click #clear_events':
 #         doc_id = FlowRouter.getQueryParam('doc_id')

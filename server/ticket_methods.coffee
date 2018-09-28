@@ -155,6 +155,10 @@ Meteor.methods
                 type:'event'
                 parent_id:ticket_id
                 event_type:'escalate'
+                office_jpid:ticket.office_jpid
+                customer_jpid:ticket.customer_jpid
+                level:next_level
+                ticket_id:ticket_id
                 text:"#{hours_elapsed} hours have elapsed, more than #{hours_value} in level #{next_level} '#{ticket_type.title}' rules, escalating."
             Meteor.call 'escalate_ticket', ticket._id, ->
             console.log 'ESCALATING', ticket._id
@@ -179,6 +183,10 @@ Meteor.methods
                 parent_id:ticket_id
                 event_type:'escalate'
                 text:"Automatic escalation from #{current_level} to #{next_level}."
+                office_jpid:ticket.office_jpid
+                customer_jpid:ticket.customer_jpid
+                level:next_level
+                ticket_id:ticket_id
 
 
             Meteor.call 'notify_about_escalation', doc_id

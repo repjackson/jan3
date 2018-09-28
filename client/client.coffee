@@ -96,6 +96,11 @@ Template.registerHelper 'long_format', (input) ->
 
 Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getQueryParam('doc_id')
 
+Template.registerHelper 'is_level_one', () -> @level is 1
+Template.registerHelper 'is_level_two', () -> @level is 2
+Template.registerHelper 'is_level_three', () -> @level is 3
+Template.registerHelper 'is_level_four', () -> @level is 4
+
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 
