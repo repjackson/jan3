@@ -40,36 +40,6 @@ template(name='submit_ticket')
 
 
 
-// template(name='sla_tester')
-//     .ui.small.icon.check_escalation.button(title='Manually Check Escalation')
-//         i.refresh.link.icon
-//     .ui.small.icon.escalate_ticket.button(title='Manually Escalate')
-//         i.sort.numeric.down.link.icon
-//     each sla_docs
-//         strong Level #{escalation_number}
-//             span(title='Escalation Hours') (#{escalation_hours} hours)
-//         .ui.small.icon.set_level.button(title="Set level to #{escalation_number}")
-//             i.link.left.arrow.icon
-//         .ui.secondary.segment
-//             | Owner
-//             +view_sla_contact username=ticket_owner
-//             if contact_customer
-//                 i.money.icon(title='Contact Customer')
-//             if contact_franchisee
-//                 i.truck.icon(title='Contact Franchisee')
-//             if email_owner
-//                 i.mail.icon(title='Email Owner')
-//             if sms_owner
-//                 i.phone.icon(title='SMS Owner')
-//         .ui.secondary.segment
-//             |Secondary
-//             +view_sla_contact username=secondary_contact
-//             if email_secondary
-//                 i.mail.icon(title='Email secondary')
-//             if sms_secondary
-//                 i.phone.icon(title='SMS secondary')
-//         .ui.divider
-
 template(name='view_sla_contact')
     // .ui.header SLA Contact #{key}
     with user_ob
@@ -91,3 +61,57 @@ template(name='complete_ticket_task')
         .field
             .ui.fluid.jpgreen.inverted.button
                 |Submit
+
+
+
+template(name='ticket_status')
+    .ui.header
+        with ticket
+            +status_template
+        |Status
+    if ticket.open
+        .start_closing.ui.small.compact.fluid.button(title='Close' class=closing_class)
+            +iconsmall name='checkmark'
+            // |&nbsp; Close
+    with ticket
+        if is_closing
+            .ui.form
+                .field
+                    label Reason
+                    select.ui.fluid.reason.dropdown
+                        each close_ticket_types
+                            option(value=slug) #{title}
+                .field
+                    label Details
+                    textarea#close_details(rows='2')
+            .finish_closing.ui.fluid.jpgreen.inverted.button
+                |Submit
+        unless open
+            if close_timestamp
+                strong Closed {{ long_format close_timestamp }} by #{close_author} with note:
+                p
+                p #{close_details}
+        unless open
+            if editing_mode
+                i.reopen.link.undo.icon(title='Reopen')
+
+template(name='feedback_widget')
+    with page_context
+        unless page_context.open
+            .ui.header
+                +icon name='feedback'
+                |Feedback
+            unless feedback_doc
+                .add_feedback.ui.button Add Feedback
+    if feedback_doc
+        with feedback_doc
+            if submitted
+                .ui.center.aligned.header Thank you for your feedback.
+            else
+                .ui.basic.center.aligned.segment
+                    i.big.thumbs.up.link.icon(class=good_class)
+                    i.big.thumbs.down.link.icon(class=bad_class)
+                .ui.fluid.action.input
+                    input.feedback_details(type='text' placeholder='Details...')
+                    .ui.jpgreen.inverted.submit_feedback.button
+                        |SUBMIT

@@ -114,7 +114,7 @@ template(name='register_customer')
                     .ui.large.form
                         .field
                             label Customer JPID
-                            input#customer_jpid(type='text' value=session_customer_jpid)
+                            input#customer_jpid(type='number' min='0' value=session_customer_jpid)
                             // if jpid_lookup_status
                             //     |#{jpid_lookup_status}
                                 // .ui.card
@@ -196,7 +196,7 @@ template(name='register_office')
                     .ui.large.form
                         .field
                             label Office JPID
-                            input#office_jpid(type='text' value=session_office_jpid)
+                            input#office_jpid(type='number' min='0' value=session_office_jpid)
                         // if account_selected
                         if office_doc
                             .field

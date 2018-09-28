@@ -70,34 +70,127 @@ Template.submit_ticket.events
         Meteor.call 'submit_ticket', doc_id, (err,res)->
 
 
-# Template.sla_tester.onCreated ->
-#     @autorun =>  Meteor.subscribe 'ticket_sla_docs', FlowRouter.getQueryParam('doc_id')
-#     @autorun =>  Meteor.subscribe 'office_employees_from_ticket_doc_id', FlowRouter.getQueryParam('doc_id')
-# Template.sla_tester.events
-#     'click .check_escalation': ->
-#         Meteor.call 'single_escalation_check', FlowRouter.getQueryParam('doc_id')
-
-#     'click .escalate_ticket': ->
-#         Meteor.call 'escalate_ticket', FlowRouter.getQueryParam('doc_id')
-
-#     'click .set_level': (e,t)->
-#         doc_id = FlowRouter.getQueryParam('doc_id')
-#         ticket = Docs.findOne doc_id
-#         type = ticket.ticket_type
-#         Docs.update doc_id,
-#             $set: level: @escalation_number
-
-# Template.sla_tester.helpers
-#     sla_docs: ->
-#         ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
-#         if ticket
-#             Docs.find {
-#                 type:'sla_setting'
-#                 office_jpid:ticket.office_jpid
-#                 ticket_type:ticket.ticket_type
-#                 }, sort:escalation_number:1
 
 Template.view_sla_contact.helpers
     user_ob: ->
         Meteor.users.findOne
             username: @username
+
+
+
+Template.ticket_status.onCreated ->
+    @is_closing = new ReactiveVar false
+    @autorun => Meteor.subscribe 'type', 'close_ticket_type'
+Template.ticket_status.helpers
+    ticket: -> Docs.findOne FlowRouter.getQueryParam('doc_id')
+    is_closing: -> Template.instance().is_closing.get()
+    closing_class: -> if Template.instance().is_closing.get() is true then 'active' else ''
+    close_ticket_types: -> Docs.find type:'close_ticket_type'
+
+Template.ticket_status.events
+    'click .reopen': ->
+        Docs.update FlowRouter.getQueryParam('doc_id'),
+            $set: open:true
+
+    'click .start_closing': (e,t)->
+        t.is_closing.set(!t.is_closing.get())
+        Meteor.setTimeout ->
+            $('.ui.fluid.reason.dropdown').dropdown()
+        ,200
+
+    'click .finish_closing': (e,t)->
+        ticket_id = FlowRouter.getQueryParam('doc_id')
+        ticket = Docs.findOne ticket_id
+
+        details_val = t.$('#close_details').val()
+        Docs.update ticket_id,
+            $set:
+                open:false
+                close_timestamp: Date.now()
+                close_details: details_val
+                close_author: Meteor.user().username
+        Docs.insert
+            type:'event'
+            parent_id: ticket_id
+            event_type:'ticket_close'
+            text:"#{Meteor.user().username} closed ticket with note: #{details_val}"
+            ticket_id: ticket_id
+            office_jpid: ticket.office_jpid
+            customer_jpid: ticket.customer_jpid
+        Docs.insert
+            type:'event'
+            parent_id: ticket_id
+            event_type:'emailed_customer_contact'
+            text:"Customer '#{ticket.customer_name}' emailed about ticket close."
+            ticket_id: ticket_id
+            office_jpid: ticket.office_jpid
+            customer_jpid: ticket.customer_jpid
+        t.is_closing.set false
+
+
+Template.feedback_widget.onCreated ->
+    @autorun => Meteor.subscribe 'feedback_doc', FlowRouter.getQueryParam('doc_id')
+Template.feedback_widget.helpers
+    page_context: ->
+        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+
+    feedback_doc: ->
+        Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+
+    good_class: ->
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        if feedback_doc.rating
+            if feedback_doc.rating is 'good'
+                'green'
+            else
+                'grey outline'
+    bad_class: ->
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        if feedback_doc.rating
+            if feedback_doc.rating is 'bad'
+                'red'
+            else
+                'grey outline'
+Template.feedback_widget.events
+    'click .add_feedback': ->
+        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        Docs.update FlowRouter.getQueryParam('doc_id'),
+            $set: feedback:true
+        Docs.insert
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+
+    'click .thumbs.up': ->
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        Docs.update feedback_doc._id,
+            $set: rating: 'good'
+
+    'click .thumbs.down': ->
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        Docs.update feedback_doc._id,
+            $set: rating: 'bad'
+
+    'blur .feedback_details': (e,t)->
+        details = e.currentTarget.value
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        Docs.update feedback_doc._id,
+            $set:details:details
+
+    'click .submit_feedback': (e,t)->
+        feedback_doc = Docs.findOne
+            type:'feedback'
+            parent_id: FlowRouter.getQueryParam('doc_id')
+        Docs.update feedback_doc._id,
+            $set:submitted:true

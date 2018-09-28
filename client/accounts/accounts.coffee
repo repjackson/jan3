@@ -137,13 +137,11 @@ Template.register_customer.helpers
         doc
 
     user_found: -> Session.get 'username_found'
-
     jpid_lookup_status: -> Session.get 'jpid_lookup_status'
-
     account_selected:  -> Session.get 'account_selected'
 
-    session_customer_jpid: -> Session.get 'customer_jpid'
-    session_office_jpid: -> Session.get 'office_jpid'
+    session_customer_jpid: -> parseInt(Session.get('customer_jpid'))
+    session_office_jpid: -> parseInt(Session.get('office_jpid'))
 
     passwords_match: ->
         password_one = Session.get 'password_one'
@@ -260,22 +258,13 @@ Template.register_customer.events
 Template.register_office.onCreated ->
     @autorun =>  Meteor.subscribe 'doc_by_jpid', Session.get('office_jpid')
 
-
 Template.register_office.onRendered ->
     Session.setDefault 'account_selected', false
 
 Template.register_office.helpers
     user_found: -> Session.get 'username_found'
-
     session_office_jpid: -> Session.get 'office_jpid'
-
-    office_doc: ->
-        doc =
-            Docs.findOne
-                type:'office'
-                # "ev.ID": Session.get('office_jpid')
-        doc
-
+    office_doc: -> Docs.findOne(type:'office')
     jpid_lookup_status: -> Session.get 'jpid_lookup_status'
     account_selected:  -> Session.get 'account_selected'
     passwords_match: ->
@@ -293,7 +282,7 @@ Template.register_office.events
         username = $('#username').val()
         password = $('#password').val()
         email = $('#email').val()
-        office_jpid = Session.get('office_jpid')
+        office_jpid = parseInt Session.get('office_jpid')
 
 
         options = {}
@@ -357,7 +346,7 @@ Template.register_office.events
 
 
     'keyup #office_jpid': (e,t)->
-        office_jpid = $('#office_jpid').val()
+        office_jpid = parseInt($('#office_jpid').val().trim())
         Session.set 'office_jpid', office_jpid
         found_office_doc =
             Docs.findOne

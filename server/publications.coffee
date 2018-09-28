@@ -555,8 +555,12 @@ Meteor.publish 'page_by_slug', (slug)->
 
 Meteor.publish 'doc_by_jpid', (jpid)->
     if jpid
-        Docs.find
-            "ev.ID":jpid
+        if typeof jpid is 'number'
+            Docs.find
+                "ev.ID":jpid.toString()
+        else
+            Docs.find
+                "ev.ID":jpid
 
 Meteor.publish 'block_field_docs', (block_doc_id)->
     Docs.find

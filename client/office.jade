@@ -24,6 +24,7 @@ template(name='office_sla')
             thead
                 tr
                     th Level
+                    th Enabled
                     th Escalation Hours
                     th Contact Customer/Franchisee
                     th Owner
@@ -31,36 +32,45 @@ template(name='office_sla')
             tbody
                 each rule_docs
                     tr
-                        td #{title}
+                        td
+                            strong #{title}
                         if sla_settings_doc
                             with sla_settings_doc
+                                td
+                                    unless is_initial
+                                        +toggle_sla_boolean key='enabled' label='Enabled' icon='checkmark' title='Enabled'
                                 if is_initial
                                     td
                                 else
                                     td
-                                        // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
-                                        +set_sla_key_value key='escalation_hours' value=1 label='1'
-                                        +set_sla_key_value key='escalation_hours' value=2 label='2'
-                                        +set_sla_key_value key='escalation_hours' value=4 label='4'
-                                        +set_sla_key_value key='escalation_hours' value=12 label='12'
+                                        if enabled
+                                            // +edit_number_field key=hours_key label='Escalation Hours' field_class='inline' min=0 max=24
+                                            +set_sla_key_value key='escalation_hours' value=1 label='1'
+                                            +set_sla_key_value key='escalation_hours' value=2 label='2'
+                                            +set_sla_key_value key='escalation_hours' value=4 label='4'
+                                            +set_sla_key_value key='escalation_hours' value=12 label='12'
                                 td
                                     if is_initial
                                         +toggle_sla_boolean key='contact_customer' label='Customer' icon='headset' title='Contact Customer'
-                                    +toggle_sla_boolean key='contact_franchisee' label='Franchisee' icon='business' title='Contact Franchisee'
+                                    if enabled
+                                        +toggle_sla_boolean key='contact_franchisee' label='Franchisee' icon='business' title='Contact Franchisee'
                                 td
                                     if is_initial
                                         +ticket_owner_select
                                     else
                                         if ticket_owner
-                                            .ui.large.basic.label #{ticket_owner}
-                                    +toggle_sla_boolean key='email_owner' label='Email' icon='open-envelope' title='Email Owner'
-                                    +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment' title='Text Owner'
+                                            if enabled
+                                                .ui.large.basic.label #{ticket_owner}
+                                    if enabled
+                                        +toggle_sla_boolean key='email_owner' label='Email' icon='open-envelope' title='Email Owner'
+                                        +toggle_sla_boolean key='sms_owner' label='SMS' icon='comment' title='Text Owner'
                                 td
-                                    +secondary_contact_widget
-                                    if secondary_contact
-                                        div
-                                        +toggle_sla_boolean key='email_secondary' label='Email' icon='open-envelope' title='Email Secondary'
-                                        +toggle_sla_boolean key='sms_secondary' label='SMS' icon='comment' title='Text Secondary'
+                                    if enabled
+                                        +secondary_contact_widget
+                                        if secondary_contact
+                                            div
+                                            +toggle_sla_boolean key='email_secondary' label='Email' icon='open-envelope' title='Email Secondary'
+                                            +toggle_sla_boolean key='sms_secondary' label='SMS' icon='comment' title='Text Secondary'
                         else
                             td No settings file
                                 .add_sla_setting_doc.ui.button Create

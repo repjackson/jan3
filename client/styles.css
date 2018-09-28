@@ -103,13 +103,9 @@ body {
 
 .ui.button, .ui.label.tag {
   margin-top: .2em !important;
-        margin-bottom: .2em !important;
+  margin-bottom: .2em !important;
 }
 
-#map {
-        min-height: 350px;
-        min-width: 100%;
-    }
 #main_area {
         min-height: 500px;
         min-width: 100%;
