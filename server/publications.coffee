@@ -19,11 +19,12 @@ Meteor.publish 'block_children', (
     query_params
     doc_id
     )->
+        console.log block_doc_id
         block = Docs.findOne block_doc_id
         collection = if block.children_collection is 'users' then "Meteor.users" else "Docs"
         # console.log 'collection', collection
         # console.log block.filter_source
-        console.log query_params
+        # console.log query_params
         if block.filter_source
             if block.filter_source is "{page_slug}"
                 filter_source_doc = Docs.findOne "ev.ID":page_jpid
@@ -133,25 +134,36 @@ Meteor.publish 'block_children', (
             limit = 100
         # console.log 'match', match
 
+        if block.context is 'link'
+            # console.log 'source_key', block.source_key
+            # console.log 'target_key', block.target_key
+            # console.log 'using', query_params[block.query_param1]
+            match = "#{block.source_key}": query_params["#{block.query_param1}"]
+            # console.log 'match', match
+            if block.source_collection is 'users'
+                source =
+                    Meteor.users.findOne match
+            else
+                source =
+                    Docs.findOne
+                        type: block.children_doc_type
+                        # fix
+                        # "#{block.target_key}":
+            # console.log 'source', source
+            source_value = source["#{block.source_match_key}"]
+            # console.log 'source value', source_value
+            source_match = {}
+            source_match["#{block.target_key}"] = source_value
+            source_match.type = block.source_match_type
+            console.log source_match
+            if block.target_collection is 'docs'
+                cursor = Docs.find source_match
+                console.log cursor.fetch()
+                return cursor
+                @stop
 
-        # theme_tag_cloud = Docs.aggregate [
-        #     { $match: match }
-        #     { $project: tags: 1 }
-        #     { $unwind: "$tags" }
-        #     { $group: _id: '$tags', count: $sum: 1 }
-        #     { $match: _id: $nin: selected_tags }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $limit: 20 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # # console.log 'theme theme_tag_cloud, ', theme_tag_cloud
-        # theme_tag_cloud.forEach (tag, i) ->
-        #     self.added 'tags', Random.id(),
-        #         name: tag.name
-        #         count: tag.count
-        #         index: i
-        match = query_params
-
+        else if block.context is 'direct'
+            match = query_params
         if block.children_collection is 'users'
             # console.log 'users'
             # console.log 'match', match

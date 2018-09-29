@@ -13,6 +13,7 @@ Template.page_edit.events
             view_title:true
             parent_slug:FlowRouter.getParam('page_slug')
             fields: []
+            context: 'direct'
 
 Template.blocks.helpers
     blocks: ->
@@ -104,7 +105,6 @@ Template.block.onCreated ->
         @data.filter_status,
         FlowRouter.getParam('jpid'),
         query_params
-
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
     @autorun => Meteor.subscribe 'block_field_docs', @data._id
 

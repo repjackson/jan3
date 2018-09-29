@@ -179,7 +179,7 @@ template(name='block')
                     if can_move_right
                         i.move_right.chevron.right.circular.link.icon
                     .toggle_editing_block.ui.small.circular.icon.button(class=editing_button_class title='Edit Block')
-                        i.pencil.icon
+                        i.large.pencil.icon
                 if editing_block
                     +edit_block
 
@@ -207,7 +207,7 @@ template(name='edit_block')
                     i.list.ui.icon
         .ui.bottom.attached.segment.active.tab(data-tab='general')
             i.remove_block.remove.link.icon(title='remove block')
-            +toggle_boolean key='published' yes_label='Published'
+            +toggle_boolean key='published' yes_label='Visible'
             +toggle_boolean key='view_title' yes_label='Title'
             +toggle_boolean key='view_add_button' yes_label='Add Button'
             .ui.form
@@ -270,6 +270,17 @@ template(name='edit_block')
         .ui.bottom.attached.segment.tab(data-tab='filter2')
             .ui.form
                 +edit_block_text_field key='query_param1' label='Query Param 1'
+                +set_key_value key='context' value='direct' label='Direct'
+
+                +set_key_value key='context' value='link' label='Link'
+                +edit_block_text_field key='source_collection' label='Source Collection'
+                +edit_block_text_field key='source_key' label='Source Query Key'
+                +edit_block_text_field key='source_match_key' label='Source Match Key'
+                +edit_block_text_field key='source_match_type' label='Source Match Type'
+                +edit_block_text_field key='target_collection' label='Target Collection'
+                +edit_block_text_field key='target_key' label='Target Key'
+
+                +set_key_value key='context' value='children' label='Children'
                 +edit_block_text_field key='query_param2' label='Query Param 2'
                 +edit_block_text_field key='query_param3' label='Query Param 3'
 
