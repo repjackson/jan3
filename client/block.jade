@@ -21,7 +21,7 @@ template(name='block')
                     .ui.add_block_child.icon.button
                         i.plus.icon
                 if custom_template
-                    +Template.dynamic template=custom_template
+                    +Template.dynamic template=custom_template data=context
                 else
                     if header_template
                         +Template.dynamic template=header_template
@@ -188,6 +188,8 @@ template(name='edit_block')
         h3.ui.header
             if icon
                 +icon name=icon
+            else
+                i.pencil.icon
             |Edit '#{title}' Block
         .ui.top.attached.tabular.stackable.menu
             a.ui.icon.active.item.tab_nav(data-tab='general' title='General')
@@ -195,6 +197,8 @@ template(name='edit_block')
             unless custom_template
                 a.ui.item.tab_nav(data-tab='filter' title='Filter')
                     i.filter.icon
+                a.ui.item.tab_nav(data-tab='filter2' title='Filter2')
+                    i.truck.icon
                 a.ui.item.tab_nav(data-tab='schema' title='Schema')
                     i.fork.icon
                 a.ui.item.tab_nav(data-tab='display' title='Display')
@@ -216,7 +220,7 @@ template(name='edit_block')
                 +edit_block_text_field label='Parent Slug' key='parent_slug'
                 +edit_block_text_field label='Header Template' key='header_template'
                 +edit_block_text_field label='Custom Template' key='custom_template'
-            h5 block id #{_id}
+            h5 Block id #{_id}
         .ui.bottom.attached.segment.tab(data-tab='filter')
             .ui.form
                 +edit_block_number_field label='Hard Limit' key='hard_limit'
@@ -226,6 +230,8 @@ template(name='edit_block')
                 div Source
                 +set_key_value key='filter_source' value='{page_slug}' label='Page Slug'
                 +set_key_value key='filter_source' value='{doc_id}' label='Doc ID'
+                +set_key_value key='filter_source' value='{username_param}' label='Username Param'
+                +set_key_value key='filter_source' value='{office_jpid_param}' label='Office JPID Param'
                 +set_key_value key='filter_source' value='{current_user}' label='Current User'
                 +toggle_boolean key='filter_key_ev_subset' yes_label='Filter Key EV'
                 div
@@ -261,6 +267,12 @@ template(name='edit_block')
 
                 div
                 +edit_block_text_field key='filter_source_key' label='Filter Source Key'
+        .ui.bottom.attached.segment.tab(data-tab='filter2')
+            .ui.form
+                +edit_block_text_field key='query_param1' label='Query Param 1'
+                +edit_block_text_field key='query_param2' label='Query Param 2'
+                +edit_block_text_field key='query_param3' label='Query Param 3'
+
         .ui.bottom.attached.segment.tab(data-tab='schema')
             each collections
                 +set_key_value_2 key='children_collection' value=slug label=title icon=icon

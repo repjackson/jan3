@@ -352,3 +352,6 @@ template(name='view_ticket_link')
         a.ui.icon.button(href="/p/ticket_customer_view?doc_id=#{_id}")
             i.right.chevron.icon
 
+template(name='user_profile_image')
+    if image_id
+        img.ui.medium.image.item(src="{{c.url image_id width=500 height=500 gravity='face' crop='fill'}}")

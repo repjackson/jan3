@@ -68,7 +68,11 @@ template(name='ticket_status')
     .ui.header
         with ticket
             +status_template
-        |Status
+        |Status:
+        if open
+            |open
+        else
+            |closed
     if ticket.open
         .start_closing.ui.small.compact.fluid.button(title='Close' class=closing_class)
             +iconsmall name='checkmark'

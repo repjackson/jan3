@@ -16,11 +16,14 @@ Meteor.publish 'block_children', (
     skip=0,
     status
     page_jpid
-    doc_id)->
+    query_params
+    doc_id
+    )->
         block = Docs.findOne block_doc_id
         collection = if block.children_collection is 'users' then "Meteor.users" else "Docs"
         # console.log 'collection', collection
         # console.log block.filter_source
+        console.log query_params
         if block.filter_source
             if block.filter_source is "{page_slug}"
                 filter_source_doc = Docs.findOne "ev.ID":page_jpid
@@ -147,7 +150,7 @@ Meteor.publish 'block_children', (
         #         name: tag.name
         #         count: tag.count
         #         index: i
-
+        match = query_params
 
         if block.children_collection is 'users'
             # console.log 'users'

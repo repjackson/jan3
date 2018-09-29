@@ -305,4 +305,3 @@ Template.toggle_block_field_boolean.helpers
 Template.view_button.helpers
     url:-> "/p/#{@type}?doc_id=#{@_id}"
 
-

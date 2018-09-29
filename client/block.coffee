@@ -70,6 +70,8 @@ Template.block.onCreated ->
     @page_size = new ReactiveVar(10)
     @skip = new ReactiveVar(0)
 
+    # console.log FlowRouter.current()
+
     if @data.limit
         @limit = new ReactiveVar(parseInt(@data.limit))
         @page_size = new ReactiveVar(parseInt(@data.limit))
@@ -87,6 +89,8 @@ Template.block.onCreated ->
         match_object.active = false
     match_object.doc_type = @data.children_doc_type
     match_object.stat_type = @data.table_stat_type
+    query_params = FlowRouter.current().queryParams
+
     @autorun -> Meteor.subscribe 'stat', match_object
     @autorun => Meteor.subscribe 'block_children',
         @data._id,
@@ -99,7 +103,7 @@ Template.block.onCreated ->
         @skip.get(),
         @data.filter_status,
         FlowRouter.getParam('jpid'),
-        FlowRouter.getQueryParam('doc_id')
+        query_params
 
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
     @autorun => Meteor.subscribe 'block_field_docs', @data._id
