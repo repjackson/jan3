@@ -272,3 +272,23 @@ Template.office_ticket_widget.helpers
     office_total_active_customers: ->
         stat = Stats.findOne
             name:'office_total_active_customers'
+
+    office_total_active_franchisees: ->
+        stat = Stats.findOne
+            name:'office_total_active_franchisees'
+
+
+    office_level_1_tickets: ->
+        stat = Stats.findOne
+            name:'office_level_1_tickets'
+    office_level_2_tickets: ->
+        stat = Stats.findOne
+            name:'office_level_2_tickets'
+    office_level_3_tickets: ->
+        stat = Stats.findOne
+            name:'office_level_3_tickets'
+    office_level_4_tickets: ->
+        stat = Stats.findOne
+            name:'office_level_4_tickets'
+
+

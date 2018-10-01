@@ -188,7 +188,7 @@ template(name='office_card')
                         +icon name='building'
                         |Office
                 else
-                    a(href="/p/office_dashboard?jpid=#{ev.ID}")
+                    a(href="/p/office?jpid=#{ev.ID}")
                         .ui.header
                             +icon name='building'
                             |Office
@@ -196,7 +196,7 @@ template(name='office_card')
                 if is_customer
                     h4.ui.header #{ev.MASTER_LICENSEE}
                 else
-                    a(href="/p/office_dashboard?jpid=#{ev.ID}")
+                    a(href="/p/office?jpid=#{ev.ID}")
                         h4.ui.header #{ev.MASTER_LICENSEE}
                 // div ##{ev.ID}
                 div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2}

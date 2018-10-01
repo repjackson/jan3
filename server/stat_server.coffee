@@ -125,6 +125,7 @@ Meteor.methods
                 type:'office'
         if office_doc
             console.log office_doc.ev
+
             customer_count_query = {
                 "ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE
                 type:'customer'
@@ -141,6 +142,49 @@ Meteor.methods
                 { upsert:true })
             stat = Stats.findOne stat_match_object
             console.log 'stat?', stat
+
+
+            franchisee_count_query = {
+                "ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE
+                type:'franchisee'
+            }
+            franchisee_count =
+                Docs.find(franchisee_count_query).count()
+            console.log 'franchisee count for',jpid, franchisee_count
+
+            stat_match_object = franchisee_count_query
+            stat_match_object['name'] = 'office_total_active_franchisees'
+            stat_match_object['office_jpid'] = jpid
+            Stats.update(stat_match_object,
+                { $set:count:franchisee_count },
+                { upsert:true })
+            stat = Stats.findOne stat_match_object
+            console.log 'stat?', stat
+
+
+            # tickets
+            levels = [1,2,3,4]
+            for number in levels
+                ticket_count_query = {
+                    office_jpid:jpid
+                    type:'ticket'
+                    level:number
+                }
+                ticket_count =
+                    Docs.find(ticket_count_query).count()
+                console.log 'ticket count for',jpid,number, ticket_count
+
+                stat_match_object = ticket_count_query
+                stat_match_object['name'] = "office_level_#{number}_tickets"
+                stat_match_object['office_jpid'] = jpid
+                Stats.update(stat_match_object,
+                    { $set:count:ticket_count },
+                    { upsert:true })
+                stat = Stats.findOne stat_match_object
+                console.log 'stat?', stat
+
+
+
 
         # franchisee count
         # ticket count per level
