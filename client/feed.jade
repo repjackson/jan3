@@ -72,7 +72,9 @@ template(name='event')
                     |#{office.EV.MASTER_LICENSEE}
                 if editing_mode
                     i.remove_event.remove.link.icon
-
+                a(href="/p/ticket_admin_view?doc_id=#{parent_id}")
+                    i.ticket.icon
+                    |Ticket
 
 
 template(name='small_doc_history')

@@ -25,7 +25,7 @@ Template.page.onCreated ->
     @autorun => Meteor.subscribe 'page_by_slug', FlowRouter.getParam('page_slug')
     @autorun => Meteor.subscribe 'blocks_by_page_slug', FlowRouter.getParam('page_slug')
     @autorun => Meteor.subscribe 'doc', FlowRouter.getQueryParam('doc_id')
-    # @autorun => Meteor.subscribe 'type', 'event_type'
+    @autorun => Meteor.subscribe 'type', 'event_type'
 
 
 Template.page.events
@@ -45,7 +45,8 @@ Template.page.helpers
 
     current_page_slug: -> FlowRouter.getParam('page_slug')
 
-Template.page_edit.helpers
+Template.page_edit
+.helpers
     page_doc: ->
         FlowRouter.watchPathChange();
         currentContext = FlowRouter.current();

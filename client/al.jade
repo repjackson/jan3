@@ -159,7 +159,9 @@ template(name='block')
                                                         else
                                                             | #{child_schema_field_value}
                     if is_comments
-                        +comments_view children=children
+                        .ui.feed
+                            each comment_children
+                                +event
                     if is_header
                         .centered.middle.aligned.row
                             .three.wide.center.aligned.column

@@ -132,9 +132,8 @@ Template.block.helpers
 
     comment_children: ->
         temp = Template.instance()
-        match.type = @children_doc_type
-        Docs.find {_id:$ne:Meteor.userId()},{
-            sort:"timestamp":parseInt("#{temp.sort_direction.get()}")
+        Docs.find {type:'event'},{
+            sort:"timestamp":-1
             }
 
 

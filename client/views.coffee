@@ -1,7 +1,3 @@
-Template.comments_view.onCreated ->
-    @autorun =>  Meteor.subscribe 'type', 'event_type'
-
-
 Template.message_type.helpers
     is_sms: -> @message_type is 'sms'
     is_email: -> @message_type is 'email'
