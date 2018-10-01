@@ -30,9 +30,22 @@ template(name='customer_facet')
             .unselect_customer.ui.active.button
                 strong #{this}
     each customers
-        .ui.button.select_customer(class=customer_class)
-            | #{this.name}
-            small #{this.count}
+        .ui.compact.small.button.select_customer(class=customer_class)
+            | #{this.name} #{this.count}
+
+template(name='office_facet')
+    .ui.header
+        +icon name='building'
+        |Offices
+    if selected_offices
+        #clear_offices.ui.icon.active.button
+            i.remove.icon
+        each selected_offices
+            .unselect_office.ui.active.button
+                strong #{this}
+    each offices
+        .ui.compact.small.button.select_office(class=office_class)
+            | #{this.name} #{this.count}
 
 
 template(name='ancestor_facet')
@@ -125,6 +138,7 @@ template(name='parent_facet')
 template(name='ticket_facet')
     .ui.grid
         .four.wide.column
+            +office_facet
             +customer_facet
             +timestamp_facet
         .twelve.wide.column

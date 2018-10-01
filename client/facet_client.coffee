@@ -7,6 +7,7 @@ Template.ticket_facet.onCreated ->
             selected_customers.array()
             selected_timestamp_tags.array()
             selected_customers.array()
+            selected_offices.array()
             type='ticket'
             )
         Meteor.subscribe 'usernames'

@@ -3,6 +3,7 @@
 @Levels = new Meteor.Collection 'levels'
 @Timestamp_tags = new Meteor.Collection 'timestamp_tags'
 @Customers = new Meteor.Collection 'customers'
+@Offices = new Meteor.Collection 'offices'
 
 
 
