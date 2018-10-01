@@ -132,7 +132,10 @@ Template.block.helpers
 
     comment_children: ->
         temp = Template.instance()
-        Docs.find {type:'event'},{
+        Docs.find {
+            type:'event'
+            parent_id:FlowRouter.getQueryParam('doc_id')
+            },{
             sort:"timestamp":-1
             }
 

@@ -41,16 +41,17 @@ Template.small_doc_history.helpers
 
 
 Template.full_doc_history.onCreated ->
-    @autorun =>  Meteor.subscribe 'child_docs', @data._id
+    @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getQueryParam('doc_id')
     @autorun =>  Meteor.subscribe 'type', 'event_type'
 
 
 Template.event.onCreated ->
     @autorun =>  Meteor.subscribe 'user_profile', @data.author_id
+    @autorun =>  Meteor.subscribe 'doc', @data.parent_id
 Template.full_doc_history.helpers
     doc_history_events: ->
         Docs.find {
-            parent_id: Template.currentData()._id
+            parent_id: FlowRouter.getQueryParam('doc_id')
             type:'event'
         }, sort:timestamp:-1
 

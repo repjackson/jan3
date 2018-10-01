@@ -34,15 +34,9 @@ template(name='users_feed')
 
 
 template(name='full_doc_history')
-    .ui.secondary.segment
-        .ui.header
-            +icon name='activity-feed'
-            |Events
-            // if is_admin
-            //     small#clear_events (x)
-        .ui.feed
-            each doc_history_events
-                +event
+    .ui.feed
+        each doc_history_events
+            +event
 
 template(name='event')
     .event
@@ -74,7 +68,7 @@ template(name='event')
                     i.remove_event.remove.link.icon
                 a(href="/p/ticket_admin_view?doc_id=#{parent_id}")
                     i.ticket.icon
-                    |Ticket
+                    |Ticket ##{parent.ticket_number}
 
 
 template(name='small_doc_history')
