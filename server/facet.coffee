@@ -1,6 +1,7 @@
 Meteor.publish 'facet', (
     selected_levels
     selected_timestamp_tags
+    selected_customers
     type
     )->
 
@@ -10,7 +11,8 @@ Meteor.publish 'facet', (
         match.type = 'ticket'
         console.log selected_timestamp_tags
 
-        # if selected_tags.length > 0 then match.tags = $all: selected_tags
+        if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags
+        if selected_customers.length > 0 then match.customer_name = selected_customers[0]
 
         console.log 'match:', match
 
@@ -66,6 +68,38 @@ Meteor.publish 'facet', (
             self.added 'timestamp_tags', Random.id(),
                 name: timestamp_tag.name
                 count: timestamp_tag.count
+                index: i
+
+        level_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: level: 1 }
+            { $group: _id: '$level', count: $sum: 1 }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
+        level_cloud.forEach (level, i) ->
+            self.added 'levels', Random.id(),
+                name: level.name
+                count: level.count
+                index: i
+
+
+
+        customer_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: customer_name: 1 }
+            { $group: _id: '$customer_name', count: $sum: 1 }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
+        customer_cloud.forEach (customer, i) ->
+            self.added 'customers', Random.id(),
+                name: customer.name
+                count: customer.count
                 index: i
 
 

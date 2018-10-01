@@ -4,8 +4,9 @@
 Template.ticket_facet.onCreated ->
     @autorun =>
         Meteor.subscribe('facet',
-            selected_levels.array()
+            selected_customers.array()
             selected_timestamp_tags.array()
+            selected_customers.array()
             type='ticket'
             )
         Meteor.subscribe 'usernames'

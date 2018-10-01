@@ -41,18 +41,6 @@ Template.tag_facet.helpers
         return button_class
 
     selected_tags: -> selected_tags.array()
-    settings: -> {
-        position: 'bottom'
-        limit: 10
-        rules: [
-            {
-                collection: Tags
-                field: 'name'
-                matchAll: false
-                template: Template.tag_result
-            }
-        ]
-    }
 
 
 

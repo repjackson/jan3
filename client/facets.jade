@@ -12,13 +12,30 @@ template(name='tag_facet')
     .ui.header
         |Tags
     if selected_tags
-        #clear_tags.ui.big.icon.active.button
+        #clear_tags.ui.icon.active.button
             i.remove.icon
         each selected_tags
             .unselect_tag.ui.active.button
                 strong #{this}
     each tags
         .ui.button.select_tag(class=tag_class)
+            strong #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+    // +highchartsHelper(chartId='cloud_chart' chartWidth='100%' charHeight='100%' chartObject=cloud_object)
+
+template(name='customer_facet')
+    .ui.header
+        |Customers
+    if selected_customers
+        #clear_customers.ui.icon.active.button
+            i.remove.icon
+        each selected_customers
+            .unselect_customer.ui.active.button
+                strong #{this}
+    each customers
+        .ui.button.select_customer(class=customer_class)
             strong #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
@@ -125,12 +142,27 @@ template(name='ticket_facet')
     .ui.grid
         .four.wide.column
             +level_facet
+            +customer_facet
             +timestamp_facet
         .twelve.wide.column
             .ui.header Tickets
-            .ui.list
+            .ui.three.cards
                 each tickets
-                    .item ##{ticket_number} #{ticket_details}
+                    .card
+                        .content
+                            .right.floated
+                                +level_icon
+                            .header ##{ticket_number}
+                        .content
+                            p #{ticket_details}
+                            .ui.list
+                                .item Office: #{ticket_office_name}
+                                .item Customer: #{customer_name}
+                                .item Open #{open}
+                            each timestamp_tags
+                                .ui.compact.label #{this}
+                            +when_template
+
 
 template(name='level_facet')
     .ui.header

@@ -2,6 +2,7 @@
 @Stats = new Meteor.Collection 'stats'
 @Levels = new Meteor.Collection 'levels'
 @Timestamp_tags = new Meteor.Collection 'timestamp_tags'
+@Customers = new Meteor.Collection 'customers'
 
 
 
