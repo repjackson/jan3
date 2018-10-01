@@ -72,7 +72,8 @@ Docs.helpers
             calc = moment.duration(response).humanize()
             calc
     parent: -> Docs.findOne @parent_id
-    customer: -> Docs.findOne @customer_id
+    customer: -> Docs.findOne @customer_jpid
+    office: -> Docs.findOne @office_jpid
     comment_count: -> Docs.find({type:'comment', parent_id:@_id}).count()
     # notified_users: ->
     #     Meteor.users.find

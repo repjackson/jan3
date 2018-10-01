@@ -73,7 +73,7 @@ template(name='ticket_status')
         with ticket
             +status_template
         |Status:
-        if open
+        if ticket.open
             |open
         else
             |closed

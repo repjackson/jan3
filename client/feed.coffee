@@ -6,23 +6,19 @@ Template.users_feed.onCreated ->
 Template.users_feed.helpers
     user_feed_events: ->
         Docs.find {type:'event'}, sort:timestamp:-1
-Template.users_feed_event.events
-    'click .remove_event': ->
-        if confirm 'Delete User Event?'
-            Docs.remove @_id
 
 
-Template.feed.onCreated ->
+Template.global_feed.onCreated ->
     @autorun => Meteor.subscribe 'type', 'event', 10
 
-Template.feed.helpers
+Template.global_feed.helpers
     feed_events: ->
         context = Template.currentData()
         # Docs.find {type:'event', doc_type:context.doc_type}, sort:timestamp:-1
         Docs.find {type:'event'}, sort:timestamp:-1
 
 
-Template.feed.events
+Template.global_feed.events
     'click .remove_event': ->
         if confirm 'Delete Event?'
             Docs.remove @_id
@@ -49,7 +45,7 @@ Template.full_doc_history.onCreated ->
     @autorun =>  Meteor.subscribe 'type', 'event_type'
 
 
-Template.doc_history_event.onCreated ->
+Template.event.onCreated ->
     @autorun =>  Meteor.subscribe 'user_profile', @data.author_id
 Template.full_doc_history.helpers
     doc_history_events: ->
@@ -61,11 +57,11 @@ Template.full_doc_history.helpers
 
 
 
-Template.doc_history_event.events
+Template.event.events
     'click .remove_event': ->
         Docs.remove @_id
 
-Template.doc_history_event.helpers
+Template.event.helpers
     is_escalation: -> @event_type is 'escalate'
 
 

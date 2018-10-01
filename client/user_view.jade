@@ -129,9 +129,9 @@ template(name='users_docs')
 
 
 template(name='user_events')
-    .ui.comments
+    .ui.feed
         each user_events
-            +doc_history_event
+            +event
 
 
 
@@ -176,12 +176,21 @@ template(name='user_view_comments')
                         i.user.icon
                 .content
                     a.author(href="/user/#{author.username}") #{author.username}
-                    .metadata
-                        span.date #{when}
                     .text
                         p #{text}
-                    .actions
+                    .metadata
+                        span.date #{when}
                         // a.reply Reply
                         unless is_customer
                             a.delete_comment
                                 i.trash.link.icon
+                        if customer_jpid
+                            a(href="/p/office?jpid=#{customer_jpid}")
+                                i.money.icon(title="Customer #{customer_jpid}")
+                                |#{customer.EV.CUST_NAME}
+                        if office_jpid
+                            a(href="/p/office?jpid=#{office_jpid}")
+                                i.building.icon(title="Office #{office_jpid}")
+                                |#{office.EV.MASTER_LICENSEE}
+                        if editing_mode
+                            i.remove_event.remove.link.icon

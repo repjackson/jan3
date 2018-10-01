@@ -65,6 +65,9 @@ if Meteor.isClient
                         type:'comment'
                         text:comment
                         parent_id: current_doc_id
+                        customer_jpid:Meteor.user().customer_jpid
+                        office_jpid:Meteor.user().office_jpid
+
         'click .delete_comment': ->
             if confirm 'delete comment?'
                 Docs.remove @_id

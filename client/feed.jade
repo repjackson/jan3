@@ -28,53 +28,9 @@ template(name='users_feed')
     h1.ui.header
         +icon name='rss'
         | Users Feed
-    .ui.comments
+    .ui.feed
         each feed_events
-            +doc_history_event
-
-
-template(name='users_feed_event')
-    .event
-        .label
-            img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
-        .content
-            .summary
-                a.user #{author.username}
-                |#{action} #{text}
-                a(href="/v/#{parent._id}") #{parent.title}
-                .date #{when}
-            .meta
-                +mark_read_link
-                if is_dev
-                    i.remove_event.remove.link.icon
-
-
-
-template(name='event')
-    // .event
-    //     .label
-    //         img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
-    //     .content
-    //         .summary
-    //             a.user #{author.username}
-    //             |#{action} #{text}
-    //             a(href="/v/#{parent._id}") #{parent.title}
-    //             .date #{when}
-    //         .meta
-    //             // +mark_read_link
-    .comment
-        .avatar
-            // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
-            +icon name=event_icon_name
-        .content
-            if show_author
-                a.user #{author.username}
-            .metadata
-                .date {{ long_format timestamp }}
-            .text #{action} #{text}
-            .actions
-                if is_dev
-                    i.remove_event.remove.link.icon
+            +event
 
 
 template(name='full_doc_history')
@@ -84,13 +40,13 @@ template(name='full_doc_history')
             |Events
             // if is_admin
             //     small#clear_events (x)
-        .ui.comments
+        .ui.feed
             each doc_history_events
-                +doc_history_event
+                +event
 
-template(name='doc_history_event')
-    .comment
-        .avatar
+template(name='event')
+    .event
+        .label
             // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
             if is_escalation
                 +level_icon
@@ -99,12 +55,12 @@ template(name='doc_history_event')
             else
                 +icon name='commit-git'
         .content
-            .text #{action} #{text}
-            .metadata
-                .date(title="{{ long_format timestamp }}") #{when}
+            .summary #{action} #{text}
+            .meta
+                span(title="{{ long_format timestamp }}") #{when}
                 if editing_mode
-                    .rating(title='Event Type') #{event_type}
-                    .id #{parent_id}
+                    span(title='Event Type') #{event_type}
+                    span #{parent_id}
                 if author_id
                     i.user.icon(title='Author')
                     a.user(href="/p/user_view?username=#{author.username}") #{author.username}
@@ -137,22 +93,28 @@ template(name='small_history_event')
 
 
 
-template(name='feed')
+template(name='global_feed')
     .ui.feed
         each feed_events
-            +feed_event
+            +event
 
-template(name='feed_event')
-    .event
-        .label
-            if icon
-                i.icon(class=event_type.icon)
+
+template(name='doc_history_event')
+    .comment
+        .avatar
+            // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            +icon name=event_type_doc.icon
         .content
-            .summary
-                |#{text} #{action} #{body}
+            if show_author
                 a.user #{author.username}
-                .date #{when}
-            .meta
-                a.like Office
-                a.like Ticket
-                a.like Customer
+            .metadata
+                .date {{ reg_format timestamp }}
+                .rating(title='Event Type') #{event_type}
+                i.building.icon(title='Office')
+                i.money.icon(title='Customer')
+                i.user.icon(title='Author')
+            .text #{action} #{text}
+            .actions
+                if is_dev
+                    i.remove_event.remove.link.icon
+

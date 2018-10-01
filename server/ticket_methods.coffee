@@ -159,37 +159,13 @@ Meteor.methods
                 customer_jpid:ticket.customer_jpid
                 level:next_level
                 ticket_id:ticket_id
-                text:"#{hours_elapsed} hours have elapsed, more than #{hours_value} in level #{next_level} '#{ticket_type.title}' rules, escalating."
+                text:"#{hours_elapsed} hours have elapsed, more than #{hours_value} in level #{next_level} '#{ticket_type.title}' rules, escalating to #{next_level}."
             Meteor.call 'escalate_ticket', ticket._id, ->
             console.log 'ESCALATING', ticket._id
         else
             console.log 'not escalating', ticket_id
 
 
-    escalate_ticket: (doc_id)->
-        ticket = Docs.findOne doc_id
-        current_level = ticket.level
-        if current_level > 3
-            Docs.update doc_id,
-                $set:level:current_level-1
-        else
-            next_level = current_level + 1
-            Docs.update doc_id,
-                $set:
-                    level:next_level
-                    updated: Date.now()
-            Docs.insert
-                type:'event'
-                parent_id:ticket_id
-                event_type:'escalate'
-                text:"Automatic escalation from #{current_level} to #{next_level}."
-                office_jpid:ticket.office_jpid
-                customer_jpid:ticket.customer_jpid
-                level:next_level
-                ticket_id:ticket_id
-
-
-            Meteor.call 'notify_about_escalation', doc_id
 
 
     clear_ticket_events: (ticket_id)->
@@ -504,25 +480,31 @@ Meteor.methods
         Meteor.call 'send_email', mail_fields
 
 
-    escalate_ticket: (ticket_id)->
-        ticket = Docs.findOne ticket_id
+
+    escalate_ticket: (doc_id)->
+        ticket = Docs.findOne doc_id
         current_level = ticket.level
         if current_level > 3
-            Docs.update ticket_id,
+            Docs.update doc_id,
                 $set:level:current_level-1
         else
             next_level = current_level + 1
-            Docs.update ticket_id,
+            Docs.update doc_id,
                 $set:
                     level:next_level
                     updated: Date.now()
-            Docs.insert
-                type:'event'
-                event_type:'escalate'
-                parent_id:ticket_id
-                text:"Automatic escalation from #{current_level} to #{next_level}."
+            # Docs.insert
+            #     type:'event'
+            #     parent_id:ticket_id
+            #     event_type:'escalate'
+            #     text:"Escalation from #{current_level} to #{next_level}."
+            #     office_jpid:ticket.office_jpid
+            #     customer_jpid:ticket.customer_jpid
+            #     level:next_level
+            #     ticket_id:ticket_id
 
-            Meteor.call 'notify_about_escalation', ticket_id
+
+            Meteor.call 'notify_about_escalation', doc_id
 
 
     clear_ticket_events: (ticket_id)->
