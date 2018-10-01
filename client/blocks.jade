@@ -104,7 +104,7 @@ template(name='view_full_button')
 template(name='ticket_assignment_cell')
     // td(class=ticket_assignment_cell_class)
     if overdue
-        +icon name='expired' classes='inline' title='Over 5 Hours'
+        +iconsmall name='expired' classes='inline' title='Over 5 Hours'
     if response
         |#{response}
     .ui.list
@@ -155,7 +155,7 @@ template(name='iconlarge')
     img.ui.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png")
 
 template(name='iconsmall')
-    img.ui.inline.image(src="https://png.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes)
+    img.ui.inline.image(src="https://png.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes title=title)
 
 template(name='message_button')
     .ui.message
@@ -178,29 +178,6 @@ template(name='user_card')
             h5 #{ev.COMPANY_NAME}
             h5 #{ev.EMAIL}
 
-template(name='customer_card')
-    .ui.card
-        with customer_doc
-            .content
-                a.ui.header(href="/p/customer?doc_id=#{_id}")
-                    +icon name='headset'
-                    |Customer Account
-            .content
-                a(href="/v/#{_id}")
-                    h4.ui.header #{ev.CUST_NAME}
-                .ui.list
-                    .item ##{ev.ID}
-                    .item #{ev.CUST_CONT_PERSON}
-                    .item #{ev.CUST_CONTACT_EMAIL}
-                    .item #{ev.TELEPHONE}
-                    .item #{ev.ADDR_STREET}
-                    .item #{ev.ADDR_STREET_2}
-                    .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-            // .content
-            //     div Franchisee
-            //         strong #{ev.FRANCHISEE}
-            //     div Office
-            //         strong #{ev.MASTER_LICENSEE}
 
 template(name='office_card')
     .ui.card

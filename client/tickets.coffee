@@ -39,6 +39,34 @@ Template.ticket_type_label.helpers
             when 'special_request' then 'carpet-cleaning'
             when 'other' then 'grey'
 
+Template.ticket_type_small.helpers
+    ticket_type_label: ->
+        switch @ticket_type
+            when 'missed_service' then 'Missed Service'
+            when 'team_member_infraction' then 'Team Member Infraction'
+            when 'change_service' then 'Request a Change of Service'
+            when 'problem' then 'Report a Problem or Service Issue'
+            when 'special_request' then 'Request a Special Service'
+            when 'other' then 'Other'
+
+    type_label_class: ->
+        switch @ticket_type
+            when 'missed_service' then 'blue'
+            when 'team_member_infraction' then 'green'
+            when 'change_service' then 'teal'
+            when 'problem' then 'yellow'
+            when 'special_request' then 'orange'
+            when 'other' then 'grey'
+
+    ticket_type_icon: ->
+        switch @ticket_type
+            when 'missed_service' then 'leave'
+            when 'team_member_infraction' then 'unfriend-male'
+            when 'change_service' then 'transfer-between-users'
+            when 'problem' then 'box-important'
+            when 'special_request' then 'carpet-cleaning'
+            when 'other' then 'grey'
+
 Template.level_icon.helpers
     is_level_one: -> @level is 1
     is_level_two: -> @level is 2
@@ -214,7 +242,6 @@ Template.complete_ticket_task.events
     'click .submit_completion_task': (e,t)->
         completion_details = t.$('#completion_details').val()
         unassigned_username = FlowRouter.getQueryParam 'unassign'
-        console.log completion_details
         ticket_id = FlowRouter.getQueryParam('doc_id')
         Meteor.call 'complete_ticket_task', ticket_id, unassigned_username, completion_details, (err,res)->
             if err then console.error err

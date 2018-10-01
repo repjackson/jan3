@@ -41,22 +41,6 @@ template(name='user_view')
                     +user_events
                     // +users_docs
                 .four.wide.column
-                    .ui.secondary.segment
-                        .ui.header
-                            +icon name='contacts'
-                            | Contact
-                        .ui.header Phone: #{ev.TELE_CELL} #{phone}
-                        .ui.header Role
-                            each roles
-                                .ui.basic.label #{this}
-                    if ev
-                        +user_ev_info
-                    if customer_jpid
-                        +customer_card
-                    if franchisee_jpid
-                        +franchisee_card
-                    if office_jpid
-                        +office_card
 
 
 template(name='user_ev_info')
@@ -145,14 +129,59 @@ template(name='users_docs')
 
 
 template(name='user_events')
+    .ui.comments
+        each user_events
+            +doc_history_event
+
+
+
+
+template(name='user_view_office_card')
     .ui.secondary.segment
-        .ui.header
-            +icon name='clock'
-            | Events
-        .ui.comments
-            each user_events
-                +doc_history_event
+        with office_doc
+            .content
+                if is_customer
+                    .ui.header
+                        +icon name='building'
+                        |Office
+                else
+                    a(href="/p/office_tickets/#{ev.ID}")
+                        .ui.header
+                            +icon name='building'
+                            |Office
+            .content
+                if is_customer
+                    h4.ui.header #{ev.MASTER_LICENSEE}
+                else
+                    a(href="/p/office_tickets/#{ev.ID}")
+                        h4.ui.header #{ev.MASTER_LICENSEE}
+                // div ##{ev.ID}
+                div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2}
+                div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                div
+                    a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
 
 
 
 
+template(name='user_view_comments')
+    .ui.comments
+        each comment_docs
+            .comment
+                a.avatar(href="/user/#{author.username}")
+                    if author.image_id
+                        img.ui.avatar.spaced.image(src="{{c.url author.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    else
+                        i.user.icon
+                .content
+                    a.author(href="/user/#{author.username}") #{author.username}
+                    .metadata
+                        span.date #{when}
+                    .text
+                        p #{text}
+                    .actions
+                        // a.reply Reply
+                        unless is_customer
+                            a.delete_comment
+                                i.trash.link.icon

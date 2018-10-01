@@ -19,12 +19,8 @@ Meteor.publish 'block_children', (
     query_params
     doc_id
     )->
-        console.log block_doc_id
         block = Docs.findOne block_doc_id
         collection = if block.children_collection is 'users' then "Meteor.users" else "Docs"
-        # console.log 'collection', collection
-        # console.log block.filter_source
-        # console.log query_params
         if block.filter_source
             if block.filter_source is "{page_slug}"
                 filter_source_doc = Docs.findOne "ev.ID":page_jpid
@@ -33,14 +29,10 @@ Meteor.publish 'block_children', (
             else if block.filter_source is "{current_user}"
                 filter_source_doc = Meteor.user()
         if page_jpid
-            # console.log 'found page', page_jpid
             doc_object = Docs.findOne "ev.ID":page_jpid
-            # console.log 'doc_ob', doc_object
         else if doc_id
             doc_object = Docs.findOne doc_id
-            # console.log 'doc_object', doc_object
         # else
-        #     console.log 'no doc_object'
 
         match = {}
         unless block.children_collection is 'users'
@@ -48,7 +40,6 @@ Meteor.publish 'block_children', (
         if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
         if query then match["$text"] = "$search":query
         # if block.children_doc_type is 'event'
-            # console.log filter_key
         calculated_value =
             switch filter_value
                 when "{source_key}"
@@ -58,19 +49,13 @@ Meteor.publish 'block_children', (
                         else
                             result = filter_source_doc["#{block.filter_source_key}"]
                         # if block.children_doc_type is 'event'
-                            # console.log 'looking up', block.filter_source_key
-                            # console.log 'from', filter_source_doc
-                            # console.log 'result', result
                         result
                     else
-                        console.log 'no filter source doc for block id', block_doc_id
                 when "{current_user_customer_name}"
-                    # console.log 'cust name'
                     if Meteor.user()
                         found_customer = Docs.findOne
                             type:'customer'
                             "ev.ID":Meteor.user().customer_jpid
-                        # console.log found_customer
                         found_customer.ev.CUST_NAME
                 when "{current_user_office_name}"
                     if Meteor.user()
@@ -104,7 +89,6 @@ Meteor.publish 'block_children', (
                         if doc_object.ev.CUST_NAME.length is 0
                             @stop()
                 when "{current_page_office_name}"
-                    # console.log 'office name', doc_object.ev.MASTER_LICENSEE
                     # if doc_object
                     #     if doc_object.ev.MASTER_LICENSEE.length > 0
                     #         doc_object.ev.MASTER_LICENSEE
@@ -120,8 +104,6 @@ Meteor.publish 'block_children', (
                 else filter_value
         if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
         # if block.children_doc_type is 'event'
-        #     console.log 'filter_value', filter_value
-        #     console.log 'calc', calculated_value
         user = Meteor.user()
 
         if block.children_collection
@@ -132,14 +114,9 @@ Meteor.publish 'block_children', (
 
         if -1 > limit > 100
             limit = 100
-        # console.log 'match', match
 
         if block.context is 'link'
-            # console.log 'source_key', block.source_key
-            # console.log 'target_key', block.target_key
-            # console.log 'using', query_params[block.query_param1]
             match = "#{block.source_key}": query_params["#{block.query_param1}"]
-            # console.log 'match', match
             if block.source_collection is 'users'
                 source =
                     Meteor.users.findOne match
@@ -149,31 +126,23 @@ Meteor.publish 'block_children', (
                         type: block.children_doc_type
                         # fix
                         # "#{block.target_key}":
-            # console.log 'source', source
             source_value = source["#{block.source_match_key}"]
-            # console.log 'source value', source_value
             source_match = {}
             source_match["#{block.target_key}"] = source_value
             source_match.type = block.source_match_type
-            console.log source_match
             if block.target_collection is 'docs'
                 cursor = Docs.find source_match
-                console.log cursor.fetch()
                 return cursor
                 @stop
 
         else if block.context is 'direct'
             match = query_params
         if block.children_collection is 'users'
-            # console.log 'users'
-            # console.log 'match', match
-            # console.log 'sort key', sort_key
             cursor = Meteor.users.find match,{
                 skip: skip
                 limit:limit
                 sort:"#{sort_key}":parseInt("#{sort_direction}")
             }
-            # console.log 'count', cursor.count()
             cursor
 
         else

@@ -11,8 +11,12 @@ template(name='level_icon')
 
 template(name='ticket_type_label')
     if ticket_type_label
-        +icon name=ticket_type_icon popup=ticket_type_label classes='inline'
+        +iconsmall name=ticket_type_icon popup=ticket_type_label classes='inline'
         | &nbsp; #{ticket_type_label}
+
+template(name='ticket_type_small')
+    if ticket_type_label
+        +iconsmall name=ticket_type_icon title=ticket_type_label classes='inline'
 
 
 

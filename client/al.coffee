@@ -71,8 +71,6 @@ Template.block.onCreated ->
     @page_size = new ReactiveVar(10)
     @skip = new ReactiveVar(0)
 
-    # console.log FlowRouter.current()
-
     if @data.limit
         @limit = new ReactiveVar(parseInt(@data.limit))
         @page_size = new ReactiveVar(parseInt(@data.limit))
@@ -93,18 +91,19 @@ Template.block.onCreated ->
     query_params = FlowRouter.current().queryParams
 
     @autorun -> Meteor.subscribe 'stat', match_object
-    @autorun => Meteor.subscribe 'block_children',
-        @data._id,
-        @data.filter_key,
-        @data.filter_value,
-        Session.get('query'),
-        @page_size.get(),
-        @sort_key.get(),
-        @sort_direction.get(),
-        @skip.get(),
-        @data.filter_status,
-        FlowRouter.getParam('jpid'),
-        query_params
+    @autorun =>
+        Meteor.subscribe 'block_children',
+            @data._id,
+            @data.filter_key,
+            @data.filter_value,
+            Session.get('query'),
+            @page_size.get(),
+            @sort_key.get(),
+            @sort_direction.get(),
+            @skip.get(),
+            @data.filter_status,
+            FlowRouter.getParam('jpid'),
+            query_params
     @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
     @autorun => Meteor.subscribe 'block_field_docs', @data._id
 
@@ -292,6 +291,7 @@ Template.edit_block.helpers
             Docs.findOne({
                 type:'schema'
                 slug:parent.children_doc_type
+                block_id:parent._id
             }).fields
         block_fields = Docs.find(type:'display_field').fetch()
         selected_keys = _.pluck block_fields, 'key'
@@ -305,8 +305,6 @@ Template.edit_block.helpers
             slug: block_doc.children_doc_type
         if schema_doc
             schema_doc.fields
-
-
 
     values: ->
         schema_doc = Docs.findOne
@@ -335,7 +333,6 @@ Template.edit_block.helpers
     display_field_value: ->
         display_field = Template.parentData(1)
         display_field["#{@slug}"]
-
 
     field_docs: ->
         Docs.find {

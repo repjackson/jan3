@@ -9,9 +9,7 @@ Template.nav.onCreated ->
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->
-        $('.dropdown').dropdown(
-            transition:'drop'
-            )
+        $('.dropdown').dropdown()
     , 500
 
 

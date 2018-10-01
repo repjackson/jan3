@@ -99,19 +99,21 @@ template(name='doc_history_event')
             else
                 +icon name='commit-git'
         .content
-            if show_author
-                a.user #{author.username}
             .text #{action} #{text}
             .metadata
-                // .date {{ long_format timestamp }}
                 .date(title="{{ long_format timestamp }}") #{when}
                 if editing_mode
                     .rating(title='Event Type') #{event_type}
                     .id #{parent_id}
-                // i.building.icon(title='Office')
-                // i.money.icon(title='Customer')
-                // i.user.icon(title='Author')
-            .actions
+                if author_id
+                    i.user.icon(title='Author')
+                    a.user(href="/p/user_view?username=#{author.username}") #{author.username}
+                if customer_jpid
+                    i.money.icon(title='Customer')
+                    |#{customer.EV.CUST_NAME}
+                if office_jpid
+                    i.building.icon(title='Office')
+                    |#{office.EV.MASTER_LICENSEE}
                 if editing_mode
                     i.remove_event.remove.link.icon
 

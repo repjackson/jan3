@@ -5,8 +5,6 @@ FlowRouter.route '/user/edit/:user_id', action: (params) ->
 Template.user_edit.onCreated ->
     @autorun -> Meteor.subscribe 'user_profile', FlowRouter.getParam('user_id')
 
-# Template.user_edit.onRendered ->
-#     console.log Meteor.users.findOne(FlowRouter.getParam('user_id'))
 
 Template.user_edit.helpers
     edit_user: -> Meteor.users.findOne FlowRouter.getParam('user_id')
