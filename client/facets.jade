@@ -1,0 +1,151 @@
+template(name='boolean_facet')
+    .ui.header filter #{key}
+    .pick_yes.ui.button yes
+    .pick_no.ui.button no
+
+
+template(name='tag_facet')
+    // .ui.left.icon.small.fluid.input
+    //     i.search.icon
+    //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Tags...'
+    // |&nbsp;
+    .ui.header
+        |Tags
+    if selected_tags
+        #clear_tags.ui.big.icon.active.button
+            i.remove.icon
+        each selected_tags
+            .unselect_tag.ui.active.button
+                strong #{this}
+    each tags
+        .ui.button.select_tag(class=tag_class)
+            strong #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+    // +highchartsHelper(chartId='cloud_chart' chartWidth='100%' charHeight='100%' chartObject=cloud_object)
+
+
+template(name='ancestor_facet')
+    // .ui.left.icon.small.inline.input
+    //     i.search.icon
+    //     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+    // |&nbsp;
+    // .ui.header ancestors
+    // if selected_ancestor_ids
+    //     #clear_ancestor_ids.ui.icon.button
+    //         i.remove.icon
+    //     each selected_ancestor_ids
+    //         .unselect_ancestor_id.ui.large.button
+    //             strong #{this}
+    each ancestors
+        // a.ui.button.select_ancestor_id(class=ancestor_id_class)
+        .ui.button.select_ancestor_id
+            // strong #{this.name}
+            strong #{title}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+template(name='location_facet')
+    // div
+    // +mini_inline_sprite name='marker'
+    .ui.left.icon.inline.input
+        i.compass.icon
+        +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Search...'
+    |&nbsp;
+    if selected_location_tags
+        #clear_location_tags.ui.icon.active.button
+            i.remove.icon
+        each selected_location_tags
+            .unselect_location_tag.ui.active.button
+                strong #{this}
+    each location_tags
+        .ui.compact.button.select_location_tag(class=location_tag_class)
+            strong #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+template(name='timestamp_facet')
+    div
+    // +mini_inline_sprite name='timer'
+    // if timestamp_tags
+    //     .ui.left.icon.fluid.input
+    //         i.clock.icon
+    //         +inputAutocomplete settings=settings id="search" class="" autocomplete="off" placeholder='Time Tags'
+    |&nbsp;
+    if selected_timestamp_tags
+        #clear_timestamp_tags.ui.icon.active.button
+            i.remove.icon
+        each selected_timestamp_tags
+            .unselect_timestamp_tag.ui.active.button
+                strong #{this}
+    each timestamp_tags
+        .ui.compact.button.select_timestamp_tag(class=timestamp_tag_class)
+            strong #{this.name}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+
+template(name='username_facet')
+    .ui.header
+        i.users.icon
+        | Authors
+    if selected_author_ids
+        #clear_authors.ui.icon.button
+            i.remove.icon
+        each selected_author_ids
+            .unselect_author.ui.large.button
+                strong #{this}
+    each author_tags
+        .ui.button.select_author(class=cloud_tag_class)
+            img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            strong #{username}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+template(name='parent_facet')
+    .ui.header
+        // img(src="https://png.icons8.com/color/100/000000/couple-man-woman.png")
+        | parent docs
+    if selected_parent_ids
+        #clear_parents.ui.icon.button
+            i.remove.icon
+        each selected_parent_ids
+            .unselect_parent.ui.large.button
+                strong #{this}
+    each available_parent_docs
+        .ui.button.select_author(class=cloud_tag_class)
+            | #{title}
+            // if isInRole 'admin'
+            //     small #{this.count}
+    // .ui.divider
+
+
+template(name='ticket_facet')
+    .ui.grid
+        .four.wide.column
+            +level_facet
+            +timestamp_facet
+        .twelve.wide.column
+            .ui.header Tickets
+            .ui.list
+                each tickets
+                    .item ##{ticket_number} #{ticket_details}
+
+template(name='level_facet')
+    .ui.header
+        |levels
+    if levels
+        #clear_levels.ui.icon.button
+            i.remove.icon
+        each levels
+            .unselect_level.ui.large.button
+                strong #{this}
+    each levels
+        .ui.button.select_level(class=cloud_tag_class)
+            | #{this.title}
+            small #{this.count}
+
+
+template(name='tag_result')
+    .three.wide.column #{title} #{office_name} #{name}
