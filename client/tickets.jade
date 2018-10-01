@@ -128,3 +128,12 @@ template(name='feedback_widget')
 template(name='ticket_close_user_info')
     with completing_user
         .ui.header #{ev.FIRST_NAME} #{ev.LAST_NAME} @#{username}
+
+
+
+template(name='office_ticket_widget')
+    with page_office
+        .ui.header #{ev.MASTER_LICENSEE} Ticket Overview
+    each rules
+        .select_type.ui.button #{title}
+    |office_total_active_customers #{office_total_active_customers.count}

@@ -251,10 +251,24 @@ Template.complete_ticket_task.events
 Template.ticket_close_user_info.onCreated ()->
     unassign_username = FlowRouter.getQueryParam 'unassign'
     @autorun => Meteor.subscribe 'user', unassign_username
-
 Template.ticket_close_user_info.helpers
     completing_user: ->
         unassign_username = FlowRouter.getQueryParam 'unassign'
         Meteor.users.findOne username:unassign_username
 
 
+
+Template.office_ticket_widget.onCreated ()->
+    @autorun => Meteor.subscribe 'jpid', FlowRouter.getQueryParam 'jpid'
+    @autorun => Meteor.subscribe 'type', 'rule'
+    @autorun => Meteor.subscribe 'office_stats', FlowRouter.getQueryParam 'jpid'
+
+Template.office_ticket_widget.helpers
+    page_office: ->
+        Docs.findOne
+            "ev.ID": FlowRouter.getQueryParam 'jpid'
+    rules: -> Docs.find {type:'rule'}, sort:number:-1
+
+    office_total_active_customers: ->
+        stat = Stats.findOne
+            name:'office_total_active_customers'

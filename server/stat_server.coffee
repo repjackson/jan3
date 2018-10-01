@@ -23,6 +23,13 @@ Meteor.publish 'all_users_count', ()->
         stat_type: 'total'
 
 
+Meteor.publish 'office_stats', (jpid)->
+    Meteor.call 'calculate_office_stats', jpid
+    Stats.find
+        office_jpid: jpid
+
+
+
 
 Meteor.publish 'office_employee_count', (office_jpid)->
     user = Meteor.user()
@@ -109,4 +116,36 @@ Meteor.methods
             count =
                 Docs.find(count_match_object).count()
             Stats.update(stat_match_object, { $set:amount:count },{ upsert:true })
+
+
+    calculate_office_stats: (jpid)->
+        office_doc =
+            Docs.findOne
+                "ev.ID":jpid
+                type:'office'
+        if office_doc
+            console.log office_doc.ev
+            customer_count_query = {
+                "ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE
+                type:'customer'
+            }
+            customer_count =
+                Docs.find(customer_count_query).count()
+            console.log 'customer count for',jpid, customer_count
+
+            stat_match_object = customer_count_query
+            stat_match_object['name'] = 'office_total_active_customers'
+            stat_match_object['office_jpid'] = jpid
+            Stats.update(stat_match_object,
+                { $set:count:customer_count },
+                { upsert:true })
+            stat = Stats.findOne stat_match_object
+            console.log 'stat?', stat
+
+        # franchisee count
+        # ticket count per level
+        # rank customers per ticket level/type
+
+
+
 
