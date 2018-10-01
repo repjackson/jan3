@@ -137,9 +137,15 @@ template(name='office_ticket_widget')
     // each rules
     //     .select_type.ui.button #{title}
     .ui.list
-        .item Total Customers #{office_total_active_customers.count}
-        .item Total Franchisees #{office_total_active_franchisees.count}
-        .item Level 1 Tickets #{office_level_1_tickets.count}
-        .item Level 2 Tickets #{office_level_2_tickets.count}
-        .item Level 3 Tickets #{office_level_3_tickets.count}
-        .item Level 4 Tickets #{office_level_4_tickets.count}
+        .item Total Customers
+            +count_view name='office_total_active_customers'
+        .item Total Franchisees
+            +count_view name='office_total_active_franchisees'
+        .item Level 1 Tickets
+            +count_view name='office_level_1_tickets'
+        .item Level 2 Tickets
+            +count_view name='office_level_2_tickets'
+        .item Level 3 Tickets
+            +count_view name='office_level_3_tickets'
+        .item Level 4 Tickets
+            +count_view name='office_level_4_tickets'

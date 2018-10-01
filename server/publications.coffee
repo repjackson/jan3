@@ -144,7 +144,13 @@ Meteor.publish 'block_children', (
                 sort:"#{sort_key}":parseInt("#{sort_direction}")
             }
             cursor
-
+        else if block.children_collection is 'stats'
+            cursor = Stats.find match,{
+                skip: skip
+                limit:limit
+                sort:"#{sort_key}":parseInt("#{sort_direction}")
+            }
+            cursor
         else
             Docs.find match,{
                 skip: skip

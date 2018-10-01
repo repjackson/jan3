@@ -14,6 +14,11 @@ Meteor.publish 'count', (type)->
         doc_type: type
         stat_type: 'total'
 
+Meteor.publish 'admin_stats', ()->
+    Meteor.call 'calculate_admin_stats'
+    Stats.find
+        stat_type: 'admin'
+
 
 
 Meteor.publish 'all_users_count', ()->
@@ -193,3 +198,33 @@ Meteor.methods
 
 
 
+    calculate_admin_stats: ->
+        types = ['customer','office','franchisee','ticket']
+        for doc_type in types
+            current_query = {type:doc_type}
+            total_count = Docs.find(current_query).count()
+
+            stat_match_object = current_query
+            stat_match_object['stat_type'] = 'admin'
+            stat_match_object['name'] = "total_#{doc_type}s"
+
+            Stats.update(stat_match_object,
+                { $set:count:total_count },
+                { upsert:true })
+
+
+
+    log_stats: ->
+        types = ['customer','office','franchisee','ticket']
+        for doc_type in types
+            current_query = {type:doc_type}
+            total_count = Docs.find(current_query).count()
+
+            stat_log_object = current_query
+            stat_log_object['type'] = 'stat_log'
+            stat_log_object['name'] = "total_#{doc_type}s"
+            stat_log_object['count'] = total_count
+            stat_log_object['timestamp'] = Date.now()
+
+            # console.log 'inserting stat log', stat_log_object
+            Stats.insert(stat_log_object)

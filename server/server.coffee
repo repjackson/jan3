@@ -56,6 +56,13 @@ Meteor.startup () ->
 if Meteor.isProduction
     SyncedCron.add(
         {
+            name: 'Log Stats'
+            schedule: (parser) ->
+                parser.text 'every 1 hours'
+            job: ->
+                Meteor.call 'log_stats', (err, res)->
+                    if err then console.error err
+        },{
             name: 'Update customers'
             schedule: (parser) ->
                 parser.text 'every 1 hours'
@@ -69,7 +76,6 @@ if Meteor.isProduction
             job: ->
                 Meteor.call 'sync_ev_users', (err, res)->
                     if err then console.error err
-        },{
         },{
             name: 'Update franchisee'
             schedule: (parser) ->

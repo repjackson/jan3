@@ -146,6 +146,10 @@ Template.block.helpers
             Meteor.users.find {_id:$ne:Meteor.userId()},{
                 sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}")
                 }
+        else if @children_collection is 'stats'
+            Stats.find {type:'stat_log'},{
+                sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}")
+                }
         else
             match = {}
             if @filter_value is "{source_key}"
