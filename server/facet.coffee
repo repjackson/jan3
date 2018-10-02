@@ -16,7 +16,7 @@ Meteor.publish 'facet', (
         if selected_customers.length > 0 then match.customer_name = selected_customers[0]
         if selected_offices.length > 0 then match.ticket_office_name = selected_offices[0]
 
-        console.log 'match:', match
+        # console.log 'match:', match
 
         # ancestor_ids_cloud = Docs.aggregate [
         #     { $match: match }

@@ -59,11 +59,13 @@ template(name='event')
                     i.user.icon(title='Author')
                     a.user(href="/p/user_view?username=#{author.username}") #{author.username}
                 if customer_jpid
-                    i.money.icon(title='Customer')
-                    |#{customer.EV.CUST_NAME}
+                    a(href="/p/customer?jpid=#{customer_jpid}")
+                        i.money.icon(title="Customer #{customer_jpid}")
+                        |#{parent.customer_name}
                 if office_jpid
-                    i.building.icon(title='Office')
-                    |#{office.EV.MASTER_LICENSEE}
+                    i.building.icon(title="Office #{office_jpid}")
+                    a(href="/p/office?jpid=#{office_jpid}")
+                        |#{parent.ticket_office_name}
                 if editing_mode
                     i.remove_event.remove.link.icon
                 a(href="/p/ticket_admin_view?doc_id=#{parent_id}")

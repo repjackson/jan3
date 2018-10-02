@@ -151,7 +151,8 @@ template(name='ticket_facet')
                                 +level_icon
                             .header
                                 +status_template
-                                |##{ticket_number}
+                                a(href="/p/ticket_admin_view?doc_id=#{_id}")
+                                    |##{ticket_number}
                         .content
                             p #{ticket_details}
                             .ui.list
