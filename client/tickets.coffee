@@ -148,7 +148,7 @@ Template.ticket_status.events
         Docs.insert
             type:'event'
             parent_id: ticket_id
-            event_type:'emailed_customer_contact'
+            event_type:'email_customer'
             text:"Customer '#{ticket.customer_name}' emailed about ticket close."
             ticket_id: ticket_id
             office_jpid: ticket.office_jpid

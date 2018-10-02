@@ -178,19 +178,15 @@ Template.assignment_widget.events
                 t.user_results.set res
 
     'click .select_user': (e,t) ->
-        # key = Template.parentData(0).key
         page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        # searched_value = doc["#{template.data.key}"]
         Meteor.call 'assign_user', page_doc._id, @, (err,res)=>
         $('#multiple_user_select_input').val ''
         t.user_results.set null
         if page_doc.type is 'task'
-            # Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to task: #{page_doc.title}."
             Meteor.call 'send_email_about_task_assignment', page_doc._id, @username
         else if page_doc.type is 'ticket'
             Docs.update page_doc._id,
                 $set: assignment_timestamp:Date.now()
-            # Meteor.call 'send_message', @username, Meteor.user().username, "You have been assigned to ticket: #{page_doc.title}."
             Meteor.call 'send_email_about_ticket_assignment', page_doc._id, @username
 
     'click .pull_user': ->
