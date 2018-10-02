@@ -135,15 +135,16 @@ template(name='parent_facet')
 
 
 template(name='ticket_facet')
-    .ui.grid
+    .ui.stackable.grid
         .four.wide.column
+            +ticket_type_facet
             +level_facet
             +status_facet
             +office_facet
             +customer_facet
             +timestamp_facet
         .twelve.wide.column
-            .ui.four.cards
+            .ui.four.stackable.cards
                 each tickets
                     .card
                         .content
@@ -153,6 +154,8 @@ template(name='ticket_facet')
                                 +status_template
                                 a(href="/p/ticket_admin_view?doc_id=#{_id}")
                                     |##{ticket_number}
+                        .content
+                            +ticket_type_label
                         .content
                             p #{ticket_details}
                             .ui.list
@@ -196,6 +199,21 @@ template(name='status_facet')
     each status
         .ui.button.select_status(class=cloud_tag_class)
             strong #{name}
+            small (#{count})
+
+template(name='ticket_type_facet')
+    .ui.header
+        +icon name='checkmark'
+        |Ticket Types
+    if selected_ticket_types
+        // #clear_ticket_types.ui.icon.button
+        //     i.remove.icon
+        each selected_ticket_types
+            .unselect_ticket_type.ui.primary.small.compact.button
+                | #{this}
+    each ticket_types
+        .ui.small.compact.button.select_ticket_type(class=cloud_tag_class)
+            | #{name}
             small (#{count})
 
 

@@ -4,6 +4,7 @@ Meteor.publish 'facet', (
     selected_customers
     selected_timestamp_tags
     selected_status
+    selected_ticket_types
     type
     )->
 
@@ -18,6 +19,7 @@ Meteor.publish 'facet', (
         if selected_offices.length > 0 then match.ticket_office_name = selected_offices[0]
         if selected_levels.length > 0 then match.level = selected_levels[0]
         if selected_status.length > 0 then match.open = selected_status[0]
+        if selected_ticket_types.length > 0 then match.ticket_type = selected_ticket_types[0]
 
         # console.log 'match:', match
 
@@ -74,6 +76,25 @@ Meteor.publish 'facet', (
                 name: timestamp_tag.name
                 count: timestamp_tag.count
                 index: i
+
+
+        ticket_types_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: ticket_type: 1 }
+            { $unwind: "$ticket_type" }
+            { $group: _id: '$ticket_type', count: $sum: 1 }
+            { $match: _id: $nin: selected_ticket_types }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'ticket_types_cloud, ', ticket_types_cloud
+        ticket_types_cloud.forEach (ticket_type, i) ->
+            self.added 'ticket_types', Random.id(),
+                name: ticket_type.name
+                count: ticket_type.count
+                index: i
+
 
         level_cloud = Docs.aggregate [
             { $match: match }

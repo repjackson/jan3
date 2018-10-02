@@ -5,6 +5,7 @@
 @Customers = new Meteor.Collection 'customers'
 @Offices = new Meteor.Collection 'offices'
 @Status = new Meteor.Collection 'status'
+@Ticket_types = new Meteor.Collection 'ticket_types'
 
 
 
