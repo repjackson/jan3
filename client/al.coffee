@@ -56,56 +56,49 @@ Template.edit_block.onCreated ->
 
 Template.block.onCreated ->
     @editing_block = new ReactiveVar false
-
-    # Meteor.subscribe('facet',
-    #     selected_tags.array()
-    #     selected_author_ids.array()
-    #     selected_location_tags.array()
-    #     selected_timestamp_tags.array()
-    #     type=@data.children_doc_type
-    #     )
-    @page_number = new ReactiveVar(1)
-    @sort_key = new ReactiveVar('timestamp')
-    @sort_direction = new ReactiveVar(-1)
-    @number_of_pages = new ReactiveVar(1)
-    @page_size = new ReactiveVar(10)
-    @skip = new ReactiveVar(0)
-
-    if @data.limit
-        @limit = new ReactiveVar(parseInt(@data.limit))
-        @page_size = new ReactiveVar(parseInt(@data.limit))
-    else
+    unless @data.custom_template
+        @page_number = new ReactiveVar(1)
+        @sort_key = new ReactiveVar('timestamp')
+        @sort_direction = new ReactiveVar(-1)
+        @number_of_pages = new ReactiveVar(1)
         @page_size = new ReactiveVar(10)
-        @limit = new ReactiveVar(10)
-    match_object = {}
-    if FlowRouter.getParam 'jpid'
-        match_object.jpid = FlowRouter.getParam 'jpid'
-    if FlowRouter.getQueryParam 'doc_id'
-        match_object.doc_id = FlowRouter.getQueryParam 'doc_id'
-    if @data.filter_status is "ACTIVE"
-        match_object.active = true
-    else
-        match_object.active = false
-    match_object.doc_type = @data.children_doc_type
-    match_object.stat_type = @data.table_stat_type
-    query_params = FlowRouter.current().queryParams
+        @skip = new ReactiveVar(0)
 
-    @autorun -> Meteor.subscribe 'stat', match_object
-    @autorun =>
-        Meteor.subscribe 'block_children',
-            @data._id,
-            @data.filter_key,
-            @data.filter_value,
-            Session.get('query'),
-            @page_size.get(),
-            @sort_key.get(),
-            @sort_direction.get(),
-            @skip.get(),
-            @data.filter_status,
-            FlowRouter.getParam('jpid'),
-            query_params
-    @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
-    @autorun => Meteor.subscribe 'block_field_docs', @data._id
+        if @data.limit
+            @limit = new ReactiveVar(parseInt(@data.limit))
+            @page_size = new ReactiveVar(parseInt(@data.limit))
+        else
+            @page_size = new ReactiveVar(10)
+            @limit = new ReactiveVar(10)
+        match_object = {}
+        if FlowRouter.getParam 'jpid'
+            match_object.jpid = FlowRouter.getParam 'jpid'
+        if FlowRouter.getQueryParam 'doc_id'
+            match_object.doc_id = FlowRouter.getQueryParam 'doc_id'
+        if @data.filter_status is "ACTIVE"
+            match_object.active = true
+        else
+            match_object.active = false
+        match_object.doc_type = @data.children_doc_type
+        match_object.stat_type = @data.table_stat_type
+        query_params = FlowRouter.current().queryParams
+
+        @autorun -> Meteor.subscribe 'stat', match_object
+        @autorun =>
+            Meteor.subscribe 'block_children',
+                @data._id,
+                @data.filter_key,
+                @data.filter_value,
+                Session.get('query'),
+                @page_size.get(),
+                @sort_key.get(),
+                @sort_direction.get(),
+                @skip.get(),
+                @data.filter_status,
+                FlowRouter.getParam('jpid'),
+                query_params
+        @autorun => Meteor.subscribe 'schema_doc_by_type', @data.children_doc_type
+        @autorun => Meteor.subscribe 'block_field_docs', @data._id
 
 
 Template.block.helpers

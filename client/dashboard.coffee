@@ -53,6 +53,14 @@ Template.dashboard_office_contacts_list.helpers
 
 
 
+Template.dashboard_service_list.onRendered ->
+    Meteor.setTimeout ->
+        $('.service_popup').popup({
+            inline: false
+            hoverable:true
+        })
+    , 800
+
 Template.dashboard_service_list.onCreated ->
     @autorun -> Meteor.subscribe 'type','service'
 Template.dashboard_service_list.helpers
@@ -62,6 +70,20 @@ Template.dashboard_service_list.helpers
             Docs.find
                 type:'service'
                 slug: $in: users_office.services
+
+Template.dashboard_service_list.events
+    # 'click .service_popup': (e,t)->
+    'click .request_service': ->
+        current_customer_jpid = Meteor.user().customer_jpid
+        new_request_id =
+            Docs.insert
+                type:'service_request'
+                service_id:@_id
+                service_title:@title
+                service_slug:@slug
+                customer_jpid:current_customer_jpid
+        FlowRouter.go "/edit/#{new_request_id}"
+        Meteor.call 'calculate_request_count', @_id
 
 
 

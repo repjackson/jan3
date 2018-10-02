@@ -68,7 +68,8 @@ template(name='dashboard_office_contacts_list')
                         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
                         .ui.popup
                             img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
-                        a(href="/user/#{username}") #{first_name} #{last_name}
+                        a(href="/user/#{username}")
+                            |#{first_name} #{last_name}
                         .ui.popup
                             img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
                     td
@@ -127,3 +128,9 @@ template(name='dashboard_service_list')
                 a.service_popup.item
                     // img.ui.avatar.image(src="{{c.url image_id height=400 crop='scale'}}")
                     |#{title}
+                .ui.popup
+                    .header #{title}
+                    .request_service.ui.compact.button
+                        i.icon
+                            +iconsmall name='service-bell'
+                        | Request

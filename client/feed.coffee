@@ -9,7 +9,7 @@ Template.users_feed.helpers
 
 
 Template.global_feed.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'event', 10
+    @autorun => Meteor.subscribe 'type', 'event', 20
 
 Template.global_feed.helpers
     feed_events: ->

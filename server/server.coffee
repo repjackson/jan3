@@ -58,7 +58,7 @@ if Meteor.isProduction
         {
             name: 'Log Stats'
             schedule: (parser) ->
-                parser.text 'every 1 hours'
+                parser.text 'every 6 hours'
             job: ->
                 Meteor.call 'log_stats', (err, res)->
                     if err then console.error err

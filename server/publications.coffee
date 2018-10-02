@@ -3,7 +3,11 @@ Meteor.publish 'type', (type, limit)->
         limit_val = limit
     else
         limit_val = 100
-    Docs.find {type:type}, limit:limit_val
+    Docs.find {type:type},
+        {
+            limit:limit_val
+            sort: timestamp:-1
+        }
 
 Meteor.publish 'block_children', (
     block_doc_id,
