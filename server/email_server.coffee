@@ -33,7 +33,7 @@ Meteor.methods
 
         mail_fields = {
             # to: ["<#{assigned_to_user.emails[0].address}>"]
-            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<brad@janhub.com>","<colin.bates@jan-pro.com>","<hendra.oey@jan-pro.com>","<ben.coleman@jan-pro.com>","<robert.burns@jan-pro.com>"]
+            to: ["<richard@janhub.com>","<zack@janhub.com>", "<Nicholas.Rose@premiumfranchisebrands.com>","<brad@janhub.com>","<colin.bates@jan-pro.com>","<hendra.oey@jan-pro.com>"]
             from: "Jan-Pro Customer Portal <portal@jan-pro.com>"
             subject: "#{username} you have been assigned to ticket ##{ticket.ticket_number} from customer: #{ticket.customer_name}."
             html: "<h4>#{username}, you have been assigned to ticket ##{ticket.ticket_number} from customer: #{ticket.customer_name}.</h4>

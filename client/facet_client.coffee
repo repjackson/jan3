@@ -4,10 +4,11 @@
 Template.ticket_facet.onCreated ->
     @autorun =>
         Meteor.subscribe('facet',
+            selected_levels.array()
+            selected_offices.array()
             selected_customers.array()
             selected_timestamp_tags.array()
-            selected_customers.array()
-            selected_offices.array()
+            selected_status.array()
             type='ticket'
             )
         Meteor.subscribe 'usernames'
@@ -15,30 +16,32 @@ Template.ticket_facet.onCreated ->
 Template.ticket_facet.helpers
     tickets: -> Docs.find type:'ticket'
 Template.level_facet.helpers
-    author_tags: ->
-        author_usernames = []
+    levels: ->
+        doc_count = Docs.find().count()
+        # if selected_levels.array().length
+        if 0 < doc_count < 3
+            Levels.find {
+                # type:Template.currentData().type
+                count: $lt: doc_count
+                }, limit:42
+        else
+            cursor = Levels.find({}, limit:42)
+            # console.log cursor.fetch()
+            return cursor
 
-        for author_id in Author_ids.find().fetch()
+    cloud_level_class: ->
+        button_class = []
+        switch
+            when @index <= 5 then button_class.push ' '
+            when @index <= 10 then button_class.push 'small'
+            when @index <= 15 then button_class.push 'tiny '
+            when @index <= 20 then button_class.push ' mini'
+        return button_class
 
-            found_user = Meteor.users.findOne(author_id.text)
-            # if found_user
-            #     console.log Meteor.users.findOne(author_id.text).username
-            author_usernames.push Meteor.users.findOne(author_id.text)
-        author_usernames
+    selected_levels: -> selected_levels.array()
 
-
-    selected_author_ids: ->
-        selected_author_usernames = []
-        for selected_author_id in selected_author_ids.array()
-            selected_author_usernames.push Meteor.users.findOne(selected_author_id).username
-        selected_author_usernames
 
 Template.level_facet.events
-    'click .select_author': ->
-        selected_author = Meteor.users.findOne username: @username
-        selected_author_ids.push selected_author._id
-    'click .unselect_author': ->
-        selected_author = Meteor.users.findOne username: @valueOf()
-        selected_author_ids.remove selected_author._id
-    'click #clear_authors': -> selected_author_ids.clear()
-
+    'click .select_level': -> selected_levels.push @name
+    'click .unselect_level': -> selected_levels.remove @valueOf()
+    'click #clear_levels': -> selected_levels.clear()

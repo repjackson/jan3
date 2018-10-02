@@ -9,10 +9,10 @@ template(name='tag_facet')
     .ui.header
         |Tags
     if selected_tags
-        #clear_tags.ui.icon.active.button
+        #clear_tags.ui.icon.primary.button
             i.remove.icon
         each selected_tags
-            .unselect_tag.ui.active.button
+            .unselect_tag.ui.primary.button
                 strong #{this}
     each tags
         .ui.button.select_tag(class=tag_class)
@@ -24,10 +24,10 @@ template(name='customer_facet')
         +icon name='headset'
         |Customers
     if selected_customers
-        #clear_customers.ui.icon.active.button
-            i.remove.icon
+        // #clear_customers.ui.icon.primary.button
+        //     i.remove.icon
         each selected_customers
-            .unselect_customer.ui.active.button
+            .unselect_customer.ui.primary.compact.small.button
                 strong #{this}
     each customers
         .ui.compact.small.button.select_customer(class=customer_class)
@@ -38,10 +38,10 @@ template(name='office_facet')
         +icon name='building'
         |Offices
     if selected_offices
-        #clear_offices.ui.icon.active.button
-            i.remove.icon
+        // #clear_offices.ui.icon.primary.button
+        //     i.remove.icon
         each selected_offices
-            .unselect_office.ui.active.button
+            .unselect_office.ui.primary.small.compact.button
                 strong #{this}
     each offices
         .ui.compact.small.button.select_office(class=office_class)
@@ -55,25 +55,24 @@ template(name='ancestor_facet')
     //     #clear_ancestor_ids.ui.icon.button
     //         i.remove.icon
     //     each selected_ancestor_ids
-    //         .unselect_ancestor_id.ui.large.button
+    //         .unselect_ancestor_id.ui.button
     //             strong #{this}
     each ancestors
         // a.ui.button.select_ancestor_id(class=ancestor_id_class)
         .ui.button.select_ancestor_id
             // strong #{this.name}
             strong #{title}
-            // if isInRole 'admin'
-            //     small #{this.count}
-    // .ui.divider
+
+
 template(name='location_facet')
     .ui.header
         +icon name='marker'
         | Location
     if selected_location_tags
-        #clear_location_tags.ui.icon.active.button
+        #clear_location_tags.ui.icon.primary.button
             i.remove.icon
         each selected_location_tags
-            .unselect_location_tag.ui.active.button
+            .unselect_location_tag.ui.primary.button
                 strong #{this}
     each location_tags
         .ui.compact.button.select_location_tag(class=location_tag_class)
@@ -88,14 +87,14 @@ template(name='timestamp_facet')
         +icon name='timer'
         | Created
     if selected_timestamp_tags
-        #clear_timestamp_tags.ui.icon.active.button
-            i.remove.icon
+        // #clear_timestamp_tags.ui.icon.primary.button
+        //     i.remove.icon
         each selected_timestamp_tags
-            .unselect_timestamp_tag.ui.active.button
+            .unselect_timestamp_tag.ui.primary.compact.button
                 strong #{this}
     each timestamp_tags
         .ui.compact.button.select_timestamp_tag(class=timestamp_tag_class)
-            strong #{this.name}
+            | #{this.name}
             // if isInRole 'admin'
             //     small #{this.count}
     // .ui.divider
@@ -108,7 +107,7 @@ template(name='username_facet')
         #clear_authors.ui.icon.button
             i.remove.icon
         each selected_author_ids
-            .unselect_author.ui.large.button
+            .unselect_author.ui.button
                 strong #{this}
     each author_tags
         .ui.button.select_author(class=cloud_tag_class)
@@ -125,7 +124,7 @@ template(name='parent_facet')
         #clear_parents.ui.icon.button
             i.remove.icon
         each selected_parent_ids
-            .unselect_parent.ui.large.button
+            .unselect_parent.ui.button
                 strong #{this}
     each available_parent_docs
         .ui.button.select_author(class=cloud_tag_class)
@@ -138,11 +137,12 @@ template(name='parent_facet')
 template(name='ticket_facet')
     .ui.grid
         .four.wide.column
+            +level_facet
+            +status_facet
             +office_facet
             +customer_facet
             +timestamp_facet
         .twelve.wide.column
-            .ui.header Tickets
             .ui.four.cards
                 each tickets
                     .card
@@ -170,17 +170,33 @@ template(name='ticket_facet')
 
 template(name='level_facet')
     .ui.header
+        +icon name='positive-dynamic'
         |Levels
-    if levels
-        #clear_levels.ui.icon.button
-            i.remove.icon
-        each levels
-            .unselect_level.ui.large.button
+    if selected_levels
+        // #clear_levels.ui.icon.button
+        //     i.remove.icon
+        each selected_levels
+            .unselect_level.ui.primary.button
                 strong #{this}
     each levels
         .ui.button.select_level(class=cloud_tag_class)
-            | #{this.title}
-            small #{this.count}
+            strong #{name}
+            small (#{count})
+
+template(name='status_facet')
+    .ui.header
+        +icon name='checkmark'
+        |Open
+    if selected_status
+        // #clear_status.ui.icon.button
+        //     i.remove.icon
+        each selected_status
+            .unselect_status.ui.primary.button
+                strong #{this}
+    each status
+        .ui.button.select_status(class=cloud_tag_class)
+            strong #{name}
+            small (#{count})
 
 
 template(name='tag_result')

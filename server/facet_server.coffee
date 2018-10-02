@@ -1,8 +1,9 @@
 Meteor.publish 'facet', (
     selected_levels
-    selected_timestamp_tags
-    selected_customers
     selected_offices
+    selected_customers
+    selected_timestamp_tags
+    selected_status
     type
     )->
 
@@ -10,11 +11,13 @@ Meteor.publish 'facet', (
         match = {}
 
         match.type = 'ticket'
-        console.log selected_timestamp_tags
+        # console.log selected_timestamp_tags
 
         if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags
         if selected_customers.length > 0 then match.customer_name = selected_customers[0]
         if selected_offices.length > 0 then match.ticket_office_name = selected_offices[0]
+        if selected_levels.length > 0 then match.level = selected_levels[0]
+        if selected_status.length > 0 then match.open = selected_status[0]
 
         # console.log 'match:', match
 
@@ -76,6 +79,7 @@ Meteor.publish 'facet', (
             { $match: match }
             { $project: level: 1 }
             { $group: _id: '$level', count: $sum: 1 }
+            { $match: _id: $nin: selected_levels }
             { $sort: count: -1, _id: 1 }
             { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
@@ -85,6 +89,22 @@ Meteor.publish 'facet', (
             self.added 'levels', Random.id(),
                 name: level.name
                 count: level.count
+                index: i
+
+        status_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: open: 1 }
+            { $group: _id: '$open', count: $sum: 1 }
+            { $match: _id: $nin: selected_status }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
+        status_cloud.forEach (status, i) ->
+            self.added 'status', Random.id(),
+                name: status.name
+                count: status.count
                 index: i
 
 
