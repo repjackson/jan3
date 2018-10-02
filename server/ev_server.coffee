@@ -330,9 +330,9 @@ Meteor.methods
                 username_display:'ID'
                 api_reverse_lookup:'NO'
                 id:'49067'
-                page_length:'1000'
+                page_length:'10000'
                 record_start:'1'
-                record_count:'1000'
+                record_count:'10000'
         # return res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
@@ -348,10 +348,12 @@ Meteor.methods
                             type: 'customer'
                             "ev.CUST_NAME": doc.CUST_NAME
                     if existing_customer_doc
+                        # console.log 'existing', existing_customer_doc._id
                         Docs.update existing_customer_doc._id,
                             $set:
                                 ev: doc
                     unless existing_customer_doc
+                        # console.log 'new'
                         new_customer_doc = Docs.insert
                             type: 'customer'
                             ev: doc
@@ -437,9 +439,9 @@ Meteor.methods
                 username_display:'ID'
                 api_reverse_lookup:'NO'
                 id:'49072'
-                page_length:'1000'
+                page_length:'10000'
                 record_start:'1'
-                record_count:'1000'
+                record_count:'10000'
         # return res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
@@ -455,9 +457,11 @@ Meteor.methods
                             type: 'customer'
                             "ev.CUST_NAME": doc.CUST_NAME
                     if existing_customer_doc
+                        # console.log 'existing',existing_customer_doc._id
                         Docs.update existing_customer_doc._id,
                             $set: ev: doc
                     unless existing_customer_doc
+                        # console.log 'new customer'
                         new_customer_doc = Docs.insert
                             type: 'customer'
                             ev: doc

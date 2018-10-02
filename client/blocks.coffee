@@ -178,7 +178,7 @@ Template.assignment_widget.events
                 t.user_results.set res
 
     'click .select_user': (e,t) ->
-        key = Template.parentData(0).key
+        # key = Template.parentData(0).key
         page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
         # searched_value = doc["#{template.data.key}"]
         Meteor.call 'assign_user', page_doc._id, @, (err,res)=>
