@@ -41,53 +41,55 @@ SyncedCron.config
     utc: false
     collectionTTL: 17280
 
-Meteor.startup () ->
-    SyncedCron.add
-        name: 'Update ticket escalations'
-        schedule: (parser) ->
-            parser.text 'every 10 minutes'
-            # so it catches 1 hour escalations
-        job: ->
-            console.log 'running site escalation check'
-            Meteor.call 'run_site_escalation_check', (err,res)->
-                if err then console.error err
-
-
 if Meteor.isProduction
     SyncedCron.add(
         {
+            name: 'Update ticket escalations'
+            schedule: (parser) ->
+                parser.text 'every 50 minutes'
+                # so it catches 1 hour escalations
+            job: ->
+                console.log 'running site escalation check'
+                Meteor.call 'run_site_escalation_check', (err,res)->
+                    if err then console.error err
+        },{
             name: 'Log Stats'
             schedule: (parser) ->
                 parser.text 'every 6 hours'
             job: ->
+                console.log 'logging stats/6 hours'
                 Meteor.call 'log_stats', (err, res)->
                     if err then console.error err
         },{
             name: 'Update customers'
             schedule: (parser) ->
-                parser.text 'every 1 hours'
+                parser.text 'every 3 hours'
             job: ->
+                console.log 'updating customers'
                 Meteor.call 'get_recent_customers', (err, res)->
                     if err then console.error err
         },{
             name: 'Update users'
             schedule: (parser) ->
-                parser.text 'every 1 hours'
+                parser.text 'every 3 hours'
             job: ->
+                console.log 'updating users/3hrs'
                 Meteor.call 'sync_ev_users', (err, res)->
                     if err then console.error err
         },{
             name: 'Update franchisee'
             schedule: (parser) ->
-                parser.text 'every 1 hours'
+                parser.text 'every 3 hours'
             job: ->
+                console.log 'updating franchisee'
                 Meteor.call 'get_recent_franchisees', (err, res)->
                     if err then console.error err
         },{
             name: 'Update office'
             schedule: (parser) ->
-                parser.text 'every 1 hours'
+                parser.text 'every 3 hours'
             job: ->
+                console.log 'updating office'
                 Meteor.call 'get_recent_offices', (err, res)->
                     if err then console.error err
         }

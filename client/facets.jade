@@ -1,12 +1,89 @@
+template(name='ticket_facet')
+    .ui.stackable.grid
+        .row
+            .right.floated.three.wide.column
+                .set_view_cards.ui.button(class=view_cards_class)
+                    +iconsmall name='activity-grid-2'
+                .set_view_segments.ui.button(class=view_segments_class)
+                    +iconsmall name='menu'
+        .row
+            .four.wide.column
+                +ticket_type_facet
+                +level_facet
+                +status_facet
+                +office_facet
+                +customer_facet
+                +timestamp_facet
+            .twelve.wide.column
+                .row
+                    if view_segments
+                        each tickets
+                            +facet_segment
+                    if view_cards
+                        .ui.four.stackable.cards
+                            each tickets
+                                +facet_card
+
+template(name='facet_card')
+    .card
+        .content
+            .right.floated
+                +level_icon
+            .header
+                +status_template
+                a(href="/p/ticket_admin_view?doc_id=#{_id}")
+                    |##{ticket_number}
+        .content
+            +ticket_type_label
+        .content
+            p #{ticket_details}
+            .ui.list
+                .item
+                    i.building.grey.icon(title='Office')
+                    |#{ticket_office_name}
+                .item
+                    i.money.grey.icon(title='Customer')
+                    |#{customer_name}
+                .item
+            // each timestamp_tags
+            //     .ui.compact.label #{this}
+            +when_template
+
+
+template(name='facet_segment')
+    .ui.segment
+        .content
+            .ui.header
+                +status_template
+                a(href="/p/ticket_admin_view?doc_id=#{_id}")
+                    |##{ticket_number}
+                +level_icon
+        .content
+            +ticket_type_label
+            p #{ticket_details}
+            .ui.list
+                .item
+                    i.building.grey.icon(title='Office')
+                    |#{ticket_office_name}
+                .item
+                    i.money.grey.icon(title='Customer')
+                    |#{customer_name}
+                .item
+            // each timestamp_tags
+            //     .ui.compact.label #{this}
+            +when_template
+
+
+
 template(name='boolean_facet')
-    .ui.header filter #{key}
+    .ui.small.header filter #{key}
     .pick_yes.ui.button yes
     .pick_no.ui.button no
 
 
 template(name='tag_facet')
     // |&nbsp;
-    .ui.header
+    .ui.small.header
         |Tags
     if selected_tags
         #clear_tags.ui.icon.primary.button
@@ -19,33 +96,37 @@ template(name='tag_facet')
             | #{this.name}
             small #{this.count}
 
+
+
 template(name='customer_facet')
-    .ui.header
-        +icon name='headset'
-        |Customers
+    div
+    +icon name='headset' classes='inline spaced' title='Customer'
     if selected_customers
         // #clear_customers.ui.icon.primary.button
         //     i.remove.icon
         each selected_customers
             .unselect_customer.ui.primary.compact.small.button
-                strong #{this}
+                | #{this}
     each customers
         .ui.compact.small.button.select_customer(class=customer_class)
-            | #{this.name} #{this.count}
+            | #{name}
+            small #{count}
+
+
 
 template(name='office_facet')
-    .ui.header
-        +icon name='building'
-        |Offices
+    div
+    +icon name='building' classes='inline spaced' title='Office'
     if selected_offices
         // #clear_offices.ui.icon.primary.button
         //     i.remove.icon
         each selected_offices
             .unselect_office.ui.primary.small.compact.button
-                strong #{this}
+                | #{this}
     each offices
         .ui.compact.small.button.select_office(class=office_class)
-            | #{this.name} #{this.count}
+            | #{this.name}
+            small #{this.count}
 
 
 template(name='ancestor_facet')
@@ -65,7 +146,7 @@ template(name='ancestor_facet')
 
 
 template(name='location_facet')
-    .ui.header
+    .ui.small.header
         +icon name='marker'
         | Location
     if selected_location_tags
@@ -83,9 +164,8 @@ template(name='location_facet')
 
 
 template(name='timestamp_facet')
-    .ui.header
-        +icon name='timer'
-        | Created
+    div
+    +icon name='timer' classes='inline spaced' title='Created'
     if selected_timestamp_tags
         // #clear_timestamp_tags.ui.icon.primary.button
         //     i.remove.icon
@@ -95,12 +175,11 @@ template(name='timestamp_facet')
     each timestamp_tags
         .ui.compact.button.select_timestamp_tag(class=timestamp_tag_class)
             | #{this.name}
-            // if isInRole 'admin'
-            //     small #{this.count}
-    // .ui.divider
+            small #{this.count}
+
 
 template(name='username_facet')
-    .ui.header
+    .ui.small.header
         i.users.icon
         | Authors
     if selected_author_ids
@@ -116,8 +195,10 @@ template(name='username_facet')
             // if isInRole 'admin'
             //     small #{this.count}
     // .ui.divider
+
+
 template(name='parent_facet')
-    .ui.header
+    .ui.small.header
         // img(src="https://png.icons8.com/color/100/000000/couple-man-woman.png")
         | parent docs
     if selected_parent_ids
@@ -134,47 +215,11 @@ template(name='parent_facet')
     // .ui.divider
 
 
-template(name='ticket_facet')
-    .ui.stackable.grid
-        .four.wide.column
-            +ticket_type_facet
-            +level_facet
-            +status_facet
-            +office_facet
-            +customer_facet
-            +timestamp_facet
-        .twelve.wide.column
-            .ui.four.stackable.cards
-                each tickets
-                    .card
-                        .content
-                            .right.floated
-                                +level_icon
-                            .header
-                                +status_template
-                                a(href="/p/ticket_admin_view?doc_id=#{_id}")
-                                    |##{ticket_number}
-                        .content
-                            +ticket_type_label
-                        .content
-                            p #{ticket_details}
-                            .ui.list
-                                .item
-                                    i.building.grey.icon(title='Office')
-                                    |#{ticket_office_name}
-                                .item
-                                    i.money.grey.icon(title='Customer')
-                                    |#{customer_name}
-                                .item
-                            // each timestamp_tags
-                            //     .ui.compact.label #{this}
-                            +when_template
 
 
 template(name='level_facet')
-    .ui.header
-        +icon name='positive-dynamic'
-        |Levels
+    div
+    +icon name='positive-dynamic' title='Level' classes='inline spaced'
     if selected_levels
         // #clear_levels.ui.icon.button
         //     i.remove.icon
@@ -184,27 +229,35 @@ template(name='level_facet')
     each levels
         .ui.button.select_level(class=cloud_tag_class)
             strong #{name}
-            small (#{count})
+            small #{count}
 
 template(name='status_facet')
-    .ui.header
-        +icon name='checkmark'
-        |Open
+    div
     if selected_status
         // #clear_status.ui.icon.button
         //     i.remove.icon
         each selected_status
             .unselect_status.ui.primary.button
-                strong #{this}
+                if this
+                    +iconsmall name='ok' classes='inline spaced'
+                    |Open
+                else
+                    +iconsmall name='inactive-state' classes='inline spaced'
+                    |Closed
     each status
         .ui.button.select_status(class=cloud_tag_class)
-            strong #{name}
-            small (#{count})
+            if name
+                +iconsmall name='ok' classes='inline spaced'
+                |Open
+            else
+                +iconsmall name='inactive-state' classes='inline spaced'
+                |Closed
+            // | #{name}
+            small #{count}
 
 template(name='ticket_type_facet')
-    .ui.header
-        +icon name='checkmark'
-        |Ticket Types
+    div
+    +icon name='clone' title='Ticket Type' classes='inline spaced'
     if selected_ticket_types
         // #clear_ticket_types.ui.icon.button
         //     i.remove.icon
@@ -214,7 +267,7 @@ template(name='ticket_type_facet')
     each ticket_types
         .ui.small.compact.button.select_ticket_type(class=cloud_tag_class)
             | #{name}
-            small (#{count})
+            small #{count}
 
 
 template(name='tag_result')

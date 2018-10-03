@@ -2,8 +2,9 @@
 
 Template.timestamp_facet.helpers
     timestamp_tags: ->
-        doc_count = Docs.find(type:Template.currentData().type).count()
+        doc_count = Docs.find(type:'ticket').count()
         # if selected_timestamp_tags.array().length
+        console.log doc_count
         if 0 < doc_count < 3
             Timestamp_tags.find {
                 count: $lt: doc_count

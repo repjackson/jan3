@@ -15,6 +15,15 @@ Template.customer_facet.helpers
             # console.log cursor.fetch()
             return cursor
 
+    customer_class: ->
+        button_class = []
+        # console.log @index
+        switch
+            when @index <= 5 then button_class.push ' '
+            when @index <= 10 then button_class.push 'small'
+            when @index <= 15 then button_class.push 'tiny '
+            when @index <= 20 then button_class.push ' mini'
+        return button_class
 
     selected_customers: -> selected_customers.array()
 

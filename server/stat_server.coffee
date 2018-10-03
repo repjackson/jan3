@@ -3,7 +3,6 @@ Meteor.publish 'stats', ->
 
 # Meteor.publish 'stat', (doc_type, stat_type)->
 Meteor.publish 'stat', (match_object)->
-    # console.log 'match_object', match_object
     Meteor.call 'calculate_stat', match_object
     Stats.find match_object, limit:100
 
@@ -129,7 +128,6 @@ Meteor.methods
                 "ev.ID":jpid
                 type:'office'
         if office_doc
-            console.log office_doc.ev
 
             customer_count_query = {
                 "ev.MASTER_LICENSEE":office_doc.ev.MASTER_LICENSEE
@@ -137,7 +135,6 @@ Meteor.methods
             }
             customer_count =
                 Docs.find(customer_count_query).count()
-            console.log 'customer count for',jpid, customer_count
 
             stat_match_object = customer_count_query
             stat_match_object['name'] = 'office_total_active_customers'
@@ -146,7 +143,6 @@ Meteor.methods
                 { $set:count:customer_count },
                 { upsert:true })
             stat = Stats.findOne stat_match_object
-            console.log 'stat?', stat
 
 
             franchisee_count_query = {
@@ -155,7 +151,6 @@ Meteor.methods
             }
             franchisee_count =
                 Docs.find(franchisee_count_query).count()
-            console.log 'franchisee count for',jpid, franchisee_count
 
             stat_match_object = franchisee_count_query
             stat_match_object['name'] = 'office_total_active_franchisees'
@@ -164,7 +159,6 @@ Meteor.methods
                 { $set:count:franchisee_count },
                 { upsert:true })
             stat = Stats.findOne stat_match_object
-            console.log 'stat?', stat
 
 
             # tickets
@@ -177,7 +171,6 @@ Meteor.methods
                 }
                 ticket_count =
                     Docs.find(ticket_count_query).count()
-                console.log 'ticket count for',jpid,number, ticket_count
 
                 stat_match_object = ticket_count_query
                 stat_match_object['name'] = "office_level_#{number}_tickets"
@@ -186,7 +179,6 @@ Meteor.methods
                     { $set:count:ticket_count },
                     { upsert:true })
                 stat = Stats.findOne stat_match_object
-                console.log 'stat?', stat
 
 
 
@@ -226,5 +218,4 @@ Meteor.methods
             stat_log_object['count'] = total_count
             stat_log_object['timestamp'] = Date.now()
 
-            # console.log 'inserting stat log', stat_log_object
             Stats.insert(stat_log_object)

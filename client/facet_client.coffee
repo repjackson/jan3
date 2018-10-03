@@ -3,6 +3,7 @@
 
 
 Template.ticket_facet.onCreated ->
+    Session.setDefault 'view_mode', 'cards'
     @autorun =>
         Meteor.subscribe('facet',
             selected_levels.array()
@@ -17,8 +18,14 @@ Template.ticket_facet.onCreated ->
 
 Template.ticket_facet.helpers
     tickets: -> Docs.find type:'ticket'
+    view_segments: -> Session.equals 'view_mode', 'segments'
+    view_cards: -> Session.equals 'view_mode', 'cards'
+    view_cards_class: -> if Session.equals 'view_mode', 'cards' then 'primary' else ''
+    view_segments_class: -> if Session.equals 'view_mode', 'segments' then 'primary' else ''
 
-
+Template.ticket_facet.events
+    'click .set_view_cards': -> Session.set 'view_mode', 'cards'
+    'click .set_view_segments': -> Session.set 'view_mode', 'segments'
 
 Template.level_facet.helpers
     levels: ->

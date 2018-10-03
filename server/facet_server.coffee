@@ -141,6 +141,8 @@ Meteor.publish 'facet', (
             ]
         # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
         customer_cloud.forEach (customer, i) ->
+            console.log customer
+            console.log i
             self.added 'customers', Random.id(),
                 name: customer.name
                 count: customer.count
