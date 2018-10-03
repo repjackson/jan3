@@ -30,7 +30,7 @@ template(name='reset_password')
             h1.ui.center.aligned.header
                 +icon name='forgot-password'
                 | Reset Password
-            .ui.segment
+            .ui.basic.segment
                 .ui.very.relaxed.two.column.grid
                     .column
                         .ui.form
@@ -59,8 +59,8 @@ template(name='login')
             .eight.wide.column
                 h1.ui.center.aligned.header
                     img.ui.spaced.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
-                    | JAN-PRO Customer Portal Login
-                .ui.segment
+                    | Login
+                .ui.basic.segment
                     .ui.labeled.fluid.input
                         .ui.basic.label Username
                         input.username(type='text')
@@ -109,63 +109,62 @@ template(name='register_customer')
                                         .item #{ev.ADDR_STREET}
                                         .item #{ev.ADDR_STREET_2}
                                         .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-            .eight.wide.column
-                .ui.segment
-                    .ui.large.form
+            .eight.wide.basic.column
+                .ui.form
+                    .field
+                        label Customer JPID
+                        input#customer_jpid(type='number' min='0' value=session_customer_jpid)
+                        // if jpid_lookup_status
+                        //     |#{jpid_lookup_status}
+                            // .ui.card
+                            //     with office_doc
+                            //         .content
+                            //             .ui.header
+                            //                 |Office
+                            //             h4.ui.header #{ev.MASTER_LICENSEE}
+                            //             div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2}
+                            //             div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                            //             div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                            //             div #{ev.TELEPHONE}
+
+                    if account_selected
                         .field
-                            label Customer JPID
-                            input#customer_jpid(type='number' min='0' value=session_customer_jpid)
-                            // if jpid_lookup_status
-                            //     |#{jpid_lookup_status}
-                                // .ui.card
-                                //     with office_doc
-                                //         .content
-                                //             .ui.header
-                                //                 |Office
-                                //             h4.ui.header #{ev.MASTER_LICENSEE}
-                                //             div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2}
-                                //             div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-                                //             div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
-                                //             div #{ev.TELEPHONE}
+                            label Username
+                            input#username(type='text' name="username")
+                            if username_found
+                                .ui.info.message
+                                    |Existing Username Found
+                                    a.ui.button.login_link(href='/login')
+                                        |Login Here
+                                        i.right.arrow.icon
+                        .field
+                            label Password
+                            input#password(type='password' name="password")
+                        .field
+                            label Email
+                            input#email(type='email')
+                            if email_found
+                                .ui.info.message
+                                    |Existing Email Found
+                                    a.ui.button.login_link(href='/login')
+                                        |Login Here
+                                        i.right.arrow.icon
+                            else
+                                .ui.success.message
+                                    |Email Available
+                    // .field
+                    //     label Repeat Password
+                    //     input.password_two(type='password')
+                    //     if passwords_match
+                    //         i.green.checkmark.icon
+                    //         |Passwords Match
+                    //     else
+                    //         i.red.remove.icon
+                    //         |Passwords Don't Match
 
-                        if account_selected
-                            .field
-                                label Username
-                                input#username(type='text' name="username")
-                                if username_found
-                                    .ui.info.message
-                                        |Existing Username Found
-                                        a.ui.button.login_link(href='/login')
-                                            |Login Here
-                                            i.right.arrow.icon
-                            .field
-                                label Password
-                                input#password(type='password' name="password")
-                            .field
-                                label Email
-                                input#email(type='email')
-                                if email_found
-                                    .ui.info.message
-                                        |Existing Email Found
-                                        a.ui.button.login_link(href='/login')
-                                            |Login Here
-                                            i.right.arrow.icon
-                                else
-                                    .ui.success.message
-                                        |Email Available
-                        // .field
-                        //     label Repeat Password
-                        //     input.password_two(type='password')
-                        //     if passwords_match
-                        //         i.green.checkmark.icon
-                        //         |Passwords Match
-                        //     else
-                        //         i.red.remove.icon
-                        //         |Passwords Don't Match
-
-                    if can_register
-                        #register.ui.fluid.inverted.jpgreen.button(class=register_button_class)
-                            .large120 Register Customer
+                if can_register
+                    #register.ui.fluid.inverted.jpgreen.button(class=register_button_class)
+                        .large120 Register Customer
             .four.wide.column
 
 
@@ -192,7 +191,7 @@ template(name='register_office')
                                 div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
                                 div #{ev.TELEPHONE}
             .eight.wide.column
-                .ui.segment
+                .ui.basic.segment
                     .ui.large.form
                         .field
                             label Office JPID

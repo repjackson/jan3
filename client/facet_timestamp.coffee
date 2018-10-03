@@ -2,16 +2,16 @@
 
 Template.timestamp_facet.helpers
     timestamp_tags: ->
-        doc_count = Docs.find(type:'ticket').count()
-        # if selected_timestamp_tags.array().length
-        console.log doc_count
-        if 0 < doc_count < 3
-            Timestamp_tags.find {
-                count: $lt: doc_count
-                }, limit:10
-        else
-            Timestamp_tags.find({}, limit:10)
-
+        Meteor.setTimeout ->
+            doc_count = Docs.find(type:'ticket').count()
+            console.log doc_count
+            if 0 < doc_count < 3
+                Timestamp_tags.find {
+                    count: $lt: doc_count
+                    }, limit:10
+            else
+                Timestamp_tags.find({}, limit:10)
+        , 400
 
     timestamp_tag_class: ->
         button_class = []

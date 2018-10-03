@@ -99,7 +99,7 @@ template(name='tag_facet')
 
 
 template(name='customer_facet')
-    div
+    .ui.hidden.divider
     +icon name='headset' classes='inline spaced' title='Customer'
     if selected_customers
         // #clear_customers.ui.icon.primary.button
@@ -115,7 +115,7 @@ template(name='customer_facet')
 
 
 template(name='office_facet')
-    div
+    .ui.hidden.divider
     +icon name='building' classes='inline spaced' title='Office'
     if selected_offices
         // #clear_offices.ui.icon.primary.button
@@ -164,18 +164,20 @@ template(name='location_facet')
 
 
 template(name='timestamp_facet')
-    div
-    +icon name='timer' classes='inline spaced' title='Created'
     if selected_timestamp_tags
-        // #clear_timestamp_tags.ui.icon.primary.button
-        //     i.remove.icon
-        each selected_timestamp_tags
-            .unselect_timestamp_tag.ui.primary.compact.button
-                strong #{this}
-    each timestamp_tags
-        .ui.compact.button.select_timestamp_tag(class=timestamp_tag_class)
-            | #{this.name}
-            small #{this.count}
+        if timestamp_tags
+            .ui.hidden.divider
+            +icon name='timer' classes='inline spaced' title='Created'
+            if selected_timestamp_tags
+                // #clear_timestamp_tags.ui.icon.primary.button
+                //     i.remove.icon
+                each selected_timestamp_tags
+                    .unselect_timestamp_tag.ui.primary.compact.button
+                        strong #{this}
+            each timestamp_tags
+                .ui.compact.button.select_timestamp_tag(class=timestamp_tag_class)
+                    | #{this.name}
+                    small #{this.count}
 
 
 template(name='username_facet')
@@ -218,21 +220,21 @@ template(name='parent_facet')
 
 
 template(name='level_facet')
-    div
+    .ui.hidden.divider
     +icon name='positive-dynamic' title='Level' classes='inline spaced'
     if selected_levels
         // #clear_levels.ui.icon.button
         //     i.remove.icon
         each selected_levels
             .unselect_level.ui.primary.button
-                strong #{this}
+                | #{this}
     each levels
         .ui.button.select_level(class=cloud_tag_class)
-            strong #{name}
+            | #{name}
             small #{count}
 
 template(name='status_facet')
-    div
+    .ui.hidden.divider
     if selected_status
         // #clear_status.ui.icon.button
         //     i.remove.icon
@@ -256,7 +258,6 @@ template(name='status_facet')
             small #{count}
 
 template(name='ticket_type_facet')
-    div
     +icon name='clone' title='Ticket Type' classes='inline spaced'
     if selected_ticket_types
         // #clear_ticket_types.ui.icon.button
