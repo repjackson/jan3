@@ -53,7 +53,10 @@ Template.dao.helpers
         Docs.find
             type:'facet'
 
-    results: -> Results.find({}, limit:20)
+    results: ->
+        facet = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        console.log 'count', Docs.find(facet.query).count()
+        Docs.find(facet.query, limit:20)
     view_segments: -> Session.equals 'view_mode', 'segments'
     view_cards: -> Session.equals 'view_mode', 'cards'
     view_table: -> Session.equals 'view_mode', 'table'

@@ -262,9 +262,18 @@ Meteor.publish 'facet_doc', (facet_id)->
 
 
 
-Meteor.publish 'results', ()->
-    Results.find {},
-        limit:20
+Meteor.publish 'results', (facet_id)->
+    # Results.find {},
+    #     limit:20
+
+    facet = Docs.findOne facet_id
+    cursor = Docs.find facet.query
+    # console.log 'current query', facet.query
+    # console.log 'current query result count', cursor.count()
+
+    Docs.find facet.query,
+        {limit:20}
+
 
 
 
