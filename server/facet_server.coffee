@@ -252,3 +252,33 @@ Meteor.publish 'facet', (
         self.ready()
 
         self.onStop ()-> subHandle.stop()
+
+
+Meteor.publish 'facet_doc', (facet_id)->
+    # if facet_id
+    #     Docs.find facet_id
+    # else
+    Docs.find type:'facet'
+
+Meteor.methods
+    fi: (args, facet_id)->
+        facet = Docs.findOne facet_id
+        query = {}
+
+    fa:(arg, facet_id)->
+        facet = Docs.findOne facet_id
+        Docs.update facet_id,
+            $addToSet:
+                args: arg
+
+    fo: (facet_id)->
+        facet = Docs.findOne facet_id
+        query = {}
+        for arg in facet.args
+            console.log 'arg', arg
+            query["#{arg.key}"] = "#{arg.value}"
+        console.log query
+        count = Docs.find(query).count()
+        Docs.update facet_id,
+            $set:
+                count:count

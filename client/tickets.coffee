@@ -287,6 +287,7 @@ Template.ticket_notes.events
             type:'event'
             parent_id: ticket_id
             ticket_id: ticket_id
+            event_type:'note'
             office_jpid: ticket.office_jpid
             franchisee_jpid: ticket.franchisee_jpid
             customer_jpid: ticket.customer_jpid

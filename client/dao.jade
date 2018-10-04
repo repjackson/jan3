@@ -1,0 +1,38 @@
+template(name='dao')
+    .ui.stackable.grid
+        .four.wide.column
+            .ui.secondary.segment
+                .ui.small.header facets
+                .ui.list
+                    each facets
+                        .item
+                            a(href="/p/dao?doc_id=#{_id}") #{_id}
+            if facet
+                with facet
+                    .ui.list
+                        .item id: #{_id}
+                        .item count: #{count}
+                    .ui.header args
+                    .ui.list
+                        each args
+                            .item
+                                |#{key}: #{value}
+                                i.remove_arg.remove.link.icon
+                    .ui.form
+                        .inline.field
+                            label new key
+                            input.arg_key(type='text')
+                        .inline.field
+                            label new value
+                            input.arg_value(type='text')
+                        .ui.divider
+            else
+                .create_facet.ui.button
+                    |Create Facet
+
+            .call.ui.button
+                |call
+        .twelve.wide.column
+            if facet.results
+                each facet.results
+                    +facet_card
