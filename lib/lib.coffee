@@ -7,7 +7,7 @@
 @Offices = new Meteor.Collection 'offices'
 @Status = new Meteor.Collection 'status'
 @Ticket_types = new Meteor.Collection 'ticket_types'
-
+@Results = new Meteor.Collection 'results'
 
 
 Docs.before.insert (userId, doc)->

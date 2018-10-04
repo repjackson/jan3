@@ -260,6 +260,22 @@ Meteor.publish 'facet_doc', (facet_id)->
     # else
     Docs.find type:'facet'
 
+
+
+Meteor.publish 'results', ()->
+    Results.find {},
+        limit:20
+
+
+
+
+
+
+
+
+
+
+
 Meteor.methods
     fi: (args, facet_id)->
         facet = Docs.findOne facet_id
@@ -281,4 +297,17 @@ Meteor.methods
         count = Docs.find(query).count()
         Docs.update facet_id,
             $set:
+                query:query
                 count:count
+
+        self = @
+        Results.remove({})
+        doc_results = Docs.find(query).fetch()
+
+        for doc in doc_results
+            console.log doc
+            Results.insert doc
+
+
+    clear_results: ->
+        Results.remove({})

@@ -12,6 +12,9 @@ template(name='dao')
                     .ui.list
                         .item id: #{_id}
                         .item count: #{count}
+                        .item
+                            .ui.button.clear_results
+                                i.remove.icon
                     .ui.header args
                     .ui.list
                         each args
@@ -33,6 +36,6 @@ template(name='dao')
             .call.ui.button
                 |call
         .twelve.wide.column
-            if facet.results
-                each facet.results
+            .ui.stackable.cards
+                each results
                     +facet_card
