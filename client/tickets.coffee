@@ -271,3 +271,24 @@ Template.office_ticket_widget.helpers
 
 
 
+Template.ticket_notes.onCreated ->
+    @adding_note = new ReactiveVar false
+Template.ticket_notes.helpers
+    adding_note: -> Template.instance().adding_note.get()
+
+Template.ticket_notes.events
+    'click #start_adding_note': (e,t)->
+        t.adding_note.set true
+    'click #submit_note': (e,t)->
+        note_val = t.$('#note_val').val()
+        ticket_id = FlowRouter.getQueryParam('doc_id')
+        ticket = Docs.findOne ticket_id
+        Docs.insert
+            type:'event'
+            parent_id: ticket_id
+            ticket_id: ticket_id
+            office_jpid: ticket.office_jpid
+            franchisee_jpid: ticket.franchisee_jpid
+            customer_jpid: ticket.customer_jpid
+            text: "#{Meteor.user().username} added note: #{note_val}."
+        t.adding_note.set false

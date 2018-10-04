@@ -149,3 +149,17 @@ template(name='office_ticket_widget')
             +count_view name='office_level_3_tickets'
         .item Level 4 Tickets
             +count_view name='office_level_4_tickets'
+
+
+
+template(name='ticket_notes')
+    if adding_note
+        .ui.form
+            .field
+                textarea#note_val(rows='2')
+            .field
+                #submit_note.ui.small.fluid.jpgreen.inverted.button
+                    |Add Note
+    else
+        #start_adding_note.ui.small.fluid.button
+            |Add Note
