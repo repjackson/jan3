@@ -1,6 +1,10 @@
 template(name='ticket_facet')
     .ui.stackable.grid
         .row
+            .four.wide.column
+                +status_facet
+            .five.wide.column
+                +level_facet
             .right.floated.three.wide.column
                 .set_view_cards.ui.button(class=view_cards_class)
                     +iconsmall name='activity-grid-2'
@@ -8,12 +12,16 @@ template(name='ticket_facet')
                     +iconsmall name='menu'
         .row
             .four.wide.column
-                +ticket_type_facet
-                +level_facet
-                +status_facet
-                +office_facet
-                +customer_facet
-                +timestamp_facet
+                .ui.secondary.segment
+                    +ticket_type_facet
+                .ui.secondary.segment
+                    +office_facet
+                .ui.secondary.segment
+                    +franchisee_facet
+                .ui.secondary.segment
+                    +customer_facet
+                .ui.secondary.segment
+                    +timestamp_facet
             .twelve.wide.column
                 .row
                     if view_segments
@@ -45,6 +53,8 @@ template(name='facet_card')
                     i.money.grey.icon(title='Customer')
                     |#{customer_name}
                 .item
+                    i.suitcase.grey.icon(title='Franchisee')
+                    |#{ticket_franchisee}
             // each timestamp_tags
             //     .ui.compact.label #{this}
             +when_template
@@ -59,9 +69,11 @@ template(name='facet_segment')
                     |##{ticket_number}
                 +level_icon
         .content
-            +ticket_type_label
-            p #{ticket_details}
+            .ui.basic.segment
+                |#{ticket_details}
             .ui.list
+                .item
+                    +ticket_type_label
                 .item
                     i.building.grey.icon(title='Office')
                     |#{ticket_office_name}
@@ -83,7 +95,7 @@ template(name='boolean_facet')
 
 template(name='tag_facet')
     // |&nbsp;
-    .ui.small.header
+    .ui.small.dividing.header
         |Tags
     if selected_tags
         #clear_tags.ui.icon.primary.button
@@ -94,13 +106,14 @@ template(name='tag_facet')
     each tags
         .ui.button.select_tag(class=tag_class)
             | #{this.name}
-            small #{this.count}
+            | #{this.count}
 
 
 
 template(name='customer_facet')
-    .ui.hidden.divider
-    +icon name='headset' classes='inline spaced' title='Customer'
+    .ui.small.header
+        +icon name='headset' classes='inline spaced' title='Customer'
+        |Customer
     if selected_customers
         // #clear_customers.ui.icon.primary.button
         //     i.remove.icon
@@ -110,13 +123,29 @@ template(name='customer_facet')
     each customers
         .ui.compact.small.button.select_customer(class=customer_class)
             | #{name}
-            small #{count}
+            | #{count}
+
+template(name='franchisee_facet')
+    .ui.small.header
+        +icon name='business' classes='inline spaced' title='Franchisee'
+        | Franchisee
+    if selected_franchisees
+        // #clear_franchisees.ui.icon.primary.button
+        //     i.remove.icon
+        each selected_franchisees
+            .unselect_franchisee.ui.primary.compact.small.button
+                | #{this}
+    each franchisees
+        .ui.compact.small.button.select_franchisee(class=franchisee_class)
+            | #{name}
+            | #{count}
 
 
 
 template(name='office_facet')
-    .ui.hidden.divider
-    +icon name='building' classes='inline spaced' title='Office'
+    .ui.small.header
+        +icon name='building' classes='inline spaced' title='Office'
+        |Office
     if selected_offices
         // #clear_offices.ui.icon.primary.button
         //     i.remove.icon
@@ -126,7 +155,7 @@ template(name='office_facet')
     each offices
         .ui.compact.small.button.select_office(class=office_class)
             | #{this.name}
-            small #{this.count}
+            | #{this.count}
 
 
 template(name='ancestor_facet')
@@ -159,14 +188,14 @@ template(name='location_facet')
         .ui.compact.button.select_location_tag(class=location_tag_class)
             strong #{this.name}
             // if isInRole 'admin'
-            //     small #{this.count}
+            //     | #{this.count}
     // .ui.divider
 
 
 template(name='timestamp_facet')
     if selected_timestamp_tags
         if timestamp_tags
-            .ui.hidden.divider
+            .ui.hidden.fitted.divider
             +icon name='timer' classes='inline spaced' title='Created'
             if selected_timestamp_tags
                 // #clear_timestamp_tags.ui.icon.primary.button
@@ -177,7 +206,7 @@ template(name='timestamp_facet')
             each timestamp_tags
                 .ui.compact.button.select_timestamp_tag(class=timestamp_tag_class)
                     | #{this.name}
-                    small #{this.count}
+                    | #{this.count}
 
 
 template(name='username_facet')
@@ -195,7 +224,7 @@ template(name='username_facet')
             img.ui.avatar.image(src="{{c.url profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
             strong #{username}
             // if isInRole 'admin'
-            //     small #{this.count}
+            //     | #{this.count}
     // .ui.divider
 
 
@@ -220,8 +249,9 @@ template(name='parent_facet')
 
 
 template(name='level_facet')
-    .ui.hidden.divider
-    +icon name='positive-dynamic' title='Level' classes='inline spaced'
+    strong
+        +icon name='positive-dynamic' title='Level' classes='inline spaced'
+        |Escalation Level &nbsp;
     if selected_levels
         // #clear_levels.ui.icon.button
         //     i.remove.icon
@@ -234,7 +264,9 @@ template(name='level_facet')
             small #{count}
 
 template(name='status_facet')
-    .ui.hidden.divider
+    strong
+        +icon name='checkmark' classes='inline spaced'
+        | Status &nbsp;
     if selected_status
         // #clear_status.ui.icon.button
         //     i.remove.icon
@@ -242,23 +274,25 @@ template(name='status_facet')
             .unselect_status.ui.primary.button
                 if this
                     +iconsmall name='ok' classes='inline spaced'
-                    |Open
+                    // |Open
                 else
                     +iconsmall name='inactive-state' classes='inline spaced'
-                    |Closed
+                    // |Closed
     each status
         .ui.button.select_status(class=cloud_tag_class)
             if name
                 +iconsmall name='ok' classes='inline spaced'
-                |Open
+                // |Open
             else
                 +iconsmall name='inactive-state' classes='inline spaced'
-                |Closed
+                // |Closed
             // | #{name}
             small #{count}
 
 template(name='ticket_type_facet')
-    +icon name='clone' title='Ticket Type' classes='inline spaced'
+    .ui.small.header
+        +icon name='variation' title='Ticket Type' classes='inline spaced'
+        |Type
     if selected_ticket_types
         // #clear_ticket_types.ui.icon.button
         //     i.remove.icon
@@ -268,7 +302,7 @@ template(name='ticket_type_facet')
     each ticket_types
         .ui.small.compact.button.select_ticket_type(class=cloud_tag_class)
             | #{name}
-            small #{count}
+            | #{count}
 
 
 template(name='tag_result')

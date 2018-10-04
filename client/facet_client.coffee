@@ -7,8 +7,9 @@ Template.ticket_facet.onCreated ->
     @autorun =>
         Meteor.subscribe('facet',
             selected_levels.array()
-            selected_offices.array()
             selected_customers.array()
+            selected_franchisees.array()
+            selected_offices.array()
             selected_timestamp_tags.array()
             selected_status.array()
             selected_ticket_types.array()

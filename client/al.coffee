@@ -42,7 +42,7 @@ Template.block.onRendered ->
     , 500
     Meteor.setTimeout ->
         $('.dropdown').dropdown()
-    , 500
+    , 700
 
 # Template.block.onRendered ->
 #     stat = Stats.findOne()

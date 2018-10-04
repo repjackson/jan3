@@ -66,7 +66,7 @@ if Meteor.isProduction
                 parser.text 'every 3 hours'
             job: ->
                 console.log 'updating customers'
-                Meteor.call 'get_recent_customers', (err, res)->
+                Meteor.call 'update_customers', (err, res)->
                     if err then console.error err
         },{
             name: 'Update users'
@@ -82,7 +82,7 @@ if Meteor.isProduction
                 parser.text 'every 3 hours'
             job: ->
                 console.log 'updating franchisee'
-                Meteor.call 'get_recent_franchisees', (err, res)->
+                Meteor.call 'update_franchisees', (err, res)->
                     if err then console.error err
         },{
             name: 'Update office'
@@ -90,7 +90,7 @@ if Meteor.isProduction
                 parser.text 'every 3 hours'
             job: ->
                 console.log 'updating office'
-                Meteor.call 'get_recent_offices', (err, res)->
+                Meteor.call 'update_offices', (err, res)->
                     if err then console.error err
         }
     )

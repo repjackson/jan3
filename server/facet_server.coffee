@@ -1,7 +1,8 @@
 Meteor.publish 'facet', (
     selected_levels
-    selected_offices
     selected_customers
+    selected_franchisees
+    selected_offices
     selected_timestamp_tags
     selected_status
     selected_ticket_types
@@ -16,6 +17,7 @@ Meteor.publish 'facet', (
 
         if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags
         if selected_customers.length > 0 then match.customer_name = selected_customers[0]
+        if selected_franchisees.length > 0 then match.ticket_franchisee = selected_franchisees[0]
         if selected_offices.length > 0 then match.ticket_office_name = selected_offices[0]
         if selected_levels.length > 0 then match.level = selected_levels[0]
         if selected_status.length > 0 then match.open = selected_status[0]
@@ -146,6 +148,26 @@ Meteor.publish 'facet', (
             self.added 'customers', Random.id(),
                 name: customer.name
                 count: customer.count
+                index: i
+
+
+
+        franchisee_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: ticket_franchisee: 1 }
+            { $group: _id: '$ticket_franchisee', count: $sum: 1 }
+            { $match: _id: $nin: selected_franchisees }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
+        franchisee_cloud.forEach (franchisee, i) ->
+            console.log franchisee
+            console.log i
+            self.added 'franchisees', Random.id(),
+                name: franchisee.name
+                count: franchisee.count
                 index: i
 
 
