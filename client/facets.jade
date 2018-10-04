@@ -10,6 +10,8 @@ template(name='ticket_facet')
                     +iconsmall name='activity-grid-2'
                 .set_view_segments.ui.button(class=view_segments_class)
                     +iconsmall name='menu'
+                .set_view_table.ui.button(class=view_table_class)
+                    +iconsmall name='data-sheet-filled'
         .row
             .four.wide.column
                 .ui.secondary.segment
@@ -27,10 +29,39 @@ template(name='ticket_facet')
                     if view_segments
                         each tickets
                             +facet_segment
+                    if view_table
+                        +facet_table
                     if view_cards
                         .ui.four.stackable.cards
                             each tickets
                                 +facet_card
+
+template(name='facet_table')
+    table.ui.striped.table(class=table_classes)
+        thead
+            tr
+                th.single.line #
+                th.single.line Office
+                th.single.line Franchisee
+                th.single.line Customer
+                th.single.line Level
+                th.single.line Details
+                th.single.line
+        tbody
+            each tickets
+                tr
+                    td #{ticket_number}
+                    td #{ticket_office_name}
+                    td #{ticket_franchisee}
+                    td #{customer_name}
+                    td
+                        +level_icon
+                    td #{ticket_details}
+                    td
+                        a.ui.icon.button(href="/p/ticket_admin_view?doc_id=#{_id}")
+                            i.right.chevron.icon
+
+
 
 template(name='facet_card')
     .card
@@ -50,11 +81,11 @@ template(name='facet_card')
                     i.building.grey.icon(title='Office')
                     |#{ticket_office_name}
                 .item
-                    i.money.grey.icon(title='Customer')
-                    |#{customer_name}
-                .item
                     i.suitcase.grey.icon(title='Franchisee')
                     |#{ticket_franchisee}
+                .item
+                    i.money.grey.icon(title='Customer')
+                    |#{customer_name}
             // each timestamp_tags
             //     .ui.compact.label #{this}
             +when_template

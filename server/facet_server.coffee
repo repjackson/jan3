@@ -13,7 +13,6 @@ Meteor.publish 'facet', (
         match = {}
 
         match.type = 'ticket'
-        # console.log selected_timestamp_tags
 
         if selected_timestamp_tags.length > 0 then match.timestamp_tags = $all: selected_timestamp_tags
         if selected_customers.length > 0 then match.customer_name = selected_customers[0]
@@ -23,7 +22,6 @@ Meteor.publish 'facet', (
         if selected_status.length > 0 then match.open = selected_status[0]
         if selected_ticket_types.length > 0 then match.ticket_type = selected_ticket_types[0]
 
-        # console.log 'match:', match
 
         # ancestor_ids_cloud = Docs.aggregate [
         #     { $match: match }
@@ -35,7 +33,6 @@ Meteor.publish 'facet', (
         #     { $limit: limit }
         #     { $project: _id: 0, name: '$_id', count: 1 }
         #     ]
-        # # console.log 'theme ancestor_ids_cloud, ', ancestor_ids_cloud
         # ancestor_ids_cloud.forEach (ancestor_id, i) ->
         #     self.added 'ancestor_ids', Random.id(),
         #         name: ancestor_id.name
@@ -52,7 +49,6 @@ Meteor.publish 'facet', (
         #     { $limit: 20 }
         #     { $project: _id: 0, name: '$_id', count: 1 }
         #     ]
-        # # console.log 'theme theme_tag_cloud, ', theme_tag_cloud
         # theme_tag_cloud.forEach (tag, i) ->
         #     self.added 'tags', Random.id(),
         #         name: tag.name
@@ -72,7 +68,6 @@ Meteor.publish 'facet', (
             { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
-        # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
         timestamp_tags_cloud.forEach (timestamp_tag, i) ->
             self.added 'timestamp_tags', Random.id(),
                 name: timestamp_tag.name
@@ -90,7 +85,6 @@ Meteor.publish 'facet', (
             { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
-        # console.log 'ticket_types_cloud, ', ticket_types_cloud
         ticket_types_cloud.forEach (ticket_type, i) ->
             self.added 'ticket_types', Random.id(),
                 name: ticket_type.name
@@ -143,8 +137,6 @@ Meteor.publish 'facet', (
             ]
         # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
         customer_cloud.forEach (customer, i) ->
-            console.log customer
-            console.log i
             self.added 'customers', Random.id(),
                 name: customer.name
                 count: customer.count
@@ -161,10 +153,7 @@ Meteor.publish 'facet', (
             { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
-        # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
         franchisee_cloud.forEach (franchisee, i) ->
-            console.log franchisee
-            console.log i
             self.added 'franchisees', Random.id(),
                 name: franchisee.name
                 count: franchisee.count
@@ -181,7 +170,6 @@ Meteor.publish 'facet', (
             { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
-        # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud
         office_cloud.forEach (office, i) ->
             self.added 'offices', Random.id(),
                 name: office.name
@@ -199,7 +187,6 @@ Meteor.publish 'facet', (
         #     { $limit: 20 }
         #     { $project: _id: 0, name: '$_id', count: 1 }
         #     ]
-        # # console.log 'location location_tag_cloud, ', location_tag_cloud
         # location_tag_cloud.forEach (location_tag, i) ->
         #     self.added 'location_tags', Random.id(),
         #         name: location_tag.name
@@ -221,7 +208,6 @@ Meteor.publish 'facet', (
         #     ]
 
 
-        # # console.log author_tag_cloud
 
         # # author_objects = []
         # # Meteor.users.find _id: $in: author_tag_cloud.
@@ -232,8 +218,6 @@ Meteor.publish 'facet', (
         #         count: author_id.count
 
         # found_docs = Docs.find(match).fetch()
-        # console.log 'match', match
-        # console.log 'found_docs', found_docs
         # found_docs.forEach (found_doc) ->
         #     self.added 'docs', doc._id, fields
         #         text: author_id.text
@@ -242,14 +226,11 @@ Meteor.publish 'facet', (
         # doc_results = []
         subHandle = Docs.find(match, {limit:20, sort: timestamp:-1}).observeChanges(
             added: (id, fields) ->
-                # console.log 'added doc', id, fields
                 # doc_results.push id
                 self.added 'docs', id, fields
             changed: (id, fields) ->
-                # console.log 'changed doc', id, fields
                 self.changed 'docs', id, fields
             removed: (id) ->
-                # console.log 'removed doc', id, fields
                 # doc_results.pull id
                 self.removed 'docs', id
         )
@@ -258,19 +239,15 @@ Meteor.publish 'facet', (
 
         # user_results = Meteor.users.find(_id:$in:doc_results).observeChanges(
         #     added: (id, fields) ->
-        #         # console.log 'added doc', id, fields
         #         self.added 'docs', id, fields
         #     changed: (id, fields) ->
-        #         # console.log 'changed doc', id, fields
         #         self.changed 'docs', id, fields
         #     removed: (id) ->
-        #         # console.log 'removed doc', id, fields
         #         self.removed 'docs', id
         # )
 
 
 
-        # console.log 'doc handle count', subHandle
 
         self.ready()
 
