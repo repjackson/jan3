@@ -224,20 +224,16 @@ template(name='location_facet')
 
 
 template(name='timestamp_facet')
-    if selected_timestamp_tags
-        if timestamp_tags
-            .ui.hidden.fitted.divider
-            +icon name='timer' classes='inline spaced' title='Created'
-            if selected_timestamp_tags
-                // #clear_timestamp_tags.ui.icon.primary.button
-                //     i.remove.icon
-                each selected_timestamp_tags
-                    .unselect_timestamp_tag.ui.primary.compact.button
-                        strong #{this}
-            each timestamp_tags
-                .ui.compact.button.select_timestamp_tag(class=timestamp_tag_class)
-                    | #{this.name}
-                    | #{this.count}
+    .ui.small.header
+        +icon name='timer' classes='inline spaced' title='Created'
+        | Created
+    each selected_timestamp_tags
+        .unselect_timestamp_tag.ui.primary.compact.button
+            strong #{this}
+    each timestamp_tags
+        .ui.compact.button.select_timestamp_tag(class=timestamp_tag_class)
+            | #{this.name}
+            | #{this.count}
 
 
 template(name='username_facet')
@@ -281,7 +277,7 @@ template(name='parent_facet')
 
 template(name='level_facet')
     strong
-        +icon name='positive-dynamic' title='Level' classes='inline spaced'
+        // +icon name='positive-dynamic' title='Level' classes='inline spaced'
         |Escalation Level &nbsp;
     if selected_levels
         // #clear_levels.ui.icon.button
@@ -296,7 +292,7 @@ template(name='level_facet')
 
 template(name='status_facet')
     strong
-        +icon name='checkmark' classes='inline spaced'
+        // +icon name='checkmark' classes='inline spaced'
         | Status &nbsp;
     if selected_status
         // #clear_status.ui.icon.button

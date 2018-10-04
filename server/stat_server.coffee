@@ -60,7 +60,7 @@ Meteor.methods
                 stat_type: 'office_employees'
                 office_jpid:office_doc.ev.ID
             },{ $set:amount:office_employee_count },{upsert:true})
-
+            return
 
     calculate_all_users_count: ()->
         all_user_count =
@@ -69,7 +69,7 @@ Meteor.methods
             collection: 'users'
             stat_type: 'total'
         },{ $set:amount:all_user_count },{upsert:true})
-
+        return
 
 
     calculate_my_tickets_count: ()->
@@ -86,7 +86,8 @@ Meteor.methods
                 stat_type: 'customer'
                 customer_jpid: user.customer_jpid
             }, { $set:amount:count },{ upsert:true })
-
+            return
+        return
 
 
     calculate_user_count: ()->
@@ -96,7 +97,7 @@ Meteor.methods
             collection:'users'
             stat_type: 'total'
         }, { $set:amount:count },{ upsert:true }
-
+        return
 
     # calculate_stat: (doc_type, stat_type)->
     calculate_stat: (stat_match_object)->
@@ -121,6 +122,7 @@ Meteor.methods
                 Docs.find(count_match_object).count()
             Stats.update(stat_match_object, { $set:amount:count },{ upsert:true })
 
+            return
 
     calculate_office_stats: (jpid)->
         office_doc =
@@ -178,9 +180,9 @@ Meteor.methods
                 Stats.update(stat_match_object,
                     { $set:count:ticket_count },
                     { upsert:true })
-                stat = Stats.findOne stat_match_object
+                # stat = Stats.findOne stat_match_object
 
-
+                return
 
 
         # franchisee count
@@ -203,7 +205,7 @@ Meteor.methods
             Stats.update(stat_match_object,
                 { $set:count:total_count },
                 { upsert:true })
-
+            return
 
 
     log_stats: ->
@@ -219,3 +221,4 @@ Meteor.methods
             stat_log_object['timestamp'] = Date.now()
 
             Stats.insert(stat_log_object)
+            return
