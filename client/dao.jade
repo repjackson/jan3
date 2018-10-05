@@ -17,6 +17,8 @@ template(name='dao')
                                 i.remove.icon
                     .ui.header args
                     +set_facet_key key='ticket_type' value='team_member_infraction' label='Team Member'
+                    each ticket_types
+                        +set_facet_key key='ticket_type' value=slug label=title
                     .ui.list
                         each args
                             .item
@@ -38,7 +40,7 @@ template(name='dao')
                 |call
         .twelve.wide.column
             .ui.stackable.cards
-                each results
+                each facet.docs
                     +facet_card
 
 

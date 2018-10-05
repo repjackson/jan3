@@ -2,19 +2,8 @@ Template.dao.onCreated ->
     @autorun -> Meteor.subscribe 'facets'
     @autorun => Meteor.subscribe 'results', FlowRouter.getQueryParam('doc_id')
     @autorun => Meteor.subscribe 'facet_doc', FlowRouter.getQueryParam('doc_id')
-    # Session.setDefault 'view_mode', 'cards'
-    # @autorun =>
-    #     Meteor.subscribe('facet',
-    #         selected_levels.array()
-    #         selected_customers.array()
-    #         selected_franchisees.array()
-    #         selected_offices.array()
-    #         selected_timestamp_tags.array()
-    #         selected_status.array()
-    #         selected_ticket_types.array()
-    #         type='ticket'
-    #         )
-    #     Meteor.subscribe 'usernames'
+    @autorun => Meteor.subscribe 'type', 'ticket_type'
+
 
 Template.dao.events
     'click .create_facet': (e,t)->
@@ -52,6 +41,10 @@ Template.dao.helpers
     facet: ->
         Facets.findOne FlowRouter.getQueryParam('doc_id')
     facets: -> Facets.find {}
+
+    ticket_types: ->
+        Docs.find
+            type:'ticket_type'
 
     results: ->
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')

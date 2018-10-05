@@ -296,21 +296,15 @@ Meteor.methods
 
     fo: (facet_id)->
         facet = Facets.findOne facet_id
-        query = {}
-        for arg in facet.args
-            console.log 'arg', arg
-            query["#{arg.key}"] = "#{arg.value}"
-        console.log query
-        count = Docs.find(query).count()
+        # query = {}
+        # for arg in facet.args
+        #     console.log 'arg', arg
+        #     query["#{arg.key}"] = "#{arg.value}"
+        # console.log query
+        count = Docs.find(facet.query).count()
+        self = @
+        doc_results = Docs.find(facet.query, limit:10).fetch()
         Facets.update facet_id,
             $set:
-                query:query
+                docs:doc_results
                 count:count
-
-        self = @
-        doc_results = Docs.find(query).fetch()
-        Facets.update facet_id,
-            $set: "results.docs":doc_results
-
-    clear_results: ->
-        Results.remove({})
