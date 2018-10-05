@@ -301,10 +301,48 @@ Meteor.methods
         #     console.log 'arg', arg
         #     query["#{arg.key}"] = "#{arg.value}"
         # console.log query
-        count = Docs.find(facet.query).count()
+        if facet.query
+            console.log 'facet.query', facet.query
+            fo_query = facet.query
+        else
+            fo_query = {}
+        count = Docs.find(fo_query).count()
+        console.log 'count', count
         self = @
-        doc_results = Docs.find(facet.query, limit:10).fetch()
+        doc_results = Docs.find(fo_query, limit:10).fetch()
         Facets.update facet_id,
             $set:
                 docs:doc_results
                 count:count
+
+    fum: (facet_id, key)->
+        facet = Facets.findOne facet_id
+        console.log 'key', key
+        console.log 'facet.query', facet.query
+        cloud = Docs.aggregate [
+            { $match: facet.query }
+            { $project: customer_name: 1 }
+            { $group: _id: '$customer_name', count: $sum: 1 }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, label: '$_id', count: 1 }
+            ]
+
+
+        console.log 'cloud', cloud
+        return_array = []
+
+        cloud.forEach (facet_result) =>
+            console.log 'facet result', facet_result
+            return_array.push facet_result
+            console.log 'return_array in', return_array
+            return_array
+            # self.added 'offices', Random.id(),
+            #     name: office.name
+            #     count: office.count
+            #     index: i
+
+        console.log 'return array OUT', return_array
+
+        Facets.update facet_id,
+            $set:customer_name:return_array

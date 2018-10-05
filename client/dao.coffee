@@ -19,7 +19,9 @@ Template.dao.events
         Meteor.call 'fo', FlowRouter.getQueryParam('doc_id')
 
     'click .clear_results': ->
-        Meteor.call 'clear_results'
+        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        Facets.update facet._id,
+            $set: docs: []
 
     'keyup .arg_key, keyup .arg_value': (e,t)->
         e.preventDefault()
@@ -38,7 +40,7 @@ Template.dao.events
 
 
 Template.dao.helpers
-    facet: ->
+    facet_doc: ->
         Facets.findOne FlowRouter.getQueryParam('doc_id')
     facets: -> Facets.find {}
 
@@ -54,13 +56,36 @@ Template.dao.helpers
     view_cards: -> Session.equals 'view_mode', 'cards'
     view_table: -> Session.equals 'view_mode', 'table'
 
+Template.set_facet_key.helpers
+    set_facet_key_class: ->
+        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        if facet.query["#{@key}"] is @value then 'primary' else ''
 
 Template.set_facet_key.events
     'click .set_facet_key': ->
-        console.log @key
-        console.log @value
-        console.log @label
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+
         query_key = "query.#{@key}"
         Facets.update facet._id,
             $set:"#{query_key}":@value
+        Meteor.call 'fo', FlowRouter.getQueryParam('doc_id')
+
+
+
+
+
+Template.facet.helpers
+    values: ->
+        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        facet["#{@key}"]
+
+    set_facet_key_class: ->
+        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        if facet.query["#{@key}"] is @value then 'primary' else ''
+
+Template.facet.events
+    # 'click .set_facet_key': ->
+    #     facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+    'click .recalc': ->
+        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        Meteor.call 'fum', facet._id, @key

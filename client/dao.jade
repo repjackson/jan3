@@ -7,16 +7,18 @@ template(name='dao')
                     each facets
                         .item
                             a(href="/p/dao?doc_id=#{_id}") #{_id}
-            if facet
-                with facet
+            if facet_doc
+                with facet_doc
                     .ui.list
                         .item id: #{_id}
                         .item count: #{count}
                         .item
-                            .ui.button.clear_results
+                            .ui.icon.button.clear_results
                                 i.remove.icon
-                    .ui.header args
-                    +set_facet_key key='ticket_type' value='team_member_infraction' label='Team Member'
+                    // each facet_filters
+                    +facet key='customer_name'
+                    .ui.small.dividing.header
+                        |Ticket Types
                     each ticket_types
                         +set_facet_key key='ticket_type' value=slug label=title
                     .ui.list
@@ -40,10 +42,19 @@ template(name='dao')
                 |call
         .twelve.wide.column
             .ui.stackable.cards
-                each facet.docs
+                each facet_doc.docs
                     +facet_card
 
 
 template(name='set_facet_key')
-    .ui.button.set_facet_key
+    .ui.button.small.compact.set_facet_key(class=set_facet_key_class)
         |#{label}
+
+
+template(name='facet')
+    |key: #{key}
+    .recalc.ui.button
+        |Recalc #{label}
+    each values
+        .ui.small.compact.button
+            |#{label}
