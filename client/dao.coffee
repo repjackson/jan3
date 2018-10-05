@@ -23,19 +23,19 @@ Template.dao.events
         Facets.update facet._id,
             $set: docs: []
 
-    'keyup .arg_key, keyup .arg_value': (e,t)->
-        e.preventDefault()
-        if e.which is 13 #enter
-            facet_id = FlowRouter.getQueryParam('doc_id')
-            arg_key_val = $('.arg_key').val().trim()
-            arg_val_val = $('.arg_value').val().trim()
-            arg = {
-                key:arg_key_val
-                value:arg_val_val
-            }
-            Meteor.call 'fa', arg, facet_id
-            $('.arg_key').val('')
-            $('.arg_value').val('')
+    # 'keyup .arg_key, keyup .arg_value': (e,t)->
+    #     e.preventDefault()
+    #     if e.which is 13 #enter
+    #         facet_id = FlowRouter.getQueryParam('doc_id')
+    #         arg_key_val = $('.arg_key').val().trim()
+    #         arg_val_val = $('.arg_value').val().trim()
+    #         arg = {
+    #             key:arg_key_val
+    #             value:arg_val_val
+    #         }
+    #         Meteor.call 'fa', arg, facet_id
+    #         $('.arg_key').val('')
+    #         $('.arg_value').val('')
 
 
 

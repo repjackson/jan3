@@ -60,11 +60,14 @@ template(name='view_sla_contact')
 template(name='complete_ticket_task')
     .ui.form
         .field
-            label Task Completion Notes
+            label Task Notes
             textarea#completion_details(rows='3')
         .field
-            .ui.submit_completion_task.fluid.jpgreen.inverted.button
+            .ui.submit_note.fluid.jpgreen.inverted.button
                 |Submit
+        .field
+            .ui.submit_and_complete_task.fluid.jpgreen.inverted.button
+                |Submit and Complete Task
 
 
 

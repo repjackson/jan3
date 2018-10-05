@@ -265,11 +265,16 @@ Meteor.publish 'facets', ->
 
 Meteor.publish 'results', (facet_id)->
     facet = Facets.findOne facet_id
-    cursor = Docs.find facet.query
-    # console.log 'current query', facet.query
-    # console.log 'current query result count', cursor.count()
+    built_query = {}
+    for arg in facet.args
+        console.log 'arg', arg
+        if arg.type is 'in'
+            built_query["#{arg.key}"] = "$in":["#{arg.value}"]
+        else
+            built_query["#{arg.key}"] = "#{arg.value}"
+    console.log 'built_query',built_query
 
-    Docs.find facet.query,
+    Docs.find built_query,
         {limit:20}
 
 
@@ -308,9 +313,20 @@ Meteor.methods
         count = Docs.find(built_query).count()
         # console.log 'count', count
         # self = @
+        # myJSON = JSON.stringify(built_query);
+        # console.log myJSON
+        # String documentAsString = myJSON.replaceAll("_\\$", "\\$").replaceAll("#", ".");
+        # Object q = JSON.parse(documentAsString);
+
+        console.log 'documentAsString', documentAsString
+        console.log 'q', q
+
+
+
         doc_results = Docs.find(built_query, limit:10).fetch()
         Facets.update facet_id,
             $set:
+                # query:built_query
                 docs:doc_results
                 count:count
 
@@ -323,35 +339,56 @@ Meteor.methods
         for arg in facet.args
             console.log 'arg', arg
             if arg.type is 'in'
-                built_query["#{arg.key}"] = "$in":"#{arg.value}"
+                # built_query["#{arg.key}"] = "$in":["#{arg.value}"]
+                built_query["#{arg.key}"] = "$in":[arg.value]
             else
                 built_query["#{arg.key}"] = "#{arg.value}"
         console.log 'built_query',built_query
 
-        cloud = Docs.aggregate [
+
+        types_cloud = Docs.aggregate [
             { $match: built_query }
-            { $project: customer_name: 1 }
-            { $group: _id: '$customer_name', count: $sum: 1 }
+            { $project: ticket_type: 1 }
+            { $unwind: "$ticket_type" }
+            { $group: _id: '$ticket_type', count: $sum: 1 }
             { $sort: count: -1, _id: 1 }
             { $limit: 10 }
-            { $project: _id: 0, label: '$_id', count: 1 }
+            { $project: _id: 0, name: '$_id', count: 1 }
             ]
 
+        console.log 'TYPES CLOUD', types_cloud
+        # pipeline = [
+        #     { $match: built_query }
+        #     { $project: customer_name: 1 }
+        #     { $group: _id: '$customer_name', count: $sum: 1 }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $limit: 10 }
+        #     { $project: _id: 0, label: '$_id', count: 1 }
+        #     ]
 
-        console.log 'cloud', cloud
+
+        # result = Docs.aggregate(pipeline, {explain: false, cursor: {} });
+        # console.log 'result', result
+        # console.log("Explain Report:", JSON.stringify(result), null, 2);
+
+
+        # console.log 'cloud', cloud
         return_array = []
 
-        cloud.forEach (facet_result) =>
-            console.log 'facet result', facet_result
+        types_cloud.forEach (facet_result) ->
+            console.log 'start return array', return_array
+            console.log 'types result', facet_result
             return_array.push facet_result
             console.log 'return_array in', return_array
-            return_array
-            # self.added 'offices', Random.id(),
-            #     name: office.name
-            #     count: office.count
-            #     index: i
+            return return_array
+        #     return_array
+        #     # self.added 'offices', Random.id(),
+        #     #     name: office.name
+        #     #     count: office.count
+        #     #     index: i
+
 
         console.log 'return array OUT', return_array
 
-        Facets.update facet_id,
-            $set:customer_name:return_array
+        # Facets.update facet_id,
+        #     $set:customer_name:return_array

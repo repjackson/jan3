@@ -124,7 +124,7 @@ Template.office_card.helpers
             Docs.findOne
                 type:'office'
                 "ev.ID": context.office_jpid
-        console.log doc
+        # console.log doc
         doc
 Template.ticket_office_card.helpers
     office_doc: ->

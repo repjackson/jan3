@@ -239,7 +239,24 @@ Template.complete_ticket_task.onRendered ()->
 
 
 Template.complete_ticket_task.events
-    'click .submit_completion_task': (e,t)->
+    'click .submit_note': (e,t)->
+        note_val = t.$('#completion_details').val()
+        unassigned_username = FlowRouter.getQueryParam 'unassign'
+        ticket_id = FlowRouter.getQueryParam('doc_id')
+        ticket = Docs.findOne ticket_id
+        Docs.insert
+            type:'event'
+            parent_id: ticket_id
+            ticket_id: ticket_id
+            event_type:'note'
+            office_jpid: ticket.office_jpid
+            franchisee_jpid: ticket.franchisee_jpid
+            customer_jpid: ticket.customer_jpid
+            text: "#{unassigned_username} added note: #{note_val}."
+        FlowRouter.go("/p/ticket_admin_view?doc_id=#{ticket_id}")
+
+
+    'click .submit_and_complete_task': (e,t)->
         completion_details = t.$('#completion_details').val()
         unassigned_username = FlowRouter.getQueryParam 'unassign'
         ticket_id = FlowRouter.getQueryParam('doc_id')

@@ -16,7 +16,7 @@ template(name='dao')
                             .ui.icon.button.clear_results
                                 i.remove.icon
                     // each facet_filters
-                    +facet key='customer_name'
+                    +facet key='level'
                     // .ui.small.dividing.header
                     //     |Ticket Types
                     // each ticket_types
@@ -26,14 +26,14 @@ template(name='dao')
                             .item
                                 |#{key}: #{value}
                                 i.remove_arg.remove.link.icon
-                    .ui.form
-                        .inline.field
-                            label new key
-                            input.arg_key(type='text')
-                        .inline.field
-                            label new value
-                            input.arg_value(type='text')
-                        .ui.divider
+                    // .ui.form
+                    //     .inline.field
+                    //         label new key
+                    //         input.arg_key(type='text')
+                    //     .inline.field
+                    //         label new value
+                    //         input.arg_value(type='text')
+                    //     .ui.divider
             else
                 .create_facet.ui.button
                     |Create Facet
