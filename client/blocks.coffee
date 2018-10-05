@@ -108,13 +108,34 @@ Template.toggle_user_published.events
 
 Template.office_card.onCreated ->
     @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.office_jpid
+Template.ticket_office_card.onCreated ->
+    page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+    if page_doc
+        console.log page_doc
+        @autorun =>  Meteor.subscribe 'doc_by_jpid', page_doc.office_jpid
+
+
 Template.office_card.helpers
     office_doc: ->
-        context = Template.currentData(0)
+        context =
+            if Template.currentData(0)
+                Template.currentData(0)
         doc =
             Docs.findOne
                 type:'office'
                 "ev.ID": context.office_jpid
+        console.log doc
+        doc
+Template.ticket_office_card.helpers
+    office_doc: ->
+        context =
+            if FlowRouter.getQueryParam('doc_id')
+                Docs.findOne FlowRouter.getQueryParam('doc_id')
+        if context
+            doc = Docs.findOne
+                type:'office'
+                "ev.ID": context.office_jpid
+        console.log doc
         doc
 
 Template.customer_card.onCreated ->
@@ -122,6 +143,22 @@ Template.customer_card.onCreated ->
 Template.customer_card.helpers
     customer_doc: ->
         context = Template.currentData(0)
+        doc =
+            Docs.findOne
+                type:'customer'
+                "ev.ID": context.customer_jpid
+        doc
+
+Template.ticket_customer_card.onCreated ->
+    page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+    if page_doc
+        console.log page_doc
+        @autorun =>  Meteor.subscribe 'doc_by_jpid', page_doc.office_jpid
+Template.ticket_customer_card.helpers
+    customer_doc: ->
+        context =
+            if FlowRouter.getQueryParam('doc_id')
+                Docs.findOne FlowRouter.getQueryParam('doc_id')
         doc =
             Docs.findOne
                 type:'customer'

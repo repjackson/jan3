@@ -89,3 +89,23 @@ Template.facet.events
     'click .recalc': ->
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
         Meteor.call 'fum', facet._id, @key
+
+    'click .select_value': ->
+        console.log @
+        filter = Template.currentData()
+        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        # query = facet.query
+        # query["#{filter.key}"] = "$all":["#{@label}"]
+        # console.log 'query',query
+        arg = {
+            key:filter.key
+            type: 'in'
+            value:@label
+            }
+        # query = {
+        #     customer_name:$all: ["Harlem Hookah"]
+        #     ticket_type: "team_member_infraction"
+        # }
+        Facets.update facet._id,
+            $addToSet: args:arg
+        Meteor.call 'fum', facet._id, filter.key

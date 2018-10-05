@@ -205,6 +205,35 @@ template(name='office_card')
                 div
                     a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
 
+template(name='ticket_office_card')
+    .ui.card
+        with office_doc
+            .content
+                if is_customer
+                    .ui.header
+                        +icon name='building'
+                        |Office
+                else
+                    a(href="/p/office?jpid=#{ev.ID}")
+                        .ui.header
+                            +icon name='building'
+                            |Office
+            .content
+                if is_customer
+                    h4.ui.header #{ev.MASTER_LICENSEE}
+                else
+                    a(href="/p/office?jpid=#{ev.ID}")
+                        h4.ui.header #{ev.MASTER_LICENSEE}
+                // div ##{ev.ID}
+                div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2}
+                div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                div
+                    a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
+
+
+
+
 template(name='franchisee_card')
     .ui.card
         with franchisee_doc

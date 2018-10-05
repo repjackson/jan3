@@ -17,10 +17,10 @@ template(name='dao')
                                 i.remove.icon
                     // each facet_filters
                     +facet key='customer_name'
-                    .ui.small.dividing.header
-                        |Ticket Types
-                    each ticket_types
-                        +set_facet_key key='ticket_type' value=slug label=title
+                    // .ui.small.dividing.header
+                    //     |Ticket Types
+                    // each ticket_types
+                    //     +set_facet_key key='ticket_type' value=slug label=title
                     .ui.list
                         each args
                             .item
@@ -56,5 +56,5 @@ template(name='facet')
     .recalc.ui.button
         |Recalc #{label}
     each values
-        .ui.small.compact.button
+        .ui.small.compact.select_value.button
             |#{label}

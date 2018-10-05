@@ -276,13 +276,6 @@ Meteor.publish 'results', (facet_id)->
 
 
 
-
-
-
-
-
-
-
 Meteor.methods
     fi: (args, facet_id)->
         facet = Facets.findOne facet_id
@@ -296,20 +289,26 @@ Meteor.methods
 
     fo: (facet_id)->
         facet = Facets.findOne facet_id
-        # query = {}
-        # for arg in facet.args
-        #     console.log 'arg', arg
-        #     query["#{arg.key}"] = "#{arg.value}"
+        built_query = {}
+        for arg in facet.args
+            console.log 'arg', arg
+            # query["#{arg.key}"] = "#{arg.value}"
+            if arg.type is 'in'
+                built_query["#{arg.key}"] = "$in":["#{arg.value}"]
+            else
+                built_query["#{arg.key}"] = "#{arg.value}"
+        console.log 'built_query',built_query
+
         # console.log query
-        if facet.query
-            console.log 'facet.query', facet.query
-            fo_query = facet.query
-        else
-            fo_query = {}
-        count = Docs.find(fo_query).count()
-        console.log 'count', count
-        self = @
-        doc_results = Docs.find(fo_query, limit:10).fetch()
+        # if facet.query
+            # console.log 'facet.query', facet.query
+            # fo_query = facet.query
+        # else
+            # fo_query = {}
+        count = Docs.find(built_query).count()
+        # console.log 'count', count
+        # self = @
+        doc_results = Docs.find(built_query, limit:10).fetch()
         Facets.update facet_id,
             $set:
                 docs:doc_results
@@ -319,8 +318,18 @@ Meteor.methods
         facet = Facets.findOne facet_id
         console.log 'key', key
         console.log 'facet.query', facet.query
+
+        built_query = {}
+        for arg in facet.args
+            console.log 'arg', arg
+            if arg.type is 'in'
+                built_query["#{arg.key}"] = "$in":"#{arg.value}"
+            else
+                built_query["#{arg.key}"] = "#{arg.value}"
+        console.log 'built_query',built_query
+
         cloud = Docs.aggregate [
-            { $match: facet.query }
+            { $match: built_query }
             { $project: customer_name: 1 }
             { $group: _id: '$customer_name', count: $sum: 1 }
             { $sort: count: -1, _id: 1 }

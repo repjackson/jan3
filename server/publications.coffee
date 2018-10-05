@@ -353,12 +353,18 @@ publishComposite 'doc', (id)->
             {
                 find: (doc)-> Meteor.users.find _id:doc.author_id
             }
-            # {
-            #     find: (doc)-> Docs.find _id:doc.referenced_office_id
-            # }
-            # {
-            #     find: (doc)-> Docs.find _id:doc.referenced_customer_id
-            # }
+            {
+                find: (doc)->
+                    Docs.find
+                        type:'office'
+                        "ev.ID":doc.office_jpid
+            }
+            {
+                find: (doc)->
+                    Docs.find
+                        type:'customer'
+                        "ev.ID":doc.customer_jpid
+            }
             {
                 find: (doc)-> Docs.find _id:doc.parent_id
             }
