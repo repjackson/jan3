@@ -1,5 +1,5 @@
 Template.dao.onCreated ->
-    @autorun -> Meteor.subscribe 'type', 'facet'
+    @autorun -> Meteor.subscribe 'facets'
     @autorun => Meteor.subscribe 'results', FlowRouter.getQueryParam('doc_id')
     @autorun => Meteor.subscribe 'facet_doc', FlowRouter.getQueryParam('doc_id')
     # Session.setDefault 'view_mode', 'cards'
@@ -18,7 +18,7 @@ Template.dao.onCreated ->
 
 Template.dao.events
     'click .create_facet': (e,t)->
-        new_facet_id = Docs.insert type:'facet'
+        new_facet_id = Facets.insert {}
         console.log new_facet_id
         Session.set 'facet_id', new_facet_id
 
@@ -46,17 +46,28 @@ Template.dao.events
             $('.arg_key').val('')
             $('.arg_value').val('')
 
+
+
 Template.dao.helpers
     facet: ->
-        Docs.findOne FlowRouter.getQueryParam('doc_id')
-    facets: ->
-        Docs.find
-            type:'facet'
+        Facets.findOne FlowRouter.getQueryParam('doc_id')
+    facets: -> Facets.find {}
 
     results: ->
-        facet = Docs.findOne FlowRouter.getQueryParam('doc_id')
+        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
         console.log 'count', Docs.find(facet.query).count()
         Docs.find(facet.query, limit:20)
     view_segments: -> Session.equals 'view_mode', 'segments'
     view_cards: -> Session.equals 'view_mode', 'cards'
     view_table: -> Session.equals 'view_mode', 'table'
+
+
+Template.set_facet_key.events
+    'click .set_facet_key': ->
+        console.log @key
+        console.log @value
+        console.log @label
+        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        query_key = "query.#{@key}"
+        Facets.update facet._id,
+            $set:"#{query_key}":@value

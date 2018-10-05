@@ -260,13 +260,11 @@ Meteor.publish 'facet_doc', (facet_id)->
     # else
     Docs.find type:'facet'
 
-
+Meteor.publish 'facets', ->
+    Facets.find()
 
 Meteor.publish 'results', (facet_id)->
-    # Results.find {},
-    #     limit:20
-
-    facet = Docs.findOne facet_id
+    facet = Facets.findOne facet_id
     cursor = Docs.find facet.query
     # console.log 'current query', facet.query
     # console.log 'current query result count', cursor.count()
@@ -287,36 +285,32 @@ Meteor.publish 'results', (facet_id)->
 
 Meteor.methods
     fi: (args, facet_id)->
-        facet = Docs.findOne facet_id
+        facet = Facets.findOne facet_id
         query = {}
 
     fa:(arg, facet_id)->
-        facet = Docs.findOne facet_id
-        Docs.update facet_id,
+        facet = Facets.findOne facet_id
+        Facets.update facet_id,
             $addToSet:
                 args: arg
 
     fo: (facet_id)->
-        facet = Docs.findOne facet_id
+        facet = Facets.findOne facet_id
         query = {}
         for arg in facet.args
             console.log 'arg', arg
             query["#{arg.key}"] = "#{arg.value}"
         console.log query
         count = Docs.find(query).count()
-        Docs.update facet_id,
+        Facets.update facet_id,
             $set:
                 query:query
                 count:count
 
         self = @
-        Results.remove({})
         doc_results = Docs.find(query).fetch()
-
-        for doc in doc_results
-            console.log doc
-            Results.insert doc
-
+        Facets.update facet_id,
+            $set: "results.docs":doc_results
 
     clear_results: ->
         Results.remove({})
