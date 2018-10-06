@@ -2,7 +2,7 @@ template(name='dao')
     .ui.stackable.grid
         .four.wide.column
             .ui.secondary.segment
-                .ui.small.header facets
+                .ui.small.header Sessions
                 .ui.list
                     each facets
                         .item
@@ -12,11 +12,18 @@ template(name='dao')
                     .ui.list
                         .item id: #{_id}
                         .item count: #{count}
-                        .item
-                            .ui.icon.button.clear_results
-                                i.remove.icon
-                    // each facet_filters
-                    +facet key='level'
+                        // .item
+                        //     .ui.icon.button.clear_results
+                        //         i.remove.icon
+                    #add_filter.ui.button
+                        i.plus.icon
+                        | Filter
+                    each filters
+                        +filter
+                    // +facet key='ticket_type' label='Ticket Type'
+                    // +facet key='customer_name' label='Customer'
+                    // +facet key='ticket_franchisee' label='Franchisee'
+                    // +facet key='ticket_office_name' label='Office'
                     // .ui.small.dividing.header
                     //     |Ticket Types
                     // each ticket_types
@@ -38,11 +45,11 @@ template(name='dao')
                 .create_facet.ui.button
                     |Create Facet
 
-            .call.ui.button
-                |call
+            // .call.ui.button
+            //     |call
         .twelve.wide.column
             .ui.stackable.cards
-                each facet_doc.docs
+                each facet_doc.results
                     +facet_card
 
 
@@ -51,10 +58,20 @@ template(name='set_facet_key')
         |#{label}
 
 
-template(name='facet')
-    |key: #{key}
-    .recalc.ui.button
-        |Recalc #{label}
+template(name='filter')
+    .ui.small.header #{label}
+    // |key: #{key}
     each values
-        .ui.small.compact.select_value.button
-            |#{label}
+        .ui.small.compact.toggle_value.button(class=toggle_value_class)
+            |#{name} #{count}
+    if editing_mode
+        i.recalc.link.refresh.icon
+        +edit_filter_field key='label' filter_id=this._id
+        +edit_filter_field key='key' filter_id=this._id
+
+
+template(name='edit_filter_field')
+    .ui.labeled.input
+        .ui.basic.label #{key}
+        input.text_val(type='text')
+

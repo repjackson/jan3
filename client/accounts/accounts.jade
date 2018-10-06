@@ -73,17 +73,17 @@ template(name='login')
                         // unless currentUser
                         .login.ui.fluid.jpgreen.inverted.button(class=login_button_class title='Login')
                             .large120 Login
-                        .four.wide.column
-                            .ui.center.aligned.header Demo
-                            #login_demo_admin.ui.fluid.button(class=demo_class title='Login Demo Admin')
-                                +iconsmall name='user-shield' classes='ui inline image'
-                                | &nbsp; Admin
-                        //     #login_demo_customer.ui.fluid.button(class=demo_class title='Login Demo Customer')
-                        //         +iconsmall name='headset' classes='ui inline image'
-                        //         | &nbsp; Customer
-                        //     #login_demo_office.ui.fluid.button(class=demo_class title='Login Demo Office')
-                        //         +iconsmall name='building' classes='ui inline image'
-                        //         | &nbsp; Office
+            .four.wide.column
+                .ui.center.aligned.header Demo
+                #login_demo_customer.ui.fluid.button(class=demo_class title='Login Demo Customer')
+                    +iconsmall name='headset' classes='ui inline image'
+                    | &nbsp; Customer
+                #login_demo_office.ui.fluid.button(class=demo_class title='Login Demo Office')
+                    +iconsmall name='building' classes='ui inline image'
+                    | &nbsp; Office
+                #login_demo_admin.ui.fluid.button(class=demo_class title='Login Demo Admin')
+                    +iconsmall name='user-shield' classes='ui inline image'
+                    | &nbsp; Admin
 
 template(name='register_customer')
     .ui.centered.padded.grid
