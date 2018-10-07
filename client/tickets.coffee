@@ -18,17 +18,9 @@ Template.ticket_type_label.helpers
             when 'team_member_infraction' then 'Team Member Infraction'
             when 'change_service' then 'Request a Change of Service'
             when 'problem' then 'Report a Problem or Service Issue'
+            when 'supply_request' then 'Supply Request'
             when 'special_request' then 'Request a Special Service'
             when 'other' then 'Other'
-
-    type_label_class: ->
-        switch @ticket_type
-            when 'missed_service' then 'blue'
-            when 'team_member_infraction' then 'green'
-            when 'change_service' then 'teal'
-            when 'problem' then 'yellow'
-            when 'special_request' then 'orange'
-            when 'other' then 'grey'
 
     ticket_type_icon: ->
         switch @ticket_type
@@ -36,6 +28,7 @@ Template.ticket_type_label.helpers
             when 'team_member_infraction' then 'unfriend-male'
             when 'change_service' then 'transfer-between-users'
             when 'problem' then 'box-important'
+            when 'supply_request' then 'toilet-paper'
             when 'special_request' then 'carpet-cleaning'
             when 'other' then 'grey'
 

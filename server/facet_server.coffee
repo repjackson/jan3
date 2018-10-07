@@ -4,10 +4,11 @@ Meteor.publish 'filters', (facet_id)->
     # else
     Docs.find
         type:'filter'
-        facet_id:facet_id
+        # facet_id:facet_id
 
-Meteor.publish 'facets', ->
-    Facets.find()
+Meteor.publish 'my_facets', ->
+    Facets.find
+        author_id: Meteor.userId()
 
 Meteor.publish 'results', (facet_id)->
     facet = Facets.findOne facet_id
@@ -57,17 +58,6 @@ Meteor.methods
         # else
             # fo_query = {}
         count = Docs.find(built_query).count()
-        # console.log 'count', count
-        # self = @
-        # myJSON = JSON.stringify(built_query);
-        # console.log myJSON
-        # String documentAsString = myJSON.replaceAll("_\\$", "\\$").replaceAll("#", ".");
-        # Object q = JSON.parse(documentAsString);
-
-        # console.log 'documentAsString', documentAsString
-        # console.log 'q', q
-
-
 
         doc_results = Docs.find(built_query, limit:10).fetch()
         Facets.update facet_id,
@@ -76,14 +66,12 @@ Meteor.methods
                 results:doc_results
                 count:count
 
-    fum: (facet_id, key)->
+    fum: (facet_id)->
         facet = Facets.findOne facet_id
-        console.log 'key', key
-        console.log 'facet filter', facet["filter_#{key}"]
 
         filters = Docs.find(
             type:'filter'
-            facet_id:facet_id
+            # facet_id:facet_id
             ).fetch()
         filter_keys = []
         for filter in filters
@@ -91,10 +79,10 @@ Meteor.methods
 
         console.log 'filter keys', filter_keys
 
-
-        unless facet["filter_#{key}"]
-            Facets.update facet_id,
-                $set: "filter_#{key}":[]
+        for filter_key in filter_keys
+            unless facet["filter_#{filter_key}"]
+                Facets.update facet_id,
+                    $set: "filter_#{filter_key}":[]
         query = if facet.query then facet.query else {}
         built_query = {}
         for arg in facet.args
@@ -104,26 +92,35 @@ Meteor.methods
                 built_query["#{arg.key}"] = "$in":[arg.value]
             else
                 built_query["#{arg.key}"] = "#{arg.value}"
-        if facet["filter_#{key}"].length > 0
-            built_query["#{key}"] = $in: facet["filter_#{key}"]
+
+        for filter_key in filter_keys
+            console.log facet["filter_#{filter_key}"]
+            filter_list = facet["filter_#{filter_key}"]
+            if filter_list and filter_list.length > 0
+                built_query["#{filter_key}"] = $in: filter_list
         console.log 'built_query', built_query
 
         count = Docs.find(built_query).count()
 
         results = Docs.find(built_query, {limit:100}).fetch()
-        # console.log results[1..5]
-        names = []
-        return_array = []
-        for result in results
-            if result["#{key}"]
-                names.push result["#{key}"]
+        method_return = []
 
-        counted = _.countBy(names)
+        for filter_key in filter_keys
+            values = []
+            key_return = []
+            for result in results
+                if result["#{filter_key}"]?
+                    values.push result["#{filter_key}"]
 
-        for name,count of counted
-            return_array.push({ name:name, count:count })
+            counted = _.countBy(values)
 
+            for value,count of counted
+                key_return.push({ value:value, count:count })
+
+            Facets.update facet_id,
+                $set:
+                    "#{filter_key}":key_return
         Facets.update facet_id,
             $set:
-                "#{key}":return_array
-                results:results[1..10]
+                count: count
+                results:results[0..10]

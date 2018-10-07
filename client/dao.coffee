@@ -1,5 +1,5 @@
 Template.dao.onCreated ->
-    @autorun -> Meteor.subscribe 'facets'
+    @autorun -> Meteor.subscribe 'my_facets'
     # @autorun => Meteor.subscribe 'results', FlowRouter.getQueryParam('doc_id')
     @autorun => Meteor.subscribe 'filters', FlowRouter.getQueryParam('doc_id')
     @autorun => Meteor.subscribe 'type', 'ticket_type'
@@ -7,9 +7,16 @@ Template.dao.onCreated ->
 
 Template.dao.events
     'click .create_facet': (e,t)->
-        new_facet_id = Facets.insert {}
-        console.log new_facet_id
-        Session.set 'facet_id', new_facet_id
+        new_facet_id =
+            Facets.insert
+                author_id: Meteor.userId()
+                timestamp: Date.now()
+                args: [
+                    key:'type'
+                    value:'ticket'
+                    ]
+        FlowRouter.go("/p/dao?doc_id=#{new_facet_id}")
+        Meteor.call 'fum', new_facet_id
 
     'click #add_filter': (e,t)->
         Docs.insert
@@ -21,7 +28,7 @@ Template.dao.events
             $pull:args:@
 
     'click .call':(e,t)->
-        Meteor.call 'fo', FlowRouter.getQueryParam('doc_id')
+        Meteor.call 'fum', FlowRouter.getQueryParam('doc_id')
 
     'click .clear_results': ->
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
@@ -47,16 +54,14 @@ Template.dao.events
 Template.dao.helpers
     facet_doc: ->
         Facets.findOne FlowRouter.getQueryParam('doc_id')
-    facets: -> Facets.find {}
+    facets: ->
+        Facets.find
+            author_id:Meteor.userId()
 
     ticket_types: ->
         Docs.find
             type:'ticket_type'
 
-    results: ->
-        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
-        console.log 'count', Docs.find(facet.query).count()
-        Docs.find(facet.query, limit:20)
     view_segments: -> Session.equals 'view_mode', 'segments'
     view_cards: -> Session.equals 'view_mode', 'cards'
     view_table: -> Session.equals 'view_mode', 'table'
@@ -64,7 +69,7 @@ Template.dao.helpers
     filters: ->
         Docs.find
             type:'filter'
-            facet_id: FlowRouter.getQueryParam('doc_id')
+            # facet_id: FlowRouter.getQueryParam('doc_id')
 
 
 
@@ -89,7 +94,7 @@ Template.set_facet_key.events
 Template.filter.helpers
     values: ->
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
-        facet["#{@key}"]
+        facet["#{@key}"][..7]
 
     set_facet_key_class: ->
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
@@ -98,8 +103,8 @@ Template.filter.helpers
     toggle_value_class: ->
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
         filter = Template.parentData()
-
-        if @name in facet["filter_#{filter.key}"] then 'primary' else ''
+        filter_list = facet["filter_#{filter.key}"]
+        if filter_list and @value in filter_list then 'primary' else ''
 
 Template.filter.events
     # 'click .set_facet_key': ->
@@ -112,12 +117,14 @@ Template.filter.events
         # console.log @
         filter = Template.currentData()
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
-        if @name in facet["filter_#{filter.key}"]
+        filter_list = facet["filter_#{filter.key}"]
+
+        if filter_list and @value in filter_list
             Facets.update facet._id,
-                $pull: "filter_#{filter.key}":@name
+                $pull: "filter_#{filter.key}": @value
         else
             Facets.update facet._id,
-                $addToSet: "filter_#{filter.key}":@name
+                $addToSet: "filter_#{filter.key}": @value
 
         Meteor.call 'fum', facet._id, filter.key
 
@@ -125,6 +132,6 @@ Template.filter.events
 Template.edit_filter_field.events
     'change .text_val': (e,t)->
         text_value = e.currentTarget.value
-        console.log @filter_id
+        # console.log @filter_id
         Docs.update @filter_id,
             { $set: "#{@key}": text_value }
