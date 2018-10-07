@@ -92,6 +92,10 @@ Meteor.methods
         for filter_key in filter_keys
             values = []
             key_return = []
+
+            example_value = Docs.findOne({"#{filter_key}":$exists:true})
+
+            filter_primitive = typeof example_value["#{filter_key}"]
             for result in results
                 if result["#{filter_key}"]?
                     values.push result["#{filter_key}"]
@@ -99,7 +103,14 @@ Meteor.methods
             counted = _.countBy(values)
 
             for value,count of counted
-                key_return.push({ value:value, count:count })
+                if filter_primitive is 'number'
+                    int_value = parseInt value
+                    key_return.push({ value:int_value, count:count })
+                else if filter_primitive is 'boolean'
+                    bool_value = if value is 'true' then true else false
+                    key_return.push({ value:bool_value, count:count })
+                else if filter_primitive is 'string'
+                    key_return.push({ value:value, count:count })
 
             Facets.update facet_id,
                 $set:

@@ -8,8 +8,18 @@ Template.dao.onCreated ->
 
 Template.facet_card.onCreated ->
     @autorun => Meteor.subscribe 'doc', @data
+Template.facet_segment.onCreated ->
+    @autorun => Meteor.subscribe 'doc', @data
+Template.dao_table_row.onCreated ->
+    @autorun => Meteor.subscribe 'doc', @data
 
 Template.facet_card.helpers
+    local_doc: ->
+        Docs.findOne @valueOf()
+Template.facet_segment.helpers
+    local_doc: ->
+        Docs.findOne @valueOf()
+Template.dao_table_row.helpers
     local_doc: ->
         Docs.findOne @valueOf()
 
@@ -100,10 +110,8 @@ Template.set_page_size.events
 
 
 Template.facet_table.helpers
-    results: ->
+    facet_doc: ->
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
-        Docs.find
-            _id:$in:facet.result_ids
 
 Template.dao.helpers
     facet_doc: ->
