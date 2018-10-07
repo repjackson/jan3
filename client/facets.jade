@@ -32,16 +32,19 @@ template(name='facet_table')
                 th.single.line Office
                 th.single.line Franchisee
                 th.single.line Customer
+                th.single.line Type
                 th.single.line Level
                 th.single.line Details
                 th.single.line
         tbody
-            each tickets
+            each facet_results
                 tr
                     td #{ticket_number}
                     td #{ticket_office_name}
                     td #{ticket_franchisee}
                     td #{customer_name}
+                    td
+                        +ticket_type_label
                     td
                         +level_icon
                     td #{ticket_details}

@@ -1,18 +1,36 @@
 template(name='dao')
     .ui.stackable.grid
-        .four.wide.column
+        .row
+            unless facet_doc
+                .sixteen.wide.column
+                    .ui.secondary.segment
+                        .ui.small.header Sessions
+                        if currentUser
+                            .create_facet.ui.icon.button(title='Create Session')
+                                i.plus.icon
+                        each my_facets
+                            a.ui.button(href="/p/dao?doc_id=#{_id}")
+                                |#{title}
+                                i.right.arrow.icon
+            else
+                .right.floated.three.wide.column
+                    .set_view_cards.ui.button(class=view_cards_class)
+                        +iconsmall name='activity-grid-2'
+                    .set_view_segments.ui.button(class=view_segments_class)
+                        +iconsmall name='menu'
+                    .set_view_table.ui.button(class=view_table_class)
+                        +iconsmall name='data-sheet-filled'
+        .row
             if facet_doc
-                with facet_doc
-                    // .ui.list
-                    //     .item #{count} results
+                .four.wide.column
                     if currentUser
                         if is_editing
                             .ui.icon.input
-                                input.facet_title(type='text' placeholder='Edit Title' value=title)
+                                input.facet_title(type='text' placeholder='Edit Title' value=facet_doc.title)
                                 i.stop_editing.checkmark.link.icon
                         else
                             .ui.header
-                                |#{title}
+                                |#{facet_doc.title}
                             i.start_editing.link.pencil.icon
                     each filters
                         +filter
@@ -21,36 +39,20 @@ template(name='dao')
                             i.plus.icon
                             | Filter
                         .ui.list
-                            each args
+                            each facet_doc.args
                                 .item
                                     |#{key}: #{value}
                                     i.remove_arg.remove.link.icon
-                    // .ui.form
-                    //     .inline.field
-                    //         label new key
-                    //         input.arg_key(type='text')
-                    //     .inline.field
-                    //         label new value
-                    //         input.arg_value(type='text')
-                    //     .ui.divider
-            else
-                if currentUser
-                    .create_facet.ui.button
-                        |Create Session
-                .ui.secondary.segment
-                    .ui.small.header Sessions
-                    each my_facets
-                        a.ui.button(href="/p/dao?doc_id=#{_id}")
-                            |#{title}
-                            i.right.arrow.icon
-
-
-            // .call.ui.button
-            //     |call
-        .twelve.wide.column
-            .ui.stackable.cards
-                each facet_doc.results
-                    +facet_card
+                .twelve.wide.column
+                    if view_segments
+                        each facet_doc.results
+                            +facet_segment
+                    if view_table
+                        +facet_table
+                    if view_cards
+                        .ui.four.stackable.cards
+                            each facet_doc.results
+                                +facet_card
 
 
 template(name='set_facet_key')

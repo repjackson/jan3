@@ -4,6 +4,7 @@ Template.dao.onCreated ->
     @autorun => Meteor.subscribe 'filters', FlowRouter.getQueryParam('doc_id')
     @autorun => Meteor.subscribe 'type', 'ticket_type'
     @is_editing = new ReactiveVar false
+    Session.setDefault 'view_mode', 'table'
 
 Template.dao.events
     'click .create_facet': (e,t)->
@@ -67,8 +68,17 @@ Template.dao.events
             Facets.update facet_id,
                 $set:title:title_val
             t.is_editing.set false
+    'click .set_view_cards': -> Session.set 'view_mode', 'cards'
+    'click .set_view_segments': -> Session.set 'view_mode', 'segments'
+    'click .set_view_table': -> Session.set 'view_mode', 'table'
 
 
+
+Template.facet_table.helpers
+    facet_results: ->
+        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        if facet.results
+            facet.results
 Template.dao.helpers
     facet_doc: ->
         Facets.findOne FlowRouter.getQueryParam('doc_id')
@@ -83,6 +93,12 @@ Template.dao.helpers
     view_segments: -> Session.equals 'view_mode', 'segments'
     view_cards: -> Session.equals 'view_mode', 'cards'
     view_table: -> Session.equals 'view_mode', 'table'
+
+    view_cards_class: -> if Session.equals 'view_mode', 'cards' then 'primary' else ''
+    view_segments_class: -> if Session.equals 'view_mode', 'segments' then 'primary' else ''
+    view_table_class: -> if Session.equals 'view_mode', 'table' then 'primary' else ''
+
+
 
     filters: ->
         Docs.find
