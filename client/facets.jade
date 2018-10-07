@@ -37,7 +37,7 @@ template(name='facet_table')
                 th.single.line Details
                 th.single.line
         tbody
-            each facet_results
+            each results
                 tr
                     td #{ticket_number}
                     td #{ticket_office_name}
@@ -55,45 +55,50 @@ template(name='facet_table')
 
 
 template(name='facet_card')
-    .card
-        .content
-            .right.floated
-                +level_icon
-            .header
-                +status_template
-                a(href="/p/ticket_admin_view?doc_id=#{_id}")
-                    |##{ticket_number}
-        .content
-            +ticket_type_label
-        .content
-            p #{ticket_details}
-            .ui.list
-                .item
-                    i.building.grey.icon(title='Office')
-                    |#{ticket_office_name}
-                .item
-                    i.suitcase.grey.icon(title='Franchisee')
-                    |#{ticket_franchisee}
-                .item
-                    i.money.grey.icon(title='Customer')
-                    |#{customer_name}
-            // each timestamp_tags
-            //     .ui.compact.label #{this}
-            +when_template
+    with local_doc
+        .card(class=ticket_color_class)
+            .content
+                .right.floated
+                    +level_icon
+                .header
+                    +status_template
+                    a(href="/p/ticket_admin_view?doc_id=#{_id}")
+                        |##{ticket_number}
+            .content
+                p
+                    strong #{ticket_details}
+            .content
+                .ui.list
+                    .item
+                        +ticket_type_label
+                    .item
+                        i.building.grey.icon(title='Office')
+                        |#{ticket_office_name}
+                    .item
+                        i.suitcase.grey.icon(title='Franchisee')
+                        |#{ticket_franchisee}
+                    .item
+                        i.money.grey.icon(title='Customer')
+                        |#{customer_name}
+                // each timestamp_tags
+                //     .ui.compact.label #{this}
+                +when_template
 
 
 template(name='facet_segment')
-    .ui.segment
+    .ui.segment(class=ticket_color_class)
         .content
             .ui.header
-                +status_template
-                a(href="/p/ticket_admin_view?doc_id=#{_id}")
-                    |##{ticket_number}
-                +level_icon
-        .content
-            .ui.basic.segment
                 |#{ticket_details}
-            .ui.list
+        .content
+            .ui.horizontal.list
+                .item
+                    a(href="/p/ticket_admin_view?doc_id=#{_id}")
+                        |##{ticket_number}
+                .item
+                    +status_template
+                .item
+                    +level_icon
                 .item
                     +ticket_type_label
                 .item

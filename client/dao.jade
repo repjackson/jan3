@@ -13,6 +13,18 @@ template(name='dao')
                                 |#{title}
                                 i.right.arrow.icon
             else
+                .four.wide.column
+                .three.wide.column
+                    .ui.inline.dropdown
+                        |View
+                        .default.text 10
+                        i.dropdown.icon
+                        .menu
+                            +set_page_size value=10
+                            +set_page_size value=20
+                            +set_page_size value=50
+                        |results
+
                 .right.floated.three.wide.column
                     .set_view_cards.ui.button(class=view_cards_class)
                         +iconsmall name='activity-grid-2'
@@ -43,16 +55,21 @@ template(name='dao')
                                 .item
                                     |#{key}: #{value}
                                     i.remove_arg.remove.link.icon
+                        .ui.button.call Call
                 .twelve.wide.column
                     if view_segments
-                        each facet_doc.results
+                        each facet_doc.result_ids
                             +facet_segment
                     if view_table
                         +facet_table
                     if view_cards
                         .ui.four.stackable.cards
-                            each facet_doc.results
+                            each facet_doc.result_ids
                                 +facet_card
+                                // .ui.header #{this}
+
+template(name='set_page_size')
+    .item.set_page_size #{value}
 
 
 template(name='set_facet_key')

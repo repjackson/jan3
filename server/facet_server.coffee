@@ -12,17 +12,9 @@ Meteor.publish 'my_facets', ->
 
 Meteor.publish 'results', (facet_id)->
     facet = Facets.findOne facet_id
-    built_query = {}
-    for arg in facet.args
-        # console.log 'arg', arg
-        if arg.type is 'in'
-            built_query["#{arg.key}"] = "$in":["#{arg.value}"]
-        else
-            built_query["#{arg.key}"] = "#{arg.value}"
-    # console.log 'built_query',built_query
 
-    Docs.find built_query,
-        {limit:20}
+    Docs.find
+        _id:$in:facet.result_ids
 
 
 
@@ -43,17 +35,13 @@ Meteor.methods
         facet = Facets.findOne facet_id
         built_query = {}
         for arg in facet.args
-            # console.log 'arg', arg
             # query["#{arg.key}"] = "#{arg.value}"
             if arg.type is 'in'
                 built_query["#{arg.key}"] = "$in":["#{arg.value}"]
             else
                 built_query["#{arg.key}"] = "#{arg.value}"
-        # console.log 'built_query',built_query
 
-        # console.log query
         # if facet.query
-            # console.log 'facet.query', facet.query
             # fo_query = facet.query
         # else
             # fo_query = {}
@@ -77,7 +65,6 @@ Meteor.methods
         for filter in filters
             filter_keys.push filter.key
 
-        console.log 'filter keys', filter_keys
 
         for filter_key in filter_keys
             unless facet["filter_#{filter_key}"]
@@ -86,7 +73,6 @@ Meteor.methods
         query = if facet.query then facet.query else {}
         built_query = {}
         for arg in facet.args
-            console.log 'arg', arg
             if arg.type is 'in'
                 # built_query["#{arg.key}"] = "$in":["#{arg.value}"]
                 built_query["#{arg.key}"] = "$in":[arg.value]
@@ -94,15 +80,13 @@ Meteor.methods
                 built_query["#{arg.key}"] = "#{arg.value}"
 
         for filter_key in filter_keys
-            console.log facet["filter_#{filter_key}"]
             filter_list = facet["filter_#{filter_key}"]
             if filter_list and filter_list.length > 0
                 built_query["#{filter_key}"] = $in: filter_list
-        console.log 'built_query', built_query
 
         count = Docs.find(built_query).count()
 
-        results = Docs.find(built_query, {limit:100}).fetch()
+        results = Docs.find(built_query, {limit:1000}).fetch()
         method_return = []
 
         for filter_key in filter_keys
@@ -120,7 +104,16 @@ Meteor.methods
             Facets.update facet_id,
                 $set:
                     "#{filter_key}":key_return
+
+        page_size = if facet.page_size then facet.page_size else 10
+
+        results_cursor = Docs.find(built_query, limit:page_size)
+        result_ids = []
+        for result in results_cursor.fetch()
+            result_ids.push result._id
+
+
         Facets.update facet_id,
             $set:
                 count: count
-                results:results[0..10]
+                result_ids:result_ids

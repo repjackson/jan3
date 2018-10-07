@@ -101,6 +101,13 @@ Template.registerHelper 'is_level_two', () -> @level is 2
 Template.registerHelper 'is_level_three', () -> @level is 3
 Template.registerHelper 'is_level_four', () -> @level is 4
 
+Template.registerHelper 'ticket_color_class', () ->
+    if @level
+        color = switch @level
+            when 1 then 'green'
+            when 2 then 'yellow'
+            when 3 then 'orange'
+            when 4 then 'red'
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 

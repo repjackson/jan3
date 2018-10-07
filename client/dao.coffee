@@ -1,10 +1,28 @@
 Template.dao.onCreated ->
     @autorun -> Meteor.subscribe 'my_facets'
-    # @autorun => Meteor.subscribe 'results', FlowRouter.getQueryParam('doc_id')
     @autorun => Meteor.subscribe 'filters', FlowRouter.getQueryParam('doc_id')
     @autorun => Meteor.subscribe 'type', 'ticket_type'
     @is_editing = new ReactiveVar false
-    Session.setDefault 'view_mode', 'table'
+    Session.setDefault 'view_mode', 'cards'
+
+
+Template.facet_card.onCreated ->
+    @autorun => Meteor.subscribe 'doc', @data
+
+Template.facet_card.helpers
+    local_doc: ->
+        Docs.findOne @valueOf()
+
+
+
+Template.dao.onRendered ->
+    Meteor.setTimeout ->
+        $('.accordion').accordion();
+    , 500
+    Meteor.setTimeout ->
+        $('.dropdown').dropdown()
+    , 700
+
 
 Template.dao.events
     'click .create_facet': (e,t)->
@@ -73,12 +91,20 @@ Template.dao.events
     'click .set_view_table': -> Session.set 'view_mode', 'table'
 
 
+Template.set_page_size.events
+    'click .set_page_size': (e,t)->
+        facet_id = FlowRouter.getQueryParam('doc_id')
+        Facets.update facet_id,
+            $set:page_size:@value
+        Meteor.call 'fum', facet_id
+
 
 Template.facet_table.helpers
-    facet_results: ->
+    results: ->
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
-        if facet.results
-            facet.results
+        Docs.find
+            _id:$in:facet.result_ids
+
 Template.dao.helpers
     facet_doc: ->
         Facets.findOne FlowRouter.getQueryParam('doc_id')
@@ -98,7 +124,11 @@ Template.dao.helpers
     view_segments_class: -> if Session.equals 'view_mode', 'segments' then 'primary' else ''
     view_table_class: -> if Session.equals 'view_mode', 'table' then 'primary' else ''
 
-
+    results: ->
+        # facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        # Docs.find
+        #     _id:$in:facet.result_ids
+        Results.find()
 
     filters: ->
         Docs.find
