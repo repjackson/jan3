@@ -113,6 +113,14 @@ Template.facet_table.helpers
     facet_doc: ->
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
 
+Template.selector.helpers
+    selector_value: ->
+        switch typeof @value
+            when 'string' then @value
+            when 'boolean'
+                if @value is true then 'Open'
+                else if @value is false then 'Closed'
+            when 'number' then @value
 Template.dao.helpers
     facet_doc: ->
         Facets.findOne FlowRouter.getQueryParam('doc_id')
@@ -174,6 +182,7 @@ Template.filter.helpers
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
         if facet.query["#{@key}"] is @value then 'primary' else ''
 
+Template.selector.helpers
     toggle_value_class: ->
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
         filter = Template.parentData()
@@ -187,9 +196,10 @@ Template.filter.events
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
         Meteor.call 'fum', facet._id, @key
 
+Template.selector.events
     'click .toggle_value': ->
         # console.log @
-        filter = Template.currentData()
+        filter = Template.parentData()
         facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
         filter_list = facet["filter_#{filter.key}"]
 

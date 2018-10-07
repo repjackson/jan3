@@ -85,14 +85,22 @@ template(name='filter')
             |#{label}
         if editing_mode
             |key: #{key}
+            |primative: #{primative}
         each values
-            .ui.small.compact.toggle_value.button(class=toggle_value_class)
-                |#{value} #{count}
+            +selector
         if editing_mode
             // i.recalc.link.refresh.icon
             +edit_filter_field key='label' filter_id=this._id
             +edit_filter_field key='key' filter_id=this._id
             +edit_filter_field key='icon' filter_id=this._id
+            +edit_filter_field key='primative' filter_id=this._id
+
+
+
+template(name='selector')
+    .ui.small.compact.toggle_value.button(class=toggle_value_class)
+        |#{selector_value}
+        |#{count}
 
 
 template(name='edit_filter_field')
