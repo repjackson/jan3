@@ -3,7 +3,7 @@ Template.dao.onCreated ->
     # @autorun => Meteor.subscribe 'results', FlowRouter.getQueryParam('doc_id')
     @autorun => Meteor.subscribe 'filters', FlowRouter.getQueryParam('doc_id')
     @autorun => Meteor.subscribe 'type', 'ticket_type'
-
+    @is_editing = new ReactiveVar false
 
 Template.dao.events
     'click .create_facet': (e,t)->
@@ -49,12 +49,30 @@ Template.dao.events
             $('.arg_key').val('')
             $('.arg_value').val('')
 
+    'click .start_editing': (e,t)-> t.is_editing.set true
+    'click .stop_editing': (e,t)->
+        e.preventDefault()
+        facet_id = FlowRouter.getQueryParam('doc_id')
+        title_val = $('.facet_title').val().trim()
+        Facets.update facet_id,
+            $set:title:title_val
+        t.is_editing.set false
+
+
+    'keyup .facet_title': (e,t)->
+        e.preventDefault()
+        if e.which is 13 #enter
+            facet_id = FlowRouter.getQueryParam('doc_id')
+            title_val = $('.facet_title').val().trim()
+            Facets.update facet_id,
+                $set:title:title_val
+            t.is_editing.set false
 
 
 Template.dao.helpers
     facet_doc: ->
         Facets.findOne FlowRouter.getQueryParam('doc_id')
-    facets: ->
+    my_facets: ->
         Facets.find
             author_id:Meteor.userId()
 
@@ -70,6 +88,8 @@ Template.dao.helpers
         Docs.find
             type:'filter'
             # facet_id: FlowRouter.getQueryParam('doc_id')
+
+    is_editing: -> Template.instance().is_editing.get()
 
 
 

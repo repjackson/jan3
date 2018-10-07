@@ -5,6 +5,15 @@ template(name='dao')
                 with facet_doc
                     // .ui.list
                     //     .item #{count} results
+                    if currentUser
+                        if is_editing
+                            .ui.icon.input
+                                input.facet_title(type='text' placeholder='Edit Title' value=title)
+                                i.stop_editing.checkmark.link.icon
+                        else
+                            .ui.header
+                                |#{title}
+                            i.start_editing.link.pencil.icon
                     each filters
                         +filter
                     if editing_mode
