@@ -14,14 +14,11 @@ Template.dao_table_row.onCreated ->
     @autorun => Meteor.subscribe 'doc', @data
 
 Template.facet_card.helpers
-    local_doc: ->
-        Docs.findOne @valueOf()
+    local_doc: -> Docs.findOne @valueOf()
 Template.facet_segment.helpers
-    local_doc: ->
-        Docs.findOne @valueOf()
+    local_doc: -> Docs.findOne @valueOf()
 Template.dao_table_row.helpers
-    local_doc: ->
-        Docs.findOne @valueOf()
+    local_doc: -> Docs.findOne @valueOf()
 
 
 

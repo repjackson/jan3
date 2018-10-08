@@ -29,6 +29,7 @@ template(name='facet_table')
         thead
             tr
                 th.single.line #
+                th.single.line Open
                 th.single.line Office
                 th.single.line Franchisee
                 th.single.line Customer
@@ -45,6 +46,8 @@ template(name='dao_table_row')
     with local_doc
         tr
             td #{ticket_number}
+            td
+                +status_template
             td #{ticket_office_name}
             td #{ticket_franchisee}
             td #{customer_name}
