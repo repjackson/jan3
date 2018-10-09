@@ -3,15 +3,9 @@ template(name='dao')
         .row
             unless facet_doc
                 .sixteen.wide.column
-                    .ui.secondary.segment
-                        .ui.small.header Sessions
-                        if currentUser
-                            .create_facet.ui.icon.button(title='Create Session')
-                                i.plus.icon
-                        each my_facets
-                            a.ui.button(href="/d/#{current_page_slug}?doc_id=#{_id}")
-                                |#{title} #{when}
-                                i.right.arrow.icon
+                    if currentUser
+                        .create_facet.ui.icon.button(title='Create Session')
+                            i.plus.icon
             else
                 .four.wide.column
                 .three.wide.column
@@ -35,15 +29,15 @@ template(name='dao')
         .row
             if facet_doc
                 .four.wide.column
-                    if currentUser
-                        if is_editing
-                            .ui.icon.input
-                                input.facet_title(type='text' placeholder='Edit Title' value=facet_doc.title)
-                                i.stop_editing.checkmark.link.icon
-                        else
-                            .ui.header
-                                |#{facet_doc.title}
-                            i.start_editing.link.pencil.icon
+                    // if currentUser
+                    //     if is_editing
+                    //         .ui.icon.input
+                    //             input.facet_title(type='text' placeholder='Edit Title' value=facet_doc.title)
+                    //             i.stop_editing.checkmark.link.icon
+                    //     else
+                    //         .ui.header
+                    //             |#{facet_doc.title}
+                    //         i.start_editing.link.pencil.icon
                     each filters
                         +filter
                     if editing_mode

@@ -1,6 +1,6 @@
 Template.dao.onCreated ->
-    @autorun -> Meteor.subscribe 'my_facets', FlowRouter.getParam('page_slug')
-    @autorun => Meteor.subscribe 'filters', FlowRouter.getQueryParam('doc_id')
+    @autorun -> Meteor.subscribe 'facet'
+    @autorun => Meteor.subscribe 'type', 'filter'
     @autorun => Meteor.subscribe 'type', 'ticket_type'
     @is_editing = new ReactiveVar false
     Session.setDefault 'view_mode', 'cards'
@@ -32,33 +32,16 @@ Template.dao.onRendered ->
 
 Template.dao.events
     'click .create_facet': (e,t)->
-        page_slug = FlowRouter.getParam('page_slug')
-        page = Docs.findOne
-            type:'page'
-            slug:page_slug
-
-        if page.qp_office_jpid then console.log FlowRouter.getQueryParam('office_jpid')
-        new_facet_ob = {
-            author_id: Meteor.userId()
-            timestamp: Date.now()
-            parent_slug: page_slug
-        }
-        if page.qp_office_jpid
-            if Meteor.user().office_jpid
-                args = [
-                    key:'office_jpid'
-                    value:Meteor.user().office_jpid
-                    ]
-                new_facet_ob['args'] = args
         new_facet_id =
-            Facets.insert new_facet_ob
-        FlowRouter.go("/d/#{page_slug}?doc_id=#{new_facet_id}")
-        Meteor.call 'fum', new_facet_id
+            Docs.insert
+                type:'facet'
+                result_ids:[]
+        # Meteor.call 'fum', new_facet_id
 
     'click #add_filter': (e,t)->
         Docs.insert
             type:'filter'
-            parent_slug: FlowRouter.getParam('page_slug')
+            # parent_slug: FlowRouter.getParam('page_slug')
 
     'click .remove_arg': (e,t)->
         Docs.update FlowRouter.getQueryParam('doc_id'),
@@ -68,8 +51,8 @@ Template.dao.events
         Meteor.call 'fum', FlowRouter.getQueryParam('doc_id')
 
     'click .clear_results': ->
-        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
-        Facets.update facet._id,
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
             $set: results: []
 
     'keyup .arg_key, keyup .arg_value': (e,t)->
@@ -91,7 +74,7 @@ Template.dao.events
         e.preventDefault()
         facet_id = FlowRouter.getQueryParam('doc_id')
         title_val = $('.facet_title').val().trim()
-        Facets.update facet_id,
+        Docs.update facet_id,
             $set:title:title_val
         t.is_editing.set false
 
@@ -101,7 +84,7 @@ Template.dao.events
         if e.which is 13 #enter
             facet_id = FlowRouter.getQueryParam('doc_id')
             title_val = $('.facet_title').val().trim()
-            Facets.update facet_id,
+            Docs.update facet_id,
                 $set:title:title_val
             t.is_editing.set false
 
@@ -113,14 +96,13 @@ Template.dao.events
 Template.set_page_size.events
     'click .set_page_size': (e,t)->
         facet_id = FlowRouter.getQueryParam('doc_id')
-        Facets.update facet_id,
+        Docs.update facet_id,
             $set:page_size:@value
         Meteor.call 'fum', facet_id
 
 
 Template.facet_table.helpers
-    facet_doc: ->
-        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+    facet_doc: -> Docs.findOne type:'facet'
 
 Template.selector.helpers
     selector_value: ->
@@ -131,19 +113,9 @@ Template.selector.helpers
                 else if @value is false then 'Closed'
             when 'number' then @value
 Template.dao.helpers
-    facet_doc: ->
-        Facets.findOne FlowRouter.getQueryParam('doc_id')
-    my_facets: ->
-        Facets.find
-            author_id:Meteor.userId()
+    facet_doc: -> Docs.findOne type:'facet'
 
-
-    current_page_slug: -> FlowRouter.getParam('page_slug')
-
-
-    ticket_types: ->
-        Docs.find
-            type:'ticket_type'
+    ticket_types: -> Docs.find type:'ticket_type'
 
     view_segments: -> Session.equals 'view_mode', 'segments'
     view_cards: -> Session.equals 'view_mode', 'cards'
@@ -153,16 +125,10 @@ Template.dao.helpers
     view_segments_class: -> if Session.equals 'view_mode', 'segments' then 'primary' else ''
     view_table_class: -> if Session.equals 'view_mode', 'table' then 'primary' else ''
 
-    results: ->
-        # facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
-        # Docs.find
-        #     _id:$in:facet.result_ids
-        Results.find()
-
     filters: ->
         Docs.find
             type:'filter'
-            parent_slug: FlowRouter.getParam('page_slug')
+            # parent_slug: FlowRouter.getParam('page_slug')
             # facet_id: FlowRouter.getQueryParam('doc_id')
 
     is_editing: -> Template.instance().is_editing.get()
@@ -171,15 +137,15 @@ Template.dao.helpers
 
 Template.set_facet_key.helpers
     set_facet_key_class: ->
-        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        facet = Docs.findOne type:'facet'
         if facet.query["#{@key}"] is @value then 'primary' else ''
 
 Template.set_facet_key.events
     'click .set_facet_key': ->
-        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        facet = Docs.findOne type:'facet'
 
         query_key = "query.#{@key}"
-        Facets.update facet._id,
+        Docs.update facet._id,
             $set:"#{query_key}":@value
         Meteor.call 'fo', FlowRouter.getQueryParam('doc_id')
 
@@ -189,39 +155,39 @@ Template.set_facet_key.events
 
 Template.filter.helpers
     values: ->
-        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        facet = Docs.findOne type:'facet'
         facet["#{@key}"][..7]
 
     set_facet_key_class: ->
-        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        facet = Docs.findOne type:'facet'
         if facet.query["#{@key}"] is @value then 'primary' else ''
 
 Template.selector.helpers
     toggle_value_class: ->
-        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        facet = Docs.findOne type:'facet'
         filter = Template.parentData()
         filter_list = facet["filter_#{filter.key}"]
         if filter_list and @value in filter_list then 'primary' else ''
 
 Template.filter.events
     # 'click .set_facet_key': ->
-    #     facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+    #     facet = Docs.findOne type:'facet'
     'click .recalc': ->
-        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        facet = Docs.findOne type:'facet'
         Meteor.call 'fum', facet._id, @key
 
 Template.selector.events
     'click .toggle_value': ->
         # console.log @
         filter = Template.parentData()
-        facet = Facets.findOne FlowRouter.getQueryParam('doc_id')
+        facet = Docs.findOne type:'facet'
         filter_list = facet["filter_#{filter.key}"]
 
         if filter_list and @value in filter_list
-            Facets.update facet._id,
+            Docs.update facet._id,
                 $pull: "filter_#{filter.key}": @value
         else
-            Facets.update facet._id,
+            Docs.update facet._id,
                 $addToSet: "filter_#{filter.key}": @value
 
         Meteor.call 'fum', facet._id, filter.key

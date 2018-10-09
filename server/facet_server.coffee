@@ -1,62 +1,16 @@
-Meteor.publish 'filters', (facet_id)->
-    # if facet_id
-    #     Docs.find facet_id
-    # else
+Meteor.publish 'facet', ()->
     Docs.find
-        type:'filter'
-        # facet_id:facet_id
-
-Meteor.publish 'my_facets', (page_slug)->
-    Facets.find
-        parent_slug: page_slug
-        author_id: Meteor.userId()
-
-Meteor.publish 'results', (facet_id)->
-    facet = Facets.findOne facet_id
-
-    Docs.find
-        _id:$in:facet.result_ids
-
+        type:'facet'
+        # author_id: Meteor.userId()
 
 
 
 
 Meteor.methods
-    fi: (args, facet_id)->
-        facet = Facets.findOne facet_id
-        query = {}
-
-    fa:(arg, facet_id)->
-        facet = Facets.findOne facet_id
-        Facets.update facet_id,
-            $addToSet:
-                args: arg
-
-    fo: (facet_id)->
-        facet = Facets.findOne facet_id
-        built_query = {}
-        for arg in facet.args
-            # query["#{arg.key}"] = "#{arg.value}"
-            if arg.type is 'in'
-                built_query["#{arg.key}"] = "$in":["#{arg.value}"]
-            else
-                built_query["#{arg.key}"] = "#{arg.value}"
-
-        # if facet.query
-            # fo_query = facet.query
-        # else
-            # fo_query = {}
-        count = Docs.find(built_query).count()
-
-        doc_results = Docs.find(built_query, limit:10).fetch()
-        Facets.update facet_id,
-            $set:
-                # query:built_query
-                results:doc_results
-                count:count
-
     fum: (facet_id)->
-        facet = Facets.findOne facet_id
+        facet = Docs.findOne
+            type:'facet'
+            author_id: Meteor.userId()
 
         filters = Docs.find(
             type:'filter'
@@ -69,16 +23,16 @@ Meteor.methods
 
         for filter_key in filter_keys
             unless facet["filter_#{filter_key}"]
-                Facets.update facet_id,
+                Docs.update facet_id,
                     $set: "filter_#{filter_key}":[]
         query = if facet.query then facet.query else {}
         built_query = {}
-        for arg in facet.args
-            if arg.type is 'in'
-                # built_query["#{arg.key}"] = "$in":["#{arg.value}"]
-                built_query["#{arg.key}"] = "$in":[arg.value]
-            else
-                built_query["#{arg.key}"] = "#{arg.value}"
+        # for arg in facet.args
+        #     if arg.type is 'in'
+        #         # built_query["#{arg.key}"] = "$in":["#{arg.value}"]
+        #         built_query["#{arg.key}"] = "$in":[arg.value]
+        #     else
+        #         built_query["#{arg.key}"] = "#{arg.value}"
 
         for filter_key in filter_keys
             filter_list = facet["filter_#{filter_key}"]
@@ -113,7 +67,7 @@ Meteor.methods
                 else if filter_primitive is 'string'
                     key_return.push({ value:value, count:count })
 
-            Facets.update facet_id,
+            Docs.update facet_id,
                 $set:
                     "#{filter_key}":key_return
 
@@ -125,7 +79,7 @@ Meteor.methods
             result_ids.push result._id
 
 
-        Facets.update facet_id,
+        Docs.update facet_id,
             $set:
                 count: count
                 result_ids:result_ids
