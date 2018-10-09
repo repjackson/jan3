@@ -1,5 +1,5 @@
 Template.dao.onCreated ->
-    @autorun -> Meteor.subscribe 'my_facets'
+    @autorun -> Meteor.subscribe 'my_facets', FlowRouter.getParam('page_slug')
     @autorun => Meteor.subscribe 'filters', FlowRouter.getQueryParam('doc_id')
     @autorun => Meteor.subscribe 'type', 'ticket_type'
     @is_editing = new ReactiveVar false
@@ -12,7 +12,6 @@ Template.facet_segment.onCreated ->
     @autorun => Meteor.subscribe 'doc', @data
 Template.dao_table_row.onCreated ->
     @autorun => Meteor.subscribe 'doc', @data
-
 Template.facet_card.helpers
     local_doc: -> Docs.findOne @valueOf()
 Template.facet_segment.helpers
@@ -33,21 +32,33 @@ Template.dao.onRendered ->
 
 Template.dao.events
     'click .create_facet': (e,t)->
-        new_facet_id =
-            Facets.insert
-                author_id: Meteor.userId()
-                timestamp: Date.now()
-                args: [
-                    key:'type'
-                    value:'ticket'
+        page_slug = FlowRouter.getParam('page_slug')
+        page = Docs.findOne
+            type:'page'
+            slug:page_slug
+
+        if page.qp_office_jpid then console.log FlowRouter.getQueryParam('office_jpid')
+        new_facet_ob = {
+            author_id: Meteor.userId()
+            timestamp: Date.now()
+            parent_slug: page_slug
+        }
+        if page.qp_office_jpid
+            if Meteor.user().office_jpid
+                args = [
+                    key:'office_jpid'
+                    value:Meteor.user().office_jpid
                     ]
-        FlowRouter.go("/p/dao?doc_id=#{new_facet_id}")
+                new_facet_ob['args'] = args
+        new_facet_id =
+            Facets.insert new_facet_ob
+        FlowRouter.go("/d/#{page_slug}?doc_id=#{new_facet_id}")
         Meteor.call 'fum', new_facet_id
 
     'click #add_filter': (e,t)->
         Docs.insert
             type:'filter'
-            facet_id: FlowRouter.getQueryParam('doc_id')
+            parent_slug: FlowRouter.getParam('page_slug')
 
     'click .remove_arg': (e,t)->
         Docs.update FlowRouter.getQueryParam('doc_id'),
@@ -93,6 +104,7 @@ Template.dao.events
             Facets.update facet_id,
                 $set:title:title_val
             t.is_editing.set false
+
     'click .set_view_cards': -> Session.set 'view_mode', 'cards'
     'click .set_view_segments': -> Session.set 'view_mode', 'segments'
     'click .set_view_table': -> Session.set 'view_mode', 'table'
@@ -125,6 +137,10 @@ Template.dao.helpers
         Facets.find
             author_id:Meteor.userId()
 
+
+    current_page_slug: -> FlowRouter.getParam('page_slug')
+
+
     ticket_types: ->
         Docs.find
             type:'ticket_type'
@@ -146,6 +162,7 @@ Template.dao.helpers
     filters: ->
         Docs.find
             type:'filter'
+            parent_slug: FlowRouter.getParam('page_slug')
             # facet_id: FlowRouter.getQueryParam('doc_id')
 
     is_editing: -> Template.instance().is_editing.get()

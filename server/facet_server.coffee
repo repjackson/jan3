@@ -6,8 +6,9 @@ Meteor.publish 'filters', (facet_id)->
         type:'filter'
         # facet_id:facet_id
 
-Meteor.publish 'my_facets', ->
+Meteor.publish 'my_facets', (page_slug)->
     Facets.find
+        parent_slug: page_slug
         author_id: Meteor.userId()
 
 Meteor.publish 'results', (facet_id)->
