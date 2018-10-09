@@ -7,42 +7,51 @@ Meteor.publish 'facet', ()->
 
 
 Meteor.methods
-    fum: (facet_id)->
+    fo: ()->
         facet = Docs.findOne
             type:'facet'
             author_id: Meteor.userId()
 
-        filters = Docs.find(
-            type:'filter'
-            # facet_id:facet_id
-            ).fetch()
-        filter_keys = []
-        for filter in filters
-            filter_keys.push filter.key
+
+        # filters = Docs.find(
+        #     type:'filter'
+        #     ).fetch()
+
+        # for filter in filters
+        #     filter_keys.push filter.key
+
+        if facet.filter_type
+            if 'ticket' in facet.filter_type
+                filter_keys =
+                    [ 'ticket_type',
+                      'ticket_franchisee',
+                      'level',
+                      'open',
+                      'type',
+                      'ticket_office_name',
+                      'customer_name' ]
+            else
+                console.log 'not viewing tickets'
+                return
 
 
-        for filter_key in filter_keys
-            unless facet["filter_#{filter_key}"]
-                Docs.update facet_id,
-                    $set: "filter_#{filter_key}":[]
-        query = if facet.query then facet.query else {}
-        built_query = {}
-        # for arg in facet.args
-        #     if arg.type is 'in'
-        #         # built_query["#{arg.key}"] = "$in":["#{arg.value}"]
-        #         built_query["#{arg.key}"] = "$in":[arg.value]
-        #     else
-        #         built_query["#{arg.key}"] = "#{arg.value}"
+        console.log filter_keys
+
+        built_query = {type:'ticket'}
+
 
         for filter_key in filter_keys
             filter_list = facet["filter_#{filter_key}"]
             if filter_list and filter_list.length > 0
                 built_query["#{filter_key}"] = $in: filter_list
+            # else
+            #     Docs.update facet._id,
+            #         $set: "filter_#{filter_key}":[]
 
         count = Docs.find(built_query).count()
 
-        results = Docs.find(built_query, {limit:1000}).fetch()
-        method_return = []
+        results = Docs.find(built_query, {limit:100}).fetch()
+        # method_return = []
 
         for filter_key in filter_keys
             values = []
@@ -67,19 +76,23 @@ Meteor.methods
                 else if filter_primitive is 'string'
                     key_return.push({ value:value, count:count })
 
-            Docs.update facet_id,
+            console.log 'filter_key', filter_key
+            console.log 'key_return', key_return
+
+            Docs.update facet._id,
                 $set:
-                    "#{filter_key}":key_return
+                    "#{filter_key}_return":key_return
 
-        page_size = if facet.page_size then facet.page_size else 10
+        # page_size = if facet.page_size then facet.page_size else 10
 
-        results_cursor = Docs.find(built_query, limit:page_size)
+        results_cursor = Docs.find(built_query, limit:10)
         result_ids = []
         for result in results_cursor.fetch()
             result_ids.push result._id
 
+        console.log result_ids
 
-        Docs.update facet_id,
+        Docs.update facet._id,
             $set:
                 count: count
                 result_ids:result_ids

@@ -38,8 +38,9 @@ template(name='dao')
                     //         .ui.header
                     //             |#{facet_doc.title}
                     //         i.start_editing.link.pencil.icon
-                    each filters
-                        +filter
+                    if filters
+                        each filters
+                            +filter
                     if editing_mode
                         #add_filter.ui.button
                             i.plus.icon
@@ -51,16 +52,19 @@ template(name='dao')
                                     i.remove_arg.remove.link.icon
                         .ui.button.call Call
                 .twelve.wide.column
-                    if view_segments
-                        each facet_doc.result_ids
-                            +facet_segment
-                    if view_table
-                        +facet_table
-                    if view_cards
-                        .ui.four.stackable.cards
+                    if is_calculating
+                        i.large.loading.refresh.icon
+                    else
+                        if view_segments
                             each facet_doc.result_ids
-                                +facet_card
-                                // .ui.header #{this}
+                                +facet_segment
+                        if view_table
+                            +facet_table
+                        if view_cards
+                            .ui.four.stackable.cards
+                                each facet_doc.result_ids
+                                    +facet_card
+                                    // .ui.header #{this}
 
 template(name='set_page_size')
     .item.set_page_size #{value}
@@ -77,9 +81,10 @@ template(name='filter')
                 +icon name=icon
             |#{label}
         if editing_mode
-            |key: #{key}
-            |primative: #{primative}
-            |parent slug: #{parent_slug}
+            .ui.list
+                .item key: #{key}
+                .item primative: #{primative}
+                .item parent slug: #{parent_slug}
         each values
             +selector
         if editing_mode

@@ -3,6 +3,7 @@ Template.dao.onCreated ->
     @autorun => Meteor.subscribe 'type', 'filter'
     @autorun => Meteor.subscribe 'type', 'ticket_type'
     @is_editing = new ReactiveVar false
+    Session.setDefault 'is_calculating', false
     Session.setDefault 'view_mode', 'cards'
 
 
@@ -36,7 +37,7 @@ Template.dao.events
             Docs.insert
                 type:'facet'
                 result_ids:[]
-        # Meteor.call 'fum', new_facet_id
+        # Meteor.call 'fo', new_facet_id
 
     'click #add_filter': (e,t)->
         Docs.insert
@@ -48,7 +49,7 @@ Template.dao.events
             $pull:args:@
 
     'click .call':(e,t)->
-        Meteor.call 'fum', FlowRouter.getQueryParam('doc_id')
+        Meteor.call 'fo', FlowRouter.getQueryParam('doc_id')
 
     'click .clear_results': ->
         facet = Docs.findOne type:'facet'
@@ -98,7 +99,7 @@ Template.set_page_size.events
         facet_id = FlowRouter.getQueryParam('doc_id')
         Docs.update facet_id,
             $set:page_size:@value
-        Meteor.call 'fum', facet_id
+        Meteor.call 'fo', facet_id
 
 
 Template.facet_table.helpers
@@ -112,7 +113,10 @@ Template.selector.helpers
                 if @value is true then 'Open'
                 else if @value is false then 'Closed'
             when 'number' then @value
+
+
 Template.dao.helpers
+    is_calculating: -> Session.get('is_calculating')
     facet_doc: -> Docs.findOne type:'facet'
 
     ticket_types: -> Docs.find type:'ticket_type'
@@ -147,7 +151,7 @@ Template.set_facet_key.events
         query_key = "query.#{@key}"
         Docs.update facet._id,
             $set:"#{query_key}":@value
-        Meteor.call 'fo', FlowRouter.getQueryParam('doc_id')
+        Meteor.call 'fo'
 
 
 
@@ -156,7 +160,7 @@ Template.set_facet_key.events
 Template.filter.helpers
     values: ->
         facet = Docs.findOne type:'facet'
-        facet["#{@key}"][..7]
+        facet["#{@key}_return"][..7]
 
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'
@@ -174,7 +178,7 @@ Template.filter.events
     #     facet = Docs.findOne type:'facet'
     'click .recalc': ->
         facet = Docs.findOne type:'facet'
-        Meteor.call 'fum', facet._id, @key
+        Meteor.call 'fo'
 
 Template.selector.events
     'click .toggle_value': ->
@@ -189,8 +193,13 @@ Template.selector.events
         else
             Docs.update facet._id,
                 $addToSet: "filter_#{filter.key}": @value
+        Session.set 'is_calculating', true
+        Meteor.call 'fo', (err,res)=>
+            if err then console.log err
+            else
+                Session.set 'is_calculating', false
 
-        Meteor.call 'fum', facet._id, filter.key
+
 
 
 Template.edit_filter_field.events
