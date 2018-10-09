@@ -35,7 +35,7 @@ Meteor.methods
                 return
 
 
-        console.log filter_keys
+        # console.log filter_keys
 
         built_query = {type:'ticket'}
 
@@ -76,8 +76,8 @@ Meteor.methods
                 else if filter_primitive is 'string'
                     key_return.push({ value:value, count:count })
 
-            console.log 'filter_key', filter_key
-            console.log 'key_return', key_return
+            # console.log 'filter_key', filter_key
+            # console.log 'key_return', key_return
 
             Docs.update facet._id,
                 $set:
@@ -90,7 +90,7 @@ Meteor.methods
         for result in results_cursor.fetch()
             result_ids.push result._id
 
-        console.log result_ids
+        # console.log result_ids
 
         Docs.update facet._id,
             $set:
