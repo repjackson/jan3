@@ -38,9 +38,12 @@ template(name='dao')
                     //         .ui.header
                     //             |#{facet_doc.title}
                     //         i.start_editing.link.pencil.icon
-                    if filters
-                        each filters
-                            +filter
+                    with type_filter
+                        +filter
+                    if type_selected
+                        if other_filters
+                            each other_filters
+                                +filter
                     if editing_mode
                         #add_filter.ui.button
                             i.plus.icon

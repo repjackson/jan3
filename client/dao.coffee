@@ -121,6 +121,22 @@ Template.dao.helpers
 
     ticket_types: -> Docs.find type:'ticket_type'
 
+    type_selected: ->
+        facet = Docs.findOne type:'facet'
+        if facet.filter_type
+            if facet.filter_type.length > 0
+                true
+            else
+                false
+        else
+            false
+
+
+    type_filter: ->
+        Docs.findOne
+            type:'filter'
+            key:'type'
+
     view_segments: -> Session.equals 'view_mode', 'segments'
     view_cards: -> Session.equals 'view_mode', 'cards'
     view_table: -> Session.equals 'view_mode', 'table'
@@ -129,9 +145,10 @@ Template.dao.helpers
     view_segments_class: -> if Session.equals 'view_mode', 'segments' then 'primary' else ''
     view_table_class: -> if Session.equals 'view_mode', 'table' then 'primary' else ''
 
-    filters: ->
+    other_filters: ->
         Docs.find
             type:'filter'
+            key:$ne:'type'
             # parent_slug: FlowRouter.getParam('page_slug')
             # facet_id: FlowRouter.getQueryParam('doc_id')
 
