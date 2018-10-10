@@ -65,7 +65,7 @@ Template.dao.events
     'keyup .arg_key, keyup .arg_value': (e,t)->
         e.preventDefault()
         if e.which is 13 #enter
-            facet_id = FlowRouter.getQueryParam('doc_id')
+            facet_id = Docs.findOne type:'facet'
             arg_key_val = $('.arg_key').val().trim()
             arg_val_val = $('.arg_value').val().trim()
             arg = {
@@ -79,7 +79,7 @@ Template.dao.events
     'click .start_editing': (e,t)-> t.is_editing.set true
     'click .stop_editing': (e,t)->
         e.preventDefault()
-        facet_id = FlowRouter.getQueryParam('doc_id')
+        facet_id = Docs.findOne type:'facet'
         title_val = $('.facet_title').val().trim()
         Docs.update facet_id,
             $set:title:title_val
@@ -89,7 +89,7 @@ Template.dao.events
     'keyup .facet_title': (e,t)->
         e.preventDefault()
         if e.which is 13 #enter
-            facet_id = FlowRouter.getQueryParam('doc_id')
+            facet_id = Docs.findOne type:'facet'
             title_val = $('.facet_title').val().trim()
             Docs.update facet_id,
                 $set:title:title_val
@@ -102,10 +102,10 @@ Template.dao.events
 
 Template.set_page_size.events
     'click .set_page_size': (e,t)->
-        facet_id = FlowRouter.getQueryParam('doc_id')
-        Docs.update facet_id,
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
             $set:page_size:@value
-        Meteor.call 'fo', facet_id
+        Meteor.call 'fo'
 
 
 Template.facet_table.helpers

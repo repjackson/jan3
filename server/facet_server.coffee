@@ -58,7 +58,7 @@ Meteor.methods
 
         count = Docs.find(built_query).count()
 
-        results = Docs.find(built_query, {limit:200}).fetch()
+        results = Docs.find(built_query, {limit:300}).fetch()
 
         for filter_key in filter_keys
             values = []
