@@ -28,7 +28,7 @@ template(name='dao')
                         +iconsmall name='data-sheet-filled'
         .row
             if facet_doc
-                .four.wide.column
+                .three.wide.column
                     // if currentUser
                     //     if is_editing
                     //         .ui.icon.input
@@ -54,22 +54,29 @@ template(name='dao')
                                     |#{key}: #{value}
                                     i.remove_arg.remove.link.icon
                         .ui.button.call Call
-                .twelve.wide.column
+                .thirteen.wide.column
                     if is_calculating
                         // i.large.loading.refresh.icon
                         .ui.active.indeterminate.big.centered.text.inline.loader
                             |Calculating filters and results
                     else
-                        if view_segments
-                            each facet_doc.result_ids
-                                +facet_segment
-                        if view_table
-                            +facet_table
-                        if view_cards
-                            .ui.four.stackable.cards
-                                each facet_doc.result_ids
-                                    +facet_card
-                                    // .ui.header #{this}
+                        if facet_doc.result_ids
+                            if facet_doc.result_ids.length
+                                if view_segments
+                                    each facet_doc.result_ids
+                                        +facet_segment
+                                if view_table
+                                    +facet_table
+                                if view_cards
+                                    .ui.four.stackable.cards
+                                        each facet_doc.result_ids
+                                            +facet_card
+                                            // .ui.header #{this}
+                            else
+                                .ui.center.aligned.header
+                                    | Choose type to calculate
+                        else
+                            |No results
 
 template(name='set_page_size')
     .item.set_page_size #{value}

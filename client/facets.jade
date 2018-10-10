@@ -36,6 +36,7 @@ template(name='facet_table')
                 th.single.line Type
                 th.single.line Level
                 th.single.line Details
+                th.single.line Assignment
                 th.single.line
         tbody
             each facet_doc.result_ids
@@ -56,6 +57,8 @@ template(name='dao_table_row')
             td
                 +level_icon
             td #{ticket_details}
+            td
+                +ticket_assignment_cell
             td
                 a.ui.icon.button(href="/p/ticket_admin_view?doc_id=#{_id}")
                     i.right.chevron.icon

@@ -1,27 +1,19 @@
-Meteor.publish 'facet', ()->
+Meteor.publish 'facet', ->
     Docs.find
-        type:'facet'
         # author_id: Meteor.userId()
-
-
-
+        type:'facet'
 
 Meteor.methods
-    fo: ()->
+    fo: ->
+        # console.log 'hi server'
         facet = Docs.findOne
             type:'facet'
             author_id: Meteor.userId()
+        console.log 'facet'
 
-
-        # filters = Docs.find(
-        #     type:'filter'
-        #     ).fetch()
-
-        # for filter in filters
-        #     filter_keys.push filter.key
-
-        if facet.filter_type
+        if facet.filter_type.length > 0
             if 'ticket' in facet.filter_type
+                console.log 'ticket in filter type'
                 filter_keys =
                     [ 'ticket_type',
                       'ticket_franchisee',
@@ -30,14 +22,38 @@ Meteor.methods
                       'type',
                       'ticket_office_name',
                       'customer_name' ]
+                console.log 'ticket type'
+                return true
+            else if 'event' in facet.filter_type
+                console.log 'event in filter type'
+                filter_keys =
+                    [
+                        'body'
+                        'text'
+                        'timestamp'
+                    ]
             else
-                console.log 'not viewing tickets'
-                return
-
+                console.log facet.filter_type.length
+                console.log 'no filter type'
+                filter_keys = []
+        else
+            console.log 'no filter type length'
+            Docs.update facet._id,
+                $set:
+                    count: 0
+                    result_ids:[]
+                    filter_type: []
+                    type_return:
+                        [
+                            { value:'ticket' }
+                            { value:'event' }
+                        ]
+            return true
+                # filter_keys = ['type']
 
         # console.log filter_keys
 
-        built_query = {type:'ticket'}
+        built_query = {}
 
 
         for filter_key in filter_keys
@@ -48,10 +64,11 @@ Meteor.methods
             #     Docs.update facet._id,
             #         $set: "filter_#{filter_key}":[]
 
+        console.log built_query
+
         count = Docs.find(built_query).count()
 
         results = Docs.find(built_query, {limit:100}).fetch()
-        # method_return = []
 
         for filter_key in filter_keys
             values = []
@@ -95,4 +112,5 @@ Meteor.methods
         Docs.update facet._id,
             $set:
                 count: count
-                result_ids:result_ids
+                result_ids:result_ids[..10]
+        return true

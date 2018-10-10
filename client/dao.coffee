@@ -37,6 +37,12 @@ Template.dao.events
             Docs.insert
                 type:'facet'
                 result_ids:[]
+                type_return:
+                    [
+                        { value:'ticket' }
+                        { value:'event' }
+                    ]
+
         # Meteor.call 'fo', new_facet_id
 
     'click #add_filter': (e,t)->
@@ -131,7 +137,6 @@ Template.dao.helpers
         else
             false
 
-
     type_filter: ->
         Docs.findOne
             type:'filter'
@@ -161,19 +166,6 @@ Template.set_facet_key.helpers
         facet = Docs.findOne type:'facet'
         if facet.query["#{@key}"] is @value then 'primary' else ''
 
-Template.set_facet_key.events
-    'click .set_facet_key': ->
-        facet = Docs.findOne type:'facet'
-
-        query_key = "query.#{@key}"
-        Docs.update facet._id,
-            $set:"#{query_key}":@value
-        Meteor.call 'fo'
-
-
-
-
-
 Template.filter.helpers
     values: ->
         facet = Docs.findOne type:'facet'
@@ -199,7 +191,7 @@ Template.filter.events
 
 Template.selector.events
     'click .toggle_value': ->
-        # console.log @
+        console.log @
         filter = Template.parentData()
         facet = Docs.findOne type:'facet'
         filter_list = facet["filter_#{filter.key}"]
@@ -211,13 +203,12 @@ Template.selector.events
             Docs.update facet._id,
                 $addToSet: "filter_#{filter.key}": @value
         Session.set 'is_calculating', true
-        Meteor.call 'fo', (err,res)=>
+        console.log 'hi call'
+        Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else
+            else if res
+                console.log 'return', res
                 Session.set 'is_calculating', false
-
-
-
 
 Template.edit_filter_field.events
     'change .text_val': (e,t)->
