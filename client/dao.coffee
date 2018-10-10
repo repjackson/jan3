@@ -169,7 +169,7 @@ Template.set_facet_key.helpers
 Template.filter.helpers
     values: ->
         facet = Docs.findOne type:'facet'
-        facet["#{@key}_return"][..7]
+        facet["#{@key}_return"][..10]
 
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'
@@ -191,7 +191,7 @@ Template.filter.events
 
 Template.selector.events
     'click .toggle_value': ->
-        console.log @
+        # console.log @
         filter = Template.parentData()
         facet = Docs.findOne type:'facet'
         filter_list = facet["filter_#{filter.key}"]

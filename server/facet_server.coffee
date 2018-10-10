@@ -5,15 +5,12 @@ Meteor.publish 'facet', ->
 
 Meteor.methods
     fo: ->
-        # console.log 'hi server'
         facet = Docs.findOne
             type:'facet'
             author_id: Meteor.userId()
-        console.log 'facet', facet
 
         if facet.filter_type and facet.filter_type.length > 0
             if 'ticket' in facet.filter_type
-                console.log 'ticket in filter type'
                 filter_keys =
                     [ 'ticket_type',
                       'ticket_franchisee',
@@ -22,9 +19,7 @@ Meteor.methods
                       'type',
                       'ticket_office_name',
                       'customer_name' ]
-                console.log 'ticket type'
             else if 'event' in facet.filter_type
-                console.log 'event in filter type'
                 filter_keys =
                     [
                         'author_id'
@@ -32,12 +27,9 @@ Meteor.methods
                         # 'timestamp'
                     ]
             else
-                console.log facet.filter_type.length
-                console.log 'no filter type'
                 filter_keys = ['type']
                 # return true
         else
-            console.log 'no filter type length'
             Docs.update facet._id,
                 $set:
                     count: 0
@@ -51,7 +43,6 @@ Meteor.methods
             return true
                 # filter_keys = ['type']
 
-        console.log 'filter_keys', filter_keys
 
         built_query = {}
 
@@ -64,11 +55,10 @@ Meteor.methods
                 Docs.update facet._id,
                     $set: "filter_#{filter_key}":[]
 
-        console.log 'built query', built_query
 
         count = Docs.find(built_query).count()
 
-        results = Docs.find(built_query, {limit:20}).fetch()
+        results = Docs.find(built_query, {limit:200}).fetch()
 
         for filter_key in filter_keys
             values = []
@@ -93,24 +83,21 @@ Meteor.methods
                 else if filter_primitive is 'string'
                     key_return.push({ value:value, count:count })
 
-            console.log 'filter_key', filter_key
-            console.log 'key_return', key_return
 
             Docs.update facet._id,
                 $set:
                     "#{filter_key}_return":key_return
 
-        # page_size = if facet.page_size then facet.page_size else 10
+        page_size = if facet.page_size then facet.page_size else 10
 
-        results_cursor = Docs.find(built_query, limit:10)
+        results_cursor = Docs.find(built_query, limit:page_size)
         result_ids = []
         for result in results_cursor.fetch()
             result_ids.push result._id
 
-        # console.log result_ids
 
         Docs.update facet._id,
             $set:
                 count: count
-                result_ids:result_ids[..10]
+                result_ids:result_ids
         return true
