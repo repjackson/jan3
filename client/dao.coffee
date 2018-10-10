@@ -1,7 +1,7 @@
 Template.dao.onCreated ->
     @autorun -> Meteor.subscribe 'facet'
     @autorun => Meteor.subscribe 'type', 'filter'
-    @autorun => Meteor.subscribe 'type', 'ticket_type'
+    # @autorun => Meteor.subscribe 'type', 'ticket_type'
     @is_editing = new ReactiveVar false
     Session.setDefault 'is_calculating', false
     Session.setDefault 'view_mode', 'cards'
@@ -37,13 +37,13 @@ Template.dao.events
             Docs.insert
                 type:'facet'
                 result_ids:[]
-                type_return:
-                    [
-                        { value:'ticket' }
-                        { value:'event' }
-                    ]
+                # type_return:
+                #     [
+                #         { value:'ticket' }
+                #         { value:'event' }
+                #     ]
 
-        # Meteor.call 'fo', new_facet_id
+        Meteor.call 'fo', new_facet_id
 
     'click #add_filter': (e,t)->
         Docs.insert
@@ -203,11 +203,11 @@ Template.selector.events
             Docs.update facet._id,
                 $addToSet: "filter_#{filter.key}": @value
         Session.set 'is_calculating', true
-        console.log 'hi call'
+        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
             else if res
-                console.log 'return', res
+                # console.log 'return', res
                 Session.set 'is_calculating', false
 
 Template.edit_filter_field.events

@@ -29,15 +29,6 @@ template(name='dao')
         .row
             if facet_doc
                 .three.wide.column
-                    // if currentUser
-                    //     if is_editing
-                    //         .ui.icon.input
-                    //             input.facet_title(type='text' placeholder='Edit Title' value=facet_doc.title)
-                    //             i.stop_editing.checkmark.link.icon
-                    //     else
-                    //         .ui.header
-                    //             |#{facet_doc.title}
-                    //         i.start_editing.link.pencil.icon
                     with type_filter
                         +filter
                     if type_selected
@@ -70,6 +61,7 @@ template(name='dao')
                                 if view_cards
                                     .ui.four.stackable.cards
                                         each facet_doc.result_ids
+                                            // .ui.header #{this}
                                             +facet_card
                                             // .ui.header #{this}
                             else
