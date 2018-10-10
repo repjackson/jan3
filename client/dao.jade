@@ -17,7 +17,8 @@ template(name='dao')
                             +set_page_size value=10
                             +set_page_size value=20
                             +set_page_size value=50
-                        |results
+                        |results of
+                        | #{facet_doc.total}
 
                 .right.floated.three.wide.column
                     .set_view_cards.ui.button(class=view_cards_class)
@@ -61,7 +62,8 @@ template(name='dao')
                                 if view_cards
                                     .ui.four.stackable.cards
                                         each facet_doc.result_ids
-                                            // .ui.header #{this}
+                                            // .card
+                                                // .ui.header #{this}
                                             +facet_card
                                             // .ui.header #{this}
                             else

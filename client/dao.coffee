@@ -228,6 +228,9 @@ Template.dao.helpers
     is_calculating: -> Session.get('is_calculating')
     facet_doc: -> Docs.findOne type:'facet'
 
+    visible_result_ids: ->
+        facet = Docs.findOne type:'facet'
+        if facet.result_ids then facet.result_ids[..10]
 
     ticket_types: -> Docs.find type:'ticket_type'
 
@@ -255,6 +258,8 @@ Template.dao.helpers
     view_table_class: -> if Session.equals 'view_mode', 'table' then 'primary' else ''
 
     other_filters: ->
+        facet = Docs.findOne type:'facet'
+        console.log facet.filter_type[0]
         Docs.find
             type:'filter'
             key:$ne:'type'

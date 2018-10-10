@@ -110,8 +110,10 @@ template(name='facet_card')
                     .item
                         i.money.grey.icon(title='Customer')
                         |#{customer_name}
-                // each timestamp_tags
-                //     .ui.compact.label #{this}
+                    if ev.MASTER_LICENSEE
+                        .item office #{ev.MASTER_LICENSEE}
+                each timestamp_tags
+                    .ui.compact.small.basic.label #{this}
                 +when_template
 
 
