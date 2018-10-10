@@ -111,6 +111,109 @@ Template.set_page_size.events
 Template.facet_table.helpers
     facet_doc: -> Docs.findOne type:'facet'
 
+
+Template.table_column_header.onCreated ->
+    @is_sorting = new ReactiveVar false
+
+Template.table_column_header.events
+    'click .sort_key': (e,t)->
+        t.is_sorting.set true
+        key = if @ev_subset then "ev.#{@key}" else @key
+        facet_doc = Docs.findOne type:'facet'
+        if facet_doc.sort_direction is -1
+            Docs.update facet_doc._id,
+                $set:
+                    sort_key: key
+                    sort_direction: 1
+        else
+            Docs.update facet_doc._id,
+                $set:
+                    sort_key: key
+                    sort_direction: -1
+        Meteor.call 'fo',(err,res) =>
+            if res
+                t.is_sorting.set false
+
+    # 'click .raise_filter':->
+    #     Docs.update @_id,
+    #         $inc:rank:1
+
+    # 'click .lower_filter':->
+    #     Docs.update @_id,
+    #         $inc:rank:-1
+
+
+Template.table_column_header.helpers
+    sort_descending: ->
+        key = if @ev_subset then "ev.#{@key}" else @key
+        facet = Docs.findOne type:'facet'
+        if facet.sort_direction is 1 and facet.sort_key is key
+            return true
+    sort_ascending: ->
+        key = if @ev_subset then "ev.#{@key}" else @key
+        facet = Docs.findOne type:'facet'
+        if facet.sort_direction is -1 and facet.sort_key is key
+            return true
+
+    is_sorting: -> Template.instance().is_sorting.get() is true
+
+Template.facet_table.helpers
+    th_field_docs: -> [
+        {
+            label: '#'
+            sortable:true
+            visible:true
+            key:'number'
+        }
+        {
+            label: 'Open'
+            sortable:true
+            visible:true
+            key:'open'
+        }
+        {
+            label: 'Office'
+            sortable:true
+            visible:true
+            key:'ticket_office_name'
+        }
+        {
+            label: 'Franchisee'
+            sortable:true
+            visible:true
+            key:'ticket_franchisee'
+        }
+        {
+            label: 'Customer'
+            sortable:true
+            visible:true
+            key:'customer_name'
+        }
+        {
+            label: 'Type'
+            sortable:true
+            visible:true
+            key: 'ticket_type'
+        }
+        {
+            label: 'Level'
+            sortable:true
+            visible:true
+            key:'level'
+        }
+        {
+            label: 'Details'
+            sortable:true
+            visible:true
+            key:'details'
+        }
+        {
+            label: 'View'
+            sortable:false
+            visible:true
+        }
+    ]
+
 Template.selector.helpers
     selector_value: ->
         switch typeof @value
@@ -124,6 +227,7 @@ Template.selector.helpers
 Template.dao.helpers
     is_calculating: -> Session.get('is_calculating')
     facet_doc: -> Docs.findOne type:'facet'
+
 
     ticket_types: -> Docs.find type:'ticket_type'
 

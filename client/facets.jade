@@ -28,19 +28,40 @@ template(name='facet_table')
     table.ui.striped.table(class=table_classes)
         thead
             tr
-                th.single.line #
-                th.single.line Open
-                th.single.line Office
-                th.single.line Franchisee
-                th.single.line Customer
-                th.single.line Type
-                th.single.line Level
-                th.single.line Details
-                th.single.line Assignment
-                th.single.line
+                each th_field_docs
+                    +table_column_header
+        // tbody
+        //     each children
+        //         tr
+        //             each children_field_docs
+        //                 if visible
+        //                     if display_field_template
+        //                         td(style="overflow:visible;")
+        //                             +Template.dynamic template=display_field_template data=..
+        //                     else
+        //                         td(class=table_cell_class) #{child_schema_field_value}
+        //                     // td(class=table_cell_class) #{child_schema_field_value}
+
         tbody
             each facet_doc.result_ids
                 +dao_table_row
+
+template(name='table_column_header')
+    if visible
+        if sortable
+            th.sort_key.single.line
+                |#{label}
+                if is_sorting
+                    i.loading.refresh.icon
+                else if sort_descending
+                    i.chevron.down.link.icon
+                else if sort_ascending
+                    i.chevron.up.link.icon
+                else
+                    i.sort.link.grey.icon
+        else
+            th.single.line
+                |#{label}
 
 
 template(name='dao_table_row')
@@ -57,8 +78,6 @@ template(name='dao_table_row')
             td
                 +level_icon
             td #{ticket_details}
-            td
-                +ticket_assignment_cell
             td
                 a.ui.icon.button(href="/p/ticket_admin_view?doc_id=#{_id}")
                     i.right.chevron.icon

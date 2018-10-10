@@ -90,7 +90,13 @@ Meteor.methods
 
         page_size = if facet.page_size then facet.page_size else 10
 
-        results_cursor = Docs.find(built_query, limit:page_size)
+        results_cursor =
+            Docs.find( built_query,
+                {
+                    limit:page_size
+                    sort:"#{facet.sort_key}":facet.sort_direction
+                }
+                )
         result_ids = []
         for result in results_cursor.fetch()
             result_ids.push result._id
