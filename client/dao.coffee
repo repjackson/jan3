@@ -1,6 +1,7 @@
 Template.dao.onCreated ->
     @autorun -> Meteor.subscribe 'facet'
     @autorun => Meteor.subscribe 'type', 'filter'
+    @autorun => Meteor.subscribe 'type', 'schema'
     # @autorun => Meteor.subscribe 'type', 'ticket_type'
     @is_editing = new ReactiveVar false
     Session.setDefault 'is_calculating', false
@@ -8,11 +9,11 @@ Template.dao.onCreated ->
 
 
 Template.facet_card.onCreated ->
-    @autorun => Meteor.subscribe 'doc', @data
+    @autorun => Meteor.subscribe 'single_doc', @data
 Template.facet_segment.onCreated ->
-    @autorun => Meteor.subscribe 'doc', @data
+    @autorun => Meteor.subscribe 'single_doc', @data
 Template.dao_table_row.onCreated ->
-    @autorun => Meteor.subscribe 'doc', @data
+    @autorun => Meteor.subscribe 'single_doc', @data
 Template.facet_card.helpers
     local_doc: -> Docs.findOne @valueOf()
 Template.facet_segment.helpers
@@ -224,6 +225,36 @@ Template.selector.helpers
             when 'number' then @value
 
 
+Template.type_filter.helpers
+    faceted_types: ->
+        Docs.find(
+            type:'schema'
+            faceted:true
+        ).fetch()
+
+    set_type_class: ->
+        facet = Docs.findOne type:'facet'
+        if facet.filter_type and @slug in facet.filter_type then 'primary' else ''
+
+
+Template.type_filter.events
+    'click .set_type': ->
+        facet = Docs.findOne type:'facet'
+
+        Docs.update facet._id,
+            $set: "filter_type": [@slug]
+        Session.set 'is_calculating', true
+        # console.log 'hi call'
+        Meteor.call 'fo', (err,res)->
+            if err then console.log err
+            else if res
+                # console.log 'return', res
+                Session.set 'is_calculating', false
+
+
+
+
+
 Template.dao.helpers
     is_calculating: -> Session.get('is_calculating')
     facet_doc: -> Docs.findOne type:'facet'
@@ -234,20 +265,6 @@ Template.dao.helpers
 
     ticket_types: -> Docs.find type:'ticket_type'
 
-    type_selected: ->
-        facet = Docs.findOne type:'facet'
-        if facet.filter_type
-            if facet.filter_type.length > 0
-                true
-            else
-                false
-        else
-            false
-
-    type_filter: ->
-        Docs.findOne
-            type:'filter'
-            key:'type'
 
     view_segments: -> Session.equals 'view_mode', 'segments'
     view_cards: -> Session.equals 'view_mode', 'cards'
@@ -259,12 +276,40 @@ Template.dao.helpers
 
     other_filters: ->
         facet = Docs.findOne type:'facet'
-        console.log facet.filter_type[0]
-        Docs.find
-            type:'filter'
-            key:$ne:'type'
-            # parent_slug: FlowRouter.getParam('page_slug')
-            # facet_id: FlowRouter.getQueryParam('doc_id')
+        current_type = facet.filter_type[0]
+        switch current_type
+            when 'ticket'
+                Docs.find
+                    type:'filter'
+                    key:$ne:'type'
+                    doc_type: 'ticket'
+
+    schema_doc: ->
+        facet = Docs.findOne type:'facet'
+        current_type = facet.filter_type[0]
+        if current_type
+            schema = Docs.findOne
+                type:'schema'
+                slug:current_type
+            # for field in schema.fields
+            #     console.log 'found field', field
+
+    faceted_fields: ->
+        facet = Docs.findOne type:'facet'
+        current_type = facet.filter_type[0]
+        faceted_fields = []
+        if current_type
+            schema = Docs.findOne
+                type:'schema'
+                slug:current_type
+            for field in schema.fields
+                if field.faceted is true
+                    faceted_fields.push field
+        faceted_fields
+            # for field in schema.fields
+            #     console.log 'found field', field
+
+
 
     is_editing: -> Template.instance().is_editing.get()
 
@@ -278,7 +323,7 @@ Template.set_facet_key.helpers
 Template.filter.helpers
     values: ->
         facet = Docs.findOne type:'facet'
-        facet["#{@key}_return"][..10]
+        facet["#{@slug}_return"][..10]
 
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'

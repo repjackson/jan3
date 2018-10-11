@@ -124,7 +124,12 @@ template(name='schema_field_edit')
                     .ui.labeled.input
                         .ui.basic.label Template
                         input.field_template(type='text' value=field_template)
+                .field
+                    .ui.labeled.input
+                        .ui.basic.label Icon
+                        input.field_icon(type='text' value=icon)
         +toggle_field_boolean key='ev_subset' label='EV Subset'
+        +toggle_field_boolean key='faceted' label='Faceted'
         div
         strong Type
         each fields

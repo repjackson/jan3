@@ -9,6 +9,10 @@ Meteor.publish 'type', (type, limit)->
             sort: timestamp:-1
         }
 
+
+Meteor.publish 'single_doc', (doc_id)->
+    Docs.find doc_id
+
 Meteor.publish 'block_children', (
     block_doc_id,
     filter_key=null,
@@ -349,26 +353,26 @@ Meteor.publish 'my_office_contacts', ()->
 publishComposite 'doc', (id)->
     {
         find: -> Docs.find id
-        # children: [
-        #     {
-        #         find: (doc)-> Meteor.users.find _id:doc.author_id
-        #     }
-        #     {
-        #         find: (doc)->
-        #             Docs.find
-        #                 type:'office'
-        #                 "ev.ID":doc.office_jpid
-        #     }
-        #     {
-        #         find: (doc)->
-        #             Docs.find
-        #                 type:'customer'
-        #                 "ev.ID":doc.customer_jpid
-        #     }
-        #     {
-        #         find: (doc)-> Docs.find _id:doc.parent_id
-        #     }
-        # ]
+        children: [
+            {
+                find: (doc)-> Meteor.users.find _id:doc.author_id
+            }
+            # {
+            #     find: (doc)->
+            #         Docs.find
+            #             type:'office'
+            #             "ev.ID":doc.office_jpid
+            # }
+            # {
+            #     find: (doc)->
+            #         Docs.find
+            #             type:'customer'
+            #             "ev.ID":doc.customer_jpid
+            # }
+            # {
+            #     find: (doc)-> Docs.find _id:doc.parent_id
+            # }
+        ]
     }
 
 

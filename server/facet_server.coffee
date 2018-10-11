@@ -11,49 +11,40 @@ Meteor.methods
             type:'facet'
             author_id: Meteor.userId()
 
-        console.log 'facet', facet
+        # console.log 'facet', facet
 
         if facet.filter_type and facet.filter_type.length > 0
-            if 'ticket' in facet.filter_type
-                filter_keys =
-                    [ 'ticket_type',
-                      'ticket_franchisee',
-                      'level',
-                      'open',
-                      'type',
-                      'timestamp_tags',
-                      'ticket_office_name',
-                      'customer_name' ]
-            else if 'office' in facet.filter_type
-                filter_keys =
-                    [
-                        "author_id"
-                        'type'
-                        'timestamp_tags'
-                        # 'timestamp'
-                    ]
-                console.log 'filter keys', filter_keys
-                # return
-            else
-                filter_keys = ['type']
-                # return true
+            schema =
+                Docs.findOne
+                    type:'schema'
+                    slug:facet.filter_type[0]
+            # console.log 'schema', schema
+            if schema
+                filter_keys = []
+                for field in schema.fields
+                    if field.faceted is true
+                        filter_keys.push field.slug
+                # console.log 'filter_keys', filter_keys
+            # return
         else
             Docs.update facet._id,
                 $set:
-                    count: 0
+                    total: 0
                     result_ids:[]
                     filter_type: []
                     type_return:
                         [
                             { value:'ticket' }
                             { value:'office' }
+                            { value:'customer' }
+                            { value:'franchisee' }
                         ]
             return true
-                # filter_keys = ['type']
 
 
         built_query = {}
 
+        filter_keys.push 'type'
 
         for filter_key in filter_keys
             filter_list = facet["filter_#{filter_key}"]
@@ -66,39 +57,42 @@ Meteor.methods
 
         total = Docs.find(built_query).count()
 
-        console.log 'total', total
-        console.log 'built query', built_query
-        results = Docs.find(built_query, {limit:20}).fetch()
+        # console.log 'total', total
+        # console.log 'built query', built_query
+        results = Docs.find(built_query, {limit:400}).fetch()
 
         console.log 'filter keys', filter_keys
 
-        # for filter_key in filter_keys
-        #     values = []
-        #     key_return = []
+        for filter_key in filter_keys
+            values = []
+            key_return = []
 
-        #     example_value = Docs.findOne({"#{filter_key}":$exists:true})
+            example_value = Docs.findOne({"#{filter_key}":$exists:true})
 
-        #     filter_primitive = typeof example_value["#{filter_key}"]
-        #     for result in results
-        #         if result["#{filter_key}"]?
-        #             values.push result["#{filter_key}"]
+            filter_primitive = typeof example_value["#{filter_key}"]
+            for result in results
+                if result["#{filter_key}"]?
+                    values.push result["#{filter_key}"]
 
-        #     counted = _.countBy(values)
+            counted = _.countBy(values)
 
-        #     for value,count of counted
-        #         if filter_primitive is 'number'
-        #             int_value = parseInt value
-        #             key_return.push({ value:int_value, count:count })
-        #         else if filter_primitive is 'boolean'
-        #             bool_value = if value is 'true' then true else false
-        #             key_return.push({ value:bool_value, count:count })
-        #         else if filter_primitive is 'string'
-        #             key_return.push({ value:value, count:count })
+            for value,count of counted
+                if filter_primitive is 'number'
+                    int_value = parseInt value
+                    key_return.push({ value:int_value, count:count })
+                else if filter_primitive is 'boolean'
+                    bool_value = if value is 'true' then true else false
+                    key_return.push({ value:bool_value, count:count })
+                else if filter_primitive is 'string'
+                    key_return.push({ value:value, count:count })
+
+            sorted = _.sortBy(key_return, 'count')
+            reversed = sorted.reverse()
 
 
-        #     Docs.update facet._id,
-        #         $set:
-        #             "#{filter_key}_return":key_return
+            Docs.update facet._id,
+                $set:
+                    "#{filter_key}_return":reversed
 
         calc_page_size = if facet.page_size then facet.page_size else 10
 

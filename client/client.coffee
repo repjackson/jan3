@@ -38,7 +38,7 @@ globalHotkeys.add
 Session.setDefault('query',null)
 
 if Meteor.isDevelopment
-    Session.setDefault('editing_mode',true)
+    Session.setDefault('editing_mode',false)
 else
     Session.setDefault('editing_mode',false)
 

@@ -23,19 +23,17 @@ template(name='dao')
                 .right.floated.three.wide.column
                     .set_view_cards.ui.button(class=view_cards_class)
                         +iconsmall name='activity-grid-2'
-                    .set_view_segments.ui.button(class=view_segments_class)
-                        +iconsmall name='menu'
+                    // .set_view_segments.ui.button(class=view_segments_class)
+                    //     +iconsmall name='menu'
                     .set_view_table.ui.button(class=view_table_class)
                         +iconsmall name='data-sheet-filled'
         .row
             if facet_doc
-                .three.wide.column
-                    with type_filter
-                        +filter
-                    if type_selected
-                        if other_filters
-                            each other_filters
-                                +filter
+                .four.wide.column
+                    +type_filter
+                    if schema_doc
+                        each faceted_fields
+                            +filter
                     if editing_mode
                         #add_filter.ui.button
                             i.plus.icon
@@ -46,7 +44,7 @@ template(name='dao')
                                     |#{key}: #{value}
                                     i.remove_arg.remove.link.icon
                         .ui.button.call Call
-                .thirteen.wide.column
+                .twelve.wide.column
                     if is_calculating
                         // i.large.loading.refresh.icon
                         .ui.active.indeterminate.big.centered.text.inline.loader
@@ -80,26 +78,35 @@ template(name='set_facet_key')
         |#{label}
 
 
+template(name='type_filter')
+    .ui.small.dividing.header
+        +icon name='category'
+        |Sections
+    each faceted_types
+        .ui.button.set_type(class=set_type_class)
+            +iconsmall name=icon
+            |#{title}
+
+
 template(name='filter')
-    .ui.secondary.segment
-        .ui.small.header
-            if icon
-                +icon name=icon
-            |#{label}
-        if editing_mode
-            .ui.list
-                .item key: #{key}
-                .item primative: #{primative}
-                .item parent slug: #{parent_slug}
-        each values
-            +selector
-        if editing_mode
-            // i.recalc.link.refresh.icon
-            +edit_filter_field key='label' filter_id=this._id
-            +edit_filter_field key='key' filter_id=this._id
-            +edit_filter_field key='icon' filter_id=this._id
-            +edit_filter_field key='primative' filter_id=this._id
-            +edit_filter_field key='parent_slug' filter_id=this._id
+    .ui.small.dividing.header
+        if icon
+            +icon name=icon
+        |#{title}
+    if editing_mode
+        .ui.list
+            .item key: #{slug}
+            .item primative: #{primative}
+            .item Doc Type: #{doc_type}
+    each values
+        +selector
+    // if editing_mode
+    //     // i.recalc.link.refresh.icon
+    //     +edit_filter_field key='label' filter_id=this._id
+    //     +edit_filter_field key='key' filter_id=this._id
+    //     +edit_filter_field key='icon' filter_id=this._id
+    //     +edit_filter_field key='primative' filter_id=this._id
+    //     +edit_filter_field key='doc_type' filter_id=this._id
 
 
 
@@ -114,3 +121,140 @@ template(name='edit_filter_field')
         .ui.basic.label #{key}
         input.text_val(type='text')
 
+
+
+
+template(name='facet_table')
+    table.ui.striped.table(class=table_classes)
+        thead
+            tr
+                each th_field_docs
+                    +table_column_header
+        // tbody
+        //     each children
+        //         tr
+        //             each children_field_docs
+        //                 if visible
+        //                     if display_field_template
+        //                         td(style="overflow:visible;")
+        //                             +Template.dynamic template=display_field_template data=..
+        //                     else
+        //                         td(class=table_cell_class) #{child_schema_field_value}
+        //                     // td(class=table_cell_class) #{child_schema_field_value}
+
+        tbody
+            each facet_doc.result_ids
+                +dao_table_row
+
+template(name='table_column_header')
+    if visible
+        if sortable
+            th.sort_key.single.line
+                |#{label}
+                if is_sorting
+                    |&nbsp;
+                    i.loading.refresh.grey.icon
+                else if sort_descending
+                    i.chevron.down.link.icon
+                else if sort_ascending
+                    i.chevron.up.link.icon
+                else
+                    i.sort.link.grey.icon
+        else
+            th.single.line
+                |#{label}
+
+
+template(name='dao_table_row')
+    with local_doc
+        tr
+            td #{ticket_number}
+            td
+                +status_template
+            td #{ticket_office_name}
+            td #{ticket_franchisee}
+            td #{customer_name}
+            td
+                +ticket_type_label
+            td
+                +level_icon
+            td #{ticket_details}
+            td
+                a.ui.icon.button(href="/p/ticket_admin_view?doc_id=#{_id}")
+                    i.right.chevron.icon
+
+
+
+template(name='facet_card')
+    with local_doc
+        .card(class=ticket_color_class)
+            .content
+                .right.floated
+                    +level_icon
+                .header
+                    +status_template
+                    a(href="/p/ticket_admin_view?doc_id=#{_id}")
+                        |##{ticket_number}
+            .content
+                p
+                    strong #{ticket_details}
+            .content
+                .ui.list
+                    .item
+                        +ticket_type_label
+                    .item
+                        i.building.grey.icon(title='Office')
+                        |#{ticket_office_name}
+                    .item
+                        i.suitcase.grey.icon(title='Franchisee')
+                        |#{ticket_franchisee}
+                    .item
+                        i.money.grey.icon(title='Customer')
+                        |#{customer_name}
+                    if ev.MASTER_LICENSEE
+                        .item office #{ev.MASTER_LICENSEE}
+                each timestamp_tags
+                    .ui.compact.small.basic.label #{this}
+                +when_template
+
+
+template(name='facet_segment')
+    with local_doc
+        .ui.segment(class=ticket_color_class)
+            .content
+                .ui.header
+                    |#{ticket_details}
+            .content
+                .ui.horizontal.list
+                    .item
+                        a(href="/p/ticket_admin_view?doc_id=#{_id}")
+                            |##{ticket_number}
+                    .item
+                        +status_template
+                    .item
+                        +level_icon
+                    .item
+                        +ticket_type_label
+                    .item
+                        i.building.grey.icon(title='Office')
+                        |#{ticket_office_name}
+                    .item
+                        i.money.grey.icon(title='Customer')
+                        |#{customer_name}
+                    .item
+                // each timestamp_tags
+                //     .ui.compact.label #{this}
+                +when_template
+
+
+
+template(name='boolean_facet')
+    .ui.small.header filter #{key}
+    .pick_yes.ui.button yes
+    .pick_no.ui.button no
+
+
+
+
+template(name='tag_result')
+    .three.wide.column #{title} #{office_name} #{name}
