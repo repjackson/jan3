@@ -46,6 +46,8 @@ Meteor.methods
 
         filter_keys.push 'type'
 
+        console.log 'filter-keys', filter_keys
+
         for filter_key in filter_keys
             filter_list = facet["filter_#{filter_key}"]
             if filter_list and filter_list.length > 0

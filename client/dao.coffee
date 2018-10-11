@@ -265,7 +265,6 @@ Template.dao.helpers
 
     ticket_types: -> Docs.find type:'ticket_type'
 
-
     view_segments: -> Session.equals 'view_mode', 'segments'
     view_cards: -> Session.equals 'view_mode', 'cards'
     view_table: -> Session.equals 'view_mode', 'table'
@@ -309,8 +308,6 @@ Template.dao.helpers
             # for field in schema.fields
             #     console.log 'found field', field
 
-
-
     is_editing: -> Template.instance().is_editing.get()
 
 
@@ -327,13 +324,13 @@ Template.filter.helpers
 
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'
-        if facet.query["#{@key}"] is @value then 'primary' else ''
+        if facet.query["#{@slug}"] is @value then 'primary' else ''
 
 Template.selector.helpers
     toggle_value_class: ->
         facet = Docs.findOne type:'facet'
         filter = Template.parentData()
-        filter_list = facet["filter_#{filter.key}"]
+        filter_list = facet["filter_#{filter.slug}"]
         if filter_list and @value in filter_list then 'primary' else ''
 
 Template.filter.events
@@ -348,14 +345,14 @@ Template.selector.events
         # console.log @
         filter = Template.parentData()
         facet = Docs.findOne type:'facet'
-        filter_list = facet["filter_#{filter.key}"]
+        filter_list = facet["filter_#{filter.slug}"]
 
         if filter_list and @value in filter_list
             Docs.update facet._id,
-                $pull: "filter_#{filter.key}": @value
+                $pull: "filter_#{filter.slug}": @value
         else
             Docs.update facet._id,
-                $addToSet: "filter_#{filter.key}": @value
+                $addToSet: "filter_#{filter.slug}": @value
         Session.set 'is_calculating', true
         # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
