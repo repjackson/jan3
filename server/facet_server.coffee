@@ -11,20 +11,17 @@ Meteor.methods
             type:'facet'
             author_id: Meteor.userId()
 
-        console.log 'facet', facet
 
         if facet.filter_type and facet.filter_type.length > 0
             schema =
                 Docs.findOne
                     type:'schema'
                     slug:facet.filter_type[0]
-            # console.log 'schema', schema
             if schema
                 filter_keys = []
                 for field in schema.fields
                     if field.faceted is true
                         filter_keys.push field.slug
-                # console.log 'filter_keys', filter_keys
             # return
         else
             Docs.update facet._id,
@@ -46,7 +43,6 @@ Meteor.methods
 
         filter_keys.push 'type'
 
-        # console.log 'filter-keys', filter_keys
 
         for filter_key in filter_keys
             filter_list = facet["filter_#{filter_key}"]
@@ -59,11 +55,8 @@ Meteor.methods
 
         total = Docs.find(built_query).count()
 
-        # console.log 'total', total
-        console.log 'built query', built_query
         results = Docs.find(built_query, {limit:1000}).fetch()
 
-        console.log 'filter keys', filter_keys
 
         for filter_key in filter_keys
             values = []
@@ -106,7 +99,6 @@ Meteor.methods
 
         skip_amount = current_page*calc_page_size-calc_page_size
 
-        console.log 'calc_page_size', calc_page_size
 
         results_cursor =
             Docs.find( built_query,

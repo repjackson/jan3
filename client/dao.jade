@@ -17,15 +17,14 @@ template(name='dao')
                         input#query(type='text' placeholder=placeholder value=current_query)
                 .six.wide.middle.aligned.column
                     .ui.inline.dropdown
-                        |View
                         .default.text 10
                         i.dropdown.icon
                         .menu
                             +set_page_size value=10
                             +set_page_size value=20
                             +set_page_size value=50
-                        |From #{facet_doc.skip_amount}
-                        | of
+                        |- #{facet_doc.skip_amount}
+                        | /
                         | #{facet_doc.total}
                 .three.wide.column
                     if facet_doc.page_amount
@@ -54,24 +53,14 @@ template(name='dao')
                     +type_filter
         .row
             if facet_doc
-                .four.wide.column
+                .three.wide.column
                     if schema_doc
                         each faceted_fields
                             +filter
-                    if editing_mode
-                        #add_filter.ui.button
-                            i.plus.icon
-                            | Filter
-                        .ui.list
-                            each facet_doc.args
-                                .item
-                                    |#{key}: #{value}
-                                    i.remove_arg.remove.link.icon
-                        .ui.button.call Call
-                .twelve.wide.column
+                .thirteen.wide.column
                     if is_calculating
                         // i.large.loading.refresh.icon
-                        .ui.active.indeterminate.massive.centered.text.inline.loader
+                        .ui.active.indeterminate.massive.centered.inline.loader
                             // |Calculating filters and results
                     else
                         if facet_doc.result_ids
@@ -103,7 +92,7 @@ template(name='set_facet_key')
 
 
 template(name='type_filter')
-    // .ui.small.dividing.header
+    // .ui.small.header
     //     +icon name='category'
     //     |Sections
     each faceted_types
@@ -114,7 +103,7 @@ template(name='type_filter')
 
 
 template(name='filter')
-    .ui.small.dividing.header
+    .ui.small.header
         if icon
             +icon name=icon
         |#{title}
@@ -195,7 +184,10 @@ template(name='dao_table_row')
         tr
             each visible_fields
                 td
-                    |#{value}
+                    if field_template
+                        +Template.dynamic template=field_template data=local_doc
+                    else
+                        |#{value}
 
 
 template(name='facet_card')
@@ -205,38 +197,19 @@ template(name='facet_card')
                 .header
                     each header_fields
                         |#{value}
-                    // +level_icon
-                    // +status_template
-                    // a(href="/p/ticket_admin_view?doc_id=#{_id}")
-                    //     |##{ticket_number}
-            // .content
-            //     p
-            //         strong #{ticket_details}
             .content
                 .ui.list
                     each visible_fields
                         .item
-                            if icon
-                                i.spaced.icon(title=title)
-                                    +icon name=icon
+                            if field_template
+                                +Template.dynamic template=field_template data=local_doc
                             else
-                                |#{title}:
-                            | #{value}
-                    // .item
-                    //     +ticket_type_label
-                    // .item
-                    //     i.building.grey.icon(title='Office')
-                    //     |#{ticket_office_name}
-                    // .item
-                    //     i.suitcase.grey.icon(title='Franchisee')
-                    //     |#{ticket_franchisee}
-                    // .item
-                    //     i.money.grey.icon(title='Customer')
-                    //     |#{customer_name}
-                    // if ev.MASTER_LICENSEE
-                    //     .item office #{ev.MASTER_LICENSEE}
-                // each timestamp_tags
-                //     .ui.compact.small.basic.label #{this}
+                                if icon
+                                    i.spaced.icon(title=title)
+                                        +icon name=icon
+                                else
+                                    |#{title}:
+                                | #{value}
                 +when_template
 
 
