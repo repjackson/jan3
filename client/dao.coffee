@@ -89,63 +89,74 @@ Template.dao.events
             Docs.insert
                 type:'facet'
                 result_ids:[]
-                # type_return:
-                #     [
-                #         { value:'ticket' }
-                #         { value:'event' }
-                #     ]
-
+                current_page:1
+                page_size:10
+                skip_amount:0
         Meteor.call 'fo', new_facet_id
 
-    'click #add_filter': (e,t)->
-        Docs.insert
-            type:'filter'
-            # parent_slug: FlowRouter.getParam('page_slug')
-
-    'click .remove_arg': (e,t)->
-        Docs.update FlowRouter.getQueryParam('doc_id'),
-            $pull:args:@
-
-    'click .call':(e,t)->
-        Meteor.call 'fo', FlowRouter.getQueryParam('doc_id')
-
-    'click .clear_results': ->
+    'click .page_up': (e,t)->
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
-            $set: results: []
+            $inc: current_page:1
+        Meteor.call 'fo'
 
-    'keyup .arg_key, keyup .arg_value': (e,t)->
-        e.preventDefault()
-        if e.which is 13 #enter
-            facet_id = Docs.findOne type:'facet'
-            arg_key_val = $('.arg_key').val().trim()
-            arg_val_val = $('.arg_value').val().trim()
-            arg = {
-                key:arg_key_val
-                value:arg_val_val
-            }
-            Meteor.call 'fa', arg, facet_id
-            $('.arg_key').val('')
-            $('.arg_value').val('')
-
-    'click .start_editing': (e,t)-> t.is_editing.set true
-    'click .stop_editing': (e,t)->
-        e.preventDefault()
-        facet_id = Docs.findOne type:'facet'
-        title_val = $('.facet_title').val().trim()
-        Docs.update facet_id,
-            $set:title:title_val
-        t.is_editing.set false
+    'click .page_down': (e,t)->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $inc: current_page:-1
+        Meteor.call 'fo'
 
 
-    'keyup .facet_title': (e,t)->
-        e.preventDefault()
-        if e.which is 13 #enter
-            facet_id = Docs.findOne type:'facet'
-            title_val = $('.facet_title').val().trim()
-            Docs.update facet_id,
-                $set:title:title_val
-            t.is_editing.set false
+
+    # 'click #add_filter': (e,t)->
+    #     Docs.insert
+    #         type:'filter'
+    #         # parent_slug: FlowRouter.getParam('page_slug')
+
+    # 'click .remove_arg': (e,t)->
+    #     Docs.update FlowRouter.getQueryParam('doc_id'),
+    #         $pull:args:@
+
+    # 'click .call':(e,t)->
+    #     Meteor.call 'fo', FlowRouter.getQueryParam('doc_id')
+
+    # 'click .clear_results': ->
+    #     facet = Docs.findOne type:'facet'
+    #     Docs.update facet._id,
+    #         $set: results: []
+
+    # 'keyup .arg_key, keyup .arg_value': (e,t)->
+    #     e.preventDefault()
+    #     if e.which is 13 #enter
+    #         facet_id = Docs.findOne type:'facet'
+    #         arg_key_val = $('.arg_key').val().trim()
+    #         arg_val_val = $('.arg_value').val().trim()
+    #         arg = {
+    #             key:arg_key_val
+    #             value:arg_val_val
+    #         }
+    #         Meteor.call 'fa', arg, facet_id
+    #         $('.arg_key').val('')
+    #         $('.arg_value').val('')
+
+    # 'click .start_editing': (e,t)-> t.is_editing.set true
+    # 'click .stop_editing': (e,t)->
+    #     e.preventDefault()
+    #     facet_id = Docs.findOne type:'facet'
+    #     title_val = $('.facet_title').val().trim()
+    #     Docs.update facet_id,
+    #         $set:title:title_val
+    #     t.is_editing.set false
+
+
+    # 'keyup .facet_title': (e,t)->
+    #     e.preventDefault()
+    #     if e.which is 13 #enter
+    #         facet_id = Docs.findOne type:'facet'
+    #         title_val = $('.facet_title').val().trim()
+    #         Docs.update facet_id,
+    #             $set:title:title_val
+    #         t.is_editing.set false
 
     'click .set_view_cards': -> Session.set 'view_mode', 'cards'
     'click .set_view_segments': -> Session.set 'view_mode', 'segments'

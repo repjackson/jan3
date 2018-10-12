@@ -431,7 +431,32 @@ Meteor.methods
         )
 
     customer_franchisee: ->
+        count = Docs.find({type:'customer', franchisee:{$exists:false},"ev.ACCOUNT_STATUS":"ACTIVE"}).count()
+        console.log 'found customers without franchisees', count
         Docs.find({type:'customer', franchisee:{$exists:false},"ev.ACCOUNT_STATUS":"ACTIVE"}).forEach((customer)->
             update_result = Docs.update({_id: customer._id},{$set:{"franchisee": customer.ev.FRANCHISEE}});
             console.log 'updated customer with franchisee', customer.ev.FRANCHISEE
+        )
+
+
+    invoice_customer: ->
+        count = Docs.find({type:'finance', customer:{$exists:false}}).count()
+        console.log 'found invoices without customers', count
+        update_result = Docs.update({type:'finance', customer_name:{$exists:false}},{$rename:"customer":"customer_name"}, {multi:true})
+
+
+    invoice_office: ->
+        count = Docs.find({type:'finance', office_name:{$exists:false}}).count()
+        console.log 'found invoices without office', count
+        update_result = Docs.update({type:'finance', office_name:{$exists:false}},{$rename:"ev.MASTER_LICENSEE":"office_name"}, {multi:true})
+
+    office_name: ->
+        count = Docs.find({type:'office', office_name:{$exists:true}}).count()
+        console.log 'found office with office name', count
+        # update_result = Docs.update({type:'office', office_name:{$exists:false}},{$rename:"ev.MASTER_LICENSEE":"office_name"}, {multi:true})
+
+
+        Docs.find({type:'office', state:{$exists:false}}).forEach((office)->
+            Docs.update({_id: office._id},{$set:{"state": office.ev.ADDR_STATE}});
+            console.log 'updated office with state', office.ev.ADDR_STATE
         )

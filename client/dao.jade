@@ -7,8 +7,18 @@ template(name='dao')
                         .create_facet.ui.icon.button(title='Create Session')
                             i.plus.icon
             else
-                .four.wide.column
                 .three.wide.column
+                    .ui.center.aligned.header
+                        +icon name='bar-chart'
+                        |Dashboard
+                .three.wide.column
+                    .ui.icon.fluid.input
+                        if current_query
+                            i.clear_search.link.remove.icon
+                        else
+                            i.link.search.icon
+                        input#query(type='text' placeholder=placeholder value=current_query)
+                .three.wide.middle.aligned.column
                     .ui.inline.dropdown
                         |View
                         .default.text 10
@@ -17,8 +27,23 @@ template(name='dao')
                             +set_page_size value=10
                             +set_page_size value=20
                             +set_page_size value=50
-                        |results of
+                        |From #{facet_doc.skip_amount}
+                        | of
                         | #{facet_doc.total}
+                .three.wide.column
+                    if facet_doc.page_amount
+                        .ui.pagination.small.menu
+                            // if show_decrement
+                            a.icon.item.page_down
+                                i.left.chevron.grey.icon
+                            .ui.item
+                                | #{facet_doc.current_page}/#{facet_doc.page_amount}
+                                // .menu
+                                //     a.set_page_number.item(class=pagination_item_class) 1
+                                //     a.set_page_number.item(class=pagination_item_class) 2
+                            a.icon.item.page_up
+                                i.right.chevron.grey.icon
+                            // if show_increment
 
                 .right.floated.three.wide.column
                     .set_view_cards.ui.button(class=view_cards_class)
@@ -84,7 +109,8 @@ template(name='type_filter')
         |Sections
     each faceted_types
         .ui.button.set_type(class=set_type_class)
-            +iconsmall name=icon
+            i.icon
+                +iconsmall name=icon
             |#{title}
 
 
@@ -184,15 +210,19 @@ template(name='facet_card')
                     // +status_template
                     // a(href="/p/ticket_admin_view?doc_id=#{_id}")
                     //     |##{ticket_number}
-            .content
-                p
-                    strong #{ticket_details}
+            // .content
+            //     p
+            //         strong #{ticket_details}
             .content
                 .ui.list
                     each visible_fields
                         .item
-                            |#{title}:
-                            strong #{value}
+                            if icon
+                                i.spaced.icon(title=title)
+                                    +icon name=icon
+                            else
+                                |#{title}:
+                            | #{value}
                     // .item
                     //     +ticket_type_label
                     // .item

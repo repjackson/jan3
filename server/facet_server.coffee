@@ -69,9 +69,11 @@ Meteor.methods
             values = []
             key_return = []
 
-            example_value = Docs.findOne({"#{filter_key}":$exists:true})
+            example_doc = Docs.findOne({"#{filter_key}":$exists:true})
 
-            filter_primitive = typeof example_value["#{filter_key}"]
+            example_value = example_doc["#{filter_key}"]
+            if example_value
+                filter_primitive = typeof example_value
             for result in results
                 if result["#{filter_key}"]? and result["#{filter_key}"].length>0
                     values.push result["#{filter_key}"]
@@ -98,11 +100,20 @@ Meteor.methods
 
         calc_page_size = if facet.page_size then facet.page_size else 10
 
+        page_amount = Math.ceil(total/calc_page_size)
+
+        current_page = if facet.current_page then facet.current_page else 1
+
+        skip_amount = current_page*calc_page_size-calc_page_size
+
+        console.log 'skip amount', skip_amount
+
         results_cursor =
             Docs.find( built_query,
                 {
                     limit:calc_page_size
                     sort:"#{facet.sort_key}":facet.sort_direction
+                    skip:skip_amount
                 }
                 )
         result_ids = []
@@ -112,6 +123,10 @@ Meteor.methods
 
         Docs.update facet._id,
             $set:
+                current_page:current_page
+                page_amount:page_amount
+                skip_amount:skip_amount
+                page_size:calc_page_size
                 total: total
                 result_ids:result_ids[..10]
         return true

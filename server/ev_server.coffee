@@ -323,11 +323,18 @@ Meteor.methods
                             "ev.ID": doc.ID
                     if existing_office_doc
                         Docs.update existing_office_doc._id,
-                            $set: ev: doc
+                            $set:
+                                ev: doc
+                                state: doc.ADDR_STATE
+                                city: doc.ADDR_CITY
+                                office_name: doc.MASTER_LICENSEE
                     else
                         new_office_doc = Docs.insert
                             type:'office'
                             ev: doc
+                            state: doc.ADDR_STATE
+                            city: doc.ADDR_CITY
+                            office_name: doc.MASTER_LICENSEE
 
     update_customers: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
