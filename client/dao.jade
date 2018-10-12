@@ -1,16 +1,13 @@
 template(name='dao')
     .ui.stackable.grid
-        .row
-            unless facet_doc
+        unless facet_doc
+            .row
                 .sixteen.wide.column
                     if currentUser
                         .create_facet.ui.icon.button(title='Create Session')
                             i.plus.icon
-            else
-                .three.wide.column
-                    .ui.center.aligned.header
-                        +icon name='bar-chart'
-                        |Dashboard
+        else
+            .row
                 .three.wide.column
                     .ui.icon.fluid.input
                         if current_query
@@ -18,7 +15,7 @@ template(name='dao')
                         else
                             i.link.search.icon
                         input#query(type='text' placeholder=placeholder value=current_query)
-                .three.wide.middle.aligned.column
+                .six.wide.middle.aligned.column
                     .ui.inline.dropdown
                         |View
                         .default.text 10
@@ -52,10 +49,12 @@ template(name='dao')
                     //     +iconsmall name='menu'
                     .set_view_table.ui.button(class=view_table_class)
                         +iconsmall name='data-sheet-filled'
+            .row
+                .sixteen.wide.column
+                    +type_filter
         .row
             if facet_doc
                 .four.wide.column
-                    +type_filter
                     if schema_doc
                         each faceted_fields
                             +filter
@@ -104,9 +103,9 @@ template(name='set_facet_key')
 
 
 template(name='type_filter')
-    .ui.small.dividing.header
-        +icon name='category'
-        |Sections
+    // .ui.small.dividing.header
+    //     +icon name='category'
+    //     |Sections
     each faceted_types
         .ui.button.set_type(class=set_type_class)
             i.icon
@@ -139,7 +138,7 @@ template(name='filter')
 template(name='selector')
     .ui.small.compact.toggle_value.button(class=toggle_value_class)
         |#{selector_value}
-        |#{count}
+        small #{count}
 
 
 template(name='edit_filter_field')

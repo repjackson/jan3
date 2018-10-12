@@ -11,7 +11,7 @@ Meteor.methods
             type:'facet'
             author_id: Meteor.userId()
 
-        # console.log 'facet', facet
+        console.log 'facet', facet
 
         if facet.filter_type and facet.filter_type.length > 0
             schema =
@@ -60,8 +60,8 @@ Meteor.methods
         total = Docs.find(built_query).count()
 
         # console.log 'total', total
-        # console.log 'built query', built_query
-        results = Docs.find(built_query, {limit:500}).fetch()
+        console.log 'built query', built_query
+        results = Docs.find(built_query, {limit:1000}).fetch()
 
         console.log 'filter keys', filter_keys
 
@@ -94,9 +94,9 @@ Meteor.methods
             reversed = sorted.reverse()
 
 
-            Docs.update facet._id,
-                $set:
-                    "#{filter_key}_return":reversed
+            Docs.update {_id:facet._id},
+                {$set:"#{filter_key}_return":reversed}
+                , ->
 
         calc_page_size = if facet.page_size then facet.page_size else 10
 
@@ -106,7 +106,7 @@ Meteor.methods
 
         skip_amount = current_page*calc_page_size-calc_page_size
 
-        # console.log 'skip amount', skip_amount
+        console.log 'calc_page_size', calc_page_size
 
         results_cursor =
             Docs.find( built_query,
@@ -121,12 +121,13 @@ Meteor.methods
             result_ids.push result._id
 
 
-        Docs.update facet._id,
-            $set:
+        Docs.update {_id:facet._id},
+            {$set:
                 current_page:current_page
                 page_amount:page_amount
                 skip_amount:skip_amount
                 page_size:calc_page_size
                 total: total
-                result_ids:result_ids[..10]
+                result_ids:result_ids
+            }, ->
         return true

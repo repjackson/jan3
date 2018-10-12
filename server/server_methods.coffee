@@ -496,3 +496,25 @@ Meteor.methods
             },
             {multi:true}
         )
+
+
+    office: ->
+        Docs.update(
+            {type:'office'},
+            {$rename: {
+                "ev.MASTER_LICENSEE": "office_name"
+                "ev.TIMESTAMP": "ev_timestamp"
+                "ev.LAST_CHANGE_USER": "last_change_user"
+                "ev.DATE_CREATED": "date_created"
+                "ev.ORIGINATOR": "originator"
+                "ev.MASTER_COUNTRY": "country"
+                "ev.MASTER_OFFICENAME": "office_name2"
+                "ev.TELEPHONE": "phone"
+                "ev.ADDR_STREET": "address"
+                "ev.ADDR_STREET_2": "address_2"
+                "ev.ADDR_CITY": "city"
+                "ev.ADDR_STATE": "state"
+                "ev.ADDR_POSTAL_CODE": "zipcode"
+                "ev.MASTER_OFFICE_MANAGER": "office_manager"
+                "ev.MASTER_OFFICE_OWNER": "office_owner"
+            }},{multi:true})

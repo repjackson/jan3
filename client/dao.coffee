@@ -259,7 +259,9 @@ Template.type_filter.events
         facet = Docs.findOne type:'facet'
 
         Docs.update facet._id,
-            $set: "filter_type": [@slug]
+            $set:
+                "filter_type": [@slug]
+                current_page: 0
         Session.set 'is_calculating', true
         # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
@@ -366,10 +368,15 @@ Template.selector.events
 
         if filter_list and @value in filter_list
             Docs.update facet._id,
+                $set:
+                    current_page:1
                 $pull: "filter_#{filter.slug}": @value
         else
             Docs.update facet._id,
-                $addToSet: "filter_#{filter.slug}": @value
+                $set:
+                    current_page:1
+                $addToSet:
+                    "filter_#{filter.slug}": @value
         Session.set 'is_calculating', true
         # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
