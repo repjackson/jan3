@@ -46,7 +46,7 @@ Meteor.methods
 
         filter_keys.push 'type'
 
-        console.log 'filter-keys', filter_keys
+        # console.log 'filter-keys', filter_keys
 
         for filter_key in filter_keys
             filter_list = facet["filter_#{filter_key}"]
@@ -61,7 +61,7 @@ Meteor.methods
 
         # console.log 'total', total
         # console.log 'built query', built_query
-        results = Docs.find(built_query, {limit:1000}).fetch()
+        results = Docs.find(built_query, {limit:500}).fetch()
 
         console.log 'filter keys', filter_keys
 
@@ -106,7 +106,7 @@ Meteor.methods
 
         skip_amount = current_page*calc_page_size-calc_page_size
 
-        console.log 'skip amount', skip_amount
+        # console.log 'skip amount', skip_amount
 
         results_cursor =
             Docs.find( built_query,

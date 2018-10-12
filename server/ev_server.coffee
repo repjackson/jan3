@@ -260,6 +260,8 @@ Meteor.methods
                             type:'special_service'
                             jpid: doc.ID
                             ev: doc
+                            customer_name: doc.CUSTOMER
+                            franchisee_name: doc.FRANCHISEE
 
     get_ev_finance: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",

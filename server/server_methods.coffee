@@ -460,3 +460,39 @@ Meteor.methods
             Docs.update({_id: office._id},{$set:{"state": office.ev.ADDR_STATE}});
             console.log 'updated office with state', office.ev.ADDR_STATE
         )
+
+    ss: -> Docs.update({type:'special_service'},{$rename:"ev.EXTRA_SERV_DESC":"service_description"}, {multi:true})
+
+    franch: ->
+        Docs.update({type:'franchisee'},
+            {$rename:
+                "ev.FRANCH_EMAIL":"email"
+                "ev.TELE_CELL":"cell"
+                "ev.TELE_HOME":"home_phone"
+                "ev.FRANCH_NAME":"franch_name"
+                "ev.ACCOUNT_STATUS":"status"
+            },
+            {multi:true}
+        )
+
+
+    customer: ->
+        Docs.update({type:'customer'},
+            {$rename:
+                "ev.MASTER_LICENSEE":"office_name"
+                "ev.CUST_NAME":"customer_name"
+                "ev.CUST_CONT_PERSON":"customer_contact_person"
+                "ev.CUST_CONTACT_EMAIL":"customer_contact_email"
+                "ev.ACCOUNT_STATUS":"status"
+                "ev.TELEPHONE": "phone"
+                "ev.ADDR_STREET": "address"
+                "ev.ADDR_STREET_2": "address_2"
+                "ev.FRANCHISEE": "franchisee_name"
+                "ev.ADDR_CITY": "city"
+                "ev.ADDR_STATE": "state"
+                "ev.CUST_NUM_DAYS_SERVICE": "customer_number_days_service"
+                "ev.CUST_DAYS_SERVICE": "customer_days_service"
+                "ev.CUST_REG_SERVICE_AMT": "customer_regular_service_amount"
+            },
+            {multi:true}
+        )
