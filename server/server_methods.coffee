@@ -417,8 +417,21 @@ Meteor.methods
         }, { $set: ticket_owner:username }, {multi:true}
 
 
-    rebuild_customers: ->
-        Docs.find({type:'customer'}, {limit:10}).forEach((customer)->
-            console.log 'found customer name', customer.ev.CUST_NAME
-            # Docs.update({_id: customer._id},{$set:{"sal": updatedSal}});
+    customer_state: ->
+        Docs.find({type:'customer', state:{$exists:false}, "ev.ACCOUNT_STATUS":"ACTIVE"}).forEach((customer)->
+            update_result = Docs.update({_id: customer._id},{$set:{"state": customer.ev.ADDR_STATE}});
+            console.log 'updated customer', customer.ev.ADDR_STATE
+
+        )
+
+    customer_city: ->
+        Docs.find({type:'customer', city:{$exists:false},"ev.ACCOUNT_STATUS":"ACTIVE"}).forEach((customer)->
+            update_result = Docs.update({_id: customer._id},{$set:{"city": customer.ev.ADDR_CITY}});
+            console.log 'updated customer', customer.ev.ADDR_CITY
+        )
+
+    customer_franchisee: ->
+        Docs.find({type:'customer', franchisee:{$exists:false},"ev.ACCOUNT_STATUS":"ACTIVE"}).forEach((customer)->
+            update_result = Docs.update({_id: customer._id},{$set:{"franchisee": customer.ev.FRANCHISEE}});
+            console.log 'updated customer with franchisee', customer.ev.FRANCHISEE
         )

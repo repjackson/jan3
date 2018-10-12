@@ -14,8 +14,59 @@ Template.facet_segment.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
 Template.dao_table_row.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
+Template.dao_table_row.helpers
+    visible_fields: ->
+        facet = Docs.findOne type:'facet'
+        schema = Docs.findOne
+            type:'schema'
+            slug:facet.filter_type[0]
+        visible = []
+        for field in schema.fields
+            if field.visible
+                visible.push field
+        visible
+
+
+    value: ->
+        doc = Template.parentData()
+        doc["#{@slug}"]
+
+
 Template.facet_card.helpers
     local_doc: -> Docs.findOne @valueOf()
+
+    visible_fields: ->
+        facet = Docs.findOne type:'facet'
+        schema = Docs.findOne
+            type:'schema'
+            slug:facet.filter_type[0]
+        visible = []
+        for field in schema.fields
+            if field.visible
+                visible.push field
+        visible
+
+    header_fields: ->
+        facet = Docs.findOne type:'facet'
+        schema = Docs.findOne
+            type:'schema'
+            slug:facet.filter_type[0]
+        header = []
+        for field in schema.fields
+            if field.header
+                header.push field
+        header
+
+    value: ->
+        # facet = Docs.findOne type:'facet'
+        # schema = Docs.findOne
+        #     type:'schema'
+        #     slug:facet.filter_type[0]
+        # console.log @
+        # console.log Template.currentData()
+        doc = Template.parentData()
+        doc["#{@slug}"]
+
 Template.facet_segment.helpers
     local_doc: -> Docs.findOne @valueOf()
 Template.dao_table_row.helpers
@@ -109,9 +160,6 @@ Template.set_page_size.events
         Meteor.call 'fo'
 
 
-Template.facet_table.helpers
-    facet_doc: -> Docs.findOne type:'facet'
-
 
 Template.table_column_header.onCreated ->
     @is_sorting = new ReactiveVar false
@@ -119,7 +167,7 @@ Template.table_column_header.onCreated ->
 Template.table_column_header.events
     'click .sort_key': (e,t)->
         t.is_sorting.set true
-        key = if @ev_subset then "ev.#{@key}" else @key
+        key = if @ev_subset then "ev.#{@slug}" else @slug
         facet_doc = Docs.findOne type:'facet'
         if facet_doc.sort_direction is -1
             Docs.update facet_doc._id,
@@ -159,61 +207,19 @@ Template.table_column_header.helpers
     is_sorting: -> Template.instance().is_sorting.get() is true
 
 Template.facet_table.helpers
-    th_field_docs: -> [
-        {
-            label: '#'
-            sortable:true
-            visible:true
-            key:'number'
-        }
-        {
-            label: 'Open'
-            sortable:true
-            visible:true
-            key:'open'
-        }
-        {
-            label: 'Office'
-            sortable:true
-            visible:true
-            key:'ticket_office_name'
-        }
-        {
-            label: 'Franchisee'
-            sortable:true
-            visible:true
-            key:'ticket_franchisee'
-        }
-        {
-            label: 'Customer'
-            sortable:true
-            visible:true
-            key:'customer_name'
-        }
-        {
-            label: 'Type'
-            sortable:true
-            visible:true
-            key: 'ticket_type'
-        }
-        {
-            label: 'Level'
-            sortable:true
-            visible:true
-            key:'level'
-        }
-        {
-            label: 'Details'
-            sortable:true
-            visible:true
-            key:'details'
-        }
-        {
-            label: 'View'
-            sortable:false
-            visible:true
-        }
-    ]
+    facet_doc: -> Docs.findOne type:'facet'
+
+    visible_fields: ->
+        facet = Docs.findOne type:'facet'
+        schema = Docs.findOne
+            type:'schema'
+            slug:facet.filter_type[0]
+        visible = []
+        for field in schema.fields
+            if field.visible
+                visible.push field
+        visible
+
 
 Template.selector.helpers
     selector_value: ->

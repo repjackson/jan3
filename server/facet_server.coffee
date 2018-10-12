@@ -61,7 +61,7 @@ Meteor.methods
 
         # console.log 'total', total
         # console.log 'built query', built_query
-        results = Docs.find(built_query, {limit:400}).fetch()
+        results = Docs.find(built_query, {limit:1000}).fetch()
 
         console.log 'filter keys', filter_keys
 
@@ -73,7 +73,7 @@ Meteor.methods
 
             filter_primitive = typeof example_value["#{filter_key}"]
             for result in results
-                if result["#{filter_key}"]?
+                if result["#{filter_key}"]? and result["#{filter_key}"].length>0
                     values.push result["#{filter_key}"]
 
             counted = _.countBy(values)

@@ -130,6 +130,9 @@ template(name='schema_field_edit')
                         input.field_icon(type='text' value=icon)
         +toggle_field_boolean key='ev_subset' label='EV Subset'
         +toggle_field_boolean key='faceted' label='Faceted'
+        +toggle_field_boolean key='visible' label='Visible'
+        +toggle_field_boolean key='sortable' label='Sortable'
+        +toggle_field_boolean key='header' label='Header'
         div
         strong Type
         each fields

@@ -128,7 +128,7 @@ template(name='facet_table')
     table.ui.striped.table(class=table_classes)
         thead
             tr
-                each th_field_docs
+                each visible_fields
                     +table_column_header
         // tbody
         //     each children
@@ -150,7 +150,7 @@ template(name='table_column_header')
     if visible
         if sortable
             th.sort_key.single.line
-                |#{label}
+                |#{title}
                 if is_sorting
                     |&nbsp;
                     i.loading.refresh.grey.icon
@@ -162,59 +162,52 @@ template(name='table_column_header')
                     i.sort.link.grey.icon
         else
             th.single.line
-                |#{label}
+                |#{title}
 
 
 template(name='dao_table_row')
     with local_doc
         tr
-            td #{ticket_number}
-            td
-                +status_template
-            td #{ticket_office_name}
-            td #{ticket_franchisee}
-            td #{customer_name}
-            td
-                +ticket_type_label
-            td
-                +level_icon
-            td #{ticket_details}
-            td
-                a.ui.icon.button(href="/p/ticket_admin_view?doc_id=#{_id}")
-                    i.right.chevron.icon
-
+            each visible_fields
+                td
+                    |#{value}
 
 
 template(name='facet_card')
     with local_doc
         .card(class=ticket_color_class)
             .content
-                .right.floated
-                    +level_icon
                 .header
-                    +status_template
-                    a(href="/p/ticket_admin_view?doc_id=#{_id}")
-                        |##{ticket_number}
+                    each header_fields
+                        |#{value}
+                    // +level_icon
+                    // +status_template
+                    // a(href="/p/ticket_admin_view?doc_id=#{_id}")
+                    //     |##{ticket_number}
             .content
                 p
                     strong #{ticket_details}
             .content
                 .ui.list
-                    .item
-                        +ticket_type_label
-                    .item
-                        i.building.grey.icon(title='Office')
-                        |#{ticket_office_name}
-                    .item
-                        i.suitcase.grey.icon(title='Franchisee')
-                        |#{ticket_franchisee}
-                    .item
-                        i.money.grey.icon(title='Customer')
-                        |#{customer_name}
-                    if ev.MASTER_LICENSEE
-                        .item office #{ev.MASTER_LICENSEE}
-                each timestamp_tags
-                    .ui.compact.small.basic.label #{this}
+                    each visible_fields
+                        .item
+                            |#{title}:
+                            strong #{value}
+                    // .item
+                    //     +ticket_type_label
+                    // .item
+                    //     i.building.grey.icon(title='Office')
+                    //     |#{ticket_office_name}
+                    // .item
+                    //     i.suitcase.grey.icon(title='Franchisee')
+                    //     |#{ticket_franchisee}
+                    // .item
+                    //     i.money.grey.icon(title='Customer')
+                    //     |#{customer_name}
+                    // if ev.MASTER_LICENSEE
+                    //     .item office #{ev.MASTER_LICENSEE}
+                // each timestamp_tags
+                //     .ui.compact.small.basic.label #{this}
                 +when_template
 
 
