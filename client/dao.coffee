@@ -275,10 +275,17 @@ Template.selector.helpers
 
 Template.type_filter.helpers
     faceted_types: ->
-        Docs.find(
-            type:'schema'
-            faceted:true
-        ).fetch()
+        if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles
+            Docs.find(
+                type:'schema'
+                faceted:true
+            ).fetch()
+        else
+            Docs.find(
+                type:'schema'
+                faceted:true
+                dev:$ne:true
+            ).fetch()
 
     set_type_class: ->
         facet = Docs.findOne type:'facet'
