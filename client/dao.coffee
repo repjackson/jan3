@@ -37,7 +37,7 @@ Template.facet_card.events
     'blur .text_field_val': (e,t)->
         local_id = Template.currentData()
         local_doc = Docs.findOne local_id
-        console.log local_doc
+        # console.log local_doc
 
         val = e.currentTarget.value
         Docs.update local_doc._id,
@@ -92,6 +92,18 @@ Template.facet_card.helpers
         # console.log Template.currentData()
         doc = Template.parentData()
         doc["#{@slug}"]
+
+    new_field_value: ->
+        facet = Docs.findOne type:'facet'
+        schema = Docs.findOne
+            type:'schema'
+            slug:facet.filter_type[0]
+        parent = Template.parentData()
+        field_doc = Docs.findOne
+            type:'field'
+            schema_slug:schema.slug
+        console.log 'field doc', field_doc
+        parent["#{field_doc.key}"]
 
 
 

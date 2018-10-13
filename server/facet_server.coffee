@@ -55,7 +55,7 @@ Meteor.methods
 
         total = Docs.find(built_query).count()
 
-        results = Docs.find(built_query, {limit:1000}).fetch()
+        results = Docs.find(built_query, {limit:1000})
 
 
         for filter_key in filter_keys
@@ -67,7 +67,7 @@ Meteor.methods
                 example_value = example_doc["#{filter_key}"]
             if example_value
                 filter_primitive = typeof example_value
-            for result in results
+            for result in results.fetch()
                 if result["#{filter_key}"]? and result["#{filter_key}"].length>0
                     values.push result["#{filter_key}"]
 
