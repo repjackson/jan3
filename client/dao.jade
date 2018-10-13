@@ -190,6 +190,11 @@ template(name='facet_card')
                     h4.header
                         each header_fields
                             |#{value}
+            if doc_header_fields
+                .content
+                    h4.header
+                        each doc_header_fields
+                            |#{new_field_value}
             .content
                 .ui.list
                     each visible_fields

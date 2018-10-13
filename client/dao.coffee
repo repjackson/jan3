@@ -83,6 +83,21 @@ Template.facet_card.helpers
                 header.push field
         header
 
+    doc_header_fields: ->
+        facet = Docs.findOne type:'facet'
+        schema = Docs.findOne
+            type:'schema'
+            slug:facet.filter_type[0]
+        header = []
+        field_docs = Docs.find
+            type:'field'
+            schema_slug:facet.filter_type[0]
+            # card_header:true
+        for field in field_docs
+            header.push field
+        console.log 'header', header
+        header
+
     value: ->
         # facet = Docs.findOne type:'facet'
         # schema = Docs.findOne
