@@ -179,22 +179,6 @@ Template.franchisee_card.helpers
 
 
 
-# Template.view_stat.onCreated ->
-#     @autorun =>  Meteor.subscribe 'stat', @data.doc_type, @data.stat_type
-# Template.view_stat.helpers
-#     stat_value: ->
-#         inputs = Template.currentData(0)
-#         doc =
-#             Stats.findOne
-#                 doc_type:inputs.doc_type
-#                 stat_type:inputs.stat_type
-#         if doc
-#             doc.amount
-
-
-
-
-
 Template.assignment_widget.onCreated ()->
     @autorun => Meteor.subscribe 'assigned_users', FlowRouter.getQueryParam('doc_id')
     @user_results = new ReactiveVar( [] )

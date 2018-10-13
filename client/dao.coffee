@@ -2,6 +2,7 @@ Template.dao.onCreated ->
     @autorun -> Meteor.subscribe 'facet'
     @autorun => Meteor.subscribe 'type', 'filter'
     @autorun => Meteor.subscribe 'type', 'schema'
+    @autorun => Meteor.subscribe 'type', 'field'
     # @autorun => Meteor.subscribe 'type', 'ticket_type'
     @is_editing = new ReactiveVar false
     Session.setDefault 'is_calculating', false
@@ -32,9 +33,33 @@ Template.dao_table_row.helpers
         doc = Template.parentData()
         doc["#{@slug}"]
 
+Template.facet_card.events
+    'blur .text_field_val': (e,t)->
+        local_id = Template.currentData()
+        local_doc = Docs.findOne local_id
+        console.log local_doc
+
+        val = e.currentTarget.value
+        Docs.update local_doc._id,
+            $set:
+                "#{@slug}": val
+
+
 
 Template.facet_card.helpers
     local_doc: -> Docs.findOne @valueOf()
+
+    linked_fields: ->
+        facet = Docs.findOne type:'facet'
+        schema = Docs.findOne
+            type:'schema'
+            slug:facet.filter_type[0]
+        linked_fields = Docs.find(
+            type:'field'
+            schema_slug: schema.slug
+            ).fetch()
+
+
 
     visible_fields: ->
         facet = Docs.findOne type:'facet'
@@ -103,6 +128,15 @@ Template.dao.events
             $inc: current_page:-1
         Meteor.call 'fo'
 
+    'click .add_doc': (e,t)->
+        facet = Docs.findOne type:'facet'
+        type = facet.filter_type[0]
+        Docs.insert
+            type:type
+
+    'click .show_facet': (e,t)->
+        facet = Docs.findOne type:'facet'
+        console.log facet
 
 
     # 'click #add_filter': (e,t)->
@@ -388,3 +422,30 @@ Template.edit_filter_field.events
         # console.log @filter_id
         Docs.update @filter_id,
             { $set: "#{@key}": text_value }
+
+
+Template.bool_switch.helpers
+    'bool_switch_class': ->
+        target_doc = Template.parentData(5)
+        bool_value = target_doc["#{@key}"]
+        if bool_value and bool_value is true
+            'primary'
+        else
+            ''
+Template.bool_switch.events
+    'click .toggle_field': ->
+        # console.log @
+        # console.log Template.currentData()
+        # console.log Template.parentData()
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        # console.log Template.parentData(4)
+        target_doc = Template.parentData(5)
+        bool_value = target_doc["#{@key}"]
+
+        if bool_value and bool_value is true
+            Docs.update target_doc._id,
+                $set: "#{@key}": false
+        else
+            Docs.update target_doc._id,
+                $set: "#{@key}": true

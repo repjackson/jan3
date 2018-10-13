@@ -63,8 +63,8 @@ Meteor.methods
             key_return = []
 
             example_doc = Docs.findOne({"#{filter_key}":$exists:true})
-
-            example_value = example_doc["#{filter_key}"]
+            if example_doc
+                example_value = example_doc["#{filter_key}"]
             if example_value
                 filter_primitive = typeof example_value
             for result in results

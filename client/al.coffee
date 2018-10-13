@@ -44,10 +44,6 @@ Template.block.onRendered ->
         $('.dropdown').dropdown()
     , 700
 
-# Template.block.onRendered ->
-#     stat = Stats.findOne()
-#     if stat
-
 Template.edit_block.onCreated ->
     @autorun -> Meteor.subscribe 'schema_doc_by_type', 'display_field'
     @autorun -> Meteor.subscribe 'type', 'schema'
@@ -137,10 +133,6 @@ Template.block.helpers
         temp = Template.instance()
         if @children_collection is 'users'
             Meteor.users.find {_id:$ne:Meteor.userId()},{
-                sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}")
-                }
-        else if @children_collection is 'stats'
-            Stats.find {type:'stat_log'},{
                 sort:"#{temp.sort_key.get()}":parseInt("#{temp.sort_direction.get()}")
                 }
         else

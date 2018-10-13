@@ -23,7 +23,7 @@ template(name='dao')
                             +set_page_size value=10
                             +set_page_size value=20
                             +set_page_size value=50
-                        |- #{facet_doc.skip_amount}
+                        | #{facet_doc.skip_amount}
                         | /
                         | #{facet_doc.total}
                 .three.wide.column
@@ -54,6 +54,9 @@ template(name='dao')
         .row
             if facet_doc
                 .three.wide.column
+                    if editing_mode
+                        .ui.button.show_facet show facet
+                        .ui.button.add_doc Add
                     if schema_doc
                         each faceted_fields
                             +filter
@@ -97,8 +100,9 @@ template(name='type_filter')
     //     |Sections
     each faceted_types
         .ui.button.set_type(class=set_type_class)
-            i.icon
-                +iconsmall name=icon
+            if icon
+                i.icon
+                    +iconsmall name=icon
             |#{title}
 
 
@@ -144,18 +148,6 @@ template(name='facet_table')
             tr
                 each visible_fields
                     +table_column_header
-        // tbody
-        //     each children
-        //         tr
-        //             each children_field_docs
-        //                 if visible
-        //                     if display_field_template
-        //                         td(style="overflow:visible;")
-        //                             +Template.dynamic template=display_field_template data=..
-        //                     else
-        //                         td(class=table_cell_class) #{child_schema_field_value}
-        //                     // td(class=table_cell_class) #{child_schema_field_value}
-
         tbody
             each facet_doc.result_ids
                 +dao_table_row
@@ -193,15 +185,20 @@ template(name='dao_table_row')
 template(name='facet_card')
     with local_doc
         .card(class=ticket_color_class)
-            .content
-                .header
-                    each header_fields
-                        |#{value}
+            if header_fields
+                .content
+                    h4.header
+                        each header_fields
+                            |#{value}
             .content
                 .ui.list
                     each visible_fields
                         .item
-                            if field_template
+                            if editing_mode
+                                .ui.fluid.labeled.small.input
+                                    .ui.basic.label #{title}
+                                    input.text_field_val(type='text' value=value)
+                            else if field_template
                                 +Template.dynamic template=field_template data=local_doc
                             else
                                 if icon
@@ -210,7 +207,24 @@ template(name='facet_card')
                                 else
                                     |#{title}:
                                 | &nbsp; #{value}
-                // +when_template
+            .content
+                |Linked Fields
+                .ui.list
+                    each linked_fields
+                        if field_template
+                            +Template.dynamic template=field_template
+                        else
+                            .ui.fluid.labeled.small.input
+                                .ui.basic.label #{title}
+                                |#{value}
+            if editing_mode
+                .content
+                    .ui.button.add_field add linked field
+                    .ui.list
+                        each linked_fields
+                            .ui.fluid.labeled.small.input
+                                .ui.basic.label #{title}
+                                input.text_field_val(type='text' value=value)
 
 
 template(name='boolean_facet')
@@ -218,7 +232,9 @@ template(name='boolean_facet')
     .pick_yes.ui.button yes
     .pick_no.ui.button no
 
-
+template(name='bool_switch')
+    .ui.button.toggle_field(class=bool_switch_class)
+        |toggle
 
 
 template(name='tag_result')
