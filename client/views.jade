@@ -21,57 +21,6 @@ template(name='my_customer_account_card')
                     .item #{ev.ADDR_STREET}
                     .item #{ev.ADDR_STREET_2}
                     .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-            // .content
-            //     div Franchisee
-            //         strong #{ev.FRANCHISEE}
-            //     div Office
-            //         strong #{ev.MASTER_LICENSEE}
-
-template(name='franchisee_view')
-    .ui.padded.stackable.grid
-        // .centered.row
-        //     +office_by_franchisee
-        .centered.middle.aligned.row
-            .three.wide.center.aligned.column
-                if is_admin
-                    +link_button link='/p/admin_franchisees' icon='business' label='Franchisees'
-            .ten.wide.column
-                h1.ui.center.aligned.grey.header
-                    +icon name='business'
-                    if ev.FRANCHISEE
-                        |#{ev.FRANCHISEE}
-                    else if ev.FRANCH_NAME
-                        |#{ev.FRANCH_NAME}
-                    |Franchisee
-            .three.wide.right.aligned.column
-                // +edit_button
-        .centered.row
-            .four.wide.column
-                .ui.secondary.segment
-                    .ui.large.list
-                        .item ##{ev.ID}
-                        if ev.FRANCH_EMAIL
-                            .item
-                                i.grey.envelope.icon
-                                |#{ev.FRANCH_EMAIL}
-                        if ev.FRANCH_NAME
-                            .item(title='Short Name')
-                                | #{ev.FRANCH_NAME}
-                        if ev.TELE_CELL
-                            .item
-                                i.grey.phone.icon
-                                |#{ev.TELE_CELL}
-
-                        // .item Master Licensee:
-                        //     strong #{ev.MASTER_LICENSEE}
-                +blocks tags='franchisee,tickets'
-                +blocks tags='franchisee,ticket,feedback_response'
-            .twelve.wide.column
-                +blocks tags='franchisee,page,parent_office'
-                +blocks tags='tickets,franchisee_page'
-            // .four.wide.column
-            //     +blocks tags='franchisee,message'
-            //     +blocks tags='franchisee,comment'
 
 
 template(name='combined_address_template')
@@ -99,12 +48,12 @@ template(name='schema_edit')
             .twelve.wide.column
                 each fields
                     +schema_field_edit
-                #add_action.ui.button
-                    i.plus.icon
-                    | Action
-                .ui.vertical.segments
-                    each actions
-                        +action_edit
+                // #add_action.ui.button
+                //     i.plus.icon
+                //     | Action
+                // .ui.vertical.segments
+                //     each actions
+                //         +action_edit
 
 
 template(name='schema_field_edit')
@@ -133,6 +82,8 @@ template(name='schema_field_edit')
         +toggle_field_boolean key='visible' label='Visible'
         +toggle_field_boolean key='sortable' label='Sortable'
         +toggle_field_boolean key='header' label='Header'
+        +toggle_field_boolean key='card_list' label='Card List'
+        +toggle_field_boolean key='table_column' label='Table Column'
         div
         strong Type
         each fields

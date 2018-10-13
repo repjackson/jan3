@@ -10,11 +10,12 @@ Template.dao.onCreated ->
 
 Template.facet_card.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
-Template.facet_segment.onCreated ->
-    @autorun => Meteor.subscribe 'single_doc', @data
 Template.dao_table_row.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
+
 Template.dao_table_row.helpers
+    local_doc: -> Docs.findOne @valueOf()
+
     visible_fields: ->
         facet = Docs.findOne type:'facet'
         schema = Docs.findOne
@@ -22,7 +23,7 @@ Template.dao_table_row.helpers
             slug:facet.filter_type[0]
         visible = []
         for field in schema.fields
-            if field.visible
+            if field.table_column
                 visible.push field
         visible
 
@@ -67,10 +68,6 @@ Template.facet_card.helpers
         doc = Template.parentData()
         doc["#{@slug}"]
 
-Template.facet_segment.helpers
-    local_doc: -> Docs.findOne @valueOf()
-Template.dao_table_row.helpers
-    local_doc: -> Docs.findOne @valueOf()
 
 
 
@@ -227,7 +224,7 @@ Template.facet_table.helpers
             slug:facet.filter_type[0]
         visible = []
         for field in schema.fields
-            if field.visible
+            if field.table_column
                 visible.push field
         visible
 

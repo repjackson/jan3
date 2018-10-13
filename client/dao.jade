@@ -139,7 +139,7 @@ template(name='edit_filter_field')
 
 
 template(name='facet_table')
-    table.ui.striped.table(class=table_classes)
+    table.ui.striped.fixed.table(class=table_classes)
         thead
             tr
                 each visible_fields
@@ -209,38 +209,8 @@ template(name='facet_card')
                                         +icon name=icon
                                 else
                                     |#{title}:
-                                | #{value}
-                +when_template
-
-
-template(name='facet_segment')
-    with local_doc
-        .ui.segment(class=ticket_color_class)
-            .content
-                .ui.header
-                    |#{ticket_details}
-            .content
-                .ui.horizontal.list
-                    .item
-                        a(href="/p/ticket_admin_view?doc_id=#{_id}")
-                            |##{ticket_number}
-                    .item
-                        +status_template
-                    .item
-                        +level_icon
-                    .item
-                        +ticket_type_label
-                    .item
-                        i.building.grey.icon(title='Office')
-                        |#{ticket_office_name}
-                    .item
-                        i.money.grey.icon(title='Customer')
-                        |#{customer_name}
-                    .item
-                // each timestamp_tags
-                //     .ui.compact.label #{this}
-                +when_template
-
+                                | &nbsp; #{value}
+                // +when_template
 
 
 template(name='boolean_facet')
