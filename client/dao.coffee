@@ -33,35 +33,44 @@ Template.dao_table_row.helpers
         doc = Template.parentData()
         doc["#{@slug}"]
 
-Template.facet_card.events
+Template.field_doc.events
     'blur .text_field_val': (e,t)->
         local_id = Template.currentData()
         local_doc = Docs.findOne local_id
         # console.log local_doc
-
+        # console.log @
         val = e.currentTarget.value
         Docs.update local_doc._id,
             $set:
-                "#{@slug}": val
+                "#{@key}": val
 
     'keyup .add_array_element': (e,t)->
         if e.which is 13
-            console.log e.currentTarget.value
-            # local_id = Template.currentData()
-            # local_doc = Docs.findOne local_id
+            local_id = Template.currentData()
+            local_doc = Docs.findOne local_id
             # # console.log local_doc
 
-            # val = e.currentTarget.value
-            # Docs.update local_doc._id,
-            #     $addToSet:
-            #         "#{@slug}": val
+            val = e.currentTarget.value
+            Docs.update local_doc._id,
+                $addToSet:
+                    "#{@key}": val
+
+
+    'click .pull_element': (e,t)->
+        local_id = Template.currentData()
+        local_doc = Docs.findOne local_id
+        # # console.log local_doc
+
+        Docs.update local_doc._id,
+            $pull:
+                "#{@key}": @valueOf()
 
 
 
 Template.facet_card.helpers
     local_doc: -> Docs.findOne @valueOf()
 
-    linked_fields: ->
+    field_docs: ->
         facet = Docs.findOne type:'facet'
         schema = Docs.findOne
             type:'schema'
@@ -71,29 +80,6 @@ Template.facet_card.helpers
             schema_slug: schema.slug
             ).fetch()
 
-    is_array:-> @field_type is 'schemas'
-
-    visible_fields: ->
-        facet = Docs.findOne type:'facet'
-        schema = Docs.findOne
-            type:'schema'
-            slug:facet.filter_type[0]
-        visible = []
-        for field in schema.fields
-            if field.visible
-                visible.push field
-        visible
-
-    header_fields: ->
-        facet = Docs.findOne type:'facet'
-        schema = Docs.findOne
-            type:'schema'
-            slug:facet.filter_type[0]
-        header = []
-        for field in schema.fields
-            if field.header
-                header.push field
-        header
 
     doc_header_fields: ->
         facet = Docs.findOne type:'facet'
@@ -110,17 +96,10 @@ Template.facet_card.helpers
         # console.log 'header', header
         header
 
-    value: ->
-        # facet = Docs.findOne type:'facet'
-        # schema = Docs.findOne
-        #     type:'schema'
-        #     slug:facet.filter_type[0]
-        # console.log @
-        # console.log Template.currentData()
-        doc = Template.parentData()
-        doc["#{@slug}"]
 
-    new_field_value: ->
+Template.field_doc.helpers
+    is_array:-> @field_type is 'schemas'
+    value: ->
         # console.log @
         facet = Docs.findOne type:'facet'
         schema = Docs.findOne
@@ -178,57 +157,6 @@ Template.dao.events
     'click .show_facet': (e,t)->
         facet = Docs.findOne type:'facet'
         console.log facet
-
-
-    # 'click #add_filter': (e,t)->
-    #     Docs.insert
-    #         type:'filter'
-    #         # parent_slug: FlowRouter.getParam('page_slug')
-
-    # 'click .remove_arg': (e,t)->
-    #     Docs.update FlowRouter.getQueryParam('doc_id'),
-    #         $pull:args:@
-
-    # 'click .call':(e,t)->
-    #     Meteor.call 'fo', FlowRouter.getQueryParam('doc_id')
-
-    # 'click .clear_results': ->
-    #     facet = Docs.findOne type:'facet'
-    #     Docs.update facet._id,
-    #         $set: results: []
-
-    # 'keyup .arg_key, keyup .arg_value': (e,t)->
-    #     e.preventDefault()
-    #     if e.which is 13 #enter
-    #         facet_id = Docs.findOne type:'facet'
-    #         arg_key_val = $('.arg_key').val().trim()
-    #         arg_val_val = $('.arg_value').val().trim()
-    #         arg = {
-    #             key:arg_key_val
-    #             value:arg_val_val
-    #         }
-    #         Meteor.call 'fa', arg, facet_id
-    #         $('.arg_key').val('')
-    #         $('.arg_value').val('')
-
-    # 'click .start_editing': (e,t)-> t.is_editing.set true
-    # 'click .stop_editing': (e,t)->
-    #     e.preventDefault()
-    #     facet_id = Docs.findOne type:'facet'
-    #     title_val = $('.facet_title').val().trim()
-    #     Docs.update facet_id,
-    #         $set:title:title_val
-    #     t.is_editing.set false
-
-
-    # 'keyup .facet_title': (e,t)->
-    #     e.preventDefault()
-    #     if e.which is 13 #enter
-    #         facet_id = Docs.findOne type:'facet'
-    #         title_val = $('.facet_title').val().trim()
-    #         Docs.update facet_id,
-    #             $set:title:title_val
-    #         t.is_editing.set false
 
     'click .set_view_cards': -> Session.set 'view_mode', 'cards'
     'click .set_view_segments': -> Session.set 'view_mode', 'segments'
