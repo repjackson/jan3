@@ -55,8 +55,9 @@ template(name='dao')
             if facet_doc
                 .three.wide.column
                     if editing_mode
-                        .ui.button.show_facet show facet
-                        .ui.button.add_doc Add
+                        .ui.button.show_facet log
+                        .ui.button.add_doc Add Doc
+                        .ui.button.add_field Add Field
                     if schema_doc
                         each faceted_fields
                             +filter
@@ -85,6 +86,21 @@ template(name='dao')
                                     | Choose type to calculate
                         else
                             |No results
+                    if editing_mode
+                        .ui.stackable.cards
+                            each fields
+                                +edit_field
+
+
+template(name='edit_field')
+    .card(class=ticket_color_class)
+        .content
+            h4.header #{title}
+        .content
+            +edit_filter_field key='title' label='Title' filter_id=this._id
+            +edit_filter_field key='key' label='Key' filter_id=this._id
+
+
 
 template(name='set_page_size')
     .item.set_page_size #{value}

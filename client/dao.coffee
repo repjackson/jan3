@@ -74,7 +74,7 @@ Template.facet_card.helpers
             slug:facet.filter_type[0]
         linked_fields = Docs.find(
             type:'field'
-            schema_slug: schema.slug
+            schema_slugs: $in: [schema.slug]
             ).fetch()
 
 
@@ -86,7 +86,7 @@ Template.facet_card.helpers
         header = []
         field_docs = Docs.find
             type:'field'
-            schema_slug:facet.filter_type[0]
+            schema_slugs:$in:[facet.filter_type[0]]
             # card_header:true
         for field in field_docs
             header.push field
@@ -105,7 +105,7 @@ Template.field_doc.helpers
         parent = Template.parentData()
         field_doc = Docs.findOne
             type:'field'
-            schema_slug:schema.slug
+            schema_slugs:$in:[schema.slug]
         # console.log 'field doc', field_doc
         parent["#{@key}"]
 
@@ -149,6 +149,14 @@ Template.dao.events
         type = facet.filter_type[0]
         Docs.insert
             type:type
+        Meteor.call 'fo'
+
+    'click .add_field': (e,t)->
+        facet = Docs.findOne type:'facet'
+        type = facet.filter_type[0]
+        Docs.insert
+            type:'field'
+            schema_slugs:[type]
         Meteor.call 'fo'
 
     'click .show_facet': (e,t)->
@@ -331,6 +339,13 @@ Template.dao.helpers
             # for field in schema.fields
             #     console.log 'found field', field
 
+    fields: ->
+        facet = Docs.findOne type:'facet'
+        current_type = facet.filter_type[0]
+        Docs.find(
+            type:'field'
+            schema_slugs: $in: [current_type]
+        ).fetch()
     is_editing: -> Template.instance().is_editing.get()
 
 
