@@ -195,41 +195,48 @@ template(name='facet_card')
                     h4.header
                         each doc_header_fields
                             |#{new_field_value}
+            // .content
+            //     .ui.list
+            //         each visible_fields
+            //             .item
+            //                 if editing_mode
+            //                     .ui.fluid.labeled.small.input
+            //                         .ui.basic.label #{title}
+            //                         input.text_field_val(type='text' value=value)
+            //                 else if field_template
+            //                     +Template.dynamic template=field_template data=local_doc
+            //                 else
+            //                     if icon
+            //                         i.spaced.icon(title=title)
+            //                             +icon name=icon
+            //                     else
+            //                         |#{title}:
+            //                     | &nbsp; #{value}
             .content
-                .ui.list
-                    each visible_fields
-                        .item
-                            if editing_mode
-                                .ui.fluid.labeled.small.input
-                                    .ui.basic.label #{title}
-                                    input.text_field_val(type='text' value=value)
-                            else if field_template
-                                +Template.dynamic template=field_template data=local_doc
-                            else
-                                if icon
-                                    i.spaced.icon(title=title)
-                                        +icon name=icon
-                                else
-                                    |#{title}:
-                                | &nbsp; #{value}
-            .content
-                |Linked Fields
                 .ui.list
                     each linked_fields
                         if field_template
                             +Template.dynamic template=field_template
                         else
-                            .ui.fluid.labeled.small.input
-                                .ui.basic.label #{title}
-                                |#{value}
+                            .item
+                                |#{title}:
+                                strong #{new_field_value}
             if editing_mode
                 .content
-                    .ui.button.add_field add linked field
+                    // .ui.button.add_field add linked field
                     .ui.list
                         each linked_fields
-                            .ui.fluid.labeled.small.input
-                                .ui.basic.label #{title}
-                                input.text_field_val(type='text' value=new_field_value)
+                            if is_array
+                                .ui.blue.segment
+                                    .ui.fluid.labeled.small.input
+                                        .ui.basic.label #{title}
+                                        input.add_array_element(type='text' placholder='add')
+                                    each values
+                                        .ui.small.label #{this}
+                            else
+                                .ui.fluid.labeled.small.input
+                                    .ui.basic.label #{title}
+                                    input.text_field_val(type='text' value=new_field_value)
 
 
 template(name='boolean_facet')

@@ -55,7 +55,12 @@ Meteor.methods
 
         total = Docs.find(built_query).count()
 
-        results = Docs.find(built_query, {limit:1000})
+        if Meteor.isDevelopment
+            limit_val = 100
+        if Meteor.isProduction
+            limit_val = 1000
+
+        results = Docs.find(built_query, {limit:limit_val})
 
 
         for filter_key in filter_keys

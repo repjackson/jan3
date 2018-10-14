@@ -44,6 +44,18 @@ Template.facet_card.events
             $set:
                 "#{@slug}": val
 
+    'keyup .add_array_element': (e,t)->
+        if e.which is 13
+            console.log e.currentTarget.value
+            # local_id = Template.currentData()
+            # local_doc = Docs.findOne local_id
+            # # console.log local_doc
+
+            # val = e.currentTarget.value
+            # Docs.update local_doc._id,
+            #     $addToSet:
+            #         "#{@slug}": val
+
 
 
 Template.facet_card.helpers
@@ -59,7 +71,7 @@ Template.facet_card.helpers
             schema_slug: schema.slug
             ).fetch()
 
-
+    is_array:-> @field_type is 'schemas'
 
     visible_fields: ->
         facet = Docs.findOne type:'facet'
@@ -95,7 +107,7 @@ Template.facet_card.helpers
             # card_header:true
         for field in field_docs
             header.push field
-        console.log 'header', header
+        # console.log 'header', header
         header
 
     value: ->
@@ -109,6 +121,7 @@ Template.facet_card.helpers
         doc["#{@slug}"]
 
     new_field_value: ->
+        # console.log @
         facet = Docs.findOne type:'facet'
         schema = Docs.findOne
             type:'schema'
@@ -117,8 +130,8 @@ Template.facet_card.helpers
         field_doc = Docs.findOne
             type:'field'
             schema_slug:schema.slug
-        console.log 'field doc', field_doc
-        parent["#{field_doc.key}"]
+        # console.log 'field doc', field_doc
+        parent["#{@key}"]
 
 
 
@@ -160,6 +173,7 @@ Template.dao.events
         type = facet.filter_type[0]
         Docs.insert
             type:type
+        Meteor.call 'fo'
 
     'click .show_facet': (e,t)->
         facet = Docs.findOne type:'facet'
