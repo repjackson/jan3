@@ -35,23 +35,20 @@ Template.dao_table_row.helpers
 
 Template.field_doc.events
     'blur .text_field_val': (e,t)->
-        local_id = Template.currentData()
-        local_doc = Docs.findOne local_id
-        # console.log local_doc
-        # console.log @
+        console.log Template.parentData()
+        parent = Template.parentData()
+
         val = e.currentTarget.value
-        Docs.update local_doc._id,
+        Docs.update parent._id,
             $set:
                 "#{@key}": val
 
     'keyup .add_array_element': (e,t)->
         if e.which is 13
-            local_id = Template.currentData()
-            local_doc = Docs.findOne local_id
-            # # console.log local_doc
+            parent = Template.parentData()
 
             val = e.currentTarget.value
-            Docs.update local_doc._id,
+            Docs.update parent._id,
                 $addToSet:
                     "#{@key}": val
 
@@ -59,11 +56,11 @@ Template.field_doc.events
     'click .pull_element': (e,t)->
         local_id = Template.currentData()
         local_doc = Docs.findOne local_id
-        # # console.log local_doc
+        target_doc = Template.parentData()
 
-        Docs.update local_doc._id,
+        Docs.update target_doc._id,
             $pull:
-                "#{@key}": @valueOf()
+                "#{local_doc.key}": @valueOf()
 
 
 
