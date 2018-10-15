@@ -361,3 +361,41 @@ template(name='view_ticket_link')
 template(name='user_profile_image')
     if image_id
         img.ui.medium.image.item(src="{{c.url image_id width=500 height=500 gravity='face' crop='fill'}}")
+
+
+
+
+
+
+template(name='message_type')
+    // |#{message_type}
+    if is_sms
+        +icon name='cell-phone' title='SMS'
+    if is_email
+        +icon name='new-post' title='Email'
+
+template(name='recipient_type')
+    if is_owner
+        +icon name='user-shield' title='Owner'
+    if is_secondary
+        +icon name='user-male-circle' title='Secondary'
+    if is_franchisee
+        +icon name='business' title='Franchisee'
+    if is_customer
+        +icon name='headset' title='Customer'
+    // |#{recipient_type}
+
+
+
+template(name='ticket_cell')
+    with ticket
+        .ui.list
+            .item ##{ticket_number}
+            .item #{ticket_type}
+            .item #{level}
+        a.ui.compact.icon.button(href="/p/ticket_admin_view?doc_id=#{_id}")
+            i.right.chevron.icon
+
+
+
+

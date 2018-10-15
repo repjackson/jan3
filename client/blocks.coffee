@@ -115,17 +115,6 @@ Template.ticket_office_card.onCreated ->
         @autorun =>  Meteor.subscribe 'doc_by_jpid', page_doc.office_jpid
 
 
-Template.office_card.helpers
-    office_doc: ->
-        context =
-            if Template.currentData(0)
-                Template.currentData(0)
-        doc =
-            Docs.findOne
-                type:'office'
-                "ev.ID": context.office_jpid
-        # console.log doc
-        doc
 Template.ticket_office_card.helpers
     office_doc: ->
         context =
@@ -138,46 +127,9 @@ Template.ticket_office_card.helpers
         console.log doc
         doc
 
-Template.customer_card.onCreated ->
-    @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.customer_jpid
-Template.customer_card.helpers
-    customer_doc: ->
-        context = Template.currentData(0)
-        doc =
-            Docs.findOne
                 type:'customer'
                 "ev.ID": context.customer_jpid
         doc
-
-Template.ticket_customer_card.onCreated ->
-    page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-    if page_doc
-        console.log page_doc
-        @autorun =>  Meteor.subscribe 'doc_by_jpid', page_doc.office_jpid
-Template.ticket_customer_card.helpers
-    customer_doc: ->
-        context =
-            if FlowRouter.getQueryParam('doc_id')
-                Docs.findOne FlowRouter.getQueryParam('doc_id')
-        doc =
-            Docs.findOne
-                type:'customer'
-                "ev.ID": context.customer_jpid
-        doc
-
-
-Template.franchisee_card.onCreated ->
-    @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.franchisee_jpid
-Template.franchisee_card.helpers
-    franchisee_doc: ->
-        context = Template.currentData(0)
-        doc =
-            Docs.findOne
-                type:'franchisee'
-                "ev.ID": context.franchisee_jpid
-        doc
-
-
 
 Template.assignment_widget.onCreated ()->
     @autorun => Meteor.subscribe 'assigned_users', FlowRouter.getQueryParam('doc_id')
@@ -322,3 +274,22 @@ Template.toggle_block_field_boolean.helpers
 Template.view_button.helpers
     url:-> "/p/#{@type}?doc_id=#{@_id}&jpid=#{@ev.ID}"
 
+Template.message_type.helpers
+    is_sms: -> @message_type is 'sms'
+    is_email: -> @message_type is 'email'
+
+Template.recipient_type.helpers
+    is_owner: -> @recipient_type is 'owner'
+    is_secondary: -> @recipient_type is 'secondary'
+    is_franchisee: -> @recipient_type is 'franchisee'
+    is_customer: -> @recipient_type is 'customer'
+
+
+
+Template.ticket_cell.onCreated ->
+    @autorun =>  Meteor.subscribe 'doc', @data.ticket_id
+
+Template.ticket_cell.helpers
+    ticket: ->
+        Docs.findOne
+            type:'ticket'

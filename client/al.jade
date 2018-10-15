@@ -122,8 +122,6 @@ template(name='block')
                                                     td(class=table_cell_class) #{child_schema_field_value}
                                                 // td(class=table_cell_class) #{child_schema_field_value}
 
-                            if view_table_footer
-                                +table_footer columns=fields.length doc_type=children_doc_type stat_type=table_stat_type
                     if is_list
                         .ui.divided.list
                             each children
