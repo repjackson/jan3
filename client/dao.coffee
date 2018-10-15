@@ -121,6 +121,11 @@ Template.dao.onRendered ->
     , 700
 
 
+Template.edit_field.events
+    'click .remove_field':->
+        if confirm "Delete #{@title} field?"
+            Docs.remove @_id
+
 Template.edit_field_boolean.helpers
     is_true: ->
         field = Template.parentData()
@@ -142,6 +147,11 @@ Template.edit_field_boolean.events
 
 
 Template.dao.events
+    'click .delete_facet': ->
+        if confirm 'Delete facet?'
+            facet = Docs.findOne type:'facet'
+            Docs.remove facet._id
+
     'click .create_facet': (e,t)->
         new_facet_id =
             Docs.insert
@@ -421,7 +431,13 @@ Template.selector.events
                 # console.log 'return', res
                 Session.set 'is_calculating', false
 
-Template.edit_filter_field.events
+Template.edit_field_text.helpers
+    field_value: ->
+        field = Template.parentData()
+        field["#{@key}"]
+
+
+Template.edit_field_text.events
     'change .text_val': (e,t)->
         text_value = e.currentTarget.value
         # console.log @filter_id

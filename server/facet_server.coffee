@@ -78,8 +78,13 @@ Meteor.methods
             if example_value
                 filter_primitive = typeof example_value
             for result in results.fetch()
-                if result["#{filter_key}"]? and result["#{filter_key}"].length>0
-                    values.push result["#{filter_key}"]
+                result_value = result["#{filter_key}"]
+                if result_value
+                    if typeof result_value is 'string'
+                        if result_value.length>0
+                            values.push result_value
+                    else
+                        values.push result_value
 
             counted = _.countBy(values)
 

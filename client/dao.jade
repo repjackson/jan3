@@ -42,6 +42,9 @@ template(name='dao')
                             // if show_increment
 
                 .right.floated.three.wide.column
+                    if editing_mode
+                        .ui.icon.button.delete_facet
+                            i.blue.remove.icon
                     .set_view_cards.ui.button(class=view_cards_class)
                         +iconsmall name='activity-grid-2'
                     // .set_view_segments.ui.button(class=view_segments_class)
@@ -98,11 +101,20 @@ template(name='dao')
 template(name='edit_field')
     .card(class=ticket_color_class)
         .content
-            h4.header #{title}
+            h4.header
+                if icon
+                    +iconsmall name=icon
+                |#{title}
         .content
-            +edit_filter_field key='title' label='Title' filter_id=this._id
-            +edit_filter_field key='key' label='Key' filter_id=this._id
+            +edit_field_text key='title' label='Title' filter_id=this._id
+            +edit_field_text key='key' label='Key' filter_id=this._id
+            +edit_field_text key='icon' label='Icon' filter_id=this._id
             +edit_field_boolean key='faceted' label='Faceted'
+            +edit_field_boolean key='visible' label='Visible'
+            +edit_field_boolean key='sortable' label='Sortable'
+        .content
+            .ui.icon.remove_field.button
+                i.remove.icon
 
 template(name='edit_field_boolean')
     if is_true
@@ -138,20 +150,9 @@ template(name='filter')
             +icon name=icon
         |#{title}
     if editing_mode
-        .ui.list
-            .item key: #{slug}
-            .item primative: #{primative}
-            .item Doc Type: #{doc_type}
+        .item key: #{key}
     each values
         +selector
-    // if editing_mode
-    //     // i.recalc.link.refresh.icon
-    //     +edit_filter_field key='label' filter_id=this._id
-    //     +edit_filter_field key='key' filter_id=this._id
-    //     +edit_filter_field key='icon' filter_id=this._id
-    //     +edit_filter_field key='primative' filter_id=this._id
-    //     +edit_filter_field key='doc_type' filter_id=this._id
-
 
 
 template(name='selector')
@@ -160,10 +161,10 @@ template(name='selector')
         small #{count}
 
 
-template(name='edit_filter_field')
+template(name='edit_field_text')
     .ui.labeled.fluid.input
         .ui.basic.label #{key}
-        input.text_val(type='text')
+        input.text_val(type='text' value=field_value)
 
 
 
