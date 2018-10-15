@@ -14,8 +14,6 @@ template(name='nav')
                 else
                     #toggle_editing.icon.large.item
                         i.pencil.link.bordered.icon
-                a.icon.item(href='/p/schemas' data-content='Schemas' class="{{ active_route 'schemas' }}" )
-                    i.database.icon
             if currentUser
                 .ui.dropdown.inverted.blue.item
                     if currentUser.image_id

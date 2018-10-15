@@ -35,7 +35,7 @@ Template.dao_table_row.helpers
 
 Template.field_doc.events
     'blur .text_field_val': (e,t)->
-        console.log Template.parentData()
+        # console.log Template.parentData()
         parent = Template.parentData()
 
         val = e.currentTarget.value
@@ -122,12 +122,12 @@ Template.field_doc.helpers
 
 
 Template.dao.onRendered ->
-    Meteor.setTimeout ->
-        $('.accordion').accordion();
-    , 500
-    Meteor.setTimeout ->
-        $('.dropdown').dropdown()
-    , 700
+    # Meteor.setTimeout ->
+    #     $('.accordion').accordion();
+    # , 500
+    # Meteor.setTimeout ->
+    #     $('.dropdown').dropdown()
+    # , 700
 
 
 Template.edit_field.events

@@ -89,13 +89,13 @@ template(name='dao')
                                     | Choose type to calculate
                         else
                             |No results
-                    if editing_mode
-                        .ui.dividing.header
-                            i.clone.icon
-                            |Fields
-                        .ui.stackable.cards
-                            each fields
-                                +edit_field
+                if editing_mode
+                    .ui.dividing.header
+                        i.clone.icon
+                        |Fields
+                    .ui.stackable.cards
+                        each fields
+                            +edit_field
 
 
 template(name='edit_field')

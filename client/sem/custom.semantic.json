@@ -1,12 +1,12 @@
 {
   "definitions": {
-    "accordion": true,
+    "accordion": false,
     "ad": false,
     "api": false,
     "breadcrumb": false,
     "button": true,
     "card": true,
-    "checkbox": true,
+    "checkbox": false,
     "comment": true,
     "container": true,
     "dimmer": true,
@@ -30,7 +30,7 @@
     "modal": false,
     "nag": false,
     "popup": true,
-    "progress": true,
+    "progress": false,
     "rail": false,
     "rating": false,
     "reset": true,
