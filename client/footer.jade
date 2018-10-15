@@ -5,9 +5,6 @@ template(name='footer')
                 .four.wide.inverted.column
                     if is_dev
                         +role_switcher
-                        div
-                        a(href='/field_instances')
-                            +icon name='field'
                     else
                         img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                         .ui.list

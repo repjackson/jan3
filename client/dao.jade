@@ -109,6 +109,7 @@ template(name='edit_field')
             +edit_field_text key='title' label='Title' filter_id=this._id
             +edit_field_text key='key' label='Key' filter_id=this._id
             +edit_field_text key='icon' label='Icon' filter_id=this._id
+            +edit_field_text key='field_type' label='Field Type' filter_id=this._id
             +edit_field_boolean key='faceted' label='Faceted'
             +edit_field_boolean key='visible' label='Visible'
             +edit_field_boolean key='sortable' label='Sortable'
@@ -118,6 +119,12 @@ template(name='edit_field')
                 i.remove.icon
 
 template(name='edit_field_boolean')
+    if is_true
+        .ui.primary.button.set_false #{label}
+    else
+        .ui.button.set_true #{label}
+
+template(name='edit_doc_boolean')
     if is_true
         .ui.primary.button.set_false #{label}
     else
@@ -224,6 +231,10 @@ template(name='facet_card')
                 .ui.list
                     each field_docs
                         +field_doc
+            .content
+                if editing_mode
+                    .ui.icon.button.remove_doc
+                        i.remove.icon
 
 template(name='field_doc')
     unless editing_mode
@@ -234,6 +245,11 @@ template(name='field_doc')
                 |#{title}:
                 strong #{value}
     if editing_mode
+        if is_boolean
+            if is_true
+                .ui.primary.button.set_false #{label}
+            else
+                .ui.button.set_true #{label}
         if is_array
             .ui.blue.segment
                 .ui.fluid.labeled.small.input

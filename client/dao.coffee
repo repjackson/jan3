@@ -63,6 +63,10 @@ Template.field_doc.events
                 "#{local_doc.key}": @valueOf()
 
 
+Template.facet_card.events
+    'click .remove_doc': ->
+        if confirm "Delete #{@title}?"
+            Docs.remove @_id
 
 Template.facet_card.helpers
     local_doc: -> Docs.findOne @valueOf()
@@ -287,7 +291,7 @@ Template.type_filter.helpers
         if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles
             Docs.find(
                 type:'schema'
-                faceted:true
+                # faceted:true
             ).fetch()
         else
             Docs.find(
