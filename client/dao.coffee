@@ -77,22 +77,27 @@ Template.facet_card.helpers
             schema_slugs: $in: [schema.slug]
             ).fetch()
 
-
-    doc_header_fields: ->
+    value: ->
+        # console.log @
         facet = Docs.findOne type:'facet'
         schema = Docs.findOne
             type:'schema'
             slug:facet.filter_type[0]
+        parent = Template.parentData()
+        field_doc = Docs.findOne
+            type:'field'
+            schema_slugs:$in:[schema.slug]
+        # console.log 'field doc', field_doc
+        parent["#{@key}"]
+
+    doc_header_fields: ->
+        facet = Docs.findOne type:'facet'
         header = []
-        field_docs = Docs.find
+        Docs.find(
             type:'field'
             schema_slugs:$in:[facet.filter_type[0]]
-            # card_header:true
-        for field in field_docs
-            header.push field
-        # console.log 'header', header
-        header
-
+            card_header:true
+        ).fetch()
 
 Template.field_doc.helpers
     is_array:-> @field_type is 'schemas'

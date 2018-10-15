@@ -112,6 +112,7 @@ template(name='edit_field')
             +edit_field_boolean key='faceted' label='Faceted'
             +edit_field_boolean key='visible' label='Visible'
             +edit_field_boolean key='sortable' label='Sortable'
+            +edit_field_boolean key='card_header' label='Card Header'
         .content
             .ui.icon.remove_field.button
                 i.remove.icon
@@ -212,16 +213,13 @@ template(name='dao_table_row')
 template(name='facet_card')
     with local_doc
         .card(class=ticket_color_class)
-            if header_fields
-                .content
-                    h4.header
-                        each header_fields
-                            |#{value}
-            if doc_header_fields
-                .content
-                    h4.header
-                        each doc_header_fields
-                            |#{value}
+            // if doc_header_fields
+            .content
+                h4.header
+                    if icon
+                        +iconsmall name=icon
+                    each doc_header_fields
+                        |#{value}
             .content
                 .ui.list
                     each field_docs
