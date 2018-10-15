@@ -324,15 +324,15 @@ Template.dao.helpers
     view_segments_class: -> if Session.equals 'view_mode', 'segments' then 'primary' else ''
     view_table_class: -> if Session.equals 'view_mode', 'table' then 'primary' else ''
 
-    other_filters: ->
-        facet = Docs.findOne type:'facet'
-        current_type = facet.filter_type[0]
-        switch current_type
-            when 'ticket'
-                Docs.find
-                    type:'filter'
-                    key:$ne:'type'
-                    doc_type: 'ticket'
+    # other_filters: ->
+    #     facet = Docs.findOne type:'facet'
+    #     current_type = facet.filter_type[0]
+    #     switch current_type
+    #         when 'ticket'
+    #             Docs.find
+    #                 type:'filter'
+    #                 key:$ne:'type'
+    #                 doc_type: 'ticket'
 
     schema_doc: ->
         facet = Docs.findOne type:'facet'
@@ -349,15 +349,12 @@ Template.dao.helpers
         current_type = facet.filter_type[0]
         faceted_fields = []
         if current_type
-            schema = Docs.findOne
-                type:'schema'
-                slug:current_type
-            for field in schema.fields
-                if field.faceted is true
-                    faceted_fields.push field
-        faceted_fields
-            # for field in schema.fields
-            #     console.log 'found field', field
+            fields =
+                Docs.find(
+                    type:'field'
+                    schema_slugs:$in:[current_type]
+                    faceted: true
+                ).fetch()
 
     fields: ->
         facet = Docs.findOne type:'facet'
@@ -378,7 +375,7 @@ Template.set_facet_key.helpers
 Template.filter.helpers
     values: ->
         facet = Docs.findOne type:'facet'
-        facet["#{@slug}_return"][..10]
+        facet["#{@key}_return"][..10]
 
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'
@@ -388,7 +385,7 @@ Template.selector.helpers
     toggle_value_class: ->
         facet = Docs.findOne type:'facet'
         filter = Template.parentData()
-        filter_list = facet["filter_#{filter.slug}"]
+        filter_list = facet["filter_#{filter.key}"]
         if filter_list and @value in filter_list then 'primary' else ''
 
 Template.filter.events
@@ -403,19 +400,19 @@ Template.selector.events
         # console.log @
         filter = Template.parentData()
         facet = Docs.findOne type:'facet'
-        filter_list = facet["filter_#{filter.slug}"]
+        filter_list = facet["filter_#{filter.key}"]
 
         if filter_list and @value in filter_list
             Docs.update facet._id,
                 $set:
                     current_page:1
-                $pull: "filter_#{filter.slug}": @value
+                $pull: "filter_#{filter.key}": @value
         else
             Docs.update facet._id,
                 $set:
                     current_page:1
                 $addToSet:
-                    "filter_#{filter.slug}": @value
+                    "filter_#{filter.key}": @value
         Session.set 'is_calculating', true
         # console.log 'hi call'
         Meteor.call 'fo', (err,res)->

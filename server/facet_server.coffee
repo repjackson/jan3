@@ -11,17 +11,22 @@ Meteor.methods
             type:'facet'
             author_id: Meteor.userId()
 
+        current_type = facet.filter_type[0]
 
         if facet.filter_type and facet.filter_type.length > 0
             schema =
                 Docs.findOne
                     type:'schema'
-                    slug:facet.filter_type[0]
+                    slug:current_type
             if schema
+                fields =
+                    Docs.find
+                        type:'field'
+                        schema_slugs:$in:[current_type]
                 filter_keys = []
-                for field in schema.fields
+                for field in fields.fetch()
                     if field.faceted is true
-                        filter_keys.push field.slug
+                        filter_keys.push field.key
             # return
         else
             Docs.update facet._id,

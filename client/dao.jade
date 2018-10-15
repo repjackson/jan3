@@ -56,8 +56,8 @@ template(name='dao')
                 .three.wide.column
                     if editing_mode
                         .ui.button.show_facet log
-                        .ui.button.add_doc Add Doc
-                        .ui.button.add_field Add Field
+                        .ui.button.add_doc + Doc
+                        .ui.button.add_field + Field
                     if schema_doc
                         each faceted_fields
                             +filter
@@ -87,7 +87,9 @@ template(name='dao')
                         else
                             |No results
                     if editing_mode
-                        .ui.small.header Fields
+                        .ui.dividing.header
+                            i.clone.icon
+                            |Fields
                         .ui.stackable.cards
                             each fields
                                 +edit_field
