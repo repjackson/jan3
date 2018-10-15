@@ -121,6 +121,26 @@ Template.dao.onRendered ->
     , 700
 
 
+Template.edit_field_boolean.helpers
+    is_true: ->
+        field = Template.parentData()
+        field["#{@key}"]
+
+
+Template.edit_field_boolean.events
+    'click .set_true': ->
+        field = Template.parentData()
+        Docs.update field._id,
+            $set:
+                "#{@key}": true
+    'click .set_false': ->
+        field = Template.parentData()
+        Docs.update field._id,
+            $set:
+                "#{@key}": false
+
+
+
 Template.dao.events
     'click .create_facet': (e,t)->
         new_facet_id =

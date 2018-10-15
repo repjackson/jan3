@@ -87,6 +87,7 @@ template(name='dao')
                         else
                             |No results
                     if editing_mode
+                        .ui.small.header Fields
                         .ui.stackable.cards
                             each fields
                                 +edit_field
@@ -99,6 +100,13 @@ template(name='edit_field')
         .content
             +edit_filter_field key='title' label='Title' filter_id=this._id
             +edit_filter_field key='key' label='Key' filter_id=this._id
+            +edit_field_boolean key='faceted' label='Faceted'
+
+template(name='edit_field_boolean')
+    if is_true
+        .ui.primary.button.set_false #{label}
+    else
+        .ui.button.set_true #{label}
 
 
 
