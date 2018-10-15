@@ -18,15 +18,15 @@ template(name='footer')
                     // #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
                     //     i.bug.icon
                 .four.wide.column
-                    if is_customer
-                        +customer_card customer_jpid=currentUser.customer_jpid
-                if currentUser.franchisee_jpid
-                    .four.wide.column
-                        if is_customer
-                            +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
+                    // if is_customer
+                    //     +customer_card customer_jpid=currentUser.customer_jpid
+                // if currentUser.franchisee_jpid
+                    // .four.wide.column
+                    //     if is_customer
+                    //         +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
                 .four.wide.column
-                    unless is_admin
-                        +office_card office_jpid=currentUser.office_jpid
+                    // unless is_admin
+                    //     +office_card office_jpid=currentUser.office_jpid
             .centered.row
                 .ui.center.aligned.inverted.grey.header
                     i.copyright.outline.icon

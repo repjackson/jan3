@@ -2,24 +2,9 @@ template(name='nav')
     .nav_bar.ui.top.attached.borderless.inverted.menu
         a.toggle_left_sidebar.icon.item
             i.bars.icon
-        if is_admin
-            each admin_nav_items
-                a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
-                    i.icon
-                        +icon name=icon
-                    .mobile.hidden &nbsp; #{title}
-        else if is_customer
-            each customer_nav_items
-                a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
-                    i.icon
-                        +icon name=icon
-                    .mobile.hidden &nbsp; #{title}
-        else if is_office
-            each office_nav_items
-                a.mobile.hidden.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
-                    i.icon
-                        +icon name=icon
-                    .mobile.hidden &nbsp; #{title}
+        a.item(href='/dashboard')
+            i.dashboard.icon
+            .mobile.hidden Dashboard
         .right.menu
             if is_dev
                 // .mobile.only
@@ -43,9 +28,6 @@ template(name='nav')
                         a.nav_bar.item(href="/p/user_view?username=#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
                             i.user.icon
                             | Profile
-                        a.nav_bar.item(href='/p/messages' class="{{ active_route 'messages' }}" )
-                            i.envelope.icon
-                            |Messages
                         a.nav_bar.item(href='/account/settings' class="{{ active_route 'account' }}" )
                             i.cog.icon
                             |Account
