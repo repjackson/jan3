@@ -13,7 +13,8 @@ Template.ticket_type_label.onRendered ->
 
 Template.ticket_type_label.helpers
     ticket_type_label: ->
-        switch @ticket_type
+        target = Template.parentData(5)
+        switch target.ticket_type
             when 'missed_service' then 'Missed Service'
             when 'team_member_infraction' then 'Team Member Infraction'
             when 'change_service' then 'Request a Change of Service'
@@ -23,7 +24,8 @@ Template.ticket_type_label.helpers
             when 'other' then 'Other'
 
     ticket_type_icon: ->
-        switch @ticket_type
+        target = Template.parentData(5)
+        switch target.ticket_type
             when 'missed_service' then 'leave'
             when 'team_member_infraction' then 'unfriend-male'
             when 'change_service' then 'transfer-between-users'
@@ -34,7 +36,8 @@ Template.ticket_type_label.helpers
 
 Template.ticket_type_small.helpers
     ticket_type_label: ->
-        switch @ticket_type
+        target = Template.parentData(5)
+        switch target.ticket_type
             when 'missed_service' then 'Missed Service'
             when 'team_member_infraction' then 'Team Member Infraction'
             when 'change_service' then 'Request a Change of Service'
@@ -43,7 +46,8 @@ Template.ticket_type_small.helpers
             when 'other' then 'Other'
 
     type_label_class: ->
-        switch @ticket_type
+        target = Template.parentData(5)
+        switch target.ticket_type
             when 'missed_service' then 'blue'
             when 'team_member_infraction' then 'green'
             when 'change_service' then 'teal'
@@ -52,7 +56,8 @@ Template.ticket_type_small.helpers
             when 'other' then 'grey'
 
     ticket_type_icon: ->
-        switch @ticket_type
+        target = Template.parentData(5)
+        switch target.ticket_type
             when 'missed_service' then 'leave'
             when 'team_member_infraction' then 'unfriend-male'
             when 'change_service' then 'transfer-between-users'
@@ -61,10 +66,18 @@ Template.ticket_type_small.helpers
             when 'other' then 'grey'
 
 Template.level_icon.helpers
-    is_level_one: -> @level is 1
-    is_level_two: -> @level is 2
-    is_level_three: -> @level is 3
-    is_level_four: -> @level is 4
+    is_level_one: ->
+        target_doc = Template.parentData(5)
+        target_doc.level is 1
+    is_level_two: ->
+        target_doc = Template.parentData(5)
+        target_doc.level is 2
+    is_level_three: ->
+        target_doc = Template.parentData(5)
+        target_doc.level is 3
+    is_level_four: ->
+        target_doc = Template.parentData(5)
+        target_doc.level is 4
 
 
 

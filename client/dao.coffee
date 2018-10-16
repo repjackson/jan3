@@ -46,7 +46,7 @@ Template.facet_segment.events
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
             $set:
-                viewing_detail: !facet.viewing_detail
+                viewing_detail: true
                 detail_id: @_id
 
     'click .remove_doc': ->
@@ -128,6 +128,23 @@ Template.edit_field_boolean.helpers
     is_true: ->
         field = Template.parentData()
         field["#{@key}"]
+
+
+Template.edit_field_array.helpers
+    values: ->
+        field = Template.parentData()
+        if field["#{@key}"] then field["#{@key}"]
+
+
+Template.edit_field_array.events
+    'keyup .add_value': (e,t)->
+        if e.which is 13
+            new_val = e.currentTarget.value
+            field = Template.parentData()
+            Docs.update field._id,
+                $addToSet:
+                    "#{@key}": new_val
+
 
 
 Template.edit_field_boolean.events
