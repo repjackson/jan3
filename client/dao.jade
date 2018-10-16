@@ -7,97 +7,119 @@ template(name='dao')
                         .create_facet.ui.icon.button(title='Create Session')
                             i.plus.icon
         else
-            .row
-                .three.wide.column
-                    .ui.icon.fluid.input
-                        if current_query
-                            i.clear_search.link.remove.icon
-                        else
-                            i.link.search.icon
-                        input#query(type='text' placeholder=placeholder value=current_query)
-                .six.wide.middle.aligned.column
-                    +set_page_size value=10
-                    +set_page_size value=20
-                    +set_page_size value=50
-                    | #{facet_doc.skip_amount}
-                    | /
-                    | #{facet_doc.total}
-                .three.wide.column
-                    if facet_doc.page_amount
-                        .ui.pagination.small.menu
-                            // if show_decrement
-                            a.icon.item.page_down
-                                i.left.chevron.grey.icon
-                            .ui.item
-                                | #{facet_doc.current_page}/#{facet_doc.page_amount}
-                                // .menu
-                                //     a.set_page_number.item(class=pagination_item_class) 1
-                                //     a.set_page_number.item(class=pagination_item_class) 2
-                            a.icon.item.page_up
-                                i.right.chevron.grey.icon
-                            // if show_increment
+            unless facet_doc.is_adding
+                .row
+                    .three.wide.column
+                        .ui.icon.fluid.input
+                            if current_query
+                                i.clear_search.link.remove.icon
+                            else
+                                i.link.search.icon
+                            input#query(type='text' placeholder=placeholder value=current_query)
+                    .six.wide.middle.aligned.column
+                        +set_page_size value=10
+                        +set_page_size value=20
+                        +set_page_size value=50
+                        | #{facet_doc.skip_amount}
+                        | /
+                        | #{facet_doc.total}
+                    .three.wide.column
+                        if facet_doc.page_amount
+                            .ui.pagination.small.menu
+                                // if show_decrement
+                                a.icon.item.page_down
+                                    i.left.chevron.grey.icon
+                                .ui.item
+                                    | #{facet_doc.current_page}/#{facet_doc.page_amount}
+                                    // .menu
+                                    //     a.set_page_number.item(class=pagination_item_class) 1
+                                    //     a.set_page_number.item(class=pagination_item_class) 2
+                                a.icon.item.page_up
+                                    i.right.chevron.grey.icon
+                                // if show_increment
 
-                .right.floated.three.wide.column
-                    if editing_mode
-                        .ui.icon.button.delete_facet
-                            i.blue.remove.icon
+                    .right.floated.three.wide.column
+                        if editing_mode
+                            .ui.icon.button.delete_facet
+                                i.blue.remove.icon
+                .row
+                    .sixteen.wide.column
+                        +type_filter
+        unless facet_doc.is_adding
             .row
-                .sixteen.wide.column
-                    +type_filter
-        .row
-            if facet_doc
-                .three.wide.column
-                    if editing_mode
-                        .ui.button.show_facet log
+                if facet_doc
+                    .three.wide.column
                         .ui.button.add_doc + Doc
-                        .ui.button.add_field + Field
-                    if schema_doc
-                        each faceted_fields
-                            +filter
-                .thirteen.wide.column
-                    if editing_mode
-                        .ui.dividing.header
-                            i.clone.icon
-                            |Fields
-                        each fields
-                            +edit_field
-                    else
-                        .ui.equal.width.grid
-                            .column
-                                if is_calculating
-                                    // i.large.loading.refresh.icon
-                                    .ui.active.indeterminate.massive.centered.inline.loader
-                                        // |Calculating filters and results
-                                else
-                                    if facet_doc.result_ids
-                                        if facet_doc.result_ids.length
-                                            each facet_doc.result_ids
-                                                +facet_segment
-                                    else
-                                        |No results
-                            if facet_doc.viewing_detail
+                        if editing_mode
+                            .ui.button.show_facet log
+                            .ui.button.add_field + Field
+                        if schema_doc
+                            each faceted_fields
+                                +filter
+                    .thirteen.wide.column
+                        if editing_mode
+                            .ui.dividing.header
+                                i.clone.icon
+                                |Fields
+                            each fields
+                                +edit_field
+                        else
+                            .ui.equal.width.grid
                                 .column
-                                    a.ui.header.close_details(href='#')
-                                        |Details
-                                        i.right.chevron.icon
-                                    with detail_doc
-                                        .content
-                                            h4.header
-                                                if icon
-                                                    +iconsmall name=icon
-                                                each doc_header_fields
-                                                    |#{value}
-                                        .content
-                                            .ui.list
-                                                each fields
-                                                    +field_doc
-                                        .content
-                                            .ui.button Reply
-                                            .ui.button Bookmark
-                                            .ui.button Close
-                                            .ui.button Comment
-                                            .ui.button.view_detail View
+                                    if is_calculating
+                                        // i.large.loading.refresh.icon
+                                        .ui.active.indeterminate.massive.centered.inline.loader
+                                            // |Calculating filters and results
+                                    else
+                                        if facet_doc.result_ids
+                                            if facet_doc.result_ids.length
+                                                each facet_doc.result_ids
+                                                    +facet_segment
+                                        else
+                                            |No results
+                                if facet_doc.viewing_detail
+                                    .column
+                                        +detail_pane
+        else
+            .centered.row
+                .ten.wdie.column
+                    +draft
 
+
+
+template(name='detail_pane')
+    a.ui.header.close_details(href='#')
+        |Details
+        i.right.chevron.icon
+    with detail_doc
+        .content
+            h4.header
+                if icon
+                    +iconsmall name=icon
+                each doc_header_fields
+                    |#{value}
+        .content
+            .ui.list
+                each fields
+                    +field_doc
+        .content
+            .ui.button Reply
+            .ui.button Bookmark
+            .ui.button Close
+            .ui.button Comment
+            .ui.button.view_detail View
+
+template(name='draft')
+    .ui.header
+        | Edit Draft
+        i.right.chevron.icon
+    with draft_doc
+        .content
+            .ui.list
+                each draft_fields
+                    +field_doc
+    .ui.button Save
+    .ui.button Cancel
 
 template(name='edit_field')
     .ui.segment(class=ticket_color_class)
@@ -118,6 +140,7 @@ template(name='edit_field')
             +edit_field_boolean key='read_only' label='Read Only'
             +edit_field_boolean key='sortable' label='Sortable'
             +edit_field_boolean key='editable' label='Editable'
+            +edit_field_boolean key='Draft' label='Draft'
             +edit_field_boolean key='card_header' label='Card Header'
             if editable
                 .ui.segment

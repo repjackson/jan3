@@ -14,11 +14,11 @@ FlowRouter.route('/', {
         if user
             if user.roles
                 if 'customer' in user.roles
-                    redirect '/p/customer_dashboard'
+                    redirect '/dashboard'
                 else if 'admin' in user.roles
-                    redirect '/p/admin'
+                    redirect '/dashboard'
                 else if 'office' in user.roles
-                    redirect "/p/office_tickets/#{user.office_jpid}"
+                    redirect '/dashboard'
         else
             redirect '/login'
     ]
@@ -30,8 +30,14 @@ globalHotkeys.add
 	combo : "ctrl+shift+e"
 	eventType: "keydown"
 	callback : ()->
+        Session.set('editing_mode',!Session.get('editing_mode'))
+
+globalHotkeys.add
+	combo : "ctrl+shift+alt+d"
+	eventType: "keydown"
+	callback : ()->
 	    if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles
-            Session.set('editing_mode',!Session.get('editing_mode'))
+            Session.set('dev_mode',!Session.get('dev_mode'))
 
 
 
@@ -39,6 +45,7 @@ Session.setDefault('query',null)
 
 if Meteor.isDevelopment
     Session.setDefault('editing_mode',false)
+    Session.setDefault('dev_mode',false)
 else
     Session.setDefault('editing_mode',false)
 

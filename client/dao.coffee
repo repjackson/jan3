@@ -3,10 +3,15 @@ Template.dao.onCreated ->
     @autorun => Meteor.subscribe 'type', 'filter'
     @autorun => Meteor.subscribe 'type', 'schema'
     @autorun => Meteor.subscribe 'type', 'field'
+
     # @autorun => Meteor.subscribe 'type', 'ticket_type'
     @is_editing = new ReactiveVar false
     Session.setDefault 'is_calculating', false
 
+Template.detail_pane.onCreated ->
+    facet = Docs.findOne type:'facet'
+    if facet
+        @autorun => Meteor.subscribe 'single_doc', facet.detail_id
 
 Template.facet_segment.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
@@ -197,9 +202,14 @@ Template.dao.events
     'click .add_doc': (e,t)->
         facet = Docs.findOne type:'facet'
         type = facet.filter_type[0]
-        Docs.insert
+        new_id = Docs.insert
             type:type
-        Meteor.call 'fo'
+        # Meteor.call 'fo'
+        Docs.update facet._id,
+            $set:
+                viewing_detail:true
+                adding_id:new_id
+                is_adding:true
 
     'click .add_field': (e,t)->
         facet = Docs.findOne type:'facet'
@@ -268,6 +278,30 @@ Template.type_filter.events
 
 
 
+Template.detail_pane.helpers
+    detail_doc: ->
+        facet = Docs.findOne type:'facet'
+        Docs.findOne facet.detail_id
+    fields: ->
+        facet = Docs.findOne type:'facet'
+        current_type = facet.filter_type[0]
+        Docs.find(
+            type:'field'
+            schema_slugs: $in: [current_type]
+        ).fetch()
+
+Template.draft.helpers
+    draft_doc: ->
+        facet = Docs.findOne type:'facet'
+        Docs.findOne facet.adding_id
+    draft_fields: ->
+        facet = Docs.findOne type:'facet'
+        current_type = facet.filter_type[0]
+        Docs.find(
+            type:'field'
+            schema_slugs: $in: [current_type]
+            # draft:true
+        ).fetch()
 
 
 Template.dao.helpers
@@ -304,9 +338,6 @@ Template.dao.helpers
                     faceted: true
                 ).fetch()
 
-    detail_doc: ->
-        facet = Docs.findOne type:'facet'
-        Docs.findOne facet.detail_id
 
     fields: ->
         facet = Docs.findOne type:'facet'
