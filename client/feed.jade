@@ -52,7 +52,7 @@ template(name='event')
             .summary #{action} #{text}
             .meta
                 span(title="{{ long_format timestamp }}") #{when}
-                if editing_mode
+                if editing_modez
                     span(title='Event Type') #{event_type}
                     span #{parent_id}
                 if author_id

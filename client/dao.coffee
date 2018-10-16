@@ -6,32 +6,10 @@ Template.dao.onCreated ->
     # @autorun => Meteor.subscribe 'type', 'ticket_type'
     @is_editing = new ReactiveVar false
     Session.setDefault 'is_calculating', false
-    Session.setDefault 'view_mode', 'cards'
 
 
-Template.facet_card.onCreated ->
+Template.facet_segment.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
-Template.dao_table_row.onCreated ->
-    @autorun => Meteor.subscribe 'single_doc', @data
-
-Template.dao_table_row.helpers
-    local_doc: -> Docs.findOne @valueOf()
-
-    visible_fields: ->
-        facet = Docs.findOne type:'facet'
-        schema = Docs.findOne
-            type:'schema'
-            slug:facet.filter_type[0]
-        visible = []
-        for field in schema.fields
-            if field.table_column
-                visible.push field
-        visible
-
-
-    value: ->
-        doc = Template.parentData()
-        doc["#{@slug}"]
 
 Template.field_doc.events
     'blur .text_field_val': (e,t)->
@@ -63,12 +41,17 @@ Template.field_doc.events
                 "#{local_doc.key}": @valueOf()
 
 
-Template.facet_card.events
+Template.facet_segment.events
+    'click .view_detail': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set: viewing_detail: true
+
     'click .remove_doc': ->
         if confirm "Delete #{@title}?"
             Docs.remove @_id
 
-Template.facet_card.helpers
+Template.facet_segment.helpers
     local_doc: -> Docs.findOne @valueOf()
 
     field_docs: ->
@@ -125,9 +108,9 @@ Template.dao.onRendered ->
     # Meteor.setTimeout ->
     #     $('.accordion').accordion();
     # , 500
-    # Meteor.setTimeout ->
-    #     $('.dropdown').dropdown()
-    # , 700
+    Meteor.setTimeout ->
+        $('.dropdown').dropdown()
+    , 700
 
 
 Template.edit_field.events
@@ -156,6 +139,11 @@ Template.edit_field_boolean.events
 
 
 Template.dao.events
+    'click .close_details': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set: viewing_detail: false
+
     'click .delete_facet': ->
         if confirm 'Delete facet?'
             facet = Docs.findOne type:'facet'
@@ -216,27 +204,27 @@ Template.set_page_size.events
 
 
 
-Template.table_column_header.onCreated ->
-    @is_sorting = new ReactiveVar false
+# Template.table_column_header.onCreated ->
+#     @is_sorting = new ReactiveVar false
 
-Template.table_column_header.events
-    'click .sort_key': (e,t)->
-        t.is_sorting.set true
-        key = if @ev_subset then "ev.#{@slug}" else @slug
-        facet_doc = Docs.findOne type:'facet'
-        if facet_doc.sort_direction is -1
-            Docs.update facet_doc._id,
-                $set:
-                    sort_key: key
-                    sort_direction: 1
-        else
-            Docs.update facet_doc._id,
-                $set:
-                    sort_key: key
-                    sort_direction: -1
-        Meteor.call 'fo',(err,res) =>
-            if res
-                t.is_sorting.set false
+# Template.table_column_header.events
+#     'click .sort_key': (e,t)->
+#         t.is_sorting.set true
+#         key = if @ev_subset then "ev.#{@slug}" else @slug
+#         facet_doc = Docs.findOne type:'facet'
+#         if facet_doc.sort_direction is -1
+#             Docs.update facet_doc._id,
+#                 $set:
+#                     sort_key: key
+#                     sort_direction: 1
+#         else
+#             Docs.update facet_doc._id,
+#                 $set:
+#                     sort_key: key
+#                     sort_direction: -1
+#         Meteor.call 'fo',(err,res) =>
+#             if res
+#                 t.is_sorting.set false
 
     # 'click .raise_filter':->
     #     Docs.update @_id,
@@ -247,33 +235,33 @@ Template.table_column_header.events
     #         $inc:rank:-1
 
 
-Template.table_column_header.helpers
-    sort_descending: ->
-        key = if @ev_subset then "ev.#{@key}" else @key
-        facet = Docs.findOne type:'facet'
-        if facet.sort_direction is 1 and facet.sort_key is key
-            return true
-    sort_ascending: ->
-        key = if @ev_subset then "ev.#{@key}" else @key
-        facet = Docs.findOne type:'facet'
-        if facet.sort_direction is -1 and facet.sort_key is key
-            return true
+# Template.table_column_header.helpers
+#     sort_descending: ->
+#         key = if @ev_subset then "ev.#{@key}" else @key
+#         facet = Docs.findOne type:'facet'
+#         if facet.sort_direction is 1 and facet.sort_key is key
+#             return true
+#     sort_ascending: ->
+#         key = if @ev_subset then "ev.#{@key}" else @key
+#         facet = Docs.findOne type:'facet'
+#         if facet.sort_direction is -1 and facet.sort_key is key
+#             return true
 
-    is_sorting: -> Template.instance().is_sorting.get() is true
+#     is_sorting: -> Template.instance().is_sorting.get() is true
 
-Template.facet_table.helpers
-    facet_doc: -> Docs.findOne type:'facet'
+# Template.facet_table.helpers
+#     facet_doc: -> Docs.findOne type:'facet'
 
-    visible_fields: ->
-        facet = Docs.findOne type:'facet'
-        schema = Docs.findOne
-            type:'schema'
-            slug:facet.filter_type[0]
-        visible = []
-        for field in schema.fields
-            if field.table_column
-                visible.push field
-        visible
+#     visible_fields: ->
+#         facet = Docs.findOne type:'facet'
+#         schema = Docs.findOne
+#             type:'schema'
+#             slug:facet.filter_type[0]
+#         visible = []
+#         for field in schema.fields
+#             if field.table_column
+#                 visible.push field
+#         visible
 
 
 Template.selector.helpers
@@ -333,25 +321,9 @@ Template.dao.helpers
         facet = Docs.findOne type:'facet'
         if facet.result_ids then facet.result_ids[..10]
 
+    # detail_view: ->
+
     ticket_types: -> Docs.find type:'ticket_type'
-
-    view_segments: -> Session.equals 'view_mode', 'segments'
-    view_cards: -> Session.equals 'view_mode', 'cards'
-    view_table: -> Session.equals 'view_mode', 'table'
-
-    view_cards_class: -> if Session.equals 'view_mode', 'cards' then 'primary' else ''
-    view_segments_class: -> if Session.equals 'view_mode', 'segments' then 'primary' else ''
-    view_table_class: -> if Session.equals 'view_mode', 'table' then 'primary' else ''
-
-    # other_filters: ->
-    #     facet = Docs.findOne type:'facet'
-    #     current_type = facet.filter_type[0]
-    #     switch current_type
-    #         when 'ticket'
-    #             Docs.find
-    #                 type:'filter'
-    #                 key:$ne:'type'
-    #                 doc_type: 'ticket'
 
     schema_doc: ->
         facet = Docs.findOne type:'facet'

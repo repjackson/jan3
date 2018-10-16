@@ -16,16 +16,12 @@ template(name='dao')
                             i.link.search.icon
                         input#query(type='text' placeholder=placeholder value=current_query)
                 .six.wide.middle.aligned.column
-                    .ui.inline.dropdown
-                        .default.text 10
-                        i.dropdown.icon
-                        .menu
-                            +set_page_size value=10
-                            +set_page_size value=20
-                            +set_page_size value=50
-                        | #{facet_doc.skip_amount}
-                        | /
-                        | #{facet_doc.total}
+                    +set_page_size value=10
+                    +set_page_size value=20
+                    +set_page_size value=50
+                    | #{facet_doc.skip_amount}
+                    | /
+                    | #{facet_doc.total}
                 .three.wide.column
                     if facet_doc.page_amount
                         .ui.pagination.small.menu
@@ -45,12 +41,12 @@ template(name='dao')
                     if editing_mode
                         .ui.icon.button.delete_facet
                             i.blue.remove.icon
-                    .set_view_cards.ui.button(class=view_cards_class)
-                        +iconsmall name='activity-grid-2'
+                    // .set_view_cards.ui.button(class=view_cards_class)
+                    //     +iconsmall name='activity-grid-2'
                     // .set_view_segments.ui.button(class=view_segments_class)
                     //     +iconsmall name='menu'
-                    .set_view_table.ui.button(class=view_table_class)
-                        +iconsmall name='data-sheet-filled'
+                    // .set_view_table.ui.button(class=view_table_class)
+                    //     +iconsmall name='data-sheet-filled'
             .row
                 .sixteen.wide.column
                     +type_filter
@@ -65,30 +61,24 @@ template(name='dao')
                         each faceted_fields
                             +filter
                 .thirteen.wide.column
-                    if is_calculating
-                        // i.large.loading.refresh.icon
-                        .ui.active.indeterminate.massive.centered.inline.loader
-                            // |Calculating filters and results
-                    else
-                        if facet_doc.result_ids
-                            if facet_doc.result_ids.length
-                                if view_segments
-                                    each facet_doc.result_ids
-                                        +facet_segment
-                                if view_table
-                                    +facet_table
-                                if view_cards
-                                    .ui.three.stackable.cards
-                                        each facet_doc.result_ids
-                                            // .card
-                                                // .ui.header #{this}
-                                            +facet_card
-                                            // .ui.header #{this}
+                    .ui.equal.width.grid
+                        .column
+                            if is_calculating
+                                // i.large.loading.refresh.icon
+                                .ui.active.indeterminate.massive.centered.inline.loader
+                                    // |Calculating filters and results
                             else
-                                .ui.center.aligned.header
-                                    | Choose type to calculate
-                        else
-                            |No results
+                                if facet_doc.result_ids
+                                    if facet_doc.result_ids.length
+                                        each facet_doc.result_ids
+                                            +facet_segment
+                                else
+                                    |No results
+                        if facet_doc.viewing_detail
+                            .column
+                                a.ui.header.close_details(href='#')
+                                    |Details
+                                    i.right.chevron.icon
                 if editing_mode
                     .ui.dividing.header
                         i.clone.icon
@@ -133,7 +123,7 @@ template(name='edit_doc_boolean')
 
 
 template(name='set_page_size')
-    .item.set_page_size #{value}
+    .ui.button.set_page_size #{value}
 
 template(name='set_facet_key')
     .ui.button.small.compact.set_facet_key(class=set_facet_key_class)
@@ -175,51 +165,9 @@ template(name='edit_field_text')
         input.text_val(type='text' value=field_value)
 
 
-
-
-template(name='facet_table')
-    table.ui.striped.fixed.table(class=table_classes)
-        thead
-            tr
-                each visible_fields
-                    +table_column_header
-        tbody
-            each facet_doc.result_ids
-                +dao_table_row
-
-template(name='table_column_header')
-    if visible
-        if sortable
-            th.sort_key.single.line
-                |#{title}
-                if is_sorting
-                    |&nbsp;
-                    i.loading.refresh.grey.icon
-                else if sort_descending
-                    i.chevron.down.link.icon
-                else if sort_ascending
-                    i.chevron.up.link.icon
-                else
-                    i.sort.link.grey.icon
-        else
-            th.single.line
-                |#{title}
-
-
-template(name='dao_table_row')
+template(name='facet_segment')
     with local_doc
-        tr
-            each visible_fields
-                td
-                    if field_template
-                        +Template.dynamic template=field_template data=local_doc
-                    else
-                        |#{value}
-
-
-template(name='facet_card')
-    with local_doc
-        .card(class=ticket_color_class)
+        .ui.segment(class=ticket_color_class)
             // if doc_header_fields
             .content
                 h4.header
@@ -231,6 +179,12 @@ template(name='facet_card')
                 .ui.list
                     each field_docs
                         +field_doc
+            .content
+                .ui.button Reply
+                .ui.button Bookmark
+                .ui.button Close
+                .ui.button Comment
+                .ui.button.view_detail View
             .content
                 if editing_mode
                     .ui.icon.button.remove_doc
