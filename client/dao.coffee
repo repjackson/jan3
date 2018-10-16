@@ -16,7 +16,7 @@ Template.detail_pane.onCreated ->
 Template.facet_segment.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
 
-Template.field_doc.events
+Template.field_edit.events
     'blur .text_field_val': (e,t)->
         # console.log Template.parentData()
         parent = Template.parentData()
@@ -97,8 +97,21 @@ Template.facet_segment.helpers
             card_header:true
         ).fetch()
 
-Template.field_doc.helpers
+Template.field_edit.helpers
     is_array:-> @field_type is 'schemas'
+    value: ->
+        # console.log @
+        facet = Docs.findOne type:'facet'
+        schema = Docs.findOne
+            type:'schema'
+            slug:facet.filter_type[0]
+        parent = Template.parentData()
+        field_doc = Docs.findOne
+            type:'field'
+            schema_slugs:$in:[schema.slug]
+        # console.log 'field doc', field_doc
+        parent["#{@key}"]
+Template.field_view.helpers
     value: ->
         # console.log @
         facet = Docs.findOne type:'facet'
@@ -289,6 +302,32 @@ Template.detail_pane.helpers
             type:'field'
             schema_slugs: $in: [current_type]
         ).fetch()
+
+Template.draft.events
+    'click .submit_draft': ->
+        facet = Docs.findOne type:'facet'
+        draft_doc = Docs.findOne facet.adding_id
+        Docs.update draft_doc._id,
+            $set:
+                submitted:true
+                submitted_timestamp:Date.now()
+        Docs.update facet._id,
+            $set:
+                adding_id:null
+                is_adding:false
+
+
+    'click .cancel_draft': ->
+        facet = Docs.findOne type:'facet'
+        draft_doc = Docs.findOne facet.adding_id
+        if confirm "Cancel draft?"
+            if draft_doc
+                Docs.remove draft_doc._id
+            Docs.update facet._id,
+                $set:
+                    adding_id:null
+                    is_adding:false
+
 
 Template.draft.helpers
     draft_doc: ->

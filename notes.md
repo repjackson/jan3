@@ -93,3 +93,13 @@ and no styling.  everything is done through database.  they don't like it they c
 
 
 i want the customer account with the ev.ID from the user matching the queryParam username value of customer_jpid
+
+
+
+not child schemas, remember the twi service request map.
+
+actions are axons, relationships that people define.  you define key, them value.
+you have horizontal travering, now need vertical.  with well, child as in result of, schemas
+
+actions set by higher roles determine movement in their subset.
+schemas+actions+roles+triggers+conditions determine features

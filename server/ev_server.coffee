@@ -1,6 +1,7 @@
 Meteor.methods
-    call_lodestar: ->
-        HTTP.call 'GET',"https://sandbox.lodestarbpm.com/test/api-test.php", (err,res)->
+    ls: ->
+        # HTTP.call 'GET',"https://sandbox.lodestarbpm.com/test/api-test.php", (err,res)->
+        HTTP.call 'GET',"https://secure.lodestarbpm.com/jpi-api/", (err,res)->
             if err then console.error err
             else
                 body = res.content
@@ -48,10 +49,10 @@ Meteor.methods
                         office['type'] = 'office'
                         new_id = Docs.insert office
                         console.log 'inserted office', new_id
-                # for office in json.offices
-                #     console.log 'office id', office.id
-                # for franchisee in json.franchisees
-                #     console.log 'franchisee id', franchisee.id
+                for office in json.offices
+                    console.log 'office id', office.id
+                for franchisee in json.franchisees
+                    console.log 'franchisee id', franchisee.id
 
     sync_ev_users: ()->
         self = @
