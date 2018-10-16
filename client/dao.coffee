@@ -42,10 +42,12 @@ Template.field_doc.events
 
 
 Template.facet_segment.events
-    'click .view_detail': ->
+    'click .facet_segment': ->
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
-            $set: viewing_detail: true
+            $set:
+                viewing_detail: !facet.viewing_detail
+                detail_id: @_id
 
     'click .remove_doc': ->
         if confirm "Delete #{@title}?"
@@ -53,6 +55,10 @@ Template.facet_segment.events
 
 Template.facet_segment.helpers
     local_doc: -> Docs.findOne @valueOf()
+
+    facet_segment_class: ->
+        facet = Docs.findOne type:'facet'
+        if facet.detail_id and facet.detail_id is @_id then 'secondary' else ''
 
     field_docs: ->
         facet = Docs.findOne type:'facet'
@@ -190,10 +196,6 @@ Template.dao.events
         facet = Docs.findOne type:'facet'
         console.log facet
 
-    'click .set_view_cards': -> Session.set 'view_mode', 'cards'
-    'click .set_view_segments': -> Session.set 'view_mode', 'segments'
-    'click .set_view_table': -> Session.set 'view_mode', 'table'
-
 
 Template.set_page_size.events
     'click .set_page_size': (e,t)->
@@ -201,68 +203,6 @@ Template.set_page_size.events
         Docs.update facet._id,
             $set:page_size:@value
         Meteor.call 'fo'
-
-
-
-# Template.table_column_header.onCreated ->
-#     @is_sorting = new ReactiveVar false
-
-# Template.table_column_header.events
-#     'click .sort_key': (e,t)->
-#         t.is_sorting.set true
-#         key = if @ev_subset then "ev.#{@slug}" else @slug
-#         facet_doc = Docs.findOne type:'facet'
-#         if facet_doc.sort_direction is -1
-#             Docs.update facet_doc._id,
-#                 $set:
-#                     sort_key: key
-#                     sort_direction: 1
-#         else
-#             Docs.update facet_doc._id,
-#                 $set:
-#                     sort_key: key
-#                     sort_direction: -1
-#         Meteor.call 'fo',(err,res) =>
-#             if res
-#                 t.is_sorting.set false
-
-    # 'click .raise_filter':->
-    #     Docs.update @_id,
-    #         $inc:rank:1
-
-    # 'click .lower_filter':->
-    #     Docs.update @_id,
-    #         $inc:rank:-1
-
-
-# Template.table_column_header.helpers
-#     sort_descending: ->
-#         key = if @ev_subset then "ev.#{@key}" else @key
-#         facet = Docs.findOne type:'facet'
-#         if facet.sort_direction is 1 and facet.sort_key is key
-#             return true
-#     sort_ascending: ->
-#         key = if @ev_subset then "ev.#{@key}" else @key
-#         facet = Docs.findOne type:'facet'
-#         if facet.sort_direction is -1 and facet.sort_key is key
-#             return true
-
-#     is_sorting: -> Template.instance().is_sorting.get() is true
-
-# Template.facet_table.helpers
-#     facet_doc: -> Docs.findOne type:'facet'
-
-#     visible_fields: ->
-#         facet = Docs.findOne type:'facet'
-#         schema = Docs.findOne
-#             type:'schema'
-#             slug:facet.filter_type[0]
-#         visible = []
-#         for field in schema.fields
-#             if field.table_column
-#                 visible.push field
-#         visible
-
 
 Template.selector.helpers
     selector_value: ->
@@ -346,6 +286,10 @@ Template.dao.helpers
                     schema_slugs:$in:[current_type]
                     faceted: true
                 ).fetch()
+
+    detail_doc: ->
+        facet = Docs.findOne type:'facet'
+        Docs.findOne facet.detail_id
 
     fields: ->
         facet = Docs.findOne type:'facet'

@@ -41,12 +41,6 @@ template(name='dao')
                     if editing_mode
                         .ui.icon.button.delete_facet
                             i.blue.remove.icon
-                    // .set_view_cards.ui.button(class=view_cards_class)
-                    //     +iconsmall name='activity-grid-2'
-                    // .set_view_segments.ui.button(class=view_segments_class)
-                    //     +iconsmall name='menu'
-                    // .set_view_table.ui.button(class=view_table_class)
-                    //     +iconsmall name='data-sheet-filled'
             .row
                 .sixteen.wide.column
                     +type_filter
@@ -79,13 +73,31 @@ template(name='dao')
                                 a.ui.header.close_details(href='#')
                                     |Details
                                     i.right.chevron.icon
-                if editing_mode
-                    .ui.dividing.header
-                        i.clone.icon
-                        |Fields
-                    .ui.stackable.cards
-                        each fields
-                            +edit_field
+                                with detail_doc
+                                    .content
+                                        h4.header
+                                            if icon
+                                                +iconsmall name=icon
+                                            each doc_header_fields
+                                                |#{value}
+                                    .content
+                                        .ui.list
+                                            each fields
+                                                +field_doc
+                                    .content
+                                        .ui.button Reply
+                                        .ui.button Bookmark
+                                        .ui.button Close
+                                        .ui.button Comment
+                                        .ui.button.view_detail View
+
+                                        if editing_mode
+                                            .ui.dividing.header
+                                                i.clone.icon
+                                                |Fields
+                                            .ui.stackable.cards
+                                                each fields
+                                                    +edit_field
 
 
 template(name='edit_field')
@@ -167,7 +179,7 @@ template(name='edit_field_text')
 
 template(name='facet_segment')
     with local_doc
-        .ui.segment(class=ticket_color_class)
+        .ui.segment.facet_segment(class=facet_segment_class)
             // if doc_header_fields
             .content
                 h4.header
@@ -179,12 +191,6 @@ template(name='facet_segment')
                 .ui.list
                     each field_docs
                         +field_doc
-            .content
-                .ui.button Reply
-                .ui.button Bookmark
-                .ui.button Close
-                .ui.button Comment
-                .ui.button.view_detail View
             .content
                 if editing_mode
                     .ui.icon.button.remove_doc
