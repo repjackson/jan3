@@ -51,6 +51,15 @@ Template.field_edit.events
 
 
 Template.facet_segment.events
+    'click .maximize': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set:
+                max_mode:true
+                full_mode:true
+                max_id:@_id
+
+
     'click .facet_segment': ->
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
@@ -115,6 +124,7 @@ Template.field_edit.helpers
             schema_slugs:$in:[schema.slug]
         # console.log 'field doc', field_doc
         parent["#{@key}"]
+
 Template.field_view.helpers
     value: ->
         # console.log @
@@ -307,6 +317,14 @@ Template.detail_pane.helpers
             schema_slugs: $in: [current_type]
         ).fetch()
 
+Template.max_view.events
+    'click .minimize': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set:
+                max_mode:false
+                full_mode:false
+
 Template.draft.events
     'click .submit_draft': ->
         facet = Docs.findOne type:'facet'
@@ -344,6 +362,18 @@ Template.draft.helpers
             type:'field'
             schema_slugs: $in: [current_type]
             # draft:true
+        ).fetch()
+
+Template.max_view.helpers
+    full_doc: ->
+        facet = Docs.findOne type:'facet'
+        Docs.findOne facet.max_id
+    fields: ->
+        facet = Docs.findOne type:'facet'
+        current_type = facet.filter_type[0]
+        Docs.find(
+            type:'field'
+            schema_slugs: $in: [current_type]
         ).fetch()
 
 

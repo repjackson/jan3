@@ -7,7 +7,16 @@ template(name='dao')
                         .create_facet.ui.icon.button(title='Create Session')
                             i.plus.icon
         else
-            unless facet_doc.is_adding
+            if facet_doc.full_mode
+                if facet_docis_adding
+                    .centered.row
+                        .ten.wide.column
+                            +draft
+                else if facet_doc.max_mode
+                    .centered.row
+                        .ten.wide.column
+                            +max_view
+            else
                 .row
                     .three.wide.column
                         .ui.icon.fluid.input
@@ -45,7 +54,7 @@ template(name='dao')
                 .row
                     .sixteen.wide.column
                         +type_filter
-        unless facet_doc.is_adding
+        unless facet_doc.full_mode
             .row
                 if facet_doc
                     .three.wide.column
@@ -84,10 +93,6 @@ template(name='dao')
                                 if facet_doc.viewing_child
                                     .column
                                         .ui.header viewing child
-        else
-            .centered.row
-                .ten.wdie.column
-                    +draft
 
 
 
@@ -109,12 +114,26 @@ template(name='detail_pane')
                         +field_edit
                     else
                         +field_view
+
+template(name='max_view')
+    .ui.header
+        |Full View
+    .ui.icon.button.minimize
+        i.minus.icon
+    with full_doc
         .content
-            .ui.button Reply
-            .ui.button Bookmark
-            .ui.button Close
-            .ui.button Comment
-            .ui.button.view_detail View
+            h4.header
+                if icon
+                    +icon name=icon
+                each doc_header_fields
+                    |#{value}
+        .content
+            .ui.list
+                each fields
+                    if editing_mode
+                        +field_edit
+                    else
+                        +field_view
 
 template(name='draft')
     .ui.header
@@ -247,6 +266,8 @@ template(name='facet_segment')
                         else
                             +field_view
             .content
+                .ui.icon.button.maximize
+                    i.plus.icon
                 if editing_mode
                     .ui.icon.button.remove_doc
                         i.remove.icon
