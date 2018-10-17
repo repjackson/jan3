@@ -16,6 +16,10 @@ Template.draft.onCreated ->
     facet = Docs.findOne type:'facet'
     if facet
         @autorun => Meteor.subscribe 'single_doc', facet.adding_id
+Template.max_view.onCreated ->
+    facet = Docs.findOne type:'facet'
+    if facet
+        @autorun => Meteor.subscribe 'single_doc', facet.max_id
 
 Template.facet_segment.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data

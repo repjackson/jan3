@@ -8,7 +8,7 @@ template(name='dao')
                             i.plus.icon
         else
             if facet_doc.full_mode
-                if facet_docis_adding
+                if facet_doc.is_adding
                     .centered.row
                         .ten.wide.column
                             +draft
@@ -118,8 +118,8 @@ template(name='detail_pane')
 template(name='max_view')
     .ui.header
         |Full View
-    .ui.icon.button.minimize
-        i.minus.icon
+    .ui.icon.button.minimize(title='Minimize')
+        i.window.minimize.icon
     with full_doc
         .content
             h4.header
@@ -250,7 +250,7 @@ template(name='edit_field_text')
 
 template(name='facet_segment')
     with local_doc
-        .ui.segment.facet_segment(class=facet_segment_class)
+        .ui.top.attached.segment.facet_segment(class=facet_segment_class)
             // if doc_header_fields
             .content
                 h4.header
@@ -266,11 +266,13 @@ template(name='facet_segment')
                         else
                             +field_view
             .content
-                .ui.icon.button.maximize
-                    i.plus.icon
+                .ui.icon.button.maximize(title='View Full')
+                    i.window.maximize.icon
                 if editing_mode
                     .ui.icon.button.remove_doc
                         i.remove.icon
+        .ui.fluid.bottom.attached.button.maximize(title='View Medium')
+            i.chevron.down.icon
 
 template(name='field_view')
     if field_template
