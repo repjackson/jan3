@@ -7,16 +7,7 @@ template(name='dao')
                         .create_facet.ui.icon.button(title='Create Session')
                             i.plus.icon
         else
-            if facet_doc.full_mode
-                if facet_doc.is_adding
-                    .centered.row
-                        .ten.wide.column
-                            +draft
-                else if facet_doc.max_mode
-                    .centered.row
-                        .ten.wide.column
-                            +max_view
-            else
+            unless facet_doc.is_adding
                 .row
                     .three.wide.column
                         .ui.icon.fluid.input
@@ -54,14 +45,13 @@ template(name='dao')
                 .row
                     .sixteen.wide.column
                         +type_filter
-        unless facet_doc.full_mode
+        unless facet_doc.is_adding
             .row
                 if facet_doc
-                    .three.wide.column
+                    .three.wide.column.scrolling
                         .ui.button.add_doc + Doc
                         if editing_mode
                             .ui.button.show_facet log
-                        if dev_mode
                             .ui.button.add_field + Field
                         if schema_doc
                             each faceted_fields
@@ -75,24 +65,26 @@ template(name='dao')
                                 +edit_field
                         else
                             .ui.equal.width.grid
-                                .column
-                                    if is_calculating
-                                        // i.large.loading.refresh.icon
-                                        .ui.active.indeterminate.massive.centered.inline.loader
-                                            // |Calculating filters and results
-                                    else
-                                        if facet_doc.result_ids
-                                            if facet_doc.result_ids.length
-                                                each facet_doc.result_ids
-                                                    +facet_segment
+                                .column.parent_scrolling
+                                    .scrolling
+                                        if is_calculating
+                                            // i.large.loading.refresh.icon
+                                            .ui.active.indeterminate.massive.centered.inline.loader
+                                                // |Calculating filters and results
                                         else
-                                            |No results
+                                            if facet_doc.result_ids
+                                                if facet_doc.result_ids.length
+                                                    each facet_doc.result_ids
+                                                        +facet_segment
+                                            else
+                                                |No results
                                 if facet_doc.viewing_detail
-                                    .column
+                                    .column.scrolling
                                         +detail_pane
-                                if facet_doc.viewing_child
-                                    .column
-                                        .ui.header viewing child
+        else
+            .centered.row
+                .ten.wdie.column
+                    +draft
 
 
 
@@ -114,26 +106,12 @@ template(name='detail_pane')
                         +field_edit
                     else
                         +field_view
-
-template(name='max_view')
-    .ui.header
-        |Full View
-    .ui.icon.button.minimize(title='Minimize')
-        i.window.minimize.icon
-    with full_doc
         .content
-            h4.header
-                if icon
-                    +icon name=icon
-                each doc_header_fields
-                    |#{value}
-        .content
-            .ui.list
-                each fields
-                    if editing_mode
-                        +field_edit
-                    else
-                        +field_view
+            .ui.button Reply
+            .ui.button Bookmark
+            .ui.button Close
+            .ui.button Comment
+            .ui.button.view_detail View
 
 template(name='draft')
     .ui.header
@@ -148,7 +126,7 @@ template(name='draft')
     .ui.button.cancel_draft Cancel
 
 template(name='edit_field')
-    .ui.blue.segment(class=ticket_color_class)
+    .ui.segment(class=ticket_color_class)
         .content
             .ui.header
                 if icon
@@ -168,10 +146,6 @@ template(name='edit_field')
             +edit_field_boolean key='editable' label='Editable'
             +edit_field_boolean key='Draft' label='Draft'
             +edit_field_boolean key='card_header' label='Card Header'
-            +edit_field_boolean key='reference' label='Reference'
-            if reference
-                .ui.segment
-                    +edit_field_text key='reference_schema' label='Reference Schema' filter_id=this._id
             if editable
                 .ui.segment
                     +edit_field_array key='editable_roles' label='Editable Roles'
@@ -250,7 +224,7 @@ template(name='edit_field_text')
 
 template(name='facet_segment')
     with local_doc
-        .ui.top.attached.segment.facet_segment(class=facet_segment_class)
+        .ui.segment.facet_segment(class=facet_segment_class)
             // if doc_header_fields
             .content
                 h4.header
@@ -266,13 +240,9 @@ template(name='facet_segment')
                         else
                             +field_view
             .content
-                .ui.icon.button.maximize(title='View Full')
-                    i.window.maximize.icon
                 if editing_mode
                     .ui.icon.button.remove_doc
                         i.remove.icon
-        .ui.fluid.bottom.attached.button.maximize(title='View Medium')
-            i.chevron.down.icon
 
 template(name='field_view')
     if field_template
@@ -402,16 +372,3 @@ template(name='query_input')
         else
             i.link.search.icon
         input#query(type='text' placeholder=placeholder value=current_query)
-
-
-template(name='schema_relation_crud')
-    .ui.segment
-        .ui.header
-            if icon
-                +icon name=icon
-            |#{relation_field_doc.title}
-        .ui.button.add_child
-            |Add #{schema_doc.title}
-        .ui.list
-            each schema_relations
-                .item #{this}

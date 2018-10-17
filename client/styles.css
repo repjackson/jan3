@@ -10,6 +10,16 @@
   box-shadow: none
 }
 
+/*.parent_scrolling{*/
+/*  height: 100%;*/
+/*  display:flex;*/
+/*}*/
+
+.scrolling{
+  /*overflow-y:scroll;*/
+  overflow-y:scroll;
+  max-height:1000px;
+}
 
 .jpgreen {
   background: rgba(132, 189, 0) !important;

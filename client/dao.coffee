@@ -12,14 +12,6 @@ Template.detail_pane.onCreated ->
     facet = Docs.findOne type:'facet'
     if facet
         @autorun => Meteor.subscribe 'single_doc', facet.detail_id
-Template.draft.onCreated ->
-    facet = Docs.findOne type:'facet'
-    if facet
-        @autorun => Meteor.subscribe 'single_doc', facet.adding_id
-Template.max_view.onCreated ->
-    facet = Docs.findOne type:'facet'
-    if facet
-        @autorun => Meteor.subscribe 'single_doc', facet.max_id
 
 Template.facet_segment.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
@@ -55,15 +47,6 @@ Template.field_edit.events
 
 
 Template.facet_segment.events
-    'click .maximize': ->
-        facet = Docs.findOne type:'facet'
-        Docs.update facet._id,
-            $set:
-                max_mode:true
-                full_mode:true
-                max_id:@_id
-
-
     'click .facet_segment': ->
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
@@ -128,7 +111,6 @@ Template.field_edit.helpers
             schema_slugs:$in:[schema.slug]
         # console.log 'field doc', field_doc
         parent["#{@key}"]
-
 Template.field_view.helpers
     value: ->
         # console.log @
@@ -267,24 +249,25 @@ Template.selector.helpers
         switch typeof @value
             when 'string' then @value
             when 'boolean'
-                if @value is true then 'Open'
-                else if @value is false then 'Closed'
+                if @value is true then 'True'
+                else if @value is false then 'False'
             when 'number' then @value
 
 
 Template.type_filter.helpers
     faceted_types: ->
-        if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles
-            Docs.find(
-                type:'schema'
-                faceted:true
-            ).fetch()
-        else
-            Docs.find(
-                type:'schema'
-                faceted:true
-                dev:$ne:true
-            ).fetch()
+        if Meteor.user() and Meteor.user().roles
+            if 'dev' in Meteor.user().roles and Session.equals('dev_mode', true)
+                Docs.find(
+                    type:'schema'
+                    # faceted:true
+                ).fetch()
+            else
+                Docs.find(
+                    type:'schema'
+                    faceted:true
+                    dev:$ne:true
+                ).fetch()
 
     set_type_class: ->
         facet = Docs.findOne type:'facet'
@@ -320,14 +303,6 @@ Template.detail_pane.helpers
             type:'field'
             schema_slugs: $in: [current_type]
         ).fetch()
-
-Template.max_view.events
-    'click .minimize': ->
-        facet = Docs.findOne type:'facet'
-        Docs.update facet._id,
-            $set:
-                max_mode:false
-                full_mode:false
 
 Template.draft.events
     'click .submit_draft': ->
@@ -366,18 +341,6 @@ Template.draft.helpers
             type:'field'
             schema_slugs: $in: [current_type]
             # draft:true
-        ).fetch()
-
-Template.max_view.helpers
-    full_doc: ->
-        facet = Docs.findOne type:'facet'
-        Docs.findOne facet.max_id
-    fields: ->
-        facet = Docs.findOne type:'facet'
-        current_type = facet.filter_type[0]
-        Docs.find(
-            type:'field'
-            schema_slugs: $in: [current_type]
         ).fetch()
 
 
@@ -435,7 +398,7 @@ Template.set_facet_key.helpers
 Template.filter.helpers
     values: ->
         facet = Docs.findOne type:'facet'
-        facet["#{@key}_return"][..10]
+        facet["#{@key}_return"]?[..10]
 
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'
@@ -539,25 +502,3 @@ Template.ticket_assignment_cell.helpers
         if @assigned_to
             Meteor.users.find
                 _id: $in: @assigned_to
-
-
-Template.schema_relation_crud.events
-    'click .add_child': ->
-        facet = Docs.findOne type:'facet'
-        Docs.update facet._id,
-            $set:viewing_child:true
-
-Template.schema_relation_crud.helpers
-    relation_field_doc: -> Template.currentData()
-    schema_doc: ->
-        relation_field_doc = Template.currentData()
-        Docs.findOne
-            type:'schema'
-            slug:relation_field_doc.reference_schema
-        # relation_field_doc.reference_schema
-    schema_relations: ->
-        relation_field_doc = Template.currentData()
-        parent = Template.parentData()
-        Docs.find
-            type:relation_field_doc.reference_schema
-            parent_id:parent._id
