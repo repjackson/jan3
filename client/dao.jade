@@ -52,6 +52,7 @@ template(name='dao')
                         .ui.button.add_doc + Doc
                         if editing_mode
                             .ui.button.show_facet log
+                        if dev_mode
                             .ui.button.add_field + Field
                         if schema_doc
                             each faceted_fields
@@ -80,6 +81,9 @@ template(name='dao')
                                 if facet_doc.viewing_detail
                                     .column
                                         +detail_pane
+                                if facet_doc.viewing_child
+                                    .column
+                                        .ui.header viewing child
         else
             .centered.row
                 .ten.wdie.column
@@ -125,7 +129,7 @@ template(name='draft')
     .ui.button.cancel_draft Cancel
 
 template(name='edit_field')
-    .ui.segment(class=ticket_color_class)
+    .ui.blue.segment(class=ticket_color_class)
         .content
             .ui.header
                 if icon
@@ -145,6 +149,10 @@ template(name='edit_field')
             +edit_field_boolean key='editable' label='Editable'
             +edit_field_boolean key='Draft' label='Draft'
             +edit_field_boolean key='card_header' label='Card Header'
+            +edit_field_boolean key='reference' label='Reference'
+            if reference
+                .ui.segment
+                    +edit_field_text key='reference_schema' label='Reference Schema' filter_id=this._id
             if editable
                 .ui.segment
                     +edit_field_array key='editable_roles' label='Editable Roles'
@@ -371,3 +379,16 @@ template(name='query_input')
         else
             i.link.search.icon
         input#query(type='text' placeholder=placeholder value=current_query)
+
+
+template(name='schema_relation_crud')
+    .ui.segment
+        .ui.header
+            if icon
+                +icon name=icon
+            |#{relation_field_doc.title}
+        .ui.button.add_child
+            |Add #{schema_doc.title}
+        .ui.list
+            each schema_relations
+                .item #{this}

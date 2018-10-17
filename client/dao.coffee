@@ -12,6 +12,10 @@ Template.detail_pane.onCreated ->
     facet = Docs.findOne type:'facet'
     if facet
         @autorun => Meteor.subscribe 'single_doc', facet.detail_id
+Template.draft.onCreated ->
+    facet = Docs.findOne type:'facet'
+    if facet
+        @autorun => Meteor.subscribe 'single_doc', facet.adding_id
 
 Template.facet_segment.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
@@ -259,7 +263,7 @@ Template.type_filter.helpers
         if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles
             Docs.find(
                 type:'schema'
-                # faceted:true
+                faceted:true
             ).fetch()
         else
             Docs.find(
@@ -501,3 +505,25 @@ Template.ticket_assignment_cell.helpers
         if @assigned_to
             Meteor.users.find
                 _id: $in: @assigned_to
+
+
+Template.schema_relation_crud.events
+    'click .add_child': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set:viewing_child:true
+
+Template.schema_relation_crud.helpers
+    relation_field_doc: -> Template.currentData()
+    schema_doc: ->
+        relation_field_doc = Template.currentData()
+        Docs.findOne
+            type:'schema'
+            slug:relation_field_doc.reference_schema
+        # relation_field_doc.reference_schema
+    schema_relations: ->
+        relation_field_doc = Template.currentData()
+        parent = Template.parentData()
+        Docs.find
+            type:relation_field_doc.reference_schema
+            parent_id:parent._id
