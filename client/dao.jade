@@ -15,81 +15,89 @@ template(name='dao')
                     // if editing_mode
                     .ui.icon.button.delete_facet(title='Clear Session')
                         i.remove.icon
-            .row
+            if config_mode
+                .row
+                    .sixteen.wide.column
+                        .ui.header
+                            i.cog.icon
+                            |Schema Configuration
+                        .ui.primary.button.disable_config
+                            i.cog.icon
+                            | Configure
+                        .ui.button.show_facet log
+                        .ui.button.add_field + Field
+                        .ui.three.stackable.cards
+                            each fields
+                                +edit_field
+            else
                 .four.wide.column.scrolling
+                    .ui.button.enable_config
+                        i.cog.icon
+                        | Configure
                     .ui.button.add_doc
                         i.plus.icon
                         |Add
-                    if dev_mode
-                        .ui.button.show_facet log
-                        .ui.button.add_field + Field
                     if schema_doc
                         each faceted_fields
                             +filter
                 .twelve.wide.column
-                    if dev_mode
-                        .ui.dividing.header
-                            i.clone.icon
-                            |Fields
-                        each fields
-                            +edit_field
-                    else
-                        .ui.equal.width.stackable.grid
-                            .column.scrolling
-                                if is_calculating
-                                    // i.large.loading.refresh.icon
-                                    .ui.active.indeterminate.massive.centered.inline.loader
-                                        // |Calculating filters and results
+                    .ui.equal.width.stackable.grid
+                        .column.scrolling
+                            if is_calculating
+                                // i.large.loading.refresh.icon
+                                .ui.active.indeterminate.massive.centered.inline.loader
+                                    // |Calculating filters and results
+                            else
+                                if facet_doc.result_ids
+                                    if facet_doc.result_ids.length
+                                        +set_page_size value=10
+                                        +set_page_size value=20
+                                        +set_page_size value=50
+                                        // | #{facet_doc.skip_amount}
+                                        // | /
+                                        if facet_doc.page_amount
+                                            .ui.pagination.small.menu
+                                                // if show_decrement
+                                                a.icon.item.page_down
+                                                    i.left.chevron.grey.icon
+                                                .ui.item
+                                                    | #{facet_doc.current_page}/#{facet_doc.page_amount}
+                                                    // .menu
+                                                    //     a.set_page_number.item(class=pagination_item_class) 1
+                                                    //     a.set_page_number.item(class=pagination_item_class) 2
+                                                a.icon.item.page_up
+                                                    i.right.chevron.grey.icon
+                                                // if show_increment
+                                        .ui.basic.label #{facet_doc.total} Results
+                                        each facet_doc.result_ids
+                                            +facet_segment
                                 else
-                                    if facet_doc.result_ids
-                                        if facet_doc.result_ids.length
-                                            +set_page_size value=10
-                                            +set_page_size value=20
-                                            +set_page_size value=50
-                                            // | #{facet_doc.skip_amount}
-                                            // | /
-                                            if facet_doc.page_amount
-                                                .ui.pagination.small.menu
-                                                    // if show_decrement
-                                                    a.icon.item.page_down
-                                                        i.left.chevron.grey.icon
-                                                    .ui.item
-                                                        | #{facet_doc.current_page}/#{facet_doc.page_amount}
-                                                        // .menu
-                                                        //     a.set_page_number.item(class=pagination_item_class) 1
-                                                        //     a.set_page_number.item(class=pagination_item_class) 2
-                                                    a.icon.item.page_up
-                                                        i.right.chevron.grey.icon
-                                                    // if show_increment
-                                            .ui.basic.label #{facet_doc.total} Results
-                                            each facet_doc.result_ids
-                                                +facet_segment
-                                    else
-                                        |No results
-                            if facet_doc.viewing_detail
-                                .column.scrolling
-                                    +detail_pane
+                                    |No results
+                        if facet_doc.viewing_detail
+                            .column.scrolling
+                                +detail_pane
 
 
 
 template(name='detail_pane')
-    a.ui.header.close_details(href='#')
-        |Details
-        i.right.chevron.icon
     with detail_doc
-        .content
-            h4.header
-                if icon
-                    +iconsmall name=icon
-                each doc_header_fields
-                    |#{value}
-        .content
-            .ui.list
-                each fields
-                    if editing_mode
-                        +field_edit
-                    else
-                        +field_view
+        a.ui.header.close_details(href='#')
+            if icon
+                i.icon
+                    +icon name=icon
+            |'#{title} 'Details
+            // each doc_header_fields
+            //     |#{value}
+            // i.right.chevron.icon
+        // .content
+        //     h4.header
+        .ui.hidden.divider
+        .ui.list
+            each fields
+                if editing_mode
+                    +field_edit
+                else
+                    +field_view
 
 template(name='draft')
     .ui.header
@@ -104,7 +112,7 @@ template(name='draft')
     .ui.button.cancel_draft Cancel
 
 template(name='edit_field')
-    .ui.segment(class=ticket_color_class)
+    .ui.card(class=ticket_color_class)
         .content
             .ui.header
                 if icon
@@ -122,11 +130,15 @@ template(name='edit_field')
             +edit_field_boolean key='read_only' label='Read Only'
             +edit_field_boolean key='sortable' label='Sortable'
             +edit_field_boolean key='editable' label='Editable'
-            +edit_field_boolean key='Draft' label='Draft'
-            +edit_field_boolean key='card_header' label='Card Header'
+            +edit_field_boolean key='draft' label='Draft'
+            +edit_field_boolean key='axon' label='Axon'
+            +edit_field_boolean key='header' label='Header'
             if editable
                 .ui.segment
                     +edit_field_array key='editable_roles' label='Editable Roles'
+            if axon
+                .ui.segment
+                    +edit_field_text key='axon_schema' label='Icon' filter_id=this._id
         .content
             .ui.icon.remove_field.button
                 i.remove.icon
@@ -145,6 +157,15 @@ template(name='edit_field_array')
         .ui.label
             |#{this}
             i.remove.icon
+
+template(name='edit_doc_array')
+    .ui.small.header #{label}
+    .ui.input
+        input.add_value(type='text' placeholder='Add')
+    each values
+        .ui.label
+            |#{this}
+            i.remove.pull_value.link.icon
 
 
 
@@ -213,10 +234,7 @@ template(name='facet_segment')
             .content
                 .ui.list
                     each field_docs
-                        if editing_mode
-                            +field_edit
-                        else
-                            +field_view
+                        +field_view
             .content
                 if editing_mode
                     .ui.icon.button.remove_doc
@@ -233,12 +251,13 @@ template(name='field_view')
 
 template(name='field_edit')
     if is_boolean
-        if is_true
-            .ui.primary.button.set_false #{label}
-        else
-            .ui.button.set_true #{label}
+        .ui.button.toggle_field(class=bool_switch_class title=key)
+            if icon
+                i.icon
+                    +icon name=icon
+            |#{title}
     if is_array
-        .ui.blue.segment
+        .ui.segment
             .ui.fluid.labeled.small.input
                 .ui.basic.label #{title}
                 input.add_array_element(type='text' placholder='add')
@@ -259,8 +278,11 @@ template(name='boolean_facet')
     .pick_no.ui.button no
 
 template(name='bool_switch')
-    .ui.button.toggle_field(class=bool_switch_class)
-        |#{key}
+    .ui.button.toggle_field(class=bool_switch_class title=key)
+        if icon
+            i.icon
+                +icon name=icon
+        |#{title}
 
 
 template(name='icon')

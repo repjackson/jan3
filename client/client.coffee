@@ -38,10 +38,17 @@ globalHotkeys.add
 	callback : ()->
 	    if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles
             Session.set('dev_mode',!Session.get('dev_mode'))
+globalHotkeys.add
+	combo : "ctrl+shift+alt+c"
+	eventType: "keydown"
+	callback : ()->
+	    if Meteor.user() and Meteor.user().roles and 'office' in Meteor.user().roles
+            Session.set('config_mode',!Session.get('config_mode'))
 
 
 
 Session.setDefault('query',null)
+Session.setDefault('config_mode',false)
 
 if Meteor.isDevelopment
     Session.setDefault('editing_mode',false)
@@ -157,6 +164,10 @@ Template.registerHelper 'dev_mode', ()->
 Template.registerHelper 'editing_mode', ()->
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles and Session.get('editing_mode')
+
+Template.registerHelper 'config_mode', ()->
+    if Meteor.user() and Meteor.user().roles
+        'office' in Meteor.user().roles and Session.get('config_mode')
 
 
 

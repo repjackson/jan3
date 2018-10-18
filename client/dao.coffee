@@ -17,6 +17,23 @@ Template.facet_segment.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
 
 Template.field_edit.events
+    'click .toggle_field': ->
+        # console.log @
+        # console.log Template.currentData()
+        # console.log Template.parentData()
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        # console.log Template.parentData(4)
+        target_doc = Template.parentData(5)
+        bool_value = target_doc["#{@key}"]
+
+        if bool_value and bool_value is true
+            Docs.update target_doc._id,
+                $set: "#{@key}": false
+        else
+            Docs.update target_doc._id,
+                $set: "#{@key}": true
+
     'blur .text_field_val': (e,t)->
         # console.log Template.parentData()
         parent = Template.parentData()
@@ -97,8 +114,19 @@ Template.facet_segment.helpers
             card_header:true
         ).fetch()
 
+
+
 Template.field_edit.helpers
-    is_array:-> @field_type is 'schemas'
+    'bool_switch_class': ->
+        target_doc = Template.parentData(5)
+        bool_value = target_doc["#{@key}"]
+        if bool_value and bool_value is true
+            'primary'
+        else
+            ''
+
+    is_array:-> @field_type is 'array'
+    is_boolean:-> @field_type is 'boolean'
     value: ->
         # console.log @
         facet = Docs.findOne type:'facet'
@@ -164,6 +192,35 @@ Template.edit_field_array.events
                     "#{@key}": new_val
 
 
+Template.edit_doc_array.events
+    'keyup .add_value': (e,t)->
+        if e.which is 13
+            new_val = e.currentTarget.value
+            array_field = Template.currentData()
+            target_doc = Template.parentData(5)
+            Docs.update target_doc._id,
+                $addToSet:
+                    "#{array_field.key}": new_val
+
+
+    'click .pull_value': (e,t)->
+        val = @valueOf()
+        if confirm "Remove #{val}?"
+            array_field = Template.currentData()
+            target_doc = Template.parentData(5)
+            Docs.update target_doc._id,
+                $pull:
+                    "#{array_field.key}": val
+
+
+Template.edit_doc_array.helpers
+    values: ->
+        array_field = Template.currentData()
+        target_doc = Template.parentData(5)
+        if target_doc["#{array_field.key}"] then target_doc["#{array_field.key}"]
+
+
+
 
 Template.edit_field_boolean.events
     'click .set_true': ->
@@ -180,6 +237,10 @@ Template.edit_field_boolean.events
 
 
 Template.dao.events
+    'click .enable_config': -> Session.set 'config_mode', true
+    'click .disable_config': -> Session.set 'config_mode', false
+
+
     'click .close_details': ->
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
@@ -473,31 +534,6 @@ Template.edit_field_text.events
             { $set: "#{@key}": text_value }
 
 
-Template.bool_switch.helpers
-    'bool_switch_class': ->
-        target_doc = Template.parentData(5)
-        bool_value = target_doc["#{@key}"]
-        if bool_value and bool_value is true
-            'primary'
-        else
-            ''
-Template.bool_switch.events
-    'click .toggle_field': ->
-        # console.log @
-        # console.log Template.currentData()
-        # console.log Template.parentData()
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
-        # console.log Template.parentData(4)
-        target_doc = Template.parentData(5)
-        bool_value = target_doc["#{@key}"]
-
-        if bool_value and bool_value is true
-            Docs.update target_doc._id,
-                $set: "#{@key}": false
-        else
-            Docs.update target_doc._id,
-                $set: "#{@key}": true
 
 
 
