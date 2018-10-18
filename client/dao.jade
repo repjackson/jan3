@@ -31,9 +31,10 @@ template(name='dao')
                                 +edit_field
             else
                 .four.wide.column.scrolling
-                    .ui.button.enable_config
-                        i.cog.icon
-                        | Configure
+                    // if is_dev
+                    //     .ui.button.enable_config
+                    //         i.cog.icon
+                    //         | Configure
                     .ui.button.add_doc
                         i.plus.icon
                         |Add
@@ -92,9 +93,18 @@ template(name='detail_pane')
         // .content
         //     h4.header
         .ui.hidden.divider
+        if facet_doc.editing_mode
+            .ui.button.disable_editing
+                i.checkmark.icon
+                |Save
+        else
+            .ui.button.enable_editing
+                i.pencil.icon
+                |Edit
+
         .ui.list
             each fields
-                if editing_mode
+                if facet_doc.editing_mode
                     +field_edit
                 else
                     +field_view

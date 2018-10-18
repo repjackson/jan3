@@ -367,11 +367,24 @@ Template.type_filter.events
                 Session.set 'is_calculating', false
 
 
+Template.detail_pane.events
+    'click .enable_editing': ->
+        facet=Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set:editing_mode:true
+    'click .disable_editing': ->
+        facet=Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set:editing_mode:false
 
 Template.detail_pane.helpers
     detail_doc: ->
         facet = Docs.findOne type:'facet'
         Docs.findOne facet.detail_id
+
+    facet_doc: ->
+        facet = Docs.findOne type:'facet'
+
     fields: ->
         facet = Docs.findOne type:'facet'
         current_type = facet.filter_type[0]

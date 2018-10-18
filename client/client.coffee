@@ -27,12 +27,6 @@ FlowRouter.route('/', {
 
 globalHotkeys = new Hotkeys()
 globalHotkeys.add
-	combo : "ctrl+shift+e"
-	eventType: "keydown"
-	callback : ()->
-        Session.set('editing_mode',!Session.get('editing_mode'))
-
-globalHotkeys.add
 	combo : "ctrl+shift+alt+d"
 	eventType: "keydown"
 	callback : ()->
@@ -51,10 +45,8 @@ Session.setDefault('query',null)
 Session.setDefault('config_mode',false)
 
 if Meteor.isDevelopment
-    Session.setDefault('editing_mode',false)
     Session.setDefault('dev_mode',false)
-else
-    Session.setDefault('editing_mode',false)
+# else
 
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
@@ -161,9 +153,6 @@ Template.registerHelper 'dev_mode', ()->
         'dev' in Meteor.user().roles and Session.get('dev_mode')
 
 
-Template.registerHelper 'editing_mode', ()->
-    if Meteor.user() and Meteor.user().roles
-        'dev' in Meteor.user().roles and Session.get('editing_mode')
 
 Template.registerHelper 'config_mode', ()->
     if Meteor.user() and Meteor.user().roles
