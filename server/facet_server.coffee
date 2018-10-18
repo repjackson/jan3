@@ -11,7 +11,9 @@ Meteor.methods
             type:'facet'
             author_id: Meteor.userId()
 
-        current_type = facet.filter_type[0]
+        current_type = facet.filter_type?[0]
+
+        filter_keys = []
 
         if facet.filter_type and facet.filter_type.length > 0
             schema =
@@ -27,23 +29,8 @@ Meteor.methods
                 for field in fields.fetch()
                     if field.faceted is true
                         filter_keys.push field.key
-            # return
         else
-            Docs.update facet._id,
-                $set:
-                    total: 0
-                    result_ids:[]
-                    filter_type: []
-                    type_return:
-                        [
-                            { value:'ticket' }
-                            { value:'office' }
-                            { value:'customer' }
-                            { value:'franchisee' }
-                        ]
-            return true
-
-
+            return
         built_query = {}
 
         filter_keys.push 'type'
@@ -64,6 +51,12 @@ Meteor.methods
             limit_val = 100
         if Meteor.isProduction
             limit_val = 1000
+
+        if Meteor.user().roles
+            if 'office' in Meteor.user().roles
+                built_query['office_jpid'] = Meteor.user().office_jpid
+            if 'customer' in Meteor.user().roles
+                built_query['customer_jpid'] = Meteor.user().customer_jpid
 
         results = Docs.find(built_query, {limit:limit_val})
 

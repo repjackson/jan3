@@ -4,87 +4,71 @@ template(name='dao')
             .row
                 .sixteen.wide.column
                     if currentUser
-                        .create_facet.ui.icon.button(title='Create Session')
+                        .create_facet.ui.button(title='Create Session')
                             i.plus.icon
-        else
-            unless facet_doc.is_adding
-                .row
-                    .three.wide.column
-                        .ui.icon.fluid.input
-                            if current_query
-                                i.clear_search.link.remove.icon
-                            else
-                                i.link.search.icon
-                            input#query(type='text' placeholder=placeholder value=current_query)
-                    .six.wide.middle.aligned.column
-                        +set_page_size value=10
-                        +set_page_size value=20
-                        +set_page_size value=50
-                        | #{facet_doc.skip_amount}
-                        | /
-                        | #{facet_doc.total}
-                    .three.wide.column
-                        if facet_doc.page_amount
-                            .ui.pagination.small.menu
-                                // if show_decrement
-                                a.icon.item.page_down
-                                    i.left.chevron.grey.icon
-                                .ui.item
-                                    | #{facet_doc.current_page}/#{facet_doc.page_amount}
-                                    // .menu
-                                    //     a.set_page_number.item(class=pagination_item_class) 1
-                                    //     a.set_page_number.item(class=pagination_item_class) 2
-                                a.icon.item.page_up
-                                    i.right.chevron.grey.icon
-                                // if show_increment
-
-                    .right.floated.three.wide.column
-                        if editing_mode
-                            .ui.icon.button.delete_facet
-                                i.blue.remove.icon
-                .row
-                    .sixteen.wide.column
-                        +type_filter
-        unless facet_doc.is_adding
+                            |Create Session
+        if facet_doc
             .row
-                if facet_doc
-                    .three.wide.column.scrolling
-                        .ui.button.add_doc + Doc
-                        if editing_mode
-                            .ui.button.show_facet log
-                            .ui.button.add_field + Field
-                        if schema_doc
-                            each faceted_fields
-                                +filter
-                    .thirteen.wide.column
-                        if dev_mode
-                            .ui.dividing.header
-                                i.clone.icon
-                                |Fields
-                            each fields
-                                +edit_field
-                        else
-                            .ui.equal.width.grid
-                                .column.parent_scrolling
-                                    .scrolling
-                                        if is_calculating
-                                            // i.large.loading.refresh.icon
-                                            .ui.active.indeterminate.massive.centered.inline.loader
-                                                // |Calculating filters and results
-                                        else
-                                            if facet_doc.result_ids
-                                                if facet_doc.result_ids.length
-                                                    each facet_doc.result_ids
-                                                        +facet_segment
-                                            else
-                                                |No results
-                                if facet_doc.viewing_detail
-                                    .column.scrolling
-                                        +detail_pane
-        else
-            .centered.row
-                .ten.wdie.column
-                    +draft
+                .fifteen.wide.column
+                    +type_filter
+                .one.wide.column
+                    // if editing_mode
+                    .ui.icon.button.delete_facet(title='Clear Session')
+                        i.remove.icon
+            .row
+                .four.wide.column.scrolling
+                    .ui.button.add_doc
+                        i.plus.icon
+                        |Add
+                    if dev_mode
+                        .ui.button.show_facet log
+                        .ui.button.add_field + Field
+                    if schema_doc
+                        each faceted_fields
+                            +filter
+                .twelve.wide.column
+                    if dev_mode
+                        .ui.dividing.header
+                            i.clone.icon
+                            |Fields
+                        each fields
+                            +edit_field
+                    else
+                        .ui.equal.width.stackable.grid
+                            .column.scrolling
+                                if is_calculating
+                                    // i.large.loading.refresh.icon
+                                    .ui.active.indeterminate.massive.centered.inline.loader
+                                        // |Calculating filters and results
+                                else
+                                    if facet_doc.result_ids
+                                        if facet_doc.result_ids.length
+                                            +set_page_size value=10
+                                            +set_page_size value=20
+                                            +set_page_size value=50
+                                            // | #{facet_doc.skip_amount}
+                                            // | /
+                                            if facet_doc.page_amount
+                                                .ui.pagination.small.menu
+                                                    // if show_decrement
+                                                    a.icon.item.page_down
+                                                        i.left.chevron.grey.icon
+                                                    .ui.item
+                                                        | #{facet_doc.current_page}/#{facet_doc.page_amount}
+                                                        // .menu
+                                                        //     a.set_page_number.item(class=pagination_item_class) 1
+                                                        //     a.set_page_number.item(class=pagination_item_class) 2
+                                                    a.icon.item.page_up
+                                                        i.right.chevron.grey.icon
+                                                    // if show_increment
+                                            .ui.basic.label #{facet_doc.total} Results
+                                            each facet_doc.result_ids
+                                                +facet_segment
+                                    else
+                                        |No results
+                            if facet_doc.viewing_detail
+                                .column.scrolling
+                                    +detail_pane
 
 
 
@@ -106,12 +90,6 @@ template(name='detail_pane')
                         +field_edit
                     else
                         +field_view
-        .content
-            .ui.button Reply
-            .ui.button Bookmark
-            .ui.button Close
-            .ui.button Comment
-            .ui.button.view_detail View
 
 template(name='draft')
     .ui.header
@@ -179,7 +157,7 @@ template(name='edit_doc_boolean')
 
 
 template(name='set_page_size')
-    .ui.button.set_page_size #{value}
+    .ui.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
 
 template(name='set_facet_key')
     .ui.button.small.compact.set_facet_key(class=set_facet_key_class)
@@ -227,7 +205,7 @@ template(name='facet_segment')
         .ui.segment.facet_segment(class=facet_segment_class)
             // if doc_header_fields
             .content
-                h4.header
+                h4.ui.header
                     if icon
                         +iconsmall name=icon
                     each doc_header_fields

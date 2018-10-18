@@ -186,7 +186,7 @@ Template.dao.events
             $set: viewing_detail: false
 
     'click .delete_facet': ->
-        if confirm 'Delete facet?'
+        if confirm 'Clear Session?'
             facet = Docs.findOne type:'facet'
             Docs.remove facet._id
 
@@ -215,14 +215,21 @@ Template.dao.events
     'click .add_doc': (e,t)->
         facet = Docs.findOne type:'facet'
         type = facet.filter_type[0]
-        new_id = Docs.insert
-            type:type
-        # Meteor.call 'fo'
+        user =Meteor.user()
+        new_doc = {}
+        if type
+            new_doc['type'] = type
+        if user.roles
+            if 'office' in user.roles
+                new_doc['office_jpid'] = user.office_jpid
+            if 'customer' in user.roles
+                new_doc['customer_jpid'] = user.customer_jpid
+        new_id = Docs.insert(new_doc)
+
         Docs.update facet._id,
             $set:
                 viewing_detail:true
-                adding_id:new_id
-                is_adding:true
+                detail_id:new_id
 
     'click .add_field': (e,t)->
         facet = Docs.findOne type:'facet'
@@ -237,11 +244,19 @@ Template.dao.events
         console.log facet
 
 
+Template.set_page_size.helpers
+    page_size_class: ->
+        facet = Docs.findOne type:'facet'
+        if @value is facet.page_size then 'primary' else ''
+
 Template.set_page_size.events
     'click .set_page_size': (e,t)->
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
-            $set:page_size:@value
+            $set:
+                current_page:0
+                skip_amount:0
+                page_size:@value
         Meteor.call 'fo'
 
 Template.selector.helpers
