@@ -21,28 +21,32 @@ Meteor.methods
                     type:'schema'
                     slug:current_type
             if schema
-                fields =
-                    Docs.find
+                facet_fields =
+                    Docs.find(
                         type:'field'
                         schema_slugs:$in:[current_type]
-                filter_keys = []
-                for field in fields.fetch()
-                    if field.faceted is true
-                        filter_keys.push field.key
+                        faceted:true
+                        ).fetch()
         else
             return
+
         built_query = {}
 
-        filter_keys.push 'type'
+        facet_fields.push
+            key:'type'
+            field_type:'string'
 
 
-        for filter_key in filter_keys
-            filter_list = facet["filter_#{filter_key}"]
+        for facet_field in facet_fields
+            filter_list = facet["filter_#{facet_field.key}"]
             if filter_list and filter_list.length > 0
-                built_query["#{filter_key}"] = $in: filter_list
+                if facet_field.field_type is 'array'
+                    built_query["#{facet_field.key}"] = $all: filter_list
+                else
+                    built_query["#{facet_field.key}"] = $in: filter_list
             else
                 Docs.update facet._id,
-                    $set: "filter_#{filter_key}":[]
+                    $set: "filter_#{facet_field.key}":[]
 
 
         total = Docs.find(built_query).count()
@@ -59,45 +63,56 @@ Meteor.methods
                 if 'customer' in Meteor.user().roles
                     built_query['customer_jpid'] = Meteor.user().customer_jpid
 
-        results = Docs.find(built_query, {limit:limit_val})
+
+        results = Docs.find(built_query, {limit:limit_val}).fetch()
 
 
-        for filter_key in filter_keys
+
+        for facet_field in facet_fields
             values = []
             key_return = []
 
-            example_doc = Docs.findOne({"#{filter_key}":$exists:true})
+            example_doc = Docs.findOne({"#{facet_field.key}":$exists:true})
             if example_doc
-                example_value = example_doc["#{filter_key}"]
+                example_value = example_doc["#{facet_field.key}"]
             if example_value
                 filter_primitive = typeof example_value
-            for result in results.fetch()
-                result_value = result["#{filter_key}"]
+            for result in results
+                result_value = result["#{facet_field.key}"]
                 if result_value
-                    if typeof result_value is 'string'
-                        if result_value.length>0
+                    switch facet_field.field_type
+                        when 'string'
+                            if result_value.length>0
+                                values.push result_value
+                        when 'array'
+                            if result_value.length>0
+                                for array_element in result_value
+                                    values.push array_element
+                        else
                             values.push result_value
-                    else
-                        values.push result_value
+
 
             counted = _.countBy(values)
 
             for value,count of counted
-                if filter_primitive is 'number'
-                    int_value = parseInt value
-                    key_return.push({ value:int_value, count:count })
-                else if filter_primitive is 'boolean'
-                    bool_value = if value is 'true' then true else false
-                    key_return.push({ value:bool_value, count:count })
-                else if filter_primitive is 'string'
-                    key_return.push({ value:value, count:count })
+                switch facet_field.field_type
+                    when 'number'
+                        int_value = parseInt value
+                        key_return.push({ value:int_value, count:count })
+                    when 'boolean'
+                        bool_value = if value is 'true' then true else false
+                        key_return.push({ value:bool_value, count:count })
+                    when 'string'
+                        key_return.push({ value:value, count:count })
+                    when 'array'
+                        key_return.push({ value:value, count:count })
 
             sorted = _.sortBy(key_return, 'count')
             reversed = sorted.reverse()
 
 
             Docs.update {_id:facet._id},
-                {$set:"#{filter_key}_return":reversed}
+                {$set:"#{facet_field.key}_return":reversed}
                 , ->
 
         calc_page_size = if facet.page_size then facet.page_size else 10

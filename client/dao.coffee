@@ -367,6 +367,9 @@ Template.type_filter.events
             $set:
                 "filter_type": [@slug]
                 current_page: 0
+                detail_id:null
+                viewing_children:false
+                viewing_detail:false
         Session.set 'is_calculating', true
         # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
@@ -376,10 +379,10 @@ Template.type_filter.events
                 Session.set 'is_calculating', false
 
 
-Template.detail_pane.onCreated ->
-    Meteor.setTimeout ->
-        $('.accordion').accordion();
-    , 500
+# Template.detail_pane.onCreated ->
+#     Meteor.setTimeout ->
+#         $('.accordion').accordion();
+#     , 500
 
 
 Template.detail_pane.events
