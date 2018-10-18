@@ -86,7 +86,7 @@ template(name='detail_pane')
             if icon
                 i.icon
                     +icon name=icon
-            |'#{title} 'Details
+            |#{title} Details
             // each doc_header_fields
             //     |#{value}
             // i.right.chevron.icon
@@ -102,12 +102,24 @@ template(name='detail_pane')
                 i.pencil.icon
                 |Edit
 
+        if facet_doc.editing_mode
+            .ui.icon.button.remove_doc
+                i.remove.icon
         .ui.list
             each fields
                 if facet_doc.editing_mode
                     +field_edit
                 else
                     +field_view
+            // .ui.styled.accordion
+            each axons
+                .ui.button.select_axon
+                    if icon
+                        i.icon
+                            +icon name=icon
+                    |#{title}
+            if facet_doc.viewing_children
+                +Template.dynamic template=facet_doc.children_template
 
 template(name='draft')
     .ui.header
@@ -148,7 +160,8 @@ template(name='edit_field')
                     +edit_field_array key='editable_roles' label='Editable Roles'
             if axon
                 .ui.segment
-                    +edit_field_text key='axon_schema' label='Icon' filter_id=this._id
+                    +edit_field_text key='axon_schema' label='Axon Schema' filter_id=this._id
+                    +edit_field_text key='children_template' label='Children Template' filter_id=this._id
         .content
             .ui.icon.remove_field.button
                 i.remove.icon
@@ -238,17 +251,21 @@ template(name='facet_segment')
             .content
                 h4.ui.header
                     if icon
-                        +iconsmall name=icon
+                        +icon name=icon
                     each doc_header_fields
                         |#{value}
             .content
                 .ui.list
                     each field_docs
                         +field_view
-            .content
-                if editing_mode
-                    .ui.icon.button.remove_doc
-                        i.remove.icon
+            // .content
+            //     each axons
+            //         .ui.button
+            //             if icon
+            //                 i.icon
+            //                     +icon name=icon
+            //             |#{title}
+
 
 template(name='field_view')
     if field_template

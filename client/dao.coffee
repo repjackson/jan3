@@ -90,6 +90,18 @@ Template.facet_segment.helpers
         linked_fields = Docs.find(
             type:'field'
             schema_slugs: $in: [schema.slug]
+            axon:$ne:true
+            ).fetch()
+
+    axons: ->
+        facet = Docs.findOne type:'facet'
+        schema = Docs.findOne
+            type:'schema'
+            slug:facet.filter_type[0]
+        linked_fields = Docs.find(
+            type:'field'
+            schema_slugs: $in: [schema.slug]
+            axon:true
             ).fetch()
 
     value: ->
@@ -157,9 +169,6 @@ Template.field_view.helpers
 
 
 Template.dao.onRendered ->
-    # Meteor.setTimeout ->
-    #     $('.accordion').accordion();
-    # , 500
     Meteor.setTimeout ->
         $('.dropdown').dropdown()
     , 700
@@ -367,6 +376,12 @@ Template.type_filter.events
                 Session.set 'is_calculating', false
 
 
+Template.detail_pane.onCreated ->
+    Meteor.setTimeout ->
+        $('.accordion').accordion();
+    , 500
+
+
 Template.detail_pane.events
     'click .enable_editing': ->
         facet=Docs.findOne type:'facet'
@@ -376,6 +391,13 @@ Template.detail_pane.events
         facet=Docs.findOne type:'facet'
         Docs.update facet._id,
             $set:editing_mode:false
+
+    'click .select_axon': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set:
+                viewing_children:true
+                children_template:@children_template
 
 Template.detail_pane.helpers
     detail_doc: ->
@@ -390,8 +412,25 @@ Template.detail_pane.helpers
         current_type = facet.filter_type[0]
         Docs.find(
             type:'field'
+            axon:$ne:true
             schema_slugs: $in: [current_type]
         ).fetch()
+
+    axons: ->
+        facet = Docs.findOne type:'facet'
+        current_type = facet.filter_type[0]
+        Docs.find(
+            type:'field'
+            axon:true
+            schema_slugs: $in: [current_type]
+        ).fetch()
+
+    child_schema_docs: ->
+        Docs.find
+            type:@axon_schema
+
+    child_schema_fields: ->
+        console.log @
 
 Template.draft.events
     'click .submit_draft': ->

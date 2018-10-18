@@ -76,7 +76,7 @@ Template.login.events
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->
             if err then console.error err
             else
-                FlowRouter.go '/p/admin'
+                FlowRouter.go '/dashboard'
 
     'click #login_demo_office': ->
         Meteor.loginWithPassword 'demo_office', 'demoofficepassword', (err,res)->
