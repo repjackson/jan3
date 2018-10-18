@@ -342,16 +342,10 @@ Template.selector.helpers
 Template.type_filter.helpers
     faceted_types: ->
         if Meteor.user() and Meteor.user().roles
-            if 'dev' in Meteor.user().roles and Session.equals('dev_mode', true)
+            # if 'dev' in Meteor.user().roles and Session.equals('dev_mode', true)
                 Docs.find(
                     type:'schema'
-                    # faceted:true
-                ).fetch()
-            else
-                Docs.find(
-                    type:'schema'
-                    faceted:true
-                    dev:$ne:true
+                    nav_roles:$in:Meteor.user().roles
                 ).fetch()
 
     set_type_class: ->
