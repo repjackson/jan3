@@ -81,46 +81,44 @@ template(name='dao')
 
 
 template(name='detail_pane')
-    with detail_doc
+    if facet_doc.editing_mode
         a.ui.header.close_details(href='#')
             if icon
                 i.icon
                     +icon name=icon
-            |#{title} Details
-            // each doc_header_fields
-            //     |#{value}
-            // i.right.chevron.icon
-        // .content
-        //     h4.header
-        .ui.hidden.divider
-        if facet_doc.editing_mode
-            .ui.fluid.button.disable_editing
-                // |Save
-                i.checkmark.icon
-        else
-            .ui.button.enable_editing
-                i.pencil.icon
-                |Edit
+            |Edit #{detail_doc.title}
+        .ui.fluid.button.disable_editing
+            // |Save
+            i.checkmark.icon
+    else
+        a.ui.header.close_details(href='#')
+            if icon
+                i.icon
+                    +icon name=icon
+            |#{detail_doc.title} Details
+        .ui.right.floated.button.enable_editing
+            i.pencil.icon
+            |Edit
 
-        if facet_doc.editing_mode
-            .ui.icon.button.remove_doc
-                i.remove.icon
-        .ui.form
-            each fields
-                .field
-                    if facet_doc.editing_mode
-                        +field_edit
-                    else
-                        +field_view
-            // .ui.styled.accordion
-        each axons
-            .ui.button.select_axon(class=axon_selector_class)
-                if icon
-                    i.icon
-                        +icon name=icon
-                |#{title}
-        if facet_doc.viewing_children
-            +Template.dynamic template=facet_doc.children_template
+    if facet_doc.editing_mode
+        .ui.icon.button.remove_doc
+            i.remove.icon
+    .ui.form
+        each fields
+            .field
+                if facet_doc.editing_mode
+                    +field_edit
+                else
+                    +field_view
+        // .ui.styled.accordion
+    each axons
+        .ui.button.select_axon(class=axon_selector_class)
+            if icon
+                i.icon
+                    +icon name=icon
+            |#{title}
+    if facet_doc.viewing_children
+        +Template.dynamic template=facet_doc.children_template
 
 template(name='draft')
     .ui.header
@@ -264,7 +262,16 @@ template(name='facet_segment')
             .content
                 .ui.list
                     each field_docs
-                        +field_view
+                        .item
+                            if field_template
+                                +Template.dynamic template=field_template
+                            else
+                                |#{title}:
+                                if is_array
+                                    each value
+                                        .ui.basic.label #{this}
+                                else
+                                    strong &nbsp; #{value}
 
 
 template(name='boolean_facet')

@@ -35,19 +35,21 @@ Template.field_edit.events
 
     'blur .text_field_val': (e,t)->
         # console.log Template.parentData()
-        parent = Template.parentData()
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
 
         val = e.currentTarget.value
-        Docs.update parent._id,
+        Docs.update target_doc._id,
             $set:
                 "#{@key}": val
 
     'keyup .add_array_element': (e,t)->
         if e.which is 13
-            parent = Template.parentData()
+            facet = Docs.findOne type:'facet'
+            target_doc = Docs.findOne _id:facet.detail_id
 
             val = e.currentTarget.value
-            Docs.update parent._id,
+            Docs.update target_doc._id,
                 $addToSet:
                     "#{@key}": val
             t.$('.add_array_element').val('')
@@ -60,6 +62,7 @@ Template.field_edit.events
         Docs.update target_doc._id,
             $pull:
                 "#{local_doc.key}": @valueOf()
+
 
 
 Template.facet_segment.events
@@ -144,14 +147,18 @@ Template.field_edit.helpers
     is_array:-> @field_type is 'array'
     is_boolean:-> @field_type is 'boolean'
     value: ->
-        parent = Template.parentData()
-        parent["#{@key}"]
+        facet = Docs.findOne type:'facet'
+        editing_doc = Docs.findOne _id:facet.detail_id
+        # console.log 'target doc', editing_doc
+        value = editing_doc["#{@key}"]
+
 
 Template.field_view.helpers
     is_array:-> @field_type is 'array'
     value: ->
-        parent = Template.parentData()
-        parent["#{@key}"]
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
+        target_doc["#{@key}"]
 
 
 
