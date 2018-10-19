@@ -15,7 +15,7 @@ template(name='dao')
                     // if editing_mode
                     .ui.icon.button.delete_facet(title='Clear Session')
                         i.remove.icon
-            if config_mode
+            if facet_doc.config_mode
                 .row
                     .sixteen.wide.column
                         .ui.header
@@ -31,10 +31,10 @@ template(name='dao')
                                 +edit_field
             else
                 .four.wide.column.scrolling
-                    // if is_dev
-                    //     .ui.button.enable_config
-                    //         i.cog.icon
-                    //         | Configure
+                    if is_dev
+                        .ui.button.enable_config
+                            i.cog.icon
+                            | Configure
                     .ui.button.add_doc
                         i.plus.icon
                         |Add
@@ -57,7 +57,7 @@ template(name='dao')
                                         // | #{facet_doc.skip_amount}
                                         // | /
                                         if facet_doc.page_amount
-                                            .ui.pagination.small.menu
+                                            .ui.pagination.menu
                                                 // if show_decrement
                                                 a.icon.item.page_down
                                                     i.left.chevron.grey.icon
@@ -94,9 +94,9 @@ template(name='detail_pane')
         //     h4.header
         .ui.hidden.divider
         if facet_doc.editing_mode
-            .ui.button.disable_editing
+            .ui.fluid.button.disable_editing
+                // |Save
                 i.checkmark.icon
-                |Save
         else
             .ui.button.enable_editing
                 i.pencil.icon
@@ -105,21 +105,22 @@ template(name='detail_pane')
         if facet_doc.editing_mode
             .ui.icon.button.remove_doc
                 i.remove.icon
-        .ui.list
+        .ui.form
             each fields
-                if facet_doc.editing_mode
-                    +field_edit
-                else
-                    +field_view
+                .field
+                    if facet_doc.editing_mode
+                        +field_edit
+                    else
+                        +field_view
             // .ui.styled.accordion
-            each axons
-                .ui.button.select_axon
-                    if icon
-                        i.icon
-                            +icon name=icon
-                    |#{title}
-            if facet_doc.viewing_children
-                +Template.dynamic template=facet_doc.children_template
+        each axons
+            .ui.button.select_axon
+                if icon
+                    i.icon
+                        +icon name=icon
+                |#{title}
+        if facet_doc.viewing_children
+            +Template.dynamic template=facet_doc.children_template
 
 template(name='draft')
     .ui.header
@@ -173,7 +174,7 @@ template(name='edit_field_boolean')
         .ui.button.set_true #{label}
 
 template(name='edit_field_array')
-    .ui.small.header #{label}
+    .ui.header #{label}
     .ui.input
         input.add_value(type='text' placeholder='Add')
     each values
@@ -182,7 +183,7 @@ template(name='edit_field_array')
             i.remove.icon
 
 template(name='edit_doc_array')
-    .ui.small.header #{label}
+    .ui.header #{label}
     .ui.input
         input.add_value(type='text' placeholder='Add')
     each values
@@ -204,24 +205,24 @@ template(name='set_page_size')
     .ui.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
 
 template(name='set_facet_key')
-    .ui.button.small.compact.set_facet_key(class=set_facet_key_class)
+    .ui.button.compact.set_facet_key(class=set_facet_key_class)
         |#{label}
 
 
 template(name='type_filter')
-    // .ui.small.header
+    // .ui.header
     //     +icon name='category'
     //     |Sections
     each faceted_types
         .ui.button.set_type(class=set_type_class)
             if icon
                 i.icon
-                    +iconsmall name=icon
+                    +icon name=icon
             |#{title}
 
 
 template(name='filter')
-    .ui.small.header
+    .ui.header
         if icon
             i.icon
                 +icon name=icon
@@ -233,7 +234,7 @@ template(name='filter')
 
 
 template(name='selector')
-    .ui.small.compact.toggle_value.button(class=toggle_value_class)
+    .ui.toggle_value.compact.button(class=toggle_value_class)
         |#{selector_value}
         small #{count}
 
@@ -268,15 +269,17 @@ template(name='facet_segment')
 
 
 template(name='field_view')
-    if field_template
-        +Template.dynamic template=field_template
-    else
-        .item
+    .item
+        if field_template
+            +Template.dynamic template=field_template
+        else
             |#{title}:
-            strong #{value}
+            if is_array
+                each value
+                    .ui.basic.label #{this}
+            else
+                strong &nbsp; #{value}
 
-
-template(name='view_array')
 
 
 template(name='field_edit')
@@ -286,24 +289,25 @@ template(name='field_edit')
                 i.icon
                     +icon name=icon
             |#{title}
-    if is_array
-        .ui.segment
-            .ui.fluid.labeled.small.input
-                .ui.basic.label #{title}
-                input.add_array_element(type='text' placholder='add')
-            if value
-                each value
-                    .ui.label
-                        |#{this}
-                        i.pull_element.remove.link.icon
+    else if is_array
+        .ui.fluid.labeled.right.icon.input
+            .ui.basic.label #{title}
+            input.add_array_element(type='text' placholder='add')
+            i.plus.icon
+        if value
+            each value
+                .ui.basic.label
+                    i.pull_element.remove.link.icon
+                    |#{this}
+        div
     else
-        .ui.fluid.labeled.small.input
+        .ui.fluid.labeled.input
             .ui.basic.label #{title}
             input.text_field_val(type='text' value=value)
 
 
 template(name='boolean_facet')
-    .ui.small.header filter #{key}
+    .ui.header filter #{key}
     .pick_yes.ui.button yes
     .pick_no.ui.button no
 
@@ -345,7 +349,7 @@ template(name='cell_date')
 template(name='ticket_assignment_cell')
     // td(class=ticket_assignment_cell_class)
     if overdue
-        +iconsmall name='expired' classes='inline' title='Over 5 Hours'
+        +icon name='expired' classes='inline' title='Over 5 Hours'
     if response
         |#{response}
     .ui.list
@@ -380,8 +384,8 @@ template(name='submitted_template')
         // .ui.label Not Submitted
 
 template(name='search_key')
-    .ui.small.icon.input
-        i.small.search.icon
+    .ui.icon.input
+        i.search.icon
         input.search_key(type='text')
 
 

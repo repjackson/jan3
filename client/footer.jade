@@ -37,4 +37,7 @@ template(name='footer')
 template(name='role_switcher')
     each role_docs
         .change_role.ui.compact.button(class=role_button_class)
-            |#{slug}
+            if icon
+                i.icon
+                    +icon name=icon
+            |#{title}

@@ -91,6 +91,7 @@ Template.facet_segment.helpers
             type:'field'
             schema_slugs: $in: [schema.slug]
             axon:$ne:true
+            visible:true
             ).fetch()
 
     axons: ->
@@ -123,14 +124,15 @@ Template.facet_segment.helpers
         Docs.find(
             type:'field'
             schema_slugs:$in:[facet.filter_type[0]]
-            card_header:true
+            header:true
         ).fetch()
 
 
 
 Template.field_edit.helpers
-    'bool_switch_class': ->
-        target_doc = Template.parentData(5)
+    bool_switch_class: ->
+        # console.log @
+        target_doc = Template.parentData()
         bool_value = target_doc["#{@key}"]
         if bool_value and bool_value is true
             'primary'
@@ -151,7 +153,9 @@ Template.field_edit.helpers
             schema_slugs:$in:[schema.slug]
         # console.log 'field doc', field_doc
         parent["#{@key}"]
+
 Template.field_view.helpers
+    is_array:-> @field_type is 'array'
     value: ->
         # console.log @
         facet = Docs.findOne type:'facet'
@@ -246,8 +250,15 @@ Template.edit_field_boolean.events
 
 
 Template.dao.events
-    'click .enable_config': -> Session.set 'config_mode', true
-    'click .disable_config': -> Session.set 'config_mode', false
+    'click .enable_config': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set:config_mode:true
+
+    'click .disable_config': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set:config_mode:false
 
 
     'click .close_details': ->

@@ -52,7 +52,7 @@ Meteor.methods
         total = Docs.find(built_query).count()
 
         if Meteor.isDevelopment
-            limit_val = 100
+            limit_val = 1000
         if Meteor.isProduction
             limit_val = 1000
 
