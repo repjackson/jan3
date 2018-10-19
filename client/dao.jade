@@ -265,64 +265,12 @@ template(name='facet_segment')
                 .ui.list
                     each field_docs
                         +field_view
-            // .content
-            //     each axons
-            //         .ui.button
-            //             if icon
-            //                 i.icon
-            //                     +icon name=icon
-            //             |#{title}
-
-
-template(name='field_view')
-    .item
-        if field_template
-            +Template.dynamic template=field_template
-        else
-            |#{title}:
-            if is_array
-                each value
-                    .ui.basic.label #{this}
-            else
-                strong &nbsp; #{value}
-
-
-
-template(name='field_edit')
-    if is_boolean
-        .ui.button.toggle_field(class=bool_switch_class title=key)
-            if icon
-                i.icon
-                    +icon name=icon
-            |#{title}
-    else if is_array
-        .ui.fluid.labeled.right.icon.input
-            .ui.basic.label #{title}
-            input.add_array_element(type='text' placholder='add')
-            i.plus.icon
-        if value
-            each value
-                .ui.basic.label
-                    i.pull_element.remove.link.icon
-                    |#{this}
-        div
-    else
-        .ui.fluid.labeled.input
-            .ui.basic.label #{title}
-            input.text_field_val(type='text' value=value)
 
 
 template(name='boolean_facet')
     .ui.header filter #{key}
     .pick_yes.ui.button yes
     .pick_no.ui.button no
-
-template(name='bool_switch')
-    .ui.button.toggle_field(class=bool_switch_class title=key)
-        if icon
-            i.icon
-                +icon name=icon
-        |#{title}
 
 
 template(name='icon')

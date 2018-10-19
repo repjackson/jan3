@@ -5,7 +5,6 @@ Template.dao.onCreated ->
     @autorun => Meteor.subscribe 'type', 'field'
 
     # @autorun => Meteor.subscribe 'type', 'ticket_type'
-    @is_editing = new ReactiveVar false
     Session.setDefault 'is_calculating', false
 
 Template.detail_pane.onCreated ->
@@ -51,7 +50,7 @@ Template.field_edit.events
             Docs.update parent._id,
                 $addToSet:
                     "#{@key}": val
-
+            t.$('.add_array_element').val('')
 
     'click .pull_element': (e,t)->
         local_id = Template.currentData()
@@ -139,34 +138,19 @@ Template.field_edit.helpers
         else
             ''
 
+    can_edit: ->
+        @editable
+
     is_array:-> @field_type is 'array'
     is_boolean:-> @field_type is 'boolean'
     value: ->
-        # console.log @
-        facet = Docs.findOne type:'facet'
-        schema = Docs.findOne
-            type:'schema'
-            slug:facet.filter_type[0]
         parent = Template.parentData()
-        field_doc = Docs.findOne
-            type:'field'
-            schema_slugs:$in:[schema.slug]
-        # console.log 'field doc', field_doc
         parent["#{@key}"]
 
 Template.field_view.helpers
     is_array:-> @field_type is 'array'
     value: ->
-        # console.log @
-        facet = Docs.findOne type:'facet'
-        schema = Docs.findOne
-            type:'schema'
-            slug:facet.filter_type[0]
         parent = Template.parentData()
-        field_doc = Docs.findOne
-            type:'field'
-            schema_slugs:$in:[schema.slug]
-        # console.log 'field doc', field_doc
         parent["#{@key}"]
 
 
@@ -214,6 +198,7 @@ Template.edit_doc_array.events
             Docs.update target_doc._id,
                 $addToSet:
                     "#{array_field.key}": new_val
+            console.log t.$('.add_value').val()
 
 
     'click .pull_value': (e,t)->
@@ -311,6 +296,7 @@ Template.dao.events
             $set:
                 viewing_detail:true
                 detail_id:new_id
+                editing_mode:true
 
     'click .add_field': (e,t)->
         facet = Docs.findOne type:'facet'
@@ -530,7 +516,6 @@ Template.dao.helpers
         }, {sort:{rank:1}}).fetch()
 
 
-    is_editing: -> Template.instance().is_editing.get()
 
 
 
