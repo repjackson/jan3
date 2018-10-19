@@ -114,7 +114,7 @@ template(name='detail_pane')
                         +field_view
             // .ui.styled.accordion
         each axons
-            .ui.button.select_axon
+            .ui.button.select_axon(class=axon_selector_class)
                 if icon
                     i.icon
                         +icon name=icon
@@ -148,6 +148,7 @@ template(name='edit_field')
             +edit_field_text key='field_type' label='Field Type' filter_id=this._id
             +edit_field_text key='default_value' label='Default Value' filter_id=this._id
             +edit_field_text key='field_template' label='Field Template' filter_id=this._id
+            +edit_field_number key='rank' label='Rank' filter_id=this._id
             +edit_field_boolean key='faceted' label='Faceted'
             +edit_field_boolean key='visible' label='Visible'
             +edit_field_boolean key='read_only' label='Read Only'
@@ -241,8 +242,13 @@ template(name='selector')
 
 template(name='edit_field_text')
     .ui.labeled.fluid.input
-        .ui.basic.label #{key}
+        .ui.basic.label(title=key) #{label}
         input.text_val(type='text' value=field_value)
+
+template(name='edit_field_number')
+    .ui.labeled.fluid.input
+        .ui.basic.label(title=key) #{label}
+        input.number_val(type='number' value=field_value)
 
 
 template(name='facet_segment')
@@ -372,9 +378,11 @@ template(name='when_template')
 
 template(name='status_template')
     if open
-        +icon name='inactive-state' title='Open'
+        // +icon name='inactive-state' title='Open'
+        .ui.basic.label Open
     else
-        +icon name='ok' title='Closed'
+        .ui.basic.label Closed
+        // +icon name='ok' title='Closed'
 
 template(name='submitted_template')
     if submitted

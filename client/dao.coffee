@@ -87,23 +87,23 @@ Template.facet_segment.helpers
         schema = Docs.findOne
             type:'schema'
             slug:facet.filter_type[0]
-        linked_fields = Docs.find(
+        linked_fields = Docs.find({
             type:'field'
             schema_slugs: $in: [schema.slug]
             axon:$ne:true
             visible:true
-            ).fetch()
+        }, {sort:{rank:1}}).fetch()
 
-    axons: ->
-        facet = Docs.findOne type:'facet'
-        schema = Docs.findOne
-            type:'schema'
-            slug:facet.filter_type[0]
-        linked_fields = Docs.find(
-            type:'field'
-            schema_slugs: $in: [schema.slug]
-            axon:true
-            ).fetch()
+    # axons: ->
+    #     facet = Docs.findOne type:'facet'
+    #     schema = Docs.findOne
+    #         type:'schema'
+    #         slug:facet.filter_type[0]
+    #     linked_fields = Docs.find(
+    #         type:'field'
+    #         schema_slugs: $in: [schema.slug]
+    #         axon:true
+        # }, {sort:{rank:-1}}).fetch()
 
     value: ->
         # console.log @
@@ -375,6 +375,7 @@ Template.type_filter.events
                 detail_id:null
                 viewing_children:false
                 viewing_detail:false
+                editing_mode:false
         Session.set 'is_calculating', true
         # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
@@ -406,32 +407,37 @@ Template.detail_pane.events
             $set:
                 viewing_children:true
                 children_template:@children_template
+                viewing_axon:@key
 
 Template.detail_pane.helpers
     detail_doc: ->
         facet = Docs.findOne type:'facet'
         Docs.findOne facet.detail_id
 
-    facet_doc: ->
+    facet_doc: -> Docs.findOne type:'facet'
+
+    axon_selector_class: ->
         facet = Docs.findOne type:'facet'
+        if @key is facet.viewing_axon then 'primary' else ''
 
     fields: ->
         facet = Docs.findOne type:'facet'
         current_type = facet.filter_type[0]
-        Docs.find(
+        Docs.find({
             type:'field'
             axon:$ne:true
             schema_slugs: $in: [current_type]
-        ).fetch()
+        }, {sort:{rank:1}}).fetch()
 
     axons: ->
         facet = Docs.findOne type:'facet'
         current_type = facet.filter_type[0]
-        Docs.find(
+        Docs.find({
             type:'field'
             axon:true
             schema_slugs: $in: [current_type]
-        ).fetch()
+        }, {sort:{rank:1}}).fetch()
+
 
     child_schema_docs: ->
         Docs.find
@@ -508,20 +514,22 @@ Template.dao.helpers
         faceted_fields = []
         if current_type
             fields =
-                Docs.find(
+                Docs.find({
                     type:'field'
                     schema_slugs:$in:[current_type]
                     faceted: true
-                ).fetch()
+                }, {sort:{rank:1}}).fetch()
 
 
     fields: ->
         facet = Docs.findOne type:'facet'
         current_type = facet.filter_type[0]
-        Docs.find(
+        Docs.find({
             type:'field'
             schema_slugs: $in: [current_type]
-        ).fetch()
+        }, {sort:{rank:1}}).fetch()
+
+
     is_editing: -> Template.instance().is_editing.get()
 
 
@@ -592,6 +600,20 @@ Template.edit_field_text.events
         # console.log @filter_id
         Docs.update @filter_id,
             { $set: "#{@key}": text_value }
+
+
+Template.edit_field_number.helpers
+    field_value: ->
+        field = Template.parentData()
+        field["#{@key}"]
+
+
+Template.edit_field_number.events
+    'change .number_val': (e,t)->
+        number_value = parseInt e.currentTarget.value
+        # console.log @filter_id
+        Docs.update @filter_id,
+            { $set: "#{@key}": number_value }
 
 
 
