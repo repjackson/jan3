@@ -5,16 +5,16 @@ template(name='footer')
                 .four.wide.inverted.column
                     if is_dev
                         +role_switcher
-                    else
-                        img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                        .ui.list
-                            .sitemap_list.item Why JAN-PRO
-                            .sitemap_list.item Commercial Cleaning
-                            .sitemap_list.item About Us
-                        .ui.list
-                            .sitemap_list.item Contact Us
-                            .sitemap_list.item Legal/ Privacy Policy
                         .ui.hidden.divider
+                    img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                    .ui.list
+                        .sitemap_list.item Why JAN-PRO
+                        .sitemap_list.item Commercial Cleaning
+                        .sitemap_list.item About Us
+                    .ui.list
+                        .sitemap_list.item Contact Us
+                        .sitemap_list.item Legal/ Privacy Policy
+                    .ui.hidden.divider
                     // #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
                     //     i.bug.icon
                 .four.wide.column
