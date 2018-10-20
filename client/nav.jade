@@ -1,48 +1,37 @@
 template(name='nav')
-    .nav_bar.ui.top.attached.borderless.inverted.menu
-        a.toggle_left_sidebar.icon.item
-            i.bars.icon
-        a.item(href='/dashboard')
-            // i.dashboard.icon
-            .mobile.hidden Dashboard
-        .right.menu
-            if is_dev
-                // .mobile.only
-                if editing_mode
-                    #toggle_editing.icon.active.large.item
-                        i.teal.pencil.link.bordered.icon
-                else
-                    #toggle_editing.icon.large.item
-                        i.pencil.link.bordered.icon
-            if currentUser
-                .ui.dropdown.inverted.blue.item
-                    if currentUser.image_id
-                        i.large.icon
-                            img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                    else
-                        i.user.icon
-                    |#{currentUser.username}
-                    .inverted.blue.menu
-                        a.nav_bar.item(href="/p/user_view?username=#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
-                            i.user.icon
-                            | Profile
-                        a.nav_bar.item(href='/account/settings' class="{{ active_route 'account' }}" )
-                            i.cog.icon
-                            |Account
-                        a#logout.nav_bar.item(href='#')
-                            i.sign.out.alternate.icon
-                            |Log Out
-                a#logout.nav_bar.item(href='#')
-                    if signing_out
-                        i.notched.circle.loading.icon
-                    else
-                        i.sign.out.alternate.icon
+    // a.ui.toggle_left_sidebar.icon.circular.button
+    //     i.bars.icon
+    a.ui.icon.circular.button(href='/dashboard')
+        .mobile.hidden Dashboard
+    img.ui.inline.image(src="{{c.url 'jan_full_logo' height=50 gravity='face' crop='fill'}}")
+    if currentUser
+        .ui.button
+            if currentUser.image_id
+                i.large.icon
+                    img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
             else
-                a.item(href='/login')
-                    i.large.icon
-                        +icon name='internal'
-                    // i.sign.in.alternate.icon
-                    | &nbsp; Log In
+                i.user.icon
+            |#{currentUser.username}
+        a.ui.nav_bar.button(href="/p/user_view?username=#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
+            i.user.icon
+            | Profile
+        a.ui.nav_bar.button(href='/account/settings' class="{{ active_route 'account' }}" )
+            i.cog.icon
+            |Account
+        // a#logout.ui.nav_bar.button(href='#')
+        //     i.sign.out.alternate.icon
+        //     |Log Out
+        a#logout.ui.nav_bar.button(href='#')
+            if signing_out
+                i.notched.circle.loading.icon
+            else
+                i.sign.out.alternate.icon
+    else
+        a.ui.button(href='/login')
+            i.large.icon
+                +icon name='internal'
+            // i.sign.in.alternate.icon
+            | &nbsp; Log In
 
 
 

@@ -4,16 +4,16 @@ Template.left_sidebar.events
         Meteor.logout ->
             FlowRouter.go '/login'
 
-Template.nav.onCreated ->
+Template.dao.onCreated ->
     @signing_out = new ReactiveVar false
 
-Template.nav.onRendered ->
+Template.dao.onRendered ->
     Meteor.setTimeout ->
         $('.dropdown').dropdown()
     , 500
 
 
-Template.nav.helpers
+Template.dao.helpers
     signing_out: ->
         if Template.instance().signing_out.get() is true then 'loading' else ''
 
@@ -71,7 +71,7 @@ Template.left_sidebar.helpers
         }, sort:number:1
 
 
-Template.nav.events
+Template.dao.events
     'click #logout': (e,t)->
         e.preventDefault()
         t.signing_out.set true
@@ -88,7 +88,7 @@ Template.nav.events
     'click #toggle_editing': ->
         Session.set('editing_mode',!Session.get('editing_mode'))
 
-Template.nav.onCreated ->
+Template.dao.onCreated ->
     @autorun -> Meteor.subscribe 'me'
     @autorun -> Meteor.subscribe 'nav_items'
     @autorun -> Meteor.subscribe 'my_customer_account'
@@ -96,7 +96,7 @@ Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'my_office'
 
 
-Template.nav.onRendered ->
+Template.dao.onRendered ->
     # Meteor.setTimeout ->
     #     $('.item').popup()
     # , 1000

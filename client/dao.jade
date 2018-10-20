@@ -1,5 +1,42 @@
 template(name='dao')
     .ui.stackable.padded.grid
+        .row
+            .four.wide.column
+            .eight.wide.column
+                .ui.center.aligned.header
+                    a(href='/dashboard')
+                        // .mobile.hidden Dashboard
+                        img.ui.inline.image(src="{{c.url 'jan_full_logo' height=50 gravity='face' crop='fill'}}")
+            .four.wide.column
+                if currentUser
+                    .ui.button
+                        if currentUser.image_id
+                            i.large.icon
+                                img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        else
+                            i.user.icon
+                        |#{currentUser.username}
+                    a.ui.nav_bar.icon.button(href="/p/user_view?username=#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
+                        i.user.icon
+                        // | Profile
+                    a.ui.nav_bar.icon.button(href='/account/settings' class="{{ active_route 'account' }}" )
+                        i.cog.icon
+                        // |Account
+                    // a#logout.ui.nav_bar.button(href='#')
+                    //     i.sign.out.alternate.icon
+                    //     |Log Out
+                    a#logout.ui.nav_bar.icon.button(href='#')
+                        if signing_out
+                            i.notched.circle.loading.icon
+                        else
+                            i.sign.out.alternate.icon
+                else
+                    a.ui.icon.button(href='/login')
+                        i.large.icon
+                            +icon name='internal'
+                        // i.sign.in.alternate.icon
+                        | &nbsp; Log In
+
         unless facet_doc
             .row
                 .sixteen.wide.column
@@ -15,26 +52,26 @@ template(name='dao')
                     // if editing_mode
                     .ui.icon.button.delete_facet(title='Clear Session')
                         i.remove.icon
+                    if is_dev
+                        .ui.button.show_facet log
             if facet_doc.config_mode
                 .row
                     .sixteen.wide.column
                         .ui.header
                             i.cog.icon
                             |Schema Configuration
-                        .ui.primary.button.disable_config
+                        .ui.big.primary.button.disable_config
                             i.cog.icon
-                            | Configure
-                        .ui.button.show_facet log
+                            // | Configure
                         .ui.button.add_field + Field
-                        .ui.three.stackable.cards
+                        .ui.four.stackable.cards
                             each fields
                                 +edit_field
             else
                 .four.wide.column.scrolling
-                    if is_dev
-                        .ui.button.enable_config
-                            i.cog.icon
-                            | Configure
+                    .ui.button.enable_config
+                        i.cog.icon
+                        | Configure
                     .ui.button.add_doc
                         i.plus.icon
                         |Add
@@ -57,7 +94,7 @@ template(name='dao')
                                         // | #{facet_doc.skip_amount}
                                         // | /
                                         if facet_doc.page_amount
-                                            .ui.pagination.menu
+                                            .ui.pagination.small.menu
                                                 // if show_decrement
                                                 a.icon.item.page_down
                                                     i.left.chevron.grey.icon
@@ -118,7 +155,13 @@ template(name='detail_pane')
                     +icon name=icon
             |#{title}
     if facet_doc.viewing_children
-        +Template.dynamic template=facet_doc.children_template
+        +children_view
+
+template(name='children_view')
+    if axon_schema
+        .ui.header #{axon_schema.title}
+    else
+        |No schema found.
 
 template(name='draft')
     .ui.header
@@ -201,7 +244,7 @@ template(name='edit_doc_boolean')
 
 
 template(name='set_page_size')
-    .ui.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
+    .ui.compact.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
 
 template(name='set_facet_key')
     .ui.button.compact.set_facet_key(class=set_facet_key_class)
@@ -209,9 +252,7 @@ template(name='set_facet_key')
 
 
 template(name='type_filter')
-    // .ui.header
-    //     +icon name='category'
-    //     |Sections
+    // img.ui.avatar.spaced.image(src="{{c.url 'logo_small' width=50 height=50 gravity='face' crop='fill'}}")
     each faceted_types
         .ui.button.set_type(class=set_type_class)
             if icon

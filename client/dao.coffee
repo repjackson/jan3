@@ -73,9 +73,6 @@ Template.facet_segment.events
                 viewing_detail: true
                 detail_id: @_id
 
-    'click .remove_doc': ->
-        if confirm "Delete #{@title}?"
-            Docs.remove @_id
 
 Template.facet_segment.helpers
     local_doc: -> Docs.findOne @valueOf()
@@ -288,7 +285,7 @@ Template.dao.events
     'click .add_doc': (e,t)->
         facet = Docs.findOne type:'facet'
         type = facet.filter_type[0]
-        user =Meteor.user()
+        user = Meteor.user()
         new_doc = {}
         if type
             new_doc['type'] = type
@@ -385,6 +382,17 @@ Template.type_filter.events
 
 
 Template.detail_pane.events
+    'click .remove_doc': ->
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
+        if confirm "Delete #{target_doc.title}?"
+            Docs.remove target_doc._id
+            Docs.update facet._id,
+                $set:
+                    detail_id:null
+                    editing_mode:false
+                    viewing_detail:false
+
     'click .enable_editing': ->
         facet=Docs.findOne type:'facet'
         Docs.update facet._id,
@@ -400,7 +408,23 @@ Template.detail_pane.events
             $set:
                 viewing_children:true
                 children_template:@children_template
-                viewing_axon:@key
+                viewing_axon:@axon_schema
+
+Template.children_view.onCreated ->
+    facet = Docs.findOne type:'facet'
+    @autorun => Meteor.subscribe 'schema_doc_by_type', facet.viewing_axon
+    @autorun => Meteor.subscribe 'type', 'schama'
+
+
+Template.children_view.helpers
+    axon_schema: ->
+        facet = Docs.findOne type:'facet'
+        res = Docs.findOne
+            type:'schema'
+            slug:facet.viewing_axon
+        res
+
+
 
 Template.detail_pane.helpers
     detail_doc: ->
@@ -411,7 +435,7 @@ Template.detail_pane.helpers
 
     axon_selector_class: ->
         facet = Docs.findOne type:'facet'
-        if @key is facet.viewing_axon then 'primary' else ''
+        if @axon_schema is facet.viewing_axon then 'primary' else ''
 
     fields: ->
         facet = Docs.findOne type:'facet'

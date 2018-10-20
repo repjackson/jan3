@@ -6,7 +6,7 @@ template(name='footer')
                     if is_dev
                         +role_switcher
                     else
-                        img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                        img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                         .ui.list
                             .sitemap_list.item Why JAN-PRO
                             .sitemap_list.item Commercial Cleaning
@@ -36,7 +36,7 @@ template(name='footer')
 
 template(name='role_switcher')
     each role_docs
-        .change_role.ui.compact.button(class=role_button_class)
+        .change_role.ui.button(class=role_button_class)
             if icon
                 i.icon
                     +icon name=icon
