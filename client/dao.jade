@@ -123,9 +123,6 @@ template(name='detail_pane')
                 i.icon
                     +icon name=icon
             |Edit #{detail_doc.title}
-        .ui.fluid.button.disable_editing
-            // |Save
-            i.checkmark.icon
     else
         a.ui.header.close_details(href='#')
             if icon
@@ -136,9 +133,6 @@ template(name='detail_pane')
             i.pencil.icon
             |Edit
 
-    if facet_doc.editing_mode
-        .ui.icon.button.remove_doc
-            i.remove.icon
     .ui.form
         each fields
             .field
@@ -146,15 +140,22 @@ template(name='detail_pane')
                     +field_edit
                 else
                     +field_view
-        // .ui.styled.accordion
-    each axons
-        .ui.button.select_axon(class=axon_selector_class)
-            if icon
-                i.icon
-                    +icon name=icon
-            |#{title}
-    if facet_doc.viewing_children
-        +children_view
+    if facet_doc.editing_mode
+        .ui.hidden.divider
+        .ui.fluid.large.button.disable_editing(title='Save')
+            i.checkmark.icon
+            // |Save
+        .ui.icon.button.remove_doc
+            i.remove.icon
+    else
+        each axons
+            .ui.button.select_axon(class=axon_selector_class)
+                if icon
+                    i.icon
+                        +icon name=icon
+                |#{title}
+        if facet_doc.viewing_children
+            +children_view
 
 template(name='children_view')
     if axon_schema
@@ -174,44 +175,44 @@ template(name='draft')
     .ui.button.submit_draft Save
     .ui.button.cancel_draft Cancel
 
-template(name='field_segment')
-    .ui.segment
-        .content
-            .ui.header
-                if icon
-                    +icon name=icon
-                |#{title}
-        .content
-            +edit_field_text key='title' label='Title' filter_id=this._id
-            +edit_field_text key='key' label='Key' filter_id=this._id
-            +edit_field_text key='icon' label='Icon' filter_id=this._id
-            +edit_field_text key='field_type' label='Field Type' filter_id=this._id
-            +edit_field_text key='default_value' label='Default Value' filter_id=this._id
-            +edit_field_text key='field_template' label='Field Template' filter_id=this._id
-            +edit_field_number key='rank' label='Rank' filter_id=this._id
-            +edit_field_boolean key='faceted' label='Faceted'
-            +edit_field_boolean key='visible' label='Visible'
-            +edit_field_boolean key='read_only' label='Read Only'
-            +edit_field_boolean key='sortable' label='Sortable'
-            +edit_field_boolean key='editable' label='Editable'
-            +edit_field_boolean key='draft' label='Draft'
-            +edit_field_boolean key='axon' label='Axon'
-            +edit_field_boolean key='header' label='Header'
-            if editable
-                .ui.segment
-                    +edit_field_array key='editable_roles' label='Editable Roles'
-            if axon
-                .ui.segment
-                    +edit_field_text key='axon_schema' label='Axon Schema' filter_id=this._id
-                    +edit_field_text key='children_template' label='Children Template' filter_id=this._id
-        .content
-            .ui.icon.remove_field.button
-                i.remove.icon
-        .ui.header dynamic fields
-        .ui.form
-            each field_fields
-                .field
-                    +field_edit
+// template(name='field_segment')
+//     .ui.segment
+//         .content
+//             .ui.header
+//                 if icon
+//                     +icon name=icon
+//                 |#{title}
+//         .content
+//             +edit_field_text key='title' label='Title' filter_id=this._id
+//             +edit_field_text key='key' label='Key' filter_id=this._id
+//             +edit_field_text key='icon' label='Icon' filter_id=this._id
+//             +edit_field_text key='field_type' label='Field Type' filter_id=this._id
+//             +edit_field_text key='default_value' label='Default Value' filter_id=this._id
+//             +edit_field_text key='field_template' label='Field Template' filter_id=this._id
+//             +edit_field_number key='rank' label='Rank' filter_id=this._id
+//             +edit_field_boolean key='faceted' label='Faceted'
+//             +edit_field_boolean key='visible' label='Visible'
+//             +edit_field_boolean key='read_only' label='Read Only'
+//             +edit_field_boolean key='sortable' label='Sortable'
+//             +edit_field_boolean key='editable' label='Editable'
+//             +edit_field_boolean key='draft' label='Draft'
+//             +edit_field_boolean key='axon' label='Axon'
+//             +edit_field_boolean key='header' label='Header'
+//             if editable
+//                 .ui.segment
+//                     +edit_field_array key='editable_roles' label='Editable Roles'
+//             if axon
+//                 .ui.segment
+//                     +edit_field_text key='axon_schema' label='Axon Schema' filter_id=this._id
+//                     +edit_field_text key='children_template' label='Children Template' filter_id=this._id
+//         .content
+//             .ui.icon.remove_field.button
+//                 i.remove.icon
+//         .ui.header dynamic fields
+//         .ui.form
+//             each field_fields
+//                 .field
+//                     +field_edit
 
 
 

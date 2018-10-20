@@ -55,13 +55,13 @@ Template.field_edit.events
             t.$('.add_array_element').val('')
 
     'click .pull_element': (e,t)->
-        local_id = Template.currentData()
-        local_doc = Docs.findOne local_id
-        target_doc = Template.parentData()
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
+        field_doc = Template.currentData()
 
         Docs.update target_doc._id,
             $pull:
-                "#{local_doc.key}": @valueOf()
+                "#{field_doc.key}": @valueOf()
 
 
 
@@ -169,13 +169,6 @@ Template.dao.onRendered ->
         $('.dropdown').dropdown()
     , 700
 
-Template.field_segment.helpers
-
-
-Template.field_segment.events
-    'click .remove_field':->
-        if confirm "Delete #{@title} field?"
-            Docs.remove @_id
 
 Template.edit_field_boolean.helpers
     is_true: ->
