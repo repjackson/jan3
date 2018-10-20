@@ -158,6 +158,12 @@ Template.registerHelper 'config_mode', ()->
     if Meteor.user() and Meteor.user().roles
         'office' in Meteor.user().roles and Session.get('config_mode')
 
+Template.registerHelper 'field_fields', () ->
+    Docs.find({
+        type:'field'
+        schema_slugs: $in: ['field']
+        axon:$ne:true
+    }, {sort:{rank:1}}).fetch()
 
 
 Template.registerHelper 'is_editor', () ->

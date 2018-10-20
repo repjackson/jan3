@@ -49,41 +49,41 @@ template(name='dao')
                             i.plus.icon
                             |Create Session
         if facet_doc
-            if facet_doc.config_mode
-                .row
-                    .sixteen.wide.column
-                        .ui.header
-                            i.cog.icon
-                            |Schema Configuration
-                        .ui.big.icon.primary.button.disable_config
-                            i.cog.icon
-                            // | Configure
-                        .ui.button.add_field + Field
-                        each fields
-                            +field_segment
-            else
-                .four.wide.column.scrolling
-                    // if editing_mode
-                    .ui.icon.button.delete_facet(title='Clear Session')
-                        i.remove.icon
-                    if is_dev
-                        .ui.button.show_facet log
+            .four.wide.column.scrolling
+                // if editing_mode
+                .ui.icon.button.delete_facet(title='Clear Session')
+                    i.remove.icon
+                if is_dev
+                    .ui.button.show_facet log
+                unless facet_doc.config_mode
                     .ui.button.enable_config
                         i.cog.icon
                         | Configure
-                    .ui.button.add_doc
-                        i.plus.icon
-                        |Add
-                    if schema_doc
-                        each faceted_fields
-                            +filter
-                .twelve.wide.column
-                    .ui.equal.width.stackable.grid
-                        .column.scrolling
-                            if is_calculating
-                                // i.large.loading.refresh.icon
-                                .ui.active.indeterminate.massive.centered.inline.loader
-                                    // |Calculating filters and results
+                else
+                    .ui.primary.button.disable_config
+                        i.cog.icon
+                        | Configure
+                .ui.button.add_doc
+                    i.plus.icon
+                    |Add
+                if schema_doc
+                    each faceted_fields
+                        +filter
+            .twelve.wide.column
+                .ui.equal.width.stackable.grid
+                    .column.scrolling
+                        if is_calculating
+                            // i.large.loading.refresh.icon
+                            .ui.active.indeterminate.massive.centered.inline.loader
+                                // |Calculating filters and results
+                        else
+                            if facet_doc.config_mode
+                                .ui.header
+                                    i.cog.icon
+                                    |Schema Configuration
+                                .ui.button.add_field + Field
+                                each fields
+                                    +facet_segment data=_id
                             else
                                 if facet_doc.result_ids
                                     if facet_doc.result_ids.length
@@ -110,9 +110,9 @@ template(name='dao')
                                             +facet_segment
                                 else
                                     |No results
-                        if facet_doc.viewing_detail
-                            .column.scrolling
-                                +detail_pane
+                    if facet_doc.viewing_detail
+                        .column.scrolling
+                            +detail_pane
 
 
 
@@ -175,7 +175,7 @@ template(name='draft')
     .ui.button.cancel_draft Cancel
 
 template(name='field_segment')
-    .ui.segment(class=ticket_color_class)
+    .ui.segment
         .content
             .ui.header
                 if icon
@@ -207,6 +207,14 @@ template(name='field_segment')
         .content
             .ui.icon.remove_field.button
                 i.remove.icon
+        .ui.header dynamic fields
+        .ui.form
+            each field_fields
+                .field
+                    +field_edit
+
+
+
 
 template(name='edit_field_boolean')
     if is_true

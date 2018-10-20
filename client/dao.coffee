@@ -75,7 +75,11 @@ Template.facet_segment.events
 
 
 Template.facet_segment.helpers
-    local_doc: -> Docs.findOne @valueOf()
+    local_doc: ->
+        if @data
+            Docs.findOne @data.valueOf()
+        else
+            Docs.findOne @valueOf()
 
     facet_segment_class: ->
         facet = Docs.findOne type:'facet'
@@ -164,6 +168,8 @@ Template.dao.onRendered ->
     Meteor.setTimeout ->
         $('.dropdown').dropdown()
     , 700
+
+Template.field_segment.helpers
 
 
 Template.field_segment.events
@@ -524,6 +530,14 @@ Template.dao.helpers
                 slug:current_type
             # for field in schema.fields
             #     console.log 'found field', field
+
+    field_fields: ->
+        Docs.find({
+            type:'field'
+            schema_slugs: $in: ['field']
+            axon:$ne:true
+        }, {sort:{rank:1}}).fetch()
+
 
     faceted_fields: ->
         facet = Docs.findOne type:'facet'
