@@ -8,7 +8,10 @@ template(name='field_edit')
                 |#{title}
         else if is_array
             .ui.fluid.labeled.right.icon.input
-                .ui.basic.label #{title}
+                .ui.basic.label
+                    if icon
+                        +icon name=icon classes='inline spaced'
+                    |#{title}
                 input.add_array_element(type='text' placholder='add')
                 i.plus.icon
             if value
@@ -19,7 +22,10 @@ template(name='field_edit')
             div
         else
             .ui.fluid.labeled.input
-                .ui.basic.label #{title}
+                .ui.basic.label
+                    if icon
+                        +icon name=icon classes='inline spaced'
+                    |#{title}
                 input.text_field_val(type='text' value=value)
 
 
