@@ -1,32 +1,36 @@
 template(name='field_edit')
     if can_edit
-        if is_boolean
-            .ui.button.toggle_field(class=bool_switch_class title=key)
-                if icon
-                    i.icon
-                        +icon name=icon
-                |#{title}
-        else if is_array
-            .ui.fluid.labeled.right.icon.input
-                .ui.basic.label
-                    if icon
-                        +icon name=icon classes='inline spaced'
-                    |#{title}
-                input.add_array_element(type='text' placholder='add')
-                i.plus.icon
-            if value
-                each value
-                    .ui.basic.label
-                        i.pull_element.remove.link.icon
-                        |#{this}
-            div
-        else
-            .ui.fluid.labeled.input
-                .ui.basic.label
-                    if icon
-                        +icon name=icon classes='inline spaced'
-                    |#{title}
-                input.text_field_val(type='text' value=value)
+        +Template.dynamic template=edit_template
+
+template(name='boolean_edit')
+    .ui.button.toggle_field(class=bool_switch_class title=key)
+        if icon
+            i.icon
+                +icon name=icon
+        |#{title}
+
+template(name='array_edit')
+    .ui.fluid.labeled.right.icon.input
+        .ui.basic.label
+            if icon
+                +icon name=icon classes='inline spaced'
+            |#{title}
+        input.add_array_element(type='text' placholder='add')
+        i.plus.icon
+    if value
+        each value
+            .ui.basic.label
+                i.pull_element.remove.link.icon
+                |#{this}
+
+
+template(name='string_edit')
+    .ui.fluid.labeled.input
+        .ui.basic.label
+            if icon
+                +icon name=icon classes='inline spaced'
+            |#{title}
+        input.text_field_val(type='text' value=value)
 
 
 template(name='field_view')
@@ -40,3 +44,37 @@ template(name='field_view')
                     .ui.basic.label #{this}
             else
                 strong &nbsp; #{value}
+
+
+
+template(name='edit_field_boolean')
+    if is_true
+        .ui.primary.button.set_false #{label}
+    else
+        .ui.button.set_true #{label}
+
+template(name='edit_field_array')
+    .ui.header #{label}
+    .ui.input
+        input.add_value(type='text' placeholder='Add')
+    each values
+        .ui.label
+            |#{this}
+            i.remove.icon
+
+template(name='edit_doc_array')
+    .ui.header #{label}
+    .ui.input
+        input.add_value(type='text' placeholder='Add')
+    each values
+        .ui.label
+            |#{this}
+            i.remove.pull_value.link.icon
+
+
+
+template(name='edit_doc_boolean')
+    if is_true
+        .ui.primary.button.set_false #{label}
+    else
+        .ui.button.set_true #{label}

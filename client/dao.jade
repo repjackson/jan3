@@ -176,9 +176,7 @@ template(name='draft')
     .ui.button.cancel_draft Cancel
 
 //             +edit_field_number key='rank' label='Rank' filter_id=this._id
-//             +edit_field_boolean key='faceted' label='Faceted'
 //             +edit_field_boolean key='read_only' label='Read Only'
-//             +edit_field_boolean key='sortable' label='Sortable'
 //             +edit_field_boolean key='draft' label='Draft'
 //             +edit_field_boolean key='axon' label='Axon'
 //             +edit_field_boolean key='header' label='Header'
@@ -197,41 +195,6 @@ template(name='draft')
 //             each field_fields
 //                 .field
 //                     +field_edit
-
-
-
-
-template(name='edit_field_boolean')
-    if is_true
-        .ui.primary.button.set_false #{label}
-    else
-        .ui.button.set_true #{label}
-
-template(name='edit_field_array')
-    .ui.header #{label}
-    .ui.input
-        input.add_value(type='text' placeholder='Add')
-    each values
-        .ui.label
-            |#{this}
-            i.remove.icon
-
-template(name='edit_doc_array')
-    .ui.header #{label}
-    .ui.input
-        input.add_value(type='text' placeholder='Add')
-    each values
-        .ui.label
-            |#{this}
-            i.remove.pull_value.link.icon
-
-
-
-template(name='edit_doc_boolean')
-    if is_true
-        .ui.primary.button.set_false #{label}
-    else
-        .ui.button.set_true #{label}
 
 
 

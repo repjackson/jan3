@@ -15,51 +15,6 @@ Template.detail_pane.onCreated ->
 Template.facet_segment.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
 
-Template.field_edit.events
-    'click .toggle_field': ->
-        facet = Docs.findOne type:'facet'
-        target_doc = Docs.findOne _id:facet.detail_id
-        bool_value = target_doc["#{@key}"]
-
-        if bool_value and bool_value is true
-            Docs.update target_doc._id,
-                $set: "#{@key}": false
-        else
-            Docs.update target_doc._id,
-                $set: "#{@key}": true
-
-    'blur .text_field_val': (e,t)->
-        # console.log Template.parentData()
-        facet = Docs.findOne type:'facet'
-        target_doc = Docs.findOne _id:facet.detail_id
-
-        val = e.currentTarget.value
-        Docs.update target_doc._id,
-            $set:
-                "#{@key}": val
-
-    'keyup .add_array_element': (e,t)->
-        if e.which is 13
-            facet = Docs.findOne type:'facet'
-            target_doc = Docs.findOne _id:facet.detail_id
-
-            val = e.currentTarget.value
-            Docs.update target_doc._id,
-                $addToSet:
-                    "#{@key}": val
-            t.$('.add_array_element').val('')
-
-    'click .pull_element': (e,t)->
-        facet = Docs.findOne type:'facet'
-        target_doc = Docs.findOne _id:facet.detail_id
-        field_doc = Template.currentData()
-
-        Docs.update target_doc._id,
-            $pull:
-                "#{field_doc.key}": @valueOf()
-
-
-
 Template.facet_segment.events
     'click .facet_segment': ->
         facet = Docs.findOne type:'facet'
@@ -127,107 +82,12 @@ Template.facet_segment.helpers
 
 
 
-Template.field_edit.helpers
-    bool_switch_class: ->
-        facet = Docs.findOne type:'facet'
-        target_doc = Docs.findOne _id:facet.detail_id
-        bool_value = target_doc["#{@key}"]
-        if bool_value and bool_value is true
-            'primary'
-        else
-            ''
-
-    can_edit: -> @editable
-
-    is_array:-> @field_type is 'array'
-    is_boolean:-> @field_type is 'boolean'
-    value: ->
-        facet = Docs.findOne type:'facet'
-        editing_doc = Docs.findOne _id:facet.detail_id
-        # console.log 'target doc', editing_doc
-        value = editing_doc["#{@key}"]
-
-
-Template.field_view.helpers
-    is_array:-> @field_type is 'array'
-    value: ->
-        facet = Docs.findOne type:'facet'
-        target_doc = Docs.findOne _id:facet.detail_id
-        target_doc["#{@key}"]
-
-
-
 
 Template.dao.onRendered ->
     Meteor.setTimeout ->
         $('.dropdown').dropdown()
     , 700
 
-
-Template.edit_field_boolean.helpers
-    is_true: ->
-        field = Template.parentData()
-        field["#{@key}"]
-
-
-Template.edit_field_array.helpers
-    values: ->
-        field = Template.parentData()
-        if field["#{@key}"] then field["#{@key}"]
-
-
-Template.edit_field_array.events
-    'keyup .add_value': (e,t)->
-        if e.which is 13
-            new_val = e.currentTarget.value
-            field = Template.parentData()
-            Docs.update field._id,
-                $addToSet:
-                    "#{@key}": new_val
-
-
-Template.edit_doc_array.events
-    'keyup .add_value': (e,t)->
-        if e.which is 13
-            new_val = e.currentTarget.value
-            array_field = Template.currentData()
-            target_doc = Template.parentData(5)
-            Docs.update target_doc._id,
-                $addToSet:
-                    "#{array_field.key}": new_val
-            console.log t.$('.add_value').val()
-
-
-    'click .pull_value': (e,t)->
-        val = @valueOf()
-        if confirm "Remove #{val}?"
-            array_field = Template.currentData()
-            target_doc = Template.parentData(5)
-            Docs.update target_doc._id,
-                $pull:
-                    "#{array_field.key}": val
-
-
-Template.edit_doc_array.helpers
-    values: ->
-        array_field = Template.currentData()
-        target_doc = Template.parentData(5)
-        if target_doc["#{array_field.key}"] then target_doc["#{array_field.key}"]
-
-
-
-
-Template.edit_field_boolean.events
-    'click .set_true': ->
-        field = Template.parentData()
-        Docs.update field._id,
-            $set:
-                "#{@key}": true
-    'click .set_false': ->
-        field = Template.parentData()
-        Docs.update field._id,
-            $set:
-                "#{@key}": false
 
 
 
