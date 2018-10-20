@@ -292,12 +292,20 @@ Template.detail_pane.helpers
 
     fields: ->
         facet = Docs.findOne type:'facet'
-        current_type = facet.filter_type[0]
-        Docs.find({
-            type:'field'
-            axon:$ne:true
-            schema_slugs: $in: [current_type]
-        }, {sort:{rank:1}}).fetch()
+        detail_doc = Docs.findOne facet.detail_id
+        if detail_doc?.type is 'field'
+            Docs.find({
+                type:'field'
+                axon:$ne:true
+                schema_slugs: $in: ['field']
+            }, {sort:{rank:1}}).fetch()
+        else
+            current_type = facet.filter_type[0]
+            Docs.find({
+                type:'field'
+                axon:$ne:true
+                schema_slugs: $in: [current_type]
+            }, {sort:{rank:1}}).fetch()
 
     axons: ->
         facet = Docs.findOne type:'facet'

@@ -24,6 +24,23 @@ template(name='array_edit')
                 |#{this}
 
 
+template(name='multiref_edit')
+    .ui.basic.label
+        if icon
+            +icon name=icon classes='inline spaced'
+        |#{title}
+    each choices
+        .ui.button.toggle_element(class=element_class) #{title}
+
+template(name='ref_edit')
+    .ui.basic.label
+        if icon
+            +icon name=icon classes='inline spaced'
+        |#{title}
+    each choices
+        .ui.button.choose_element(class=element_class) #{title}
+
+
 template(name='string_edit')
     .ui.fluid.labeled.input
         .ui.basic.label

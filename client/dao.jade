@@ -119,10 +119,11 @@ template(name='dao')
 template(name='detail_pane')
     if facet_doc.editing_mode
         a.ui.header.close_details(href='#')
-            if icon
+            if detail_doc.icon
                 i.icon
-                    +icon name=icon
+                    +icon name=detail_doc.icon
             |Edit #{detail_doc.title}
+        .ui.hidden.divider
     else
         a.ui.header.close_details(href='#')
             if icon

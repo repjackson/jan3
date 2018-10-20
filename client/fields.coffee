@@ -61,7 +61,11 @@ Template.array_edit.events
 Template.field_edit.helpers
     can_edit: -> @editable
 
-    edit_template: -> "#{@field_type}_edit"
+    edit_template: ->
+        if @field_type
+            "#{@field_type}_edit"
+        else
+            "string_edit"
 
 Template.boolean_edit.helpers
     bool_switch_class: ->
@@ -74,6 +78,13 @@ Template.boolean_edit.helpers
             ''
 
 Template.string_edit.helpers
+    value: ->
+        facet = Docs.findOne type:'facet'
+        editing_doc = Docs.findOne _id:facet.detail_id
+        # console.log 'target doc', editing_doc
+        value = editing_doc["#{@key}"]
+
+Template.field_view.helpers
     value: ->
         facet = Docs.findOne type:'facet'
         editing_doc = Docs.findOne _id:facet.detail_id
@@ -93,3 +104,47 @@ Template.array_edit.helpers
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
         target_doc["#{@key}"]
+
+Template.multiref_edit.onCreated ->
+    @autorun => Meteor.subscribe 'type', @data.ref_schema
+Template.ref_edit.onCreated ->
+    @autorun => Meteor.subscribe 'type', @data.ref_schema
+
+Template.multiref_edit.helpers
+    choices: ->
+        Docs.find
+            type:@ref_schema
+    value: ->
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
+        target_doc["#{@key}"]
+
+Template.multiref_edit.events
+    'click .toggle_element': (e,t)->
+        console.log @
+
+
+
+Template.ref_edit.events
+    'click .choose_element': (e,t)->
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
+        editing_field = Template.currentData().key
+        console.log Template.parentData(1)
+        console.log Template.parentData(2)
+        console.log Template.parentData(3)
+        console.log Template.parentData(3)
+        console.log Template.parentData(3)
+
+        Docs.update target_doc._id,
+            $set:"#{editing_field}": @key
+
+Template.ref_edit.helpers
+    choices: ->
+        Docs.find
+            type:@ref_schema
+    element_class: ->
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
+        # if target_doc["#{@key}"]
+        console.log @
