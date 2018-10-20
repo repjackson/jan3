@@ -3,10 +3,7 @@ template(name='footer')
         .ui.stackable.equal.height.centered.padded.grid
             .row
                 .four.wide.inverted.column
-                    if is_dev
-                        +role_switcher
-                        .ui.hidden.divider
-                    img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                    img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                     .ui.list
                         .sitemap_list.item Why JAN-PRO
                         .sitemap_list.item Commercial Cleaning
@@ -18,6 +15,9 @@ template(name='footer')
                     // #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
                     //     i.bug.icon
                 .four.wide.column
+                    if is_dev
+                        +role_switcher
+                        .ui.hidden.divider
                     // if is_customer
                     //     +customer_card customer_jpid=currentUser.customer_jpid
                 // if currentUser.franchisee_jpid
@@ -28,7 +28,7 @@ template(name='footer')
                     // unless is_admin
                     //     +office_card office_jpid=currentUser.office_jpid
             .centered.row
-                .ui.center.aligned.inverted.grey.header
+                .ui.center.aligned.inverted.grey.small.header
                     i.copyright.outline.icon
                     | 2018 JAN-PRO Franchising, Inc.
 

@@ -17,13 +17,8 @@ Template.facet_segment.onCreated ->
 
 Template.field_edit.events
     'click .toggle_field': ->
-        # console.log @
-        # console.log Template.currentData()
-        # console.log Template.parentData()
-        # console.log Template.parentData(2)
-        # console.log Template.parentData(3)
-        # console.log Template.parentData(4)
-        target_doc = Template.parentData(5)
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
         bool_value = target_doc["#{@key}"]
 
         if bool_value and bool_value is true
@@ -134,16 +129,15 @@ Template.facet_segment.helpers
 
 Template.field_edit.helpers
     bool_switch_class: ->
-        # console.log @
-        target_doc = Template.parentData()
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
         bool_value = target_doc["#{@key}"]
         if bool_value and bool_value is true
             'primary'
         else
             ''
 
-    can_edit: ->
-        @editable
+    can_edit: -> @editable
 
     is_array:-> @field_type is 'array'
     is_boolean:-> @field_type is 'boolean'
