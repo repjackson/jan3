@@ -32,6 +32,14 @@ template(name='string_edit')
             |#{title}
         input.text_field_val(type='text' value=value)
 
+template(name='number_edit')
+    .ui.fluid.labeled.input
+        .ui.basic.label
+            if icon
+                +icon name=icon classes='inline spaced'
+            |#{title}
+        input.number_field_val(type='number' value=value)
+
 
 template(name='field_view')
     .item
