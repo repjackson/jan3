@@ -166,7 +166,7 @@ Template.dao.onRendered ->
     , 700
 
 
-Template.edit_field.events
+Template.field_segment.events
     'click .remove_field':->
         if confirm "Delete #{@title} field?"
             Docs.remove @_id

@@ -2,7 +2,7 @@
         margin-top: 12px;
 }
 
-.nav_bar.ui.menu {
+.nav_bar {
   /*border: 0px solid transparent; */
   border: none !important;
   /*background: #01336C; //dark blue*/

@@ -1,42 +1,46 @@
 template(name='dao')
     .ui.stackable.padded.grid
-        .row
-            .four.wide.column
-            .eight.wide.column
-                .ui.center.aligned.header
-                    a(href='/dashboard')
-                        // .mobile.hidden Dashboard
-                        img.ui.inline.image(src="{{c.url 'jan_full_logo' height=50 gravity='face' crop='fill'}}")
-            .four.wide.column
-                if currentUser
-                    .ui.button
-                        if currentUser.image_id
-                            i.large.icon
-                                img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        else
-                            i.user.icon
-                        |#{currentUser.username}
-                    a.ui.nav_bar.icon.button(href="/p/user_view?username=#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
-                        i.user.icon
-                        // | Profile
-                    a.ui.nav_bar.icon.button(href='/account/settings' class="{{ active_route 'account' }}" )
-                        i.cog.icon
-                        // |Account
-                    // a#logout.ui.nav_bar.button(href='#')
-                    //     i.sign.out.alternate.icon
-                    //     |Log Out
-                    a#logout.ui.nav_bar.icon.button(href='#')
-                        if signing_out
-                            i.notched.circle.loading.icon
-                        else
-                            i.sign.out.alternate.icon
-                else
-                    a.ui.icon.button(href='/login')
-                        i.large.icon
-                            +icon name='internal'
-                        // i.sign.in.alternate.icon
-                        | &nbsp; Log In
+        // .row.nav_bar
+        //     .four.wide.column
+        //     // .eight.wide.column
+        //     //     .ui.center.aligned.header
+        //     //         a(href='/dashboard')
+        //     //             // .mobile.hidden Dashboard
+        //     //             img.ui.inline.image(src="{{c.url 'jan_full_logo' height=50 gravity='face' crop='fill'}}")
 
+        #dash_header.ui.vertical.masthead.center.aligned.segment.grid
+            .row
+                .four.wide.column
+                .eight.wide.column
+                    img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                    // h2.ui.inverted.header Customer Portal
+                .four.wide.column
+                    if currentUser
+                        a.ui.icon.button(href='/account/settings' class="{{ active_route 'account' }}" )
+                            if currentUser.image_id
+                                i.large.icon
+                                    img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                            else
+                                i.user.icon
+                            |#{currentUser.username}
+                        a#logout.ui.icon.button(href='#')
+                            if signing_out
+                                i.notched.circle.loading.icon
+                            else
+                                i.sign.out.alternate.icon
+                    else
+                        a.ui.icon.button(href='/login')
+                            i.large.icon
+                                +icon name='internal'
+                            // i.sign.in.alternate.icon
+                            | &nbsp; Log In
+            .row
+                .sixteen.wide.column
+                    unless currentUser
+                        a.ui.center.aligned.big.inverted.blue.button(href='/login')
+                            |Login to see Dashboard
+                            i.right.arrow.icon
+                    +type_filter
         unless facet_doc
             .row
                 .sixteen.wide.column
@@ -45,30 +49,25 @@ template(name='dao')
                             i.plus.icon
                             |Create Session
         if facet_doc
-            .row
-                .fifteen.wide.column
-                    +type_filter
-                .one.wide.column
-                    // if editing_mode
-                    .ui.icon.button.delete_facet(title='Clear Session')
-                        i.remove.icon
-                    if is_dev
-                        .ui.button.show_facet log
             if facet_doc.config_mode
                 .row
                     .sixteen.wide.column
                         .ui.header
                             i.cog.icon
                             |Schema Configuration
-                        .ui.big.primary.button.disable_config
+                        .ui.big.icon.primary.button.disable_config
                             i.cog.icon
                             // | Configure
                         .ui.button.add_field + Field
-                        .ui.four.stackable.cards
-                            each fields
-                                +edit_field
+                        each fields
+                            +field_segment
             else
                 .four.wide.column.scrolling
+                    // if editing_mode
+                    .ui.icon.button.delete_facet(title='Clear Session')
+                        i.remove.icon
+                    if is_dev
+                        .ui.button.show_facet log
                     .ui.button.enable_config
                         i.cog.icon
                         | Configure
@@ -175,8 +174,8 @@ template(name='draft')
     .ui.button.submit_draft Save
     .ui.button.cancel_draft Cancel
 
-template(name='edit_field')
-    .ui.card(class=ticket_color_class)
+template(name='field_segment')
+    .ui.segment(class=ticket_color_class)
         .content
             .ui.header
                 if icon
