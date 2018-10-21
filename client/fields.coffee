@@ -12,7 +12,7 @@ Template.boolean_edit.events
                 $set: "#{@key}": true
 
 Template.string_edit.events
-    'blur .text_field_val': (e,t)->
+    'blur .string_val': (e,t)->
         # console.log Template.parentData()
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
@@ -23,7 +23,7 @@ Template.string_edit.events
                 "#{@key}": val
 
 Template.number_edit.events
-    'blur .number_field_val': (e,t)->
+    'blur .number_val': (e,t)->
         # console.log Template.parentData()
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
@@ -35,6 +35,17 @@ Template.number_edit.events
 
 Template.date_edit.events
     'blur .date_val': (e,t)->
+        # console.log Template.parentData()
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
+
+        val = e.currentTarget.value
+        Docs.update target_doc._id,
+            $set:
+                "#{@key}": val
+
+Template.textarea_edit.events
+    'blur .textarea_val': (e,t)->
         # console.log Template.parentData()
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
@@ -82,7 +93,7 @@ Template.boolean_edit.helpers
     bool_switch_class: ->
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
-        bool_value = target_doc["#{@key}"]
+        bool_value = target_doc?["#{@key}"]
         if bool_value and bool_value is true
             'primary'
         else
@@ -93,35 +104,44 @@ Template.string_edit.helpers
         facet = Docs.findOne type:'facet'
         editing_doc = Docs.findOne _id:facet.detail_id
         # console.log 'target doc', editing_doc
-        value = editing_doc["#{@key}"]
+        value = editing_doc?["#{@key}"]
 
 Template.date_edit.helpers
     value: ->
         facet = Docs.findOne type:'facet'
         editing_doc = Docs.findOne _id:facet.detail_id
         # console.log 'target doc', editing_doc
-        value = editing_doc["#{@key}"]
+        value = editing_do?c["#{@key}"]
 
 Template.field_view.helpers
     value: ->
         facet = Docs.findOne type:'facet'
         editing_doc = Docs.findOne _id:facet.detail_id
         # console.log 'target doc', editing_doc
-        value = editing_doc["#{@key}"]
+        value = editing_doc?["#{@key}"]
+
+    is_array: -> @field_type is 'array'
 
 Template.number_edit.helpers
     value: ->
         facet = Docs.findOne type:'facet'
         editing_doc = Docs.findOne _id:facet.detail_id
         # console.log 'target doc', editing_doc
-        value = editing_doc["#{@key}"]
+        value = editing_doc?["#{@key}"]
+
+Template.textarea_edit.helpers
+    value: ->
+        facet = Docs.findOne type:'facet'
+        editing_doc = Docs.findOne _id:facet.detail_id
+        # console.log 'target doc', editing_doc
+        value = editing_doc?["#{@key}"]
 
 
 Template.array_edit.helpers
     value: ->
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
-        target_doc["#{@key}"]
+        target_doc?["#{@key}"]
 
 Template.multiref_edit.onCreated ->
     @autorun => Meteor.subscribe 'type', @data.ref_schema

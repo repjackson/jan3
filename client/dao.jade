@@ -2,11 +2,13 @@ template(name='dao')
     .ui.stackable.padded.grid
         #dash_header.ui.vertical.masthead.center.aligned.segment.grid
             .row
-                .four.wide.column
-                .eight.wide.column
+                .two.wide.column
                     img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                     // h2.ui.inverted.header Customer Portal
-                .four.wide.column
+                .twelve.wide.column
+                    if facet_doc
+                        +type_filter
+                .two.wide.column
                     if currentUser
                         a.ui.icon.circular.button(href='/account/settings' class="{{ active_route 'account' }}" )
                             if currentUser.image_id
@@ -26,15 +28,6 @@ template(name='dao')
                                 +icon name='internal'
                             // i.sign.in.alternate.icon
                             | &nbsp; Log In
-            if facet_doc
-                .row
-                    .sixteen.wide.column
-                        unless currentUser
-                            a.ui.center.aligned.big.inverted.blue.button(href='/login')
-                                |Login to see Dashboard
-                                i.right.arrow.icon
-                        else
-                            +type_filter
         unless facet_doc
             .row
                 .sixteen.wide.column
@@ -129,9 +122,9 @@ template(name='detail_pane')
         .ui.hidden.divider
     else
         a.ui.header.close_details(href='#')
-            if icon
+            if detail_doc.icon
                 i.icon
-                    +icon name=icon
+                    +icon name=detail_doc.icon
             |#{detail_doc.title} Details
         .ui.right.floated.button.enable_editing
             i.pencil.icon
@@ -178,27 +171,6 @@ template(name='draft')
                     +field_edit
     .ui.button.submit_draft Save
     .ui.button.cancel_draft Cancel
-
-//             +edit_field_number key='rank' label='Rank' filter_id=this._id
-//             +edit_field_boolean key='read_only' label='Read Only'
-//             +edit_field_boolean key='draft' label='Draft'
-//             +edit_field_boolean key='axon' label='Axon'
-//             +edit_field_boolean key='header' label='Header'
-//             if editable
-//                 .ui.segment
-//                     +edit_field_array key='editable_roles' label='Editable Roles'
-//             if axon
-//                 .ui.segment
-//                     +edit_field_text key='axon_schema' label='Axon Schema' filter_id=this._id
-//                     +edit_field_text key='children_template' label='Children Template' filter_id=this._id
-//         .content
-//             .ui.icon.remove_field.button
-//                 i.remove.icon
-//         .ui.header dynamic fields
-//         .ui.form
-//             each field_fields
-//                 .field
-//                     +field_edit
 
 
 
@@ -266,7 +238,7 @@ template(name='facet_segment')
                             if field_template
                                 +Template.dynamic template=field_template
                             else
-                                |#{title}:
+                                |#{title}: &nbsp;
                                 if is_array
                                     each value
                                         .ui.basic.label #{this}

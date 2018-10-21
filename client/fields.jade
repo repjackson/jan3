@@ -19,7 +19,7 @@ template(name='array_edit')
         i.plus.icon
     if value
         each value
-            .ui.basic.label
+            .ui.large.basic.label
                 i.pull_element.remove.link.icon
                 |#{this}
 
@@ -61,7 +61,22 @@ template(name='string_edit')
             if icon
                 +icon name=icon classes='inline spaced'
             |#{title}
-        input.text_field_val(type='text' value=value)
+        input.string_val(type='text' value=value)
+
+
+
+
+template(name='textarea_edit')
+    .ui.fluid.labeled.input
+        .ui.basic.label
+            if icon
+                +icon name=icon classes='inline spaced'
+            |#{title}
+        textarea.textarea_val(rows='5')
+            |#{value}
+
+
+
 
 template(name='number_edit')
     .ui.fluid.labeled.input
@@ -69,7 +84,8 @@ template(name='number_edit')
             if icon
                 +icon name=icon classes='inline spaced'
             |#{title}
-        input.number_field_val(type='number' value=value)
+        input.number_val(type='number' value=value)
+
 
 template(name='date_edit')
     .ui.fluid.labeled.input
@@ -85,43 +101,9 @@ template(name='field_view')
         if field_template
             +Template.dynamic template=field_template
         else
-            |#{title}:
+            |#{title}: &nbsp;
             if is_array
                 each value
                     .ui.basic.label #{this}
             else
                 strong &nbsp; #{value}
-
-
-
-template(name='edit_field_boolean')
-    if is_true
-        .ui.primary.button.set_false #{label}
-    else
-        .ui.button.set_true #{label}
-
-template(name='edit_field_array')
-    .ui.header #{label}
-    .ui.input
-        input.add_value(type='text' placeholder='Add')
-    each values
-        .ui.label
-            |#{this}
-            i.remove.icon
-
-template(name='edit_doc_array')
-    .ui.header #{label}
-    .ui.input
-        input.add_value(type='text' placeholder='Add')
-    each values
-        .ui.label
-            |#{this}
-            i.remove.pull_value.link.icon
-
-
-
-template(name='edit_doc_boolean')
-    if is_true
-        .ui.primary.button.set_false #{label}
-    else
-        .ui.button.set_true #{label}

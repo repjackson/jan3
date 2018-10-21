@@ -31,6 +31,8 @@ Template.facet_segment.helpers
         else
             Docs.findOne @valueOf()
 
+    is_array: -> @field_type is 'array'
+
     facet_segment_class: ->
         facet = Docs.findOne type:'facet'
         if facet.detail_id and facet.detail_id is @_id then 'secondary' else ''
