@@ -71,6 +71,14 @@ template(name='number_edit')
             |#{title}
         input.number_field_val(type='number' value=value)
 
+template(name='date_edit')
+    .ui.fluid.labeled.input
+        .ui.basic.label
+            if icon
+                +icon name=icon classes='inline spaced'
+            |#{title}
+        input.date_val(type='date' value=value)
+
 
 template(name='field_view')
     .item

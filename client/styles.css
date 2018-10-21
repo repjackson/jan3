@@ -137,9 +137,10 @@ body {
 }
 
 #main_area {
-        min-height: 500px;
-        min-width: 100%;
-    }
+  min-height: 600px;
+  /*min-height: 100%;*/
+  min-width: 100%;
+}
 /*#cleaning_schedule {*/
 /*    max-height: 300px;*/
         /*min-width: 100%;*/

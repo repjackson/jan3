@@ -33,6 +33,17 @@ Template.number_edit.events
             $set:
                 "#{@key}": val
 
+Template.date_edit.events
+    'blur .date_val': (e,t)->
+        # console.log Template.parentData()
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
+
+        val = e.currentTarget.value
+        Docs.update target_doc._id,
+            $set:
+                "#{@key}": val
+
 Template.array_edit.events
     'keyup .add_array_element': (e,t)->
         if e.which is 13
@@ -78,6 +89,13 @@ Template.boolean_edit.helpers
             ''
 
 Template.string_edit.helpers
+    value: ->
+        facet = Docs.findOne type:'facet'
+        editing_doc = Docs.findOne _id:facet.detail_id
+        # console.log 'target doc', editing_doc
+        value = editing_doc["#{@key}"]
+
+Template.date_edit.helpers
     value: ->
         facet = Docs.findOne type:'facet'
         editing_doc = Docs.findOne _id:facet.detail_id
