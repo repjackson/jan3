@@ -24,6 +24,8 @@ template(name='array_edit')
                 |#{this}
 
 
+
+
 template(name='multiref_edit')
     .ui.basic.label
         if icon
@@ -32,6 +34,8 @@ template(name='multiref_edit')
     each choices
         .ui.button.toggle_element(class=element_class) #{title}
 
+
+
 template(name='ref_edit')
     .ui.basic.label
         if icon
@@ -39,6 +43,8 @@ template(name='ref_edit')
         |#{title}
     each choices
         .ui.button.choose_element(class=element_class) #{title}
+
+
 
 
 template(name='string_edit')

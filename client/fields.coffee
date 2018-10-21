@@ -130,14 +130,13 @@ Template.ref_edit.events
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
         editing_field = Template.currentData().key
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
-        console.log Template.parentData(3)
-        console.log Template.parentData(3)
-        console.log Template.parentData(3)
+        value =
+            if @key then @key
+            else if @slug then @slug
+            else if @username then @username
 
         Docs.update target_doc._id,
-            $set:"#{editing_field}": @key
+            $set:"#{editing_field}": value
 
 Template.ref_edit.helpers
     choices: ->
@@ -146,5 +145,9 @@ Template.ref_edit.helpers
     element_class: ->
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
-        # if target_doc["#{@key}"]
-        console.log @
+        editing_field = Template.currentData().key
+        value =
+            if @key then @key
+            else if @slug then @slug
+            else if @username then @username
+        if target_doc["#{editing_field}"] is value then 'primary' else ''
