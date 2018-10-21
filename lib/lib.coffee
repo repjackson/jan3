@@ -3,14 +3,25 @@
 
 
 Docs.before.insert (userId, doc)->
+    user = Meteor.users.findOne userId
+
+    if user.roles
+        if 'office' in user.roles
+            doc['office_jpid'] = user.office_jpid
+        if 'customer' in user.roles
+            doc['customer_jpid'] = user.customer_jpid
+
+    doc.author_id = Meteor.userId()
+    doc.author_username = user.username
+
     timestamp = Date.now();
     now = moment(timestamp);
 
     doc.timestamp = timestamp
 
     doc.updated = timestamp
-
     doc.long_timestamp = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
+
     date = moment(timestamp).format('Do')
     weekdaynum = moment(timestamp).isoWeekday()
     weekday = moment().isoWeekday(weekdaynum).format('dddd')
@@ -21,7 +32,6 @@ Docs.before.insert (userId, doc)->
     if _
         date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
     doc.timestamp_tags = date_array
-    doc.author_id = Meteor.userId()
 
     return
 

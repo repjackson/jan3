@@ -1,13 +1,5 @@
 template(name='dao')
     .ui.stackable.padded.grid
-        // .row.nav_bar
-        //     .four.wide.column
-        //     // .eight.wide.column
-        //     //     .ui.center.aligned.header
-        //     //         a(href='/dashboard')
-        //     //             // .mobile.hidden Dashboard
-        //     //             img.ui.inline.image(src="{{c.url 'jan_full_logo' height=50 gravity='face' crop='fill'}}")
-
         #dash_header.ui.vertical.masthead.center.aligned.segment.grid
             .row
                 .four.wide.column
@@ -34,13 +26,15 @@ template(name='dao')
                                 +icon name='internal'
                             // i.sign.in.alternate.icon
                             | &nbsp; Log In
-            .row
-                .sixteen.wide.column
-                    unless currentUser
-                        a.ui.center.aligned.big.inverted.blue.button(href='/login')
-                            |Login to see Dashboard
-                            i.right.arrow.icon
-                    +type_filter
+            if facet_doc
+                .row
+                    .sixteen.wide.column
+                        unless currentUser
+                            a.ui.center.aligned.big.inverted.blue.button(href='/login')
+                                |Login to see Dashboard
+                                i.right.arrow.icon
+                        else
+                            +type_filter
         unless facet_doc
             .row
                 .sixteen.wide.column
@@ -90,14 +84,14 @@ template(name='dao')
                                     | Field
                                 each fields
                                     +facet_segment data=_id
-                                .ui.header
-                                    +icon name='workflow'
-                                    |Rules
-                                .ui.button.add_rule
-                                    i.plus.icon
-                                    |Rule
-                                each fields
-                                    +facet_segment data=_id
+                                // .ui.header
+                                //     +icon name='workflow'
+                                //     |Rules
+                                // .ui.button.add_rule
+                                //     i.plus.icon
+                                //     |Rule
+                                // each fields
+                                //     +facet_segment data=_id
                             else
                                 if facet_doc.result_ids
                                     if facet_doc.result_ids.length
@@ -107,18 +101,13 @@ template(name='dao')
                                         // | #{facet_doc.skip_amount}
                                         // | /
                                         if facet_doc.page_amount
-                                            .ui.pagination.small.menu
-                                                // if show_decrement
-                                                a.icon.item.page_down
-                                                    i.left.chevron.grey.icon
-                                                .ui.item
-                                                    | #{facet_doc.current_page}/#{facet_doc.page_amount}
-                                                    // .menu
-                                                    //     a.set_page_number.item(class=pagination_item_class) 1
-                                                    //     a.set_page_number.item(class=pagination_item_class) 2
-                                                a.icon.item.page_up
-                                                    i.right.chevron.grey.icon
-                                                // if show_increment
+                                            .ui.small.basic.label
+                                                | #{facet_doc.current_page}/#{facet_doc.page_amount}
+                                            a.ui.icon.small.page_down.button
+                                                i.left.chevron.grey.icon
+                                            a.ui.icon.small.page_up.button
+                                                i.right.chevron.grey.icon
+                                            // if show_increment
                                         .ui.basic.label #{facet_doc.total} Results
                                         each facet_doc.result_ids
                                             +facet_segment
@@ -214,7 +203,7 @@ template(name='draft')
 
 
 template(name='set_page_size')
-    .ui.compact.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
+    .ui.compact.small.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
 
 template(name='set_facet_key')
     .ui.button.compact.set_facet_key(class=set_facet_key_class)
@@ -265,7 +254,7 @@ template(name='facet_segment')
         .ui.segment.facet_segment(class=facet_segment_class)
             // if doc_header_fields
             .content
-                h4.ui.header
+                h3.ui.header
                     if icon
                         +icon name=icon
                     each doc_header_fields

@@ -38,7 +38,7 @@
     "search": false,
     "segment": true,
     "shape": false,
-    "sidebar": true,
+    "sidebar": false,
     "site": true,
     "statistic": true,
     "step": false,
@@ -50,7 +50,7 @@
   },
   "themes": {
     "amazon": false,
-    "basic": false,
+    "basic": true,
     "bookish": false,
     "bootstrap3": false,
     "chubby": false,

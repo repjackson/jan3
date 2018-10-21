@@ -37,26 +37,28 @@ Template.facet_segment.helpers
 
     field_docs: ->
         facet = Docs.findOne type:'facet'
-        schema = Docs.findOne
-            type:'schema'
-            slug:facet.filter_type[0]
-        linked_fields = Docs.find({
-            type:'field'
-            schema_slugs: $in: [schema.slug]
-            axon:$ne:true
-            visible:true
-        }, {sort:{rank:1}}).fetch()
+        local_doc =
+            if @data
+                Docs.findOne @data.valueOf()
+            else
+                Docs.findOne @valueOf()
+        if local_doc?.type is 'field'
+            Docs.find({
+                type:'field'
+                axon:$ne:true
+                schema_slugs: $in: ['field']
+            }, {sort:{rank:1}}).fetch()
+        else
+            schema = Docs.findOne
+                type:'schema'
+                slug:facet.filter_type[0]
+            linked_fields = Docs.find({
+                type:'field'
+                schema_slugs: $in: [schema.slug]
+                axon:$ne:true
+                visible:true
+            }, {sort:{rank:1}}).fetch()
 
-    # axons: ->
-    #     facet = Docs.findOne type:'facet'
-    #     schema = Docs.findOne
-    #         type:'schema'
-    #         slug:facet.filter_type[0]
-    #     linked_fields = Docs.find(
-    #         type:'field'
-    #         schema_slugs: $in: [schema.slug]
-    #         axon:true
-        # }, {sort:{rank:-1}}).fetch()
 
     value: ->
         # console.log @
@@ -73,13 +75,28 @@ Template.facet_segment.helpers
 
     doc_header_fields: ->
         facet = Docs.findOne type:'facet'
-        header = []
-        Docs.find(
-            type:'field'
-            schema_slugs:$in:[facet.filter_type[0]]
-            header:true
-        ).fetch()
-
+        local_doc =
+            if @data
+                Docs.findOne @data.valueOf()
+            else
+                Docs.findOne @valueOf()
+        if local_doc?.type is 'field'
+            Docs.find({
+                type:'field'
+                axon:$ne:true
+                header:true
+                schema_slugs: $in: ['field']
+            }, {sort:{rank:1}}).fetch()
+        else
+            schema = Docs.findOne
+                type:'schema'
+                slug:facet.filter_type[0]
+            linked_fields = Docs.find({
+                type:'field'
+                schema_slugs: $in: [schema.slug]
+                header:true
+                axon:$ne:true
+            }, {sort:{rank:1}}).fetch()
 
 
 
@@ -142,11 +159,6 @@ Template.dao.events
         new_doc = {}
         if type
             new_doc['type'] = type
-        if user.roles
-            if 'office' in user.roles
-                new_doc['office_jpid'] = user.office_jpid
-            if 'customer' in user.roles
-                new_doc['customer_jpid'] = user.customer_jpid
         new_id = Docs.insert(new_doc)
 
         Docs.update facet._id,

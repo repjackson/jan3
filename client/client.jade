@@ -28,12 +28,9 @@ head
 
 template(name='layout')
     .context.example
-        // +nav
-        .ui.bottom.attached.basic.segment.pushable
-            +left_sidebar
-            .pusher
-                #main_area
-                    +Template.dynamic template=main
+        // .ui.bottom.attached.basic.segment.pushable
+        #main_area
+            +Template.dynamic template=main
         +footer
 
 
