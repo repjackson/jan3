@@ -219,6 +219,7 @@ Template.type_filter.events
                 viewing_children:false
                 viewing_detail:false
                 editing_mode:false
+                config_mode:false
         Session.set 'is_calculating', true
         # console.log 'hi call'
         Meteor.call 'fo', (err,res)->

@@ -145,9 +145,10 @@ Template.ref_edit.helpers
     element_class: ->
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
-        editing_field = Template.currentData().key
+        parent = Template.parentData()
+
         value =
             if @key then @key
             else if @slug then @slug
             else if @username then @username
-        if target_doc["#{editing_field}"] is value then 'primary' else ''
+        if target_doc["#{parent.key}"] is value then 'primary' else ''

@@ -12,18 +12,18 @@ template(name='dao')
             .row
                 .four.wide.column
                 .eight.wide.column
-                    img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                    img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                     // h2.ui.inverted.header Customer Portal
                 .four.wide.column
                     if currentUser
-                        a.ui.icon.button(href='/account/settings' class="{{ active_route 'account' }}" )
+                        a.ui.icon.circular.button(href='/account/settings' class="{{ active_route 'account' }}" )
                             if currentUser.image_id
                                 i.large.icon
                                     img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                             else
                                 i.user.icon
                             |#{currentUser.username}
-                        a#logout.ui.icon.button(href='#')
+                        a#logout.ui.icon.circular.button(href='#')
                             if signing_out
                                 i.notched.circle.loading.icon
                             else
@@ -74,6 +74,7 @@ template(name='dao')
                     .column.scrolling
                         if is_calculating
                             // i.large.loading.refresh.icon
+                            .ui.hidden.divider
                             .ui.active.indeterminate.massive.centered.inline.loader
                                 // |Calculating filters and results
                         else
@@ -81,7 +82,20 @@ template(name='dao')
                                 .ui.header
                                     i.cog.icon
                                     |Schema Configuration
-                                .ui.button.add_field + Field
+                                .ui.header
+                                    +icon name='rename'
+                                    |Fields
+                                .ui.button.add_field
+                                    i.plus.icon
+                                    | Field
+                                each fields
+                                    +facet_segment data=_id
+                                .ui.header
+                                    +icon name='workflow'
+                                    |Rules
+                                .ui.button.add_rule
+                                    i.plus.icon
+                                    |Rule
                                 each fields
                                     +facet_segment data=_id
                             else
