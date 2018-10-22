@@ -37,6 +37,11 @@ Template.facet_segment.helpers
         facet = Docs.findOne type:'facet'
         if facet.detail_id and facet.detail_id is @_id then 'secondary' else ''
 
+    view_full: ->
+        # facet = Docs.findOne type:'facet'
+        # if facet.detail_id and facet.detail_id is @_id then true else false
+        true
+
     field_docs: ->
         facet = Docs.findOne type:'facet'
         local_doc =
@@ -109,19 +114,24 @@ Template.dao.onRendered ->
 
 
 
+Template.toggle_facet_config.helpers
+    boolean_true: ->
+        facet = Docs.findOne type:'facet'
+        if facet then facet["#{@key}"]
+
+Template.toggle_facet_config.events
+    'click .enable_key': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set:"#{@key}":true
+
+    'click .disable_key': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set:"#{@key}":false
+
 
 Template.dao.events
-    'click .enable_config': ->
-        facet = Docs.findOne type:'facet'
-        Docs.update facet._id,
-            $set:config_mode:true
-
-    'click .disable_config': ->
-        facet = Docs.findOne type:'facet'
-        Docs.update facet._id,
-            $set:config_mode:false
-
-
     'click .close_details': ->
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
@@ -185,7 +195,7 @@ Template.dao.events
 Template.set_page_size.helpers
     page_size_class: ->
         facet = Docs.findOne type:'facet'
-        if @value is facet.page_size then 'primary' else ''
+        if @value is facet.page_size then 'blue' else ''
 
 
 Template.set_page_size.events
@@ -220,7 +230,7 @@ Template.type_filter.helpers
 
     set_type_class: ->
         facet = Docs.findOne type:'facet'
-        if facet.filter_type and @slug in facet.filter_type then 'primary' else ''
+        if facet.filter_type and @slug in facet.filter_type then 'blue large' else ''
 
 
 Template.type_filter.events
@@ -309,7 +319,7 @@ Template.detail_pane.helpers
 
     axon_selector_class: ->
         facet = Docs.findOne type:'facet'
-        if @axon_schema is facet.viewing_axon then 'primary' else ''
+        if @axon_schema is facet.viewing_axon then 'blue' else ''
 
     fields: ->
         facet = Docs.findOne type:'facet'
@@ -449,7 +459,7 @@ Template.dao.helpers
 Template.set_facet_key.helpers
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'
-        if facet.query["#{@key}"] is @value then 'primary' else ''
+        if facet.query["#{@key}"] is @value then 'blue' else ''
 
 Template.filter.helpers
     values: ->
@@ -458,14 +468,14 @@ Template.filter.helpers
 
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'
-        if facet.query["#{@slug}"] is @value then 'primary' else ''
+        if facet.query["#{@slug}"] is @value then 'blue' else ''
 
 Template.selector.helpers
     toggle_value_class: ->
         facet = Docs.findOne type:'facet'
         filter = Template.parentData()
         filter_list = facet["filter_#{filter.key}"]
-        if filter_list and @value in filter_list then 'primary' else ''
+        if filter_list and @value in filter_list then 'blue' else ''
 
 Template.filter.events
     # 'click .set_facet_key': ->

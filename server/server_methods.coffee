@@ -518,3 +518,33 @@ Meteor.methods
                 "ev.MASTER_OFFICE_MANAGER": "office_manager"
                 "ev.MASTER_OFFICE_OWNER": "office_owner"
             }},{multi:true})
+
+    rename_ls: ->
+        console.log 'renaming ls'
+        result = Docs.update(
+            {
+                type:'customer',
+                master_licensee:{$exists:true}
+            },
+            {$rename:
+                master_licensee: 'office_name'
+                # master_id: '78'
+                id: 'jpid'
+                cust_name: 'customer_name'
+                cust_cont_person: 'customer_contact_person'
+                cust_contact_email: 'customer_contact_email'
+                # telephone: '6625347871'
+                addr_street: 'address'
+                addr_street_2: 'address_2'
+                franchisee: 'franchisee_name'
+                addr_city: 'city'
+                addr_state: 'state'
+                cust_num_days_service: 'customer_number_days_service'
+                cust_days_service: 'customer_days_service'
+                cust_regc_service_amt: 'customer_regular_service_amount'
+                account_status: 'status'
+            },
+            {multi:true}
+        )
+        console.log 'result', result
+

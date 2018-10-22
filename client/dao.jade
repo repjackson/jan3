@@ -4,7 +4,6 @@ template(name='dao')
             .middle.aligned.row
                 .two.wide.column
                     img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                    // h2.ui.inverted.header Customer Portal
                 .twelve.wide.column
                     if facet_doc
                         +type_filter
@@ -26,7 +25,6 @@ template(name='dao')
                         a.ui.icon.button(href='/login')
                             i.large.icon
                                 +icon name='internal'
-                            // i.sign.in.alternate.icon
                             | &nbsp; Log In
         unless facet_doc
             .row
@@ -37,22 +35,14 @@ template(name='dao')
                             |Create Session
         if facet_doc
             .four.wide.column.scrolling
-                // if editing_mode
                 .ui.icon.button.delete_facet(title='Clear Session')
                     i.remove.icon
                 if is_dev
                     .ui.icon.button.show_facet
                         i.code.icon
-                unless facet_doc.config_mode
-                    .ui.button.enable_config
-                        i.icon
-                            +icon name='administrative-tools'
-                        | Configure #{current_type.title}
-                else
-                    .ui.primary.button.disable_config
-                        i.icon
-                            +icon name='administrative-tools'
-                        | Configure
+
+                +toggle_facet_config key='config_mode' title='Schema Configuration' icon='administrative-tools'
+                +toggle_facet_config key='view_full' title='View Full' icon='resize-diagonal'
                 .ui.button.add_doc
                     i.plus.icon
                     |Add
@@ -80,14 +70,6 @@ template(name='dao')
                                         | Field
                                 each fields
                                     +facet_segment data=_id
-                                // .ui.header
-                                //     +icon name='workflow'
-                                //     |Rules
-                                // .ui.button.add_rule
-                                //     i.plus.icon
-                                //     |Rule
-                                // each fields
-                                //     +facet_segment data=_id
                             else
                                 if facet_doc.result_ids
                                     if facet_doc.result_ids.length
@@ -121,6 +103,18 @@ template(name='dao')
                         .column.scrolling
                             +detail_pane
 
+
+template(name='toggle_facet_config')
+    if boolean_true
+        .ui.blue.button.disable_key(title=title)
+            i.icon
+                +icon name=icon
+            | #{label}
+    else
+        .ui.button.enable_key
+            i.icon
+                +icon name=icon
+            | #{label}
 
 
 template(name='detail_pane')
@@ -241,39 +235,27 @@ template(name='facet_segment')
                         +icon name=icon
                     each doc_header_fields
                         |#{value}
-            .content
-                p
-                .ui.list
-                    each field_docs
-                        if value
-                            .item
-                                if field_template
-                                    +Template.dynamic template=field_template
-                                else
-                                    if icon
-                                        i.large.icon
-                                            +icon name=icon
-                                    .content
-                                        .header #{title}
-                                        .description
+            if facet_doc.view_full
+                .content
+                    p
+                    .ui.list
+                        each field_docs
+                            if value
+                                .item
+                                    if field_template
+                                        +Template.dynamic template=field_template
+                                    else
+                                        .content
+                                            if icon
+                                                i.large.icon
+                                                    +icon name=icon
+                                            | #{title}
+                                            |&nbsp;
                                             if is_array
                                                 each value
                                                     .ui.basic.label #{this}
                                             else
-                                                |#{value}
-
-
-        // else
-        //     if icon
-        //         i.icon
-        //             +icon name=icon
-        //     |#{title}: &nbsp;
-        //     if is_array
-        //         each value
-        //             .ui.basic.label #{this}
-        //     else
-        //         strong &nbsp; #{value}
-
+                                                strong #{value}
 
 
 template(name='boolean_facet')

@@ -9,50 +9,51 @@ Meteor.methods
                 # console.dir json
                 console.log json.offices.length
                 console.log json.franchisees.length
-                console.log json.customers.length
-                for customer in json.customers
-                    console.log 'customer id', customer.id
-                    console.dir customer
-                    found_customer =
-                        Docs.findOne
-                            type:'customer'
-                            id:customer.id
-                    if found_customer
-                        console.log 'found customer', customer.id
-                    else
-                        customer['type'] = 'customer'
-                        new_id = Docs.insert customer
-                        console.log 'inserted customer', new_id
-                for franchisee in json.franchisees
-                    console.log 'franchisee id', franchisee.id
-                    console.dir franchisee
-                    found_franchisee =
-                        Docs.findOne
-                            type:'franchisee'
-                            id:franchisee.id
-                    if found_franchisee
-                        console.log 'found franchisee', franchisee.id
-                    else
-                        franchisee['type'] = 'franchisee'
-                        new_id = Docs.insert franchisee
-                        console.log 'inserted franchisee', new_id
-                for office in json.offices
-                    console.log 'office id', office.id
-                    console.dir office
-                    found_office =
-                        Docs.findOne
-                            type:'office'
-                            id:office.id
-                    if found_office
-                        console.log 'found office', office.id
-                    else
-                        office['type'] = 'office'
-                        new_id = Docs.insert office
-                        console.log 'inserted office', new_id
-                for office in json.offices
-                    console.log 'office id', office.id
-                for franchisee in json.franchisees
-                    console.log 'franchisee id', franchisee.id
+                console.dir json.customers[..4]
+                # for customer in json.customers
+                #     console.log 'customer id', customer.id
+                #     console.dir customer
+                #     found_customer =
+                #         Docs.findOne
+                #             type:'customer'
+                #             id:customer.id
+                #     if found_customer
+                #         console.log 'found customer', customer.id
+                #     else
+                #         customer['type'] = 'customer'
+                #         new_id = Docs.insert customer
+                #         console.log 'inserted customer', new_id
+                # for franchisee in json.franchisees
+                #     console.log 'franchisee id', franchisee.id
+                #     console.dir franchisee
+                #     found_franchisee =
+                #         Docs.findOne
+                #             type:'franchisee'
+                #             id:franchisee.id
+                #     if found_franchisee
+                #         console.log 'found franchisee', franchisee.id
+                #     else
+                #         franchisee['type'] = 'franchisee'
+                #         new_id = Docs.insert franchisee
+                #         console.log 'inserted franchisee', new_id
+                # for office in json.offices
+                #     console.log 'office id', office.id
+                #     console.dir office
+                #     found_office =
+                #         Docs.findOne
+                #             type:'office'
+                #             id:office.id
+                #     if found_office
+                #         console.log 'found office', office.id
+                #     else
+                #         office['type'] = 'office'
+                #         new_id = Docs.insert office
+                #         console.log 'inserted office', new_id
+                # for office in json.offices
+                #     console.log 'office id', office.id
+                # for franchisee in json.franchisees
+                #     console.log 'franchisee id', franchisee.id
+
 
     sync_ev_users: ()->
         self = @

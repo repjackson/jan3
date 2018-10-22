@@ -3,9 +3,7 @@ $.cloudinary.config
 
 FlowRouter.notFound =
     action: ->
-        BlazeLayout.render 'layout',
-            main: 'not_found'
-
+        FlowRouter.go '/dashboard'
 
 FlowRouter.route('/', {
     triggersEnter: [(context, redirect) ->
@@ -41,12 +39,9 @@ globalHotkeys.add
 
 
 
-Session.setDefault('query',null)
-Session.setDefault('config_mode',false)
 
 if Meteor.isDevelopment
     Session.setDefault('dev_mode',false)
-# else
 
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
@@ -55,6 +50,7 @@ Template.registerHelper 'is_editing', () ->
     Session.equals 'editing_id', @_id
 
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
+Template.registerHelper 'facet_doc', () ->  Docs.findOne type:'facet'
 
 Template.registerHelper 'overdue', () ->
     if @assignment_timestamp

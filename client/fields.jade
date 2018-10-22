@@ -97,16 +97,17 @@ template(name='date_edit')
 
 
 template(name='field_view')
-    .item
-        if field_template
-            +Template.dynamic template=field_template
-        else
-            if icon
-                i.icon
-                    +icon name=icon
-            |#{title}: &nbsp;
-            if is_array
-                each value
-                    .ui.basic.label #{this}
+    if value
+        .item
+            if field_template
+                +Template.dynamic template=field_template
             else
-                strong &nbsp; #{value}
+                if icon
+                    i.icon
+                        +icon name=icon
+                |#{title}: &nbsp;
+                if is_array
+                    each value
+                        .ui.basic.label #{this}
+                else
+                    strong &nbsp; #{value}

@@ -56,12 +56,12 @@ Meteor.methods
         if Meteor.isProduction
             limit_val = 1000
 
-        if Meteor.user().roles
-            unless 'dev' in Meteor.user().roles
-                if 'office' in Meteor.user().roles
-                    built_query['office_jpid'] = Meteor.user().office_jpid
-                if 'customer' in Meteor.user().roles
-                    built_query['customer_jpid'] = Meteor.user().customer_jpid
+        # if Meteor.user().roles
+        #     unless 'dev' in Meteor.user().roles
+        #         if 'office' in Meteor.user().roles
+        #             built_query['office_jpid'] = Meteor.user().office_jpid
+        #         if 'customer' in Meteor.user().roles
+        #             built_query['customer_jpid'] = Meteor.user().customer_jpid
 
 
         results = Docs.find(built_query, {limit:limit_val}).fetch()
