@@ -187,6 +187,7 @@ Template.set_page_size.helpers
         facet = Docs.findOne type:'facet'
         if @value is facet.page_size then 'primary' else ''
 
+
 Template.set_page_size.events
     'click .set_page_size': (e,t)->
         facet = Docs.findOne type:'facet'
@@ -196,6 +197,7 @@ Template.set_page_size.events
                 skip_amount:0
                 page_size:@value
         Meteor.call 'fo'
+
 
 Template.selector.helpers
     selector_value: ->
@@ -278,10 +280,14 @@ Template.detail_pane.events
                 children_template:@children_template
                 viewing_axon:@axon_schema
 
+
+
 Template.children_view.onCreated ->
     facet = Docs.findOne type:'facet'
     @autorun => Meteor.subscribe 'schema_doc_by_type', facet.viewing_axon
     @autorun => Meteor.subscribe 'type', 'schama'
+
+
 
 
 Template.children_view.helpers
@@ -387,7 +393,13 @@ Template.dao.helpers
         facet = Docs.findOne type:'facet'
         if facet.result_ids then facet.result_ids[..10]
 
-    # detail_view: ->
+    current_type: ->
+        facet = Docs.findOne type:'facet'
+        type_key = facet.filter_type[0]
+        Docs.findOne
+            type:'schema'
+            slug:type_key
+
 
     ticket_types: -> Docs.find type:'ticket_type'
 

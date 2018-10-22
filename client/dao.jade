@@ -1,7 +1,7 @@
 template(name='dao')
     .ui.stackable.padded.grid
-        #dash_header.ui.vertical.masthead.center.aligned.segment.grid
-            .row
+        #dash_header.ui.masthead.center.aligned.segment.stackable.grid
+            .middle.aligned.row
                 .two.wide.column
                     img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                     // h2.ui.inverted.header Customer Portal
@@ -10,14 +10,14 @@ template(name='dao')
                         +type_filter
                 .two.wide.column
                     if currentUser
-                        a.ui.icon.circular.button(href='/account/settings' class="{{ active_route 'account' }}" )
+                        a.ui.icon.button(href='/account/settings' class="{{ active_route 'account' }}" )
                             if currentUser.image_id
                                 i.large.icon
                                     img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                             else
                                 i.user.icon
                             |#{currentUser.username}
-                        a#logout.ui.icon.circular.button(href='#')
+                        a#logout.ui.icon.button(href='#')
                             if signing_out
                                 i.notched.circle.loading.icon
                             else
@@ -41,14 +41,17 @@ template(name='dao')
                 .ui.icon.button.delete_facet(title='Clear Session')
                     i.remove.icon
                 if is_dev
-                    .ui.button.show_facet log
+                    .ui.icon.button.show_facet
+                        i.code.icon
                 unless facet_doc.config_mode
                     .ui.button.enable_config
-                        i.cog.icon
-                        | Configure
+                        i.icon
+                            +icon name='administrative-tools'
+                        | Configure #{current_type.title}
                 else
                     .ui.primary.button.disable_config
-                        i.cog.icon
+                        i.icon
+                            +icon name='administrative-tools'
                         | Configure
                 .ui.button.add_doc
                     i.plus.icon
@@ -66,15 +69,15 @@ template(name='dao')
                                 // |Calculating filters and results
                         else
                             if facet_doc.config_mode
-                                .ui.header
-                                    i.cog.icon
-                                    |Schema Configuration
+                                .ui.center.aligned.header
+                                    +icon name='administrative-tools'
+                                    |Schema '#{current_type.title}'
                                 .ui.header
                                     +icon name='rename'
                                     |Fields
-                                .ui.button.add_field
-                                    i.plus.icon
-                                    | Field
+                                    .ui.right.floated.button.add_field
+                                        i.plus.icon
+                                        | Field
                                 each fields
                                     +facet_segment data=_id
                                 // .ui.header
@@ -88,20 +91,28 @@ template(name='dao')
                             else
                                 if facet_doc.result_ids
                                     if facet_doc.result_ids.length
-                                        +set_page_size value=10
-                                        +set_page_size value=20
-                                        +set_page_size value=50
-                                        // | #{facet_doc.skip_amount}
-                                        // | /
-                                        if facet_doc.page_amount
-                                            .ui.small.basic.label
-                                                | #{facet_doc.current_page}/#{facet_doc.page_amount}
-                                            a.ui.icon.small.page_down.button
-                                                i.left.chevron.grey.icon
-                                            a.ui.icon.small.page_up.button
-                                                i.right.chevron.grey.icon
-                                            // if show_increment
-                                        .ui.basic.label #{facet_doc.total} Results
+                                        .ui.horizontal.list
+                                            .item
+                                                .ui.header
+                                                    if current_type.icon
+                                                        i.icon
+                                                            +icon name=current_type.icon
+                                                    |#{current_type.title}
+                                            .item
+                                                +set_page_size value=10
+                                                +set_page_size value=20
+                                                +set_page_size value=50
+                                            .item
+                                                if facet_doc.page_amount
+                                                    a.ui.icon.small.page_down.button(title='Previous Page')
+                                                        i.left.chevron.grey.icon
+                                                    .ui.small.basic.label
+                                                        | #{facet_doc.current_page}/#{facet_doc.page_amount}
+                                                    a.ui.icon.small.page_up.button(title='Next Page')
+                                                        i.right.chevron.grey.icon
+                                                    // if show_increment
+                                            .item
+                                                .ui.basic.label #{facet_doc.total} Results
                                         each facet_doc.result_ids
                                             +facet_segment
                                 else
@@ -114,14 +125,16 @@ template(name='dao')
 
 template(name='detail_pane')
     if facet_doc.editing_mode
-        a.ui.header.close_details(href='#')
+        a.ui.center.aligned.header.close_details(href='#')
             if detail_doc.icon
                 i.icon
                     +icon name=detail_doc.icon
             |Edit #{detail_doc.title}
-        .ui.hidden.divider
+        .ui.right.floated.large.button.disable_editing(title='Save')
+            i.green.checkmark.icon
+            |Save
     else
-        a.ui.header.close_details(href='#')
+        a.ui.center.aligned.header.close_details(href='#')
             if detail_doc.icon
                 i.icon
                     +icon name=detail_doc.icon
@@ -138,13 +151,10 @@ template(name='detail_pane')
                 else
                     +field_view
     if facet_doc.editing_mode
-        .ui.hidden.divider
-        .ui.fluid.large.button.disable_editing(title='Save')
-            i.checkmark.icon
-            // |Save
-        .ui.icon.button.remove_doc
-            i.remove.icon
-    else
+        .ui.button.remove_doc
+            i.red.remove.icon
+            |Delete
+    unless facet_doc.editing_mode
         each axons
             .ui.button.select_axon(class=axon_selector_class)
                 if icon
@@ -196,7 +206,7 @@ template(name='filter')
     .ui.header
         if icon
             i.icon
-                +icon name=icon
+                +iconsmall name=icon
         |#{title}
     if editing_mode
         .item key: #{key}
@@ -232,18 +242,38 @@ template(name='facet_segment')
                     each doc_header_fields
                         |#{value}
             .content
+                p
                 .ui.list
                     each field_docs
-                        .item
-                            if field_template
-                                +Template.dynamic template=field_template
-                            else
-                                |#{title}: &nbsp;
-                                if is_array
-                                    each value
-                                        .ui.basic.label #{this}
+                        if value
+                            .item
+                                if field_template
+                                    +Template.dynamic template=field_template
                                 else
-                                    strong &nbsp; #{value}
+                                    if icon
+                                        i.large.icon
+                                            +icon name=icon
+                                    .content
+                                        .header #{title}
+                                        .description
+                                            if is_array
+                                                each value
+                                                    .ui.basic.label #{this}
+                                            else
+                                                |#{value}
+
+
+        // else
+        //     if icon
+        //         i.icon
+        //             +icon name=icon
+        //     |#{title}: &nbsp;
+        //     if is_array
+        //         each value
+        //             .ui.basic.label #{this}
+        //     else
+        //         strong &nbsp; #{value}
+
 
 
 template(name='boolean_facet')

@@ -1,11 +1,6 @@
 template(name='accounts_layout')
-    .context.example
-        .ui.bottom.attached.basic.segment.pushable
-            +left_sidebar
-            .pusher
-                #main_area
-                    +accounts_nav
-                    +Template.dynamic template=main
+    +accounts_nav
+    +Template.dynamic template=main
 
 template(name='accounts_nav')
     .nav_bar.ui.five.item.stackable.inverted.blue.large.menu

@@ -101,6 +101,9 @@ template(name='field_view')
         if field_template
             +Template.dynamic template=field_template
         else
+            if icon
+                i.icon
+                    +icon name=icon
             |#{title}: &nbsp;
             if is_array
                 each value
