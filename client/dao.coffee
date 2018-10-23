@@ -35,7 +35,7 @@ Template.facet_segment.helpers
 
     facet_segment_class: ->
         facet = Docs.findOne type:'facet'
-        if facet.detail_id and facet.detail_id is @_id then 'secondary' else ''
+        if facet.detail_id and facet.detail_id is @_id then 'tertiary blue' else ''
 
     view_full: ->
         # facet = Docs.findOne type:'facet'

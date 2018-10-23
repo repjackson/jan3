@@ -151,7 +151,7 @@ body {
   background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 97%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%);
   margin: 0em;
   width: 100% !important;
-  padding: 1rem 0rem 0;
+  /*padding: 1rem 0rem 0;*/
 }
 
 .hidden.menu {

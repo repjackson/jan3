@@ -1,31 +1,31 @@
 template(name='dao')
-    .ui.stackable.padded.grid
-        #dash_header.ui.masthead.center.aligned.segment.stackable.grid
-            .middle.aligned.row
-                .two.wide.column
-                    img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                .twelve.wide.column
-                    if facet_doc
-                        +type_filter
-                .two.wide.column
-                    if currentUser
-                        a.ui.icon.button(href='/account/settings' class="{{ active_route 'account' }}" )
-                            if currentUser.image_id
-                                i.large.icon
-                                    img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                            else
-                                i.user.icon
-                            |#{currentUser.username}
-                        a#logout.ui.icon.button(href='#')
-                            if signing_out
-                                i.notched.circle.loading.icon
-                            else
-                                i.sign.out.alternate.icon
-                    else
-                        a.ui.icon.button(href='/login')
+    #dash_header.ui.masthead.center.aligned.stackable.grid
+        .middle.aligned.row
+            .two.wide.column
+                img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            .twelve.wide.column
+                if facet_doc
+                    +type_filter
+            .two.wide.column
+                if currentUser
+                    a.ui.icon.button(href='/account/settings' class="{{ active_route 'account' }}" )
+                        if currentUser.image_id
                             i.large.icon
-                                +icon name='internal'
-                            | &nbsp; Log In
+                                img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        else
+                            i.user.icon
+                        |#{currentUser.username}
+                    a#logout.ui.icon.button(href='#')
+                        if signing_out
+                            i.notched.circle.loading.icon
+                        else
+                            i.sign.out.alternate.icon
+                else
+                    a.ui.icon.button(href='/login')
+                        i.large.icon
+                            +icon name='internal'
+                        | &nbsp; Log In
+    .ui.stackable.padded.grid
         unless facet_doc
             .row
                 .sixteen.wide.column
@@ -106,12 +106,12 @@ template(name='dao')
 
 template(name='toggle_facet_config')
     if boolean_true
-        .ui.blue.button.disable_key(title=title)
+        .ui.blue.icon.large.button.disable_key(title=title)
             i.icon
                 +icon name=icon
             | #{label}
     else
-        .ui.button.enable_key
+        .ui.icon.large.button.enable_key
             i.icon
                 +icon name=icon
             | #{label}

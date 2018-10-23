@@ -95,7 +95,7 @@ Template.boolean_edit.helpers
         target_doc = Docs.findOne _id:facet.detail_id
         bool_value = target_doc?["#{@key}"]
         if bool_value and bool_value is true
-            'primary'
+            'blue'
         else
             ''
 
@@ -152,14 +152,40 @@ Template.multiref_edit.helpers
     choices: ->
         Docs.find
             type:@ref_schema
+
     value: ->
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
         target_doc["#{@key}"]
 
+    element_class: ->
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
+        parent = Template.parentData()
+
+        value =
+            if @key then @key
+            else if @slug then @slug
+            else if @username then @username
+        if value in target_doc["#{parent.key}"] then 'blue' else ''
+
+
 Template.multiref_edit.events
     'click .toggle_element': (e,t)->
-        console.log @
+        facet = Docs.findOne type:'facet'
+        target_doc = Docs.findOne _id:facet.detail_id
+        editing_field = Template.currentData().key
+        value =
+            if @key then @key
+            else if @slug then @slug
+            else if @username then @username
+        if value in target_doc["#{editing_field}"]
+            Docs.update target_doc._id,
+                $pull:"#{editing_field}": value
+        else
+            Docs.update target_doc._id,
+                $addToSet:"#{editing_field}": value
+
 
 
 
@@ -189,4 +215,4 @@ Template.ref_edit.helpers
             if @key then @key
             else if @slug then @slug
             else if @username then @username
-        if target_doc["#{parent.key}"] is value then 'primary' else ''
+        if target_doc["#{parent.key}"] is value then 'blue' else ''
