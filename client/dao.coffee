@@ -317,6 +317,26 @@ Template.detail_pane.helpers
 
     facet_doc: -> Docs.findOne type:'facet'
 
+
+    can_edit: ->
+        facet = Docs.findOne type:'facet'
+        type_key = facet.filter_type[0]
+        schema = Docs.findOne
+            type:'schema'
+            slug:type_key
+
+        my_role = Meteor.user()?.roles?[0]
+        if my_role
+            if schema.editable_roles
+                if my_role in schema.editable_roles
+                    true
+                else
+                    false
+            else
+                false
+        else
+            false
+
     axon_selector_class: ->
         facet = Docs.findOne type:'facet'
         if @axon_schema is facet.viewing_axon then 'blue' else ''
@@ -409,6 +429,25 @@ Template.dao.helpers
         Docs.findOne
             type:'schema'
             slug:type_key
+
+    can_add: ->
+        facet = Docs.findOne type:'facet'
+        type_key = facet.filter_type[0]
+        schema = Docs.findOne
+            type:'schema'
+            slug:type_key
+
+        my_role = Meteor.user()?.roles?[0]
+        if my_role
+            if schema.addable_roles
+                if my_role in schema.addable_roles
+                    true
+                else
+                    false
+            else
+                false
+        else
+            false
 
 
     ticket_types: -> Docs.find type:'ticket_type'

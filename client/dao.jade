@@ -42,9 +42,10 @@ template(name='dao')
                         i.code.icon
                     +toggle_facet_config key='config_mode' title='Schema Configuration' icon='administrative-tools'
                 +toggle_facet_config key='view_full' title='View Full' icon='resize-diagonal'
-                .ui.button.add_doc
-                    i.plus.icon
-                    |Add
+                if can_add
+                    .ui.button.add_doc
+                        i.plus.icon
+                        |Add #{current_type.title}
                 if schema_doc
                     each faceted_fields
                         +filter
@@ -134,10 +135,11 @@ template(name='detail_pane')
                 i.icon
                     +icon name=detail_doc.icon
             |#{detail_doc.title} Details
-        .ui.hidden.divider
-        .ui.icon.fluid.button.enable_editing
-            i.pencil.large.icon
-            // |Edit
+        if can_edit
+            .ui.hidden.divider
+            .ui.icon.fluid.button.enable_editing
+                i.pencil.large.icon
+                // |Edit
     .ui.form
         each fields
             .field

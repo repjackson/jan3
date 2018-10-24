@@ -1,5 +1,5 @@
 Template.boolean_edit.events
-    'click .toggle_field': ->
+    'click .toggle_field': (e,t)->
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
         bool_value = target_doc["#{@key}"]
