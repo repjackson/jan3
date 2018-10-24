@@ -11,22 +11,10 @@ template(name='footer')
                     .ui.list
                         .sitemap_list.item Contact Us
                         .sitemap_list.item Legal/ Privacy Policy
-                    .ui.hidden.divider
-                    // #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
-                    //     i.bug.icon
                 .four.wide.column
-                    if is_dev
+                    if is_eric
                         +role_switcher
-                        .ui.hidden.divider
-                    // if is_customer
-                    //     +customer_card customer_jpid=currentUser.customer_jpid
-                // if currentUser.franchisee_jpid
-                    // .four.wide.column
-                    //     if is_customer
-                    //         +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
                 .four.wide.column
-                    // unless is_admin
-                    //     +office_card office_jpid=currentUser.office_jpid
             .centered.row
                 .ui.center.aligned.inverted.grey.small.header
                     i.copyright.outline.icon

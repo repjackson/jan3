@@ -148,6 +148,9 @@ Template.registerHelper 'dev_mode', ()->
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles and Session.get('dev_mode')
 
+Template.registerHelper 'is_eric', () ->
+    if Meteor.user() and Meteor.user().roles
+        'dev' is Meteor.user().username
 
 
 Template.registerHelper 'config_mode', ()->

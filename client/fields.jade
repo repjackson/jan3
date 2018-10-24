@@ -105,7 +105,9 @@ template(name='field_view')
                 if icon
                     i.icon
                         +icon name=icon
-                |#{title}: &nbsp;
+                |&nbsp;
+                |#{title}:
+                |&nbsp;
                 if is_array
                     each value
                         .ui.basic.label #{this}

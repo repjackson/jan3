@@ -3,24 +3,25 @@ Template.boolean_edit.events
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
         bool_value = target_doc["#{@key}"]
+        # console.log t.data
+        # console.log @
 
         if bool_value and bool_value is true
             Docs.update target_doc._id,
-                $set: "#{@key}": false
+                $set: "#{t.data.key}": false
         else
             Docs.update target_doc._id,
-                $set: "#{@key}": true
+                $set: "#{t.data.key}": true
 
 Template.string_edit.events
     'blur .string_val': (e,t)->
-        # console.log Template.parentData()
         facet = Docs.findOne type:'facet'
         target_doc = Docs.findOne _id:facet.detail_id
 
         val = e.currentTarget.value
         Docs.update target_doc._id,
             $set:
-                "#{@key}": val
+                "#{t.data.key}": val
 
 Template.number_edit.events
     'blur .number_val': (e,t)->
@@ -31,7 +32,7 @@ Template.number_edit.events
         val = parseInt e.currentTarget.value
         Docs.update target_doc._id,
             $set:
-                "#{@key}": val
+                "#{t.data.key}": val
 
 Template.date_edit.events
     'blur .date_val': (e,t)->
@@ -42,7 +43,7 @@ Template.date_edit.events
         val = e.currentTarget.value
         Docs.update target_doc._id,
             $set:
-                "#{@key}": val
+                "#{t.data.key}": val
 
 Template.textarea_edit.events
     'blur .textarea_val': (e,t)->
@@ -53,7 +54,7 @@ Template.textarea_edit.events
         val = e.currentTarget.value
         Docs.update target_doc._id,
             $set:
-                "#{@key}": val
+                "#{t.data.key}": val
 
 Template.array_edit.events
     'keyup .add_array_element': (e,t)->
@@ -64,7 +65,7 @@ Template.array_edit.events
             val = e.currentTarget.value
             Docs.update target_doc._id,
                 $addToSet:
-                    "#{@key}": val
+                    "#{t.data.key}": val
             t.$('.add_array_element').val('')
 
     'click .pull_element': (e,t)->
@@ -167,7 +168,7 @@ Template.multiref_edit.helpers
             if @key then @key
             else if @slug then @slug
             else if @username then @username
-        if value in target_doc["#{parent.key}"] then 'blue' else ''
+        if value in target_doc?["#{parent?.key}"] then 'blue' else ''
 
 
 Template.multiref_edit.events
@@ -215,4 +216,4 @@ Template.ref_edit.helpers
             if @key then @key
             else if @slug then @slug
             else if @username then @username
-        if target_doc["#{parent.key}"] is value then 'blue' else ''
+        if target_doc?["#{parent.key}"] is value then 'blue' else ''
