@@ -325,18 +325,21 @@ Template.detail_pane.helpers
         schema = Docs.findOne
             type:'schema'
             slug:type_key
+        if 'dev' in Meteor.user().roles
+            true
+        else
+            my_role = Meteor.user()?.roles?[0]
+            if my_role
 
-        my_role = Meteor.user()?.roles?[0]
-        if my_role
-            if schema.editable_roles
-                if my_role in schema.editable_roles
-                    true
+                if schema.editable_roles
+                    if my_role in schema.editable_roles
+                        true
+                    else
+                        false
                 else
                     false
             else
                 false
-        else
-            false
 
     axon_selector_class: ->
         facet = Docs.findOne type:'facet'
@@ -487,12 +490,13 @@ Template.dao.helpers
     fields: ->
         facet = Docs.findOne type:'facet'
         current_type = facet.filter_type[0]
-        Docs.find({
+        fields = Docs.find({
             type:'field'
             schema_slugs: $in: [current_type]
-        }, {sort:{rank:1}}).fetch()
-
-
+        # }, {sort:{rank:1}}).fetch()
+        }).fetch()
+        # console.log fields
+        fields
 
 
 

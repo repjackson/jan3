@@ -476,6 +476,22 @@ Meteor.methods
         )
 
 
+    update_office_jpid: ->
+        Docs.update({type:'office'},
+            {$rename:
+                "ev.ID":"office_jpid"
+            },
+            {multi:true}
+        )
+
+    update_customer_jpid: ->
+        Docs.update({type:'customer'},
+            {$rename:
+                "ev.ID":"customer_jpid"
+            },
+            {multi:true}
+        )
+
     customer: ->
         Docs.update({type:'customer'},
             {$rename:
@@ -548,3 +564,9 @@ Meteor.methods
         )
         console.log 'result', result
 
+    raw_count: ->
+        raw = Docs.rawCollection()
+            # .distinct('author_id')
+        dis = Meteor.wrapAsync raw.distinct, raw
+        count = dis 'author_id'
+        console.log count

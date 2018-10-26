@@ -13,8 +13,6 @@ Meteor.methods
 
         current_type = facet.filter_type?[0]
 
-        filter_keys = []
-
         if facet.filter_type and facet.filter_type.length > 0
             schema =
                 Docs.findOne
@@ -36,6 +34,12 @@ Meteor.methods
             key:'type'
             field_type:'string'
 
+        filter_keys = []
+        for filter in facet_fields
+            unless filter.key in filter_keys
+                filter_keys.push filter.key
+
+        # _.values facet_fields, 'key'
 
         for facet_field in facet_fields
             filter_list = facet["filter_#{facet_field.key}"]
@@ -51,51 +55,34 @@ Meteor.methods
 
         total = Docs.find(built_query).count()
 
-        if Meteor.isDevelopment
-            limit_val = 1000
-        if Meteor.isProduction
-            limit_val = 1000
-
-        # if Meteor.user().roles
-        #     unless 'dev' in Meteor.user().roles
-        #         if 'office' in Meteor.user().roles
-        #             built_query['office_jpid'] = Meteor.user().office_jpid
-        #         if 'customer' in Meteor.user().roles
-        #             built_query['customer_jpid'] = Meteor.user().customer_jpid
+        if Meteor.user().roles
+            if current_type in ['customer', 'office']
+                if 'office' in Meteor.user().roles
+                    built_query['office_jpid'] = Meteor.user().office_jpid
+                if 'customer' in Meteor.user().roles
+                    built_query['customer_jpid'] = Meteor.user().customer_jpid
 
 
-        results = Docs.find(built_query, {limit:limit_val}).fetch()
+        # results = Docs.find(built_query, {limit:limit_val}).fetch()
 
+        raw = Docs.rawCollection()
+            # .distinct('author_id')
+        dis = Meteor.wrapAsync raw.distinct, raw
 
 
         for facet_field in facet_fields
             values = []
             key_return = []
-
+            distincts = dis(facet_field.key, built_query)
             example_doc = Docs.findOne({"#{facet_field.key}":$exists:true})
-            if example_doc
-                example_value = example_doc["#{facet_field.key}"]
-            if example_value
-                filter_primitive = typeof example_value
-            for result in results
-                result_value = result["#{facet_field.key}"]
-                if result_value
-                    switch facet_field.field_type
-                        when 'string'
-                            if result_value.length>0
-                                values.push result_value
-                        when 'array'
-                            if result_value.length>0
-                                for array_element in result_value
-                                    values.push array_element
-                        else
-                            values.push result_value
+            example_value = example_doc["#{facet_field.key}"]
+            field_type = typeof example_value
 
+            for value in distincts
+                count = Docs.find("#{facet_field.key}":value).count()
+                console.log facet_field.key, 'key count', count, 'for', value
 
-            counted = _.countBy(values)
-
-            for value,count of counted
-                switch facet_field.field_type
+                switch field_type
                     when 'number'
                         int_value = parseInt value
                         key_return.push({ value:int_value, count:count })
@@ -109,7 +96,6 @@ Meteor.methods
 
             sorted = _.sortBy(key_return, 'count')
             reversed = sorted.reverse()
-
 
             Docs.update {_id:facet._id},
                 {$set:"#{facet_field.key}_return":reversed}
