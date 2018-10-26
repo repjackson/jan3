@@ -74,15 +74,20 @@ Meteor.methods
             values = []
             key_return = []
 
-            # console.log facet_field
+            # console.log 'built query', built_query
+            test_count = Docs.find(built_query).count()
+            # console.log 'test count', test_count
 
             distincts = dis(facet_field.key, built_query)
             example_doc = Docs.findOne({"#{facet_field.key}":$exists:true})
-            example_value = example_doc["#{facet_field.key}"]
+            example_value = example_doc?["#{facet_field.key}"]
             field_type = typeof example_value
 
             for value in distincts
-                count = Docs.find("#{facet_field.key}":value).count()
+                filtered_built_query = _.clone built_query
+                filtered_built_query["#{facet_field.key}"] = value
+
+                count = Docs.find(filtered_built_query).count()
                 # console.log facet_field.key, count, value
 
                 switch field_type
@@ -90,11 +95,11 @@ Meteor.methods
                         int_value = parseInt value
                         key_return.push({ value:int_value, count:count })
                     when 'boolean'
-                        bool_value = if value is 'true' then true else false
+                        bool_value = if value is true then true else false
                         key_return.push({ value:bool_value, count:count })
-                    when 'string'
-                        key_return.push({ value:value, count:count })
                     when 'array'
+                        key_return.push({ value:value, count:count })
+                    else
                         key_return.push({ value:value, count:count })
 
             sorted = _.sortBy(key_return, 'count')

@@ -215,6 +215,7 @@ Template.selector.helpers
         switch typeof @value
             when 'string' then @value
             when 'boolean'
+                # console.log @value
                 if @value is true then 'True'
                 else if @value is false then 'False'
             when 'number' then @value
