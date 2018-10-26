@@ -150,6 +150,7 @@ Template.dao.events
                 current_page:1
                 page_size:10
                 skip_amount:0
+                view_full:true
         Meteor.call 'fo', new_facet_id
 
     'click .page_up': (e,t)->

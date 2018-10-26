@@ -192,7 +192,7 @@ template(name='set_facet_key')
 template(name='type_filter')
     // img.ui.avatar.spaced.image(src="{{c.url 'logo_small' width=50 height=50 gravity='face' crop='fill'}}")
     each faceted_types
-        .ui.large.button.set_type(class=set_type_class)
+        .ui.button.set_type(class=set_type_class)
             if icon
                 i.icon
                     +icon name=icon
@@ -268,13 +268,13 @@ template(name='boolean_facet')
 
 
 template(name='icon')
-    img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes data-content=popup title=title)
+    img.ui.mini.image(src="https://png.icons8.com/color/80/000000/#{name}.png" class=classes data-content=popup title=title)
 
 template(name='iconlarge')
-    img.ui.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png")
+    img.ui.image(src="https://png.icons8.com/color/80/000000/#{name}.png")
 
 template(name='iconsmall')
-    img.ui.inline.image(src="https://png.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes title=title)
+    img.ui.inline.image(src="https://png.icons8.com/color/24/000000/#{name}.png" class=classes title=title)
 
 
 template(name='tag_result')
