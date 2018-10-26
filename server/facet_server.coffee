@@ -145,7 +145,7 @@ Meteor.methods
     agg: ->
         # pipeline = []
         options = {
-            explain:true
+            explain:false
             }
 
         pipe =  [
@@ -157,6 +157,7 @@ Meteor.methods
             { $sort: count: -1, _id: 1 }
             { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }
+            # { $output: 'results' }
         ]
         # # console.log 'theme theme_tag_cloud, ', theme_tag_cloud
         # theme_tag_cloud.forEach (tag, i) ->
@@ -164,11 +165,21 @@ Meteor.methods
         #         name: tag.name
         #         count: tag.count
         #         index: i
-        console.log pipe
+        # console.log pipe
 
-        raw = Docs.rawCollection().aggregate(pipe,options)
-        agg = Meteor.wrapAsync(raw)
+        agg = Docs.rawCollection().aggregate(pipe,options)
 
-        res = agg
-        console.log res
+        # agg.map (j)->
+        #     console.log j
+        agg.forEach (doc)->
+            console.log doc
+
+        # agg.forEach (doc)->
+        #     res = []
+        #     console.log 'before', res.length
+        #     res.push
+        #         count:doc.count
+        #         name:doc.name
+        #     console.log 'after', res.length
+        # console.log res
         # agg
