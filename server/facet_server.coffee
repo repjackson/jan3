@@ -66,7 +66,6 @@ Meteor.methods
         # results = Docs.find(built_query, {limit:limit_val}).fetch()
 
         raw = Docs.rawCollection()
-            # .distinct('author_id')
         dis = Meteor.wrapAsync raw.distinct, raw
 
 
@@ -141,3 +140,35 @@ Meteor.methods
                 result_ids:result_ids
             }, ->
         return true
+
+
+    agg: ->
+        # pipeline = []
+        options = {
+            explain:true
+            }
+
+        pipe =  [
+            { $match: {type:'schema'} }
+            { $project: tags: 1 }
+            { $unwind: "$tags" }
+            { $group: _id: '$tags', count: $sum: 1 }
+            # { $match: _id: $nin: selected_theme_tags }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+        # # console.log 'theme theme_tag_cloud, ', theme_tag_cloud
+        # theme_tag_cloud.forEach (tag, i) ->
+        #     self.added 'tags', Random.id(),
+        #         name: tag.name
+        #         count: tag.count
+        #         index: i
+        console.log pipe
+
+        raw = Docs.rawCollection().aggregate(pipe,options)
+        agg = Meteor.wrapAsync(raw)
+
+        res = agg
+        console.log res
+        # agg
