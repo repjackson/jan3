@@ -73,6 +73,9 @@ Meteor.methods
         for facet_field in facet_fields
             values = []
             key_return = []
+
+            # console.log facet_field
+
             distincts = dis(facet_field.key, built_query)
             example_doc = Docs.findOne({"#{facet_field.key}":$exists:true})
             example_value = example_doc["#{facet_field.key}"]
@@ -80,7 +83,7 @@ Meteor.methods
 
             for value in distincts
                 count = Docs.find("#{facet_field.key}":value).count()
-                console.log facet_field.key, 'key count', count, 'for', value
+                # console.log facet_field.key, count, value
 
                 switch field_type
                     when 'number'

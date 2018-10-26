@@ -1,8 +1,8 @@
 Template.dao.onCreated ->
     @autorun -> Meteor.subscribe 'facet'
-    @autorun => Meteor.subscribe 'type', 'filter'
+    # @autorun => Meteor.subscribe 'type', 'filter'
     @autorun => Meteor.subscribe 'type', 'schema'
-    @autorun => Meteor.subscribe 'type', 'field'
+    @autorun => Meteor.subscribe 'type', 'field', 300
 
     # @autorun => Meteor.subscribe 'type', 'ticket_type'
     Session.setDefault 'is_calculating', false
