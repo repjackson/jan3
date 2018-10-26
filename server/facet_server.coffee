@@ -117,6 +117,11 @@ Meteor.methods
         skip_amount = current_page*calc_page_size-calc_page_size
 
 
+        test_calc = Meteor.call 'agg'
+
+        console.log test_calc
+
+
         results_cursor =
             Docs.find( built_query,
                 {
@@ -146,6 +151,7 @@ Meteor.methods
         # pipeline = []
         options = {
             explain:false
+            # cursor:{}
             }
 
         pipe =  [
@@ -169,17 +175,12 @@ Meteor.methods
 
         agg = Docs.rawCollection().aggregate(pipe,options)
 
-        # agg.map (j)->
-        #     console.log j
-        agg.forEach (doc)->
-            console.log doc
+        res = {}
 
-        # agg.forEach (doc)->
-        #     res = []
-        #     console.log 'before', res.length
-        #     res.push
-        #         count:doc.count
-        #         name:doc.name
-        #     console.log 'after', res.length
-        # console.log res
-        # agg
+        agg.toArray()
+
+
+        # agg.forEach (doc)=>
+        #     res["#{doc.name}"] = doc.count
+        #     console.log 'in', res
+        # console.log 'out', res
