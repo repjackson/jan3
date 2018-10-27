@@ -200,31 +200,60 @@ Meteor.methods
                 username_display:'ID'
                 api_reverse_lookup:'NO'
                 id:'49352'
-                page_length:'10000'
-                record_start:'1'
-                record_count:'10000'
+                page_length:'1000'
+                record_start:'0'
+                record_count:'1000'
         # return res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
-            else
+            # else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+                # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # doc.type = 'customer'
+                for ev_doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                    franch_doc = {}
+                    franch_doc.type = 'franchisee'
+                    franch_doc.franchisee = ev_doc.FRANCHISEE
+                    franch_doc.jpid = ev_doc.ID
+                    franch_doc.email = ev_doc.FRANCH_EMAIL
+                    franch_doc.cell = ev_doc.TELE_CELL
+                    franch_doc.home = ev_doc.TELE_HOME
+                    franch_doc.office_name = ev_doc.MASTER_LICENSEE
+                    franch_doc.short_name = ev_doc.SHORT_NAME
+                    franch_doc.franch_name = ev_doc.FRANCH_NAME
+                    franch_doc.status = ev_doc.ACCOUNT_STATUS
+                    franch_doc.ev_timestamp = ev_doc.TIMESTAMP
+                    franch_doc.city = ev_doc.ADDR_CITY
+                    franch_doc.state = ev_doc.ADDR_STATE
+                    franch_doc.country = ev_doc.MASTER_COUNTRY
+
                     existing_franchisee =
                         Docs.findOne
                             type: 'franchisee'
-                            "ev.ID": doc.ID
+                            jpid: ev_doc.ID
                     if existing_franchisee
                         Docs.update existing_franchisee._id,
                             $set:
-                                ev: doc
+                                franchisee: ev_doc.FRANCHISEE
+                                jpid: ev_doc.ID
+                                email: ev_doc.FRANCH_EMAIL
+                                cell: ev_doc.TELE_CELL
+                                home: ev_doc.TELE_HOME
+                                office_name: ev_doc.MASTER_LICENSEE
+                                short_name: ev_doc.SHORT_NAME
+                                franch_name: ev_doc.FRANCH_NAME
+                                status: ev_doc.ACCOUNT_STATUS
+                                ev_timestamp: ev_doc.TIMESTAMP
+                                city: ev_doc.ADDR_CITY
+                                state: ev_doc.ADDR_STATE
+                                country: ev_doc.MASTER_COUNTRY
+                        console.log 'updated franch', existing_franchisee.franchisee, existing_franchisee.jpid
                     else
-                        new_franchisee_doc = Docs.insert
-                            type:'franchisee'
-                            ev: doc
+                        new_franchisee_doc = Docs.insert franch_doc
                         console.log 'add franchisee', new_franchisee_doc
+
+
+
 
     sync_services: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",

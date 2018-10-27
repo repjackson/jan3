@@ -4,15 +4,15 @@
 
 Docs.before.insert (userId, doc)->
     user = Meteor.users.findOne userId
+    if user
+        if user.roles
+            if 'office' in user.roles
+                doc['office_jpid'] = user.office_jpid
+            if 'customer' in user.roles
+                doc['customer_jpid'] = user.customer_jpid
 
-    if user.roles
-        if 'office' in user.roles
-            doc['office_jpid'] = user.office_jpid
-        if 'customer' in user.roles
-            doc['customer_jpid'] = user.customer_jpid
-
-    doc.author_id = Meteor.userId()
-    doc.author_username = user.username
+        doc.author_id = Meteor.userId()
+        doc.author_username = user.username
 
     timestamp = Date.now();
     now = moment(timestamp);

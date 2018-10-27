@@ -520,7 +520,7 @@ Template.set_facet_key.helpers
 Template.filter.helpers
     values: ->
         facet = Docs.findOne type:'facet'
-        facet["#{@key}_return"]?[..10]
+        facet["#{@key}_return"]?[..20]
 
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'
