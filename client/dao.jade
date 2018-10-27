@@ -48,19 +48,14 @@ template(name='dao')
                             |Create Session
         if facet_doc
             .four.wide.column.scrolling
-                +type_filter
-                .ui.divider
+                // +type_filter
+                .ui.fluid.large.active.button
+                    if current_type.icon
+                        // i.large.icon
+                        +icon name=current_type.icon classes='spaced'
+                    strong #{current_type.title}
                 .ui.icon.button.delete_facet(title='Clear Session')
                     i.remove.icon
-                if is_dev
-                    .ui.icon.button.show_facet
-                        i.code.icon
-                    +toggle_facet_config key='config_mode' title='Schema Configuration' icon='administrative-tools'
-                +toggle_facet_config key='view_full' title='View Full' icon='resize-diagonal'
-                if can_add
-                    .ui.button.add_doc
-                        i.plus.icon
-                        |Add #{current_type.title}
                 if schema_doc
                     each faceted_fields
                         +filter
@@ -74,11 +69,16 @@ template(name='dao')
                             .ui.active.indeterminate.massive.centered.inline.loader
                                 // |Calculating filters and results
                         else
+                            if is_dev
+                                .ui.icon.button.show_facet
+                                    i.code.icon
+                                +toggle_facet_config key='config_mode' title='Schema Configuration' label='Configure' icon='administrative-tools'
+                            +toggle_facet_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
                             if facet_doc.config_mode
-                                .ui.center.aligned.header
-                                    +icon name='administrative-tools'
-                                    |Schema '#{current_type.title}'
                                 .ui.header
+                                    +icon name='administrative-tools'
+                                    | Edit Schema '#{current_type.title}'
+                                .ui.small.header
                                     +icon name='rename'
                                     |&nbsp;
                                     |Fields
@@ -87,36 +87,34 @@ template(name='dao')
                                     | Field
                                 each fields
                                     +facet_segment data=_id
+                            else if facet_doc.result_ids
+                                if facet_doc.result_ids.length
+                                    .ui.horizontal.list
+                                        if can_add
+                                            .item
+                                                .ui.button.add_doc
+                                                    i.plus.icon
+                                                    |Add #{current_type.title}
+                                        .item
+                                            +set_page_size value=10
+                                            +set_page_size value=20
+                                            +set_page_size value=50
+                                        .item
+                                            if facet_doc.page_amount
+                                                a.ui.icon.small.page_down.button(title='Previous Page')
+                                                    i.left.chevron.grey.icon
+                                                .ui.small.basic.label
+                                                    | #{facet_doc.current_page}/#{facet_doc.page_amount}
+                                                a.ui.icon.small.page_up.button(title='Next Page')
+                                                    i.right.chevron.grey.icon
+                                                // if show_increment
+                                        .item
+                                            .ui.basic.label #{facet_doc.total} Results
+                                    .scrolling
+                                        each facet_doc.result_ids
+                                            +facet_segment
                             else
-                                if facet_doc.result_ids
-                                    if facet_doc.result_ids.length
-                                        .ui.horizontal.list
-                                            .item
-                                                .ui.header
-                                                    if current_type.icon
-                                                        i.icon
-                                                            +icon name=current_type.icon
-                                                    |#{current_type.title}
-                                            .item
-                                                +set_page_size value=10
-                                                +set_page_size value=20
-                                                +set_page_size value=50
-                                            // .item
-                                            //     if facet_doc.page_amount
-                                            //         a.ui.icon.small.page_down.button(title='Previous Page')
-                                            //             i.left.chevron.grey.icon
-                                            //         .ui.small.basic.label
-                                            //             | #{facet_doc.current_page}/#{facet_doc.page_amount}
-                                            //         a.ui.icon.small.page_up.button(title='Next Page')
-                                            //             i.right.chevron.grey.icon
-                                            //         // if show_increment
-                                            .item
-                                                .ui.basic.label #{facet_doc.total} Results
-                                        .scrolling
-                                            each facet_doc.result_ids
-                                                +facet_segment
-                                else
-                                    |No results
+                                |No results
                     if facet_doc.viewing_detail
                         .column.scrolling
                             +detail_pane
@@ -124,12 +122,12 @@ template(name='dao')
 
 template(name='toggle_facet_config')
     if boolean_true
-        .ui.blue.icon.large.button.disable_key(title=title)
+        .ui.blue.button.disable_key(title=title)
             i.icon
                 +icon name=icon
             | #{label}
     else
-        .ui.icon.large.button.enable_key
+        .ui.button.enable_key
             i.icon
                 +icon name=icon
             | #{label}

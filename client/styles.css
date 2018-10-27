@@ -74,17 +74,6 @@ body {
     height: 200px;
 }
 
-.footer_area {
-  /*position: absolute !important;*/
-  bottom: 0;
-  width: 100%;
-  margin: 0 !important;
-  /*background: rgba(0, 20, 137) !important;*/
-  background: linear-gradient(to top, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 99%,rgba(132,189,0,1) 99%, rgba(132,189,0,1) 100%) !important;
-}
-.footer_area .sitemap_list{
-  color:white !important;
-}
 
 
 
@@ -148,11 +137,27 @@ body {
 
 #dash_header.masthead {
   /*background: rgba(0,20,137,1);*/
-  background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 97%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%);
-  margin: 0em;
+  background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 96%,rgba(132,189,0,1) 96%, rgba(132,189,0,1) 100%) !important;
+  margin: 0 !important;
+  border: 0 !important;
   width: 100% !important;
   /*padding: 1rem 0rem 0;*/
 }
+
+.footer_area {
+  /*position: absolute !important;*/
+  bottom: 0;
+  width: 100%;
+  margin: 0 !important;
+  border: 0 !important;
+  /*background: rgba(0, 20, 137) !important;*/
+  background: linear-gradient(to top, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
+}
+.footer_area .sitemap_list{
+  color:white !important;
+}
+
+
 
 .hidden.menu {
   display: none;
