@@ -1,7 +1,7 @@
 Template.dao.onCreated ->
     @autorun -> Meteor.subscribe 'facet'
     # @autorun => Meteor.subscribe 'type', 'filter'
-    @autorun => Meteor.subscribe 'type', 'schema'
+    @autorun => Meteor.subscribe 'type', 'schema', 100
     @autorun => Meteor.subscribe 'type', 'field', 300
 
     # @autorun => Meteor.subscribe 'type', 'ticket_type'
@@ -132,6 +132,13 @@ Template.toggle_facet_config.events
 
 
 Template.dao.events
+    'click .clear_current_type': ->
+        facet = Docs.findOne type:'facet'
+        Docs.update facet._id,
+            $set: filter_type: []
+
+
+
     'click .close_details': ->
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
@@ -224,7 +231,12 @@ Template.selector.helpers
 Template.type_filter.helpers
     faceted_types: ->
         if Meteor.user() and Meteor.user().roles
-            # if 'dev' in Meteor.user().roles and Session.equals('dev_mode', true)
+            if 'dev' in Meteor.user().roles
+                Docs.find(
+                    type:'schema'
+                    # nav_roles:$in:Meteor.user().roles
+                ).fetch()
+            else
                 Docs.find(
                     type:'schema'
                     nav_roles:$in:Meteor.user().roles
@@ -494,8 +506,7 @@ Template.dao.helpers
         fields = Docs.find({
             type:'field'
             schema_slugs: $in: [current_type]
-        # }, {sort:{rank:1}}).fetch()
-        }).fetch()
+        }, {sort:{rank:1}}).fetch()
         # console.log fields
         fields
 

@@ -66,8 +66,10 @@ template(name='login')
                     .ui.hidden.divider
                     .field
                         // unless currentUser
-                        .login.ui.fluid.jpgreen.inverted.button(class=login_button_class title='Login')
-                            .large120 Login
+                        .login.ui.big.fluid.jpgreen.inverted.button(class=login_button_class title='Login')
+                            // .large120 Login
+                            i.large.chevron.right.icon
+                            // +icon name='sort-right' classes='inline'
             .four.wide.column
                 .ui.center.aligned.header Demo
                 #login_demo_customer.ui.fluid.button(class=demo_class title='Login Demo Customer')
