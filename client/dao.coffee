@@ -212,13 +212,13 @@ Template.set_page_size.events
 
 Template.selector.helpers
     selector_value: ->
-        switch typeof @value
-            when 'string' then @value
+        switch typeof @name
+            when 'string' then @name
             when 'boolean'
-                # console.log @value
-                if @value is true then 'True'
-                else if @value is false then 'False'
-            when 'number' then @value
+                # console.log @name
+                if @name is true then 'True'
+                else if @name is false then 'False'
+            when 'number' then @name
 
 
 Template.type_filter.helpers
@@ -520,7 +520,7 @@ Template.selector.helpers
         facet = Docs.findOne type:'facet'
         filter = Template.parentData()
         filter_list = facet["filter_#{filter.key}"]
-        if filter_list and @value in filter_list then 'blue' else ''
+        if filter_list and @name in filter_list then 'blue' else ''
 
 Template.filter.events
     # 'click .set_facet_key': ->
@@ -536,17 +536,17 @@ Template.selector.events
         facet = Docs.findOne type:'facet'
         filter_list = facet["filter_#{filter.key}"]
 
-        if filter_list and @value in filter_list
+        if filter_list and @name in filter_list
             Docs.update facet._id,
                 $set:
                     current_page:1
-                $pull: "filter_#{filter.key}": @value
+                $pull: "filter_#{filter.key}": @name
         else
             Docs.update facet._id,
                 $set:
                     current_page:1
                 $addToSet:
-                    "filter_#{filter.key}": @value
+                    "filter_#{filter.key}": @name
         Session.set 'is_calculating', true
         # console.log 'hi call'
         Meteor.call 'fo', (err,res)->

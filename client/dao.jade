@@ -205,15 +205,13 @@ template(name='filter')
             i.icon
                 +iconsmall name=icon
         |#{title}
-    if editing_mode
-        .item key: #{key}
     each values
         +selector
 
 
 template(name='selector')
     .ui.toggle_value.compact.button(class=toggle_value_class)
-        |#{selector_value}
+        |#{name}
         small #{count}
 
 
