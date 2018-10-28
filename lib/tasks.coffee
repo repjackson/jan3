@@ -19,9 +19,9 @@ if Meteor.isClient
         Session.setDefault 'view_to_me',true
         Session.setDefault 'view_by_me',false
 
-    Template.task_segment.helpers
-        task_segment_class: ->
-            if Session.equals('viewing_task_id',@_id) then 'raised' else 'secondary'
+    Template.task_card.helpers
+        task_card_class: ->
+            if Session.equals('viewing_task_id',@_id) then 'raised blue' else 'secondary'
 
 
     Template.tasks.helpers
@@ -30,9 +30,9 @@ if Meteor.isClient
         viewing_task: ->
             Docs.findOne Session.get('viewing_task_id')
 
-        incomplete_class: -> if Session.get('view_incomplete') then 'active' else ''
-        by_me_class: -> if Session.get('view_by_me') then 'active' else ''
-        to_me_class: -> if Session.get('view_to_me') then 'active' else ''
+        incomplete_class: -> if Session.get('view_incomplete') then 'blue' else ''
+        by_me_class: -> if Session.get('view_by_me') then 'blue' else ''
+        to_me_class: -> if Session.get('view_to_me') then 'blue' else ''
 
 
         task_docs: ->
@@ -50,8 +50,8 @@ if Meteor.isClient
         # Meteor.setTimeout ->
         #     $('.ui.accordion').accordion()
         # , 400
-    Template.task_segment.events
-        'click .task_segment': ->
+    Template.task_card.events
+        'click .task_card': ->
             Session.set 'viewing_task_id', @_id
 
     Template.tasks.events

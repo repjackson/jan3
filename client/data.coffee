@@ -19,11 +19,11 @@ Template.detail_pane.onCreated ->
     if facet
         @autorun => Meteor.subscribe 'single_doc', facet.detail_id
 
-Template.facet_segment.onCreated ->
+Template.facet_card.onCreated ->
     @autorun => Meteor.subscribe 'single_doc', @data
 
-Template.facet_segment.events
-    'click .facet_segment': ->
+Template.facet_card.events
+    'click .facet_card': ->
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
             $set:
@@ -31,7 +31,7 @@ Template.facet_segment.events
                 detail_id: @_id
 
 
-Template.facet_segment.helpers
+Template.facet_card.helpers
     local_doc: ->
         if @data
             Docs.findOne @data.valueOf()
@@ -40,9 +40,9 @@ Template.facet_segment.helpers
 
     is_array: -> @field_type is 'array'
 
-    facet_segment_class: ->
+    facet_card_class: ->
         facet = Docs.findOne type:'facet'
-        if facet.detail_id and facet.detail_id is @_id then 'raised' else 'secondary'
+        if facet.detail_id and facet.detail_id is @_id then 'raised blue' else 'secondary'
 
     view_full: ->
         # facet = Docs.findOne type:'facet'

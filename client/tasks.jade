@@ -23,9 +23,9 @@ template(name='tasks')
                         | Assigned to Me
             .twelve.wide.column
                 .ui.equal.width.grid
-                    .column
+                    .column.scrolling
                         each task_docs
-                            +task_segment
+                            +task_card
                     if viewing_task_id
                         .column
                             .ui.large.fluid.button.close_pane
@@ -34,6 +34,8 @@ template(name='tasks')
                                 // +icon name='close-pane'
                             with viewing_task
                                 .content
+                                    .ui.header #{title}
+                                    .description #{details}
                                     .ui.list
                                         .item by #{author_username}
                                         .item #{when}
@@ -43,16 +45,15 @@ template(name='tasks')
                                         .item assigned_by #{assigned_by}
                                         .item due_date #{due_date}
 
-template(name='task_segment')
-    .ui.segment.task_segment(class=task_segment_class)
+template(name='task_card')
+    .ui.fluid.link.card.task_card(class=task_card_class)
         .content
             .header #{title}
+            .meta #{when} by #{author_username}
         .content
             .ui.list
-                .item by #{author_username}
-                .item #{when}
-                .item {{ long_format updated }}
-                .item long2 #{long_timestamp}
+                // .item {{ long_format updated }}
+                // .item long2 #{long_timestamp}
                 .item assigned_to #{assigned_to}
                 .item assigned_by #{assigned_by}
                 .item due_date #{due_date}
@@ -62,8 +63,3 @@ template(name='task_segment')
             .content
                 each tags
                     .ui.label #{this}
-        .content
-            .ui.icon.button
-                i.checkmark.icon
-            .ui.icon.button
-                i.forward.icon

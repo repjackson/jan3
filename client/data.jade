@@ -56,7 +56,7 @@ template(name='data')
                                         i.plus.icon
                                         | Field
                                     each fields
-                                        +facet_segment data=_id
+                                        +facet_card data=_id
                                 else if facet_doc.result_ids
                                     if facet_doc.result_ids.length
                                         .ui.horizontal.list
@@ -82,7 +82,7 @@ template(name='data')
                                                 .ui.label #{facet_doc.total} Results
                                         .scrolling
                                             each facet_doc.result_ids
-                                                +facet_segment
+                                                +facet_card
                                 else
                                     |No results
                         if facet_doc.viewing_detail
@@ -214,7 +214,7 @@ template(name='filter')
 
 
 template(name='selector')
-    .ui.toggle_value.circular.button(class=toggle_value_class)
+    .ui.toggle_value.button(class=toggle_value_class)
         |#{name}
         small #{count}
 
@@ -230,9 +230,9 @@ template(name='edit_field_number')
         input.number_val(type='number' value=field_value)
 
 
-template(name='facet_segment')
+template(name='facet_card')
     with local_doc
-        .ui.segment.facet_segment(class=facet_segment_class)
+        .ui.fluid.link.card.facet_card(class=facet_card_class)
             // if doc_header_fields
             .content
                 h3.ui.header
