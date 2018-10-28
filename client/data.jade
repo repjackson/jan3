@@ -23,6 +23,8 @@ template(name='data')
 
                 .ui.icon.button.delete_facet(title='Clear Session')
                     i.remove.icon
+                .ui.icon.button.run_fo(title='Refresh')
+                    i.refresh.icon
                 if schema_doc
                     each faceted_fields
                         +filter
@@ -92,7 +94,7 @@ template(name='data')
 
 template(name='toggle_facet_config')
     if boolean_true
-        .ui.blue.button.disable_key(title=title)
+        .ui.button.disable_key(title=title)
             i.icon
                 +icon name=icon
             | #{label}
@@ -172,7 +174,7 @@ template(name='draft')
 
 
 template(name='set_page_size')
-    .ui.small.compact.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
+    .ui.small.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
 
 template(name='set_facet_key')
     .ui.button.set_facet_key(class=set_facet_key_class)
@@ -212,7 +214,7 @@ template(name='filter')
 
 
 template(name='selector')
-    .ui.toggle_value.compact.button(class=toggle_value_class)
+    .ui.toggle_value.circular.button(class=toggle_value_class)
         |#{name}
         small #{count}
 
@@ -343,9 +345,9 @@ template(name='sort_column_header')
     th.sort_by(class=classes)
         |#{label}
         if sort_descending
-            i.chevron.down.link.blue.icon
+            i.chevron.down.link.icon
         else if sort_ascending
-            i.chevron.up.link.blue.icon
+            i.chevron.up.link.icon
         else
             i.sort.link.grey.icon
 

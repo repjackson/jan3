@@ -5,19 +5,45 @@ template(name='tasks')
                 h1.ui.center.aligned.header
                     +icon name='tasks'
                     | Tasks
+                .ui.fluid.button
+                    i.plus.icon
+                    |Add Task
             .twelve.wide.column
-                .ui.dividing.header
-                    +icon name='unchecked-checkbox'
-                    |Incomplete Tasks
-                each incomplete_tasks
-                    +task_segment
-                .ui.dividing.header My Tasks
-                each my_tasks
-                    +task_segment
-            .four.wide.column
+                .ui.equal.width.grid
+                    .column
+                        .ui.dividing.header
+                            +icon name='unchecked-checkbox'
+                            |Incomplete Tasks
+                        each incomplete_tasks
+                            +task_segment
+                        .ui.dividing.header
+                            |Assigned to Me
+                        each tasks_to_me
+                            +task_segment
+                        .ui.dividing.header
+                            +icon name='checked-user-male'
+                            |Assigned by Me
+                        each tasks_from_me
+                            +task_segment
+                    if viewing_task_id
+                        .column
+                            .ui.header
+                                |Viewing
+                            with viewing_task
+                                .content
+                                    .ui.list
+                                        .item by #{author_username}
+                                        .item #{when}
+                                        .item {{ long_format updated }}
+                                        .item long2 #{long_timestamp}
+                                        .item assigned_to #{assigned_to}
+                                        .item assigned_by #{assigned_by}
+                                        .item due_date #{due_date}
+                            .ui.button.close_pane
+                                +icon name='close-pane'
 
 template(name='task_segment')
-    .ui.segment
+    .ui.segment.task_segment(class=task_segment_class)
         .content
             .header #{title}
         .content

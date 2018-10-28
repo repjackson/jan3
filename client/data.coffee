@@ -156,6 +156,10 @@ Template.data.events
             facet = Docs.findOne type:'facet'
             Docs.remove facet._id
 
+    'click .run_fo': ->
+        facet = Docs.findOne type:'facet'
+        Meteor.call 'fo', facet._id
+
     'click .create_facet': (e,t)->
         new_facet_id =
             Docs.insert
@@ -210,7 +214,7 @@ Template.data.events
 Template.set_page_size.helpers
     page_size_class: ->
         facet = Docs.findOne type:'facet'
-        if @value is facet.page_size then 'blue' else ''
+        if @value is facet.page_size then 'active' else ''
 
 
 Template.set_page_size.events
@@ -252,7 +256,7 @@ Template.type_filter.helpers
     set_type_class: ->
         facet = Docs.findOne type:'facet'
         console.log @
-        if facet.filter_type and @slug in facet.filter_type then 'blue'
+        if facet.filter_type and @slug in facet.filter_type then 'active'
 
 Template.type_filter.events
     'click .set_type': ->
@@ -363,7 +367,7 @@ Template.detail_pane.helpers
 
     axon_selector_class: ->
         facet = Docs.findOne type:'facet'
-        if @axon_schema is facet.viewing_axon then 'blue' else ''
+        if @axon_schema is facet.viewing_axon then 'active' else ''
 
     fields: ->
         facet = Docs.findOne type:'facet'
@@ -522,7 +526,7 @@ Template.data.helpers
 Template.set_facet_key.helpers
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'
-        if facet.query["#{@key}"] is @value then 'blue' else ''
+        if facet.query["#{@key}"] is @value then 'active' else ''
 
 Template.filter.helpers
     values: ->
@@ -531,14 +535,14 @@ Template.filter.helpers
 
     set_facet_key_class: ->
         facet = Docs.findOne type:'facet'
-        if facet.query["#{@slug}"] is @value then 'blue' else ''
+        if facet.query["#{@slug}"] is @value then 'active' else ''
 
 Template.selector.helpers
     toggle_value_class: ->
         facet = Docs.findOne type:'facet'
         filter = Template.parentData()
         filter_list = facet["filter_#{filter.key}"]
-        if filter_list and @name in filter_list then 'blue' else ''
+        if filter_list and @name in filter_list then 'active' else ''
 
 Template.filter.events
     # 'click .set_facet_key': ->
