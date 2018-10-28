@@ -1,12 +1,10 @@
 template(name='feed')
     .ui.padded.stackable.grid
-        .centered.row
+        .row
             .three.wide.center.aligned.column
-            .ten.wide.column
                 h1.ui.header
                     +icon name='rss'
                     |Feed
-        .centered.row
             .ten.wide.column
                 .ui.feed
                     each feed_events

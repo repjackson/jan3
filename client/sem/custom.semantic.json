@@ -35,7 +35,7 @@
     "rating": false,
     "reset": true,
     "reveal": false,
-    "search": false,
+    "search": true,
     "segment": true,
     "shape": false,
     "sidebar": false,

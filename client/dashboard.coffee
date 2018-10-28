@@ -1,9 +1,8 @@
-FlowRouter.route '/data', action: ->
-    BlazeLayout.render 'layout',
-        main: 'data'
-FlowRouter.route '/dashboard', action: ->
-    BlazeLayout.render 'layout',
-        main: 'dashboard'
+FlowRouter.route '/dashboard',
+    name:'dashboard'
+    action: ->
+        BlazeLayout.render 'layout',
+            main: 'dashboard'
 
 # Template.office_contact_cards.helpers
 #     office_contacts: ->

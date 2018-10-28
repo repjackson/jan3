@@ -18,8 +18,8 @@ template(name='data')
                         strong #{current_type.title}
                 else
                     .ui.large.center.aligned.header
-                        +icon name='dashboard'
-                        |Dashboard
+                        +icon name='mind-map'
+                        |Data
 
                 .ui.icon.button.delete_facet(title='Clear Session')
                     i.remove.icon
@@ -78,7 +78,7 @@ template(name='data')
                                                     // if show_increment
                                             .item
                                                 .ui.label #{facet_doc.total} Results
-                                        .scrolling.ui.segments
+                                        .scrolling
                                             each facet_doc.result_ids
                                                 +facet_segment
                                 else

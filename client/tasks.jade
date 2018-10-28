@@ -2,32 +2,41 @@ template(name='tasks')
     .ui.padded.stackable.grid
         .row
             .four.wide.column
-                .ui.header
+                h1.ui.center.aligned.header
                     +icon name='tasks'
                     | Tasks
             .twelve.wide.column
                 .ui.dividing.header
                     +icon name='unchecked-checkbox'
                     |Incomplete Tasks
-                .ui.cards
-                    each my_tasks
-                        .card
-                            .content
-                                .header #{title}
-                            .content
-                                .ui.icon.button
-                                    i.checkmark.icon
-                                .ui.icon.button
-                                    i.forward.icon
+                each incomplete_tasks
+                    +task_segment
                 .ui.dividing.header My Tasks
-                .ui.cards
-                    each my_tasks
-                        .card
-                            .content
-                                .header #{title}
-                            .content
-                                .ui.icon.button
-                                    i.checkmark.icon
-                                .ui.icon.button
-                                    i.forward.icon
+                each my_tasks
+                    +task_segment
             .four.wide.column
+
+template(name='task_segment')
+    .ui.segment
+        .content
+            .header #{title}
+        .content
+            .ui.list
+                .item by #{author_username}
+                .item #{when}
+                .item {{ long_format updated }}
+                .item long2 #{long_timestamp}
+                .item assigned_to #{assigned_to}
+                .item assigned_by #{assigned_by}
+                .item due_date #{due_date}
+        .content
+            .description #{details}
+        if tags
+            .content
+                each tags
+                    .ui.label #{this}
+        .content
+            .ui.icon.button
+                i.checkmark.icon
+            .ui.icon.button
+                i.forward.icon

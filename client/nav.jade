@@ -1,44 +1,44 @@
 template(name='nav')
-    #dash_header.ui.masthead.center.aligned.stackable.grid
-        .middle.aligned.row
-            .two.wide.column
-                img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            .eleven.wide.column
-                .ui.inverted.blue.large.menu
-                    a.item(href="/dashboard")
-                        i.dashboard.icon
-                        | Dashboard
-                    a.item(href="/data")
-                        i.database.icon
-                        | Data
-                    a.item(href='/messaging')
-                        i.chat.icon
-                        | Messaging
-                    a.item(href='/feed')
-                        i.feed.icon
-                        | Feed
-                    a.item(href='/tasks')
-                        i.tasks.icon
-                        | Tasks
-            .three.wide.column
-                if currentUser
-                    a.ui.icon.blue.button(href='/account/settings' class="{{ active_route 'account' }}" )
-                        if currentUser.image_id
-                            i.large.icon
-                                img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        else
-                            i.user.icon
-                        |#{currentUser.username}
-                    a#logout.ui.icon.blue.button(href='#')
-                        if signing_out
-                            i.notched.circle.loading.icon
-                        else
-                            i.sign.out.alternate.icon
-                else
-                    a.ui.icon.blue.button(href='/login')
-                        i.icon
-                            +icon name='internal'
-                        | &nbsp; Log In
+    #dash_header.ui.masthead.inverted.blue.big.menu
+        .item
+            img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+        a.item(href="/dashboard" class="{{ isActiveRoute 'dashboard' }}")
+            i.dashboard.icon
+            .mobile.hidden Dashboard
+        a.item(href="/data" class="{{ isActiveRoute 'data' }}")
+            i.database.icon
+            .mobile.hidden Data
+        a.item(href='/messaging' class="{{ isActiveRoute 'messaging' }}")
+            i.chat.icon
+            .mobile.hidden Messaging
+        a.item(href='/feed' class="{{ isActiveRoute 'feed' }}" )
+            i.feed.icon
+            .mobile.hidden Feed
+        a.item(href='/tasks' class="{{ isActiveRoute 'tasks' }}")
+            i.tasks.icon
+            .mobile.hidden Tasks
+        .ui.search.item
+            .ui.transparent.icon.inverted.large.disabled.input
+                i.search.icon
+                input(type='text' placeholder='Search')
+            // | Search
+        .right.menu
+            if currentUser
+                a.ui.item(href='/account/settings' class="{{ isActiveRoute 'account' }}" )
+                    if currentUser.image_id
+                        img.ui.avatar.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    else
+                        i.user.icon
+                    |#{currentUser.username}
+                a#logout.ui.icon.item(href='#')
+                    if signing_out
+                        i.notched.circle.loading.icon
+                    else
+                        i.sign.out.alternate.icon
+            else
+                a.ui.icon.item(href='/login')
+                    i.sign.in.alternate.icon
+                    | &nbsp; Log In
 
 
 

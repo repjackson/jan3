@@ -237,3 +237,22 @@ Meteor.publish 'feedback_doc', (ticket_id)->
     Docs.find
         type:'feedback'
         parent_id: ticket_id
+
+
+
+Meteor.publish 'inbox', ->
+    user = Meteor.user()
+    if Meteor.user()
+        Docs.find {
+            type:'message'
+            to:Meteor.user().username
+        }, limit:20
+
+
+Meteor.publish 'outbox', ->
+    user = Meteor.user()
+    if Meteor.user()
+        Docs.find {
+            type:'message'
+            author_username:Meteor.user().username
+        }, limit:20

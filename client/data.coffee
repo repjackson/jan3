@@ -1,3 +1,10 @@
+FlowRouter.route '/data',
+    name:'data'
+    action: ->
+        BlazeLayout.render 'layout',
+            main: 'data'
+
+
 Template.data.onCreated ->
     @autorun -> Meteor.subscribe 'facet'
     # @autorun => Meteor.subscribe 'type', 'filter'

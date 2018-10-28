@@ -1,8 +1,10 @@
 
 
-FlowRouter.route '/feed', action: ->
-    BlazeLayout.render 'layout',
-        main: 'feed'
+FlowRouter.route '/feed',
+    name:'feed'
+    action: ->
+        BlazeLayout.render 'layout',
+            main: 'feed'
 
 
 

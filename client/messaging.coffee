@@ -1,15 +1,31 @@
-FlowRouter.route '/messaging', action: ->
-    BlazeLayout.render 'layout',
-        main: 'messaging'
+FlowRouter.route '/messaging',
+    name:'messaging'
+    action: ->
+        BlazeLayout.render 'layout',
+            main: 'messaging'
 
 
 
-Template.messaging.onCreated ->
-    @autorun -> Meteor.subscribe 'type', 'message', 100
+Template.inbox.onCreated ->
+    @autorun -> Meteor.subscribe 'inbox'
+Template.outbox.onCreated ->
+    @autorun -> Meteor.subscribe 'outbox'
 
-Template.messaging.helpers
-    messages: -> Docs.find { type:'message'}
+Template.inbox.helpers
+    inbox_messages: ->
+        Docs.find
+            type:'message'
+            to:Meteor.user().username
 
+Template.outbox.helpers
+    outbox_messages: ->
+        Docs.find
+            type:'message'
+            author_username:Meteor.user().username
+
+
+Template.wall.helpers
+    wall_posts: -> Docs.find type:'wall_post'
 
 Template.messaging.onRendered ->
     # Meteor.setTimeout ->

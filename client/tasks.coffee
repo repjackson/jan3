@@ -1,6 +1,8 @@
-FlowRouter.route '/tasks', action: ->
-    BlazeLayout.render 'layout',
-        main: 'tasks'
+FlowRouter.route '/tasks',
+    name:'tasks'
+    action: ->
+        BlazeLayout.render 'layout',
+            main: 'tasks'
 
 
 
@@ -9,6 +11,7 @@ Template.tasks.onCreated ->
 
 Template.tasks.helpers
     tasks: -> Docs.find type:'task'
+    my_tasks: -> Docs.find type:'task'
     my_tasks: -> Docs.find type:'task'
 
 
