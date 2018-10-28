@@ -13,7 +13,6 @@ template(name='data')
                 if current_type
                     .ui.fluid.large.basic.active.button.clear_current_type
                         if current_type.icon
-                            // i.large.icon
                             +icon name=current_type.icon classes='spaced'
                         strong #{current_type.title}
                 else
@@ -21,10 +20,12 @@ template(name='data')
                         +icon name='mind-map'
                         |Data
 
-                .ui.icon.button.delete_facet(title='Clear Session')
+                .ui.button.delete_facet(title='Clear Session')
                     i.remove.icon
-                .ui.icon.button.run_fo(title='Refresh')
+                    |Clear
+                .ui.button.run_fo(title='Refresh')
                     i.refresh.icon
+                    |Reset
                 if schema_doc
                     each faceted_fields
                         +filter

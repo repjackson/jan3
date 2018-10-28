@@ -1,318 +1,182 @@
-Template.add_ticket_button.events
-    'click #add_ticket': ->
-        Meteor.call 'log_ticket', (err,res)->
-            if err then console.error err
-            else
-                FlowRouter.go "/p/submit_ticket?doc_id=#{res}"
-
-
-Template.ticket_type_label.onRendered ->
-    Meteor.setTimeout ->
-        $('img').popup()
-    , 2000
-
-Template.ticket_type_label.helpers
-    ticket_type_label: ->
-        target = Template.parentData(5)
-        switch target.ticket_type
-            when 'missed_service' then 'Missed Service'
-            when 'team_member_infraction' then 'Team Member Infraction'
-            when 'change_service' then 'Request a Change of Service'
-            when 'problem' then 'Report a Problem or Service Issue'
-            when 'supply_request' then 'Supply Request'
-            when 'special_request' then 'Request a Special Service'
-            when 'other' then 'Other'
-
-    ticket_type_icon: ->
-        target = Template.parentData(5)
-        switch target.ticket_type
-            when 'missed_service' then 'leave'
-            when 'team_member_infraction' then 'unfriend-male'
-            when 'change_service' then 'transfer-between-users'
-            when 'problem' then 'box-important'
-            when 'supply_request' then 'toilet-paper'
-            when 'special_request' then 'carpet-cleaning'
-            when 'other' then 'grey'
-
-Template.ticket_type_small.helpers
-    ticket_type_label: ->
-        target = Template.parentData(5)
-        switch target.ticket_type
-            when 'missed_service' then 'Missed Service'
-            when 'team_member_infraction' then 'Team Member Infraction'
-            when 'change_service' then 'Request a Change of Service'
-            when 'problem' then 'Report a Problem or Service Issue'
-            when 'special_request' then 'Request a Special Service'
-            when 'other' then 'Other'
-
-    type_label_class: ->
-        target = Template.parentData(5)
-        switch target.ticket_type
-            when 'missed_service' then 'blue'
-            when 'team_member_infraction' then 'green'
-            when 'change_service' then 'teal'
-            when 'problem' then 'yellow'
-            when 'special_request' then 'orange'
-            when 'other' then 'grey'
-
-    ticket_type_icon: ->
-        target = Template.parentData(5)
-        switch target.ticket_type
-            when 'missed_service' then 'leave'
-            when 'team_member_infraction' then 'unfriend-male'
-            when 'change_service' then 'transfer-between-users'
-            when 'problem' then 'box-important'
-            when 'special_request' then 'carpet-cleaning'
-            when 'other' then 'grey'
-
-Template.level_icon.helpers
-    is_level_one: ->
-        target_doc = Template.parentData(5)
-        target_doc.level is 1
-    is_level_two: ->
-        target_doc = Template.parentData(5)
-        target_doc.level is 2
-    is_level_three: ->
-        target_doc = Template.parentData(5)
-        target_doc.level is 3
-    is_level_four: ->
-        target_doc = Template.parentData(5)
-        target_doc.level is 4
+FlowRouter.route '/tickets',
+    name:'tickets'
+    action: ->
+        BlazeLayout.render 'layout',
+            main: 'tickets'
 
 
 
-
-Template.submit_ticket.onCreated ->
-    @autorun -> Meteor.subscribe 'type','ticket_type'
-#     @autorun -> Meteor.subscribe 'type','rule'
-#     @autorun -> Meteor.subscribe 'ticket', FlowRouter.getQueryParam('doc_id')
-
-
-Template.submit_ticket.helpers
-    ticket_type_docs: -> Docs.find type:'ticket_type'
-    can_submit: ->
-        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        user = Meteor.user()
-        is_customer = user and user.roles and ('customer' in user.roles)
-        ticket.service_date and ticket.ticket_details and ticket.ticket_type and is_customer
-
-Template.submit_ticket.events
-    'click .submit': ->
-        doc_id = FlowRouter.getQueryParam 'doc_id'
-
-        FlowRouter.go "/p/ticket_customer_view?doc_id=#{doc_id}"
-        Meteor.call 'submit_ticket', doc_id, (err,res)->
+Template.tickets.onCreated ->
+    @autorun -> Meteor.subscribe 'session'
+    @autorun -> Meteor.subscribe 'ticket_schema'
+    @autorun -> Meteor.subscribe 'ticket_fields'
+    @autorun -> Meteor.subscribe 'fe'
+    @editing_id = new ReactiveVar null
+    @viewing_id = new ReactiveVar null
+    Session.setDefault 'viewing_task_id',null
+    Session.setDefault 'editing',false
 
 
-
-Template.view_sla_contact.helpers
-    user_ob: ->
-        Meteor.users.findOne
-            username: @username
+Template.ticket_card.onCreated ->
+    @autorun => Meteor.subscribe 'single_doc', @data
 
 
-
-Template.ticket_status.onCreated ->
-    @is_closing = new ReactiveVar false
-    @autorun => Meteor.subscribe 'type', 'close_ticket_type'
-Template.ticket_status.helpers
-    ticket: -> Docs.findOne FlowRouter.getQueryParam('doc_id')
-    is_closing: -> Template.instance().is_closing.get()
-    closing_class: -> if Template.instance().is_closing.get() is true then 'active' else ''
-    close_ticket_types: -> Docs.find type:'close_ticket_type'
-
-Template.ticket_status.events
-    'click .reopen': ->
-        Docs.update FlowRouter.getQueryParam('doc_id'),
-            $set: open:true
-
-    'click .start_closing': (e,t)->
-        t.is_closing.set(!t.is_closing.get())
-        Meteor.setTimeout ->
-            $('.ui.fluid.reason.dropdown').dropdown()
-        ,200
-
-    'click .finish_closing': (e,t)->
-        ticket_id = FlowRouter.getQueryParam('doc_id')
-        ticket = Docs.findOne ticket_id
-
-        details_val = t.$('#close_details').val()
-        Docs.update ticket_id,
-            $set:
-                open:false
-                close_timestamp: Date.now()
-                close_details: details_val
-                close_author: Meteor.user().username
-        Docs.insert
-            type:'event'
-            parent_id: ticket_id
-            event_type:'ticket_close'
-            text:"#{Meteor.user().username} closed ticket with note: #{details_val}"
-            ticket_id: ticket_id
-            office_jpid: ticket.office_jpid
-            customer_jpid: ticket.customer_jpid
-        Docs.insert
-            type:'event'
-            parent_id: ticket_id
-            event_type:'email_customer'
-            text:"Customer '#{ticket.customer_name}' emailed about ticket close."
-            ticket_id: ticket_id
-            office_jpid: ticket.office_jpid
-            customer_jpid: ticket.customer_jpid
-        t.is_closing.set false
+Template.ticket_card.helpers
+    local_doc: ->
+        if @data
+            Docs.findOne @data.valueOf()
+        else
+            Docs.findOne @valueOf()
 
 
-Template.feedback_widget.onCreated ->
-    @autorun => Meteor.subscribe 'feedback_doc', FlowRouter.getQueryParam('doc_id')
-Template.feedback_widget.helpers
-    page_context: ->
-        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-
-    feedback_doc: ->
-        Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-
-    good_class: ->
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        if feedback_doc.rating
-            if feedback_doc.rating is 'good'
-                'green'
-            else
-                'grey outline'
-    bad_class: ->
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        if feedback_doc.rating
-            if feedback_doc.rating is 'bad'
-                'red'
-            else
-                'grey outline'
-Template.feedback_widget.events
-    'click .add_feedback': ->
-        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        Docs.update FlowRouter.getQueryParam('doc_id'),
-            $set: feedback:true
-        Docs.insert
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-
-    'click .thumbs.up': ->
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        Docs.update feedback_doc._id,
-            $set: rating: 'good'
-
-    'click .thumbs.down': ->
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        Docs.update feedback_doc._id,
-            $set: rating: 'bad'
-
-    'blur .feedback_details': (e,t)->
-        details = e.currentTarget.value
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        Docs.update feedback_doc._id,
-            $set:details:details
-
-    'click .submit_feedback': (e,t)->
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        Docs.update feedback_doc._id,
-            $set:submitted:true
+    ticket_card_class: ->
+        if Session.equals('viewing_task_id',@_id) then 'raised blue' else 'secondary'
 
 
-Template.complete_ticket_task.onCreated ()->
-    doc_id = FlowRouter.getQueryParam 'doc_id'
-    @autorun => Meteor.subscribe 'doc', doc_id
+Template.tickets.helpers
+    session_doc: -> Docs.findOne type:'session'
+    editing: -> Session.get 'editing'
+    viewing_task_id: -> Session.get 'viewing_task_id'
+    viewing_task: ->
+        Docs.findOne Session.get('viewing_task_id')
 
-Template.complete_ticket_task.onRendered ()->
-    @autorun () =>
-        if @subscriptionsReady()
-            doc_id = FlowRouter.getQueryParam 'doc_id'
-            if ticket
-                ticket = Docs.findOne doc_id
-            # if unassigned_username
-                # console.log 'found unassign', unassigned_username
+    faceted_fields: ->
+        fields =
+            Docs.find({
+                type:'field'
+                schema_slugs:$in:['ticket']
+                faceted: true
+            }, {sort:{rank:1}}).fetch()
+
+    fields: ->
+        fields = Docs.find({
+            type:'field'
+            schema_slugs: $in: ['ticket']
+        }, {sort:{rank:1}}).fetch()
+        # console.log fields
+        fields
+
+    task_docs: ->
+        query = {type:'task'}
+        if Session.get 'view_incomplete'
+            query.complete = $ne:true
+        else if Session.get 'view_complete'
+            query.complete = true
+        if Session.get 'view_by_me'
+            query.assigned_by = Meteor.user().username
+        if Session.get 'view_to_me'
+            query.assigned_to = Meteor.user().username
+        Docs.find query
 
 
-Template.complete_ticket_task.events
-    'click .submit_note': (e,t)->
-        note_val = t.$('#completion_details').val()
-        unassigned_username = FlowRouter.getQueryParam 'unassign'
-        ticket_id = FlowRouter.getQueryParam('doc_id')
-        ticket = Docs.findOne ticket_id
-        Docs.insert
-            type:'event'
-            parent_id: ticket_id
-            ticket_id: ticket_id
-            event_type:'note'
-            office_jpid: ticket.office_jpid
-            franchisee_jpid: ticket.franchisee_jpid
-            customer_jpid: ticket.customer_jpid
-            text: "#{unassigned_username} added note: #{note_val}."
-        FlowRouter.go("/p/ticket_admin_view?doc_id=#{ticket_id}")
+Template.tickets.onRendered ->
+    # Meteor.setTimeout ->
+    #     $('.ui.accordion').accordion()
+    # , 400
+Template.ticket_card.events
+    'click .ticket_card': ->
+        Session.set 'viewing_task_id', @_id
+
+Template.tickets.events
+    'click .create_session': (e,t)->
+        new_session_id =
+            Docs.insert
+                type:'session'
+                current_page:1
+                page_size:10
+                skip_amount:0
+                view_full:true
+        Session.set 'session_id', new_session_id
+        Meteor.call 'fe'
+
+    'click .show_session': ->
+        session = Docs.findOne type:'session'
+        console.log session
+
+    'click .delete_session': ->
+        if confirm 'Clear Session?'
+            session = Docs.findOne type:'session'
+            Docs.remove session._id
+
+    'click .run_fe': ->
+        session = Docs.findOne type:'session'
+        Meteor.call 'fe'
 
 
-    'click .submit_and_complete_task': (e,t)->
-        completion_details = t.$('#completion_details').val()
-        unassigned_username = FlowRouter.getQueryParam 'unassign'
-        ticket_id = FlowRouter.getQueryParam('doc_id')
-        Meteor.call 'complete_ticket_task', ticket_id, unassigned_username, completion_details, (err,res)->
-            if err then console.error err
-            else
-                FlowRouter.go("/p/ticket_admin_view?doc_id=#{ticket_id}")
+    'click #new_task': (e,t)->
+        new_id = Docs.insert
+            type:'task'
+        Session.set('editing_task', true)
+        Session.set('viewing_task_id',new_id)
 
-Template.ticket_close_user_info.onCreated ()->
-    unassign_username = FlowRouter.getQueryParam 'unassign'
-    @autorun => Meteor.subscribe 'user', unassign_username
-Template.ticket_close_user_info.helpers
-    completing_user: ->
-        unassign_username = FlowRouter.getQueryParam 'unassign'
-        Meteor.users.findOne username:unassign_username
+    'click .toggle_incomplete': -> Session.set('view_incomplete', !Session.get('view_incomplete'))
+    'click .toggle_complete': -> Session.set('view_complete', !Session.get('view_complete'))
+    'click .toggle_to_me': -> Session.set('view_to_me', !Session.get('view_to_me'))
+    'click .toggle_by_me': -> Session.set('view_by_me', !Session.get('view_by_me'))
+
+    'click .mark_complete': ->
+        Docs.update @_id,
+            $set: complete: true
+
+    'click .mark_incomplete': ->
+        Docs.update @_id,
+            $set: complete: false
+
+
+    'click .delete_comment': ->
+        if confirm 'delete comment?'
+            Docs.remove @_id
+
+    'click .close_pane': ->
+        Session.set 'viewing_task_id', null
 
 
 
-Template.office_ticket_widget.onCreated ()->
-    @autorun => Meteor.subscribe 'jpid', FlowRouter.getQueryParam 'jpid'
-    @autorun => Meteor.subscribe 'type', 'rule'
-    @autorun => Meteor.subscribe 'office_stats', FlowRouter.getQueryParam 'jpid'
+Template.facet.helpers
+    values: ->
+        session = Docs.findOne type:'session'
+        session["#{@key}_return"]?[..20]
 
-Template.office_ticket_widget.helpers
-    page_office: ->
-        Docs.findOne
-            "ev.ID": FlowRouter.getQueryParam 'jpid'
-    rules: -> Docs.find {type:'rule'}, sort:number:-1
+    set_facet_key_class: ->
+        session = Docs.findOne type:'session'
+        if session.query["#{@slug}"] is @value then 'active' else ''
 
+Template.select.helpers
+    toggle_value_class: ->
+        session = Docs.findOne type:'session'
+        filter = Template.parentData()
+        filter_list = session["filter_#{filter.key}"]
+        if filter_list and @name in filter_list then 'active' else ''
 
+Template.facet.events
+    # 'click .set_facet_key': ->
+    #     session = Docs.findOne type:'session'
+    'click .recalc': ->
+        session = Docs.findOne type:'session'
+        Meteor.call 'fe'
 
-Template.ticket_notes.onCreated ->
-    @adding_note = new ReactiveVar false
-Template.ticket_notes.helpers
-    adding_note: -> Template.instance().adding_note.get()
+Template.select.events
+    'click .toggle_value': ->
+        # console.log @
+        filter = Template.parentData()
+        session = Docs.findOne type:'session'
+        filter_list = session["filter_#{filter.key}"]
 
-Template.ticket_notes.events
-    'click #start_adding_note': (e,t)->
-        t.adding_note.set true
-    'click #submit_note': (e,t)->
-        note_val = t.$('#note_val').val()
-        ticket_id = FlowRouter.getQueryParam('doc_id')
-        ticket = Docs.findOne ticket_id
-        Docs.insert
-            type:'event'
-            parent_id: ticket_id
-            ticket_id: ticket_id
-            event_type:'note'
-            office_jpid: ticket.office_jpid
-            franchisee_jpid: ticket.franchisee_jpid
-            customer_jpid: ticket.customer_jpid
-            text: "#{Meteor.user().username} added note: #{note_val}."
-        t.adding_note.set false
+        if filter_list and @name in filter_list
+            Docs.update session._id,
+                $set:
+                    current_page:1
+                $pull: "filter_#{filter.key}": @name
+        else
+            Docs.update session._id,
+                $set:
+                    current_page:1
+                $addToSet:
+                    "filter_#{filter.key}": @name
+        Session.set 'is_calculating', true
+        # console.log 'hi call'
+        Meteor.call 'fe', (err,res)->
+            if err then console.log err
+            else if res
+                # console.log 'return', res
+                Session.set 'is_calculating', false

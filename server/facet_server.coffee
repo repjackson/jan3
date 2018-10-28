@@ -1,7 +1,7 @@
 Meteor.publish 'facet', ->
     Docs.find {
-            type:'facet'
-            author_id: Meteor.userId()
+        type:'facet'
+        author_id: Meteor.userId()
     }, {limit:1}
 
 
@@ -64,19 +64,11 @@ Meteor.methods
         for facet_field in facet_fields
             values = []
             key_return = []
-
-            # console.log 'built query', built_query
-            # test_count = Docs.find(built_query).count()
-            # console.log 'test count', test_count
-
-            # distincts = dis(facet_field.key, built_query)
             example_doc = Docs.findOne({"#{facet_field.key}":$exists:true})
             example_value = example_doc?["#{facet_field.key}"]
             field_type = typeof example_value
 
             test_calc = Meteor.call 'agg', built_query, facet_field.field_type, facet_field.key
-
-            # console.log test_calc
 
             Docs.update {_id:facet._id},
                 { $set:"#{facet_field.key}_return":test_calc }
