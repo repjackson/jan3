@@ -4,10 +4,11 @@ template(name='nav')
             img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
         a.item(href="/dashboard" class="{{ isActiveRoute 'dashboard' }}")
             +icon name='dashboard'
-            .large.monitor.only &nbsp; Dashboard
-        a.item(href="/data" class="{{ isActiveRoute 'data' }}")
-            +icon name='mind-map'
-            .large.monitor.only &nbsp; Data
+            .mobile.hidden &nbsp; Dashboard
+        if is_dev
+            a.item(href="/data" class="{{ isActiveRoute 'data' }}")
+                +icon name='mind-map'
+                .mobile.hidden &nbsp; Data
         // a.item(href='/messaging' class="{{ isActiveRoute 'messaging' }}")
         //     i.chat.icon
         //     .mobile.hidden Messaging
@@ -16,7 +17,7 @@ template(name='nav')
         //     .mobile.hidden Feed
         a.item(href='/tickets' class="{{ isActiveRoute 'tickets' }}")
             +icon name='two-tickets'
-            .large.monitor.only &nbsp; Tickets
+            .mobile.hidden &nbsp; Tickets
         .ui.search.item
             .ui.transparent.icon.inverted.large.disabled.input
                 i.search.icon

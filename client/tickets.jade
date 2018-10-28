@@ -47,7 +47,7 @@ template(name='tickets')
 
 
             .twelve.wide.column
-                .ui.equal.width.grid
+                .ui.equal.width.stackable.grid
                     .column.scrolling
                         each session_doc.result_ids
                             +ticket_card
@@ -94,6 +94,26 @@ template(name='tickets')
                                                             +icon name='tags'
                                                         each tags
                                                             .ui.basic.label #{this}
+                                          .item ticket_number: #{ticket_number}
+                                          .item franchisee_jpid: #{franchisee_jpid}
+                                          .item office_jpid: #{office_jpid}
+                                          .item customer_jpid: #{customer_jpid}
+                                          .item customer_name: #{customer_name}
+                                          .item ticket_office_name: #{ticket_office_name}
+                                          .item ticket_franchisee: #{ticket_franchisee}
+                                          .item level: #{level}
+                                          .item open: #{open}
+                                          .item submitted: #{submitted}
+                                          .item timestamp: #{timestamp}
+                                          .item updated: #{updated}
+                                          .item long_timestamp: #{long_timestamp}
+                                          .item ticket_type: #{ticket_type}
+                                          .item ticket_details: #{ticket_details}
+                                          .item service_date: #{service_date}
+                                          .item submitted_datetime: #{submitted_datetime}
+                                          .item last_updated_datetime: #{last_updated_datetime}
+                                          .item assigned_to: #{assigned_to}
+
 
                                     .content
                                         .ui.button
@@ -133,7 +153,27 @@ template(name='ticket_card')
                 .meta #{when} by #{author_username}
             .content
                 .description #{details}
-
+            .content
+                .ui.list
+                  .item ticket_number: #{ticket_number}
+                  .item franchisee_jpid: #{franchisee_jpid}
+                  .item office_jpid: #{office_jpid}
+                  .item customer_jpid: #{customer_jpid}
+                  .item customer_name: #{customer_name}
+                  .item ticket_office_name: #{ticket_office_name}
+                  .item ticket_franchisee: #{ticket_franchisee}
+                  .item level: #{level}
+                  .item open: #{open}
+                  .item submitted: #{submitted}
+                  .item timestamp: #{timestamp}
+                  .item updated: #{updated}
+                  .item long_timestamp: #{long_timestamp}
+                  .item ticket_type: #{ticket_type}
+                  .item ticket_details: #{ticket_details}
+                  .item service_date: #{service_date}
+                  .item submitted_datetime: #{submitted_datetime}
+                  .item last_updated_datetime: #{last_updated_datetime}
+                  .item assigned_to: #{assigned_to}
 
 
 template(name='facet')
