@@ -1,22 +1,22 @@
-FlowRouter.route '/communication', action: ->
+FlowRouter.route '/messaging', action: ->
     BlazeLayout.render 'layout',
-        main: 'communication'
+        main: 'messaging'
 
 
 
-Template.communication.onCreated ->
-    @autorun -> Meteor.subscribe 'communication', FlowRouter.getQueryParam('doc_id')
+Template.messaging.onCreated ->
+    @autorun -> Meteor.subscribe 'type', 'message', 100
 
-Template.communication.helpers
-    communication: -> Docs.find { parent_id:FlowRouter.getQueryParam('doc_id'), type:'comment'}
+Template.messaging.helpers
+    messages: -> Docs.find { type:'message'}
 
 
-Template.communication.onRendered ->
+Template.messaging.onRendered ->
     # Meteor.setTimeout ->
     #     $('.ui.accordion').accordion()
     # , 400
 
-Template.communication.events
+Template.messaging.events
     'keyup #new_comment': (e,t)->
         e.preventDefault()
         current_doc_id = FlowRouter.getQueryParam('doc_id')

@@ -8,9 +8,12 @@ template(name='nav')
                     a.item(href="/dashboard")
                         i.dashboard.icon
                         | Dashboard
-                    a.item(href='/communication')
+                    a.item(href="/data")
+                        i.database.icon
+                        | Data
+                    a.item(href='/messaging')
                         i.chat.icon
-                        | Communication
+                        | Messaging
                     a.item(href='/feed')
                         i.feed.icon
                         | Feed
@@ -24,16 +27,16 @@ template(name='nav')
                             i.large.icon
                                 img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         else
-                            i.user.large.icon
+                            i.user.icon
                         |#{currentUser.username}
                     a#logout.ui.icon.blue.button(href='#')
                         if signing_out
-                            i.notched.circle.loading.large.icon
+                            i.notched.circle.loading.icon
                         else
-                            i.sign.out.alternate.large.icon
+                            i.sign.out.alternate.icon
                 else
                     a.ui.icon.blue.button(href='/login')
-                        i.large.icon
+                        i.icon
                             +icon name='internal'
                         | &nbsp; Log In
 
@@ -60,7 +63,7 @@ template(name='left_sidebar')
             // with currentUser.users_customer.parent_franchisee.parent_office
             each office_nav_items
                 a.toggle_left_sidebar.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
-                    // i.large.icon
+                    // i.icon
                     //     +icon name=icon
                     | #{title}
             // a.toggle_sidebar.item(href="/profile/edit/#{currentUser._id}")

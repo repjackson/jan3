@@ -1,0 +1,24 @@
+template(name='messaging')
+    .ui.padded.stackable.grid
+        .row
+            .four.wide.column
+                .ui.header
+                    +icon name='chat'
+                    | Messaging
+            .eight.wide.column
+                .ui.dividing.header My Messages
+                .ui.cards
+                    each messages
+                        .card
+                            .content
+                                .header #{body}
+                            .content
+                                .ui.button
+                                    |Reply
+            .four.wide.column
+                +wall
+
+template(name='wall')
+    .ui.header
+        +icon name='note'
+        |Wall

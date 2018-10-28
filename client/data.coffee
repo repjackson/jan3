@@ -1,4 +1,4 @@
-Template.dao.onCreated ->
+Template.data.onCreated ->
     @autorun -> Meteor.subscribe 'facet'
     # @autorun => Meteor.subscribe 'type', 'filter'
     @autorun => Meteor.subscribe 'type', 'schema', 100
@@ -107,7 +107,7 @@ Template.facet_segment.helpers
 
 
 
-Template.dao.onRendered ->
+Template.data.onRendered ->
     Meteor.setTimeout ->
         $('.dropdown').dropdown()
     , 700
@@ -131,7 +131,7 @@ Template.toggle_facet_config.events
             $set:"#{@key}":false
 
 
-Template.dao.events
+Template.data.events
     'click .clear_current_type': ->
         facet = Docs.findOne type:'facet'
         Docs.update facet._id,
@@ -432,7 +432,7 @@ Template.draft.helpers
         ).fetch()
 
 
-Template.dao.helpers
+Template.data.helpers
     is_calculating: -> Session.get('is_calculating')
     facet_doc: -> Docs.findOne type:'facet'
 

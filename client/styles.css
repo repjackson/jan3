@@ -55,7 +55,7 @@ body {
   /*font-family: "Open Sans",sans-serif;*/
   font-family: 'Lato', sans-serif !important;
   min-height: 500px;
-  background: rgba(0,0,0,.15);
+  background: #F2F6FA;
 }
 
 .ui.header{

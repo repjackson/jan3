@@ -5,10 +5,11 @@ FlowRouter.route '/tasks', action: ->
 
 
 Template.tasks.onCreated ->
-    @autorun -> Meteor.subscribe 'tasks', FlowRouter.getQueryParam('doc_id')
+    @autorun -> Meteor.subscribe 'type', 'task', 100
 
 Template.tasks.helpers
-    tasks: -> Docs.find { parent_id:FlowRouter.getQueryParam('doc_id'), type:'comment'}
+    tasks: -> Docs.find type:'task'
+    my_tasks: -> Docs.find type:'task'
 
 
 Template.tasks.onRendered ->
@@ -17,20 +18,9 @@ Template.tasks.onRendered ->
     # , 400
 
 Template.tasks.events
-    'keyup #new_comment': (e,t)->
-        e.preventDefault()
-        current_doc_id = FlowRouter.getQueryParam('doc_id')
-        comment = $('#new_comment').val().trim()
-        if e.which is 13 #enter
-            $('#new_comment').val ''
-            new_comment_id =
-                Docs.insert
-                    type:'comment'
-                    text:comment
-                    parent_id: current_doc_id
-                    customer_jpid:Meteor.user().customer_jpid
-                    office_jpid:Meteor.user().office_jpid
-
+    'click #new_task': (e,t)->
+        Docs.insert
+            type:'task'
 
     'click .delete_comment': ->
         if confirm 'delete comment?'
