@@ -2,7 +2,7 @@ template(name='tasks')
     .ui.padded.stackable.grid
         .row
             .four.wide.column
-                h1.ui.center.aligned.header
+                .ui.large.header
                     +icon name='tasks'
                     | Tasks
                 .ui.fluid.button
@@ -13,7 +13,11 @@ template(name='tasks')
                 .ui.large.fluid.button.toggle_incomplete(class=incomplete_class)
                     i.icon
                         +icon name='unchecked-checkbox'
-                    |Incomplete Tasks
+                    |Incomplete
+                .ui.large.fluid.button.toggle_complete(class=complete_class)
+                    i.icon
+                        +icon name='checkmark'
+                    |Complete
                 .ui.large.fluid.button.toggle_by_me(class=by_me_class)
                     i.icon
                         +icon name='login-rounded-right'
@@ -29,41 +33,78 @@ template(name='tasks')
                             +task_card
                     if viewing_task_id
                         .column
-                            .ui.large.fluid.button.close_pane
-                                |Viewing Task
-                                i.right.arrow.icon
-                                // +icon name='close-pane'
                             with viewing_task
-                                .ui.header #{title}
-                                .content
-                                    .description #{details}
-                                    .ui.list
-                                        .item by #{author_username}
-                                        .item #{when}
-                                        .item {{ long_format updated }}
-                                        .item long2 #{long_timestamp}
-                                        .item assigned_to #{assigned_to}
-                                        .item assigned_by #{assigned_by}
-                                        .item due_date #{due_date}
-                                .ui.small.dividing.header Actions
-                                .ui.button
-                                    +icon name='checkmark'
+                                .ui.fluid.card
+                                    .content
+                                        .right.floated
+                                            if complete
+                                                +icon name='checkmark'
+                                            else
+                                                +icon name='unchecked-checkbox'
+                                        .header #{title}
+                                        .meta #{when} by #{author_username}
+
+                                    .content
+                                        .description #{details}
+                                    .content
+                                        .ui.list
+                                            .item
+                                                .content
+                                                    i.icon
+                                                        +icon name='user-male'
+                                                    |Assigned to
+                                                    strong #{assigned_to}
+                                            .item
+                                                .content
+                                                    i.icon
+                                                        +icon name='user-shield'
+                                                    |Assigned by
+                                                    strong #{assigned_by}
+                                            if due_date
+                                                .item
+                                                    .content
+                                                        i.icon
+                                                            +icon name='clock'
+                                                        |Due Date
+                                                        strong #{due_date}
+                                            if tags
+                                                .item
+                                                    .content
+                                                        i.icon
+                                                            +icon name='tags'
+                                                        each tags
+                                                            .ui.basic.label #{this}
+
+                                    .content
+                                        if complete
+                                            .ui.button.mark_incomplete
+                                                +icon name='unchecked-checkbox'
+                                        else
+                                            .ui.button.mark_complete
+                                                +icon name='checkmark'
+                                        .ui.button
+                                            +icon name='good-quality'
+                                        .ui.button
+                                            +icon name='poor-quality'
+                                        .ui.button
+                                            +icon name='add-user-male'
+                                        .ui.button
+                                            +icon name='chat'
+                                        .ui.button
+                                            +icon name='open-envelope'
+                            .ui.fluid.button.close_pane
+                                // |Viewing Task
+                                i.right.chevron.icon
 
 template(name='task_card')
     .ui.fluid.link.card.task_card(class=task_card_class)
         .content
+            .right.floated
+                if complete
+                    +icon name='checkmark'
+                else
+                    +icon name='unchecked-checkbox'
             .header #{title}
             .meta #{when} by #{author_username}
         .content
-            .ui.list
-                // .item {{ long_format updated }}
-                // .item long2 #{long_timestamp}
-                .item assigned_to #{assigned_to}
-                .item assigned_by #{assigned_by}
-                .item due_date #{due_date}
-        .content
             .description #{details}
-        if tags
-            .content
-                each tags
-                    .ui.label #{this}

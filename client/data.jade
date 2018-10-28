@@ -106,48 +106,50 @@ template(name='toggle_facet_config')
 
 
 template(name='detail_pane')
-    unless facet_doc.editing_mode
-        a.ui.center.aligned.header.close_details(href='#')
-            if detail_doc.icon
-                i.icon
-                    +icon name=detail_doc.icon
-            |#{detail_doc.title} Details
-    if facet_doc.editing_mode
-        a.ui.center.aligned.header.close_details(href='#')
-            if detail_doc.icon
-                i.icon
-                    +icon name=detail_doc.icon
-            |Edit #{detail_doc.title}
-        .ui.hidden.divider
-        .ui.icon.fluid.button.disable_editing(title='Save')
-            i.green.checkmark.large.icon
-            // |Save
-    .ui.hidden.divider
-    .ui.form
-        each fields
-            .field
-                if facet_doc.editing_mode
-                    +field_edit
-                else
-                    +field_view
-    if facet_doc.editing_mode
-        .ui.button.remove_doc
-            i.red.remove.icon
-            |Delete
-    unless facet_doc.editing_mode
-        each axons
-            .ui.button.select_axon(class=axon_selector_class)
-                if icon
-                    i.icon
-                        +icon name=icon
-                |#{title}
-        if facet_doc.viewing_children
-            +children_view
-        if can_edit
+    .ui.fluid.card
+        .content
+            unless facet_doc.editing_mode
+                a.ui.center.aligned.header.close_details(href='#')
+                    if detail_doc.icon
+                        i.icon
+                            +icon name=detail_doc.icon
+                    |#{detail_doc.title} Details
+            if facet_doc.editing_mode
+                a.ui.center.aligned.header.close_details(href='#')
+                    if detail_doc.icon
+                        i.icon
+                            +icon name=detail_doc.icon
+                    |Edit #{detail_doc.title}
+                .ui.hidden.divider
+                .ui.icon.fluid.button.disable_editing(title='Save')
+                    i.green.checkmark.large.icon
+                    // |Save
             .ui.hidden.divider
-            .ui.icon.fluid.button.enable_editing
-                i.pencil.large.icon
-                // |Edit
+            .ui.form
+                each fields
+                    .field
+                        if facet_doc.editing_mode
+                            +field_edit
+                        else
+                            +field_view
+            if facet_doc.editing_mode
+                .ui.button.remove_doc
+                    i.red.remove.icon
+                    |Delete
+            unless facet_doc.editing_mode
+                each axons
+                    .ui.button.select_axon(class=axon_selector_class)
+                        if icon
+                            i.icon
+                                +icon name=icon
+                        |#{title}
+                if facet_doc.viewing_children
+                    +children_view
+                if can_edit
+                    .ui.hidden.divider
+                    .ui.icon.fluid.button.enable_editing
+                        i.pencil.large.icon
+                        // |Edit
 
 
 

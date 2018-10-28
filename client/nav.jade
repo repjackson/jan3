@@ -3,20 +3,20 @@ template(name='nav')
         .item
             img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
         a.item(href="/dashboard" class="{{ isActiveRoute 'dashboard' }}")
-            i.dashboard.icon
-            .mobile.hidden Dashboard
+            +icon name='dashboard'
+            .large.monitor.only &nbsp; Dashboard
         a.item(href="/data" class="{{ isActiveRoute 'data' }}")
-            i.database.icon
-            .mobile.hidden Data
-        a.item(href='/messaging' class="{{ isActiveRoute 'messaging' }}")
-            i.chat.icon
-            .mobile.hidden Messaging
-        a.item(href='/feed' class="{{ isActiveRoute 'feed' }}" )
-            i.feed.icon
-            .mobile.hidden Feed
+            +icon name='mind-map'
+            .large.monitor.only &nbsp; Data
+        // a.item(href='/messaging' class="{{ isActiveRoute 'messaging' }}")
+        //     i.chat.icon
+        //     .mobile.hidden Messaging
+        // a.item(href='/feed' class="{{ isActiveRoute 'feed' }}" )
+        //     i.feed.icon
+        //     .mobile.hidden Feed
         a.item(href='/tasks' class="{{ isActiveRoute 'tasks' }}")
-            i.tasks.icon
-            .mobile.hidden Tasks
+            +icon name='tasks'
+            .large.monitor.only &nbsp; Tasks
         .ui.search.item
             .ui.transparent.icon.inverted.large.disabled.input
                 i.search.icon
