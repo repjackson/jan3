@@ -6,21 +6,22 @@ template(name='tasks')
                     +icon name='tasks'
                     | Tasks
                 .ui.fluid.button
-                    i.plus.icon
+                    i.icon
+                        +icon name='plus'
                     |Add Task
-                .ui.vertical.large.fluid.menu
-                    a.item.toggle_incomplete(class=incomplete_class)
-                        i.icon
-                            +icon name='unchecked-checkbox'
-                        |Incomplete Tasks
-                    a.item.toggle_by_me(class=by_me_class)
-                        i.icon
-                            +icon name='login-rounded-right'
-                        |Assigned by Me
-                    a.item.toggle_to_me(class=to_me_class)
-                        i.icon
-                            +icon name='login-rounded'
-                        | Assigned to Me
+                .ui.hidden.divider
+                .ui.large.fluid.button.toggle_incomplete(class=incomplete_class)
+                    i.icon
+                        +icon name='unchecked-checkbox'
+                    |Incomplete Tasks
+                .ui.large.fluid.button.toggle_by_me(class=by_me_class)
+                    i.icon
+                        +icon name='login-rounded-right'
+                    |Assigned by Me
+                .ui.large.fluid.button.toggle_to_me(class=to_me_class)
+                    i.icon
+                        +icon name='login-rounded'
+                    | Assigned to Me
             .twelve.wide.column
                 .ui.equal.width.grid
                     .column.scrolling
@@ -33,8 +34,8 @@ template(name='tasks')
                                 i.right.arrow.icon
                                 // +icon name='close-pane'
                             with viewing_task
+                                .ui.header #{title}
                                 .content
-                                    .ui.header #{title}
                                     .description #{details}
                                     .ui.list
                                         .item by #{author_username}
@@ -44,6 +45,9 @@ template(name='tasks')
                                         .item assigned_to #{assigned_to}
                                         .item assigned_by #{assigned_by}
                                         .item due_date #{due_date}
+                                .ui.small.dividing.header Actions
+                                .ui.button
+                                    +icon name='checkmark'
 
 template(name='task_card')
     .ui.fluid.link.card.task_card(class=task_card_class)
