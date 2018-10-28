@@ -1,5 +1,11 @@
 
 
+FlowRouter.route '/feed', action: ->
+    BlazeLayout.render 'layout',
+        main: 'feed'
+
+
+
 Template.users_feed.onCreated ->
     @autorun => Meteor.subscribe 'users_feed', FlowRouter.getParam('username')
 
@@ -8,17 +14,17 @@ Template.users_feed.helpers
         Docs.find {type:'event'}, sort:timestamp:-1
 
 
-Template.global_feed.onCreated ->
+Template.feed.onCreated ->
     @autorun => Meteor.subscribe 'type', 'event', 20
 
-Template.global_feed.helpers
+Template.feed.helpers
     feed_events: ->
         context = Template.currentData()
         # Docs.find {type:'event', doc_type:context.doc_type}, sort:timestamp:-1
         Docs.find {type:'event'}, sort:timestamp:-1
 
 
-Template.global_feed.events
+Template.feed.events
     'click .remove_event': ->
         if confirm 'Delete Event?'
             Docs.remove @_id

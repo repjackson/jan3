@@ -1,37 +1,45 @@
 template(name='nav')
-    // a.ui.toggle_left_sidebar.icon.circular.button
-    //     i.bars.icon
-    a.ui.icon.circular.button(href='/dashboard')
-        .mobile.hidden Dashboard
-    img.ui.inline.image(src="{{c.url 'jan_full_logo' height=50 gravity='face' crop='fill'}}")
-    if currentUser
-        .ui.button
-            if currentUser.image_id
-                i.large.icon
-                    img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-            else
-                i.user.icon
-            |#{currentUser.username}
-        a.ui.nav_bar.button(href="/p/user_view?username=#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
-            i.user.icon
-            | Profile
-        a.ui.nav_bar.button(href='/account/settings' class="{{ active_route 'account' }}" )
-            i.cog.icon
-            |Account
-        // a#logout.ui.nav_bar.button(href='#')
-        //     i.sign.out.alternate.icon
-        //     |Log Out
-        a#logout.ui.nav_bar.button(href='#')
-            if signing_out
-                i.notched.circle.loading.icon
-            else
-                i.sign.out.alternate.icon
-    else
-        a.ui.button(href='/login')
-            i.large.icon
-                +icon name='internal'
-            // i.sign.in.alternate.icon
-            | &nbsp; Log In
+    #dash_header.ui.masthead.center.aligned.stackable.grid
+        .middle.aligned.row
+            .two.wide.column
+                img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            .eleven.wide.column
+                .ui.inverted.blue.large.menu
+                    a.item(href="/dashboard")
+                        i.dashboard.icon
+                        | Dashboard
+                    a.item(href='/communication')
+                        i.chat.icon
+                        | Communication
+                    a.item(href='/feed')
+                        i.feed.icon
+                        | Feed
+                    a.item(href='/tasks')
+                        i.tasks.icon
+                        | Tasks
+            .three.wide.column
+                if currentUser
+                    a.ui.icon.blue.button(href='/account/settings' class="{{ active_route 'account' }}" )
+                        if currentUser.image_id
+                            i.large.icon
+                                img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        else
+                            i.user.large.icon
+                        |#{currentUser.username}
+                    a#logout.ui.icon.blue.button(href='#')
+                        if signing_out
+                            i.notched.circle.loading.large.icon
+                        else
+                            i.sign.out.alternate.large.icon
+                else
+                    a.ui.icon.blue.button(href='/login')
+                        i.large.icon
+                            +icon name='internal'
+                        | &nbsp; Log In
+
+
+
+
 
 
 
