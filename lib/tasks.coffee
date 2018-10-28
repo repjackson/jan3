@@ -10,11 +10,14 @@ if Meteor.isClient
     Template.tasks.onCreated ->
         @autorun -> Meteor.subscribe 'incomplete_tasks'
         @autorun -> Meteor.subscribe 'tasks_to_me'
-        @autorun -> Meteor.subscribe 'tasks_from_me'
+        @autorun -> Meteor.subscribe 'tasks_by_me'
         @editing_id = new ReactiveVar null
         @viewing_id = new ReactiveVar null
         Session.setDefault 'viewing_task_id',null
         Session.setDefault 'editing',false
+        Session.setDefault 'view_incomplete',true
+        Session.setDefault 'view_to_me',true
+        Session.setDefault 'view_by_me',false
 
     Template.task_segment.helpers
         task_segment_class: ->
@@ -26,24 +29,21 @@ if Meteor.isClient
         viewing_task_id: -> Session.get 'viewing_task_id'
         viewing_task: ->
             Docs.findOne Session.get('viewing_task_id')
-        incomplete_tasks: ->
-            if Meteor.user()
-                Docs.find
-                    type:'task'
-                    complete:$ne:true
-                    assigned_to:Meteor.user().username
 
-        tasks_to_me: ->
-            if Meteor.user()
-                Docs.find
-                    type:'task'
-                    assigned_to:Meteor.user().username
+        incomplete_class: -> if Session.get('view_incomplete') then 'active' else ''
+        by_me_class: -> if Session.get('view_by_me') then 'active' else ''
+        to_me_class: -> if Session.get('view_to_me') then 'active' else ''
 
-        tasks_from_me: ->
-            if Meteor.user()
-                Docs.find
-                    type:'task'
-                    assigned_from:Meteor.user().username
+
+        task_docs: ->
+            query = {type:'task'}
+            if Session.get 'view_incomplete'
+                query.complete = $ne:true
+            if Session.get 'view_by_me'
+                query.assigned_by = Meteor.user().username
+            if Session.get 'view_to_me'
+                query.assigned_to = Meteor.user().username
+            Docs.find query
 
 
     Template.tasks.onRendered ->
@@ -58,8 +58,18 @@ if Meteor.isClient
         'click #new_task': (e,t)->
             new_id = Docs.insert
                 type:'task'
-            t.editing_id.set new_id
-            t.viewing_id.set new_id
+            Session.set('editing_task', true)
+            Session.set('viewing_task_id',new_id)
+
+        'click .toggle_incomplete': ->
+            Session.set('view_incomplete', !Session.get('view_incomplete'))
+
+        'click .toggle_to_me': ->
+            Session.set('view_to_me', !Session.get('view_to_me'))
+
+        'click .toggle_by_me': ->
+            Session.set('view_by_me', !Session.get('view_by_me'))
+
 
         'click .delete_comment': ->
             if confirm 'delete comment?'
@@ -83,7 +93,7 @@ if Meteor.isServer
                 assigned_to:Meteor.user().username
 
 
-    Meteor.publish 'tasks_from_me',  ->
+    Meteor.publish 'tasks_by_me',  ->
         if Meteor.user()
             Docs.find
                 type:'task'
