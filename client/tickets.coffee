@@ -139,14 +139,14 @@ Template.facet.helpers
 
     set_facet_key_class: ->
         session = Docs.findOne type:'session'
-        if session.query["#{@slug}"] is @value then 'active' else ''
+        if session.query["#{@slug}"] is @value then 'blue' else ''
 
 Template.select.helpers
     toggle_value_class: ->
         session = Docs.findOne type:'session'
         filter = Template.parentData()
         filter_list = session["filter_#{filter.key}"]
-        if filter_list and @name in filter_list then 'active' else ''
+        if filter_list and @name in filter_list then 'blue' else ''
 
 Template.facet.events
     # 'click .set_facet_key': ->
