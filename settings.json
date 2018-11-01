@@ -43,7 +43,7 @@
 	"cloudinary_secret": "rPPXD3rZM_GCjODvh0T70XeDCSw",
 	"galaxy.meteor.com": {
 		"env": {
-			"MONGO_URL": "mongodb://richardadmin:richardadminpassword@aws-us-east-1-portal.21.dblayer.com:10444/jandb?ssl=true",
+			"MONGO_URL": "mongodb://jandbadmin:jandbadminpassword@portal-ssl205-34.jan-mongo.2695390294.composedb.com:30736/jandb?ssl=true",
 			"ROOT_URL": "https://www.jan.meteorapp.com"
 		}
 	},
