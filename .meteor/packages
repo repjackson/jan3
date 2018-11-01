@@ -6,8 +6,8 @@
 
 qualia:one
 meteor-base@1.4.0             # Packages every Meteor app needs to have
-mongo@1.6.0                   # The database Meteor supports right now
-session@1.1.8                 # Client-side reactive dictionary for your app
+mongo@1.5.0                   # The database Meteor supports right now
+session@1.1.7                 # Client-side reactive dictionary for your app
 tracker@1.2.0                 # Meteor's client-side reactive programming library
 
 
@@ -19,14 +19,14 @@ semantic:ui
 blaze-html-templates
 dburles:collection-helpers
 accounts-password@1.5.1
-shell-server@0.4.0
+shell-server@0.3.1
 kadira:flow-router
 kadira:blaze-layout
-accounts-base@1.4.3
+accounts-base@1.4.2
 momentjs:moment
 reactive-var@1.0.11
 matb33:collection-hooks
-less@2.8.0
+less@2.7.12
 reywood:publish-composite
 tomwasd:flow-router-autoscroll
 http@1.4.1
@@ -36,9 +36,8 @@ pacreach:jade
 coffeescript
 percolate:synced-cron
 random@1.1.0
-modules@0.13.0
+modules@0.12.2
 meteorhacks:ssr
 lepozepo:cloudinary
 juliancwirko:postcss@=1.2.0
 flowkey:hotkeys
-zimme:active-route

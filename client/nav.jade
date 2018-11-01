@@ -1,61 +1,68 @@
 template(name='nav')
-    #dash_header.ui.masthead.inverted.blue.menu
-        a.item(href="/dashboard" class="{{ isActiveRoute 'dashboard' }}")
-            img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-        unless is_customer
-            a.item(href="/data" class="{{ isActiveRoute 'data' }}")
-                +icon name='mind-map'
-                // .mobile.hidden &nbsp; Data
-        // if is_office
-        //     a.item.view_franchisees
-        //         +icon name='business'
-        //         .mobile.hidden &nbsp; Franchisees
-        //     a.item.view_customers
-        //         +icon name='headset'
-        //         .mobile.hidden &nbsp; Customers
-        //     a.item(href="/employees" class="{{ isActiveRoute 'employees' }}")
-        //         +icon name='group'
-        //         .mobile.hidden &nbsp; Employees
-        //     a.item(href="/office_settings" class="{{ isActiveRoute 'office_settings' }}")
-        //         +icon name='settings'
-        //         .mobile.hidden &nbsp; Settings
-        // a.item(href='/messaging' class="{{ isActiveRoute 'messaging' }}")
-        //     i.chat.icon
-        //     .mobile.hidden Messaging
-        // a.item(href='/feed' class="{{ isActiveRoute 'feed' }}" )
-        //     i.feed.icon
-        //     .mobile.hidden Feed
-        a.item(href='/tickets' class="{{ isActiveRoute 'tickets' }}")
-            +icon name='two-tickets'
-            // .mobile.hidden &nbsp; Tickets
-        // .ui.search.item
-        //     .ui.transparent.icon.inverted.large.disabled.input
-        //         i.search.icon
-        //         input(type='text' placeholder='Search')
-        //     // | Search
-        a.item(href='/add' class="{{ isActiveRoute 'add' }}" title='Add Ticket')
-            +icon name='add-ticket'
+    .nav_bar.ui.top.attached.borderless.inverted.menu
+        a.toggle_left_sidebar.icon.item
+            i.bars.icon
+        if is_admin
+            each admin_nav_items
+                a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
+                    i.icon
+                        +icon name=icon
+                    .mobile.hidden &nbsp; #{title}
+        else if is_customer
+            each customer_nav_items
+                a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
+                    i.icon
+                        +icon name=icon
+                    .mobile.hidden &nbsp; #{title}
+        else if is_office
+            each office_nav_items
+                a.mobile.hidden.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
+                    i.icon
+                        +icon name=icon
+                    .mobile.hidden &nbsp; #{title}
         .right.menu
+            if is_dev
+                // .mobile.only
+                if editing_mode
+                    #toggle_editing.icon.active.large.item
+                        i.teal.pencil.link.bordered.icon
+                else
+                    #toggle_editing.icon.large.item
+                        i.pencil.link.bordered.icon
+                a.icon.item(href='/p/schemas' data-content='Schemas' class="{{ active_route 'schemas' }}" )
+                    i.database.icon
             if currentUser
-                a.ui.item(href='/account/settings' class="{{ isActiveRoute 'account' }}" )
+                .ui.dropdown.inverted.blue.item
                     if currentUser.image_id
-                        img.ui.avatar.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        i.large.icon
+                            img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
                     |#{currentUser.username}
-                a#logout.ui.icon.item(href='#')
+                    .inverted.blue.menu
+                        a.nav_bar.item(href="/p/user_view?username=#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
+                            i.user.icon
+                            | Profile
+                        a.nav_bar.item(href='/p/messages' class="{{ active_route 'messages' }}" )
+                            i.envelope.icon
+                            |Messages
+                        a.nav_bar.item(href='/account/settings' class="{{ active_route 'account' }}" )
+                            i.cog.icon
+                            |Account
+                        a#logout.nav_bar.item(href='#')
+                            i.sign.out.alternate.icon
+                            |Log Out
+                a#logout.nav_bar.item(href='#')
                     if signing_out
                         i.notched.circle.loading.icon
                     else
                         i.sign.out.alternate.icon
             else
-                a.ui.icon.item(href='/login')
-                    i.sign.in.alternate.icon
+                a.item(href='/login')
+                    i.large.icon
+                        +icon name='internal'
+                    // i.sign.in.alternate.icon
                     | &nbsp; Log In
-
-
-
-
 
 
 
@@ -76,7 +83,7 @@ template(name='left_sidebar')
             // with currentUser.users_customer.parent_franchisee.parent_office
             each office_nav_items
                 a.toggle_left_sidebar.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
-                    // i.icon
+                    // i.large.icon
                     //     +icon name=icon
                     | #{title}
             // a.toggle_sidebar.item(href="/profile/edit/#{currentUser._id}")

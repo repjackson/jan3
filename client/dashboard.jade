@@ -41,7 +41,7 @@ template(name='customer_menu')
             i.large.icon
                 +icon name='add-ticket'
             | &nbsp; Log Ticket
-        a.item(href='/p/tickets')
+        a.item(href='/p/customer_tickets')
             i.large.icon
                 +icon name='two-tickets'
             | &nbsp; Tickets
@@ -82,8 +82,6 @@ template(name='dashboard_office_contacts_list')
                         div #{email}
                     td
                         +email_user_link
-
-
 template(name='email_user_link')
     a(href="mailto:#{email}" target='_window' title="Email #{first_name}")
         // i.mail.icon
@@ -92,9 +90,7 @@ template(name='email_user_link')
 //                     //     +view_user_button
 
 
-
-
-template(name='dashboard')
+template(name='dashboard_header')
     #dash_header.ui.vertical.masthead.center.aligned.segment
         .ui.container
             img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
@@ -104,9 +100,7 @@ template(name='dashboard')
                     |Login to see Dashboard
                     i.right.arrow.icon
             +customer_menu
-    +customer_special_services
-    +dashboard_office_messages
-    +dashboard_office_contacts_list
+
 
 template(name='dashboard_office_messages')
     .ui.stackable.grid

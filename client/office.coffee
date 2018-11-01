@@ -1,10 +1,3 @@
-FlowRouter.route '/office_settings',
-    name:'office_settings'
-    action: ->
-        BlazeLayout.render 'layout',
-            main: 'office_settings'
-
-
 Template.office_service_settings.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'service'
 
@@ -30,10 +23,10 @@ Template.office_service_settings.events
                     $set: services: [@slug]
 
 
-# Template.toggle_sla_boolean.onRendered ->
-#     Meteor.setTimeout ->
-#         $('.button').popup()
-#     , 400
+Template.toggle_sla_boolean.onRendered ->
+    Meteor.setTimeout ->
+        $('.button').popup()
+    , 400
 
 
 Template.office_sla.onCreated ->
@@ -202,3 +195,6 @@ Template.secondary_contact_widget.helpers
 
 Template.office_roles.helpers
     office_employees: -> Meteor.users.find()
+
+
+

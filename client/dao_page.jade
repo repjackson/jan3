@@ -1,0 +1,61 @@
+template(name='dao_page')
+    if Template.subscriptionsReady
+        if page_doc
+            with page_doc
+                if editing_mode
+                    +dao_page_edit data=page_doc
+                .ui.padded.stackable.grid
+                    if show_header
+                        .centered.middle.aligned.row
+                            .center.aligned.three.wide.column
+                                if left_link
+                                    a.ui.button(href=left_link_url)
+                                        // i.icon(class=icon)
+                                        if left_link_icon
+                                            i.icon
+                                                +icon name=left_link_icon classes='centered'
+                                        // i.left.chevron.icon
+                                        | #{left_link_label}
+                            .center.aligned.ten.wide.column
+                                h2.ui.center.aligned.header
+                                    if icon
+                                        +icon name=icon
+                                    |#{title}
+                            .center.aligned.three.wide.column
+                    .ui.sixteen.wide.column
+                        +dao
+        else
+            if editing_mode
+                .ui.basic.center.aligned.segment
+                    h3.ui.header No Page with #{current_page_slug}.
+                    #create_page.ui.button Create
+    else
+        .ui.active.loader
+
+
+template(name='dao_page_edit')
+    with page_doc
+        .ui.fluid.secondary.segment.editing_segment.accordion
+            .title
+                a(href='/p/pages' title='Admin Pages')
+                    i.clone.link.icon
+                |Edit '#{title}'
+                i.dropdown.icon
+            .content
+                .ui.form
+                    .fields
+                        +edit_page_text_field key='title' label='Title'
+                        +edit_page_text_field key='icon' label='Icon'
+                        +edit_page_text_field key='slug' label='Slug'
+                        +edit_number_field key='number' label='Rank'
+                +toggle_boolean key='show_header' yes_label='Header' icon='ellipsis horizontal'
+                +toggle_boolean key='admin_nav' yes_label='Admin Nav' icon='user shield'
+                +toggle_boolean key='office_nav' yes_label='Office Nav' icon='building'
+                +toggle_boolean key='customer_nav' yes_label='Customer Nav' icon='money'
+                if left_link
+                    h5 Left Link
+                    .ui.form
+                        .fields
+                            +edit_page_text_field key='left_link_url' label='Url' icon='linkify'
+                            +edit_page_text_field key='left_link_icon' label='Icon' icon='image'
+                            +edit_page_text_field key='left_link_label' label='Label' icon='code'

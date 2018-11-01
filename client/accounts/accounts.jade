@@ -1,6 +1,11 @@
 template(name='accounts_layout')
-    +accounts_nav
-    +Template.dynamic template=main
+    .context.example
+        .ui.bottom.attached.basic.segment.pushable
+            +left_sidebar
+            .pusher
+                #main_area
+                    +accounts_nav
+                    +Template.dynamic template=main
 
 template(name='accounts_nav')
     .nav_bar.ui.five.item.stackable.inverted.blue.large.menu
@@ -66,10 +71,8 @@ template(name='login')
                     .ui.hidden.divider
                     .field
                         // unless currentUser
-                        .login.ui.big.fluid.jpgreen.inverted.button(class=login_button_class title='Login')
-                            // .large120 Login
-                            i.large.chevron.right.icon
-                            // +icon name='sort-right' classes='inline'
+                        .login.ui.fluid.jpgreen.inverted.button(class=login_button_class title='Login')
+                            .large120 Login
             .four.wide.column
                 .ui.center.aligned.header Demo
                 #login_demo_customer.ui.fluid.button(class=demo_class title='Login Demo Customer')

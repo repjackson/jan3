@@ -1,140 +1,131 @@
-Meteor.publish 'facet', ->
-    Docs.find {
-        type:'facet'
+Meteor.publish 'filters', (facet_id)->
+    # if facet_id
+    #     Docs.find facet_id
+    # else
+    Docs.find
+        type:'filter'
+        # facet_id:facet_id
+
+Meteor.publish 'my_facets', (page_slug)->
+    Facets.find
+        parent_slug: page_slug
         author_id: Meteor.userId()
-    }, {limit:1}
+
+Meteor.publish 'results', (facet_id)->
+    facet = Facets.findOne facet_id
+
+    Docs.find
+        _id:$in:facet.result_ids
+
+
+
 
 
 Meteor.methods
-    fo: ->
-        facet = Docs.findOne
-            type:'facet'
-            author_id: Meteor.userId()
+    fi: (args, facet_id)->
+        facet = Facets.findOne facet_id
+        query = {}
 
-        current_type = facet.filter_type?[0]
+    fa:(arg, facet_id)->
+        facet = Facets.findOne facet_id
+        Facets.update facet_id,
+            $addToSet:
+                args: arg
 
-        if facet.filter_type and facet.filter_type.length > 0
-            schema =
-                Docs.findOne
-                    type:'schema'
-                    slug:current_type
-            if schema
-                facet_fields =
-                    Docs.find(
-                        type:'field'
-                        schema_slugs:$in:[current_type]
-                        faceted:true
-                    ).fetch()
-        else
-            return
-
+    fo: (facet_id)->
+        facet = Facets.findOne facet_id
         built_query = {}
-
-        facet_fields.push
-            key:'type'
-            field_type:'string'
-
-        filter_keys = []
-        for filter in facet_fields
-            unless filter.key in filter_keys
-                filter_keys.push filter.key
-
-        for facet_field in facet_fields
-            filter_list = facet["filter_#{facet_field.key}"]
-            if filter_list and filter_list.length > 0
-                if facet_field.field_type is 'array'
-                    built_query["#{facet_field.key}"] = $all: filter_list
-                else
-                    built_query["#{facet_field.key}"] = $in: filter_list
+        for arg in facet.args
+            # query["#{arg.key}"] = "#{arg.value}"
+            if arg.type is 'in'
+                built_query["#{arg.key}"] = "$in":["#{arg.value}"]
             else
-                Docs.update facet._id,
-                    $set: "filter_#{facet_field.key}":[]
+                built_query["#{arg.key}"] = "#{arg.value}"
+
+        # if facet.query
+            # fo_query = facet.query
+        # else
+            # fo_query = {}
+        count = Docs.find(built_query).count()
+
+        doc_results = Docs.find(built_query, limit:10).fetch()
+        Facets.update facet_id,
+            $set:
+                # query:built_query
+                results:doc_results
+                count:count
+
+    fum: (facet_id)->
+        facet = Facets.findOne facet_id
+
+        filters = Docs.find(
+            type:'filter'
+            # facet_id:facet_id
+            ).fetch()
+        filter_keys = []
+        for filter in filters
+            filter_keys.push filter.key
 
 
-        total = Docs.find(built_query).count()
+        for filter_key in filter_keys
+            unless facet["filter_#{filter_key}"]
+                Facets.update facet_id,
+                    $set: "filter_#{filter_key}":[]
+        query = if facet.query then facet.query else {}
+        built_query = {}
+        for arg in facet.args
+            if arg.type is 'in'
+                # built_query["#{arg.key}"] = "$in":["#{arg.value}"]
+                built_query["#{arg.key}"] = "$in":[arg.value]
+            else
+                built_query["#{arg.key}"] = "#{arg.value}"
 
-        if Meteor.user().roles
-            if current_type in ['customer', 'office']
-                if 'office' in Meteor.user().roles
-                    built_query['office_jpid'] = Meteor.user().office_jpid
-                if 'customer' in Meteor.user().roles
-                    built_query['customer_jpid'] = Meteor.user().customer_jpid
+        for filter_key in filter_keys
+            filter_list = facet["filter_#{filter_key}"]
+            if filter_list and filter_list.length > 0
+                built_query["#{filter_key}"] = $in: filter_list
 
+        count = Docs.find(built_query).count()
 
-        for facet_field in facet_fields
+        results = Docs.find(built_query, {limit:1000}).fetch()
+        method_return = []
+
+        for filter_key in filter_keys
             values = []
             key_return = []
-            example_doc = Docs.findOne({"#{facet_field.key}":$exists:true})
-            example_value = example_doc?["#{facet_field.key}"]
-            field_type = typeof example_value
 
-            test_calc = Meteor.call 'agg', built_query, facet_field.field_type, facet_field.key
+            example_value = Docs.findOne({"#{filter_key}":$exists:true})
 
-            Docs.update {_id:facet._id},
-                { $set:"#{facet_field.key}_return":test_calc }
-                , ->
+            filter_primitive = typeof example_value["#{filter_key}"]
+            for result in results
+                if result["#{filter_key}"]?
+                    values.push result["#{filter_key}"]
 
-        calc_page_size = if facet.page_size then facet.page_size else 10
+            counted = _.countBy(values)
 
-        page_amount = Math.ceil(total/calc_page_size)
+            for value,count of counted
+                if filter_primitive is 'number'
+                    int_value = parseInt value
+                    key_return.push({ value:int_value, count:count })
+                else if filter_primitive is 'boolean'
+                    bool_value = if value is 'true' then true else false
+                    key_return.push({ value:bool_value, count:count })
+                else if filter_primitive is 'string'
+                    key_return.push({ value:value, count:count })
 
-        current_page = if facet.current_page then facet.current_page else 1
+            Facets.update facet_id,
+                $set:
+                    "#{filter_key}":key_return
 
-        skip_amount = current_page*calc_page_size-calc_page_size
+        page_size = if facet.page_size then facet.page_size else 10
 
-        results_cursor =
-            Docs.find( built_query,
-                {
-                    limit:calc_page_size
-                    sort:"#{facet.sort_key}":facet.sort_direction
-                    skip:skip_amount
-                }
-            )
-
+        results_cursor = Docs.find(built_query, limit:page_size)
         result_ids = []
         for result in results_cursor.fetch()
             result_ids.push result._id
 
 
-        Docs.update {_id:facet._id},
-            {$set:
-                current_page:current_page
-                page_amount:page_amount
-                skip_amount:skip_amount
-                page_size:calc_page_size
-                total: total
+        Facets.update facet_id,
+            $set:
+                count: count
                 result_ids:result_ids
-            }, ->
-        return true
-
-
-    agg: (query, type, key)->
-        options = {
-            explain:false
-            }
-        # console.log key
-        if type is 'array'
-            pipe =  [
-                { $match: query }
-                { $project: "#{key}": 1 }
-                { $unwind: "$#{key}" }
-                { $group: _id: "$#{key}", count: $sum: 1 }
-                { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
-                { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        else
-            pipe =  [
-                { $match: query }
-                { $project: "#{key}": 1 }
-                { $group: _id: "$#{key}", count: $sum: 1 }
-                { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
-                { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-
-        agg = Docs.rawCollection().aggregate(pipe,options)
-
-        res = {}
-        if agg
-            agg.toArray()

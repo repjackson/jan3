@@ -14,8 +14,8 @@ head
     meta(name="msapplication-TileColor", content="#da532c")
     meta(name="theme-color", content="#ffffff")
     meta(name="google-site-verification" content="Vev_RWZQZ5dX1GOznUWd3Qukax27RgUhZXje16BUXs4")
-    // link(href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css" rel="stylesheet" type="text/css")
-    // script(src="https://code.jquery.com/jquery-2.1.4.js")
+    link(href="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.css" rel="stylesheet" type="text/css")
+    script(src="https://code.jquery.com/jquery-2.1.4.js")
 
     link(href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet")
 
@@ -24,15 +24,18 @@ head
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='black')
 
-    // script(src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js")
+    script(src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js")
 
 template(name='layout')
     .context.example
-        // .ui.bottom.attached.basic.segment.pushable
         +nav
-        #main_area
-            +Template.dynamic template=main
-        +footer
+        .ui.bottom.attached.basic.segment.pushable
+            +left_sidebar
+            .pusher
+                #main_area
+                    +Template.dynamic template=sub_nav
+                    +Template.dynamic template=main
+            +footer
 
 
 template(name='not_found')

@@ -1,0 +1,16 @@
+template(name='admin_stats')
+    .ui.list
+        .item Total Customers
+            +count_view name='total_customers'
+        .item Total Franchisees
+            +count_view name='total_franchisees'
+        .item Total Offices
+            +count_view name='total_offices'
+        .item Total Tickets
+            +count_view name='total_tickets'
+        .item Total Open Tickets
+            +count_view name='total_open_ticket'
+
+
+template(name='count_view')
+    |#{stat_doc.count}

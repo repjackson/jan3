@@ -1,0 +1,363 @@
+template(name='author_info')
+    with author
+        if image_id
+            img.ui.avatar.spaced.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+        |&nbsp;
+        a(href="/user/#{username}") #{username}
+        // +staus_indicator
+    // .ui.sub.header #{when}
+
+template(name='when_template')
+    div(title="{{ long_format timestamp }}")
+        |#{when}
+
+template(name='last_updated_template')
+    |{{ long_format last_updated_datetime }}
+
+template(name='list_item')
+    .item
+        i.icon(class=icon title=key)
+        .content
+            .description
+                |#{label}
+                strong #{key_value}
+
+template(name='toggle_boolean')
+    if is_on
+        #turn_off.ui.primary.compact.button
+            if icon
+                i.icon(class=icon)
+            |#{yes_label}
+    else
+        #turn_on.ui.compact.button
+            if icon
+                i.icon(class=icon)
+            |#{yes_label}
+
+template(name='save_button')
+    a.ui.icon.button(href="/v/#{_id}")
+        i.green.checkmark.icon
+        // | Save
+
+template(name='edit_button')
+    a.ui.icon.button(href="/edit/#{_id}" title='Edit' class=classes)
+        i.pencil.icon
+            // +icon name='pencil'
+        // i.pencil.icon
+        // | Edit
+
+template(name='view_button')
+    a.ui.icon.button(href=url title='Details')
+        i.right.chevron.green.icon
+
+template(name='old_view_button')
+    a.ui.icon.button(href="/v/#{_id}" title='Details')
+        i.right.chevron.teal.icon
+
+template(name='icon_view')
+    if icon
+        +icon name=icon
+
+template(name='view_page_button')
+    a.ui.icon.button(href="/p/#{slug}" data-content='View Page' class=classes)
+        // +icon name='details-pane'
+        i.right.chevron.blue.icon
+
+template(name='view_office_button')
+    a.ui.icon.button(href="/p/office_tickets/#{ev.ID}" data-content='View Office' class=classes)
+        // +icon name='details-pane'
+        i.right.chevron.green.icon
+
+template(name='view_user_button')
+    a.ui.icon.button(href="/user/#{username}" title="View #{username}" class=classes)
+        // +avatar_sprite name='chevron-right'
+        // +icon name='circled-chevron-right'
+        i.right.chevron.green.icon
+
+template(name='edit_user_button')
+    a.ui.icon.button(href="/user/edit/#{_id}" title="Edit #{username}" class=classes)
+        // +icon name='circled-chevron-right'
+        i.pencil.icon
+
+template(name='add_button')
+    #add.ui.icon.button(title='Add')
+        i.plus.icon
+        // +icon name='plus-math'
+
+template(name='toggle_sla_boolean')
+    .ui.trigger.button(class=toggle_boolean_button_class title=title)
+        i.icon
+            +iconsmall name=icon
+
+template(name='toggle_key')
+    .toggle_key.ui.button(class=toggle_key_button_class)
+        if icon
+            i.icon
+                +icon name=icon
+        |#{label}
+
+template(name='view_full_button')
+    a.floated.right(href="/v/#{_id}")
+        // i.right.chevron.link.icon
+        | View
+
+template(name='ticket_assignment_cell')
+    // td(class=ticket_assignment_cell_class)
+    if overdue
+        +iconsmall name='expired' classes='inline' title='Over 5 Hours'
+    if response
+        |#{response}
+    .ui.list
+        each assigned_users
+            .item
+                // .image
+                //     img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                .content
+                    .header
+                        // if image_id
+                        //     img.ui.avatar.spaced.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        |#{first_name} #{last_name}
+                    .description
+                        | @#{username}
+
+template(name='call_phone_button')
+    a.ui.fluid.button(href="tel:#{phone_number}")
+        i.phone.icon
+        | Call #{phone_number}
+
+template(name='link_button')
+    a.ui.button(href=link title=label)
+        // i.icon(class=icon)
+        if icon
+            i.icon
+                +icon name=icon classes='centered'
+        // i.left.chevron.icon
+        | #{label}
+
+template(name='edit_link')
+    .field
+        label link (include http://)
+        .ui.left.icon.input
+            i.linkify.icon
+            input#link(type='text' value=url)
+
+template(name='call_method')
+    .call_method.ui.button
+        if label
+            |#{label}
+        else
+            |#{name}
+
+template(name='icon')
+    img.ui.mini.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes data-content=popup title=title)
+
+template(name='iconlarge')
+    img.ui.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png")
+
+template(name='iconsmall')
+    img.ui.inline.image(src="https://png.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes title=title)
+
+template(name='message_button')
+    .ui.message
+        .ui.header
+            +icon name=icon
+            a(href=link) #{label}
+
+template(name='toggle_user_published')
+    #toggle_button.ui.icon.button(class=classes)
+        if published
+            i.green.circle.icon
+        else
+            i.circle.outline.icon
+
+template(name='user_card')
+    with author
+        img.ui.small.rounded.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+        a(href="/user/#{username}")
+            h4.ui.header #{first_name} #{last_name} @#{username}
+            h5 #{ev.COMPANY_NAME}
+            h5 #{ev.EMAIL}
+
+
+template(name='office_card')
+    .ui.card
+        with office_doc
+            .content
+                if is_customer
+                    .ui.header
+                        +icon name='building'
+                        |Office
+                else
+                    a(href="/p/office?jpid=#{ev.ID}")
+                        .ui.header
+                            +icon name='building'
+                            |Office
+            .content
+                if is_customer
+                    h4.ui.header #{ev.MASTER_LICENSEE}
+                else
+                    a(href="/p/office?jpid=#{ev.ID}")
+                        h4.ui.header #{ev.MASTER_LICENSEE}
+                // div ##{ev.ID}
+                div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2}
+                div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                div
+                    a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
+
+template(name='ticket_office_card')
+    .ui.card
+        with office_doc
+            .content
+                if is_customer
+                    .ui.header
+                        +icon name='building'
+                        |Office
+                else
+                    a(href="/p/office?jpid=#{ev.ID}")
+                        .ui.header
+                            +icon name='building'
+                            |Office
+            .content
+                if is_customer
+                    h4.ui.header #{ev.MASTER_LICENSEE}
+                else
+                    a(href="/p/office?jpid=#{ev.ID}")
+                        h4.ui.header #{ev.MASTER_LICENSEE}
+                // div ##{ev.ID}
+                div #{ev.ADDR_STREET} #{ev.ADDR_STREET_2}
+                div #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                div #{ev.ADDR_POSTAL_CODE} #{ev.MASTER_COUNTRY}
+                div
+                    a(href="tel:#{ev.TELEPHONE}") #{ev.TELEPHONE}
+
+
+
+
+template(name='franchisee_card')
+    .ui.card
+        with franchisee_doc
+            .content
+                a(href="/v/#{_id}")
+                    .ui.header
+                        +icon name='conference'
+                        |Franchisee
+            .content
+                a(href="/v/#{_id}")
+                    h4.ui.header #{ev.FRANCH_NAME}
+                .ui.list
+                    .item(title='JPID') ##{ev.ID}
+                    .item #{ev.FRANCH_EMAIL}
+                    // .item(title='Short Name') #{ev.FRANCH_NAME}
+                    .item(title='Call Number')
+                        a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
+
+template(name='view_stat')
+    |#{stat_value}
+
+template(name='view_single_user_key')
+    with single_user
+        if image_id
+            img.ui.avatar.spaced.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+        |&nbsp;
+        a(href="/user/#{username}") #{username}
+        // +staus_indicator
+    // .ui.sub.header #{when}
+
+template(name='assignment_widget')
+    p(title="{{ from_now ticket_assignment_timestamp }}") Last Assigned {{ long_format ticket_assignment_timestamp }}
+    // if overdue
+    //     |overdue
+    // else
+    //     |not overdue
+    .ui.form
+        .field
+            .ui.icon.input
+                if user_results
+                    i.link.remove.icon.clear_results
+                else
+                    i.search.icon
+                input#multiple_user_select_input(type='text' placeholder='Search Office User')
+        if user_results
+            .ui.segment
+                .ui.middle.aligned.selection.animated.list
+                    each user_results
+                        .select_user.item
+                            h5.ui.header
+                                img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                |#{username}
+        .field
+            .ui.list
+                each assigned_users
+                    .item
+                        .right.floated.content
+                            i.pull_user.remove.link.icon
+                        .image
+                            img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            h4.ui.header
+                                |#{first_name} #{last_name}
+                                small @#{username}
+
+template(name='edit_block_text_field')
+    .inline.field
+        label #{label}
+        input.text_field(type='text' value=block_key_value)
+
+template(name='edit_block_number_field')
+    .inline.field
+        label #{label}
+        input.number_field(type='number' min='0' value=block_key_value)
+
+template(name='set_key_value')
+    .set_key_value.ui.small.compact.button(class=set_value_button_class)
+        if icon
+            i.icon
+                +icon name=icon
+        |#{label}
+
+template(name='set_page_key_value')
+    .set_page_key_value.ui.compact.button(class=set_value_button_class)
+        if icon
+            i.icon
+                +icon name=icon
+        |#{label}
+
+template(name='set_field_key_value')
+    .set_field_key_value.ui.compact.button(class=set_value_button_class) #{label}
+
+template(name='toggle_block_field_boolean')
+    .toggle_block_field_boolean.ui.compact.button(class=toggle_value_button_class) #{label}
+
+template(name='set_key_value_2')
+    .set_key_value.ui.button(class=set_value_button_class)
+        if icon
+            i.icon
+                +icon name=icon
+        |#{label}
+
+template(name='event_type_icon')
+    if event_type_doc.icon
+        +icon name=event_type_doc.icon
+        // |#{event_type}
+    else
+        +icon name='commit-git'
+        // |#{event_type}
+
+template(name='user_avatar')
+    img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
+    .ui.popup
+        img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
+    // a(href="/user/#{username}") #{first_name} #{last_name}
+
+template(name='view_ticket_link')
+    unless is_customer
+        a.ui.icon.button(href="/p/ticket_admin_view?doc_id=#{_id}")
+            i.right.chevron.icon
+    if is_customer
+        a.ui.icon.button(href="/p/ticket_customer_view?doc_id=#{_id}")
+            i.right.chevron.icon
+
+template(name='user_profile_image')
+    if image_id
+        img.ui.medium.image.item(src="{{c.url image_id width=500 height=500 gravity='face' crop='fill'}}")

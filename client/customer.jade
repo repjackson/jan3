@@ -1,0 +1,61 @@
+template(name='customer_tickets')
+    .ui.four.cards
+        each customer_ticket_docs
+            .card
+                .content
+                    .header
+                        +ticket_type_small
+                        |&nbsp; #{ticket_details}
+                    .meta
+                        |#{when}
+
+
+
+template(name='customer_card')
+    .ui.card
+        with customer_doc
+            .content
+                a.ui.header(href="/p/customer?doc_id=#{_id}&jpid=#{ev.ID}")
+                    +icon name='headset'
+                    |Customer Account
+            .content
+                a(href="/p/customer?doc_id=#{_id}&jpid=#{ev.ID}")
+                    h4.ui.header #{ev.CUST_NAME}
+                .ui.list
+                    .item ##{ev.ID}
+                    .item #{ev.CUST_CONT_PERSON}
+                    .item #{ev.CUST_CONTACT_EMAIL}
+                    .item #{ev.TELEPHONE}
+                    .item #{ev.ADDR_STREET}
+                    .item #{ev.ADDR_STREET_2}
+                    .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+            // .content
+            //     div Franchisee
+            //         strong #{ev.FRANCHISEE}
+            //     div Office
+            //         strong #{ev.MASTER_LICENSEE}
+
+
+template(name='ticket_customer_card')
+    .ui.card
+        with customer_doc
+            .content
+                a.ui.header(href="/p/customer?doc_id=#{_id}&jpid=#{ev.ID}")
+                    +icon name='headset'
+                    |Customer Account
+            .content
+                a(href="/p/customer?doc_id=#{_id}&jpid=#{ev.ID}")
+                    h4.ui.header #{ev.CUST_NAME}
+                .ui.list
+                    .item ##{ev.ID}
+                    .item #{ev.CUST_CONT_PERSON}
+                    .item #{ev.CUST_CONTACT_EMAIL}
+                    .item #{ev.TELEPHONE}
+                    .item #{ev.ADDR_STREET}
+                    .item #{ev.ADDR_STREET_2}
+                    .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+            // .content
+            //     div Franchisee
+            //         strong #{ev.FRANCHISEE}
+            //     div Office
+            //         strong #{ev.MASTER_LICENSEE}

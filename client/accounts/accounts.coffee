@@ -44,13 +44,13 @@ Template.login.events
             if Meteor.user()
                 if Meteor.user().roles
                     if 'office' in Meteor.user().roles
-                        FlowRouter.go "/dashboard"
+                        FlowRouter.go "/p/office_tickets/#{Meteor.user().office_jpid}"
                     else if 'customer' in Meteor.user().roles
-                        FlowRouter.go "/dashboard"
+                        FlowRouter.go "/p/customer_dashboard"
                     else
-                        FlowRouter.go "/dashboard"
+                        FlowRouter.go "/p/customer_dashboard"
                 else
-                    FlowRouter.go "/dashboard"
+                    FlowRouter.go "/p/customer_dashboard"
 
     'keyup .username, keyup .password': (e,t)->
         if e.which is 13 #enter
@@ -66,17 +66,17 @@ Template.login.events
                         if 'office' in Meteor.user().roles
                             FlowRouter.go "/p/office_tickets/#{Meteor.user().office_jpid}"
                         else if 'customer' in Meteor.user().roles
-                            FlowRouter.go "/dashboard"
+                            FlowRouter.go "/p/customer_dashboard"
                         else
-                            FlowRouter.go "/dashboard"
+                            FlowRouter.go "/p/customer_dashboard"
                     else
-                        FlowRouter.go "/dashboard"
+                        FlowRouter.go "/p/customer_dashboard"
 
     'click #login_demo_admin': ->
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->
             if err then console.error err
             else
-                FlowRouter.go '/dashboard'
+                FlowRouter.go '/p/admin'
 
     'click #login_demo_office': ->
         Meteor.loginWithPassword 'demo_office', 'demoofficepassword', (err,res)->
@@ -84,13 +84,13 @@ Template.login.events
             else
                 Meteor.call 'find_office_from_jpid', '15793131',(err,res)->
                     if err then console.error err
-                FlowRouter.go "/dashboard"
+                FlowRouter.go "/p/office_tickets/15793131"
 
     'click #login_demo_customer': ->
         Meteor.loginWithPassword 'demo_customer', 'democustomerpassword', (err,res)->
             if err then console.error err
             else
-                FlowRouter.go '/dashboard'
+                FlowRouter.go '/p/customer_dashboard'
 
 
 Template.login.helpers
@@ -126,14 +126,14 @@ Template.register_customer.helpers
         doc =
             Docs.findOne
                 type:'customer'
-                jpid: Session.get('customer_jpid')
+                "ev.ID": Session.get('customer_jpid')
         doc
 
     office_doc: ->
         doc =
             Docs.findOne
                 type:'office'
-                jpid: Session.get('office_jpid')
+                "ev.ID": Session.get('office_jpid')
         doc
 
     user_found: -> Session.get 'username_found'
@@ -180,7 +180,7 @@ Template.register_customer.events
             if err
                 alert err
             else
-                FlowRouter.go '/dashboard'
+                FlowRouter.go '/p/customer_dashboard'
                 Docs.insert
                     type:'message'
                     username:options.username
@@ -191,7 +191,7 @@ Template.register_customer.events
                 #     office_doc =
                 #         Docs.findOne
                 #             type:'office'
-                #             jpid: office_jpid
+                #             "ev.ID": office_jpid
         )
 
     'keyup #username': (e,t)->
@@ -247,7 +247,7 @@ Template.register_customer.events
         found_customer_doc =
             Docs.findOne
                 type:'customer'
-                jpid: customer_jpid
+                "ev.ID": customer_jpid
 
         if found_customer_doc
         else
@@ -303,7 +303,7 @@ Template.register_office.events
         office_doc =
             Docs.findOne
                 type:'office'
-                jpid: office_jpid
+                "ev.ID": office_jpid
         Accounts.createUser(options, (err,res)=>
             if err
                 alert err
@@ -351,7 +351,7 @@ Template.register_office.events
         found_office_doc =
             Docs.findOne
                 type:'office'
-                # jpid: office_jpid
+                # "ev.ID": office_jpid
 
         if found_office_doc
             Session.set 'account_selected', true

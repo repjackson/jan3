@@ -3,7 +3,9 @@ $.cloudinary.config
 
 FlowRouter.notFound =
     action: ->
-        FlowRouter.go '/dashboard'
+        BlazeLayout.render 'layout',
+            main: 'not_found'
+
 
 FlowRouter.route('/', {
     triggersEnter: [(context, redirect) ->
@@ -12,11 +14,11 @@ FlowRouter.route('/', {
         if user
             if user.roles
                 if 'customer' in user.roles
-                    redirect '/dashboard'
+                    redirect '/p/customer_dashboard'
                 else if 'admin' in user.roles
-                    redirect '/dashboard'
+                    redirect '/p/admin'
                 else if 'office' in user.roles
-                    redirect '/dashboard'
+                    redirect "/p/office_tickets/#{user.office_jpid}"
         else
             redirect '/login'
     ]
@@ -25,23 +27,20 @@ FlowRouter.route('/', {
 
 globalHotkeys = new Hotkeys()
 globalHotkeys.add
-	combo : "ctrl+shift+alt+d"
+	combo : "ctrl+shift+e"
 	eventType: "keydown"
 	callback : ()->
 	    if Meteor.user() and Meteor.user().roles and 'dev' in Meteor.user().roles
-            Session.set('dev_mode',!Session.get('dev_mode'))
-globalHotkeys.add
-	combo : "ctrl+shift+alt+c"
-	eventType: "keydown"
-	callback : ()->
-	    if Meteor.user() and Meteor.user().roles and 'office' in Meteor.user().roles
-            Session.set('config_mode',!Session.get('config_mode'))
+            Session.set('editing_mode',!Session.get('editing_mode'))
 
 
 
+Session.setDefault('query',null)
 
 if Meteor.isDevelopment
-    Session.setDefault('dev_mode',false)
+    Session.setDefault('editing_mode',true)
+else
+    Session.setDefault('editing_mode',false)
 
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
@@ -50,7 +49,6 @@ Template.registerHelper 'is_editing', () ->
     Session.equals 'editing_id', @_id
 
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
-Template.registerHelper 'facet_doc', () ->  Docs.findOne type:'facet'
 
 Template.registerHelper 'overdue', () ->
     if @assignment_timestamp
@@ -68,8 +66,8 @@ Template.registerHelper 'cell_value', () ->
 
 
 
-# Template.registerHelper 'active_route', (slug) ->
-#     if FlowRouter.getParam('page_slug') and FlowRouter.getParam('page_slug') is slug then 'active' else ''
+Template.registerHelper 'active_route', (slug) ->
+    if FlowRouter.getParam('page_slug') and FlowRouter.getParam('page_slug') is slug then 'active' else ''
 
 
 
@@ -148,21 +146,11 @@ Template.registerHelper 'dev_mode', ()->
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles and Session.get('dev_mode')
 
-Template.registerHelper 'is_eric', () ->
+
+Template.registerHelper 'editing_mode', ()->
     if Meteor.user() and Meteor.user().roles
-        'dev' is Meteor.user().username
+        'dev' in Meteor.user().roles and Session.get('editing_mode')
 
-
-Template.registerHelper 'config_mode', ()->
-    if Meteor.user() and Meteor.user().roles
-        'office' in Meteor.user().roles and Session.get('config_mode')
-
-Template.registerHelper 'field_fields', () ->
-    Docs.find({
-        type:'field'
-        schema_slugs: $in: ['field']
-        axon:$ne:true
-    }, {sort:{rank:1}}).fetch()
 
 
 Template.registerHelper 'is_editor', () ->

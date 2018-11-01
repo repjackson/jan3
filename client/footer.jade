@@ -3,20 +3,35 @@ template(name='footer')
         .ui.stackable.equal.height.centered.padded.grid
             .row
                 .four.wide.inverted.column
-                    img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                    .ui.list
-                        .sitemap_list.item Why JAN-PRO
-                        .sitemap_list.item Commercial Cleaning
-                        .sitemap_list.item About Us
-                    .ui.list
-                        .sitemap_list.item Contact Us
-                        .sitemap_list.item Legal/ Privacy Policy
-                .four.wide.column
-                    if is_eric
+                    if is_dev
                         +role_switcher
+                        div
+                        a(href='/field_instances')
+                            +icon name='field'
+                    else
+                        img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                        .ui.list
+                            .sitemap_list.item Why JAN-PRO
+                            .sitemap_list.item Commercial Cleaning
+                            .sitemap_list.item About Us
+                        .ui.list
+                            .sitemap_list.item Contact Us
+                            .sitemap_list.item Legal/ Privacy Policy
+                        .ui.hidden.divider
+                    // #report_bug.ui.icon.button(data-position="right center" data-tooltip="Report Bug")
+                    //     i.bug.icon
                 .four.wide.column
+                    if is_customer
+                        +customer_card customer_jpid=currentUser.customer_jpid
+                if currentUser.franchisee_jpid
+                    .four.wide.column
+                        if is_customer
+                            +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
+                .four.wide.column
+                    unless is_admin
+                        +office_card office_jpid=currentUser.office_jpid
             .centered.row
-                .ui.center.aligned.inverted.grey.small.header
+                .ui.center.aligned.inverted.grey.header
                     i.copyright.outline.icon
                     | 2018 JAN-PRO Franchising, Inc.
 
@@ -24,8 +39,5 @@ template(name='footer')
 
 template(name='role_switcher')
     each role_docs
-        .change_role.ui.button(class=role_button_class)
-            if icon
-                i.icon
-                    +icon name=icon
-            |#{title}
+        .change_role.ui.compact.button(class=role_button_class)
+            |#{slug}
