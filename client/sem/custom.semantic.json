@@ -52,9 +52,9 @@
     "amazon": false,
     "basic": false,
     "bookish": false,
-    "bootstrap3": true,
+    "bootstrap3": false,
     "chubby": false,
-    "classic": false,
+    "classic": true,
     "colored": false,
     "default": true,
     "duo": false,
@@ -63,14 +63,14 @@
     "github": false,
     "gmail": false,
     "instagram": false,
-    "material": true,
+    "material": false,
     "pulsar": false,
-    "raised": true,
+    "raised": false,
     "resetcss": false,
-    "round": true,
+    "round": false,
     "rtl": false,
     "striped": false,
     "timeline": false,
-    "twitter": true
+    "twitter": false
   }
 }

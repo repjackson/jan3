@@ -1,15 +1,10 @@
 template(name='tickets')
     .ui.padded.stackable.grid
         .row
-            .four.wide.column
-                .ui.large.header
-                    +icon name='tasks'
-                    | Tasks
-                .ui.fluid.button
-                    i.icon
-                        +icon name='plus'
-                    |Add Task
-                .ui.hidden.divider
+            .four.wide.column.scrolling
+                // .ui.large.header
+                //     +icon name='tasks'
+                //     | Tasks
                 unless session_doc
                     .ui.button.create_session
                         i.plus.icon
@@ -18,12 +13,12 @@ template(name='tickets')
                     if is_dev
                         .ui.icon.button.show_session
                             i.code.icon
-                    .ui.button.delete_facet(title='Clear Session')
-                        i.remove.icon
-                        |Clear
-                    .ui.button.run_fe(title='Refresh')
-                        i.refresh.icon
-                        |Reset
+                        .ui.button.delete_session(title='Clear Session')
+                            i.remove.icon
+                            |Clear
+                        .ui.button.run_fe(title='Refresh')
+                            i.refresh.icon
+                            |Reset
 
 
                 // .ui.large.fluid.button.toggle_incomplete(class=incomplete_class)
@@ -46,143 +41,14 @@ template(name='tickets')
                     +facet
 
 
-            .twelve.wide.column
-                .ui.equal.width.stackable.grid
-                    .column.scrolling
-                        each session_doc.result_ids
-                            +ticket_card
-                    if viewing_task_id
-                        .column
-                            with viewing_task
-                                .ui.fluid.card
-                                    .content
-                                        .right.floated
-                                            if complete
-                                                +icon name='checkmark'
-                                            else
-                                                +icon name='unchecked-checkbox'
-                                        .header
-                                            |# #{ticket_number}
-                                            |#{customer_name}
-                                        .meta #{when} by #{author_username}
-
-                                    .content
-                                        .description #{ticket_details}
-                                    .content
-                                        .ui.list
-                                            // .item
-                                            //     .content
-                                            //         i.icon
-                                            //             +icon name='user-male'
-                                            //         |Assigned to
-                                            //         strong #{assigned_to}
-                                            .item
-                                                .content
-                                                    i.icon
-                                                        +icon name='user-shield'
-                                                    |Assigned by
-                                                    strong #{assigned_by}
-                                            if due_date
-                                                .item
-                                                    .content
-                                                        i.icon
-                                                            +icon name='clock'
-                                                        |Due Date
-                                                        strong #{due_date}
-                                            if tags
-                                                .item
-                                                    .content
-                                                        i.icon
-                                                            +icon name='tags'
-                                                        each tags
-                                                            .ui.basic.label #{this}
-
-                                            .item # #{ticket_number}
-                                            .item
-                                                .content(title="Customer JPID #{customer_jpid}")
-                                                    +icon name='headset'
-                                                    // |Customer
-                                                    strong #{customer_name}
-                                            .item
-                                                .content(title="Office JPID #{office_jpid}")
-                                                    +icon name='building'
-                                                    // |Office
-                                                    strong #{ticket_office_name}
-                                            .item
-                                                .content(title="Franchisee JPID #{franchisee_jpid}")
-                                                    +icon name='business'
-                                                    // |Office
-                                                    strong #{ticket_franchisee}
-                                            .item Level: #{level}
-                                            +level_icon
-                                            +ticket_status
-                                            .item Submitted: #{submitted}
-                                            +submitted_template
-                                            .item Ticket Type: #{ticket_type}
-                                            +ticket_type_label
-                                            .item Service Date: #{service_date}
-
-
-                                    .content
-                                        .ui.button
-                                            +icon name='pencil'
-
-                                    .content
-                                        if complete
-                                            .ui.button.mark_incomplete
-                                                +icon name='unchecked-checkbox'
-                                        else
-                                            .ui.button.mark_complete
-                                                +icon name='checkmark'
-                                        .ui.button
-                                            +icon name='good-quality'
-                                        .ui.button
-                                            +icon name='poor-quality'
-                                        .ui.button
-                                            +icon name='add-user-male'
-                                        .ui.button
-                                            +icon name='chat'
-                                        .ui.button
-                                            +icon name='add-subnode'
-                                        .ui.button
-                                            +icon name='open-envelope'
-                                    .content
-                                        .ui.header
-                                            +icon name='chat'
-                                            | Comments
-                                    .content
-                                        .ui.header
-                                            +icon name='add-user-male'
-                                            | Assignments
-                                    .content
-                                        .ui.header
-                                            +icon name='rss'
-                                            | Feed
-                                    .content
-                                        .ui.header
-                                            +icon name='add-subnode'
-                                            | Child Tickets
-                                    .content
-                                        .ui.header
-                                            +icon name='feedback'
-                                            | Feedback
-                                    .content
-                                        .ui.header
-                                            +icon name='renew-subscription'
-                                            | Subscriptions
-                                    .content
-                                        .ui.header
-                                            +icon name='open-envelope'
-                                            | Viewed By
-
-                            .ui.fluid.button.close_pane
-                                // |Viewing Task
-                                i.right.chevron.icon
+            .twelve.wide.column.scrolling
+                each session_doc.result_ids
+                    +ticket_card
 
 template(name='ticket_card')
     with local_doc
-        .ui.fluid.link.card.ticket_card(class=ticket_card_class)
-            .content
+        .ui.fluid.card(class=ticket_card_class)
+            a.content.ticket_card
                 .right.floated
                     if complete
                         +icon name='checkmark'
@@ -195,59 +61,110 @@ template(name='ticket_card')
 
             .content
                 .description #{ticket_details}
-            // .content
-            //     .ui.list
-                    // .item
-                    //     .content
-                    //         i.icon
-                    //             +icon name='user-male'
-                    //         |Assigned to
-                    //         strong #{assigned_to}
-                    // .item
-                    //     .content
-                    //         i.icon
-                    //             +icon name='user-shield'
-                    //         |Assigned by
-                    //         strong #{assigned_by}
-                    // if due_date
-                    //     .item
-                    //         .content
-                    //             i.icon
-                    //                 +icon name='clock'
-                    //             |Due Date
-                    //             strong #{due_date}
-                    // if tags
-                    //     .item
-                    //         .content
-                    //             i.icon
-                    //                 +icon name='tags'
-                    //             each tags
-                    //                 .ui.basic.label #{this}
+            if is_viewing
+                .content
+                    .ui.list
+                        // .item
+                        //     .content
+                        //         i.icon
+                        //             +icon name='user-male'
+                        //         |Assigned to
+                        //         strong #{assigned_to}
+                        .item
+                            .content
+                                i.icon
+                                    +icon name='user-shield'
+                                |Assigned by
+                                strong #{assigned_by}
+                        if due_date
+                            .item
+                                .content
+                                    i.icon
+                                        +icon name='clock'
+                                    |Due Date
+                                    strong #{due_date}
+                        if tags
+                            .item
+                                .content
+                                    i.icon
+                                        +icon name='tags'
+                                    each tags
+                                        .ui.basic.label #{this}
 
-                    // .item # #{ticket_number}
-                    // .item
-                    //     .content(title="Customer JPID #{customer_jpid}")
-                    //         +icon name='headset'
-                    //         // |Customer
-                    //         strong #{customer_name}
-                    // .item
-                    //     .content(title="Office JPID #{office_jpid}")
-                    //         +icon name='building'
-                    //         // |Office
-                    //         strong #{ticket_office_name}
-                    // .item
-                    //     .content(title="Franchisee JPID #{franchisee_jpid}")
-                    //         +icon name='business'
-                    //         // |Office
-                    //         strong #{ticket_franchisee}
-                    // .item Level: #{level}
-                    // +level_icon
-                    // +ticket_status
-                    // .item Submitted: #{submitted}
-                    // +submitted_template
-                    // .item Ticket Type: #{ticket_type}
-                    // +ticket_type_label
-                    // .item Service Date: #{service_date}
+                        .item # #{ticket_number}
+                        .item
+                            .content(title="Customer JPID #{customer_jpid}")
+                                +icon name='headset'
+                                // |Customer
+                                strong #{customer_name}
+                        .item
+                            .content(title="Office JPID #{office_jpid}")
+                                +icon name='building'
+                                // |Office
+                                strong #{ticket_office_name}
+                        .item
+                            .content(title="Franchisee JPID #{franchisee_jpid}")
+                                +icon name='business'
+                                // |Office
+                                strong #{ticket_franchisee}
+                        .item Level: #{level}
+                        +level_icon
+                        +ticket_status
+                        .item Submitted: #{submitted}
+                        +submitted_template
+                        .item Ticket Type: #{ticket_type}
+                        +ticket_type_label
+                        .item Service Date: #{service_date}
+                .content
+                    .ui.button
+                        +icon name='pencil'
+                .content
+                    if complete
+                        .ui.button.mark_incomplete
+                            +icon name='unchecked-checkbox'
+                    else
+                        .ui.button.mark_complete
+                            +icon name='checkmark'
+                    .ui.button
+                        +icon name='good-quality'
+                    .ui.button
+                        +icon name='poor-quality'
+                    .ui.button
+                        +icon name='add-user-male'
+                    .ui.button
+                        +icon name='chat'
+                    .ui.button
+                        +icon name='add-subnode'
+                    .ui.button
+                        +icon name='open-envelope'
+                .content
+                    .ui.header
+                        +icon name='chat'
+                        | Comments
+                .content
+                    .ui.header
+                        +icon name='add-user-male'
+                        | Assignments
+                .content
+                    .ui.header
+                        +icon name='rss'
+                        | Feed
+                .content
+                    .ui.header
+                        +icon name='add-subnode'
+                        | Child Tickets
+                .content
+                    .ui.header
+                        +icon name='feedback'
+                        | Feedback
+                .content
+                    .ui.header
+                        +icon name='renew-subscription'
+                        | Subscriptions
+                .content
+                    .ui.header
+                        +icon name='open-envelope'
+                        | Viewed By
 
 
 template(name='facet')
@@ -256,11 +173,14 @@ template(name='facet')
             i.icon
                 +iconsmall name=icon
         |#{title}
-    each values
-        +select
+    .ui.divided.equal.width.padded.grid
+        each values
+            +select
 
 
 template(name='select')
     .ui.toggle_value.button(class=toggle_value_class)
+        if selector_template
+            +Template.dynamic template=selector_template
         |#{name}
         small #{count}

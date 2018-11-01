@@ -4,6 +4,12 @@ FlowRouter.route '/tickets',
         BlazeLayout.render 'layout',
             main: 'tickets'
 
+FlowRouter.route '/add',
+    name:'submit_ticket'
+    action: ->
+        BlazeLayout.render 'layout',
+            main: 'submit_ticket'
+
 
 
 Template.tickets.onCreated ->
@@ -28,6 +34,7 @@ Template.ticket_card.helpers
         else
             Docs.findOne @valueOf()
 
+    is_viewing: -> Session.equals('viewing_task_id',@_id)
 
     ticket_card_class: ->
         if Session.equals('viewing_task_id',@_id) then 'raised blue' else 'secondary'
@@ -39,6 +46,7 @@ Template.tickets.helpers
     viewing_task_id: -> Session.get 'viewing_task_id'
     viewing_task: ->
         Docs.findOne Session.get('viewing_task_id')
+
 
     faceted_fields: ->
         fields =
@@ -73,9 +81,14 @@ Template.tickets.onRendered ->
     # Meteor.setTimeout ->
     #     $('.ui.accordion').accordion()
     # , 400
+
+
 Template.ticket_card.events
     'click .ticket_card': ->
-        Session.set 'viewing_task_id', @_id
+        if Session.equals 'viewing_task_id', @_id
+            Session.set 'viewing_task_id', null
+        else
+            Session.set 'viewing_task_id', @_id
 
 Template.tickets.events
     'click .create_session': (e,t)->
@@ -86,6 +99,7 @@ Template.tickets.events
                 page_size:10
                 skip_amount:0
                 view_full:true
+                type_filter:['ticket']
         Session.set 'session_id', new_session_id
         Meteor.call 'fe'
 
@@ -143,6 +157,7 @@ Template.facet.helpers
 
 Template.select.helpers
     toggle_value_class: ->
+        # console.log @
         session = Docs.findOne type:'session'
         filter = Template.parentData()
         filter_list = session["filter_#{filter.key}"]

@@ -255,7 +255,7 @@ Template.type_filter.helpers
 
     set_type_class: ->
         facet = Docs.findOne type:'facet'
-        console.log @
+        # console.log @
         if facet.filter_type and @slug in facet.filter_type then 'active'
 
 Template.type_filter.events

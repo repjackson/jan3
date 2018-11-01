@@ -31,16 +31,21 @@ template(name='add_ticket_button')
 
 
 template(name='submit_ticket')
-    .ui.header
-        +icon name='category'
-        |Type
-    each ticket_type_docs
-        +toggle_key key='ticket_type' value=slug label=title icon=icon
-    +edit_textarea label='Details' key='ticket_details' icon='view-details'
-    +edit_datetime_field key='service_date' label='Service Time'
-    .ui.hidden.divider
-    .submit.ui.fluid.jpgreen.inverted.button
-        |SUBMIT
+    .ui.container
+        .ui.header
+            +icon name='category'
+            |Type
+        // each ticket_type_docs
+        //     +toggle_key key='ticket_type' value=slug label=title icon=icon
+        .ui.form
+            .field
+                label Details
+                textarea(rows='3')
+        // +edit_textarea label='Details' key='ticket_details' icon='view-details'
+        // +edit_datetime_field key='service_date' label='Service Time'
+        .ui.hidden.divider
+        .submit.ui.fluid.jpgreen.inverted.button
+            |SUBMIT
 
 
 
