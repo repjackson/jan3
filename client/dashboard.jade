@@ -82,6 +82,7 @@ template(name='dashboard_office_contacts_list')
                         div #{email}
                     td
                         +email_user_link
+
 template(name='email_user_link')
     a(href="mailto:#{email}" target='_window' title="Email #{first_name}")
         // i.mail.icon

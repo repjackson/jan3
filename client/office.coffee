@@ -5,7 +5,7 @@ Template.office_service_settings.helpers
     services: -> Docs.find {type:'service'}
     select_service_button_class: ->
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
-        if @slug in page_office.services then 'primary' else ''
+        if @slug in page_office.services then 'active' else ''
 
 Template.office_service_settings.events
     'click .select_service': ->
@@ -54,7 +54,7 @@ Template.office_sla.helpers
         page_office = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
         return page_office
     ticket_types: -> Docs.find {type:'ticket_type'}
-    select_ticket_type_button_class: -> if Session.equals('ticket_type_selection', @slug) then 'primary' else ''
+    select_ticket_type_button_class: -> if Session.equals('ticket_type_selection', @slug) then 'active' else ''
     selected_ticket_type: -> Session.get 'ticket_type_selection'
     is_initial: -> Template.parentData().number is 1
     rule_docs: -> Docs.find {type:'rule'}, sort:number:1

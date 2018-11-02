@@ -1,0 +1,263 @@
+template(name='delta')
+    .ui.stackable.padded.grid
+        unless delta_doc
+            .row
+                .sixteen.wide.column
+                    if currentUser
+                        .create_delta.ui.button(title='Create Session')
+                            i.plus.icon
+                            |Create Session
+        if delta_doc
+            .four.wide.column.scrolling
+                // +type_filter
+                if current_type
+                    .ui.fluid.large.basic.active.button.clear_current_type
+                        if current_type.icon
+                            +icon name=current_type.icon classes='spaced'
+                        strong #{current_type.title}
+                else
+                    .ui.large.center.aligned.header
+                        +icon name='database'
+                        |Data
+
+                .ui.button.delete_delta(title='Clear Session')
+                    i.remove.icon
+                    |Clear
+                .ui.button.run_fo(title='Refresh')
+                    i.refresh.icon
+                    |Reset
+                if schema_doc
+                    each deltaed_fields
+                        +filter
+
+            .twelve.wide.column
+                .ui.equal.width.stackable.grid
+                    if current_type
+                        .column
+                            if is_calculating
+                                // i.large.loading.refresh.icon
+                                .ui.hidden.divider
+                                .ui.active.indeterminate.massive.centered.inline.loader
+                                    // |Calculating filters and results
+                            else
+                                if is_dev
+                                    .ui.icon.button.show_delta
+                                        i.code.icon
+                                    +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='administrative-tools'
+                                +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
+                                if delta_doc.config_mode
+                                    .ui.header
+                                        +icon name='administrative-tools'
+                                        | Edit Schema '#{current_type.title}'
+                                    .ui.small.header
+                                        +icon name='rename'
+                                        |&nbsp;
+                                        |Fields
+                                    .ui.fluid.button.add_field
+                                        i.plus.icon
+                                        | Field
+                                    each fields
+                                        +delta_card data=_id
+                                else if delta_doc.result_ids
+                                    if delta_doc.result_ids.length
+                                        .ui.horizontal.list
+                                            if can_add
+                                                .item
+                                                    .ui.button.add_doc
+                                                        i.plus.icon
+                                                        |Add #{current_type.title}
+                                            .item
+                                                +set_page_size value=10
+                                                +set_page_size value=20
+                                                +set_page_size value=50
+                                            .item
+                                                if delta_doc.page_amount
+                                                    a.ui.icon.small.page_down.button(title='Previous Page')
+                                                        i.left.chevron.grey.icon
+                                                    .ui.small.label
+                                                        | #{delta_doc.current_page}/#{delta_doc.page_amount}
+                                                    a.ui.icon.small.page_up.button(title='Next Page')
+                                                        i.right.chevron.grey.icon
+                                                    // if show_increment
+                                            .item
+                                                .ui.label #{delta_doc.total} Results
+                                        .scrolling
+                                            each delta_doc.result_ids
+                                                +delta_card
+                                else
+                                    |No results
+                        if delta_doc.viewing_detail
+                            .column.scrolling
+                                +detail_pane
+                    else
+                        .column
+                            +type_filter
+
+template(name='toggle_delta_config')
+    if boolean_true
+        .ui.button.disable_key(title=title)
+            i.icon
+                +icon name=icon
+            | #{label}
+    else
+        .ui.button.enable_key
+            i.icon
+                +icon name=icon
+            | #{label}
+
+
+template(name='detail_pane')
+    .ui.fluid.card
+        .content
+            unless delta_doc.editing_mode
+                a.ui.center.aligned.header.close_details(href='#')
+                    if detail_doc.icon
+                        i.icon
+                            +icon name=detail_doc.icon
+                    |#{detail_doc.title} Details
+            if delta_doc.editing_mode
+                a.ui.center.aligned.header.close_details(href='#')
+                    if detail_doc.icon
+                        i.icon
+                            +icon name=detail_doc.icon
+                    |Edit #{detail_doc.title}
+                .ui.hidden.divider
+                .ui.icon.fluid.button.disable_editing(title='Save')
+                    i.green.checkmark.large.icon
+                    // |Save
+            .ui.hidden.divider
+            .ui.form
+                each fields
+                    .field
+                        if delta_doc.editing_mode
+                            +field_edit
+                        else
+                            +field_view
+            if delta_doc.editing_mode
+                .ui.button.remove_doc
+                    i.red.remove.icon
+                    |Delete
+            unless delta_doc.editing_mode
+                each axons
+                    .ui.button.select_axon(class=axon_selector_class)
+                        if icon
+                            i.icon
+                                +icon name=icon
+                        |#{title}
+                if delta_doc.viewing_children
+                    +children_view
+                if can_edit
+                    .ui.hidden.divider
+                    .ui.icon.fluid.button.enable_editing
+                        i.pencil.large.icon
+                        // |Edit
+
+
+
+template(name='children_view')
+    if axon_schema
+        .ui.header #{axon_schema.title}
+    else
+        |No schema found.
+
+
+
+template(name='set_page_size')
+    .ui.small.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
+
+template(name='set_delta_key')
+    .ui.button.set_delta_key(class=set_delta_key_class)
+        |#{label}
+
+
+template(name='type_filter')
+    // img.ui.avatar.spaced.image(src="{{c.url 'logo_small' width=50 height=50 gravity='face' crop='fill'}}")
+    .ui.centered.stackable.four.cards
+        each deltaed_types
+            .ui.link.card.set_type(class=set_type_class)
+                .content
+                    if icon
+                        .right.floated.mini.ui.image
+                            +iconlarge name=icon
+                    .header
+                        |#{title}
+                    .description
+                        each tags
+                            .ui.basic.label #{this}
+
+        // .ui.large.labeled.icon.button.set_type(class=set_type_class)
+        //     if icon
+        //         i.icon
+        //             +icon name=icon
+        //     |#{title}
+
+
+template(name='filter')
+    .ui.header
+        if icon
+            i.icon
+                +iconsmall name=icon
+        |#{title}
+    each values
+        +selector
+
+
+template(name='selector')
+    .ui.toggle_value.button(class=toggle_value_class)
+        |#{name}
+        small #{count}
+
+
+template(name='edit_field_text')
+    .ui.labeled.fluid.input
+        .ui.basic.label(title=key) #{label}
+        input.text_val(type='text' value=field_value)
+
+template(name='edit_field_number')
+    .ui.labeled.fluid.input
+        .ui.basic.label(title=key) #{label}
+        input.number_val(type='number' value=field_value)
+
+
+template(name='delta_card')
+    with local_doc
+        .ui.fluid.link.card.delta_card(class=delta_card_class)
+            // if doc_header_fields
+            .content
+                h3.ui.header
+                    if icon
+                        +icon name=icon
+                    each doc_header_fields
+                        |#{value}
+            if delta_doc.view_full
+                .content
+                    p
+                    .ui.list
+                        each field_docs
+                            if value
+                                .item
+                                    if field_template
+                                        +Template.dynamic template=field_template
+                                    else
+                                        .content
+                                            if icon
+                                                i.large.icon
+                                                    +icon name=icon
+                                            | #{title}
+                                            |&nbsp;
+                                            if is_array
+                                                each value
+                                                    .ui.basic.label #{this}
+                                            else
+                                                strong #{value}
+
+
+template(name='boolean_delta')
+    .ui.header filter #{key}
+    .pick_yes.ui.button yes
+    .pick_no.ui.button no
+
+
+
+template(name='tag_result')
+    .three.wide.column #{title} #{office_name} #{name}
