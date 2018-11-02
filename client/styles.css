@@ -6,21 +6,29 @@
   /*border: 0px solid transparent; */
   border: none !important;
   /*background: #01336C; //dark blue*/
-  background: rgba(0, 20, 137) !important;
+  /*background: rgba(0, 20, 137) !important;*/
+  background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 96%,rgba(132,189,0,1) 96%, rgba(132,189,0,1) 100%) !important;
   box-shadow: none
 }
 
+
+.footer_area {
+  /*position: absolute !important;*/
+  bottom: 0;
+  width: 100%;
+  margin: 0 !important;
+  background: linear-gradient(to top, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
+  margin: 0 !important;
+  border: 0 !important;
+  /*background: rgba(0, 20, 137) !important;*/
+}
+.footer_area .sitemap_list{
+  color:white !important;
+}
 
 .jpgreen {
   background: rgba(132, 189, 0) !important;
 
-}
-
-#sub_nav.ui.inverted.menu {
-  /*border: 0px solid transparent; */
-  border: none !important;
-  background: #0a4a7b;
-  box-shadow: none
 }
 
 body {
@@ -47,16 +55,6 @@ body {
     height: 200px;
 }
 
-.footer_area {
-  /*position: absolute !important;*/
-  bottom: 0;
-  width: 100%;
-  margin: 0 !important;
-  background: rgba(0, 20, 137) !important;
-}
-.footer_area .sitemap_list{
-  color:white !important;
-}
 
 /* Mobile */
   @media only screen and (max-width: 767px) {

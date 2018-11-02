@@ -250,3 +250,129 @@ template(name='user_cell_text_edit')
 
 
 
+
+
+// new
+
+template(name='field_edit')
+    +Template.dynamic template=edit_template
+
+template(name='boolean_edit')
+    .ui.button.toggle_field(class=bool_switch_class title=key)
+        if icon
+            i.icon
+                +icon name=icon
+        |#{title}
+
+template(name='array_edit')
+    .ui.fluid.labeled.right.icon.input
+        .ui.basic.label
+            if icon
+                +icon name=icon classes='inline spaced'
+            |#{title}
+        input.add_array_element(type='text' placholder='add')
+        i.plus.icon
+    if value
+        each value
+            .ui.large.basic.label
+                i.pull_element.remove.link.icon
+                |#{this}
+
+
+
+
+template(name='multiref_edit')
+    .ui.basic.label
+        if icon
+            +icon name=icon classes='inline spaced'
+        |#{title}
+    each choices
+        .ui.button.toggle_element(class=element_class)
+            if icon
+                i.icon
+                    +icon name=icon
+            |#{title}
+
+
+
+template(name='ref_edit')
+    .ui.basic.label
+        if icon
+            +icon name=icon classes='inline spaced'
+        |#{title}
+    each choices
+        .ui.button.choose_element(class=element_class)
+            if icon
+                i.icon
+                    +icon name=icon
+            |#{title}
+
+
+
+
+template(name='string_edit')
+    .ui.fluid.labeled.input
+        .ui.basic.label
+            if icon
+                +icon name=icon classes='inline spaced'
+            |#{title}
+        input.string_val(type='text' value=value)
+
+
+
+
+template(name='textarea_edit')
+    .ui.fluid.labeled.input
+        .ui.basic.label
+            if icon
+                +icon name=icon classes='inline spaced'
+            |#{title}
+        textarea.textarea_val(rows='5')
+            |#{value}
+
+
+
+
+template(name='number_edit')
+    .ui.fluid.labeled.input
+        .ui.basic.label
+            if icon
+                +icon name=icon classes='inline spaced'
+            |#{title}
+        input.number_val(type='number' value=value)
+
+
+template(name='date_edit')
+    .ui.fluid.labeled.input
+        .ui.basic.label
+            if icon
+                +icon name=icon classes='inline spaced'
+            |#{title}
+        input.date_val(type='date' value=value)
+
+
+template(name='field_view')
+    if value
+        .item
+            if field_template
+                +Template.dynamic template=field_template
+            else
+                if icon
+                    i.icon
+                        +icon name=icon
+                |&nbsp;
+                |#{title}:
+                |&nbsp;
+                if is_array
+                    each value
+                        .ui.basic.label #{this}
+                else
+                    strong &nbsp; #{value}
+
+
+
+
+
+
+
+

@@ -2,6 +2,11 @@ template(name='nav')
     .nav_bar.ui.top.attached.borderless.inverted.menu
         a.toggle_left_sidebar.icon.item
             i.bars.icon
+        unless is_customer
+            a.item(href="/data")
+                i.icon
+                    +icon name='database'
+                | Data
         if is_admin
             each admin_nav_items
                 a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
@@ -15,8 +20,6 @@ template(name='nav')
                         +icon name=icon
                     .mobile.hidden &nbsp; #{title}
         else if is_office
-            a.icon.item(href="/data")
-                i.database.icon
             each office_nav_items
                 a.mobile.hidden.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
                     i.icon
@@ -31,8 +34,6 @@ template(name='nav')
                 else
                     #toggle_editing.icon.large.item
                         i.pencil.link.bordered.icon
-                a.icon.item(href='/p/schemas' data-content='Schemas' class="{{ active_route 'schemas' }}" )
-                    i.database.icon
             if currentUser
                 .ui.dropdown.inverted.blue.item
                     if currentUser.image_id

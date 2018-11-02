@@ -375,7 +375,6 @@ Template.detail_pane.helpers
         if detail_doc?.type is 'field'
             Docs.find({
                 type:'field'
-                axon:$ne:true
                 schema_slugs: $in: ['field']
             }, {sort:{rank:1}}).fetch()
         else
