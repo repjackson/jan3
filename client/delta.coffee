@@ -59,7 +59,6 @@ Template.delta_card.helpers
         if local_doc?.type is 'field'
             Docs.find({
                 type:'field'
-                axon:$ne:true
                 schema_slugs: $in: ['field']
             }, {sort:{rank:1}}).fetch()
         else
@@ -69,7 +68,6 @@ Template.delta_card.helpers
             linked_fields = Docs.find({
                 type:'field'
                 schema_slugs: $in: [schema.slug]
-                axon:$ne:true
                 visible:true
             }, {sort:{rank:1}}).fetch()
 
@@ -307,33 +305,6 @@ Template.detail_pane.events
         Docs.update delta._id,
             $set:editing_mode:false
 
-    'click .select_axon': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_children:true
-                children_template:@children_template
-                viewing_axon:@axon_schema
-
-
-
-Template.children_view.onCreated ->
-    delta = Docs.findOne type:'delta'
-    @autorun => Meteor.subscribe 'schema_doc_by_type', delta.viewing_axon
-    @autorun => Meteor.subscribe 'type', 'schama'
-
-
-
-
-Template.children_view.helpers
-    axon_schema: ->
-        delta = Docs.findOne type:'delta'
-        res = Docs.findOne
-            type:'schema'
-            slug:delta.viewing_axon
-        res
-
-
 
 Template.detail_pane.helpers
     detail_doc: ->
@@ -385,16 +356,6 @@ Template.detail_pane.helpers
                 schema_slugs: $in: [current_type]
             }, {sort:{rank:1}}).fetch()
 
-    axons: ->
-        delta = Docs.findOne type:'delta'
-        current_type = delta.filter_type[0]
-        Docs.find({
-            type:'field'
-            axon:true
-            schema_slugs: $in: [current_type]
-        }, {sort:{rank:1}}).fetch()
-
-
     child_schema_docs: ->
         Docs.find
             type:@axon_schema
@@ -417,25 +378,6 @@ Template.delta.helpers
         Docs.findOne
             type:'schema'
             slug:type_key
-
-    can_add: ->
-        delta = Docs.findOne type:'delta'
-        type_key = delta.filter_type[0]
-        schema = Docs.findOne
-            type:'schema'
-            slug:type_key
-
-        my_role = Meteor.user()?.roles?[0]
-        if my_role
-            if schema.addable_roles
-                if my_role in schema.addable_roles
-                    true
-                else
-                    false
-            else
-                false
-        else
-            false
 
 
     ticket_types: -> Docs.find type:'ticket_type'
@@ -563,24 +505,3 @@ Template.edit_field_number.events
         # console.log @filter_id
         Docs.update @filter_id,
             { $set: "#{@key}": number_value }
-
-
-
-
-
-Template.ticket_assignment_cell.onCreated ->
-    @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
-
-Template.ticket_assignment_cell.helpers
-    # ticket_assignment_cell_class: ->
-    #     if @assignment_timestamp
-    #         now = Date.now()
-    #         response = @assignment_timestamp - now
-    #         calc = moment.duration(response).humanize()
-    #         hour_amount = moment.duration(response).asHours()
-    #         if hour_amount<-5 then 'negative' else 'positive'
-
-    assigned_users: ->
-        if @assigned_to
-            Meteor.users.find
-                _id: $in: @assigned_to

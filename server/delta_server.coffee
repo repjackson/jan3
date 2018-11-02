@@ -53,12 +53,12 @@ Meteor.methods
 
         total = Docs.find(built_query).count()
 
-        if Meteor.user().roles
-            if current_type in ['customer', 'office']
-                if 'office' in Meteor.user().roles
-                    built_query['office_jpid'] = Meteor.user().office_jpid
-                if 'customer' in Meteor.user().roles
-                    built_query['customer_jpid'] = Meteor.user().customer_jpid
+        # if Meteor.user().roles
+        #     if current_type in ['customer', 'office']
+        #         if 'office' in Meteor.user().roles
+        #             built_query['office_jpid'] = Meteor.user().office_jpid
+        #         if 'customer' in Meteor.user().roles
+        #             built_query['customer_jpid'] = Meteor.user().customer_jpid
 
 
         for delta_field in delta_fields

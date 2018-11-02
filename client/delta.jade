@@ -136,14 +136,6 @@ template(name='detail_pane')
                     i.red.remove.icon
                     |Delete
             unless delta_doc.editing_mode
-                each axons
-                    .ui.button.select_axon(class=axon_selector_class)
-                        if icon
-                            i.icon
-                                +icon name=icon
-                        |#{title}
-                if delta_doc.viewing_children
-                    +children_view
                 if can_edit
                     .ui.hidden.divider
                     .ui.icon.fluid.button.enable_editing
