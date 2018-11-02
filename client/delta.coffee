@@ -17,10 +17,10 @@ Template.delta.onCreated ->
 Template.detail_pane.onCreated ->
     delta = Docs.findOne type:'delta'
     if delta
-        @autorun => Meteor.subscribe 'single_doc', delta.detail_id
+        @autorun => Meteor.subscribe 'doc', delta.detail_id
 
 Template.delta_card.onCreated ->
-    @autorun => Meteor.subscribe 'single_doc', @data
+    @autorun => Meteor.subscribe 'doc', @data
 
 Template.delta_card.events
     'click .delta_card': ->

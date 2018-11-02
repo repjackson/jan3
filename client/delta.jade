@@ -35,10 +35,8 @@ template(name='delta')
                     if current_type
                         .column
                             if is_calculating
-                                // i.large.loading.refresh.icon
                                 .ui.hidden.divider
                                 .ui.active.indeterminate.massive.centered.inline.loader
-                                    // |Calculating filters and results
                             else
                                 if is_dev
                                     .ui.icon.button.show_delta
@@ -95,7 +93,7 @@ template(name='delta')
 
 template(name='toggle_delta_config')
     if boolean_true
-        .ui.button.disable_key(title=title)
+        .ui.active.button.disable_key(title=title)
             i.icon
                 +icon name=icon
             | #{label}
@@ -227,6 +225,7 @@ template(name='delta_card')
                 h3.ui.header
                     if icon
                         +icon name=icon
+                    |#{title}
                     each doc_header_fields
                         |#{value}
             if delta_doc.view_full
@@ -250,14 +249,3 @@ template(name='delta_card')
                                                     .ui.basic.label #{this}
                                             else
                                                 strong #{value}
-
-
-template(name='boolean_delta')
-    .ui.header filter #{key}
-    .pick_yes.ui.button yes
-    .pick_no.ui.button no
-
-
-
-template(name='tag_result')
-    .three.wide.column #{title} #{office_name} #{name}

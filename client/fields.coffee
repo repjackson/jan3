@@ -355,28 +355,6 @@ Template.edit_array_field.events
             $pull: "#{Template.parentData(0).key}": tag
         t.$('.new_entry').val(tag)
 
-Template.edit_array_field.helpers
-    # editing_mode: ->
-    #     if Session.equals 'editing', true then true else false
-    # theme_select_settings: -> {
-    #     position: 'top'
-    #     limit: 10
-    #     rules: [
-    #         {
-    #             collection: Tags
-    #             field: 'name'
-    #             matchAll: false
-    #             template: Template.tag_result
-    #         }
-    #         ]
-    # }
-
-
-
-
-
-
-
 
 Template.user_cell_text_edit.onCreated ->
     @editing_mode = new ReactiveVar false
