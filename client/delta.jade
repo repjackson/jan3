@@ -27,7 +27,7 @@ template(name='delta')
                     i.refresh.icon
                     |Reset
                 if schema_doc
-                    each deltaed_fields
+                    each delta_fields
                         +filter
 
             .twelve.wide.column
@@ -44,18 +44,19 @@ template(name='delta')
                                     +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='administrative-tools'
                                 +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
                                 if delta_doc.config_mode
-                                    .ui.header
-                                        +icon name='administrative-tools'
-                                        | Edit Schema '#{current_type.title}'
-                                    .ui.small.header
-                                        +icon name='rename'
-                                        |&nbsp;
-                                        |Fields
-                                    .ui.fluid.button.add_field
-                                        i.plus.icon
-                                        | Field
-                                    each fields
-                                        +delta_card data=_id
+                                    .scrolling
+                                        .ui.header
+                                            +icon name='administrative-tools'
+                                            | Edit Schema '#{current_type.title}'
+                                        .ui.small.header
+                                            +icon name='rename'
+                                            |&nbsp;
+                                            |Fields
+                                        .ui.fluid.button.add_field
+                                            i.plus.icon
+                                            | Field
+                                        each fields
+                                            +delta_card data=_id
                                 else if delta_doc.result_ids
                                     if delta_doc.result_ids.length
                                         .ui.horizontal.list

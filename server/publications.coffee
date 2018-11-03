@@ -2,7 +2,7 @@ Meteor.publish 'type', (type, limit)->
     if limit
         limit_val = limit
     else
-        limit_val = 100
+        limit_val = 400
     Docs.find {type:type},
         {
             limit:limit_val

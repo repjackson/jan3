@@ -38,16 +38,13 @@ Template.delta_card.helpers
         else
             Docs.findOne @valueOf()
 
+    delta_doc: -> Docs.findOne type:'delta'
+
     is_array: -> @field_type is 'array'
 
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
         if delta.detail_id and delta.detail_id is @_id then 'raised blue' else 'secondary'
-
-    view_full: ->
-        # delta = Docs.findOne type:'delta'
-        # if delta.detail_id and delta.detail_id is @_id then true else false
-        true
 
     field_docs: ->
         delta = Docs.findOne type:'delta'
@@ -336,9 +333,6 @@ Template.detail_pane.helpers
             else
                 false
 
-    axon_selector_class: ->
-        delta = Docs.findOne type:'delta'
-        if @axon_schema is delta.viewing_axon then 'active' else ''
 
     fields: ->
         delta = Docs.findOne type:'delta'
@@ -352,7 +346,6 @@ Template.detail_pane.helpers
             current_type = delta.filter_type[0]
             Docs.find({
                 type:'field'
-                axon:$ne:true
                 schema_slugs: $in: [current_type]
             }, {sort:{rank:1}}).fetch()
 
