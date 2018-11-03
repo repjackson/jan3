@@ -95,6 +95,10 @@ Template.registerHelper 'long_format', (input) ->
         moment(input).format('MMMM Do h:mma')
 
 Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getQueryParam('doc_id')
+Template.registerHelper 'delta_doc', () -> Docs.findOne type:'delta'
+
+
+
 
 Template.registerHelper 'is_level_one', () -> @level is 1
 Template.registerHelper 'is_level_two', () -> @level is 2

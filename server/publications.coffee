@@ -9,6 +9,7 @@ Meteor.publish 'type', (type, limit)->
             sort: timestamp:-1
         }
 
+
 Meteor.publish 'block_children', (
     block_doc_id,
     filter_key=null,

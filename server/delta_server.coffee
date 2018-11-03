@@ -4,6 +4,39 @@ Meteor.publish 'delta', ->
         author_id: Meteor.userId()
     }, {limit:1}
 
+Meteor.publish 'my_schemas', ->
+    if Meteor.user() and Meteor.user().roles
+        if 'dev' in Meteor.user().roles
+            Docs.find(
+                type:'schema'
+                # view_roles:$in:Meteor.user().roles
+            )
+        else
+            Docs.find(
+                type:'schema'
+                view_roles:$in:Meteor.user().roles
+            )
+
+
+Meteor.publish 'schema_fields', ->
+    delta = Docs.findOne
+        type:'delta'
+        author_id: Meteor.userId()
+
+    current_type = delta.filter_type?[0]
+    Docs.find
+        type:'field'
+        schema_slugs:$in:[current_type, 'field']
+
+Meteor.publish 'schema', ->
+    delta = Docs.findOne
+        type:'delta'
+        author_id: Meteor.userId()
+    current_type = delta.filter_type?[0]
+    Docs.find
+        type:'schema'
+        slug: current_type
+
 
 Meteor.methods
     fo: ->

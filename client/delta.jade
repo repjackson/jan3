@@ -32,64 +32,70 @@ template(name='delta')
             .twelve.wide.column
                 .ui.equal.width.stackable.grid
                     if current_type
-                        .column
-                            if is_calculating
-                                .ui.hidden.divider
-                                .ui.active.indeterminate.massive.centered.inline.loader
-                            else
-                                if is_dev
-                                    .ui.icon.button.show_delta
-                                        i.code.icon
-                                    +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='administrative-tools'
-                                +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
-                                if delta_doc.config_mode
-                                    .scrolling
-                                        .ui.header
-                                            +icon name='administrative-tools'
-                                            | Edit Schema '#{current_type.title}'
-                                        .ui.small.header
-                                            +icon name='rename'
-                                            |&nbsp;
-                                            |Fields
-                                        .ui.fluid.button.add_field
-                                            i.plus.icon
-                                            | Field
-                                        each fields
-                                            +delta_card data=_id
-                                else if delta_doc.result_ids
-                                    if delta_doc.result_ids.length
-                                        .ui.horizontal.list
-                                            if can_add
-                                                .item
-                                                    .ui.button.add_doc
-                                                        i.green.plus.icon
-                                                        |Add #{current_type.title}
-                                            .item
-                                                +set_page_size value=10
-                                                +set_page_size value=20
-                                                +set_page_size value=50
-                                            .item
-                                                if delta_doc.page_amount
-                                                    a.ui.icon.small.page_down.button(title='Previous Page')
-                                                        i.left.chevron.grey.icon
-                                                    .ui.small.label
-                                                        | #{delta_doc.current_page}/#{delta_doc.page_amount}
-                                                    a.ui.icon.small.page_up.button(title='Next Page')
-                                                        i.right.chevron.grey.icon
-                                                    // if show_increment
-                                            .item
-                                                .ui.label #{delta_doc.total} Results
-                                        .scrolling
-                                            each delta_doc.result_ids
-                                                +delta_card
-                                else
-                                    |No results
-                        if delta_doc.viewing_detail
-                            .column.scrolling
-                                +detail_pane
+                        +delta_results
                     else
                         .column
                             +type_filter
+
+template(name='delta_results')
+    .column
+        if is_calculating
+            .ui.hidden.divider
+            .ui.active.indeterminate.massive.centered.inline.loader
+        else
+            if is_dev
+                .ui.icon.button.show_delta
+                    i.code.icon
+                +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='administrative-tools'
+            if can_add
+                .ui.button.add_doc
+                    i.green.plus.icon
+                    |Add #{current_type.title}
+            if delta_doc.config_mode
+                .scrolling
+                    .ui.header
+                        +icon name='administrative-tools'
+                        | Edit Schema '#{current_type.title}'
+                    +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
+                    .ui.small.header
+                        +icon name='rename'
+                        |&nbsp;
+                        |Fields
+                    .ui.fluid.button.add_field
+                        i.plus.icon
+                        | Field
+                    each schema_fields
+                        +delta_card data=_id
+            else if delta_doc.result_ids
+                if delta_doc.result_ids.length
+                    .ui.horizontal.list
+                        .item
+                            +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
+                        .item
+                            +set_page_size value=10
+                            +set_page_size value=20
+                            +set_page_size value=50
+                        .item
+                            if delta_doc.page_amount
+                                a.ui.icon.small.page_down.button(title='Previous Page')
+                                    i.left.chevron.grey.icon
+                                .ui.small.label
+                                    | #{delta_doc.current_page}/#{delta_doc.page_amount}
+                                a.ui.icon.small.page_up.button(title='Next Page')
+                                    i.right.chevron.grey.icon
+                                // if show_increment
+                        .item
+                            .ui.label #{delta_doc.total} Results
+                    .scrolling
+                        each delta_doc.result_ids
+                            +delta_card
+            else
+                |No results
+    if delta_doc.viewing_detail
+        .column.scrolling
+            +detail_pane
+
+
 
 template(name='toggle_delta_config')
     if boolean_true
@@ -108,16 +114,19 @@ template(name='detail_pane')
     .ui.fluid.card
         .content
             unless delta_doc.editing_mode
-                a.ui.center.aligned.header.close_details(href='#')
+                a.ui.header.close_details(href='#')
                     if detail_doc.icon
                         i.icon
                             +icon name=detail_doc.icon
                     |#{detail_doc.title} Details
             if delta_doc.editing_mode
-                a.ui.center.aligned.header.close_details(href='#')
+                a.ui.header.close_details(href='#')
                     if detail_doc.icon
                         i.icon
                             +icon name=detail_doc.icon
+                    else
+                        i.icon
+                            +icon name='pencil'
                     |Edit #{detail_doc.title}
                 .ui.hidden.divider
                 .ui.icon.fluid.button.disable_editing(title='Save')
@@ -125,11 +134,13 @@ template(name='detail_pane')
                     // |Save
             .ui.hidden.divider
             .ui.form
-                each fields
-                    .field
-                        if delta_doc.editing_mode
+                if delta_doc.editing_mode
+                    each edit_fields
+                        .field
                             +field_edit
-                        else
+                else
+                    each fields
+                        .field
                             +field_view
             if delta_doc.editing_mode
                 .ui.button.remove_doc

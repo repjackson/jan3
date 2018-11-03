@@ -4,18 +4,18 @@ FlowRouter.route '/data',
         BlazeLayout.render 'layout',
             main: 'delta'
 
+Template.delta_results.onCreated ->
+    @autorun => Meteor.subscribe 'schema_fields'
+    Session.setDefault 'is_calculating', false
 
 Template.delta.onCreated ->
     @autorun -> Meteor.subscribe 'delta'
-    # @autorun => Meteor.subscribe 'type', 'filter'
-    @autorun => Meteor.subscribe 'type', 'schema', 100
-    @autorun => Meteor.subscribe 'type', 'field', 300
+    # @autorun => Meteor.subscribe 'delta_schema'
 
-    # @autorun => Meteor.subscribe 'type', 'ticket_type'
-    Session.setDefault 'is_calculating', false
 
 Template.detail_pane.onCreated ->
     delta = Docs.findOne type:'delta'
+    @autorun => Meteor.subscribe 'schema_fields'
     if delta
         @autorun => Meteor.subscribe 'doc', delta.detail_id
 
@@ -38,7 +38,7 @@ Template.delta_card.helpers
         else
             Docs.findOne @valueOf()
 
-    delta_doc: -> Docs.findOne type:'delta'
+    # delta_doc: -> Docs.findOne type:'delta'
 
     is_array: -> @primative is 'array'
 
@@ -139,13 +139,6 @@ Template.delta.events
         Docs.update delta._id,
             $set: filter_type: []
 
-
-
-    'click .close_details': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set: viewing_detail: false
-
     'click .delete_delta': ->
         if confirm 'Clear Session?'
             delta = Docs.findOne type:'delta'
@@ -165,6 +158,14 @@ Template.delta.events
                 skip_amount:0
                 view_full:true
         Meteor.call 'fo', new_delta_id
+
+
+Template.delta_results.events
+    'click .close_details': ->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set: viewing_detail: false
+
 
     'click .page_up': (e,t)->
         delta = Docs.findOne type:'delta'
@@ -317,21 +318,19 @@ Template.detail_pane.helpers
         schema = Docs.findOne
             type:'schema'
             slug:type_key
-        if 'dev' in Meteor.user().roles
-            true
-        else
-            my_role = Meteor.user()?.roles?[0]
-            if my_role
+        my_role = Meteor.user()?.roles?[0]
 
-                if schema.editable_roles
-                    if my_role in schema.editable_roles
+        if my_role
+            if 'dev' in Meteor.user().roles
+                true
+            else
+                if schema.edit_roles
+                    if my_role in schema.edit_roles
                         true
                     else
                         false
                 else
                     false
-            else
-                false
 
 
     fields: ->
@@ -349,6 +348,22 @@ Template.detail_pane.helpers
                 schema_slugs: $in: [current_type]
             }, {sort:{rank:1}}).fetch()
 
+    edit_fields: ->
+        delta = Docs.findOne type:'delta'
+        detail_doc = Docs.findOne delta.detail_id
+        if detail_doc?.type is 'field'
+            Docs.find({
+                type:'field'
+                schema_slugs: $in: ['field']
+            }, {sort:{rank:1}}).fetch()
+        else
+            current_type = delta.filter_type[0]
+            Docs.find({
+                type:'field'
+                editable:true
+                schema_slugs: $in: [current_type]
+            }, {sort:{rank:1}}).fetch()
+
     child_schema_docs: ->
         Docs.find
             type:@axon_schema
@@ -356,14 +371,50 @@ Template.detail_pane.helpers
     child_schema_fields: ->
         console.log @
 
-
-Template.delta.helpers
+Template.delta_results.helpers
     is_calculating: -> Session.get('is_calculating')
-    delta_doc: -> Docs.findOne type:'delta'
 
-    visible_result_ids: ->
+    field_fields: ->
+        Docs.find({
+            type:'field'
+            schema_slugs: $in: ['field']
+        }, {sort:{rank:1}}).fetch()
+
+
+    schema_fields: ->
         delta = Docs.findOne type:'delta'
-        if delta.result_ids then delta.result_ids[..10]
+        current_type = delta.filter_type[0]
+        fields = Docs.find({
+            type:'field'
+            schema_slugs: $in: [current_type]
+        }, {sort:{rank:1}}).fetch()
+        # console.log fields
+        fields
+
+
+
+    can_add: ->
+        delta = Docs.findOne type:'delta'
+        type_key = delta.filter_type[0]
+        schema = Docs.findOne
+            type:'schema'
+            slug:type_key
+        if 'dev' in Meteor.user().roles
+            true
+        else
+            my_role = Meteor.user()?.roles?[0]
+            if my_role
+
+                if schema.add_roles
+                    if my_role in schema.add_roles
+                        true
+                    else
+                        false
+                else
+                    false
+            else
+                false
+
 
     current_type: ->
         delta = Docs.findOne type:'delta'
@@ -373,7 +424,14 @@ Template.delta.helpers
             slug:type_key
 
 
-    ticket_types: -> Docs.find type:'ticket_type'
+
+Template.delta.helpers
+    current_type: ->
+        delta = Docs.findOne type:'delta'
+        type_key = delta.filter_type[0]
+        Docs.findOne
+            type:'schema'
+            slug:type_key
 
     schema_doc: ->
         delta = Docs.findOne type:'delta'
@@ -384,14 +442,6 @@ Template.delta.helpers
                 slug:current_type
             # for field in schema.fields
             #     console.log 'found field', field
-
-    field_fields: ->
-        Docs.find({
-            type:'field'
-            schema_slugs: $in: ['field']
-            axon:$ne:true
-        }, {sort:{rank:1}}).fetch()
-
 
     delta_fields: ->
         delta = Docs.findOne type:'delta'
@@ -404,15 +454,6 @@ Template.delta.helpers
                     schema_slugs:$in:[current_type]
                     faceted: true
                 }, {sort:{rank:1}}).fetch()
-
-    can_add: ->
-        if Meteor.user() and Meteor.user().roles
-            if 'dev' in Meteor.user().roles
-                true
-            else
-                false
-        else
-            false
 
 
     fields: ->

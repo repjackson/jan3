@@ -22,6 +22,21 @@ Docs.before.insert (userId, doc)->
         date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
     doc.timestamp_tags = date_array
     doc.author_id = Meteor.userId()
+    if Meteor.user()
+        doc.author_username = Meteor.user().username
+        if Meteor.user().office_jpid
+            doc.office_jpid = Meteor.user().office_jpid
+        if Meteor.user().customer_jpid
+            doc.customer_jpid = Meteor.user().customer_jpid
+        if Meteor.user().franchisee_jpid
+            doc.franchisee_jpid = Meteor.user().franchisee_jpid
+
+        if Meteor.user().office_name
+            doc.office_name = Meteor.user().office_name
+        if Meteor.user().customer_name
+            doc.customer_name = Meteor.user().customer_name
+        if Meteor.user().franchisee_name
+            doc.franchisee_name = Meteor.user().franchisee_name
 
     return
 

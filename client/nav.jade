@@ -1,5 +1,5 @@
 template(name='nav')
-    .nav_bar.ui.top.attached.borderless.inverted.big.menu
+    .nav_bar.ui.top.attached.borderless.inverted.menu
         a.toggle_left_sidebar.icon.item
             i.bars.icon
 
@@ -37,29 +37,16 @@ template(name='nav')
                     #toggle_editing.icon.large.item
                         i.pencil.link.bordered.icon
             if currentUser
-                a.mobile.hidden.item(href="/help" class="{{ active_route 'help' }}" title='Help')
-                    i.icon
-                        +icon name='help'
-                .ui.dropdown.inverted.blue.item
+                // a.mobile.hidden.item(href="/help" class="{{ active_route 'help' }}" title='Help')
+                //     i.icon
+                //         +icon name='help'
+                a.nav_bar.item(href="/p/user_view?username=#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
                     if currentUser.image_id
                         i.large.icon
                             img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
                     |#{currentUser.username}
-                    .inverted.blue.menu
-                        a.nav_bar.item(href="/p/user_view?username=#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
-                            i.user.icon
-                            | Profile
-                        a.nav_bar.item(href='/p/messages' class="{{ active_route 'messages' }}" )
-                            i.envelope.icon
-                            |Messages
-                        a.nav_bar.item(href='/account/settings' class="{{ active_route 'account' }}" )
-                            i.cog.icon
-                            |Account
-                        a#logout.nav_bar.item(href='#')
-                            i.sign.out.alternate.icon
-                            |Log Out
                 a#logout.nav_bar.item(href='#')
                     if signing_out
                         i.notched.circle.loading.icon
