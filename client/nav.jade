@@ -1,12 +1,10 @@
 template(name='nav')
-    .nav_bar.ui.top.attached.borderless.inverted.menu
+    .nav_bar.ui.top.attached.borderless.inverted.big.menu
         a.toggle_left_sidebar.icon.item
             i.bars.icon
-        unless is_customer
-            a.item(href="/data")
-                i.icon
-                    +icon name='database'
-                | Data
+
+        .item
+            img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
         if is_admin
             each admin_nav_items
                 a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
@@ -25,6 +23,10 @@ template(name='nav')
                     i.icon
                         +icon name=icon
                     .mobile.hidden &nbsp; #{title}
+        a.item(href="/data")
+            i.icon
+                +icon name='database'
+            | Data
         .right.menu
             if is_dev
                 // .mobile.only

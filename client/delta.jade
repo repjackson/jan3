@@ -9,7 +9,6 @@ template(name='delta')
                             |Create Session
         if delta_doc
             .four.wide.column.scrolling
-                // +type_filter
                 if current_type
                     .ui.fluid.large.basic.active.button.clear_current_type
                         if current_type.icon
@@ -172,9 +171,9 @@ template(name='type_filter')
                             +iconlarge name=icon
                     .header
                         |#{title}
-                    .description
-                        each tags
-                            .ui.basic.label #{this}
+                    // .description
+                    //     each tags
+                    //         .ui.basic.label #{this}
 
         // .ui.large.labeled.icon.button.set_type(class=set_type_class)
         //     if icon
@@ -212,17 +211,17 @@ template(name='edit_field_number')
 
 template(name='delta_card')
     with local_doc
-        .ui.fluid.link.card.delta_card(class=delta_card_class)
-            // if doc_header_fields
-            .content
-                h3.ui.header
-                    if icon
-                        +icon name=icon
-                    each doc_header_fields
-                        |#{value}
+        .ui.fluid.card.delta_card(class=delta_card_class)
+            if doc_header_fields
+                .content
+                    h3.ui.header
+                        if icon
+                            +icon name=icon
+                        each doc_header_fields
+                            |#{value}
+                            |&nbsp;
             if delta_doc.view_full
                 .content
-                    p
                     .ui.list
                         each field_docs
                             if value

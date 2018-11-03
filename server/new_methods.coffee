@@ -15,6 +15,23 @@ Meteor.methods
             {multi:true}
         )
 
+    ss: ->
+        Docs.update({type:'special_service'},
+            {$rename:
+                "ev.CUSTOMER": "customer_name"
+                "ev.DUE_DATE": "due_date"
+                "ev.CUST_OPS_MANAGER": "customer_operations_manager"
+                "ev.FRANCHISEE": "franchisee_name"
+                "ev.SERV_TYPE": "service_type"
+                "ev.EXTRA_SERV_DESC": "extra_services_description"
+                "ev.DATE_CREATED": "date_created"
+                "ev.EXTRA_PRICE": "extra_price"
+                "ev.FRANCH_NAME": "franch_name"
+                "ev.ID": "jpid"
+            },
+            {multi:true}
+        )
+
 
     update_office_jpid: ->
         Docs.update({type:'office'},
@@ -52,6 +69,47 @@ Meteor.methods
             },
             {multi:true}
         )
+
+
+    customer: ->
+        Docs.update({type:'customer'},
+            {$rename:
+                "ev.MASTER_LICENSEE":"office_name"
+                "ev.CUST_NAME":"customer_name"
+                "ev.CUST_CONT_PERSON":"customer_contact_person"
+                "ev.CUST_CONTACT_EMAIL":"customer_contact_email"
+                "ev.ACCOUNT_STATUS":"status"
+                "ev.TELEPHONE": "phone"
+                "ev.ADDR_STREET": "address"
+                "ev.ADDR_STREET_2": "address_2"
+                "ev.FRANCHISEE": "franchisee_name"
+                "ev.ADDR_CITY": "city"
+                "ev.ADDR_STATE": "state"
+                "ev.CUST_NUM_DAYS_SERVICE": "customer_number_days_service"
+                "ev.CUST_DAYS_SERVICE": "customer_days_service"
+                "ev.CUST_REG_SERVICE_AMT": "customer_regular_service_amount"
+            },
+            {multi:true}
+        )
+
+    finance: ->
+        Docs.update({type:'finance'},
+            {$rename:
+                "ev.MASTER_LICENSEE": 'office_name'
+                "ev.CUSTOMER": 'customer_name'
+                "ev.BILL_QB_INVOICE": 'invoice'
+                "ev.BILL_QB_INVOICE_DATE": 'invoice_date'
+                "ev.BILL_QB_TOTAL": 'total'
+                "ev.BILL_BALANCE": 'balance'
+                "ev.BILL_QB_RS_AMOUNT": 'rs_amount'
+                "ev.BILL_QB_SPECIALS": 'specials'
+                "ev.SUP_TOT_TAX": 'total_tax'
+            },
+            {multi:true}
+        )
+
+
+
 
 
     office: ->
