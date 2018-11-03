@@ -4,8 +4,12 @@ Meteor.methods
             {$rename:
                 "ev.FRANCH_EMAIL":"email"
                 "ev.TELE_CELL":"cell"
+                "ev.ID":'franchisee_jpid'
+                "ev.MASTER_LICENSEE":'office_name'
                 "ev.TELE_HOME":"home_phone"
                 "ev.FRANCH_NAME":"franch_name"
+                "ev.FRANCHISEE":"franchisee_name"
+                "ev.SHORT_NAME":"short_name"
                 "ev.ACCOUNT_STATUS":"status"
             },
             {multi:true}

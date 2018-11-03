@@ -40,7 +40,7 @@ Template.delta_card.helpers
 
     delta_doc: -> Docs.findOne type:'delta'
 
-    is_array: -> @field_type is 'array'
+    is_array: -> @primative is 'array'
 
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
@@ -235,17 +235,17 @@ Template.selector.helpers
 
 
 Template.type_filter.helpers
-    deltaed_types: ->
+    delta_types: ->
         if Meteor.user() and Meteor.user().roles
             if 'dev' in Meteor.user().roles
                 Docs.find(
                     type:'schema'
-                    # nav_roles:$in:Meteor.user().roles
+                    # view_roles:$in:Meteor.user().roles
                 ).fetch()
             else
                 Docs.find(
                     type:'schema'
-                    nav_roles:$in:Meteor.user().roles
+                    view_roles:$in:Meteor.user().roles
                 ).fetch()
 
     set_type_class: ->
@@ -404,6 +404,15 @@ Template.delta.helpers
                     schema_slugs:$in:[current_type]
                     faceted: true
                 }, {sort:{rank:1}}).fetch()
+
+    can_add: ->
+        if Meteor.user() and Meteor.user().roles
+            if 'dev' in Meteor.user().roles
+                true
+            else
+                false
+        else
+            false
 
 
     fields: ->

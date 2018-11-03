@@ -35,6 +35,9 @@ template(name='nav')
                     #toggle_editing.icon.large.item
                         i.pencil.link.bordered.icon
             if currentUser
+                a.mobile.hidden.item(href="/help" class="{{ active_route 'help' }}" title='Help')
+                    i.icon
+                        +icon name='help'
                 .ui.dropdown.inverted.blue.item
                     if currentUser.image_id
                         i.large.icon

@@ -63,7 +63,7 @@ template(name='delta')
                                             if can_add
                                                 .item
                                                     .ui.button.add_doc
-                                                        i.plus.icon
+                                                        i.green.plus.icon
                                                         |Add #{current_type.title}
                                             .item
                                                 +set_page_size value=10
@@ -164,7 +164,7 @@ template(name='set_delta_key')
 template(name='type_filter')
     // img.ui.avatar.spaced.image(src="{{c.url 'logo_small' width=50 height=50 gravity='face' crop='fill'}}")
     .ui.centered.stackable.four.cards
-        each deltaed_types
+        each delta_types
             .ui.link.card.set_type(class=set_type_class)
                 .content
                     if icon
@@ -194,7 +194,7 @@ template(name='filter')
 
 
 template(name='selector')
-    .ui.toggle_value.button(class=toggle_value_class)
+    .ui.toggle_value.compact.button(class=toggle_value_class)
         |#{name}
         small #{count}
 
@@ -218,7 +218,6 @@ template(name='delta_card')
                 h3.ui.header
                     if icon
                         +icon name=icon
-                    |#{title}
                     each doc_header_fields
                         |#{value}
             if delta_doc.view_full
