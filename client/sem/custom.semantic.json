@@ -50,7 +50,7 @@
   },
   "themes": {
     "amazon": false,
-    "basic": false,
+    "basic": true,
     "bookish": false,
     "bootstrap3": false,
     "chubby": false,
@@ -59,7 +59,7 @@
     "default": true,
     "duo": false,
     "fixed": false,
-    "flat": false,
+    "flat": true,
     "github": false,
     "gmail": false,
     "instagram": false,

@@ -30,6 +30,25 @@ Template.delta_card.events
                 viewing_detail: true
                 detail_id: @_id
 
+    'click .set_schema': ->
+        delta = Docs.findOne type:'delta'
+
+        Docs.update delta._id,
+            $set:
+                "filter_type": [@slug]
+                current_page: 0
+                detail_id:null
+                viewing_children:false
+                viewing_detail:false
+                editing_mode:false
+                config_mode:false
+        Session.set 'is_calculating', true
+        # console.log 'hi call'
+        Meteor.call 'fo', (err,res)->
+            if err then console.log err
+            else if res
+                # console.log 'return', res
+                Session.set 'is_calculating', false
 
 Template.delta_card.helpers
     local_doc: ->
@@ -134,10 +153,25 @@ Template.toggle_delta_config.events
 
 
 Template.delta.events
-    'click .clear_current_type': ->
+    'click .view_schamas': ->
         delta = Docs.findOne type:'delta'
+
         Docs.update delta._id,
-            $set: filter_type: []
+            $set:
+                "filter_type": ['schema']
+                current_page: 0
+                detail_id:null
+                viewing_children:false
+                viewing_detail:false
+                editing_mode:false
+                config_mode:false
+        # Session.set 'is_calculating', true
+        # console.log 'hi call'
+        Meteor.call 'fo', (err,res)->
+            if err then console.log err
+            # else if res
+                # console.log 'return', res
+                # Session.set 'is_calculating', false
 
     'click .delete_delta': ->
         if confirm 'Clear Session?'
@@ -152,12 +186,18 @@ Template.delta.events
         new_delta_id =
             Docs.insert
                 type:'delta'
+                filter_type: ['schema']
                 result_ids:[]
                 current_page:1
                 page_size:10
                 skip_amount:0
                 view_full:true
         Meteor.call 'fo', new_delta_id
+
+
+    'click .show_delta': (e,t)->
+        delta = Docs.findOne type:'delta'
+        console.log delta
 
 
 Template.delta_results.events
@@ -204,9 +244,6 @@ Template.delta_results.events
             schema_slugs:[type]
         Meteor.call 'fo'
 
-    'click .show_delta': (e,t)->
-        delta = Docs.findOne type:'delta'
-        console.log delta
 
 
 Template.set_page_size.helpers

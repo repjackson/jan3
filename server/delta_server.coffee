@@ -93,6 +93,9 @@ Meteor.methods
             if 'customer' in Meteor.user().roles
                 if current_type is 'ticket'
                     built_query['customer_jpid'] = Meteor.user().customer_jpid
+        if current_type is 'schema'
+            built_query['view_roles'] = $in:Meteor.user().roles
+
 
 
         for delta_field in delta_fields
