@@ -1,11 +1,78 @@
 Meteor.methods
-    call_lodestar: ->
-        HTTP.call 'GET',"https://sandbox.lodestarbpm.com/test/api-test.php", (err,res)->
+    ls: ->
+        # HTTP.call 'GET',"https://sandbox.lodestarbpm.com/test/api-test.php", (err,res)->
+        HTTP.call 'GET',"https://secure.lodestarbpm.com/jpi-api/", (err,res)->
             if err then console.error err
             else
                 body = res.content
                 json = JSON.parse body
+                # console.dir json
+                # console.log json.offices.length
+                # console.log json.franchisees.length
+                console.dir json.customers[..4]
+                # for customer in json.customers
+                #     # console.log 'customer id', customer.id
+                #     # console.dir customer
+                #     found_customer =
+                #         Docs.findOne
+                #             type:'customer'
+                #             jpid:customer.id
+                #     if found_customer
+                #         console.log 'found customer', customer.id
+                #     else
+                #         local = {}
 
+                #         local.type = 'customer'
+                #         local.source = 'ls'
+                #         local.jpid = customer.id
+                #         local.customer_name = customer.cust_name
+                #         local.customer_contact_person = customer.cust_cont_person
+                #         local.customer_contact_email = customer.cust_contact_email
+                #         local.telephone = customer.telephone
+                #         local.address = customer.addr_street
+                #         local.address2 = customer.addr_street_2
+                #         local.franchisee = customer.franchisee
+                #         local.city = customer.addr_city
+                #         local.state = customer.addr_state
+                #         local.customer_number_days_service = customer. cust_num_days_service
+                #         local.customer_days_service = customer.cust_days_service
+                #         local.customer_regular_service_amount = customer.cust_reg_service_amt
+                #         local.status = customer.account_status
+
+                #         new_id = Docs.insert local
+                #         console.log 'inserted customer', new_id
+
+
+                # for franchisee in json.franchisees
+                #     console.log 'franchisee id', franchisee.id
+                #     console.dir franchisee
+                #     found_franchisee =
+                #         Docs.findOne
+                #             type:'franchisee'
+                #             id:franchisee.id
+                #     if found_franchisee
+                #         console.log 'found franchisee', franchisee.id
+                #     else
+                #         franchisee['type'] = 'franchisee'
+                #         new_id = Docs.insert franchisee
+                #         console.log 'inserted franchisee', new_id
+                # for office in json.offices
+                #     console.log 'office id', office.id
+                #     console.dir office
+                #     found_office =
+                #         Docs.findOne
+                #             type:'office'
+                #             id:office.id
+                #     if found_office
+                #         console.log 'found office', office.id
+                #     else
+                #         office['type'] = 'office'
+                #         new_id = Docs.insert office
+                #         console.log 'inserted office', new_id
+                # for office in json.offices
+                #     console.log 'office id', office.id
+                # for franchisee in json.franchisees
+                #     console.log 'franchisee id', franchisee.id
 
 
     sync_ev_users: ()->
@@ -154,30 +221,59 @@ Meteor.methods
                 api_reverse_lookup:'NO'
                 id:'49352'
                 page_length:'10000'
-                record_start:'1'
+                record_start:'0'
                 record_count:'10000'
         # return res.content
         xml2js.parseString res.content, {explicitArray:false, emptyTag:'', ignoreAttrs:true, trim:true}, (err, json_result)=>
             if err then console.error('errors',err)
-            else
+            # else
                 # json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1]
-                console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
+                # console.dir json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD[1..5]
             if json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                for doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
-                    # doc.type = 'customer'
+                for ev_doc in json_result.EXTRAVIEW_RESULTS.PROBLEM_RECORD
+                    franch_doc = {}
+                    franch_doc.type = 'franchisee'
+                    franch_doc.franchisee = ev_doc.FRANCHISEE
+                    franch_doc.jpid = ev_doc.ID
+                    franch_doc.email = ev_doc.FRANCH_EMAIL
+                    franch_doc.cell = ev_doc.TELE_CELL
+                    franch_doc.home = ev_doc.TELE_HOME
+                    franch_doc.office_name = ev_doc.MASTER_LICENSEE
+                    franch_doc.short_name = ev_doc.SHORT_NAME
+                    franch_doc.franch_name = ev_doc.FRANCH_NAME
+                    franch_doc.status = ev_doc.ACCOUNT_STATUS
+                    franch_doc.ev_timestamp = ev_doc.TIMESTAMP
+                    franch_doc.city = ev_doc.ADDR_CITY
+                    franch_doc.state = ev_doc.ADDR_STATE
+                    franch_doc.country = ev_doc.MASTER_COUNTRY
+
                     existing_franchisee =
                         Docs.findOne
                             type: 'franchisee'
-                            "ev.ID": doc.ID
+                            jpid: ev_doc.ID
                     if existing_franchisee
                         Docs.update existing_franchisee._id,
                             $set:
-                                ev: doc
+                                franchisee: ev_doc.FRANCHISEE
+                                jpid: ev_doc.ID
+                                email: ev_doc.FRANCH_EMAIL
+                                cell: ev_doc.TELE_CELL
+                                home: ev_doc.TELE_HOME
+                                office_name: ev_doc.MASTER_LICENSEE
+                                short_name: ev_doc.SHORT_NAME
+                                franch_name: ev_doc.FRANCH_NAME
+                                status: ev_doc.ACCOUNT_STATUS
+                                ev_timestamp: ev_doc.TIMESTAMP
+                                city: ev_doc.ADDR_CITY
+                                state: ev_doc.ADDR_STATE
+                                country: ev_doc.MASTER_COUNTRY
+                        console.log 'updated franch', existing_franchisee.franchisee, existing_franchisee.jpid
                     else
-                        new_franchisee_doc = Docs.insert
-                            type:'franchisee'
-                            ev: doc
+                        new_franchisee_doc = Docs.insert franch_doc
                         console.log 'add franchisee', new_franchisee_doc
+
+
+
 
     sync_services: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -215,6 +311,8 @@ Meteor.methods
                             type:'special_service'
                             jpid: doc.ID
                             ev: doc
+                            customer_name: doc.CUSTOMER
+                            franchisee_name: doc.FRANCHISEE
 
     get_ev_finance: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",
@@ -278,11 +376,18 @@ Meteor.methods
                             "ev.ID": doc.ID
                     if existing_office_doc
                         Docs.update existing_office_doc._id,
-                            $set: ev: doc
+                            $set:
+                                ev: doc
+                                state: doc.ADDR_STATE
+                                city: doc.ADDR_CITY
+                                office_name: doc.MASTER_LICENSEE
                     else
                         new_office_doc = Docs.insert
                             type:'office'
                             ev: doc
+                            state: doc.ADDR_STATE
+                            city: doc.ADDR_CITY
+                            office_name: doc.MASTER_LICENSEE
 
     update_customers: () ->
         res = HTTP.call 'GET',"http://ext-jan-pro.extraview.net/jan-pro/ExtraView/ev_api.action",

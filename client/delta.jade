@@ -50,7 +50,7 @@ template(name='delta_results')
             if can_add
                 .ui.button.add_doc
                     i.green.plus.icon
-                    |Add #{current_type.title}
+                    |#{current_type.title}
             if delta_doc.config_mode
                 .scrolling
                     .ui.header
@@ -128,10 +128,6 @@ template(name='detail_pane')
                         i.icon
                             +icon name='pencil'
                     |Edit #{detail_doc.title}
-                .ui.hidden.divider
-                .ui.icon.fluid.button.disable_editing(title='Save')
-                    i.green.checkmark.large.icon
-                    // |Save
             .ui.hidden.divider
             .ui.form
                 if delta_doc.editing_mode
@@ -143,14 +139,21 @@ template(name='detail_pane')
                         .field
                             +field_view
             if delta_doc.editing_mode
-                .ui.button.remove_doc
-                    i.red.remove.icon
-                    |Delete
+                .ui.hidden.divider
+                .ui.grid
+                    .thirteen.wide.column
+                        .ui.green.fluid.icon.button.disable_editing(title='Save')
+                            i.checkmark.icon
+                            // |Save
+                    .three.wide.column
+                        .ui.red.fluid.icon.button.remove_doc
+                            i.remove.icon
+                            // |Delete
             unless delta_doc.editing_mode
                 if can_edit
                     .ui.hidden.divider
                     .ui.icon.fluid.button.enable_editing
-                        i.pencil.large.icon
+                        i.pencil.blue.icon
                         // |Edit
 
 
@@ -175,22 +178,18 @@ template(name='type_filter')
     // img.ui.avatar.spaced.image(src="{{c.url 'logo_small' width=50 height=50 gravity='face' crop='fill'}}")
     .ui.centered.stackable.four.cards
         each delta_types
-            .ui.link.card.set_type(class=set_type_class)
-                .content
+            .ui.card(class=set_type_class)
+                a.content.set_type
                     if icon
                         .right.floated.mini.ui.image
                             +iconlarge name=icon
                     .header
                         |#{title}
-                    // .description
-                    //     each tags
-                    //         .ui.basic.label #{this}
-
-        // .ui.large.labeled.icon.button.set_type(class=set_type_class)
-        //     if icon
-        //         i.icon
-        //             +icon name=icon
-        //     |#{title}
+                .content
+                    if bookmarked
+                        i.bookmark.red.link.icon(title='Unbookmark')
+                    else
+                        i.bookmark.outline.link.icon(title='Bookmark')
 
 
 template(name='filter')

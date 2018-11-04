@@ -193,6 +193,8 @@ Template.delta_results.events
                 viewing_detail:true
                 detail_id:new_id
                 editing_mode:true
+        Meteor.call 'fo'
+
 
     'click .add_field': (e,t)->
         delta = Docs.findOne type:'delta'
@@ -210,7 +212,7 @@ Template.delta_results.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'active' else ''
+        if @value is delta.page_size then 'blue' else ''
 
 
 Template.set_page_size.events
@@ -252,7 +254,7 @@ Template.type_filter.helpers
     set_type_class: ->
         delta = Docs.findOne type:'delta'
         # console.log @
-        if delta.filter_type and @slug in delta.filter_type then 'active'
+        if delta.filter_type and @slug in delta.filter_type then 'blue'
 
 Template.type_filter.events
     'click .set_type': ->
@@ -293,6 +295,9 @@ Template.detail_pane.events
                     detail_id:null
                     editing_mode:false
                     viewing_detail:false
+        Meteor.call 'fo'
+
+
 
     'click .enable_editing': ->
         delta=Docs.findOne type:'delta'
@@ -471,7 +476,7 @@ Template.delta.helpers
 Template.set_delta_key.helpers
     set_delta_key_class: ->
         delta = Docs.findOne type:'delta'
-        if delta.query["#{@key}"] is @value then 'active' else ''
+        if delta.query["#{@key}"] is @value then 'blue' else ''
 
 Template.filter.helpers
     values: ->
@@ -480,14 +485,14 @@ Template.filter.helpers
 
     set_delta_key_class: ->
         delta = Docs.findOne type:'delta'
-        if delta.query["#{@slug}"] is @value then 'active' else ''
+        if delta.query["#{@slug}"] is @value then 'blue' else ''
 
 Template.selector.helpers
     toggle_value_class: ->
         delta = Docs.findOne type:'delta'
         filter = Template.parentData()
         filter_list = delta["filter_#{filter.key}"]
-        if filter_list and @name in filter_list then 'active' else ''
+        if filter_list and @name in filter_list then 'blue' else ''
 
 Template.filter.events
     # 'click .set_delta_key': ->

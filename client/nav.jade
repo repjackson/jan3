@@ -4,7 +4,11 @@ template(name='nav')
             i.bars.icon
 
         .item
-            img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            // img.ui.small.image(src='/logo150.png')
+            // img.ui.mini.image(src="{{c.url 'logo_small'}}")
+            // img.ui.image(src="{{c.url 'logo_small' }}")
+
         if is_admin
             each admin_nav_items
                 a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)

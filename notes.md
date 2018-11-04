@@ -89,7 +89,13 @@ you're only allowed to talk to tori through the site
 and no styling.  everything is done through database.  they don't like it they change it. I'm the world builder.
 
 
+jp blue
+#001489
+(RGB: 0, 20, 137)
 
 
+green
+#84bd00
+rgba(132, 189, 0, 1)
 
 i want the customer account with the ev.ID from the user matching the queryParam username value of customer_jpid

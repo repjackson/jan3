@@ -103,7 +103,7 @@ Template.block.onCreated ->
 
 Template.block.helpers
     editing_block: -> Template.instance().editing_block.get() and Session.get('editing_mode')
-    editing_button_class: -> if Template.instance().editing_block.get() is true then 'blue' else ''
+    editing_button_class: -> if Template.instance().editing_block.get() is true then 'active' else ''
 
     block_class: ->
         if @published

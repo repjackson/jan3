@@ -2,16 +2,16 @@ Template.role_switcher.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'role'
 
 Template.role_switcher.helpers
-    role_docs: -> 
-        Docs.find 
+    role_docs: ->
+        Docs.find
             type: 'role'
 
     role_button_class: ->
-        if Meteor.user() and Meteor.user().roles and @slug in Meteor.user().roles then 'blue' else ''
+        if Meteor.user() and Meteor.user().roles and @slug in Meteor.user().roles then 'active' else ''
 
 
 Template.footer.helpers
-    site_doc: -> 
+    site_doc: ->
         site_doc = Docs.findOne Session.get('current_site_id')
         if site_doc then site_doc
 
@@ -26,7 +26,7 @@ Template.footer.events
             complete:false
             link:window.location.pathname
         FlowRouter.go("/edit/#{new_bug_id}")
-            
+
 
 Template.role_switcher.events
     'click .change_role': ->

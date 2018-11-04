@@ -329,13 +329,11 @@ template(name='string_edit')
 
 
 template(name='textarea_edit')
-    .ui.fluid.labeled.input
-        .ui.basic.label
-            if icon
-                +icon name=icon classes='inline spaced'
-            |#{title}
-        textarea.textarea_val(rows='5')
-            |#{value}
+    if icon
+        +icon name=icon classes='inline spaced'
+    strong #{title}
+    textarea.textarea_val(rows='10')
+        |#{value}
 
 
 
