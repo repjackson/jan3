@@ -24,13 +24,6 @@ Template.nav.helpers
     #         if FlowRouter.getParam('page_slug') is slug then 'active' else ''
 
 
-    my_office_doc: ->
-        user = Meteor.user()
-        if user and user.office_jpid
-            Docs.find
-                "ev.ID": user.office_jpid
-                type:'office'
-
     admin_nav_items: ->
         Docs.find {
             type:'page'
@@ -48,12 +41,6 @@ Template.nav.helpers
         }, sort:number:1
 
 Template.left_sidebar.helpers
-    my_office_doc: ->
-        user = Meteor.user()
-        if user and user.office_jpid
-            Docs.find
-                "ev.ID": user.office_jpid
-                type:'office'
     admin_nav_items: ->
         Docs.find {
             type:'page'

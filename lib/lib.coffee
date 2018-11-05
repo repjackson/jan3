@@ -52,14 +52,14 @@ Meteor.users.helpers
         if @customer_jpid
             found = Docs.findOne
                 type:'customer'
-                "ev.ID": @customer_jpid
+                customer_jpid: @customer_jpid
             found
 
     users_office: ->
         if @office_jpid
             office_doc = Docs.findOne
                 type:'office'
-                "ev.ID": @office_jpid
+                office_jpid: @office_jpid
             return office_doc
 
 
@@ -97,33 +97,25 @@ Docs.helpers
     franchisee_customers: ->
         Docs.find
             type: 'customer'
-            "ev.FRANCHISEE": @ev.FRANCHISEE
+            customer_name: @customer_name
 
     parent_franchisee: ->
         Docs.findOne
             type: 'franchisee'
-            "ev.FRANCHISEE": @ev.FRANCHISEE
+            franchisee_name: @franchisee_name
 
     incident_customer: ->
         Docs.findOne
             type:'customer'
-            "ev.ID": @customer_jpid
+            customer_jpid: @customer_jpid
 
     # users_customer: ->
     #     user = Meteor.user()
     #     found = Docs.findOne
     #         type:'customer'
-    #         "ev.ID": user.customer_jpid
+    #         customer_jpid: user.customer_jpid
     #     found
 
-
-    parent_office: ->
-        # attached to franchisee
-        found = Docs.findOne
-            type:'office'
-            "ev.MASTER_LICENSEE": @ev.MASTER_LICENSEE
-        if found
-            found
 
 
 Meteor.methods

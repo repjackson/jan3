@@ -7,7 +7,7 @@
 #         user = Meteor.user()
 #         if user and user.customer_jpid
 #             customer_doc = Docs.findOne
-#                 "ev.ID": user.customer_jpid
+#                 customer_jpid: user.customer_jpid
 #                 type:'customer'
 #                 # grandparent office
 #             if customer_doc
@@ -40,7 +40,7 @@ Template.dashboard_office_contacts_list.helpers
         # user = Meteor.user()
         # if user and user.customer_jpid
         #     customer_doc = Docs.findOne
-        #         "ev.ID": user.customer_jpid
+        #         customer_jpid: user.customer_jpid
         #         type:'customer'
         #         # grandparent office
         #     if customer_doc

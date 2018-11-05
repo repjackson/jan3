@@ -7,7 +7,7 @@ if Meteor.isClient
     Template.admin_stats.helpers
         page_office: ->
             Docs.findOne
-                "ev.ID": FlowRouter.getQueryParam 'jpid'
+                office_jpid: FlowRouter.getQueryParam 'jpid'
         rules: -> Docs.find {type:'rule'}, sort:number:-1
 
     Template.count_view.helpers

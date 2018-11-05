@@ -69,18 +69,6 @@ Template.registerHelper 'cell_value', () ->
 Template.registerHelper 'active_route', (slug) ->
     if FlowRouter.getParam('page_slug') and FlowRouter.getParam('page_slug') is slug then 'active' else ''
 
-
-
-Template.registerHelper 'my_office_link', () ->
-    user = Meteor.user()
-    if user
-        if user.office_jpid
-            # users_office = Docs.findOne
-            #     "ev.ID": user.office_jpid
-            #     type:'office'
-            # users_office
-            return "/p/office_tickets/#{user.office_jpid}"
-
 # Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
 
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()
@@ -96,9 +84,6 @@ Template.registerHelper 'long_format', (input) ->
 
 Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getQueryParam('doc_id')
 Template.registerHelper 'delta_doc', () -> Docs.findOne type:'delta'
-
-
-
 
 Template.registerHelper 'is_level_one', () -> @level is 1
 Template.registerHelper 'is_level_two', () -> @level is 2
@@ -126,7 +111,7 @@ Template.registerHelper 'my_office', () ->
                 users_office
         # if user.customer_jpid
         #     customer_doc = Docs.findOne
-        #         "ev.ID": user.customer_jpid
+        #         customer_jpid: user.customer_jpid
         #         type:'customer'
         #     if customer_doc
         #         users_office = Docs.findOne
@@ -214,16 +199,6 @@ Template.registerHelper 'page_slug_key_value', () ->
         slug:FlowRouter.getParam('page_slug')
     if page
         page["#{@key}"]
-
-
-Template.registerHelper 'page_jpid_key_value', () ->
-    # doc_field = Template.parentData(2)
-    page = Docs.findOne
-        "ev.ID":FlowRouter.getParam('jpid')
-    if page
-        page["#{@key}"]
-
-
 
 
 # Template.registerHelper 'active_route', (slug) ->

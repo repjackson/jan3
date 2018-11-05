@@ -126,14 +126,14 @@ Template.register_customer.helpers
         doc =
             Docs.findOne
                 type:'customer'
-                "ev.ID": Session.get('customer_jpid')
+                customer_jpid: Session.get('customer_jpid')
         doc
 
     office_doc: ->
         doc =
             Docs.findOne
                 type:'office'
-                "ev.ID": Session.get('office_jpid')
+                office_jpid: Session.get('office_jpid')
         doc
 
     user_found: -> Session.get 'username_found'
@@ -191,7 +191,7 @@ Template.register_customer.events
                 #     office_doc =
                 #         Docs.findOne
                 #             type:'office'
-                #             "ev.ID": office_jpid
+                #             office_jpid: office_jpid
         )
 
     'keyup #username': (e,t)->
@@ -303,7 +303,7 @@ Template.register_office.events
         office_doc =
             Docs.findOne
                 type:'office'
-                "ev.ID": office_jpid
+                office_jpid: office_jpid
         Accounts.createUser(options, (err,res)=>
             if err
                 alert err
@@ -351,7 +351,7 @@ Template.register_office.events
         found_office_doc =
             Docs.findOne
                 type:'office'
-                # "ev.ID": office_jpid
+                # office_jpid: office_jpid
 
         if found_office_doc
             Session.set 'account_selected', true

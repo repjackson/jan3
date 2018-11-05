@@ -278,7 +278,7 @@ Meteor.methods
         user = Meteor.users.findOne username:username
         if user and user.customer_jpid
             customer_doc = Docs.findOne
-                "ev.ID": user.customer_jpid
+                customer_jpid: user.customer_jpid
                 type:'customer'
         
         

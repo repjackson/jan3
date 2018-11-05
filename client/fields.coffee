@@ -129,7 +129,10 @@ Template.edit_textarea.helpers
     'key_value': () ->
         doc_field = Template.parentData(0)
         if FlowRouter.getParam('jpid')
-            current_doc = Docs.findOne "ev.ID":FlowRouter.getParam('jpid')
+            current_office =
+                Docs.findOne
+                    office_jpid:FlowRouter.getParam('jpid')
+                    type:'office'
         if FlowRouter.getQueryParam('doc_id')
             current_doc = Docs.findOne FlowRouter.getParam('jpid')
         if current_doc

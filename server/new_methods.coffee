@@ -36,7 +36,7 @@ Meteor.methods
     update_office_jpid: ->
         Docs.update({type:'office'},
             {$rename:
-                "ev.ID":"office_jpid"
+                "ev.ID":office_jpid
             },
             {multi:true}
         )
