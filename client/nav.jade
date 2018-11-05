@@ -26,6 +26,10 @@ template(name='nav')
                 i.icon
                     +icon name='business'
                 .mobile.hidden &nbsp; Franchisees
+            a.mobile.hidden.delta_customers.item(title='Customers')
+                i.icon
+                    +icon name='headset'
+                .mobile.hidden &nbsp; Customers
             a.mobile.hidden.item(href="/p/office_settings/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
                 i.icon
                     +icon name='settings'

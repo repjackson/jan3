@@ -96,7 +96,6 @@ Meteor.methods
                     $set: "filter_#{delta_field.key}":[]
 
 
-        total = Docs.find(built_query).count()
 
         if Meteor.user().roles
             if 'office' in Meteor.user().roles
@@ -108,8 +107,24 @@ Meteor.methods
         if current_type is 'schema'
             unless 'dev' in Meteor.user().roles
                 built_query['view_roles'] = $in:Meteor.user().roles
+        if current_type is 'customer'
+            if Meteor.user().office_jpid
+                my_office =
+                    Docs.findOne
+                        type:'office'
+                        office_jpid:Meteor.user().office_jpid
+                built_query['office_name'] = my_office.office_name
+
+        if current_type is 'franchisee'
+            if Meteor.user().office_jpid
+                my_office =
+                    Docs.findOne
+                        type:'office'
+                        office_jpid:Meteor.user().office_jpid
+                built_query['office_name'] = my_office.office_name
 
 
+        total = Docs.find(built_query).count()
 
         for delta_field in delta_fields
             values = []

@@ -122,7 +122,7 @@ Template.registerHelper 'my_office', () ->
                 office_jpid: Meteor.user().office_jpid
                 type:'office'
             if users_office
-                console.log users_office
+                # console.log users_office
                 users_office
         # if user.customer_jpid
         #     customer_doc = Docs.findOne
