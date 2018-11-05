@@ -28,6 +28,16 @@ Meteor.publish 'schema_fields', ->
         type:'field'
         schema_slugs:$in:[current_type, 'field']
 
+Meteor.publish 'schema_actions', ->
+    delta = Docs.findOne
+        type:'delta'
+        author_id: Meteor.userId()
+
+    current_type = delta.filter_type?[0]
+    Docs.find
+        type:'action'
+        schema_slugs:$in:[current_type, 'field']
+
 Meteor.publish 'schema', ->
     delta = Docs.findOne
         type:'delta'
@@ -45,6 +55,8 @@ Meteor.methods
             author_id: Meteor.userId()
 
         current_type = delta.filter_type?[0]
+
+        delta_fields = []
 
         if delta.filter_type and delta.filter_type.length > 0
             schema =
@@ -94,7 +106,8 @@ Meteor.methods
                 if current_type is 'ticket'
                     built_query['customer_jpid'] = Meteor.user().customer_jpid
         if current_type is 'schema'
-            built_query['view_roles'] = $in:Meteor.user().roles
+            unless 'dev' in Meteor.user().roles
+                built_query['view_roles'] = $in:Meteor.user().roles
 
 
 

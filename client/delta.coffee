@@ -6,11 +6,166 @@ FlowRouter.route '/data',
 
 Template.delta_results.onCreated ->
     @autorun => Meteor.subscribe 'schema_fields'
+    @autorun => Meteor.subscribe 'schema_actions'
     Session.setDefault 'is_calculating', false
 
 Template.delta.onCreated ->
     @autorun -> Meteor.subscribe 'delta'
-    # @autorun => Meteor.subscribe 'delta_schema'
+    @autorun => Meteor.subscribe 'schema_fields'
+
+Template.delta.helpers
+    current_type: ->
+        delta = Docs.findOne type:'delta'
+        type_key = delta.filter_type[0]
+        Docs.findOne
+            type:'schema'
+            slug:type_key
+
+    schema_doc: ->
+        delta = Docs.findOne type:'delta'
+        current_type = delta.filter_type[0]
+        if current_type
+            schema = Docs.findOne
+                type:'schema'
+                slug:current_type
+            # for field in schema.fields
+            #     console.log 'found field', field
+
+    delta_fields: ->
+        delta = Docs.findOne type:'delta'
+        current_type = delta.filter_type[0]
+        delta_fields = []
+        if current_type
+            fields =
+                Docs.find({
+                    type:'field'
+                    schema_slugs:$in:[current_type]
+                    faceted: true
+                }, {sort:{rank:1}}).fetch()
+
+
+    fields: ->
+        delta = Docs.findOne type:'delta'
+        current_type = delta.filter_type[0]
+        fields = Docs.find({
+            type:'field'
+            schema_slugs: $in: [current_type]
+        }, {sort:{rank:1}}).fetch()
+        # console.log fields
+        fields
+
+
+Template.delta.events
+    'click .view_schamas': ->
+        delta = Docs.findOne type:'delta'
+
+        Docs.update delta._id,
+            $set:
+                "filter_type": ['schema']
+                current_page: 0
+                detail_id:null
+                viewing_children:false
+                viewing_detail:false
+                editing_mode:false
+                config_mode:false
+        Session.set 'is_calculating', true
+        # console.log 'hi call'
+        Meteor.call 'fo', (err,res)->
+            if err then console.log err
+            else if res
+                # console.log 'return', res
+                Session.set 'is_calculating', false
+
+    'click .delete_delta': ->
+        if confirm 'Clear Session?'
+            delta = Docs.findOne type:'delta'
+            Docs.remove delta._id
+
+    'click .run_fo': ->
+        delta = Docs.findOne type:'delta'
+        Meteor.call 'fo', delta._id
+
+    'click .create_delta': (e,t)->
+        new_delta_id =
+            Docs.insert
+                type:'delta'
+                filter_type: ['schema']
+                result_ids:[]
+                current_page:1
+                page_size:10
+                skip_amount:0
+                view_full:true
+        Meteor.call 'fo', new_delta_id
+
+
+    'click .show_delta': (e,t)->
+        delta = Docs.findOne type:'delta'
+        console.log delta
+
+
+Template.delta_results.helpers
+    is_calculating: -> Session.get('is_calculating')
+
+    field_fields: ->
+        Docs.find({
+            type:'field'
+            schema_slugs: $in: ['field']
+        }, {sort:{rank:1}}).fetch()
+
+
+    schema_fields: ->
+        delta = Docs.findOne type:'delta'
+        current_type = delta.filter_type[0]
+        fields = Docs.find({
+            type:'field'
+            schema_slugs: $in: [current_type]
+        }, {sort:{rank:1}}).fetch()
+        # console.log fields
+        fields
+
+    schema_actions: ->
+        delta = Docs.findOne type:'delta'
+        current_type = delta.filter_type[0]
+        actions = Docs.find({
+            type:'action'
+            schema_slugs: $in: [current_type]
+        }, {sort:{rank:1}}).fetch()
+        # console.log fields
+        actions
+
+
+    can_add: ->
+        delta = Docs.findOne type:'delta'
+        type_key = delta.filter_type[0]
+        schema = Docs.findOne
+            type:'schema'
+            slug:type_key
+        if 'dev' in Meteor.user().roles
+            true
+        else
+            my_role = Meteor.user()?.roles?[0]
+            if my_role
+
+                if schema.add_roles
+                    if my_role in schema.add_roles
+                        true
+                    else
+                        false
+                else
+                    false
+            else
+                false
+
+
+    current_type: ->
+        delta = Docs.findOne type:'delta'
+        type_key = delta.filter_type[0]
+        Docs.findOne
+            type:'schema'
+            slug:type_key
+
+
+
 
 
 Template.detail_pane.onCreated ->
@@ -20,7 +175,9 @@ Template.detail_pane.onCreated ->
         @autorun => Meteor.subscribe 'doc', delta.detail_id
 
 Template.delta_card.onCreated ->
+    # console.log @
     @autorun => Meteor.subscribe 'doc', @data
+
 
 Template.delta_card.events
     'click .delta_card': ->
@@ -87,6 +244,27 @@ Template.delta_card.helpers
                 visible:true
             }, {sort:{rank:1}}).fetch()
 
+    actions: ->
+        delta = Docs.findOne type:'delta'
+        local_doc =
+            if @data
+                Docs.findOne @data.valueOf()
+            else
+                Docs.findOne @valueOf()
+        if local_doc?.type is 'field'
+            Docs.find({
+                type:'action'
+                schema_slugs: $in: ['field']
+            }, {sort:{rank:1}}).fetch()
+        else
+            schema = Docs.findOne
+                type:'schema'
+                slug:delta.filter_type[0]
+            linked_fields = Docs.find({
+                type:'action'
+                schema_slugs: $in: [schema.slug]
+            }, {sort:{rank:1}}).fetch()
+
 
     value: ->
         # console.log @
@@ -128,6 +306,9 @@ Template.delta_card.helpers
 
 
 
+
+
+
 Template.delta.onRendered ->
     Meteor.setTimeout ->
         $('.dropdown').dropdown()
@@ -152,52 +333,6 @@ Template.toggle_delta_config.events
             $set:"#{@key}":false
 
 
-Template.delta.events
-    'click .view_schamas': ->
-        delta = Docs.findOne type:'delta'
-
-        Docs.update delta._id,
-            $set:
-                "filter_type": ['schema']
-                current_page: 0
-                detail_id:null
-                viewing_children:false
-                viewing_detail:false
-                editing_mode:false
-                config_mode:false
-        # Session.set 'is_calculating', true
-        # console.log 'hi call'
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            # else if res
-                # console.log 'return', res
-                # Session.set 'is_calculating', false
-
-    'click .delete_delta': ->
-        if confirm 'Clear Session?'
-            delta = Docs.findOne type:'delta'
-            Docs.remove delta._id
-
-    'click .run_fo': ->
-        delta = Docs.findOne type:'delta'
-        Meteor.call 'fo', delta._id
-
-    'click .create_delta': (e,t)->
-        new_delta_id =
-            Docs.insert
-                type:'delta'
-                filter_type: ['schema']
-                result_ids:[]
-                current_page:1
-                page_size:10
-                skip_amount:0
-                view_full:true
-        Meteor.call 'fo', new_delta_id
-
-
-    'click .show_delta': (e,t)->
-        delta = Docs.findOne type:'delta'
-        console.log delta
 
 
 Template.delta_results.events
@@ -273,52 +408,18 @@ Template.selector.helpers
                 else if @name is false then 'False'
             when 'number' then @name
 
-
-Template.type_filter.helpers
-    delta_types: ->
-        if Meteor.user() and Meteor.user().roles
-            if 'dev' in Meteor.user().roles
-                Docs.find(
-                    type:'schema'
-                    # view_roles:$in:Meteor.user().roles
-                ).fetch()
-            else
-                Docs.find(
-                    type:'schema'
-                    view_roles:$in:Meteor.user().roles
-                ).fetch()
-
-    set_type_class: ->
-        delta = Docs.findOne type:'delta'
-        # console.log @
-        if delta.filter_type and @slug in delta.filter_type then 'blue'
-
-Template.type_filter.events
-    'click .set_type': ->
-        delta = Docs.findOne type:'delta'
-
-        Docs.update delta._id,
-            $set:
-                "filter_type": [@slug]
-                current_page: 0
-                detail_id:null
-                viewing_children:false
-                viewing_detail:false
-                editing_mode:false
-                config_mode:false
-        Session.set 'is_calculating', true
-        # console.log 'hi call'
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else if res
-                # console.log 'return', res
-                Session.set 'is_calculating', false
-
-
-# Template.detail_pane.onCreated ->
-#     Meteor.setTimeout ->
-#         $('.accordion').accordion();
-#     , 500
+Template.filter.onCreated ->
+    Meteor.setTimeout ->
+        $('.accordion').accordion();
+    , 500
+Template.detail_pane.onCreated ->
+    Meteor.setTimeout ->
+        $('.accordion').accordion();
+    , 500
+Template.delta_card.onCreated ->
+    Meteor.setTimeout ->
+        $('.accordion').accordion();
+    , 500
 
 
 Template.detail_pane.events
@@ -412,101 +513,6 @@ Template.detail_pane.helpers
 
     child_schema_fields: ->
         console.log @
-
-Template.delta_results.helpers
-    is_calculating: -> Session.get('is_calculating')
-
-    field_fields: ->
-        Docs.find({
-            type:'field'
-            schema_slugs: $in: ['field']
-        }, {sort:{rank:1}}).fetch()
-
-
-    schema_fields: ->
-        delta = Docs.findOne type:'delta'
-        current_type = delta.filter_type[0]
-        fields = Docs.find({
-            type:'field'
-            schema_slugs: $in: [current_type]
-        }, {sort:{rank:1}}).fetch()
-        # console.log fields
-        fields
-
-
-
-    can_add: ->
-        delta = Docs.findOne type:'delta'
-        type_key = delta.filter_type[0]
-        schema = Docs.findOne
-            type:'schema'
-            slug:type_key
-        if 'dev' in Meteor.user().roles
-            true
-        else
-            my_role = Meteor.user()?.roles?[0]
-            if my_role
-
-                if schema.add_roles
-                    if my_role in schema.add_roles
-                        true
-                    else
-                        false
-                else
-                    false
-            else
-                false
-
-
-    current_type: ->
-        delta = Docs.findOne type:'delta'
-        type_key = delta.filter_type[0]
-        Docs.findOne
-            type:'schema'
-            slug:type_key
-
-
-
-Template.delta.helpers
-    current_type: ->
-        delta = Docs.findOne type:'delta'
-        type_key = delta.filter_type[0]
-        Docs.findOne
-            type:'schema'
-            slug:type_key
-
-    schema_doc: ->
-        delta = Docs.findOne type:'delta'
-        current_type = delta.filter_type[0]
-        if current_type
-            schema = Docs.findOne
-                type:'schema'
-                slug:current_type
-            # for field in schema.fields
-            #     console.log 'found field', field
-
-    delta_fields: ->
-        delta = Docs.findOne type:'delta'
-        current_type = delta.filter_type[0]
-        delta_fields = []
-        if current_type
-            fields =
-                Docs.find({
-                    type:'field'
-                    schema_slugs:$in:[current_type]
-                    faceted: true
-                }, {sort:{rank:1}}).fetch()
-
-
-    fields: ->
-        delta = Docs.findOne type:'delta'
-        current_type = delta.filter_type[0]
-        fields = Docs.find({
-            type:'field'
-            schema_slugs: $in: [current_type]
-        }, {sort:{rank:1}}).fetch()
-        # console.log fields
-        fields
 
 
 

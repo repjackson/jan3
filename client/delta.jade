@@ -39,11 +39,7 @@ template(name='delta')
 
             .twelve.wide.column
                 .ui.equal.width.stackable.grid
-                    if current_type
-                        +delta_results
-                    else
-                        .column
-                            +type_filter
+                    +delta_results
 
 template(name='delta_results')
     .column
@@ -63,15 +59,28 @@ template(name='delta_results')
                         +icon name='administrative-tools'
                         | Edit Schema '#{current_type.title}'
                     +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
-                    .ui.small.header
-                        +icon name='rename'
-                        |&nbsp;
-                        |Fields
-                    .ui.fluid.button.add_field
-                        i.plus.icon
-                        | Field
-                    each schema_fields
-                        +delta_card data=_id
+                    .ui.accordion
+                        .active.title
+                            .ui.small.header
+                                +icon name='rename'
+                                |Fields
+                        .active.content
+                            .ui.fluid.button.add_field
+                                i.plus.icon
+                                | Field
+                            each schema_fields
+                                +delta_card data=_id
+                    .ui.accordion
+                        .active.title
+                            .ui.small.header
+                                +icon name='action'
+                                | Actions
+                        .active.content
+                            .ui.fluid.button.add_action
+                                i.plus.icon
+                                | Action
+                            each schema_actions
+                                +delta_card data=_id
             else if delta_doc.result_ids
                 if delta_doc.result_ids.length
                     .ui.horizontal.list
@@ -164,15 +173,11 @@ template(name='detail_pane')
                         i.pencil.blue.icon
                         // |Edit
 
-
-
 template(name='children_view')
     if axon_schema
         .ui.header #{axon_schema.title}
     else
         |No schema found.
-
-
 
 template(name='set_page_size')
     .ui.small.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
@@ -181,40 +186,22 @@ template(name='set_delta_key')
     .ui.button.set_delta_key(class=set_delta_key_class)
         |#{label}
 
-
-template(name='type_filter')
-    // img.ui.avatar.spaced.image(src="{{c.url 'logo_small' width=50 height=50 gravity='face' crop='fill'}}")
-    .ui.centered.stackable.four.cards
-        each delta_types
-            .ui.card(class=set_type_class)
-                a.content.set_type
-                    if icon
-                        .right.floated.mini.ui.image
-                            +iconlarge name=icon
-                    .header
-                        |#{title}
-                .content
-                    if bookmarked
-                        i.bookmark.red.link.icon(title='Unbookmark')
-                    else
-                        i.bookmark.outline.link.icon(title='Bookmark')
-
-
 template(name='filter')
-    .ui.header
-        if icon
-            i.icon
-                +iconsmall name=icon
-        |#{title}
-    each values
-        +selector
-
+    .ui.accordion
+        .active.title
+            .ui.header
+                if icon
+                    i.icon
+                        +iconsmall name=icon
+                |#{title}
+        .active.content
+            each values
+                +selector
 
 template(name='selector')
     .ui.toggle_value.button(class=toggle_value_class)
         |#{name}
         small #{count}
-
 
 template(name='edit_field_text')
     .ui.labeled.fluid.input
@@ -258,6 +245,12 @@ template(name='delta_card')
                                                     .ui.basic.label #{this}
                                             else
                                                 strong #{value}
-            .content
-                .ui.button.set_schema
-                    |View
+            if actions
+                .content
+                    each actions
+                        +action
+
+template(name='action')
+    .ui.button.fire_action
+        i.icon(class=icon)
+        |#{title}

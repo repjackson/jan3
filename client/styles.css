@@ -215,6 +215,8 @@ body {
   /*overflow-y:scroll;*/
   overflow-y:scroll;
   max-height:1200px;
+  padding:2px;
+
 }
 
 
