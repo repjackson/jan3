@@ -81,7 +81,7 @@ Template.registerHelper 'my_office_link', () ->
             # users_office
             return "/p/office_tickets/#{user.office_jpid}"
 
-Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
+# Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
 
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()
 
@@ -116,13 +116,14 @@ Template.registerHelper 'ticket_color_class', () ->
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 
 Template.registerHelper 'my_office', () ->
-    user = Meteor.user()
-    if user
-        if user.office_jpid
+    if Meteor.user()
+        if Meteor.user().office_jpid
             users_office = Docs.findOne
-                "ev.ID": user.office_jpid
+                office_jpid: Meteor.user().office_jpid
                 type:'office'
-            users_office
+            if users_office
+                console.log users_office
+                users_office
         # if user.customer_jpid
         #     customer_doc = Docs.findOne
         #         "ev.ID": user.customer_jpid

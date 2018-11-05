@@ -107,7 +107,7 @@ Template.toggle_user_published.events
 
 
 Template.office_card.onCreated ->
-    @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.office_jpid
+    @autorun =>  Meteor.subscribe 'my_office'
 Template.ticket_office_card.onCreated ->
     page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
     if page_doc
@@ -115,17 +115,7 @@ Template.ticket_office_card.onCreated ->
         @autorun =>  Meteor.subscribe 'doc_by_jpid', page_doc.office_jpid
 
 
-Template.office_card.helpers
-    office_doc: ->
-        context =
-            if Template.currentData(0)
-                Template.currentData(0)
-        doc =
-            Docs.findOne
-                type:'office'
-                "ev.ID": context.office_jpid
-        # console.log doc
-        doc
+
 Template.ticket_office_card.helpers
     office_doc: ->
         context =
@@ -134,7 +124,7 @@ Template.ticket_office_card.helpers
         if context
             doc = Docs.findOne
                 type:'office'
-                "ev.ID": context.office_jpid
+                "jpid": context.office_jpid
         console.log doc
         doc
 
@@ -146,7 +136,7 @@ Template.customer_card.helpers
         doc =
             Docs.findOne
                 type:'customer'
-                "ev.ID": context.customer_jpid
+                "jpid": context.customer_jpid
         doc
 
 Template.ticket_customer_card.onCreated ->
@@ -162,7 +152,7 @@ Template.ticket_customer_card.helpers
         doc =
             Docs.findOne
                 type:'customer'
-                "ev.ID": context.customer_jpid
+                "jpid": context.customer_jpid
         doc
 
 
@@ -174,7 +164,7 @@ Template.franchisee_card.helpers
         doc =
             Docs.findOne
                 type:'franchisee'
-                "ev.ID": context.franchisee_jpid
+                "jpid": context.franchisee_jpid
         doc
 
 
@@ -336,5 +326,5 @@ Template.toggle_block_field_boolean.helpers
 
 
 Template.view_button.helpers
-    url:-> "/p/#{@type}?doc_id=#{@_id}&jpid=#{@ev.ID}"
+    url:-> "/p/#{@type}?doc_id=#{@_id}&jpid=#{@jpid}"
 

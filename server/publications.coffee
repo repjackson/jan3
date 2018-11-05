@@ -10,6 +10,13 @@ Meteor.publish 'type', (type, limit)->
         }
 
 
+Meteor.publish 'office_jpid', (jpid)->
+    console.log jpid
+    Docs.find
+        type:'office'
+        office_jpid: jpid
+
+
 Meteor.publish 'block_children', (
     block_doc_id,
     filter_key=null,
@@ -28,13 +35,13 @@ Meteor.publish 'block_children', (
         collection = if block.children_collection is 'users' then "Meteor.users" else "Docs"
         if block.filter_source
             if block.filter_source is "{page_slug}"
-                filter_source_doc = Docs.findOne "ev.ID":page_jpid
+                filter_source_doc = Docs.findOne "jpid":page_jpid
             else if block.filter_source is "{doc_id}"
                 filter_source_doc = Docs.findOne doc_id
             else if block.filter_source is "{current_user}"
                 filter_source_doc = Meteor.user()
         if page_jpid
-            doc_object = Docs.findOne "ev.ID":page_jpid
+            doc_object = Docs.findOne "jpid":page_jpid
         else if doc_id
             doc_object = Docs.findOne doc_id
         # else
@@ -60,18 +67,18 @@ Meteor.publish 'block_children', (
                     if Meteor.user()
                         found_customer = Docs.findOne
                             type:'customer'
-                            "ev.ID":Meteor.user().customer_jpid
+                            "jpid":Meteor.user().customer_jpid
                         found_customer.ev.CUST_NAME
                 when "{current_user_office_name}"
                     if Meteor.user()
                         found_office = Docs.findOne
                             type:'office'
-                            "ev.ID":Meteor.user().office_jpid
+                            "jpid":Meteor.user().office_jpid
                         found_office.ev.MASTER_LICENSEE
                 when "{current_user_franchisee_name}"
                     found_franchisee = Docs.findOne
                         type:'franchisee'
-                        "ev.ID":Meteor.user().franchisee_jpid
+                        "jpid":Meteor.user().franchisee_jpid
                     found_franchisee.ev.FRANCHISEE
                 # user
                 when "{current_user_customer_jpid}"
@@ -239,7 +246,7 @@ Meteor.publish 'has_key_value', (key, value)->
 
 
 Meteor.publish 'static_office_employees', (office_jpid)->
-    office_doc = Docs.findOne "ev.ID":office_jpid
+    office_doc = Docs.findOne "jpid":office_jpid
     Meteor.users.find
         "office_name": office_doc.ev.MASTER_LICENSEE
 
@@ -302,7 +309,7 @@ Meteor.publish 'my_customer_account', ->
     if user and user.customer_jpid and user.roles
         if 'customer' in user.roles
             Docs.find
-                "ev.ID": user.customer_jpid
+                "jpid": user.customer_jpid
                 type:'customer'
 
 Meteor.publish 'my_franchisee', ->
@@ -310,7 +317,7 @@ Meteor.publish 'my_franchisee', ->
     if user and user.franchisee_jpid and user.roles
         if 'customer' in user.roles
             Docs.find
-                "ev.ID": user.franchisee_jpid
+                "jpid": user.franchisee_jpid
                 type:'franchisee'
 
 Meteor.publish 'my_office', ->
@@ -319,14 +326,14 @@ Meteor.publish 'my_office', ->
         if user.office_jpid and user.roles
             if 'office' or 'customer' in user.roles
                 Docs.find
-                    "ev.ID": user.office_jpid
+                    office_jpid: user.office_jpid
                     type:'office'
 
 Meteor.publish 'my_special_services', ->
     user = Meteor.user()
     if user and user.customer_jpid
         customer_doc = Docs.findOne
-            "ev.ID": user.customer_jpid
+            "jpid": user.customer_jpid
             type:'customer'
             # grandparent office
         Docs.find {
@@ -339,7 +346,7 @@ Meteor.publish 'my_office_contacts', ()->
     if Meteor.user()
         if Meteor.user().customer_jpid
             customer_doc = Docs.findOne
-                "ev.ID": Meteor.user().customer_jpid
+                "jpid": Meteor.user().customer_jpid
                 type:'customer'
             Meteor.users.find {
                 published: true
@@ -358,13 +365,13 @@ publishComposite 'doc', (id)->
         #         find: (doc)->
         #             Docs.find
         #                 type:'office'
-        #                 "ev.ID":doc.office_jpid
+        #                 "jpid":doc.office_jpid
         #     }
         #     {
         #         find: (doc)->
         #             Docs.find
         #                 type:'customer'
-        #                 "ev.ID":doc.customer_jpid
+        #                 "jpid":doc.customer_jpid
         #     }
         #     {
         #         find: (doc)-> Docs.find _id:doc.parent_id
@@ -385,13 +392,13 @@ publishComposite 'ticket', (id)->
                     # customer doc
                     Docs.find
                         type:'customer'
-                        "ev.ID": ticket.customer_jpid
+                        "jpid": ticket.customer_jpid
 
             }
             {
                 find: (ticket)->
                     Docs.find
-                        "ev.ID": ticket.office_jpid
+                        "jpid": ticket.office_jpid
                         type:'office'
 
             }
@@ -420,11 +427,11 @@ publishComposite 'me', ()->
         #             if user.profile
         #                 if user.customer_jpid
         #                     Docs.find
-        #                         "ev.ID": user.customer_jpid
+        #                         "jpid": user.customer_jpid
         #                         type:'customer'
         #                 if user.office_jpid
         #                     Docs.find
-        #                         "ev.ID": user.office_jpid
+        #                         "jpid": user.office_jpid
         #                         type:'office'
 
         #         # children: [
@@ -558,10 +565,10 @@ Meteor.publish 'doc_by_jpid', (jpid)->
     if jpid
         if typeof jpid is 'number'
             Docs.find
-                "ev.ID":jpid.toString()
+                "jpid":jpid.toString()
         else
             Docs.find
-                "ev.ID":jpid
+                "jpid":jpid
 
 Meteor.publish 'block_field_docs', (block_doc_id)->
     Docs.find
@@ -596,7 +603,7 @@ Meteor.publish 'ticket_sla_docs', (ticket_doc_id)->
 
 Meteor.publish 'office_employees_from_ticket_doc_id', (ticket_doc_id)->
     ticket = Docs.findOne ticket_doc_id
-    office_doc = Docs.findOne "ev.ID":ticket.office_jpid
+    office_doc = Docs.findOne "jpid":ticket.office_jpid
     Meteor.users.find
         "ev.COMPANY_NAME": office_doc.ev.MASTER_LICENSEE
 

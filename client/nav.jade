@@ -1,5 +1,5 @@
 template(name='nav')
-    .nav_bar.ui.top.attached.borderless.inverted.menu
+    .nav_bar.ui.top.attached.borderless.large.inverted.menu
         a.toggle_left_sidebar.icon.item
             i.bars.icon
 
@@ -22,11 +22,19 @@ template(name='nav')
                         +icon name=icon
                     .mobile.hidden &nbsp; #{title}
         else if is_office
-            each office_nav_items
-                a.mobile.hidden.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
-                    i.icon
-                        +icon name=icon
-                    .mobile.hidden &nbsp; #{title}
+            a.mobile.hidden.delta_franchisees.item(title='Franchisees')
+                i.icon
+                    +icon name='business'
+                .mobile.hidden &nbsp; Franchisees
+            a.mobile.hidden.item(href="/p/office_settings/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
+                i.icon
+                    +icon name='settings'
+                .mobile.hidden &nbsp; Settings
+            // each office_nav_items
+            //     a.mobile.hidden.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
+            //         i.icon
+            //             +icon name=icon
+            //         .mobile.hidden &nbsp; #{title}
         a.item(href="/data")
             i.icon
                 +icon name='database'

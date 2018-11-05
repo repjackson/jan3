@@ -79,6 +79,15 @@ Template.nav.events
             FlowRouter.go '/login'
             t.signing_out.set false
 
+    'click .delta_franchisees': (e,t)->
+        e.preventDefault()
+        doc = { slug:'franchisee' }
+        FlowRouter.go '/data'
+        Session.set 'is_calculating', true
+        # console.log 'hi call'
+        Meteor.call 'set_schema', doc, ->
+            Session.set 'is_calculating', false
+
     'click .log_ticket': (e,t)->
         Meteor.call 'log_ticket', (err,res)->
             if err then console.error err
