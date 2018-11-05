@@ -8,6 +8,7 @@ Template.delta_results.onCreated ->
     @autorun => Meteor.subscribe 'schema_fields'
     @autorun => Meteor.subscribe 'schema_actions'
     @autorun => Meteor.subscribe 'type', 'action'
+    @autorun => Meteor.subscribe 'type', 'field', 200
 
     Session.setDefault 'is_calculating', false
 
@@ -248,7 +249,7 @@ Template.delta_card.helpers
             schema = Docs.findOne
                 type:'schema'
                 slug:delta.filter_type[0]
-            linked_fields = Docs.find({
+            Docs.find({
                 type:'field'
                 schema_slugs: $in: [schema.slug]
                 visible:true
@@ -270,8 +271,9 @@ Template.delta_card.helpers
             schema = Docs.findOne
                 type:'schema'
                 slug:delta.filter_type[0]
-            linked_fields = Docs.find({
+            Docs.find({
                 type:'action'
+                visible:true
                 schema_slugs: $in: [schema.slug]
             }, {sort:{rank:1}}).fetch()
 
@@ -644,5 +646,10 @@ Template.edit_field_number.events
 
 Template.action.events
     'click .fire_action': (e,t)->
+        Session.set 'is_calculating', true
         target = Template.parentData()
-        Meteor.call @slug, target
+        Meteor.call @slug, target, (err,res)->
+            if err then console.log err
+            else
+                # console.log 'return', res
+                Session.set 'is_calculating', false
