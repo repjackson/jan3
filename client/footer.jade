@@ -14,6 +14,10 @@ template(name='footer')
                         .ui.list
                             .sitemap_list.item Contact Us
                             .sitemap_list.item Legal/ Privacy Policy
+                        .ui.list
+                            .sitemap_list.item Icons by
+                                a(href="https://icons8.com/")
+                                    |Icons8
                         .ui.hidden.divider
                 .four.wide.column
                     if is_customer
@@ -34,5 +38,5 @@ template(name='footer')
 
 template(name='role_switcher')
     each role_docs
-        .change_role.ui.compact.button(class=role_button_class)
+        .change_role.ui.button(class=role_button_class)
             |#{slug}

@@ -7,7 +7,7 @@ Template.role_switcher.helpers
             type: 'role'
 
     role_button_class: ->
-        if Meteor.user() and Meteor.user().roles and @slug in Meteor.user().roles then 'active' else ''
+        if Meteor.user() and Meteor.user().roles and @slug in Meteor.user().roles then 'blue' else ''
 
 
 Template.footer.helpers

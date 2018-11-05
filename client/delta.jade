@@ -11,9 +11,10 @@ template(name='delta')
             .four.wide.column.scrolling
                 if current_type
                     .ui.stackable.grid
-                        .three.wide.column
-                            .ui.large.icon.button.view_schamas(title='Data')
-                                i.left.chevron.icon
+                        unless viewing_schemas
+                            .three.wide.column
+                                .ui.large.icon.button.view_schamas(title='Data')
+                                    i.left.chevron.icon
                         .thirteen.wide.column
                             h1.ui.header
                                 if current_type.icon
@@ -49,6 +50,7 @@ template(name='delta_results')
         else
             if is_dev
                 +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='administrative-tools'
+            +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
             if can_add
                 .ui.button.add_doc
                     i.green.plus.icon
@@ -58,25 +60,25 @@ template(name='delta_results')
                     .ui.header
                         +icon name='administrative-tools'
                         | Edit Schema '#{current_type.title}'
-                    +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
                     .ui.accordion
                         .active.title
                             .ui.small.header
                                 +icon name='rename'
                                 |Fields
                         .active.content
-                            .ui.fluid.button.add_field
+                            .ui.button.add_field
                                 i.plus.icon
                                 | Field
                             each schema_fields
                                 +delta_card data=_id
+                    .ui.hidden.divider
                     .ui.accordion
                         .active.title
                             .ui.small.header
                                 +icon name='action'
                                 | Actions
                         .active.content
-                            .ui.fluid.button.add_action
+                            .ui.button.add_action
                                 i.plus.icon
                                 | Action
                             each schema_actions
@@ -84,8 +86,6 @@ template(name='delta_results')
             else if delta_doc.result_ids
                 if delta_doc.result_ids.length
                     .ui.horizontal.list
-                        .item
-                            +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
                         .item
                             .ui.compact.buttons
                                 +set_page_size value=10
@@ -200,7 +200,7 @@ template(name='filter')
 
 template(name='selector')
     .ui.toggle_value.button(class=toggle_value_class)
-        |#{name}
+        strong #{name}
         small #{count}
 
 template(name='edit_field_text')

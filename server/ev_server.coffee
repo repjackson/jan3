@@ -10,37 +10,37 @@ Meteor.methods
                 # console.log json.offices.length
                 # console.log json.franchisees.length
                 console.dir json.customers[..4]
-                # for customer in json.customers
-                #     # console.log 'customer id', customer.id
-                #     # console.dir customer
-                #     found_customer =
-                #         Docs.findOne
-                #             type:'customer'
-                #             jpid:customer.id
-                #     if found_customer
-                #         console.log 'found customer', customer.id
-                #     else
-                #         local = {}
+                for customer in json.customers
+                    # console.log 'customer id', customer.id
+                    # console.dir customer
+                    found_customer =
+                        Docs.findOne
+                            type:'customer'
+                            jpid:customer.id
+                    if found_customer
+                        console.log 'found customer', customer.cust_name
+                    else
+                        local = {}
 
-                #         local.type = 'customer'
-                #         local.source = 'ls'
-                #         local.jpid = customer.id
-                #         local.customer_name = customer.cust_name
-                #         local.customer_contact_person = customer.cust_cont_person
-                #         local.customer_contact_email = customer.cust_contact_email
-                #         local.telephone = customer.telephone
-                #         local.address = customer.addr_street
-                #         local.address2 = customer.addr_street_2
-                #         local.franchisee = customer.franchisee
-                #         local.city = customer.addr_city
-                #         local.state = customer.addr_state
-                #         local.customer_number_days_service = customer. cust_num_days_service
-                #         local.customer_days_service = customer.cust_days_service
-                #         local.customer_regular_service_amount = customer.cust_reg_service_amt
-                #         local.status = customer.account_status
+                        local.type = 'customer'
+                        local.source = 'ls'
+                        local.jpid = customer.id
+                        local.customer_name = customer.cust_name
+                        local.customer_contact_person = customer.cust_cont_person
+                        local.customer_contact_email = customer.cust_contact_email
+                        local.telephone = customer.telephone
+                        local.address = customer.addr_street
+                        local.address2 = customer.addr_street_2
+                        local.franchisee = customer.franchisee
+                        local.city = customer.addr_city
+                        local.state = customer.addr_state
+                        local.customer_number_days_service = customer. cust_num_days_service
+                        local.customer_days_service = customer.cust_days_service
+                        local.customer_regular_service_amount = customer.cust_reg_service_amt
+                        local.status = customer.account_status
 
-                #         new_id = Docs.insert local
-                #         console.log 'inserted customer', new_id
+                        new_id = Docs.insert local
+                        console.log 'inserted customer', customer.cust_name
 
 
                 # for franchisee in json.franchisees

@@ -198,10 +198,10 @@ template(name='edit_block')
             a.ui.icon.active.item.tab_nav(data-tab='general' title='General')
                 i.pencil.icon
             unless custom_template
-                a.ui.item.tab_nav(data-tab='filter' title='Filter')
-                    i.filter.icon
-                a.ui.item.tab_nav(data-tab='filter2' title='Filter2')
-                    i.truck.icon
+                // a.ui.item.tab_nav(data-tab='filter' title='Filter')
+                //     i.filter.icon
+                // a.ui.item.tab_nav(data-tab='filter2' title='Filter2')
+                //     i.truck.icon
                 a.ui.item.tab_nav(data-tab='schema' title='Schema')
                     i.fork.icon
                 a.ui.item.tab_nav(data-tab='display' title='Display')
@@ -224,68 +224,68 @@ template(name='edit_block')
                 +edit_block_text_field label='Header Template' key='header_template'
                 +edit_block_text_field label='Custom Template' key='custom_template'
             h5 Block id #{_id}
-        .ui.bottom.attached.segment.tab(data-tab='filter')
-            .ui.form
-                +edit_block_number_field label='Hard Limit' key='hard_limit'
-                +edit_block_number_field label='Soft Limit' key='limit'
-                +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
-                +set_key_value key='filter_status' value="" label='All'
-                div Source
-                +set_key_value key='filter_source' value='{page_slug}' label='Page Slug'
-                +set_key_value key='filter_source' value='{doc_id}' label='Doc ID'
-                +set_key_value key='filter_source' value='{username_param}' label='Username Param'
-                +set_key_value key='filter_source' value='{office_jpid_param}' label='Office JPID Param'
-                +set_key_value key='filter_source' value='{current_user}' label='Current User'
-                +toggle_boolean key='filter_key_ev_subset' yes_label='Filter Key EV'
-                div
-                +edit_block_text_field label='Parent Key' key='filter_key'
-                +set_key_value key='filter_key' value='_id' label='_id'
-                +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
-                +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
-                +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
-                +set_key_value key='filter_key' value='office_jpid' label='office_jpid'
-                +set_key_value key='filter_key' value='customer_jpid' label='customer_jpid'
-                +set_key_value key='filter_key' value='franchisee_jpid' label='franchisee_jpid'
-                div
-                +edit_block_text_field label='Filter Value' key='filter_value'
-                +set_key_value key='filter_value' value='{source_key}' label='Source Key'
-                +set_key_value key='filter_value' value=true label='true'
-                +set_key_value key='filter_value' value=false label='false'
-                div
-                h5 Calculated Filter Value
-                div
-                i.user.icon
-                +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
-                +set_key_value key='filter_value' value='{current_user_customer_jpid}' label='Current User Customer JPID'
-                +set_key_value key='filter_value' value='{current_user_office_jpid}' label='Current User Office JPID'
-                +set_key_value key='filter_value' value='{current_user_office_name}' label='Current User Office Name'
-                +set_key_value key='filter_value' value='{current_user_franchisee_jpid}' label='Current User Franchisee JPID'
-                +set_key_value key='filter_value' value='{current_user_franchisee_name}' label='Current User Franchisee Name'
-                div
-                i.clone.icon
-                +set_key_value key='filter_value' value='{current_page_customer_name}' label='Current Page Customer Name'
-                +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
-                +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
-                +set_key_value key='filter_value' value='{current_page_jpid}' label='Current Page JPID'
+        // .ui.bottom.attached.segment.tab(data-tab='filter')
+        //     .ui.form
+        //         +edit_block_number_field label='Hard Limit' key='hard_limit'
+        //         +edit_block_number_field label='Soft Limit' key='limit'
+        //         +set_key_value key='filter_status' value="ACTIVE" label='Active Status'
+        //         +set_key_value key='filter_status' value="" label='All'
+        //         div Source
+        //         +set_key_value key='filter_source' value='{page_slug}' label='Page Slug'
+        //         +set_key_value key='filter_source' value='{doc_id}' label='Doc ID'
+        //         +set_key_value key='filter_source' value='{username_param}' label='Username Param'
+        //         +set_key_value key='filter_source' value='{office_jpid_param}' label='Office JPID Param'
+        //         +set_key_value key='filter_source' value='{current_user}' label='Current User'
+        //         +toggle_boolean key='filter_key_ev_subset' yes_label='Filter Key EV'
+        //         div
+        //         +edit_block_text_field label='Parent Key' key='filter_key'
+        //         +set_key_value key='filter_key' value='_id' label='_id'
+        //         +set_key_value key='filter_key' value='ev.FRANCHISEE' label='ev.FRANCHISEE'
+        //         +set_key_value key='filter_key' value='ev.CUSTOMER' label='ev.CUSTOMER'
+        //         +set_key_value key='filter_key' value='ev.MASTER_LICENSEE' label='ev.MASTER_LICENSEE'
+        //         +set_key_value key='filter_key' value='office_jpid' label='office_jpid'
+        //         +set_key_value key='filter_key' value='customer_jpid' label='customer_jpid'
+        //         +set_key_value key='filter_key' value='franchisee_jpid' label='franchisee_jpid'
+        //         div
+        //         +edit_block_text_field label='Filter Value' key='filter_value'
+        //         +set_key_value key='filter_value' value='{source_key}' label='Source Key'
+        //         +set_key_value key='filter_value' value=true label='true'
+        //         +set_key_value key='filter_value' value=false label='false'
+        //         div
+        //         h5 Calculated Filter Value
+        //         div
+        //         i.user.icon
+        //         +set_key_value key='filter_value' value='{current_user_customer_name}' label='Current User Customer Name'
+        //         +set_key_value key='filter_value' value='{current_user_customer_jpid}' label='Current User Customer JPID'
+        //         +set_key_value key='filter_value' value='{current_user_office_jpid}' label='Current User Office JPID'
+        //         +set_key_value key='filter_value' value='{current_user_office_name}' label='Current User Office Name'
+        //         +set_key_value key='filter_value' value='{current_user_franchisee_jpid}' label='Current User Franchisee JPID'
+        //         +set_key_value key='filter_value' value='{current_user_franchisee_name}' label='Current User Franchisee Name'
+        //         div
+        //         i.clone.icon
+        //         +set_key_value key='filter_value' value='{current_page_customer_name}' label='Current Page Customer Name'
+        //         +set_key_value key='filter_value' value='{current_page_franchisee_name}' label='Current Page Franchisee Name'
+        //         +set_key_value key='filter_value' value='{current_page_office_name}' label='Current Page Office Name'
+        //         +set_key_value key='filter_value' value='{current_page_jpid}' label='Current Page JPID'
 
-                div
-                +edit_block_text_field key='filter_source_key' label='Filter Source Key'
-        .ui.bottom.attached.segment.tab(data-tab='filter2')
-            .ui.form
-                +edit_block_text_field key='query_param1' label='Query Param 1'
-                +set_key_value key='context' value='direct' label='Direct'
+        //         div
+        //         +edit_block_text_field key='filter_source_key' label='Filter Source Key'
+        // .ui.bottom.attached.segment.tab(data-tab='filter2')
+        //     .ui.form
+        //         +edit_block_text_field key='query_param1' label='Query Param 1'
+        //         +set_key_value key='context' value='direct' label='Direct'
 
-                +set_key_value key='context' value='link' label='Link'
-                +edit_block_text_field key='source_collection' label='Source Collection'
-                +edit_block_text_field key='source_key' label='Source Query Key'
-                +edit_block_text_field key='source_match_key' label='Source Match Key'
-                +edit_block_text_field key='source_match_type' label='Source Match Type'
-                +edit_block_text_field key='target_collection' label='Target Collection'
-                +edit_block_text_field key='target_key' label='Target Key'
+        //         +set_key_value key='context' value='link' label='Link'
+        //         +edit_block_text_field key='source_collection' label='Source Collection'
+        //         +edit_block_text_field key='source_key' label='Source Query Key'
+        //         +edit_block_text_field key='source_match_key' label='Source Match Key'
+        //         +edit_block_text_field key='source_match_type' label='Source Match Type'
+        //         +edit_block_text_field key='target_collection' label='Target Collection'
+        //         +edit_block_text_field key='target_key' label='Target Key'
 
-                +set_key_value key='context' value='children' label='Children'
-                +edit_block_text_field key='query_param2' label='Query Param 2'
-                +edit_block_text_field key='query_param3' label='Query Param 3'
+        //         +set_key_value key='context' value='children' label='Children'
+        //         +edit_block_text_field key='query_param2' label='Query Param 2'
+        //         +edit_block_text_field key='query_param3' label='Query Param 3'
 
         .ui.bottom.attached.segment.tab(data-tab='schema')
             each collections
