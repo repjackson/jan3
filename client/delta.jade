@@ -20,7 +20,6 @@ template(name='delta')
                                 if current_type.icon
                                     +icon name=current_type.icon classes='spaced'
                                 strong #{current_type.title}
-
                 // else
                 //     .ui.large.center.aligned.header
                 //         +icon name='database'
@@ -36,11 +35,13 @@ template(name='delta')
                         i.code.icon
 
                 each delta_fields
-                    +filter
+                    +facet
 
             .twelve.wide.column
                 .ui.equal.width.stackable.grid
                     +delta_results
+
+
 
 template(name='delta_results')
     .column
@@ -104,8 +105,9 @@ template(name='delta_results')
                         .item
                             .ui.label #{delta_doc.total} Results
                     .scrolling
-                        each delta_doc.result_ids
-                            +delta_card
+                        .ui.stackable.cards
+                            each delta_doc.result_ids
+                                +delta_card
             else
                 |No results
     if delta_doc.viewing_detail
@@ -128,16 +130,18 @@ template(name='toggle_delta_config')
 
 
 template(name='detail_pane')
+    .ui.fluid.small.icon.button.close_details
+        i.right.chevron.icon
     .ui.fluid.card
         .content
             unless delta_doc.editing_mode
-                a.ui.header.close_details(href='#')
+                .ui.header
                     if detail_doc.icon
                         i.icon
                             +icon name=detail_doc.icon
                     |#{detail_doc.title} Details
             if delta_doc.editing_mode
-                a.ui.header.close_details(href='#')
+                .ui.header
                     if detail_doc.icon
                         i.icon
                             +icon name=detail_doc.icon
@@ -186,7 +190,7 @@ template(name='set_delta_key')
     .ui.button.set_delta_key(class=set_delta_key_class)
         |#{label}
 
-template(name='filter')
+template(name='facet')
     .ui.accordion
         .active.title
             .ui.header
@@ -216,7 +220,7 @@ template(name='edit_field_number')
 
 template(name='delta_card')
     with local_doc
-        .ui.fluid.card.delta_card(class=delta_card_class)
+        .ui.card.delta_card(class=delta_card_class)
             if doc_header_fields
                 .content
                     h3.ui.header

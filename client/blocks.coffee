@@ -157,7 +157,7 @@ Template.ticket_customer_card.helpers
 
 
 Template.franchisee_card.onCreated ->
-    @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.franchisee_jpid
+    @autorun =>  Meteor.subscribe 'franchisee_jpid', @data.franchisee_jpid
 Template.franchisee_card.helpers
     franchisee_doc: ->
         context = Template.currentData(0)

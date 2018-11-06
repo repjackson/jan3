@@ -16,6 +16,12 @@ Meteor.publish 'office_jpid', (jpid)->
         type:'office'
         office_jpid: jpid
 
+Meteor.publish 'franchisee_jpid', (jpid)->
+    console.log jpid
+    Docs.find
+        type:'franchisee'
+        franchisee_jpid: jpid
+
 
 Meteor.publish 'block_children', (
     block_doc_id,
@@ -67,18 +73,18 @@ Meteor.publish 'block_children', (
                     if Meteor.user()
                         found_customer = Docs.findOne
                             type:'customer'
-                            jpid:Meteor.user().customer_jpid
+                            customer_jpid:Meteor.user().customer_jpid
                         found_customer.ev.CUST_NAME
                 when "{current_user_office_name}"
                     if Meteor.user()
                         found_office = Docs.findOne
                             type:'office'
-                            jpid:Meteor.user().office_jpid
+                            office_jpid:Meteor.user().office_jpid
                         found_office.ev.MASTER_LICENSEE
                 when "{current_user_franchisee_name}"
                     found_franchisee = Docs.findOne
                         type:'franchisee'
-                        jpid:Meteor.user().franchisee_jpid
+                        franchisee_jpid:Meteor.user().franchisee_jpid
                     found_franchisee.ev.FRANCHISEE
                 # user
                 when "{current_user_customer_jpid}"
@@ -94,12 +100,12 @@ Meteor.publish 'block_children', (
                 when "{current_page_doc_id}"
                     if doc_id
                         doc_id
-                when "{current_page_customer_name}"
-                    if doc_object
-                        if doc_object.ev.CUST_NAME.length > 0
-                            doc_object.ev.CUST_NAME
-                        if doc_object.ev.CUST_NAME.length is 0
-                            @stop()
+                # when "{current_page_customer_name}"
+                #     if doc_object
+                #         if doc_object.ev.CUST_NAME.length > 0
+                #             doc_object.ev.CUST_NAME
+                #         if doc_object.ev.CUST_NAME.length is 0
+                #             @stop()
                 when "{current_page_office_name}"
                     # if doc_object
                     #     if doc_object.ev.MASTER_LICENSEE.length > 0
@@ -156,13 +162,13 @@ Meteor.publish 'block_children', (
                 sort:"#{sort_key}":parseInt("#{sort_direction}")
             }
             cursor
-        else if block.children_collection is 'stats'
-            cursor = Stats.find match,{
-                skip: skip
-                limit:limit
-                sort:"#{sort_key}":parseInt("#{sort_direction}")
-            }
-            cursor
+        # else if block.children_collection is 'stats'
+        #     cursor = Stats.find match,{
+        #         skip: skip
+        #         limit:limit
+        #         sort:"#{sort_key}":parseInt("#{sort_direction}")
+        #     }
+        #     cursor
         else
             Docs.find match,{
                 skip: skip

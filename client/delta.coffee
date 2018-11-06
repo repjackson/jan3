@@ -51,9 +51,16 @@ Template.delta.helpers
         current_type = delta.filter_type[0]
         delta_fields = []
         if current_type
-            fields =
+            if 'dev' in Meteor.user().roles
                 Docs.find({
                     type:'field'
+                    schema_slugs:$in:[current_type]
+                    faceted: true
+                }, {sort:{rank:1}}).fetch()
+            else
+                Docs.find({
+                    type:'field'
+                    view_roles: $in: Meteor.user().roles
                     schema_slugs:$in:[current_type]
                     faceted: true
                 }, {sort:{rank:1}}).fetch()
@@ -84,11 +91,9 @@ Template.delta.events
                 editing_mode:false
                 config_mode:false
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else if res
-                # console.log 'return', res
+            else
                 Session.set 'is_calculating', false
 
     'click .delete_delta': ->
@@ -98,7 +103,11 @@ Template.delta.events
 
     'click .run_fo': ->
         delta = Docs.findOne type:'delta'
-        Meteor.call 'fo', delta._id
+        Session.set 'is_calculating', true
+        Meteor.call 'fo', (err,res)->
+            if err then console.log err
+            else
+                Session.set 'is_calculating', false
 
     'click .create_delta': (e,t)->
         new_delta_id =
@@ -211,11 +220,9 @@ Template.delta_card.events
                 editing_mode:false
                 config_mode:false
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else if res
-                # console.log 'return', res
+            else
                 Session.set 'is_calculating', false
 
 Template.delta_card.helpers
@@ -352,11 +359,9 @@ Template.delta_results.events
         Docs.update delta._id,
             $inc: current_page:1
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else if res
-                # console.log 'return', res
+            else
                 Session.set 'is_calculating', false
 
     'click .page_down': (e,t)->
@@ -364,11 +369,9 @@ Template.delta_results.events
         Docs.update delta._id,
             $inc: current_page:-1
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else if res
-                # console.log 'return', res
+            else
                 Session.set 'is_calculating', false
 
     'click .add_doc': (e,t)->
@@ -386,11 +389,9 @@ Template.delta_results.events
                 detail_id:new_id
                 editing_mode:true
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else if res
-                # console.log 'return', res
+            else
                 Session.set 'is_calculating', false
 
 
@@ -401,11 +402,9 @@ Template.delta_results.events
             type:'field'
             schema_slugs:[type]
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else if res
-                # console.log 'return', res
+            else
                 Session.set 'is_calculating', false
 
 
@@ -425,11 +424,9 @@ Template.set_page_size.events
                 skip_amount:0
                 page_size:@value
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else if res
-                # console.log 'return', res
+            else
                 Session.set 'is_calculating', false
 
 
@@ -443,7 +440,7 @@ Template.selector.helpers
                 else if @name is false then 'False'
             when 'number' then @name
 
-Template.filter.onRendered ->
+Template.facet.onRendered ->
     Meteor.setTimeout ->
         $('.accordion').accordion();
     , 500
@@ -469,11 +466,9 @@ Template.detail_pane.events
                     editing_mode:false
                     viewing_detail:false
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else if res
-                # console.log 'return', res
+            else
                 Session.set 'is_calculating', false
 
 
@@ -525,6 +520,11 @@ Template.detail_pane.helpers
                 type:'field'
                 schema_slugs: $in: ['field']
             }, {sort:{rank:1}}).fetch()
+        else if detail_doc?.type is 'action'
+            Docs.find({
+                type:'field'
+                schema_slugs: $in: ['action']
+            }, {sort:{rank:1}}).fetch()
         else
             current_type = delta.filter_type[0]
             Docs.find({
@@ -540,6 +540,11 @@ Template.detail_pane.helpers
                 type:'field'
                 schema_slugs: $in: ['field']
             }, {sort:{rank:1}}).fetch()
+        else if detail_doc?.type is 'action'
+            Docs.find({
+                type:'field'
+                schema_slugs: $in: ['action']
+            }, {sort:{rank:1}}).fetch()
         else
             current_type = delta.filter_type[0]
             Docs.find({
@@ -548,9 +553,6 @@ Template.detail_pane.helpers
                 schema_slugs: $in: [current_type]
             }, {sort:{rank:1}}).fetch()
 
-    child_schema_docs: ->
-        Docs.find
-            type:@axon_schema
 
     child_schema_fields: ->
         console.log @
@@ -561,7 +563,7 @@ Template.set_delta_key.helpers
         delta = Docs.findOne type:'delta'
         if delta.query["#{@key}"] is @value then 'blue' else ''
 
-Template.filter.helpers
+Template.facet.helpers
     values: ->
         delta = Docs.findOne type:'delta'
         delta["#{@key}_return"]?[..20]
@@ -577,17 +579,15 @@ Template.selector.helpers
         filter_list = delta["filter_#{filter.key}"]
         if filter_list and @name in filter_list then 'blue' else ''
 
-Template.filter.events
+Template.facet.events
     # 'click .set_delta_key': ->
     #     delta = Docs.findOne type:'delta'
     'click .recalc': ->
         delta = Docs.findOne type:'delta'
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else if res
-                # console.log 'return', res
+            else
                 Session.set 'is_calculating', false
 
 Template.selector.events
@@ -609,11 +609,9 @@ Template.selector.events
                 $addToSet:
                     "filter_#{filter.key}": @name
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else if res
-                # console.log 'return', res
+            else
                 Session.set 'is_calculating', false
 
 Template.edit_field_text.helpers
@@ -646,10 +644,11 @@ Template.edit_field_number.events
 
 Template.action.events
     'click .fire_action': (e,t)->
-        Session.set 'is_calculating', true
         target = Template.parentData()
-        Meteor.call @slug, target, (err,res)->
-            if err then console.log err
-            else
-                # console.log 'return', res
-                Session.set 'is_calculating', false
+        if @function
+            Session.set 'is_calculating', true
+            Meteor.call @function, target, (err,res)->
+                if err then console.log err
+                else
+                    # console.log 'return', res
+                    Session.set 'is_calculating', false
