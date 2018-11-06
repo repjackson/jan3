@@ -31,11 +31,11 @@ template(name='delta')
                     i.refresh.icon
                     // |Reset
                 if is_dev
-                    .ui.icon.button.show_delta
+                    .ui.icon.compact.button.show_delta
                         i.code.icon
-
-                each delta_fields
-                    +facet
+                .ui.vertical.segments
+                    each delta_fields
+                        +facet
 
             .twelve.wide.column
                 .ui.equal.width.stackable.grid
@@ -104,7 +104,7 @@ template(name='delta_results')
                                 // if show_increment
                         .item
                             .ui.label #{delta_doc.total} Results
-                    .scrolling
+                    .scrolling.delta_cards
                         .ui.stackable.cards
                             each delta_doc.result_ids
                                 +delta_card
@@ -191,16 +191,17 @@ template(name='set_delta_key')
         |#{label}
 
 template(name='facet')
-    .ui.accordion
-        .active.title
-            .ui.small.header
-                if icon
-                    i.icon
-                        +iconsmall name=icon
-                |#{title}
-        .active.content
-            each values
-                +selector
+    .ui.secondary.compact.segment
+        .ui.accordion
+            .active.title
+                .ui.header
+                    if icon
+                        i.icon
+                            +iconsmall name=icon
+                    |#{title}
+            .active.content
+                each values
+                    +selector
 
 template(name='selector')
     .ui.toggle_value.compact.button(class=toggle_value_class)
@@ -222,7 +223,7 @@ template(name='delta_card')
     with local_doc
         .ui.card(class=delta_card_class)
             if doc_header_fields
-                .content.delta_card
+                a.content.delta_card(href='#')
                     h3.ui.header
                         if icon
                             +icon name=icon
@@ -256,6 +257,5 @@ template(name='delta_card')
 
 template(name='action')
     .ui.basic.button.fire_action
-        i.icon
-            +icon name=icon
         |#{title}
+        +iconsmall name=icon classes=''

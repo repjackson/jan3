@@ -214,9 +214,12 @@ body {
 .scrolling{
   /*overflow-y:scroll;*/
   overflow-y:scroll;
-  max-height:1200px;
+  overflow-x: hidden;
   padding:2px;
+  max-height:1200px;
+}
 
+.delta_cards{
 }
 
 

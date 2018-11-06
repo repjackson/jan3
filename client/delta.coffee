@@ -238,7 +238,7 @@ Template.delta_card.helpers
 
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
-        if delta.detail_id and delta.detail_id is @_id then 'raised blue' else 'secondary'
+        if delta.detail_id and delta.detail_id is @_id then 'raised' else 'secondary'
 
     field_docs: ->
         delta = Docs.findOne type:'delta'

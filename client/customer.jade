@@ -15,47 +15,56 @@ template(name='customer_card')
     .ui.card
         with customer_doc
             .content
-                a.ui.header(href="/p/customer?doc_id=#{_id}&jpid=#{ev.ID}")
+                .ui.header
                     +icon name='headset'
                     |Customer Account
             .content
-                a(href="/p/customer?doc_id=#{_id}&jpid=#{ev.ID}")
-                    h4.ui.header #{ev.CUST_NAME}
+                h4.ui.header #{customer_name}
                 .ui.list
-                    .item ##{ev.ID}
-                    .item #{ev.CUST_CONT_PERSON}
-                    .item #{ev.CUST_CONTACT_EMAIL}
-                    .item #{ev.TELEPHONE}
-                    .item #{ev.ADDR_STREET}
-                    .item #{ev.ADDR_STREET_2}
-                    .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
-            // .content
-            //     div Franchisee
-            //         strong #{ev.FRANCHISEE}
-            //     div Office
-            //         strong #{ev.MASTER_LICENSEE}
-
+                    .item ##{customer_jpid}
+                    .item #{customer_contact_person}
+                    .item #{customer_contact_email}
+                    .item #{phone}
+                    .item #{address}
+                    .item #{address_2}
+                    .item #{city} #{state}
+            //   "office_name": "JAN-PRO Central Ontario",
+            //   "customer_name": "H&S Massage Spa Canada Corporation",
+            //   "customer_contact_person": "Erica Ho / Gigi Harding",
+            //   "customer_contact_email": "gigiharding@handandstone.ca",
+            //   "status": "ACTIVE",
+            //   "phone": "905-737-6467",
+            //   "address": "1550 16th Ave Building D Unit 6 - 8",
+            //   "address_2": "",
+            //   "franchisee_name": "Ken Valdez",
+            //   "city": "Richmond Hill",
+            //   "state": "ON",
+            //   "customer_number_days_service": "2",
+            //   "customer_days_service": "W|Sa",
+            //   "customer_regular_service_amount": "245.00",
+            //   "customer_jpid": "38243242"
+            // }
 
 template(name='ticket_customer_card')
     .ui.card
         with customer_doc
             .content
-                a.ui.header(href="/p/customer?doc_id=#{_id}&jpid=#{ev.ID}")
+                a.ui.header(href="/p/customer?doc_id=#{_id}&jpid=#{ID}")
                     +icon name='headset'
                     |Customer Account
             .content
-                a(href="/p/customer?doc_id=#{_id}&jpid=#{ev.ID}")
-                    h4.ui.header #{ev.CUST_NAME}
+                a(href="/p/customer?doc_id=#{_id}&jpid=#{ID}")
+                    h4.ui.header #{CUST_NAME}
                 .ui.list
-                    .item ##{ev.ID}
-                    .item #{ev.CUST_CONT_PERSON}
-                    .item #{ev.CUST_CONTACT_EMAIL}
-                    .item #{ev.TELEPHONE}
-                    .item #{ev.ADDR_STREET}
-                    .item #{ev.ADDR_STREET_2}
-                    .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                    .item ##{ID}
+                    .item #{CUST_CONT_PERSON}
+                    .item #{CUST_CONTACT_EMAIL}
+                    .item #{TELEPHONE}
+                    .item #{ADDR_STREET}
+                    .item #{ADDR_STREET_2}
+                    .item #{ADDR_CITY} #{ADDR_STATE}
             // .content
             //     div Franchisee
-            //         strong #{ev.FRANCHISEE}
+            //         strong #{FRANCHISEE}
             //     div Office
-            //         strong #{ev.MASTER_LICENSEE}
+            //         strong #{MASTER_LICENSEE}

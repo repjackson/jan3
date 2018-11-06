@@ -129,14 +129,14 @@ Template.ticket_office_card.helpers
         doc
 
 Template.customer_card.onCreated ->
-    @autorun =>  Meteor.subscribe 'doc_by_jpid', @data.customer_jpid
+    @autorun =>  Meteor.subscribe 'customer_jpid', @data.customer_jpid
 Template.customer_card.helpers
     customer_doc: ->
         context = Template.currentData(0)
         doc =
             Docs.findOne
                 type:'customer'
-                "jpid": context.customer_jpid
+                customer_jpid: context.customer_jpid
         doc
 
 Template.ticket_customer_card.onCreated ->

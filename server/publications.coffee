@@ -22,6 +22,12 @@ Meteor.publish 'franchisee_jpid', (jpid)->
         type:'franchisee'
         franchisee_jpid: jpid
 
+Meteor.publish 'customer_jpid', (jpid)->
+    console.log jpid
+    Docs.find
+        type:'customer'
+        customer_jpid: jpid
+
 
 Meteor.publish 'block_children', (
     block_doc_id,
