@@ -9,6 +9,7 @@ Template.delta_results.onCreated ->
     @autorun => Meteor.subscribe 'schema_actions'
     @autorun => Meteor.subscribe 'type', 'action'
     @autorun => Meteor.subscribe 'type', 'field', 200
+    @autorun => Meteor.subscribe 'type', 'schema', 200
 
     Session.setDefault 'is_calculating', false
 
@@ -158,8 +159,7 @@ Template.delta_results.helpers
             true
         else
             my_role = Meteor.user()?.roles?[0]
-            if my_role
-
+            if schema and my_role
                 if schema.add_roles
                     if my_role in schema.add_roles
                         true

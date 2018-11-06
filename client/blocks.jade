@@ -223,13 +223,13 @@ template(name='franchisee_card')
                         |Franchisee
             .content
                 a(href="/v/#{_id}")
-                    h4.ui.header #{ev.FRANCH_NAME}
+                    h4.ui.header #{franch_name}
                 .ui.list
-                    .item(title='JPID') ##{ev.ID}
-                    .item #{ev.FRANCH_EMAIL}
-                    // .item(title='Short Name') #{ev.FRANCH_NAME}
+                    .item(title='JPID') ##{franchisee_jpid}
+                    .item #{email}
+                    // .item(title='Short Name') #{franch_name}
                     .item(title='Call Number')
-                        a(href="tel:#{ev.TELE_CELL}") #{ev.TELE_CELL}
+                        a(href="tel:#{cell}") #{cell}
 
 template(name='view_stat')
     |#{stat_value}
