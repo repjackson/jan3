@@ -348,17 +348,18 @@ Meteor.publish 'my_special_services', ->
         }, limit: 5
 
 Meteor.publish 'my_office_contacts', ()->
-    user = Meteor.user()
-    if Meteor.user()
-        if Meteor.user().customer_jpid
-            customer_doc = Docs.findOne
-                jpid: Meteor.user().customer_jpid
-                type:'customer'
-            Meteor.users.find {
-                published: true
-                customer_jpid: customer_doc.customer_jpid
-            }
+    # user = Meteor.user()
+    # if Meteor.user()
+    #     if Meteor.user().customer_jpid
+    #         customer_doc = Docs.findOne
+    #             jpid: Meteor.user().customer_jpid
+    #             type:'customer'
+    #         Meteor.users.find {
+    #             # published: true
+    #             office_jpid: customer_doc.office_jpid
+    #         }
 
+    Meteor.users.find {}, limit:5
 
 publishComposite 'doc', (id)->
     {

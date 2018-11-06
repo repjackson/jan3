@@ -32,7 +32,7 @@ Template.dashboard_office_contacts_list.onCreated ->
 Template.dashboard_office_contacts_list.helpers
     office_contacts: ->
         found = Meteor.users.find {
-            published:true
+            # published:true
             # "office_name": customer_doc.ev.MASTER_LICENSEE
         }, limit:100
         found

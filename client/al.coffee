@@ -176,10 +176,7 @@ Template.block.helpers
                 false
     child_schema_field_value: ->
         child_doc = Template.parentData(1)
-        if @ev_subset
-            child_doc.ev["#{@key}"]
-        else
-            child_doc["#{@key}"]
+        child_doc["#{@key}"]
 
     is_table: -> @view is 'table'
     is_list: -> @view is 'list'

@@ -193,7 +193,7 @@ template(name='set_delta_key')
 template(name='facet')
     .ui.accordion
         .active.title
-            .ui.header
+            .ui.small.header
                 if icon
                     i.icon
                         +iconsmall name=icon
@@ -220,9 +220,9 @@ template(name='edit_field_number')
 
 template(name='delta_card')
     with local_doc
-        .ui.card.delta_card(class=delta_card_class)
+        .ui.card(class=delta_card_class)
             if doc_header_fields
-                .content
+                .content.delta_card
                     h3.ui.header
                         if icon
                             +icon name=icon
@@ -240,21 +240,22 @@ template(name='delta_card')
                                     else
                                         .content
                                             if icon
-                                                i.large.icon
+                                                i.icon(title=title)
                                                     +icon name=icon
-                                            | #{title}
+                                            // strong #{title}
                                             |&nbsp;
                                             if is_array
                                                 each value
                                                     .ui.basic.label #{this}
                                             else
-                                                strong #{value}
+                                                | #{value}
             if actions
                 .content
                     each actions
                         +action
 
 template(name='action')
-    .ui.button.fire_action
-        i.icon(class=icon)
+    .ui.basic.button.fire_action
+        i.icon
+            +icon name=icon
         |#{title}
