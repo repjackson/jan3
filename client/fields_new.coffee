@@ -177,7 +177,9 @@ Template.multiref_edit.helpers
             if @key then @key
             else if @slug then @slug
             else if @username then @username
-        if value in target_doc?["#{parent?.key}"] then 'blue' else ''
+        if parent and target_doc and value
+            if target_doc["#{parent.key}"]
+                if value in target_doc["#{parent.key}"] then 'blue' else ''
 
 
 Template.multiref_edit.events
@@ -189,12 +191,17 @@ Template.multiref_edit.events
             if @key then @key
             else if @slug then @slug
             else if @username then @username
-        if value in target_doc["#{editing_field}"]
-            Docs.update target_doc._id,
-                $pull:"#{editing_field}": value
-        else
-            Docs.update target_doc._id,
-                $addToSet:"#{editing_field}": value
+        if target_doc and value
+            if target_doc["#{editing_field}"]
+                if value in target_doc["#{editing_field}"]
+                    Docs.update target_doc._id,
+                        $pull:"#{editing_field}": value
+                else
+                    Docs.update target_doc._id,
+                        $addToSet:"#{editing_field}": value
+            else
+                Docs.update target_doc._id,
+                    $addToSet:"#{editing_field}": value
 
 
 

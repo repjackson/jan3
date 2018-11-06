@@ -150,6 +150,7 @@ Meteor.methods
         results_cursor =
             Docs.find( built_query,
                 {
+                    fields:_id:1
                     limit:calc_page_size
                     sort:"#{delta.sort_key}":delta.sort_direction
                     skip:skip_amount
@@ -178,14 +179,14 @@ Meteor.methods
             explain:false
             }
         # console.log key
-        if type is 'array'
+        if type in ['array','multiref']
             pipe =  [
                 { $match: query }
                 { $project: "#{key}": 1 }
                 { $unwind: "$#{key}" }
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
+                { $limit: 10 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
         else
@@ -194,7 +195,7 @@ Meteor.methods
                 { $project: "#{key}": 1 }
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
+                { $limit: 10 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
 

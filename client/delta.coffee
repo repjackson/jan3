@@ -83,7 +83,7 @@ Template.delta.events
 
         Docs.update delta._id,
             $set:
-                "filter_type": ['schema']
+                filter_type: ['schema']
                 current_page: 0
                 detail_id:null
                 viewing_children:false
@@ -234,7 +234,7 @@ Template.delta_card.helpers
 
     # delta_doc: -> Docs.findOne type:'delta'
 
-    is_array: -> @primative is 'array'
+    is_array: -> @primative in ['array','multiref']
 
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
@@ -259,7 +259,7 @@ Template.delta_card.helpers
             Docs.find({
                 type:'field'
                 schema_slugs: $in: [schema.slug]
-                visible:true
+                view_roles: $in: Meteor.user().roles
             }, {sort:{rank:1}}).fetch()
 
     actions: ->
@@ -529,6 +529,7 @@ Template.detail_pane.helpers
             current_type = delta.filter_type[0]
             Docs.find({
                 type:'field'
+                view_roles: $in: Meteor.user().roles
                 schema_slugs: $in: [current_type]
             }, {sort:{rank:1}}).fetch()
 
@@ -549,7 +550,7 @@ Template.detail_pane.helpers
             current_type = delta.filter_type[0]
             Docs.find({
                 type:'field'
-                editable:true
+                edit_roles: $in: Meteor.user().roles
                 schema_slugs: $in: [current_type]
             }, {sort:{rank:1}}).fetch()
 

@@ -203,8 +203,8 @@ template(name='facet')
                 +selector
 
 template(name='selector')
-    .ui.toggle_value.button(class=toggle_value_class)
-        strong #{name}
+    .ui.toggle_value.compact.button(class=toggle_value_class)
+        | #{name}
         small #{count}
 
 template(name='edit_field_text')
