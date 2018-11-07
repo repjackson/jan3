@@ -13,8 +13,8 @@ if Meteor.isClient
     Template.set_schema.events
         'click .set_schema': ->
             delta = Docs.findOne type:'delta'
-            console.log @
-            console.log Template.parentData()
+            # console.log @
+            # console.log Template.parentData()
 
             Docs.update delta._id,
                 $set:
@@ -31,6 +31,18 @@ if Meteor.isClient
                 else
                     Session.set 'is_calculating', false
 
+
+    Template.bookmark_button.helpers
+        icon_class: -> if  @bookmark_ids and Meteor.userId() in @bookmark_ids then 'red' else 'outline'
+
+    Template.bookmark_button.events
+        'click .toggle_bookmark': (e,t)->
+            # console.log @
+            # console.log t
+            # console.log t.data
+            # console.log Template.currentData()
+            # console.log Template.parentData()
+            Meteor.call 'bookmark', @
 
 
 
@@ -58,6 +70,7 @@ Meteor.methods
 
 
     bookmark: (target)->
+        # console.log target
         if target.bookmark_ids and Meteor.userId() in target.bookmark_ids
             Docs.update target._id,
                 $pull: bookmark_ids: Meteor.userId()
