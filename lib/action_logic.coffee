@@ -10,6 +10,26 @@ if Meteor.isClient
                         # console.log 'return', res
                         # Session.set 'is_calculating', false
 
+    Template.set_schema.events
+        'click .set_schema': ->
+            delta = Docs.findOne type:'delta'
+            console.log @
+            console.log Template.parentData()
+
+            Docs.update delta._id,
+                $set:
+                    "filter_type": [@slug]
+                    current_page: 0
+                    detail_id:null
+                    viewing_children:false
+                    viewing_detail:false
+                    editing_mode:false
+                    config_mode:false
+            Session.set 'is_calculating', true
+            Meteor.call 'fo', (err,res)->
+                if err then console.log err
+                else
+                    Session.set 'is_calculating', false
 
 
 

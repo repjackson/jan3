@@ -202,23 +202,6 @@ Template.delta_card.events
                 viewing_detail: true
                 detail_id: @_id
 
-    'click .set_schema': ->
-        delta = Docs.findOne type:'delta'
-
-        Docs.update delta._id,
-            $set:
-                "filter_type": [@slug]
-                current_page: 0
-                detail_id:null
-                viewing_children:false
-                viewing_detail:false
-                editing_mode:false
-                config_mode:false
-        Session.set 'is_calculating', true
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
 
 Template.delta_card.helpers
     local_doc: ->

@@ -1,6 +1,6 @@
 template(name='action')
     if template
-        +Template.dynamic template=template
+        +Template.dynamic template=template data=..
     // else
     //     .ui.basic.button.fire_action
     //         |#{title}
@@ -12,5 +12,7 @@ template(name='set_schema')
         i.right.chevron.icon
 
 
-
+template(name='bookmark_button')
+    .ui.button
+        i.bookmark.icon
 
