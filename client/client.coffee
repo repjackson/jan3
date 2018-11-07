@@ -135,6 +135,39 @@ Template.registerHelper 'is_dev', () ->
 Template.registerHelper 'dev_mode', ()->
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles and Session.get('dev_mode')
+Template.registerHelper 'is_eric', ()->
+    if Meteor.user()
+        'Bda8mRG925DnxTjQC' is Meteor.userId()
+
+
+
+
+
+Template.registerHelper 'actions', ()->
+    delta = Docs.findOne type:'delta'
+    local_doc =
+        if @data
+            Docs.findOne @data.valueOf()
+        else
+            Docs.findOne @valueOf()
+    if local_doc?.type is 'field'
+        Docs.find({
+            type:'action'
+            schema_slugs: $in: ['field']
+        }, {sort:{rank:1}}).fetch()
+    else
+        schema = Docs.findOne
+            type:'schema'
+            slug:delta.filter_type[0]
+        Docs.find({
+            type:'action'
+            visible:true
+            schema_slugs: $in: [schema.slug]
+        }, {sort:{rank:1}}).fetch()
+
+
+Template.registerHelper 'is_array', ()-> @primative in ['array','multiref']
+
 
 
 Template.registerHelper 'editing_mode', ()->

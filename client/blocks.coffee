@@ -124,7 +124,7 @@ Template.ticket_office_card.helpers
         if context
             doc = Docs.findOne
                 type:'office'
-                "jpid": context.office_jpid
+                office_jpid: context.office_jpid
         console.log doc
         doc
 
@@ -152,7 +152,7 @@ Template.ticket_customer_card.helpers
         doc =
             Docs.findOne
                 type:'customer'
-                "jpid": context.customer_jpid
+                customer_jpid: context.customer_jpid
         doc
 
 
@@ -164,7 +164,7 @@ Template.franchisee_card.helpers
         doc =
             Docs.findOne
                 type:'franchisee'
-                "jpid": context.franchisee_jpid
+                franchisee_jpid: context.franchisee_jpid
         doc
 
 

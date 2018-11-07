@@ -43,14 +43,14 @@ template(name='nav')
                 +icon name='database'
             | Data
         .right.menu
-            if is_dev
-                // .mobile.only
-                if editing_mode
-                    #toggle_editing.icon.active.large.item
-                        i.teal.pencil.link.bordered.icon
-                else
-                    #toggle_editing.icon.large.item
-                        i.pencil.link.bordered.icon
+            // if is_dev
+            //     // .mobile.only
+            //     if editing_mode
+            //         #toggle_editing.icon.active.large.item
+            //             i.teal.pencil.link.bordered.icon
+            //     else
+            //         #toggle_editing.icon.large.item
+            //             i.pencil.link.bordered.icon
             if currentUser
                 // a.mobile.hidden.item(href="/help" class="{{ active_route 'help' }}" title='Help')
                 //     i.icon

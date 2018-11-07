@@ -126,10 +126,6 @@ Template.field_view.helpers
         # console.log 'target doc', editing_doc
         value = editing_doc?["#{@key}"]
 
-    is_array: ->
-        # console.log @key,@primative
-        @primative is 'array'
-
 
 
 Template.number_edit.helpers

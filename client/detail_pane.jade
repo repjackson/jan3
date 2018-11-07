@@ -1,0 +1,52 @@
+template(name='detail_pane')
+    .ui.fluid.small.icon.button.close_details
+        i.right.chevron.icon
+    .ui.fluid.card
+        .content
+            unless delta_doc.editing_mode
+                .ui.header
+                    if detail_doc.icon
+                        i.icon
+                            +icon name=detail_doc.icon
+                    |#{detail_doc.title} Details
+            if delta_doc.editing_mode
+                .ui.header
+                    if detail_doc.icon
+                        i.icon
+                            +icon name=detail_doc.icon
+                    else
+                        i.icon
+                            +icon name='pencil'
+                    |Edit #{detail_doc.title}
+            .ui.hidden.divider
+            .ui.form
+                if delta_doc.editing_mode
+                    each edit_fields
+                        .field
+                            +field_edit
+                else
+                    each fields
+                        .field
+                            +field_view
+            if delta_doc.editing_mode
+                .ui.hidden.divider
+                .ui.grid
+                    .thirteen.wide.column
+                        .ui.green.fluid.icon.button.disable_editing(title='Save')
+                            i.checkmark.icon
+                            // |Save
+                    .three.wide.column
+                        .ui.red.fluid.icon.button.remove_doc
+                            i.remove.icon
+                            // |Delete
+            unless delta_doc.editing_mode
+                if can_edit
+                    .ui.hidden.divider
+                    .ui.icon.fluid.button.enable_editing
+                        i.pencil.blue.icon
+                        // |Edit
+            if actions
+                .content
+                    each actions
+                        +action
+

@@ -8,7 +8,7 @@ template(name='delta')
                             i.plus.icon
                             |Create Session
         if delta_doc
-            .four.wide.column.scrolling
+            .three.wide.column.scrolling
                 if current_type
                     .ui.stackable.grid
                         unless viewing_schemas
@@ -70,8 +70,9 @@ template(name='delta_results')
                             .ui.button.add_field
                                 i.plus.icon
                                 | Field
-                            each schema_fields
-                                +delta_card data=_id
+                            .ui.stackable.cards
+                                each schema_fields
+                                    +delta_card data=_id
                     .ui.hidden.divider
                     .ui.accordion
                         .active.title
@@ -82,8 +83,9 @@ template(name='delta_results')
                             .ui.button.add_action
                                 i.plus.icon
                                 | Action
-                            each schema_actions
-                                +delta_card data=_id
+                            .ui.stackable.cards
+                                each schema_actions
+                                    +delta_card data=_id
             else if delta_doc.result_ids
                 if delta_doc.result_ids.length
                     .ui.horizontal.list
@@ -95,13 +97,15 @@ template(name='delta_results')
                         .item
                             if delta_doc.page_amount
                                 .ui.icon.compact.buttons
+                                if show_page_down
                                     a.ui.page_down.button(title='Previous Page')
                                         i.left.chevron.grey.icon
+                                if show_page_up
                                     a.ui.page_up.button(title='Next Page')
                                         i.right.chevron.grey.icon
-                                .ui.small.label
-                                    | #{delta_doc.current_page}/#{delta_doc.page_amount}
-                                // if show_increment
+                                if multiple_pages
+                                    .ui.small.label
+                                        | #{delta_doc.current_page}/#{delta_doc.page_amount}
                         .item
                             .ui.label #{delta_doc.total} Results
                     .scrolling.delta_cards
@@ -128,54 +132,6 @@ template(name='toggle_delta_config')
                 +icon name=icon
             | #{label}
 
-
-template(name='detail_pane')
-    .ui.fluid.small.icon.button.close_details
-        i.right.chevron.icon
-    .ui.fluid.card
-        .content
-            unless delta_doc.editing_mode
-                .ui.header
-                    if detail_doc.icon
-                        i.icon
-                            +icon name=detail_doc.icon
-                    |#{detail_doc.title} Details
-            if delta_doc.editing_mode
-                .ui.header
-                    if detail_doc.icon
-                        i.icon
-                            +icon name=detail_doc.icon
-                    else
-                        i.icon
-                            +icon name='pencil'
-                    |Edit #{detail_doc.title}
-            .ui.hidden.divider
-            .ui.form
-                if delta_doc.editing_mode
-                    each edit_fields
-                        .field
-                            +field_edit
-                else
-                    each fields
-                        .field
-                            +field_view
-            if delta_doc.editing_mode
-                .ui.hidden.divider
-                .ui.grid
-                    .thirteen.wide.column
-                        .ui.green.fluid.icon.button.disable_editing(title='Save')
-                            i.checkmark.icon
-                            // |Save
-                    .three.wide.column
-                        .ui.red.fluid.icon.button.remove_doc
-                            i.remove.icon
-                            // |Delete
-            unless delta_doc.editing_mode
-                if can_edit
-                    .ui.hidden.divider
-                    .ui.icon.fluid.button.enable_editing
-                        i.pencil.blue.icon
-                        // |Edit
 
 template(name='children_view')
     if axon_schema
@@ -255,7 +211,3 @@ template(name='delta_card')
                     each actions
                         +action
 
-template(name='action')
-    .ui.basic.button.fire_action
-        |#{title}
-        +iconsmall name=icon classes=''

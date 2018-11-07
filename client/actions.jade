@@ -1,0 +1,16 @@
+template(name='action')
+    if template
+        +Template.dynamic template=template
+    // else
+    //     .ui.basic.button.fire_action
+    //         |#{title}
+    //         +iconsmall name=icon classes=''
+
+template(name='set_schema')
+    .ui.basic.button.set_schema
+        | View
+        i.right.chevron.icon
+
+
+
+
