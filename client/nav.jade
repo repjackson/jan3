@@ -8,6 +8,11 @@ template(name='nav')
             // img.ui.mini.image(src="{{c.url 'logo_small'}}")
             // img.ui.image(src="{{c.url 'logo_small' }}")
 
+        each bookmarks
+            a.mobile.hidden.item.pick_delta(title=title)
+                i.icon
+                    +icon name=icon
+                .mobile.hidden &nbsp; #{title}
         if is_admin
             each admin_nav_items
                 a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)

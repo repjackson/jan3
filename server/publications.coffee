@@ -10,6 +10,12 @@ Meteor.publish 'type', (type, limit)->
         }
 
 
+Meteor.publish 'my_bookmarks', ->
+    Docs.find
+        bookmark_ids:$in:[Meteor.userId()]
+
+
+
 Meteor.publish 'office_jpid', (jpid)->
     console.log jpid
     Docs.find
