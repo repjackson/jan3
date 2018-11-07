@@ -289,7 +289,7 @@ template(name='array_edit')
 
 
 template(name='multiref_edit')
-    .ui.basic.label
+    .ui.small.dividing.header
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}
@@ -303,7 +303,7 @@ template(name='multiref_edit')
 
 
 template(name='ref_edit')
-    .ui.basic.label
+    .ui.small.dividing.header
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}
@@ -318,11 +318,11 @@ template(name='ref_edit')
 
 
 template(name='string_edit')
-    .ui.fluid.labeled.input
-        .ui.basic.label
-            if icon
-                +icon name=icon classes='inline spaced'
-            |#{title}
+    .ui.small.dividing.header
+        if icon
+            +icon name=icon classes='inline spaced'
+        |#{title}
+    .ui.input
         input.string_val(type='text' value=value)
 
 

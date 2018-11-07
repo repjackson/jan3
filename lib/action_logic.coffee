@@ -46,6 +46,21 @@ if Meteor.isClient
 
 
 
+
+    Template.subscribe_button.helpers
+        icon_class: -> if  @subscribe_ids and Meteor.userId() in @subscribe_ids then 'red' else 'outline'
+
+    Template.subscribe_button.events
+        'click .toggle_subscribe': (e,t)->
+            # console.log @
+            # console.log t
+            # console.log t.data
+            # console.log Template.currentData()
+            # console.log Template.parentData()
+            Meteor.call 'subscribe', @
+
+
+
 Meteor.methods
     set_schema: (target)->
         # console.log 'target',target
@@ -77,3 +92,13 @@ Meteor.methods
         else
             Docs.update target._id,
                 $addToSet: bookmark_ids: Meteor.userId()
+
+
+    subscribe: (target)->
+        # console.log target
+        if target.subscribe_ids and Meteor.userId() in target.subscribe_ids
+            Docs.update target._id,
+                $pull: subscribe_ids: Meteor.userId()
+        else
+            Docs.update target._id,
+                $addToSet: subscribe_ids: Meteor.userId()

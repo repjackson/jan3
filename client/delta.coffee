@@ -158,26 +158,6 @@ Template.delta_results.helpers
         actions
 
 
-    can_add: ->
-        delta = Docs.findOne type:'delta'
-        type_key = delta.filter_type[0]
-        schema = Docs.findOne
-            type:'schema'
-            slug:type_key
-        if 'dev' in Meteor.user().roles
-            true
-        else
-            my_role = Meteor.user()?.roles?[0]
-            if schema and my_role
-                if schema.add_roles
-                    if my_role in schema.add_roles
-                        true
-                    else
-                        false
-                else
-                    false
-            else
-                false
 
 
     current_type: ->
@@ -387,7 +367,7 @@ Template.delta_results.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'blue' else ''
+        if @value is delta.page_size then 'blue' else 'basic'
 
 
 Template.set_page_size.events
@@ -430,7 +410,7 @@ Template.delta_card.onRendered ->
 Template.set_delta_key.helpers
     set_delta_key_class: ->
         delta = Docs.findOne type:'delta'
-        if delta.query["#{@key}"] is @value then 'blue' else ''
+        if delta.query["#{@key}"] is @value then 'blue' else 'basic'
 
 Template.facet.helpers
     values: ->
@@ -439,14 +419,14 @@ Template.facet.helpers
 
     set_delta_key_class: ->
         delta = Docs.findOne type:'delta'
-        if delta.query["#{@slug}"] is @value then 'blue' else ''
+        if delta.query["#{@slug}"] is @value then 'blue' else 'basic'
 
 Template.selector.helpers
     toggle_value_class: ->
         delta = Docs.findOne type:'delta'
         filter = Template.parentData()
         filter_list = delta["filter_#{filter.key}"]
-        if filter_list and @name in filter_list then 'blue' else ''
+        if filter_list and @name in filter_list then 'blue' else 'basic'
 
 Template.facet.events
     # 'click .set_delta_key': ->

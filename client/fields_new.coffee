@@ -101,7 +101,7 @@ Template.boolean_edit.helpers
         if bool_value and bool_value is true
             'blue'
         else
-            ''
+            'basic'
 
 Template.string_edit.helpers
     value: ->
@@ -175,7 +175,7 @@ Template.multiref_edit.helpers
             else if @username then @username
         if parent and target_doc and value
             if target_doc["#{parent.key}"]
-                if value in target_doc["#{parent.key}"] then 'blue' else ''
+                if value in target_doc["#{parent.key}"] then 'blue' else 'basic'
 
 
 Template.multiref_edit.events
@@ -228,4 +228,4 @@ Template.ref_edit.helpers
             if @key then @key
             else if @slug then @slug
             else if @username then @username
-        if target_doc?["#{parent.key}"] is value then 'blue' else ''
+        if target_doc?["#{parent.key}"] is value then 'blue' else 'basic'
