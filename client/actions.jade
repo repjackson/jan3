@@ -1,22 +1,46 @@
 template(name='action')
     if template
-        +Template.dynamic template=template data=..
+        +Template.dynamic template=action_button_template data=..
     // else
     //     .ui.basic.button.fire_action
     //         |#{title}
     //         +iconsmall name=icon classes=''
 
-template(name='set_schema')
+template(name='set_schema_button')
     .ui.basic.button.set_schema
         | View
         i.right.chevron.icon
 
 
 template(name='bookmark_button')
-    .ui.basic.icon.button.toggle_bookmark
+    .ui.basic.icon.button.toggle_bookmark(title='Toggle Bookmark')
         i.bookmark.icon(class=icon_class)
 
+
+template(name='mark_read_button')
+    if read
+        .ui.green.icon.button.toggle_read(title='Mark Unread')
+            +icon name='open-envelope'
+    else
+        .ui.basic.icon.button.toggle_read(title='Mark Read')
+            +icon name='secured-letter'
+
+template(name='mark_read_pane')
+    .ui.header
+        +icon name='open-envelope'
+        | Read By
+
+
+
 template(name='subscribe_button')
-    .ui.basic.icon.button.toggle_subscribe
+    .ui.basic.icon.button.toggle_subscribe(title='Toggle Subscribe')
         i.bell.icon(class=icon_class)
+
+
+
+template(name='bookmark_pane')
+    .ui.header
+        +icon name='bookmark-ribbon'
+        |Bookmarks
+
 

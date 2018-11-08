@@ -96,6 +96,29 @@ Template.delta.events
             else
                 Session.set 'is_calculating', false
 
+
+    'click .add_doc': (e,t)->
+        delta = Docs.findOne type:'delta'
+        type = delta.filter_type[0]
+        user = Meteor.user()
+        new_doc = {}
+        if type
+            new_doc['type'] = type
+        new_id = Docs.insert(new_doc)
+
+        Docs.update delta._id,
+            $set:
+                viewing_detail:true
+                detail_id:new_id
+                editing_mode:true
+        Session.set 'is_calculating', true
+        Meteor.call 'fo', (err,res)->
+            if err then console.log err
+            else
+                Session.set 'is_calculating', false
+
+
+
     'click .delete_delta': ->
         if confirm 'Clear Session?'
             delta = Docs.findOne type:'delta'
@@ -329,25 +352,6 @@ Template.delta_results.events
             else
                 Session.set 'is_calculating', false
 
-    'click .add_doc': (e,t)->
-        delta = Docs.findOne type:'delta'
-        type = delta.filter_type[0]
-        user = Meteor.user()
-        new_doc = {}
-        if type
-            new_doc['type'] = type
-        new_id = Docs.insert(new_doc)
-
-        Docs.update delta._id,
-            $set:
-                viewing_detail:true
-                detail_id:new_id
-                editing_mode:true
-        Session.set 'is_calculating', true
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
 
 
     'click .add_field': (e,t)->

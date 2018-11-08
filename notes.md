@@ -60,6 +60,13 @@ billions of documents, then when you're ready, trillions
 
 
 
+# console.log @
+# console.log t
+# console.log t.data
+# console.log Template.currentData()
+# console.log Template.parentData()
+
+
 
 <!--'escalate'  'positive-dynamic'-->
 <!--'close'  'close-sign'-->

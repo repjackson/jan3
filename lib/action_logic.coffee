@@ -10,7 +10,7 @@ if Meteor.isClient
                         # console.log 'return', res
                         # Session.set 'is_calculating', false
 
-    Template.set_schema.events
+    Template.set_schema_button.events
         'click .set_schema': ->
             delta = Docs.findOne type:'delta'
             # console.log @
@@ -33,31 +33,30 @@ if Meteor.isClient
 
 
     Template.bookmark_button.helpers
-        icon_class: -> if  @bookmark_ids and Meteor.userId() in @bookmark_ids then 'red' else 'outline'
+        icon_class: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then 'red' else 'outline'
 
     Template.bookmark_button.events
         'click .toggle_bookmark': (e,t)->
-            # console.log @
-            # console.log t
-            # console.log t.data
-            # console.log Template.currentData()
-            # console.log Template.parentData()
-            Meteor.call 'bookmark', @
-
-
+            Meteor.call 'user_toggle_list', @, 'bookmark_ids'
 
 
     Template.subscribe_button.helpers
-        icon_class: -> if  @subscribe_ids and Meteor.userId() in @subscribe_ids then 'red' else 'outline'
+        icon_class: -> if @subscribe_ids and Meteor.userId() in @subscribe_ids then 'blue' else 'outline'
 
     Template.subscribe_button.events
         'click .toggle_subscribe': (e,t)->
-            # console.log @
-            # console.log t
-            # console.log t.data
-            # console.log Template.currentData()
-            # console.log Template.parentData()
-            Meteor.call 'subscribe', @
+            Meteor.call 'user_toggle_list', @, 'subscribe_ids'
+
+
+    Template.mark_read_button.helpers
+        # icon_class: -> if @read_ids and Meteor.userId() in @read_ids then '' else 'outline'
+        read: ->
+            if @read_ids and Meteor.userId() in @read_ids then true else false
+
+
+    Template.mark_read_button.events
+        'click .toggle_read': (e,t)->
+            Meteor.call 'user_toggle_list', @, 'read_ids'
 
 
 
@@ -94,11 +93,14 @@ Meteor.methods
                 $addToSet: bookmark_ids: Meteor.userId()
 
 
-    subscribe: (target)->
+
+
+    user_toggle_list: (target, key)->
         # console.log target
-        if target.subscribe_ids and Meteor.userId() in target.subscribe_ids
+        list = target["#{key}"]
+        if list and Meteor.userId() in list
             Docs.update target._id,
-                $pull: subscribe_ids: Meteor.userId()
+                $pull: "#{key}": Meteor.userId()
         else
             Docs.update target._id,
-                $addToSet: subscribe_ids: Meteor.userId()
+                $addToSet: "#{key}": Meteor.userId()

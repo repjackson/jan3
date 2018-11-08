@@ -170,6 +170,10 @@ Template.registerHelper 'is_array', ()-> @primative in ['array','multiref']
 
 
 
+Template.registerHelper 'action_button_template', ()-> "#{@slug}_button"
+Template.registerHelper 'action_pane_template', ()-> "#{@slug}_pane"
+
+
 Template.registerHelper 'can_add', ()->
     delta = Docs.findOne type:'delta'
     type_key = delta.filter_type[0]
