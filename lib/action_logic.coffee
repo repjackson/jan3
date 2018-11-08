@@ -33,7 +33,7 @@ if Meteor.isClient
 
 
     Template.bookmark_button.helpers
-        icon_class: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then 'red' else 'outline'
+        bookmark_class: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then 'basic red' else 'basic'
 
     Template.bookmark_button.events
         'click .toggle_bookmark': (e,t)->

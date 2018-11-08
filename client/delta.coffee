@@ -371,7 +371,7 @@ Template.delta_results.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'blue' else 'basic'
+        if @value is delta.page_size then 'green' else ''
 
 
 Template.set_page_size.events
@@ -382,11 +382,11 @@ Template.set_page_size.events
                 current_page:0
                 skip_amount:0
                 page_size:@value
-        Session.set 'is_calculating', true
+        # Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            else
-                Session.set 'is_calculating', false
+            # else
+            #     Session.set 'is_calculating', false
 
 
 Template.selector.helpers
@@ -430,7 +430,7 @@ Template.selector.helpers
         delta = Docs.findOne type:'delta'
         filter = Template.parentData()
         filter_list = delta["filter_#{filter.key}"]
-        if filter_list and @name in filter_list then 'blue' else 'basic'
+        if filter_list and @name in filter_list then 'green' else 'basic'
 
 Template.facet.events
     # 'click .set_delta_key': ->

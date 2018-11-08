@@ -4,7 +4,7 @@ template(name='delta')
             .row
                 .sixteen.wide.column
                     if currentUser
-                        .create_delta.ui.large.basic.circular.button(title='Create Session')
+                        .create_delta.ui.large.basic.button(title='Create Session')
                             i.plus.icon
                             |Create Session
         if delta_doc
@@ -13,26 +13,26 @@ template(name='delta')
                     .ui.stackable.grid
                         unless viewing_schemas
                             .three.wide.column
-                                .ui.large.circular.basic.icon.circular.button.view_schamas(title='Data')
+                                .ui.large.icon.button.view_schamas(title='Data')
                                     i.left.chevron.icon
-                        .thirteen.wide.column
-                            h1.ui.header
+                        .thirteen.wide.middle.aligned.column
+                            h1.ui.center.aligned.header
                                 if current_type.icon
                                     +icon name=current_type.icon classes='spaced'
-                                strong #{current_type.title}
+                                | #{current_type.title}
                     if can_add
-                        .ui.large.basic.circular.button.add_doc
+                        .ui.large.icon.button.add_doc
                             i.green.plus.icon
-                            |#{current_type.title}
+                            // |#{current_type.title}
 
-                .ui.compact.icon.basic.circular.button.delete_delta(title='Clear Session')
+                .ui.compact.icon.button.delete_delta(title='Clear Session')
                     i.remove.icon
                     // |Clear
-                .ui.compact.icon.basic.circular.button.run_fo(title='Reload Session')
+                .ui.compact.icon.button.run_fo(title='Reload Session')
                     i.refresh.icon
                     // |Reset
                 if is_dev
-                    .ui.icon.compact.basic.circular.button.show_delta
+                    .ui.icon.compact.button.show_delta
                         i.code.icon
                 // .ui.vertical.segments
                 each delta_fields
@@ -60,7 +60,7 @@ template(name='delta_results')
                             +icon name='rename'
                             |Fields
                     .active.content
-                        .ui.circular.button.add_field
+                        .ui.button.add_field
                             i.plus.icon
                             | Field
                         .ui.stackable.cards
@@ -73,7 +73,7 @@ template(name='delta_results')
                             +icon name='action'
                             | Actions
                     .active.content
-                        .ui.circular.button.add_action
+                        .ui.button.add_action
                             i.plus.icon
                             | Action
                         .ui.stackable.cards
@@ -92,12 +92,11 @@ template(name='delta_results')
                             +set_page_size value=50
                         .item
                             if delta_doc.page_amount
-                                .ui.icon.compact.circular.buttons
                                 if show_page_down
-                                    a.ui.page_down.circular.button(title='Previous Page')
+                                    a.ui.page_down.button(title='Previous Page')
                                         i.left.chevron.grey.icon
                                 if show_page_up
-                                    a.ui.page_up.circular.button(title='Next Page')
+                                    a.ui.page_up.button(title='Next Page')
                                         i.right.chevron.grey.icon
                                 if multiple_pages
                                     .ui.small.label
@@ -118,15 +117,15 @@ template(name='delta_results')
 
 template(name='toggle_delta_config')
     if boolean_true
-        .ui.blue.circular.button.disable_key(title=title)
+        .ui.active.compact.icon.button.disable_key(title=label)
             i.icon
                 +icon name=icon
-            | #{label}
+            // | #{label}
     else
-        .ui.basic.circular.button.enable_key
+        .ui.compact.icon.button.enable_key(title=label)
             i.icon
                 +icon name=icon
-            | #{label}
+            // | #{label}
 
 
 template(name='children_view')
@@ -136,10 +135,10 @@ template(name='children_view')
         |No schema found.
 
 template(name='set_page_size')
-    .ui.circular.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
+    .ui.small.compact.icon.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
 
 template(name='set_delta_key')
-    .ui.circular.button.set_delta_key(class=set_delta_key_class)
+    .ui.button.set_delta_key(class=set_delta_key_class)
         |#{label}
 
 template(name='facet')
@@ -157,9 +156,9 @@ template(name='facet')
 
 template(name='selector')
     if name
-        .ui.toggle_value.compact.circular.button(class=toggle_value_class)
-            | #{name}
-            small #{count}
+        .ui.toggle_value.compact.small.button(class=toggle_value_class)
+            .large130 #{name}
+                small #{count}
 
 template(name='edit_field_text')
     .ui.labeled.fluid.input

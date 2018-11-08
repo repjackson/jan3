@@ -1,5 +1,5 @@
 template(name='detail_pane')
-    .ui.fluid.small.icon.basic.circular.button.close_details
+    .ui.fluid.small.icon.button.close_details
         i.right.chevron.icon
     .ui.fluid.card
         .content
@@ -17,7 +17,7 @@ template(name='detail_pane')
                     else
                         i.icon
                             +icon name='pencil'
-                    |Edit #{detail_doc.title}
+                    |Edit #{detail_doc.title} #{current_type.title}
             .ui.hidden.divider
             // .ui.form
             if delta_doc.editing_mode
@@ -52,7 +52,7 @@ template(name='detail_pane')
             unless delta_doc.editing_mode
                 if can_edit
                     .ui.hidden.divider
-                    .ui.icon.fluid.basic.circular.button.enable_editing
+                    .ui.icon.fluid.button.enable_editing
                         i.pencil.blue.icon
                         // |Edit
         if actions

@@ -47,6 +47,14 @@ Template.detail_pane.helpers
     delta_doc: -> Docs.findOne type:'delta'
 
 
+    current_type: ->
+        delta = Docs.findOne type:'delta'
+        type_key = delta.filter_type[0]
+        Docs.findOne
+            type:'schema'
+            slug:type_key
+
+
     can_edit: ->
         delta = Docs.findOne type:'delta'
         type_key = delta.filter_type[0]
