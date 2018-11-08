@@ -2,6 +2,9 @@
         margin-top: 12px;
 }
 
+
+
+
 .nav_bar.ui.menu {
   /*border: 0px solid transparent; */
   border: none !important;
@@ -41,6 +44,10 @@ body {
 
 .ui.header{
   font-family: 'Lato', sans-serif !important;
+}
+
+.ui.button{
+  text-transform: none !important;
 }
 
 
@@ -92,7 +99,11 @@ body {
 }
   .large120 {
     font-size: 120%;
-    line-height: 120%;
+    /*line-height: 120%;*/
+}
+  .large110 {
+    font-size: 110%;
+    /*line-height: 120%;*/
 }
   .large150 {
     font-size: 150%;

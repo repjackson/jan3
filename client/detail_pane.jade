@@ -51,13 +51,14 @@ template(name='detail_pane')
                             i.remove.icon
                             // |Delete
                         // |Edit
-        .content
-            if can_edit
-                .ui.icon.button.enable_editing(title="Edit")
-                    +iconsmall name='edit'
-            each actions
-                +Template.dynamic template=action_button_template data=detail_doc
-        each actions
+        unless delta_doc.editing_mode
             .content
-                +Template.dynamic template=action_pane_template data=detail_doc
+                if can_edit
+                    .ui.icon.button.enable_editing(title="Edit")
+                        +iconsmall name='edit'
+                each actions
+                    +Template.dynamic template=action_button_template data=detail_doc
+            each actions
+                .content
+                    +Template.dynamic template=action_pane_template data=detail_doc
 

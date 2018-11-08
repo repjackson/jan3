@@ -153,8 +153,8 @@ Template.ref_edit.onCreated ->
 
 Template.multiref_edit.helpers
     choices: ->
-        Docs.find
-            type:@ref_schema
+        Docs.find {type:@ref_schema},
+            {sort:title:1}
 
     value: ->
         delta = Docs.findOne type:'delta'
