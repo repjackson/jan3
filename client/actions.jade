@@ -15,10 +15,10 @@ template(name='set_schema_button')
 
 template(name='bookmark_button')
     if bookmarked
-        .ui.icon.basic.red.small.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
+        .ui.icon.red.small.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
             +iconsmall name='bookmark-ribbon'
     else
-        .ui.icon.small.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
+        .ui.icon.small.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
             // +iconsmall name='bookmark-ribbon'
             <img src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png">
 
@@ -55,9 +55,57 @@ template(name='mark_read_pane')
 
 
 template(name='subscribe_button')
-    .ui.basic.icon.small.button.toggle_subscribe(title='Toggle Subscribe')
-        i.bell.icon(class=icon_class)
+    if subscribed
+        .ui.icon.teal.small.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
+            +iconsmall name='renew-subscription'
+    else
+        .ui.icon.small.button.toggle_subscribe(title='Subscribe' class=subscription_class)
+            +iconsmall name='cancel-subscription'
 
+template(name='subscribe_pane')
+    .ui.header
+        +icon name='renew-subscription'
+        | Subscribers
+    .ui.list
+        each subscribers
+            +user_list_view
+
+
+
+
+
+template(name='comment_button')
+    .ui.icon.small.button.toggle_comment(title='Comment' class=subscription_class)
+        +iconsmall name='comments'
+
+template(name='comment_pane')
+    .ui.header
+        +icon name='comments'
+        | Comments
+    .ui.list
+        each comments
+            .ui.header #{text}
+    .ui.fluid.left.icon.input
+        i.plus.icon
+        input#new_comment(type='text' placeholder='Add...')
+    .ui.comments
+        each comments
+            .comment
+                a.avatar(href="/user/#{author.username}")
+                    if author.image_id
+                        img.ui.avatar.spaced.image(src="{{c.url author.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    else
+                        i.user.icon
+                .content
+                    a.author(href="/user/#{author.username}") #{author.username}
+                    .metadata
+                        span.date #{when}
+                    .text
+                        p #{text}
+                    .actions
+                        // a.reply Reply
+                        if is_admin
+                            a.delete_comment delete
 
 
 
