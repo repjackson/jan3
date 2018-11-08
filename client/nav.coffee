@@ -16,6 +16,15 @@ Template.nav.onRendered ->
 
 
 Template.left_sidebar.events
+    'click .pick_delta': (e,t)->
+        e.preventDefault()
+        FlowRouter.go '/data'
+        Session.set 'is_calculating', true
+        # console.log 'hi call'
+        Meteor.call 'set_schema', @, ->
+            Session.set 'is_calculating', false
+
+
     'click #logout': (e,t)->
         e.preventDefault()
         Meteor.logout ->
@@ -44,6 +53,7 @@ Template.nav.helpers
     bookmarks: ->
         Docs.find
             bookmark_ids: $in:[Meteor.userId()]
+            type:'schema'
 
 
     admin_nav_items: ->
@@ -63,6 +73,11 @@ Template.nav.helpers
         }, sort:number:1
 
 Template.left_sidebar.helpers
+    bookmarks: ->
+        Docs.find
+            bookmark_ids: $in:[Meteor.userId()]
+            type:'schema'
+
     admin_nav_items: ->
         Docs.find {
             type:'page'

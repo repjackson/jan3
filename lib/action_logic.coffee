@@ -33,12 +33,13 @@ if Meteor.isClient
 
 
     Template.bookmark_button.helpers
-        bookmarked: ->
-            if @bookmark_ids and Meteor.userId() in @bookmark_ids then true else false
+        bookmarked: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then true else false
 
     Template.bookmark_button.events
         'click .toggle_bookmark': (e,t)->
             Meteor.call 'user_toggle_list', @, 'bookmark_ids'
+
+
 
 
     Template.subscribe_button.helpers
@@ -46,19 +47,37 @@ if Meteor.isClient
 
     Template.subscribe_button.events
         'click .toggle_subscribe': (e,t)->
-            Meteor.call 'user_toggle_list', @, 'subscribe_ids'
+            Meteor.call 'user_toggle_list', @data, 'subscribe_ids'
+
+
+    Template.mark_read_pane.onCreated ->
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'read_ids'
+
+    Template.bookmark_pane.onCreated ->
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'bookmark_ids'
+
+    Template.bookmark_pane.helpers
+        bookmark_users: ->
+            target = Template.currentData()
+            if target
+                Meteor.users.find
+                    _id: $in: target.bookmark_ids
+
 
 
     Template.mark_read_button.helpers
-        # icon_class: -> if @read_ids and Meteor.userId() in @read_ids then '' else 'outline'
-        read: ->
-            if @read_ids and Meteor.userId() in @read_ids then true else false
-
+        read: -> if @read_ids and Meteor.userId() in @read_ids then true else false
 
     Template.mark_read_button.events
         'click .toggle_read': (e,t)->
             Meteor.call 'user_toggle_list', @, 'read_ids'
 
+    Template.mark_read_pane.helpers
+        read_users: ->
+            target = Template.currentData()
+            if target
+                Meteor.users.find
+                    _id: $in: target.read_ids
 
 
 Meteor.methods
@@ -83,19 +102,6 @@ Meteor.methods
         else
             return null
 
-
-    bookmark: (target)->
-        # console.log target
-        if target.bookmark_ids and Meteor.userId() in target.bookmark_ids
-            Docs.update target._id,
-                $pull: bookmark_ids: Meteor.userId()
-        else
-            Docs.update target._id,
-                $addToSet: bookmark_ids: Meteor.userId()
-
-
-
-
     user_toggle_list: (target, key)->
         # console.log target
         list = target["#{key}"]
@@ -105,3 +111,9 @@ Meteor.methods
         else
             Docs.update target._id,
                 $addToSet: "#{key}": Meteor.userId()
+
+
+if Meteor.isServer
+    Meteor.publish 'user_list_users', (target,key)->
+        Meteor.users.find
+            _id: $in: target["#{key}"]

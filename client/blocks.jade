@@ -24,7 +24,7 @@ template(name='list_item')
 
 template(name='toggle_boolean')
     if is_on
-        #turn_off.ui.active.compact.button
+        #turn_off.ui.green.compact.button
             if icon
                 i.icon(class=icon)
             |#{yes_label}
@@ -85,9 +85,8 @@ template(name='add_button')
         // +icon name='plus-math'
 
 template(name='toggle_sla_boolean')
-    .ui.trigger.button(class=toggle_boolean_button_class title=title)
-        i.icon
-            +iconsmall name=icon
+    .ui.trigger.icon.button(class=toggle_boolean_button_class title=title)
+        +iconsmall name=icon
 
 template(name='toggle_key')
     .toggle_key.ui.button(class=toggle_key_button_class)
@@ -321,7 +320,7 @@ template(name='event_type_icon')
         // |#{event_type}
     else
         +icon name='commit-git'
-        // |#{event_type}
+    // |#{event_type}
 
 template(name='user_avatar')
     img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
@@ -340,3 +339,14 @@ template(name='view_ticket_link')
 template(name='user_profile_image')
     if image_id
         img.ui.medium.image.item(src="{{c.url image_id width=500 height=500 gravity='face' crop='fill'}}")
+
+
+
+template(name='user_list_view')
+    .item
+        img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
+        // .ui.popup
+        //     img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
+        .content
+            a.header(href="/user/#{username}") #{first_name} #{last_name}
+            .description @#{username}

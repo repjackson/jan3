@@ -22,6 +22,19 @@ template(name='bookmark_button')
             // +iconsmall name='bookmark-ribbon'
             <img src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png">
 
+template(name='bookmark_pane')
+    .ui.header
+        +icon name='bookmark-ribbon'
+        |Bookmarked By
+    .ui.list
+        each bookmark_users
+            +user_list_view
+
+
+
+
+
+
 
 template(name='mark_read_button')
     if read
@@ -35,6 +48,9 @@ template(name='mark_read_pane')
     .ui.header
         +icon name='open-envelope'
         | Read By
+    .ui.list
+        each read_users
+            +user_list_view
 
 
 
@@ -43,10 +59,5 @@ template(name='subscribe_button')
         i.bell.icon(class=icon_class)
 
 
-
-template(name='bookmark_pane')
-    .ui.header
-        +icon name='bookmark-ribbon'
-        |Bookmarks
 
 

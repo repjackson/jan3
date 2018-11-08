@@ -34,15 +34,15 @@ template(name='nav')
                 i.icon
                     +icon name='headset'
                 .mobile.hidden &nbsp; Customers
-            a.mobile.hidden.item(href="/p/office_settings/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
-                i.icon
-                    +icon name='settings'
-                .mobile.hidden &nbsp; Settings
-            // each office_nav_items
-            //     a.mobile.hidden.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
-            //         i.icon
-            //             +icon name=icon
-            //         .mobile.hidden &nbsp; #{title}
+            // a.mobile.hidden.item(href="/p/office_settings/#{my_office.office_jpid}" class="{{ active_route slug }}" title=title)
+            //     i.icon
+            //         +icon name='settings'
+            //     .mobile.hidden &nbsp; Settings
+            each office_nav_items
+                a.mobile.hidden.item(href="/p/#{slug}/#{my_office.office_jpid}" class="{{ active_route slug }}" title=title)
+                    i.icon
+                        +icon name=icon
+                    .mobile.hidden &nbsp; #{title}
         a.item(href="/data")
             i.icon
                 +icon name='database'
@@ -82,11 +82,16 @@ template(name='nav')
 
 
 template(name='left_sidebar')
-    .ui.left.vertical.sidebar.inverted.nav_bar.thin.menu
+    .ui.left.vertical.sidebar.inverted.large.nav_bar.menu
         if currentUser
             a.toggle_left_sidebar.header.item(href="/user/#{currentUser.username}")
                 img.ui.centered.mini.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 |#{currentUser.username}
+        each bookmarks
+            a.toggle_left_sidebar.item.pick_delta(href='#')
+                i.icon
+                    +icon name=icon
+                .mobile.hidden &nbsp; #{title}
         if is_customer
             a.header.toggle_left_sidebar.item(href='/')
                 |Dashboard
@@ -97,7 +102,7 @@ template(name='left_sidebar')
         else if is_office
             // with currentUser.users_customer.parent_franchisee.parent_office
             each office_nav_items
-                a.toggle_left_sidebar.item(href="/p/#{slug}/#{my_office.ev.ID}" class="{{ active_route slug }}" title=title)
+                a.toggle_left_sidebar.item(href="/p/#{slug}/#{my_office.office_jpid}" class="{{ active_route slug }}" title=title)
                     // i.large.icon
                     //     +icon name=icon
                     | #{title}

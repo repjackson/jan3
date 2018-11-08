@@ -57,7 +57,7 @@ template(name='detail_pane')
                     +iconsmall name='edit'
             each actions
                 +Template.dynamic template=action_button_template data=detail_doc
-        .content
-            each actions
+        each actions
+            .content
                 +Template.dynamic template=action_pane_template data=detail_doc
 
