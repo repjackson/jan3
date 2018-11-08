@@ -21,6 +21,14 @@ Template.delta.onRendered ->
     Meteor.setTimeout ->
         $('.dropdown').dropdown()
     , 700
+    Meteor.setTimeout ->
+        $('.ui.button').popup()
+    , 1000
+
+Template.delta_results.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.button').popup()
+    , 1000
 
 
 Template.delta.helpers
@@ -421,9 +429,9 @@ Template.facet.helpers
         delta = Docs.findOne type:'delta'
         delta["#{@key}_return"]?[..20]
 
-    set_delta_key_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.query["#{@slug}"] is @value then 'blue' else 'basic'
+    # set_delta_key_class: ->
+    #     delta = Docs.findOne type:'delta'
+    #     if delta.query["#{@slug}"] is @value then 'blue' else 'basic'
 
 Template.selector.helpers
     toggle_value_class: ->

@@ -7,6 +7,9 @@ Template.detail_pane.onRendered ->
     Meteor.setTimeout ->
         $('.accordion').accordion();
     , 500
+    Meteor.setTimeout ->
+        $('.ui.button').popup()
+    , 1000
 
 
 

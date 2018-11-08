@@ -213,7 +213,7 @@ template(name='edit_array_field')
     // each field_value
     each ../tags
         // a.ui.circular.button.doc_tag #{this}
-        a.ui.button.doc_tag
+        a.ui.compact.button.doc_tag
             i.remove.icon
             |#{this}
 
@@ -270,7 +270,7 @@ template(name='boolean_edit')
         if icon
             i.icon
                 +icon name=icon
-    .ui.button.toggle_field(class=bool_switch_class title=key)
+    .ui.compact.button.toggle_field(class=bool_switch_class title=key)
         if icon
             i.icon
                 +icon name=icon
@@ -299,7 +299,7 @@ template(name='multiref_edit')
             +icon name=icon classes='inline spaced'
         |#{title}
     each choices
-        .ui.button.toggle_element(class=element_class)
+        .ui.compact.button.toggle_element(class=element_class)
             if icon
                 i.icon
                     +icon name=icon
@@ -313,7 +313,7 @@ template(name='ref_edit')
             +icon name=icon classes='inline spaced'
         |#{title}
     each choices
-        .ui.button.choose_element(class=element_class)
+        .ui.compact.button.choose_element(class=element_class)
             if icon
                 i.icon
                     +icon name=icon

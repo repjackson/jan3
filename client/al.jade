@@ -173,14 +173,14 @@ template(name='block')
                                     +icon name='code'
                                     |Dev
                             .three.wide.right.aligned.column
+                if can_move_left
+                    i.move_left.chevron.left.circular.link.icon
+                if can_lower
+                    i.chevron.up.circular.link.circular.icon.lower_block
+                i.chevron.down.circular.link.icon.raise_block
+                if can_move_right
+                    i.move_right.chevron.right.circular.link.icon
                 if editing_mode
-                    if can_move_left
-                        i.move_left.chevron.left.circular.link.icon
-                    if can_lower
-                        i.chevron.up.circular.link.circular.icon.lower_block
-                    i.chevron.down.circular.link.icon.raise_block
-                    if can_move_right
-                        i.move_right.chevron.right.circular.link.icon
                     .toggle_editing_block.ui.small.circular.icon.button(class=editing_button_class title='Edit Block')
                         i.large.pencil.icon
                 if editing_block

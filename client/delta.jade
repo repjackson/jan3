@@ -5,8 +5,8 @@ template(name='delta')
                 .sixteen.wide.column
                     if currentUser
                         .create_delta.ui.large.basic.button(title='Create Session')
-                            i.plus.icon
-                            |Create Session
+                            i.green.plus.icon
+                            | Session
         if delta_doc
             .four.wide.column.scrolling
                 if current_type
@@ -21,8 +21,10 @@ template(name='delta')
                                     +icon name=current_type.icon classes='spaced'
                                 | #{current_type.title}
                     if can_add
-                        .ui.large.icon.button.add_doc
-                            i.green.plus.icon
+                        .ui.hidden.divider
+                        .ui.fluid.icon.compact.button.add_doc(title="Add #{current_type.title}")
+                            // +icon name='plus'
+                            i.green.large.plus.icon
                             // |#{current_type.title}
 
                 .ui.compact.icon.button.delete_delta(title='Clear Session')
@@ -117,14 +119,12 @@ template(name='delta_results')
 
 template(name='toggle_delta_config')
     if boolean_true
-        .ui.active.compact.icon.button.disable_key(title=label)
-            i.icon
-                +icon name=icon
+        .ui.green.icon.button.disable_key(title=label)
+            +iconsmall name=icon
             // | #{label}
     else
-        .ui.compact.icon.button.enable_key(title=label)
-            i.icon
-                +icon name=icon
+        .ui.icon.button.enable_key(title=label)
+            +iconsmall name=icon
             // | #{label}
 
 
@@ -145,7 +145,7 @@ template(name='facet')
     .ui.compact.segment
         .ui.accordion
             .active.title
-                .ui.small.header
+                .ui.header
                     if icon
                         i.icon
                             +iconsmall name=icon
@@ -157,7 +157,7 @@ template(name='facet')
 template(name='selector')
     if name
         .ui.toggle_value.compact.small.button(class=toggle_value_class)
-            .large130 #{name}
+            .large120 #{name}
                 small #{count}
 
 template(name='edit_field_text')
