@@ -1,6 +1,6 @@
 template(name='detail_pane')
-    .ui.fluid.small.icon.button.close_details
-        i.right.chevron.icon
+    .ui.fluid.small.compact.icon.button.close_details
+        i.large.angle.double.right.icon
     .ui.fluid.card
         .content
             unless delta_doc.editing_mode
@@ -13,10 +13,10 @@ template(name='detail_pane')
             if delta_doc.editing_mode
                 .ui.header
                     if detail_doc.icon
-                        i.icon
+                        i.large.icon
                             +icon name=detail_doc.icon
                     else
-                        i.icon
+                        i.large.icon
                             +icon name='pencil'
                     |Edit #{detail_doc.title} #{current_type.title}
             .ui.hidden.divider
@@ -24,12 +24,12 @@ template(name='detail_pane')
             if delta_doc.editing_mode
                 .ui.grid
                     .thirteen.wide.column
-                        .ui.green.fluid.icon.button.disable_editing(title='Save')
-                            i.checkmark.icon
+                        .ui.fluid.icon.compact.button.disable_editing(title='Save')
+                            i.green.checkmark.icon
                             // |Save
                     .three.wide.column
-                        .ui.red.icon.button.remove_doc(title='Title')
-                            i.remove.icon
+                        .ui.icon.compact.button.remove_doc(title='Title')
+                            i.red.remove.icon
                             // |Delete
 
                 each edit_fields

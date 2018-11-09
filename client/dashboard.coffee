@@ -1,7 +1,15 @@
-# FlowRouter.route '/', action: ->
-#     BlazeLayout.render 'layout',
-#         main: 'dashboard'
+FlowRouter.route '/dashboard', action: ->
+    BlazeLayout.render 'layout',
+        main: 'dashboard'
 
+Template.dashboard.onCreated ->
+    @autorun -> Meteor.subscribe 'my_blocks'
+
+Template.dashboard.helpers
+    my_blocks: ->
+        Docs.find
+            type:'block'
+            author_id: Meteor.userId()
 # Template.office_contact_cards.helpers
 #     office_contacts: ->
 #         user = Meteor.user()

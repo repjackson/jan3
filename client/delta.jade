@@ -50,7 +50,7 @@ template(name='delta_results')
     .column
         if is_dev
             +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='administrative-tools'
-        +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand'
+        +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand Cards'
         if delta_doc.config_mode
             .scrolling
                 .ui.header
@@ -191,9 +191,9 @@ template(name='delta_card')
                                     if field_template
                                         +Template.dynamic template=field_template
                                     else
-                                        .content
+                                        .content(title=title)
                                             if icon
-                                                i.icon(title=title)
+                                                i.icon
                                                     +icon name=icon
                                             // strong #{title}
                                             |&nbsp;

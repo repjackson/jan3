@@ -196,7 +196,12 @@ Template.registerHelper 'can_add', ()->
             false
 
 
-
+Template.registerHelper 'my_role', ()->
+    if Meteor.user() and Meteor.user().roles
+        role_slug = Meteor.user().roles[0]
+        Docs.findOne
+            type:'role'
+            slug: role_slug
 
 Template.registerHelper 'editing_mode', ()->
     if Meteor.user() and Meteor.user().roles

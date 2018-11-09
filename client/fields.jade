@@ -73,7 +73,7 @@ template(name='edit_html')
 
 
 template(name='edit_date_field')
-    .ui.dividing.header
+    .ui.header
         +icon name='calendar'
         |#{label}
     .field
@@ -83,7 +83,7 @@ template(name='edit_date_field')
             input#date_field(type='date' value=key_value)
 
 template(name='view_date_field')
-    .ui.dividing.header
+    .ui.header
         +icon name='calendar'
         |#{label}
     h4.ui.header
@@ -265,11 +265,11 @@ template(name='field_edit')
     +Template.dynamic template=edit_template
 
 template(name='boolean_edit')
-    .ui.small.dividing.header
-        |#{title}
+    .ui.small.header
         if icon
             i.icon
                 +icon name=icon
+        |#{title}
     .ui.compact.button.toggle_field(class=bool_switch_class title=key)
         if icon
             i.icon
@@ -277,7 +277,7 @@ template(name='boolean_edit')
         |#{title}
 
 template(name='array_edit')
-    .ui.small.dividing.header
+    .ui.small.header
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}
@@ -294,7 +294,7 @@ template(name='array_edit')
 
 
 template(name='multiref_edit')
-    .ui.small.dividing.header
+    .ui.small.header
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}
@@ -308,7 +308,7 @@ template(name='multiref_edit')
 
 
 template(name='ref_edit')
-    .ui.small.dividing.header
+    .ui.small.header
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}
@@ -323,7 +323,7 @@ template(name='ref_edit')
 
 
 template(name='string_edit')
-    .ui.small.dividing.header
+    .ui.small.header
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}
@@ -334,7 +334,7 @@ template(name='string_edit')
 
 
 template(name='textarea_edit')
-    .ui.small.dividing.header
+    .ui.small.header
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}
@@ -345,7 +345,7 @@ template(name='textarea_edit')
 
 
 template(name='number_edit')
-    .ui.small.dividing.header
+    .ui.small.header
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}
@@ -354,7 +354,7 @@ template(name='number_edit')
 
 
 template(name='date_edit')
-    .ui.small.dividing.header
+    .ui.small.header
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}

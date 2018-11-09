@@ -1,3 +1,14 @@
+template(name='dashboard')
+    +dashboard_header
+    .ui.add_block.icon.button
+        i.large.plus.icon
+    each my_blocks
+        +block_view
+
+
+
+template(name='block_view')
+    div #{title}
 
 //         .row
 //             with currentUser.users_customer.parent_franchisee
@@ -94,8 +105,10 @@ template(name='email_user_link')
 template(name='dashboard_header')
     #dash_header.ui.vertical.masthead.center.aligned.segment
         .ui.container
-            img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            h2.ui.inverted.header Customer Portal
+            // img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            h2.ui.inverted.header
+                |#{my_role.title}
+                | Portal
             unless currentUser
                 a.ui.center.aligned.big.inverted.blue.button(href='/login')
                     |Login to see Dashboard

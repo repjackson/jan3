@@ -1,5 +1,5 @@
 template(name='footer')
-    .footer_area.ui.fluid.segment.footer
+    .ui.fluid.inverted.blue.segment.footer
         .ui.stackable.equal.height.centered.padded.grid
             .row
                 .four.wide.inverted.column
@@ -37,5 +37,5 @@ template(name='footer')
 
 template(name='role_switcher')
     each role_docs
-        .change_role.ui.button(class=role_button_class)
-            |#{slug}
+        .change_role.ui.compact.small.button(class=role_button_class)
+            |#{title}

@@ -14,6 +14,10 @@ Meteor.publish 'my_bookmarks', ->
     Docs.find
         bookmark_ids:$in:[Meteor.userId()]
 
+Meteor.publish 'my_blocks', ->
+    Docs.find
+        type:'block'
+        author_id: Meteor.userId()
 
 
 Meteor.publish 'office_jpid', (jpid)->
