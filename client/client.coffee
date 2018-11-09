@@ -161,7 +161,7 @@ Template.registerHelper 'actions', ()->
             slug:delta.filter_type[0]
         Docs.find({
             type:'action'
-            visible:true
+            # visible:true
             schema_slugs: $in: [schema.slug]
         }, {sort:{rank:1}}).fetch()
 

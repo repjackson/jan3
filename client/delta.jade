@@ -19,7 +19,7 @@ template(name='delta')
                             h1.ui.center.aligned.header
                                 if current_type.icon
                                     +icon name=current_type.icon classes='spaced'
-                                | #{current_type.title}
+                                | #{current_type.plural}
                     if can_add
                         .ui.hidden.divider
                         .ui.fluid.icon.compact.button.add_doc(title="Add #{current_type.title}")
@@ -93,16 +93,16 @@ template(name='delta_results')
                             +set_page_size value=20
                             +set_page_size value=50
                         .item
-                            if delta_doc.page_amount
-                                if show_page_down
-                                    a.ui.page_down.button(title='Previous Page')
-                                        i.left.chevron.grey.icon
-                                if show_page_up
-                                    a.ui.page_up.button(title='Next Page')
-                                        i.right.chevron.grey.icon
-                                if multiple_pages
-                                    .ui.small.label
-                                        | #{delta_doc.current_page}/#{delta_doc.page_amount}
+                            // if delta_doc.page_amount
+                            // if show_page_down
+                            .ui.small.basic.label
+                                | #{delta_doc.current_page}/#{delta_doc.page_amount}
+                            a.ui.page_down.small.compact.icon.button(title='Previous Page')
+                                i.left.chevron.grey.icon
+                            // if show_page_up
+                            a.ui.page_up.small.compact.icon.button(title='Next Page')
+                                i.right.chevron.grey.icon
+                            // if multiple_pages
                         .item
                             | #{delta_doc.total} Results
                     .scrolling.delta_cards
@@ -142,22 +142,26 @@ template(name='set_delta_key')
         |#{label}
 
 template(name='facet')
-    .ui.compact.segment
-        .ui.accordion
-            .active.title
-                .ui.header
-                    if icon
-                        i.icon
-                            +iconsmall name=icon
-                    |#{title}
-            .active.content
-                each values
-                    +selector
+    // .ui.compact.segment
+    .ui.accordion
+        .active.title
+            .ui.header
+                if icon
+                    i.icon
+                        +iconsmall name=icon
+                |#{title}
+        .active.content
+            each values
+                +selector
 
 template(name='selector')
     if name
         .ui.toggle_value.compact.small.button(class=toggle_value_class)
-            .large120 #{name}
+            .large110 #{name}
+                small #{count}
+    else
+        .ui.toggle_value.compact.small.button(class=toggle_value_class)
+            .large110 Null
                 small #{count}
 
 template(name='edit_field_text')
@@ -173,10 +177,10 @@ template(name='edit_field_number')
 
 template(name='delta_card')
     with local_doc
-        .ui.card(class=delta_card_class)
+        .ui.fluid.card(class=delta_card_class)
             if doc_header_fields
                 a.content.delta_card(href='#')
-                    h3.ui.header
+                    h4.ui.header
                         if icon
                             +icon name=icon
                         each doc_header_fields
@@ -202,8 +206,8 @@ template(name='delta_card')
                                                     .ui.basic.label #{this}
                                             else
                                                 | #{value}
-            if actions
-                .content
-                    each actions
-                        +action
+            // if actions
+            //     .content
+            //         each actions
+            //             +Template.dynamic template=action_button_template data=detail_doc
 

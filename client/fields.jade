@@ -182,9 +182,8 @@ template(name='edit_textarea')
         if icon
             +icon name=icon
         |#{label}
-    .ui.form
-        .field
-            textarea.textarea(rows='5') #{page_key_value}
+    .ui.input
+        textarea.textarea(rows='5') #{page_key_value}
 
 
 
@@ -333,8 +332,10 @@ template(name='textarea_edit')
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}
-    textarea.textarea_val(rows='10')
-        |#{value}
+    .ui.form
+        .field
+            textarea.textarea_val(rows='10')
+                |#{value}
 
 
 

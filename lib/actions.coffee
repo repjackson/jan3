@@ -1,14 +1,4 @@
 if Meteor.isClient
-    Template.action.events
-        'click .fire_action': (e,t)->
-            target = Template.parentData()
-            if @function
-                # Session.set 'is_calculating', true
-                Meteor.call @function, target, (err,res)->
-                    if err then console.log err
-                    # else
-                        # console.log 'return', res
-                        # Session.set 'is_calculating', false
 
     Template.set_schema_button.events
         'click .set_schema': ->

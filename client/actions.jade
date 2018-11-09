@@ -1,11 +1,3 @@
-template(name='action')
-    if template
-        +Template.dynamic template=action_button_template data=..
-    // else
-    //     .ui.basic.small.button.fire_action
-    //         |#{title}
-    //         +iconsmall name=icon classes=''
-
 template(name='set_schema_button')
     .ui.small.icon.button.set_schema(title='View Schema')
         // | View
@@ -15,12 +7,14 @@ template(name='set_schema_button')
 
 template(name='bookmark_button')
     if bookmarked
-        .ui.icon.red.small.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
+        .ui.red.small.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
             +iconsmall name='bookmark-ribbon'
+            |Bookmarked
     else
-        .ui.icon.small.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
+        .ui.basic.small.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
             // +iconsmall name='bookmark-ribbon'
-            <img src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png">
+            img(src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png")
+            |Bookmark
 
 template(name='bookmark_pane')
     .ui.header
@@ -38,11 +32,13 @@ template(name='bookmark_pane')
 
 template(name='mark_read_button')
     if read
-        .ui.green.icon.small.button.toggle_read(title='Mark Unread')
+        .ui.green.small.button.toggle_read(title='Mark Unread')
             +iconsmall name='open-envelope'
+            | Read
     else
-        .ui.icon.small.button.toggle_read(title='Mark Read')
+        .ui.basic.small.button.toggle_read(title='Mark Read')
             +iconsmall name='secured-letter'
+            | Unread
 
 template(name='mark_read_pane')
     .ui.header
@@ -56,11 +52,13 @@ template(name='mark_read_pane')
 
 template(name='subscribe_button')
     if subscribed
-        .ui.icon.teal.small.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
+        .ui.teal.small.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
             +iconsmall name='renew-subscription'
+            |Subscribed
     else
-        .ui.icon.small.button.toggle_subscribe(title='Subscribe' class=subscription_class)
+        .ui.basic.small.button.toggle_subscribe(title='Subscribe' class=subscription_class)
             +iconsmall name='cancel-subscription'
+            | Not Subscribed
 
 template(name='subscribe_pane')
     .ui.header
@@ -71,12 +69,27 @@ template(name='subscribe_pane')
             +user_list_view
 
 
+template(name='assignment_button')
+    .ui.basic.small.button.toggle_comment(title='Assignment' class=subscription_class)
+        +iconsmall name='user-engagement-female'
+        |Assignments
+
+template(name='assignment_pane')
+    .ui.header
+        +icon name='user-engagement-female'
+        | Assignments
+    .ui.list
+        each assignments
+            +user_list_view
+    +assignment_widget
+
 
 
 
 template(name='comment_button')
-    .ui.icon.small.button.toggle_comment(title='Comment' class=subscription_class)
+    .ui.basic.small.button.toggle_comment(title='Comment' class=subscription_class)
         +iconsmall name='comments'
+        | Comment
 
 template(name='comment_pane')
     .ui.header

@@ -20,7 +20,7 @@ template(name='nav')
             a.mobile.hidden.item.pick_delta(title=title)
                 i.icon
                     +icon name=icon
-                .mobile.hidden &nbsp; #{title}
+                .mobile.hidden &nbsp; #{plural}
         if is_admin
             each admin_nav_items
                 a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)

@@ -410,6 +410,16 @@ Template.selector.helpers
                 else if @name is false then 'False'
             when 'number' then @name
 
+    toggle_value_class: ->
+        delta = Docs.findOne type:'delta'
+        filter = Template.parentData()
+        filter_list = delta["filter_#{filter.key}"]
+        if filter_list and @name in filter_list then 'active' else ''
+
+
+
+
+
 Template.facet.onRendered ->
     Meteor.setTimeout ->
         $('.accordion').accordion();
@@ -436,12 +446,6 @@ Template.facet.helpers
     #     delta = Docs.findOne type:'delta'
     #     if delta.query["#{@slug}"] is @value then 'blue' else 'basic'
 
-Template.selector.helpers
-    toggle_value_class: ->
-        delta = Docs.findOne type:'delta'
-        filter = Template.parentData()
-        filter_list = delta["filter_#{filter.key}"]
-        if filter_list and @name in filter_list then 'green' else 'basic'
 
 Template.facet.events
     # 'click .set_delta_key': ->
