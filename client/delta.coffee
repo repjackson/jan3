@@ -424,11 +424,11 @@ Template.facet.onRendered ->
     Meteor.setTimeout ->
         $('.accordion').accordion();
     , 500
-Template.delta_card.onRendered ->
-    Meteor.setTimeout ->
-        # $('.accordion').accordion();
-        $('.shape').shape();
-    , 500
+# Template.delta_card.onRendered ->
+#     Meteor.setTimeout ->
+#         # $('.accordion').accordion();
+#         # $('.shape').shape()
+#     , 500
 
 
 

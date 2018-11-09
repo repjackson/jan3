@@ -55,11 +55,11 @@ if Meteor.isClient
                     _id: $in: target.subscribe_ids
 
 
-    Template.comment_button.helpers
-        commentd: -> if @comment_ids and Meteor.userId() in @comment_ids then true else false
-    Template.comment_button.events
-        'click .toggle_comment': (e,t)->
-            Meteor.call 'user_toggle_list', @, 'comment_ids'
+    # Template.comment_button.helpers
+    #     commentd: -> if @comment_ids and Meteor.userId() in @comment_ids then true else false
+    # Template.comment_button.events
+    #     'click .toggle_comment': (e,t)->
+    #         Meteor.call 'user_toggle_list', @, 'comment_ids'
 
     Template.comment_pane.onCreated ->
         @autorun -> Meteor.subscribe 'comments', @data

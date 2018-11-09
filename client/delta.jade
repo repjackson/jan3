@@ -27,15 +27,15 @@ template(name='delta')
                             i.green.large.plus.icon
                             // |#{current_type.title}
 
-                .ui.compact.icon.button.delete_delta(title='Clear Session')
-                    i.remove.icon
-                    // |Clear
-                .ui.compact.icon.button.run_fo(title='Reload Session')
-                    i.refresh.icon
-                    // |Reset
-                if is_dev
-                    .ui.icon.compact.button.show_delta
-                        i.code.icon
+                // .ui.compact.icon.button.delete_delta(title='Clear Session')
+                //     i.remove.icon
+                //     // |Clear
+                // .ui.compact.icon.button.run_fo(title='Reload Session')
+                //     i.refresh.icon
+                //     // |Reset
+                // if is_dev
+                //     .ui.icon.compact.button.show_delta
+                //         i.code.icon
                 // .ui.vertical.segments
                 each delta_fields
                     +facet
@@ -111,9 +111,9 @@ template(name='delta_results')
                             .ui.hidden.divider
             else
                 |No results
-    if delta_doc.viewing_detail
-        .column.scrolling
-            +detail_pane
+    // if delta_doc.viewing_detail
+    //     .column.scrolling
+    //         +detail_pane
 
 
 
@@ -177,48 +177,65 @@ template(name='edit_field_number')
 
 template(name='delta_card')
     with local_doc
-        .ui.shape
-            .sides
-                .active.side
-                    .ui.segment(class=delta_card_class)
-                        if doc_header_fields
-                            a.content.delta_card(href='#')
-                                h4.ui.header
-                                    if icon
-                                        +icon name=icon
-                                    each doc_header_fields
-                                        |#{value}
-                                        |&nbsp;
-                        if delta_doc.view_full
-                            .content
-                                .ui.list
-                                    each field_docs
-                                        if value
-                                            .item
-                                                if field_template
-                                                    +Template.dynamic template=field_template
-                                                else
-                                                    .content(title=title)
-                                                        if icon
-                                                            i.icon
-                                                                +icon name=icon
-                                                        // strong #{title}
-                                                        |&nbsp;
-                                                        if is_array
-                                                            each value
-                                                                .ui.basic.label #{this}
-                                                        else
-                                                            | #{value}
-                .side
-                    +assignment_pane
-                .side
-                    +comment_pane
-                .side
-                    +subscribe_pane
+        .ui.fluid.card(class=delta_card_class)
+            if doc_header_fields
+                a.content.delta_card(href='#')
+                    h4.ui.header
+                        if icon
+                            +icon name=icon
+                        each doc_header_fields
+                            |#{value}
+                            |&nbsp;
+            if delta_doc.view_full
+                .content
+                    .ui.list
+                        each field_docs
+                            if value
+                                .item
+                                    if field_template
+                                        +Template.dynamic template=field_template
+                                    else
+                                        .content(title=title)
+                                            if icon
+                                                i.icon
+                                                    +icon name=icon
+                                            // strong #{title}
+                                            |&nbsp;
+                                            if is_array
+                                                each value
+                                                    .ui.basic.label #{this}
+                                            else
+                                                | #{value}
+            if actions
+                .content
+                    each actions
+                        +Template.dynamic template=action_button_template data=detail_doc
+                    .ui.icon.button
+                        +icon name='checkmark'
+                    .ui.icon.button
+                        +icon name='good-quality'
+                    .ui.icon.button
+                        +icon name='poor-quality'
+                    .ui.icon.button
+                        +icon name='checkmark'
+            .ui.bottom.attached.menu
+                .item
+                    +iconsmall name='comments' classes='spaced'
+                    | Comment
+                .item
+                    +iconsmall name='user-engagement-female' classes='spaced'
+                    | Assignments
+                .item
+                    +iconsmall name='rss' classes='spaced'
+                    | Events
+                .item 1
+
+            // .content
+            //     +assignment_pane
+            // .content
+            //     +comment_pane
+            // .content
+            //     +subscribe_pane
         // .ui.bottom.attached.icon.compact.button
         //     i.chevron.down.icon
-        //     // if actions
-        //     //     .content
-        //     //         each actions
-        //     //             +Template.dynamic template=action_button_template data=detail_doc
 
