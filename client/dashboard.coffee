@@ -9,21 +9,18 @@ Template.dashboard.helpers
     my_blocks: ->
         Docs.find
             type:'block'
+            block_type: 'dashboard'
             author_id: Meteor.userId()
-# Template.office_contact_cards.helpers
-#     office_contacts: ->
-#         user = Meteor.user()
-#         if user and user.customer_jpid
-#             customer_doc = Docs.findOne
-#                 customer_jpid: user.customer_jpid
-#                 type:'customer'
-#                 # grandparent office
-#             if customer_doc
-#                 found = Meteor.users.find {
-#                     published:true
-#                     # "office_name": customer_doc.ev.MASTER_LICENSEE
-#                 }, limit:100
-#                 found
+
+
+Template.dashboard.events
+    'click .add_block': ->
+        # console.log 'hi'
+        Docs.insert
+            type:'block'
+            block_type: 'dashboard'
+
+
 
 Template.customer_menu.events
     'click .log_ticket': (e,t)->

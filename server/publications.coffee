@@ -9,7 +9,6 @@ Meteor.publish 'type', (type, limit)->
             sort: timestamp:-1
         }
 
-
 Meteor.publish 'my_bookmarks', ->
     Docs.find
         bookmark_ids:$in:[Meteor.userId()]
@@ -17,8 +16,8 @@ Meteor.publish 'my_bookmarks', ->
 Meteor.publish 'my_blocks', ->
     Docs.find
         type:'block'
-        author_id: Meteor.userId()
-
+        block_type: 'dashboard'
+        # author_id: Meteor.userId()
 
 Meteor.publish 'office_jpid', (jpid)->
     console.log jpid

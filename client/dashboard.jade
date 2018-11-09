@@ -1,14 +1,31 @@
 template(name='dashboard')
     +dashboard_header
-    .ui.add_block.icon.button
-        i.large.plus.icon
+    .ui.add_block.icon.button.add_block
+        i.plus.icon
+    .ui.add_block.icon.button.add_dashboard
+        i.plus.icon
+    each my_dashboards
+        .ui.header #{title}
     each my_blocks
-        +block_view
+        +dash_block
+
+    .ui.stackable.equal.width.padded.grid
+        .row
+            .column
+                .ui.segment
+                    .ui.header Tasks
+            .column
+                .ui.segment
+                    .ui.header Tasks
 
 
+template(name='dash_block')
+    .ui.card
+        .content
+            i.cog.link.icon
+            .ui.header #{title} hi
 
-template(name='block_view')
-    div #{title}
+
 
 //         .row
 //             with currentUser.users_customer.parent_franchisee
@@ -105,7 +122,8 @@ template(name='email_user_link')
 template(name='dashboard_header')
     #dash_header.ui.vertical.masthead.center.aligned.segment
         .ui.container
-            // img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            if is_customer
+                img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             h2.ui.inverted.header
                 |#{my_role.title}
                 | Portal
@@ -113,7 +131,8 @@ template(name='dashboard_header')
                 a.ui.center.aligned.big.inverted.blue.button(href='/login')
                     |Login to see Dashboard
                     i.right.arrow.icon
-            +customer_menu
+            if is_customer
+                +customer_menu
 
 
 template(name='dashboard_office_messages')

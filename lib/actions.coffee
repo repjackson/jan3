@@ -43,7 +43,7 @@ if Meteor.isClient
     Template.bookmark_pane.helpers
         bookmark_users: ->
             target = Template.currentData()
-            if target
+            if target and target.bookmark_ids
                 Meteor.users.find
                     _id: $in: target.bookmark_ids
 
@@ -60,7 +60,7 @@ if Meteor.isClient
     Template.subscribe_pane.helpers
         subscribers: ->
             target = Template.currentData()
-            if target
+            if target and target.subscribe_ids
                 Meteor.users.find
                     _id: $in: target.subscribe_ids
 
@@ -96,7 +96,7 @@ if Meteor.isClient
     Template.mark_read_pane.helpers
         read_users: ->
             target = Template.currentData()
-            if target
+            if target and target.read_ids
                 Meteor.users.find
                     _id: $in: target.read_ids
 
