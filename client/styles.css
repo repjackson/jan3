@@ -110,7 +110,7 @@ body {
     line-height: 130%;
 }
 
-.ui.button, .ui.label.tag {
+.margined, .ui.label.tag {
   margin-top: .2em !important;
   margin-bottom: .2em !important;
 }

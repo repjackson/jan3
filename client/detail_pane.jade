@@ -54,7 +54,7 @@ template(name='detail_pane')
         unless delta_doc.editing_mode
             .content
                 if can_edit
-                    .ui.basic.button.enable_editing(title="Edit")
+                    .ui.compact.button.enable_editing(title="Edit")
                         +iconsmall name='edit'
                         | Edit
                 each actions

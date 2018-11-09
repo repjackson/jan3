@@ -222,12 +222,12 @@ Template.delta_card.helpers
             Docs.findOne @valueOf()
 
 
-    delta_card_class: ->
-        delta = Docs.findOne type:'delta'
-        classes = []
-        if delta.detail_id then classes.push 'fluid'
-        if delta.detail_id is @_id then classes.push 'raised fluid'
-        classes
+    # delta_card_class: ->
+    #     delta = Docs.findOne type:'delta'
+    #     classes = []
+    #     if delta.detail_id then classes.push 'fluid'
+    #     if delta.detail_id is @_id then classes.push 'raised fluid'
+    #     classes
 
     field_docs: ->
         delta = Docs.findOne type:'delta'
@@ -382,7 +382,7 @@ Template.delta_results.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'green' else ''
+        if @value is delta.page_size then 'active' else ''
 
 
 Template.set_page_size.events
@@ -426,7 +426,8 @@ Template.facet.onRendered ->
     , 500
 Template.delta_card.onRendered ->
     Meteor.setTimeout ->
-        $('.accordion').accordion();
+        # $('.accordion').accordion();
+        $('.shape').shape();
     , 500
 
 

@@ -22,7 +22,7 @@ template(name='delta')
                                 | #{current_type.plural}
                     if can_add
                         .ui.hidden.divider
-                        .ui.fluid.icon.compact.button.add_doc(title="Add #{current_type.title}")
+                        .ui.fluid.icon.compact.margined.button.add_doc(title="Add #{current_type.title}")
                             // +icon name='plus'
                             i.green.large.plus.icon
                             // |#{current_type.title}
@@ -106,9 +106,9 @@ template(name='delta_results')
                         .item
                             | #{delta_doc.total} Results
                     .scrolling.delta_cards
-                        .ui.stackable.cards
-                            each delta_doc.result_ids
-                                +delta_card
+                        each delta_doc.result_ids
+                            +delta_card
+                            .ui.hidden.divider
             else
                 |No results
     if delta_doc.viewing_detail
@@ -119,7 +119,7 @@ template(name='delta_results')
 
 template(name='toggle_delta_config')
     if boolean_true
-        .ui.green.icon.button.disable_key(title=label)
+        .ui.active.icon.button.disable_key(title=label)
             +iconsmall name=icon
             // | #{label}
     else
@@ -156,7 +156,7 @@ template(name='facet')
 
 template(name='selector')
     if name
-        .ui.toggle_value.compact.small.button(class=toggle_value_class)
+        .ui.toggle_value.compact.small.margined.button(class=toggle_value_class)
             .large110 #{name}
                 small #{count}
     else
@@ -177,37 +177,48 @@ template(name='edit_field_number')
 
 template(name='delta_card')
     with local_doc
-        .ui.fluid.card(class=delta_card_class)
-            if doc_header_fields
-                a.content.delta_card(href='#')
-                    h4.ui.header
-                        if icon
-                            +icon name=icon
-                        each doc_header_fields
-                            |#{value}
-                            |&nbsp;
-            if delta_doc.view_full
-                .content
-                    .ui.list
-                        each field_docs
-                            if value
-                                .item
-                                    if field_template
-                                        +Template.dynamic template=field_template
-                                    else
-                                        .content(title=title)
-                                            if icon
-                                                i.icon
-                                                    +icon name=icon
-                                            // strong #{title}
-                                            |&nbsp;
-                                            if is_array
-                                                each value
-                                                    .ui.basic.label #{this}
-                                            else
-                                                | #{value}
-            // if actions
-            //     .content
-            //         each actions
-            //             +Template.dynamic template=action_button_template data=detail_doc
+        .ui.shape
+            .sides
+                .active.side
+                    .ui.segment(class=delta_card_class)
+                        if doc_header_fields
+                            a.content.delta_card(href='#')
+                                h4.ui.header
+                                    if icon
+                                        +icon name=icon
+                                    each doc_header_fields
+                                        |#{value}
+                                        |&nbsp;
+                        if delta_doc.view_full
+                            .content
+                                .ui.list
+                                    each field_docs
+                                        if value
+                                            .item
+                                                if field_template
+                                                    +Template.dynamic template=field_template
+                                                else
+                                                    .content(title=title)
+                                                        if icon
+                                                            i.icon
+                                                                +icon name=icon
+                                                        // strong #{title}
+                                                        |&nbsp;
+                                                        if is_array
+                                                            each value
+                                                                .ui.basic.label #{this}
+                                                        else
+                                                            | #{value}
+                .side
+                    +assignment_pane
+                .side
+                    +comment_pane
+                .side
+                    +subscribe_pane
+        // .ui.bottom.attached.icon.compact.button
+        //     i.chevron.down.icon
+        //     // if actions
+        //     //     .content
+        //     //         each actions
+        //     //             +Template.dynamic template=action_button_template data=detail_doc
 

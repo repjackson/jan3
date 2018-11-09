@@ -1,5 +1,5 @@
 template(name='set_schema_button')
-    .ui.small.icon.button.set_schema(title='View Schema')
+    .ui.icon.compact.button.set_schema(title='View Schema')
         // | View
         // i.right.chevron.icon
         +iconsmall name='chevron-right'
@@ -7,11 +7,11 @@ template(name='set_schema_button')
 
 template(name='bookmark_button')
     if bookmarked
-        .ui.red.small.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
+        .ui.red.compact.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
             +iconsmall name='bookmark-ribbon'
             |Bookmarked
     else
-        .ui.basic.small.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
+        .ui.compact.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
             // +iconsmall name='bookmark-ribbon'
             img(src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png")
             |Bookmark
@@ -32,11 +32,11 @@ template(name='bookmark_pane')
 
 template(name='mark_read_button')
     if read
-        .ui.green.small.button.toggle_read(title='Mark Unread')
+        .ui.green.compact.button.toggle_read(title='Mark Unread')
             +iconsmall name='open-envelope'
             | Read
     else
-        .ui.basic.small.button.toggle_read(title='Mark Read')
+        .ui.compact.button.toggle_read(title='Mark Read')
             +iconsmall name='secured-letter'
             | Unread
 
@@ -52,11 +52,11 @@ template(name='mark_read_pane')
 
 template(name='subscribe_button')
     if subscribed
-        .ui.teal.small.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
+        .ui.teal.compact.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
             +iconsmall name='renew-subscription'
             |Subscribed
     else
-        .ui.basic.small.button.toggle_subscribe(title='Subscribe' class=subscription_class)
+        .ui.compact.button.toggle_subscribe(title='Subscribe' class=subscription_class)
             +iconsmall name='cancel-subscription'
             | Not Subscribed
 
@@ -70,7 +70,7 @@ template(name='subscribe_pane')
 
 
 template(name='assignment_button')
-    .ui.basic.small.button.toggle_comment(title='Assignment' class=subscription_class)
+    .ui.compact.button.toggle_comment(title='Assignment' class=subscription_class)
         +iconsmall name='user-engagement-female'
         |Assignments
 
@@ -87,7 +87,7 @@ template(name='assignment_pane')
 
 
 template(name='comment_button')
-    .ui.basic.small.button.toggle_comment(title='Comment' class=subscription_class)
+    .ui.compact.button.toggle_comment(title='Comment' class=subscription_class)
         +iconsmall name='comments'
         | Comment
 
