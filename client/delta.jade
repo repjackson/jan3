@@ -183,99 +183,40 @@ template(name='edit_field_number')
 
 template(name='delta_card')
     with local_doc
-        .ui.fluid.card(class=delta_card_class)
-            .content
-                .ui.divided.grid
-                    .fifteen.wide.column
-                        .large120 #{text}
-                    a.one.wide.center.aligned.column.toggle_size(class=size_column_class)
-                        +icon name='resize-diagonal' title='Maximize'
-            .content
-                .ui.equal.width.divided.grid
-                    .column
-                        +author_info
-                        +when_template
-                    .column
-                        |Tags
-                        each tags
-                            .ui.basic.label #{this}
-                    .column
-                        if complete
-                            +icon name='checked-radio-button' classes='spaced'
-                            | Complete
-                        else
-                            +icon name='unchecked-radio-button' classes='spaced'
-                            | Incomplete
+        +Template.dynamic template=card_template
 
-            // if doc_header_fields
-            //     a.content.delta_card(href='#')
-            //         h4.ui.header
-            //             if icon
-            //                 +icon name=icon
-            //             each doc_header_fields
-            //                 |#{value}
-            //                 |&nbsp;
 
-            // if delta_doc.view_full
-            //     .content
-            //         .ui.equal.width.divided.grid
-            //             each field_docs
-            //                 if value
-            //                     .column
-            //                         if field_template
-            //                             +Template.dynamic template=field_template
-            //                         else
-            //                             .content(title=title)
-            //                                 if icon
-            //                                     i.icon
-            //                                         +icon name=icon
-            //                                 // strong #{title}
-            //                                 |&nbsp;
-            //                                 if is_array
-            //                                     each value
-            //                                         .ui.basic.label #{this}
-            //                                 else
-            //                                     | #{value}
-            if actions
-                .content
-                    .ui.equal.width.divided.grid
-                        // each actions
-                        //     .column
-                        //         +Template.dynamic template=action_button_template data=detail_doc
-                        .column
-                            +bookmark_button
-                            if full_mode
-                                +bookmark_pane
-                        .column
-                            .ui.icon.compact.button
-                                +iconsmall name='checkmark'
-                        .column
-                            .ui.icon.compact.button
-                                +iconsmall name='facebook-like'
-                            .ui.icon.compact.button
-                                +iconsmall name='thumbs-down'
-                        .column
-                            +subscribe_button
-                            if full_mode
-                                +subscribe_pane
-                        .column
-                            +mark_read_button
-                            if full_mode
-                                +mark_read_pane
+template(name='default_card')
+    .ui.fluid.card.delta_card(class=delta_card_class)
+        if doc_header_fields
             .content
-                .ui.equal.width.divided.grid
-                    .column
-                        +iconsmall name='comments' classes='spaced'
-                        | Comment
-                        if full_mode
-                            +comments
-                    .column
-                        +iconsmall name='user-engagement-female' classes='spaced'
-                        | Assignments
-                        if full_mode
-                            +assignment_pane
-                    .column
-                        +iconsmall name='rss' classes='spaced'
-                        | Events
-                        if full_mode
-                            +global_feed
+                h3.ui.header
+                    if icon
+                        +icon name=icon
+                    each doc_header_fields
+                        |#{value}
+                        |&nbsp;
+        if delta_doc.view_full
+            .content
+                .ui.list
+                    each field_docs
+                        if value
+                            .item
+                                if field_template
+                                    +Template.dynamic template=field_template
+                                else
+                                    .content
+                                        if icon
+                                            i.large.icon
+                                                +icon name=icon
+                                        | #{title}
+                                        |&nbsp;
+                                        if is_array
+                                            each value
+                                                .ui.basic.label #{this}
+                                        else
+                                            strong #{value}
+        if actions
+            .content
+                each actions
+                    +Template.dynamic template=action_button_template data=detail_doc

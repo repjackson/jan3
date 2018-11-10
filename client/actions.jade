@@ -9,12 +9,14 @@ template(name='bookmark_button')
     if bookmarked
         .ui.red.compact.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
             +iconsmall name='bookmark-ribbon'
-            |Bookmarked
+            if full_mode
+                |Bookmarked
     else
         .ui.compact.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
             // +iconsmall name='bookmark-ribbon'
             img(src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png")
-            |Bookmark
+            if full_mode
+                |Bookmark
 
 template(name='bookmark_pane')
     .ui.header
@@ -34,11 +36,13 @@ template(name='mark_read_button')
     if read
         .ui.green.compact.button.toggle_read(title='Mark Unread')
             +iconsmall name='open-envelope'
-            | Read
+            if full_mode
+                | Read
     else
         .ui.compact.button.toggle_read(title='Mark Read')
             +iconsmall name='secured-letter'
-            | Unread
+            if full_mode
+                | Unread
 
 template(name='mark_read_pane')
     .ui.header
@@ -54,11 +58,13 @@ template(name='subscribe_button')
     if subscribed
         .ui.teal.compact.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
             +iconsmall name='renew-subscription'
-            |Subscribed
+            if full_mode
+                |Subscribed
     else
         .ui.compact.button.toggle_subscribe(title='Subscribe' class=subscription_class)
             +iconsmall name='renew-subscription'
-            | Subscribe
+            if full_mode
+                | Subscribe
 
 template(name='subscribe_pane')
     .ui.header
@@ -68,11 +74,6 @@ template(name='subscribe_pane')
         each subscribers
             +user_list_view
 
-
-// template(name='assignment_button')
-//     .ui.compact.button.toggle_comment(title='Assignment' class=subscription_class)
-//         +iconsmall name='user-engagement-female'
-//         |Assignments
 
 template(name='assignment_pane')
     .ui.header
@@ -84,12 +85,6 @@ template(name='assignment_pane')
     +assignment_widget
 
 
-
-
-// template(name='comment_button')
-//     .ui.compact.button.toggle_comment(title='Comment' class=subscription_class)
-//         +iconsmall name='comments'
-//         | Comment
 
 template(name='comment_pane')
     .ui.header
@@ -121,4 +116,23 @@ template(name='comment_pane')
                             a.delete_comment delete
 
 
+
+template(name='voting_button')
+    .ui.icon.compact.button.upvote
+        +iconsmall name='facebook-like'
+    .ui.icon.compact.button.downvote
+        +iconsmall name='thumbs-down'
+
+
+template(name='voting_pane')
+    .ui.header
+        +icon name='facebook-like'
+        |Upvoters
+    each upvoters
+        +user_list_view
+    .ui.header
+        +icon name='thumbs-down'
+        |Downvoters
+    each downvoters
+        +user_list_view
 

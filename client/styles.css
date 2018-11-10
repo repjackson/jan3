@@ -230,6 +230,19 @@ body {
   max-height:1200px;
 }
 
+
+.scrolling_small::-webkit-scrollbar {
+    display: none;
+}
+
+.scrolling_small{
+  /*overflow-y:scroll;*/
+  overflow-y:scroll;
+  overflow-x: hidden;
+  padding:2px;
+  max-height:500px;
+}
+
 .delta_cards{
 }
 

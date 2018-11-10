@@ -166,3 +166,82 @@ template(name='ticket_notes')
     else
         #start_adding_note.ui.small.fluid.button
             |Add Note
+
+
+
+
+template(name='task_card')
+    with local_doc
+        .ui.fluid.card(class=delta_card_class)
+            .content
+                .ui.divided.grid
+                    .fifteen.wide.column
+                        .large120 #{text}
+                    a.one.wide.center.aligned.column.toggle_size(class=size_column_class)
+                        +icon name='resize-diagonal' title='Maximize'
+            .content
+                .ui.equal.width.divided.grid
+                    .column
+                        +author_info
+                        +when_template
+                    .column
+                        |Tags
+                        each tags
+                            .ui.basic.label #{this}
+                    .column
+                        if complete
+                            +icon name='checked-radio-button' classes='spaced'
+                            | Complete
+                            if full_mode
+                                div
+                                .ui.compact.button.mark_incomplete
+                                    +iconsmall name='unchecked-checkbox'
+                                    | Mark Incomplete
+                        else
+                            +icon name='unchecked-radio-button' classes='spaced'
+                            | Incomplete
+                            if full_mode
+                                div
+                                .ui.compact.button.mark_complete
+                                    +iconsmall name='checkmark'
+                                    | Mark Complete
+            if actions
+                .content
+                    .ui.equal.width.divided.grid
+                        .column
+                            +bookmark_button
+                            if full_mode
+                                +bookmark_pane
+                        .column
+                            .ui.header
+                                +icon name='tree-structure'
+                                |Relations
+                        .column
+                            +voting_button
+                            if full_mode
+                                +voting_pane
+                        .column
+                            +subscribe_button
+                            if full_mode
+                                +subscribe_pane
+                        .column
+                            +mark_read_button
+                            if full_mode
+                                +mark_read_pane
+            .content
+                .ui.equal.width.divided.grid
+                    .column
+                        +iconsmall name='comments' classes='spaced'
+                        | Comment
+                        if full_mode
+                            +comments
+                    .column
+                        +iconsmall name='user-engagement-female' classes='spaced'
+                        | Assignments
+                        if full_mode
+                            +assignment_pane
+                    .column
+                        +iconsmall name='rss' classes='spaced'
+                        | Events
+                        if full_mode
+                            +global_feed

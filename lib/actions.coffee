@@ -3,12 +3,11 @@ if Meteor.isClient
     Template.set_schema_button.events
         'click .set_schema': ->
             delta = Docs.findOne type:'delta'
-            # console.log @
-            # console.log Template.parentData()
+            card_doc = Template.parentData(4)
 
             Docs.update delta._id,
                 $set:
-                    "filter_type": [@slug]
+                    "filter_type": [card_doc.slug]
                     current_page: 0
                     detail_id:null
                     viewing_children:false
@@ -54,6 +53,48 @@ if Meteor.isClient
             if target and target.subscribe_ids
                 Meteor.users.find
                     _id: $in: target.subscribe_ids
+
+
+
+
+
+
+    Template.voting_button.helpers
+        upvoted: -> if @upvoted_ids and Meteor.userId() in @upvoted_ids then true else false
+        downvoted: -> if @downvoted_ids and Meteor.userId() in @downvoted_ids then true else false
+
+    Template.voting_button.events
+        'click .upvote': (e,t)-> Meteor.call 'upvote', @
+
+        'click .downvote': (e,t)-> Meteor.call 'downvote', @
+
+    Template.voting_pane.onCreated ->
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'upvoted_ids'
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'downvoted_ids'
+    Template.voting_pane.helpers
+        upvoters: ->
+            target = Template.currentData()
+            if target and target.upvoted_ids
+                Meteor.users.find
+                    _id: $in: target.upvoted_ids
+
+        downvoters: ->
+            target = Template.currentData()
+            if target and target.downvoted_ids
+                Meteor.users.find
+                    _id: $in: target.downvoted_ids
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     # Template.comment_button.helpers

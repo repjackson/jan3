@@ -157,6 +157,13 @@ Template.delta.events
         delta = Docs.findOne type:'delta'
         console.log delta
 
+Template.delta_card.helpers
+    card_template: ->
+        doc = Docs.findOne @valueOf()
+        if doc and doc.type
+            if doc.type is 'task' then 'task_card' else 'default_card'
+
+
 
 Template.delta_results.helpers
     is_calculating: -> Session.get('is_calculating')
@@ -164,7 +171,6 @@ Template.delta_results.helpers
     results_class: ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail then 'sixteen wide' else 'twelve wide'
-
 
 
     multiple_pages: ->
@@ -221,7 +227,16 @@ Template.delta_card.onCreated ->
     @autorun => Meteor.subscribe 'doc', @data
 
 
-Template.delta_card.events
+Template.task_card.events
+    'click .mark_complete': ->
+        Docs.update @_id,
+            $set: complete:true
+
+    'click .mark_incomplete': ->
+        Docs.update @_id,
+            $set: complete:false
+
+
     'click .toggle_size': ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail
@@ -244,6 +259,7 @@ Template.delta_card.helpers
             Docs.findOne @valueOf()
 
 
+Template.default_card.helpers
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
         classes = []
