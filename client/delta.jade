@@ -8,47 +8,46 @@ template(name='delta')
                             i.green.plus.icon
                             | Session
         if delta_doc
-            .four.wide.column.scrolling
-                if current_type
-                    .ui.stackable.grid
-                        unless viewing_schemas
-                            .three.wide.column
-                                .ui.large.icon.button.view_schamas(title='Data')
-                                    i.left.chevron.icon
-                        .thirteen.wide.middle.aligned.column
-                            h1.ui.center.aligned.header
-                                if current_type.icon
-                                    +icon name=current_type.icon classes='spaced'
-                                | #{current_type.plural}
-                    if can_add
+            unless delta_doc.viewing_detail
+                .four.wide.column.scrolling
+                    if current_type
+                        .ui.stackable.grid
+                            unless viewing_schemas
+                                .three.wide.column
+                                    .ui.large.icon.button.view_schamas(title='Data')
+                                        i.left.chevron.icon
+                            .thirteen.wide.middle.aligned.column
+                                h1.ui.center.aligned.header
+                                    if current_type.icon
+                                        +icon name=current_type.icon classes='spaced'
+                                    | #{current_type.plural}
+                        if can_add
+                            .ui.hidden.divider
+                            .ui.fluid.icon.compact.margined.button.add_doc(title="Add #{current_type.title}")
+                                // +icon name='plus'
+                                i.green.large.plus.icon
+                                // |#{current_type.title}
+
+                    .ui.compact.icon.button.delete_delta(title='Clear Session')
+                        i.remove.icon
+                        // |Clear
+                    .ui.compact.icon.button.run_fo(title='Reload Session')
+                        i.refresh.icon
+                        // |Reset
+                    if is_dev
+                        .ui.icon.compact.button.show_delta
+                            i.code.icon
+                    // .ui.vertical.segments
+                    each delta_fields
                         .ui.hidden.divider
-                        .ui.fluid.icon.compact.margined.button.add_doc(title="Add #{current_type.title}")
-                            // +icon name='plus'
-                            i.green.large.plus.icon
-                            // |#{current_type.title}
+                        +facet
 
-                .ui.compact.icon.button.delete_delta(title='Clear Session')
-                    i.remove.icon
-                    // |Clear
-                .ui.compact.icon.button.run_fo(title='Reload Session')
-                    i.refresh.icon
-                    // |Reset
-                if is_dev
-                    .ui.icon.compact.button.show_delta
-                        i.code.icon
-                // .ui.vertical.segments
-                each delta_fields
-                    .ui.hidden.divider
-                    +facet
-
-            .twelve.wide.column
-                .ui.equal.width.stackable.grid
-                    +delta_results
+            +delta_results
 
 
 
 template(name='delta_results')
-    .column
+    .column(class=results_class)
         if is_dev
             +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
         // +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand Cards'
@@ -106,15 +105,19 @@ template(name='delta_results')
                         .ui.hidden.divider
                         .ui.active.indeterminate.massive.centered.inline.loader
                     else
-                        .scrolling.delta_cards
-                            each delta_doc.result_ids
+                        if delta_doc.viewing_detail
+                            with delta_doc.detail_id
                                 +delta_card
-                                .ui.hidden.divider
+                        else
+                            .scrolling.delta_cards
+                                each delta_doc.result_ids
+                                    +delta_card
+                                    .ui.hidden.divider
             else
                 |No results
-    if delta_doc.viewing_detail
-        .column.scrolling
-            +detail_pane
+    // if delta_doc.viewing_detail
+    //     .column.scrolling
+    //         +detail_pane
 
 
 
@@ -180,6 +183,12 @@ template(name='delta_card')
     with local_doc
         .ui.fluid.card(class=delta_card_class)
             .content
+                .ui.divided.grid
+                    .fifteen.wide.column
+                        .large120 #{text}
+                    a.one.wide.center.aligned.column.toggle_size(class=size_column_class)
+                        +icon name='resize-diagonal' title='Maximize'
+            .content
                 .ui.equal.width.divided.grid
                     .column
                         +author_info
@@ -187,13 +196,11 @@ template(name='delta_card')
                         +when_template
                     .column
                         if complete
-                            +icon name='unchecked-radio-button' title='Open'
+                            +icon name='checked-radio-button' classes='spaced'
                             | Complete
                         else
-                            +icon name='checked-radio-button' title='Closed'
+                            +icon name='unchecked-radio-button' classes='spaced'
                             | Incomplete
-                    a.column
-                        +icon name='resize-diagonal' title='Closed'
 
             // if doc_header_fields
             //     a.content.delta_card(href='#')
@@ -203,10 +210,6 @@ template(name='delta_card')
             //             each doc_header_fields
             //                 |#{value}
             //                 |&nbsp;
-            .content
-                .ui.equal.width.divided.grid
-                    .column
-                        |#{text}
 
             // if delta_doc.view_full
             //     .content
@@ -235,9 +238,9 @@ template(name='delta_card')
                     .ui.icon.compact.button
                         +iconsmall name='checkmark'
                     .ui.icon.compact.button
-                        +iconsmall name='good-quality'
+                        +iconsmall name='facebook-like'
                     .ui.icon.compact.button
-                        +iconsmall name='poor-quality'
+                        +iconsmall name='thumbs-down'
                     .ui.icon.compact.button
                         +iconsmall name='checkmark'
             .content

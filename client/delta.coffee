@@ -161,6 +161,12 @@ Template.delta.events
 Template.delta_results.helpers
     is_calculating: -> Session.get('is_calculating')
 
+    results_class: ->
+        delta = Docs.findOne type:'delta'
+        if delta.viewing_detail then 'sixteen wide' else 'twelve wide'
+
+
+
     multiple_pages: ->
         delta = Docs.findOne type:'delta'
         delta.page_amount > 1
@@ -216,12 +222,18 @@ Template.delta_card.onCreated ->
 
 
 Template.delta_card.events
-    'click .delta_card': ->
+    'click .toggle_size': ->
         delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_detail: true
-                detail_id: @_id
+        if delta.viewing_detail
+            Docs.update delta._id,
+                $set:
+                    viewing_detail: false
+                    detail_id: null
+        else
+            Docs.update delta._id,
+                $set:
+                    viewing_detail: true
+                    detail_id: @_id
 
 
 Template.delta_card.helpers
@@ -232,12 +244,20 @@ Template.delta_card.helpers
             Docs.findOne @valueOf()
 
 
-    # delta_card_class: ->
-    #     delta = Docs.findOne type:'delta'
-    #     classes = []
-    #     if delta.detail_id then classes.push 'fluid'
-    #     if delta.detail_id is @_id then classes.push 'raised fluid'
-    #     classes
+    delta_card_class: ->
+        delta = Docs.findOne type:'delta'
+        classes = []
+        if delta.detail_id then classes.push 'fluid'
+        if delta.detail_id is @_id then classes.push 'raised fluid'
+        classes
+
+
+    size_column_class: ->
+        delta = Docs.findOne type:'delta'
+        classes = []
+        if delta.detail_id is @_id then classes.push 'blue'
+        classes
+
 
     field_docs: ->
         delta = Docs.findOne type:'delta'
