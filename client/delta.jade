@@ -50,7 +50,7 @@ template(name='delta_results')
     .column
         if is_dev
             +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
-        +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand Cards'
+        // +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand Cards'
         if delta_doc.config_mode
             .scrolling
                 .ui.header
@@ -65,9 +65,8 @@ template(name='delta_results')
                         .ui.button.add_field
                             i.plus.icon
                             | Field
-                        .ui.stackable.cards
-                            each schema_fields
-                                +delta_card data=_id
+                        each schema_fields
+                            +delta_card data=_id
                 .ui.hidden.divider
                 .ui.accordion
                     .active.title
@@ -78,9 +77,8 @@ template(name='delta_results')
                         .ui.button.add_action
                             i.plus.icon
                             | Action
-                        .ui.stackable.cards
-                            each schema_actions
-                                +delta_card data=_id
+                        each schema_actions
+                            +delta_card data=_id
         else
             if is_calculating
                 .ui.hidden.divider
@@ -105,15 +103,16 @@ template(name='delta_results')
                             // if multiple_pages
                         .item
                             | #{delta_doc.total} Results
+                    .ui.hidden.divider
                     .scrolling.delta_cards
                         each delta_doc.result_ids
                             +delta_card
                             .ui.hidden.divider
             else
                 |No results
-    // if delta_doc.viewing_detail
-    //     .column.scrolling
-    //         +detail_pane
+    if delta_doc.viewing_detail
+        .column.scrolling
+            +detail_pane
 
 
 
@@ -178,57 +177,79 @@ template(name='edit_field_number')
 template(name='delta_card')
     with local_doc
         .ui.fluid.card(class=delta_card_class)
-            if doc_header_fields
-                a.content.delta_card(href='#')
-                    h4.ui.header
-                        if icon
-                            +icon name=icon
-                        each doc_header_fields
-                            |#{value}
-                            |&nbsp;
-            if delta_doc.view_full
-                .content
-                    .ui.list
-                        each field_docs
-                            if value
-                                .item
-                                    if field_template
-                                        +Template.dynamic template=field_template
-                                    else
-                                        .content(title=title)
-                                            if icon
-                                                i.icon
-                                                    +icon name=icon
-                                            // strong #{title}
-                                            |&nbsp;
-                                            if is_array
-                                                each value
-                                                    .ui.basic.label #{this}
-                                            else
-                                                | #{value}
+            .content
+                .ui.equal.width.divided.grid
+                    .column
+                        +author_info
+                    .column
+                        +when_template
+                    .column
+                        if complete
+                            +icon name='unchecked-radio-button' title='Open'
+                            | Complete
+                        else
+                            +icon name='checked-radio-button' title='Closed'
+                            | Incomplete
+                    a.column
+                        +icon name='resize-diagonal' title='Closed'
+
+            // if doc_header_fields
+            //     a.content.delta_card(href='#')
+            //         h4.ui.header
+            //             if icon
+            //                 +icon name=icon
+            //             each doc_header_fields
+            //                 |#{value}
+            //                 |&nbsp;
+            .content
+                .ui.equal.width.divided.grid
+                    .column
+                        +iconsmall name='note'
+                        |#{text}
+
+            // if delta_doc.view_full
+            //     .content
+            //         .ui.equal.width.divided.grid
+            //             each field_docs
+            //                 if value
+            //                     .column
+            //                         if field_template
+            //                             +Template.dynamic template=field_template
+            //                         else
+            //                             .content(title=title)
+            //                                 if icon
+            //                                     i.icon
+            //                                         +icon name=icon
+            //                                 // strong #{title}
+            //                                 |&nbsp;
+            //                                 if is_array
+            //                                     each value
+            //                                         .ui.basic.label #{this}
+            //                                 else
+            //                                     | #{value}
             if actions
                 .content
                     each actions
                         +Template.dynamic template=action_button_template data=detail_doc
-                    .ui.icon.button
-                        +icon name='checkmark'
-                    .ui.icon.button
-                        +icon name='good-quality'
-                    .ui.icon.button
-                        +icon name='poor-quality'
-                    .ui.icon.button
-                        +icon name='checkmark'
-            .ui.bottom.attached.menu
-                .item
-                    +iconsmall name='comments' classes='spaced'
-                    | Comment
-                .item
-                    +iconsmall name='user-engagement-female' classes='spaced'
-                    | Assignments
-                .item
-                    +iconsmall name='rss' classes='spaced'
-                    | Events
-                .item 1
+                    .ui.icon.compact.button
+                        +iconsmall name='checkmark'
+                    .ui.icon.compact.button
+                        +iconsmall name='good-quality'
+                    .ui.icon.compact.button
+                        +iconsmall name='poor-quality'
+                    .ui.icon.compact.button
+                        +iconsmall name='checkmark'
+            .content
+                .ui.equal.width.divided.grid
+                    .column
+                        +iconsmall name='comments' classes='spaced'
+                        | Comment
+                    .column
+                        +iconsmall name='user-engagement-female' classes='spaced'
+                        | Assignments
+                    .column
+                        +iconsmall name='rss' classes='spaced'
+                        | Events
 
             // .content
             //     +assignment_pane
