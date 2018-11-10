@@ -49,7 +49,8 @@ template(name='delta')
 template(name='delta_results')
     .column(class=results_class)
         if is_dev
-            +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
+            unless delta_doc.viewing_detail
+                +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
         // +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand Cards'
         if delta_doc.config_mode
             .scrolling
@@ -82,25 +83,26 @@ template(name='delta_results')
         else
             if delta_doc.result_ids
                 if delta_doc.result_ids.length
-                    .ui.horizontal.list
-                        .item
-                            +set_page_size value=10
-                            +set_page_size value=20
-                            +set_page_size value=50
-                        .item
-                            if multiple_pages
-                                .ui.basic.label
-                                    | #{delta_doc.current_page}/#{delta_doc.page_amount}
-                            | #{delta_doc.total} Results
-                        .item
-                            .ui.buttons
-                                if show_page_down
-                                    a.ui.page_down.small.compact.icon.button(title='Previous Page')
-                                        i.left.chevron.grey.icon
-                                if show_page_up
-                                    a.ui.page_up.small.compact.icon.button(title='Next Page')
-                                        i.right.chevron.grey.icon
-                    .ui.hidden.divider
+                    unless delta_doc.viewing_detail
+                        .ui.horizontal.list
+                            .item
+                                +set_page_size value=10
+                                +set_page_size value=20
+                                +set_page_size value=50
+                            .item
+                                if multiple_pages
+                                    .ui.basic.label
+                                        | #{delta_doc.current_page}/#{delta_doc.page_amount}
+                                | #{delta_doc.total} Results
+                            .item
+                                .ui.buttons
+                                    if show_page_down
+                                        a.ui.page_down.small.compact.icon.button(title='Previous Page')
+                                            i.left.chevron.grey.icon
+                                    if show_page_up
+                                        a.ui.page_up.small.compact.icon.button(title='Next Page')
+                                            i.right.chevron.grey.icon
+                        .ui.hidden.divider
                     if is_calculating
                         .ui.hidden.divider
                         .ui.active.indeterminate.massive.centered.inline.loader
@@ -192,8 +194,11 @@ template(name='delta_card')
                 .ui.equal.width.divided.grid
                     .column
                         +author_info
-                    .column
                         +when_template
+                    .column
+                        |Tags
+                        each tags
+                            .ui.basic.label #{this}
                     .column
                         if complete
                             +icon name='checked-radio-button' classes='spaced'
@@ -233,34 +238,44 @@ template(name='delta_card')
             //                                     | #{value}
             if actions
                 .content
-                    each actions
-                        +Template.dynamic template=action_button_template data=detail_doc
-                    .ui.icon.compact.button
-                        +iconsmall name='checkmark'
-                    .ui.icon.compact.button
-                        +iconsmall name='facebook-like'
-                    .ui.icon.compact.button
-                        +iconsmall name='thumbs-down'
-                    .ui.icon.compact.button
-                        +iconsmall name='checkmark'
+                    .ui.equal.width.divided.grid
+                        // each actions
+                        //     .column
+                        //         +Template.dynamic template=action_button_template data=detail_doc
+                        .column
+                            +bookmark_button
+                            if full_mode
+                                +bookmark_pane
+                        .column
+                            .ui.icon.compact.button
+                                +iconsmall name='checkmark'
+                        .column
+                            .ui.icon.compact.button
+                                +iconsmall name='facebook-like'
+                            .ui.icon.compact.button
+                                +iconsmall name='thumbs-down'
+                        .column
+                            +subscribe_button
+                            if full_mode
+                                +subscribe_pane
+                        .column
+                            +mark_read_button
+                            if full_mode
+                                +mark_read_pane
             .content
                 .ui.equal.width.divided.grid
                     .column
                         +iconsmall name='comments' classes='spaced'
                         | Comment
+                        if full_mode
+                            +comments
                     .column
                         +iconsmall name='user-engagement-female' classes='spaced'
                         | Assignments
+                        if full_mode
+                            +assignment_pane
                     .column
                         +iconsmall name='rss' classes='spaced'
                         | Events
-
-            // .content
-            //     +assignment_pane
-            // .content
-            //     +comment_pane
-            // .content
-            //     +subscribe_pane
-        // .ui.bottom.attached.icon.compact.button
-        //     i.chevron.down.icon
-
+                        if full_mode
+                            +global_feed

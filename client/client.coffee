@@ -168,6 +168,10 @@ Template.registerHelper 'actions', ()->
 
 Template.registerHelper 'is_array', ()-> @primative in ['array','multiref']
 
+Template.registerHelper 'full_mode', ()->
+    delta = Docs.findOne type:'delta'
+    delta.viewing_detail
+
 
 
 Template.registerHelper 'action_button_template', ()-> "#{@slug}_button"

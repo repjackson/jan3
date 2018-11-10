@@ -545,7 +545,8 @@ Meteor.publish 'service_child_requests', (service_id)->
 
 Meteor.publish 'assigned_users', (doc_id)->
     doc = Docs.findOne doc_id
-    Meteor.users.find(_id: $in: doc.assigned_to)
+    if doc.assigned_to
+        Meteor.users.find(_id: $in: doc.assigned_to)
 
 Meteor.publish 'selected_users', (doc_id, key)->
     doc = Docs.findOne doc_id

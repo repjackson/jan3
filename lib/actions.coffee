@@ -26,6 +26,7 @@ if Meteor.isClient
         bookmarked: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then true else false
     Template.bookmark_button.events
         'click .toggle_bookmark': (e,t)->
+            console.log @
             Meteor.call 'user_toggle_list', @, 'bookmark_ids'
 
     Template.bookmark_pane.onCreated ->
