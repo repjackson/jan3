@@ -27,17 +27,18 @@ template(name='delta')
                             i.green.large.plus.icon
                             // |#{current_type.title}
 
-                // .ui.compact.icon.button.delete_delta(title='Clear Session')
-                //     i.remove.icon
-                //     // |Clear
-                // .ui.compact.icon.button.run_fo(title='Reload Session')
-                //     i.refresh.icon
-                //     // |Reset
-                // if is_dev
-                //     .ui.icon.compact.button.show_delta
-                //         i.code.icon
+                .ui.compact.icon.button.delete_delta(title='Clear Session')
+                    i.remove.icon
+                    // |Clear
+                .ui.compact.icon.button.run_fo(title='Reload Session')
+                    i.refresh.icon
+                    // |Reset
+                if is_dev
+                    .ui.icon.compact.button.show_delta
+                        i.code.icon
                 // .ui.vertical.segments
                 each delta_fields
+                    .ui.hidden.divider
                     +facet
 
             .twelve.wide.column
@@ -80,10 +81,7 @@ template(name='delta_results')
                         each schema_actions
                             +delta_card data=_id
         else
-            if is_calculating
-                .ui.hidden.divider
-                .ui.active.indeterminate.massive.centered.inline.loader
-            else if delta_doc.result_ids
+            if delta_doc.result_ids
                 if delta_doc.result_ids.length
                     .ui.horizontal.list
                         .item
@@ -91,23 +89,27 @@ template(name='delta_results')
                             +set_page_size value=20
                             +set_page_size value=50
                         .item
-                            // if delta_doc.page_amount
-                            // if show_page_down
-                            .ui.small.basic.label
-                                | #{delta_doc.current_page}/#{delta_doc.page_amount}
-                            a.ui.page_down.small.compact.icon.button(title='Previous Page')
-                                i.left.chevron.grey.icon
-                            // if show_page_up
-                            a.ui.page_up.small.compact.icon.button(title='Next Page')
-                                i.right.chevron.grey.icon
-                            // if multiple_pages
-                        .item
+                            if multiple_pages
+                                .ui.basic.label
+                                    | #{delta_doc.current_page}/#{delta_doc.page_amount}
                             | #{delta_doc.total} Results
+                        .item
+                            .ui.buttons
+                                if show_page_down
+                                    a.ui.page_down.small.compact.icon.button(title='Previous Page')
+                                        i.left.chevron.grey.icon
+                                if show_page_up
+                                    a.ui.page_up.small.compact.icon.button(title='Next Page')
+                                        i.right.chevron.grey.icon
                     .ui.hidden.divider
-                    .scrolling.delta_cards
-                        each delta_doc.result_ids
-                            +delta_card
-                            .ui.hidden.divider
+                    if is_calculating
+                        .ui.hidden.divider
+                        .ui.active.indeterminate.massive.centered.inline.loader
+                    else
+                        .scrolling.delta_cards
+                            each delta_doc.result_ids
+                                +delta_card
+                                .ui.hidden.divider
             else
                 |No results
     if delta_doc.viewing_detail
@@ -204,7 +206,6 @@ template(name='delta_card')
             .content
                 .ui.equal.width.divided.grid
                     .column
-                        +iconsmall name='note'
                         |#{text}
 
             // if delta_doc.view_full

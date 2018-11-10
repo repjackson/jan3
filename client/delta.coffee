@@ -161,6 +161,18 @@ Template.delta.events
 Template.delta_results.helpers
     is_calculating: -> Session.get('is_calculating')
 
+    multiple_pages: ->
+        delta = Docs.findOne type:'delta'
+        delta.page_amount > 1
+
+    show_page_down: ->
+        delta = Docs.findOne type:'delta'
+        delta.current_page > 1
+
+    show_page_up: ->
+        delta = Docs.findOne type:'delta'
+        delta.current_page < delta.page_amount
+
     field_fields: ->
         Docs.find({
             type:'field'
@@ -187,8 +199,6 @@ Template.delta_results.helpers
         }, {sort:{rank:1}}).fetch()
         # console.log fields
         actions
-
-
 
 
     current_type: ->
@@ -393,11 +403,11 @@ Template.set_page_size.events
                 current_page:0
                 skip_amount:0
                 page_size:@value
-        # Session.set 'is_calculating', true
+        Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
             if err then console.log err
-            # else
-            #     Session.set 'is_calculating', false
+            else
+                Session.set 'is_calculating', false
 
 
 Template.selector.helpers
