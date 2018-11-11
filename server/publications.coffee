@@ -497,11 +497,6 @@ publishComposite 'me', ()->
         #     }
         # ]
     }
-Meteor.publish 'comments', (doc_id)->
-    Docs.find
-        parent_id: doc_id
-        type:'comment'
-
 
 
 
@@ -545,7 +540,7 @@ Meteor.publish 'service_child_requests', (service_id)->
 
 Meteor.publish 'assigned_users', (doc_id)->
     doc = Docs.findOne doc_id
-    if doc.assigned_to
+    if doc and doc.assigned_to
         Meteor.users.find(_id: $in: doc.assigned_to)
 
 Meteor.publish 'selected_users', (doc_id, key)->

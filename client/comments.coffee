@@ -1,31 +1,41 @@
-Template.comments.onCreated ->
-    @autorun -> Meteor.subscribe 'comments', FlowRouter.getQueryParam('doc_id')
+if Meteor.isClient
+    Template.comments.onCreated ->
+        @autorun => Meteor.subscribe 'comments', @data._id
 
-Template.comments.helpers
-    comments: -> Docs.find { parent_id:FlowRouter.getQueryParam('doc_id'), type:'comment'}
-
-
-Template.comments.onRendered ->
-    # Meteor.setTimeout ->
-    #     $('.ui.accordion').accordion()
-    # , 400
-
-Template.comments.events
-    'keyup #new_comment': (e,t)->
-        e.preventDefault()
-        current_doc_id = FlowRouter.getQueryParam('doc_id')
-        comment = $('#new_comment').val().trim()
-        if e.which is 13 #enter
-            $('#new_comment').val ''
-            new_comment_id =
-                Docs.insert
-                    type:'comment'
-                    text:comment
-                    parent_id: current_doc_id
-                    customer_jpid:Meteor.user().customer_jpid
-                    office_jpid:Meteor.user().office_jpid
+    Template.comments.helpers
+        comments: ->
+            delta = Docs.findOne type:'delta'
+            Docs.find
+                parent_id:delta.detail_id,
+                type:'comment'
 
 
-    'click .delete_comment': ->
-        if confirm 'delete comment?'
-            Docs.remove @_id
+    Template.comments.onRendered ->
+        # Meteor.setTimeout ->
+        #     $('.ui.accordion').accordion()
+        # , 400
+
+    Template.comments.events
+        'keyup #new_comment': (e,t)->
+            e.preventDefault()
+            delta = Docs.findOne type:'delta'
+            text = $('#new_comment').val().trim()
+            if e.which is 13 #enter
+                $('#new_comment').val ''
+                new_comment_id =
+                    Docs.insert
+                        type:'comment'
+                        text:text
+                        parent_id: delta.detail_id
+
+
+        'click .delete_comment': ->
+            if confirm 'delete comment?'
+                Docs.remove @_id
+
+if Meteor.isServer
+    Meteor.publish 'comments', (doc_id)->
+        Docs.find
+            parent_id: doc_id
+            type:'comment'
+

@@ -259,6 +259,18 @@ Template.delta_card.helpers
             Docs.findOne @valueOf()
 
 
+
+Template.task_card.helpers
+    size_column_class: ->
+        delta = Docs.findOne type:'delta'
+        classes = []
+        if delta.detail_id is @_id then classes.push 'blue'
+        classes
+
+
+
+
+
 Template.default_card.helpers
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
@@ -268,11 +280,6 @@ Template.default_card.helpers
         classes
 
 
-    size_column_class: ->
-        delta = Docs.findOne type:'delta'
-        classes = []
-        if delta.detail_id is @_id then classes.push 'blue'
-        classes
 
 
     field_docs: ->
