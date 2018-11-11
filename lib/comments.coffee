@@ -5,6 +5,7 @@ if Meteor.isClient
     Template.comments.helpers
         comments: ->
             delta = Docs.findOne type:'delta'
+            # if delta
             Docs.find
                 parent_id:delta.detail_id,
                 type:'comment'
@@ -19,14 +20,15 @@ if Meteor.isClient
         'keyup #new_comment': (e,t)->
             e.preventDefault()
             delta = Docs.findOne type:'delta'
-            text = $('#new_comment').val().trim()
-            if e.which is 13 #enter
-                $('#new_comment').val ''
-                new_comment_id =
-                    Docs.insert
-                        type:'comment'
-                        text:text
-                        parent_id: delta.detail_id
+            if delta
+                text = $('#new_comment').val().trim()
+                if e.which is 13 #enter
+                    $('#new_comment').val ''
+                    new_comment_id =
+                        Docs.insert
+                            type:'comment'
+                            text:text
+                            parent_id: delta.detail_id
 
 
         'click .delete_comment': ->
