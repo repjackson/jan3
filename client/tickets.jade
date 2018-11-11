@@ -40,7 +40,7 @@ template(name='submit_ticket')
     +edit_datetime_field key='service_date' label='Service Time'
     .ui.hidden.divider
     .submit.ui.fluid.jpgreen.inverted.button
-        |SUBMIT
+        | Submit
 
 
 
@@ -106,6 +106,10 @@ template(name='ticket_status')
             if editing_mode
                 i.reopen.link.undo.icon(title='Reopen')
 
+
+
+
+
 template(name='feedback_widget')
     with page_context
         unless page_context.open
@@ -125,7 +129,9 @@ template(name='feedback_widget')
                 .ui.fluid.action.input
                     input.feedback_details(type='text' placeholder='Details...')
                     .ui.jpgreen.inverted.submit_feedback.button
-                        |SUBMIT
+                        | Submit
+
+
 
 
 template(name='ticket_close_user_info')
@@ -173,16 +179,38 @@ template(name='ticket_notes')
 template(name='task_card')
     .ui.fluid.card(class=delta_card_class)
         .content
-            .ui.divided.stackable.padded.grid
+            .ui.divided.stackable.grid
                 .fifteen.wide.column
-                    .large120 #{text}
+                    +task_text
                 a.one.wide.center.aligned.column.toggle_size(class=size_column_class)
                     +icon name='resize-diagonal' title='Maximize'
         .content
-            .ui.equal.width.divided.stackable.padded.grid
+            .ui.equal.width.divided.stackable.grid
                 .column
+                    .ui.header
+                        +icon name='quill-with-ink'
+                        | Author
                     +author_info
                     +when_template
+                    |#{long_time}
+                .column
+                    .ui.header
+                        +icon name='headset'
+                        | Customer
+                    .ui.small.header ##{customer_jpid}
+                    .ui.small.header #{customer_name}
+                .column
+                    .ui.header
+                        +icon name='business'
+                        | Franchisee
+                    .ui.small.header ##{franchisee_jpid}
+                    .ui.small.header #{franchisee_name}
+                .column
+                    .ui.header
+                        +icon name='building'
+                        | Office
+                    .ui.small.header ##{office_jpid}
+                    .ui.small.header #{office_name}
                 .column
                     .ui.header
                         +icon name='tags'
@@ -208,11 +236,9 @@ template(name='task_card')
                                 | Mark Complete
         if actions
             .content
-                .ui.equal.width.divided.stackable.padded.grid
+                .ui.equal.width.divided.stackable.grid
                     .column
-                        +bookmark_button
-                        if full_mode
-                            +bookmark_pane
+                        +bookmark_widget
                     .column
                         .ui.header
                             +icon name='tree-structure'
@@ -227,15 +253,13 @@ template(name='task_card')
                     .column
                         +voting
                     .column
-                        +subscribe_button
-                        if full_mode
-                            +subscribe_pane
+                        +subscribe
                     .column
                         +mark_read_button
                         if full_mode
                             +mark_read_pane
         .content
-            .ui.equal.width.divided.stackable.padded.grid
+            .ui.equal.width.divided.stackable.grid
                 .column
                     +comments
                 .column
@@ -248,3 +272,14 @@ template(name='task_card')
                         | Events
                     if full_mode
                         +global_feed
+
+
+
+template(name='task_text')
+    if editing
+        .ui.form
+            .field
+                textarea.text_val(rows='3') #{text}
+    else
+        .large120 #{text}
+

@@ -550,6 +550,23 @@ Template.edit_field_text.events
             { $set: "#{@key}": text_value }
 
 
+
+
+
+Template.task_text.onCreated ->
+    @editing = new ReactiveVar false
+
+Template.task_text.helpers
+    editing: -> Template.currentData().editing.get()
+
+Template.task_text.events
+    'change .text_val': (e,t)->
+        text_value = e.currentTarget.value
+        # console.log @filter_id
+        Docs.update @filter_id,
+            { $set: text: text_value }
+
+
 Template.edit_field_number.helpers
     field_value: ->
         field = Template.parentData()

@@ -5,7 +5,10 @@ template(name='set_schema_button')
         +iconsmall name='chevron-right'
 
 
-template(name='bookmark_button')
+template(name='bookmark_widget')
+    .ui.header
+        +icon name='bookmark-ribbon'
+        |Bookmarks
     if bookmarked
         .ui.red.compact.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
             +iconsmall name='bookmark-ribbon'
@@ -17,11 +20,11 @@ template(name='bookmark_button')
             img(src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png")
             if full_mode
                 |Bookmark
+    if full_mode
+        +bookmark_pane
+
 
 template(name='bookmark_pane')
-    .ui.header
-        +icon name='bookmark-ribbon'
-        |Bookmarked By
     .ui.list
         each bookmark_users
             +user_list_view
@@ -33,6 +36,9 @@ template(name='bookmark_pane')
 
 
 template(name='mark_read_button')
+    .ui.header
+        +icon name='open-envelope'
+        | Read
     if read
         .ui.green.compact.button.toggle_read(title='Mark Unread')
             +iconsmall name='open-envelope'
@@ -45,16 +51,16 @@ template(name='mark_read_button')
                 | Unread
 
 template(name='mark_read_pane')
-    .ui.header
-        +icon name='open-envelope'
-        | Read By
     .ui.list
         each read_users
             +user_list_view
 
 
 
-template(name='subscribe_button')
+template(name='subscribe')
+    .ui.header
+        +icon name='renew-subscription'
+        | Subscriptions
     if subscribed
         .ui.teal.compact.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
             +iconsmall name='renew-subscription'
@@ -65,11 +71,12 @@ template(name='subscribe_button')
             +iconsmall name='renew-subscription'
             if full_mode
                 | Subscribe
+    if full_mode
+        +subscribe_pane
+
+
 
 template(name='subscribe_pane')
-    .ui.header
-        +icon name='renew-subscription'
-        | Subscribers
     .ui.list
         each subscribers
             +user_list_view
@@ -128,14 +135,16 @@ template(name='voting_pane')
     .ui.header
         +icon name='facebook-like'
         |Upvoters
-    each upvoters
-        +user_list_view
-    .ui.header
+    .ui.list
+        each upvoters
+            +user_list_view
 
+    .ui.header
         +icon name='thumbs-down'
         |Downvoters
-    each downvoters
-        +user_list_view
+    .ui.list
+        each downvoters
+            +user_list_view
 
 
 

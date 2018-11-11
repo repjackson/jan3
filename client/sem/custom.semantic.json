@@ -54,7 +54,7 @@
     "bookish": false,
     "bootstrap3": false,
     "chubby": false,
-    "classic": false,
+    "classic": true,
     "colored": false,
     "default": true,
     "duo": false,
@@ -67,10 +67,10 @@
     "pulsar": false,
     "raised": false,
     "resetcss": false,
-    "round": true,
+    "round": false,
     "rtl": false,
     "striped": false,
     "timeline": false,
-    "twitter": false
+    "twitter": true
   }
 }

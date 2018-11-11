@@ -9,7 +9,7 @@ template(name='delta')
                             | Session
         if delta_doc
             unless delta_doc.viewing_detail
-                .four.wide.column.scrolling
+                .three.wide.column.scrolling
                     if current_type
                         .ui.stackable.grid
                             unless viewing_schemas
@@ -41,7 +41,6 @@ template(name='delta')
                     each delta_fields
                         .ui.hidden.divider
                         +facet
-
             +delta_results
 
 
@@ -163,8 +162,8 @@ template(name='facet')
 template(name='selector')
     if name
         .ui.toggle_value.compact.small.margined.button(class=toggle_value_class)
-            .large110 #{name}
-                small #{count}
+            | #{name}
+            small #{count}
     else
         .ui.toggle_value.compact.small.button(class=toggle_value_class)
             .large110 Null

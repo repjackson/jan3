@@ -20,9 +20,9 @@ if Meteor.isClient
                     Session.set 'is_calculating', false
 
 
-    Template.bookmark_button.helpers
+    Template.bookmark_widget.helpers
         bookmarked: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then true else false
-    Template.bookmark_button.events
+    Template.bookmark_widget.events
         'click .toggle_bookmark': (e,t)->
             console.log @
             Meteor.call 'user_toggle_list', @, 'bookmark_ids'
@@ -38,9 +38,9 @@ if Meteor.isClient
 
 
 
-    Template.subscribe_button.helpers
+    Template.subscribe.helpers
         subscribed: -> if @subscribe_ids and Meteor.userId() in @subscribe_ids then true else false
-    Template.subscribe_button.events
+    Template.subscribe.events
         'click .toggle_subscribe': (e,t)->
             Meteor.call 'user_toggle_list', @, 'subscribe_ids'
 
@@ -62,8 +62,8 @@ if Meteor.isClient
         upvoted: -> if @upvoter_ids and Meteor.userId() in @upvoter_ids then true else false
         downvoted: -> if @downvoter_ids and Meteor.userId() in @downvoter_ids then true else false
 
-        upvote_class: -> if @upvoter_ids and Meteor.userId() in @upvoter_ids then 'olive' else false
-        downvote_class: -> if @downvoter_ids and Meteor.userId() in @downvoter_ids then 'orange' else false
+        upvote_class: -> if @upvoter_ids and Meteor.userId() in @upvoter_ids then 'green' else false
+        downvote_class: -> if @downvoter_ids and Meteor.userId() in @downvoter_ids then 'red' else false
 
     Template.voting.events
         'click .upvote': (e,t)-> Meteor.call 'upvote', @_id
@@ -171,10 +171,8 @@ if Meteor.isClient
                 # Meteor.call 'send_email_about_ticket_assignment', page_doc._id, @username
 
         'click .pull_user': ->
-            context = Template.currentData(0)
             if confirm "Remove #{@username}?"
-                page_doc = Docs.findOne Template.currentData()._id
-                Meteor.call 'unassign_user', page_doc._id, @
+                Meteor.call 'list_remove_user', Template.currentData()._id, 'assigned_ids', @
 
 
     Template.assignments.helpers
@@ -225,10 +223,8 @@ if Meteor.isClient
             #     Meteor.call 'send_email_about_task_assignment', page_doc._id, @username
 
         'click .pull_user': ->
-            context = Template.currentData(0)
             if confirm "Remove #{@username}?"
-                page_doc = Docs.findOne Template.currentData()._id
-                Meteor.call 'unassign_user', page_doc._id, @
+                Meteor.call 'list_remove_user', Template.currentData()._id, 'approver_ids', @
 
 
     Template.approval.helpers

@@ -22,5 +22,7 @@ template(name='comments')
                             p #{text}
                         .actions
                             // a.reply Reply
-                            if is_admin
-                                a.delete_comment delete
+                            a.delete_comment
+                                i.trash.icon
+                            a.vote_up
+                                i.thumbs.up.icon
