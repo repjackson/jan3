@@ -59,28 +59,31 @@ if Meteor.isClient
 
 
     Template.voting.helpers
-        upvoted: -> if @upvoted_ids and Meteor.userId() in @upvoted_ids then true else false
-        downvoted: -> if @downvoted_ids and Meteor.userId() in @downvoted_ids then true else false
+        upvoted: -> if @upvoter_ids and Meteor.userId() in @upvoter_ids then true else false
+        downvoted: -> if @downvoter_ids and Meteor.userId() in @downvoter_ids then true else false
+
+        upvote_class: -> if @upvoter_ids and Meteor.userId() in @upvoter_ids then 'olive' else false
+        downvote_class: -> if @downvoter_ids and Meteor.userId() in @downvoter_ids then 'orange' else false
 
     Template.voting.events
-        'click .upvote': (e,t)-> Meteor.call 'upvote', @
-        'click .downvote': (e,t)-> Meteor.call 'downvote', @
+        'click .upvote': (e,t)-> Meteor.call 'upvote', @_id
+        'click .downvote': (e,t)-> Meteor.call 'downvote', @_id
 
     Template.voting_pane.onCreated ->
-        @autorun -> Meteor.subscribe 'user_list_users', @data, 'upvoted_ids'
-        @autorun -> Meteor.subscribe 'user_list_users', @data, 'downvoted_ids'
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'upvoter_ids'
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'downvoter_ids'
     Template.voting_pane.helpers
         upvoters: ->
             target = Template.currentData()
-            if target and target.upvoted_ids
+            if target and target.upvoter_ids
                 Meteor.users.find
-                    _id: $in: target.upvoted_ids
+                    _id: $in: target.upvoter_ids
 
         downvoters: ->
             target = Template.currentData()
-            if target and target.downvoted_ids
+            if target and target.downvoter_ids
                 Meteor.users.find
-                    _id: $in: target.downvoted_ids
+                    _id: $in: target.downvoter_ids
 
 
 
@@ -157,7 +160,6 @@ if Meteor.isClient
         'click .select_user': (e,t) ->
             delta = Docs.findOne type:'delta'
             target =  Docs.findOne delta.detail_id
-            console.log target
             page_doc = Docs.findOne Template.currentData()._id
             Meteor.call 'list_add_user', delta.detail_id,'assigned_ids',@,(err,res)=>
             $('#multiple_user_select_input').val ''
@@ -189,6 +191,73 @@ if Meteor.isClient
             target =  Docs.findOne delta.detail_id
             if target and target.assigned_ids
                 Meteor.users.find(_id: $in: target.assigned_ids)
+
+
+
+    # approval
+    #
+
+
+    Template.approval.onCreated ->
+        @autorun => Meteor.subscribe 'user_list_users', @data, 'approver_ids'
+        @user_results = new ReactiveVar( [] )
+
+    Template.approval.events
+        'click .clear_results': (e,t)->
+            t.user_results.set null
+
+        'keyup #multiple_user_select_input': (e,t)->
+            multiple_user_select_input_value = $(e.currentTarget).closest('#multiple_user_select_input').val().trim()
+            current_ticket = Docs.findOne Template.currentData()._id
+            Meteor.call 'lookup_office_user_by_username_and_officename', current_ticket.ticket_office_name, multiple_user_select_input_value, (err,res)=>
+                if err then console.error err
+                else
+                    t.user_results.set res
+
+        'click .select_user': (e,t) ->
+            delta = Docs.findOne type:'delta'
+            target =  Docs.findOne delta.detail_id
+            page_doc = Docs.findOne Template.currentData()._id
+            Meteor.call 'list_add_user', delta.detail_id,'approver_ids',@,(err,res)=>
+            $('#multiple_user_select_input').val ''
+            t.user_results.set null
+            # if page_doc.type is 'task'
+            #     Meteor.call 'send_email_about_task_assignment', page_doc._id, @username
+
+        'click .pull_user': ->
+            context = Template.currentData(0)
+            if confirm "Remove #{@username}?"
+                page_doc = Docs.findOne Template.currentData()._id
+                Meteor.call 'unassign_user', page_doc._id, @
+
+
+    Template.approval.helpers
+        ticket_assignment_timestamp: ->
+            delta = Docs.findOne type:'delta'
+            target =  Docs.findOne delta.detail_id
+            if target
+                target.assignment_timestamp
+
+        user_results: -> Template.instance().user_results.get()
+
+        assigned_users: ->
+            delta = Docs.findOne type:'delta'
+            target =  Docs.findOne delta.detail_id
+            if target and target.approver_ids
+                Meteor.users.find(_id: $in: target.approver_ids)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -235,6 +304,18 @@ Meteor.methods
             parent_id: doc_id
             event_type: 'assignment'
             text: "#{user.username} was assigned to #{doc.type}."
+
+
+    list_remove_user: (doc_id, key, user)->
+        doc = Docs.findOne doc_id
+        Docs.update doc_id,
+            $pull: "#{key}": user._id
+        Docs.insert
+            type:'event'
+            parent_id: doc_id
+            event_type: 'assignment'
+            text: "#{user.username} was unassigned from #{doc.type}."
+
 
 
 
