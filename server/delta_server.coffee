@@ -22,11 +22,11 @@ Meteor.publish 'schema_fields', ->
     delta = Docs.findOne
         type:'delta'
         author_id: Meteor.userId()
-
-    current_type = delta.filter_type?[0]
-    Docs.find
-        type:'field'
-        schema_slugs:$in:[current_type, 'field']
+    if delta and delta.filter_type
+        current_type = delta.filter_type[0]
+        Docs.find
+            type:'field'
+            schema_slugs:$in:[current_type, 'field']
 
 Meteor.publish 'schema_actions', ->
     delta = Docs.findOne
