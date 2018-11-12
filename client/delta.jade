@@ -1,47 +1,74 @@
 template(name='delta')
     .ui.stackable.padded.grid
-        unless delta_doc
+        if currentUser
             .row
-                .sixteen.wide.column
-                    if currentUser
-                        .create_delta.ui.large.basic.button(title='Create Session')
-                            i.green.plus.icon
-                            | Session
-        if delta_doc
-            unless delta_doc.viewing_detail
-                .three.wide.column.scrolling
-                    if current_type
-                        .ui.stackable.grid
-                            unless viewing_schemas
-                                .three.wide.column
-                                    .ui.large.icon.button.view_schamas(title='Data')
-                                        i.left.chevron.icon
-                            .thirteen.wide.middle.aligned.column
-                                h1.ui.center.aligned.header
-                                    if current_type.icon
-                                        +icon name=current_type.icon classes='spaced'
-                                    | #{current_type.plural}
-                        if can_add
-                            .ui.hidden.divider
-                            .ui.fluid.icon.compact.margined.button.add_doc(title="Add #{current_type.title}")
-                                // +icon name='plus'
-                                i.green.large.plus.icon
-                                // |#{current_type.title}
+                .four.wide.column
+                    img.ui.small.center.aligned.image(src="{{c.url 'jan_full_logo' }}")
+                .eight.wide.column
+                    // a.ui.button(href="/data")
+                    //     i.icon
+                    //         +icon name='database'
+                    //     | Data
+                    each bookmarks
+                        a.ui.icon.compact.button.pick_delta(title=plural)
+                            i.icon
+                                +icon name=icon
+                        // | #{plural}
+                .four.wide.column
+                    .ui.button
+                        if currentUser.image_id
+                            i.large.icon
+                                img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        else
+                            i.user.icon
+                        |#{currentUser.username}
+                    +logout_button
 
-                    .ui.compact.icon.button.delete_delta(title='Clear Session')
-                        i.remove.icon
-                        // |Clear
-                    .ui.compact.icon.button.run_fo(title='Reload Session')
-                        i.refresh.icon
-                        // |Reset
-                    if is_dev
-                        .ui.icon.compact.button.show_delta
-                            i.code.icon
-                    // .ui.vertical.segments
-                    each delta_fields
-                        .ui.hidden.divider
-                        +facet
-            +delta_results
+        // if currentUser
+        //     unless delta_doc
+        //         .row
+        //             .sixteen.wide.column
+        //                 if currentUser
+        //                     .create_delta.ui.button(title='Create Session')
+        //                         i.green.plus.icon
+        //                         | Session
+        //     if delta_doc
+        //         unless delta_doc.viewing_detail
+        //             .three.wide.column.scrolling
+        //                 if current_type
+        //                     .ui.stackable.grid
+        //                         unless viewing_schemas
+        //                             .three.wide.column
+        //                                 .ui.large.icon.button.view_schamas(title='Data')
+        //                                     i.left.chevron.icon
+        //                         .thirteen.wide.middle.aligned.column
+        //                             h1.ui.center.aligned.header
+        //                                 if current_type.icon
+        //                                     +icon name=current_type.icon classes='spaced'
+        //                                 | #{current_type.plural}
+        //                     if can_add
+        //                         .ui.hidden.divider
+        //                         .ui.fluid.icon.compact.margined.button.add_doc(title="Add #{current_type.title}")
+        //                             // +icon name='plus'
+        //                             i.green.large.plus.icon
+        //                             // |#{current_type.title}
+
+        //                 .ui.compact.icon.button.delete_delta(title='Clear Session')
+        //                     i.remove.icon
+        //                     // |Clear
+        //                 .ui.compact.icon.button.run_fo(title='Reload Session')
+        //                     i.refresh.icon
+        //                     // |Reset
+        //                 if is_dev
+        //                     .ui.icon.compact.button.show_delta
+        //                         i.code.icon
+        //                 // .ui.vertical.segments
+        //                 each delta_fields
+        //                     .ui.hidden.divider
+        //                     +facet
+        //         +delta_results
+        unless currentUser
+            +login
 
 
 
@@ -219,3 +246,9 @@ template(name='default_card')
             .content
                 each actions
                     +Template.dynamic template=action_button_template data=detail_doc
+
+
+
+template(name='logout_button')
+    #logout.ui.icon.button(title='Sign Out')
+        i.sign.out.alternate.icon

@@ -38,7 +38,7 @@
     "search": false,
     "segment": true,
     "shape": false,
-    "sidebar": true,
+    "sidebar": false,
     "site": true,
     "statistic": true,
     "step": false,
@@ -54,7 +54,7 @@
     "bookish": false,
     "bootstrap3": false,
     "chubby": false,
-    "classic": true,
+    "classic": false,
     "colored": false,
     "default": true,
     "duo": false,
@@ -67,10 +67,10 @@
     "pulsar": false,
     "raised": false,
     "resetcss": false,
-    "round": false,
+    "round": true,
     "rtl": false,
     "striped": false,
     "timeline": false,
-    "twitter": true
+    "twitter": false
   }
 }

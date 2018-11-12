@@ -1,134 +1,47 @@
 template(name='nav')
-    // .nav_bar.ui.top.attached.large.inverted.menu
-    .ui.top.attached.large.inverted.blue.menu
-        a.toggle_left_sidebar.icon.item
-            i.bars.icon
-        // a.item(href="/dashboard")
-        .item
-            img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            // img.ui.small.image(src='/logo150.png')
-            // img.ui.mini.image(src="{{c.url 'logo_small'}}")
-            // img.ui.image(src="{{c.url 'logo_small' }}")
-        a.item(href="/data")
-            i.icon
-                +icon name='database'
-            | Data
-
-
-
-        each bookmarks
-            a.mobile.hidden.item.pick_delta(title=title)
-                i.icon
-                    +icon name=icon
-                .mobile.hidden &nbsp; #{plural}
-        if is_admin
-            each admin_nav_items
-                a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
-                    i.icon
-                        +icon name=icon
-                    .mobile.hidden &nbsp; #{title}
-        else if is_customer
-            each customer_nav_items
-                a.mobile.hidden.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
-                    i.icon
-                        +icon name=icon
-                    .mobile.hidden &nbsp; #{title}
-        else if is_office
-            a.mobile.hidden.delta_franchisees.item(title='Franchisees')
-                i.icon
-                    +icon name='business'
-                .mobile.hidden &nbsp; Franchisees
-            a.mobile.hidden.delta_customers.item(title='Customers')
-                i.icon
-                    +icon name='headset'
-                .mobile.hidden &nbsp; Customers
-            // a.mobile.hidden.item(href="/p/office_settings/#{my_office.office_jpid}" class="{{ active_route slug }}" title=title)
-            //     i.icon
-            //         +icon name='settings'
-            //     .mobile.hidden &nbsp; Settings
-            each office_nav_items
-                a.mobile.hidden.item(href="/p/#{slug}/#{my_office.office_jpid}" class="{{ active_route slug }}" title=title)
-                    i.icon
-                        +icon name=icon
-                    .mobile.hidden &nbsp; #{title}
-        .right.menu
-            // if is_dev
-            //     // .mobile.only
-            //     if editing_mode
-            //         #toggle_editing.icon.active.large.item
-            //             i.teal.pencil.link.bordered.icon
-            //     else
-            //         #toggle_editing.icon.large.item
-            //             i.pencil.link.bordered.icon
-            if currentUser
-                // a.mobile.hidden.item(href="/help" class="{{ active_route 'help' }}" title='Help')
+    .ui.padded.stackable.grid
+        .row
+            .four.wide.column
+                img.ui.small.center.aligned.image(src="{{c.url 'jan_full_logo' }}")
+            .eight.wide.column
+                // a.ui.button(href="/data")
                 //     i.icon
-                //         +icon name='help'
-                a.nav_bar.item(href="/p/user_view?username=#{currentUser.username}" data-content='View Profile' class="{{ active_route 'user_view'}}")
-                    if currentUser.image_id
-                        i.large.icon
-                            img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                    else
-                        i.user.icon
-                    |#{currentUser.username}
-                a#logout.nav_bar.item(href='#')
-                    if signing_out
-                        i.notched.circle.loading.icon
-                    else
+                //         +icon name='database'
+                //     | Data
+                if currentUser
+                    each bookmarks
+                        a.ui.icon.compact.button.pick_delta(title=plural)
+                            i.icon
+                                +icon name=icon
+                        // | #{plural}
+            .four.wide.column
+                // if is_dev
+                //     // .mobile.only
+                //     if editing_mode
+                //         #toggle_editing.icon.active.large.item
+                //             i.teal.pencil.link.bordered.icon
+                //     else
+                //         #toggle_editing.icon.large.item
+                //             i.pencil.link.bordered.icon
+                if currentUser
+                    // a.mobile.hidden.item(href="/help"  }}" title='Help')
+                    //     i.icon
+                    //         +icon name='help'
+                    .ui.button
+                        if currentUser.image_id
+                            i.large.icon
+                                img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        else
+                            i.user.icon
+                        |#{currentUser.username}
+                    #logout.ui.icon.button
                         i.sign.out.alternate.icon
-            else
-                a.item(href='/login')
-                    i.large.icon
-                        +icon name='internal'
-                    // i.sign.in.alternate.icon
-                    | &nbsp; Log In
+                // else
+                //     a.ui.button(href='/login')
+                //         i.large.icon
+                //             +icon name='internal'
+                //         // i.sign.in.alternate.icon
+                //         | &nbsp; Log In
 
 
 
-template(name='left_sidebar')
-    .ui.left.vertical.sidebar.inverted.large.nav_bar.menu
-        if currentUser
-            a.toggle_left_sidebar.header.item(href="/user/#{currentUser.username}")
-                img.ui.centered.mini.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                |#{currentUser.username}
-        each bookmarks
-            a.toggle_left_sidebar.item.pick_delta(href='#')
-                i.icon
-                    +icon name=icon
-                .mobile.hidden &nbsp; #{title}
-        if is_customer
-            a.header.toggle_left_sidebar.item(href='/')
-                |Dashboard
-        if is_admin
-            each admin_nav_items
-                a.toggle_left_sidebar.item(href="/p/#{slug}" class="{{ active_route slug }}" title=title)
-                    |#{title}
-        else if is_office
-            // with currentUser.users_customer.parent_franchisee.parent_office
-            each office_nav_items
-                a.toggle_left_sidebar.item(href="/p/#{slug}/#{my_office.office_jpid}" class="{{ active_route slug }}" title=title)
-                    // i.large.icon
-                    //     +icon name=icon
-                    | #{title}
-            // a.toggle_sidebar.item(href="/profile/edit/#{currentUser._id}")
-            //     if currentUser.profile.first_name
-            //         | #{currentUser.profile.first_name}
-            //     else
-            //         | #{currentUser.username}
-            //     if currentUser.profile.image_id
-            //         img.ui.avatar.image(src="{{c.url currentUser.profile.image_id width=50 height=50 gravity='face' crop='fill'}}" )
-            //     else
-            //         i.user.icon
-            // a#logout.ui.toggle_sidebar.item(href='#')
-            //     i.large.icon
-            //         +mini_sprite name='edit'
-            //     | Sign Out
-        if currentUser
-            a#logout.ui.item(href='#')
-                | Sign Out
-                i.sign.out.alternate.icon
-        else
-            a.ui.toggle_sidebar.item(href='/login')
-                // i.large.icon
-                //     +mini_sprite name='enter'
-                | Log In

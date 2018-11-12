@@ -121,9 +121,9 @@ template(name='voting')
         +icon name='leaderboard'
         | Priority
     .ui.icon.compact.button.upvote(class=upvote_class)
-        +iconsmall name='facebook-like'
+        +iconsmall name='collapse-arrow'
     .ui.icon.compact.button.downvote(class=downvote_class)
-        +iconsmall name='thumbs-down'
+        +iconsmall name='expand-arrow'
     .ui.mini.statistic
         .value #{points}
         .label Points
@@ -150,7 +150,7 @@ template(name='voting_pane')
 
 template(name='assignments')
     .ui.header
-        +icon name='user-engagement-female'
+        +icon name='checked-user-male'
         | Assignments
     p(title="{{ from_now ticket_assignment_timestamp }}") Last Assigned {{ long_format ticket_assignment_timestamp }}
     if full_mode

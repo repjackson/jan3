@@ -1,56 +1,35 @@
-FlowRouter.route '/login',
-    name: 'login'
-    action: -> BlazeLayout.render 'accounts_layout', main: 'login'
-FlowRouter.route '/register_customer',
-    name: 'register_customer'
-    action: -> BlazeLayout.render 'accounts_layout', main: 'register_customer'
-FlowRouter.route '/register_office',
-    name: 'register_office'
-    action: -> BlazeLayout.render 'accounts_layout', main: 'register_office'
-FlowRouter.route '/reset_password',
-    name: 'reset_password'
-    action: -> BlazeLayout.render 'accounts_layout', main: 'reset_password'
-
-
 Template.accounts_layout.onCreated ->
     @autorun -> Meteor.subscribe 'my_customer_account'
     @autorun -> Meteor.subscribe 'my_franchisee'
     @autorun -> Meteor.subscribe 'my_office'
     @autorun -> Meteor.subscribe 'me'
-Template.menu_item.onCreated ->
-    @signing_in = new ReactiveVar false
-
-Template.menu_item.helpers
-    active_route: (slug)->
-        if Template.instance().signing_in.get() is true
-            'disabled'
-
-
 
 Template.login.events
-    'click #logout': (e,t)->
-        e.preventDefault()
-        Meteor.logout()
-        FlowRouter.go '/login'
+    # 'click #logout': (e,t)->
+    #     e.preventDefault()
+    #     Meteor.logout()
+        # FlowRouter.go '/login'
 
     'click .login': (e,t)->
-        e.preventDefault()
+        # e.preventDefault()
         # comment = $('#register_comment').val().trim()
         username = $('.username').val()
         password = $('.password').val()
         Meteor.loginWithPassword username, password, (err,res)->
             if err
                 alert err
-            if Meteor.user()
-                if Meteor.user().roles
-                    if 'office' in Meteor.user().roles
-                        FlowRouter.go "/p/office_tickets/#{Meteor.user().office_jpid}"
-                    else if 'customer' in Meteor.user().roles
-                        FlowRouter.go "/p/customer_dashboard"
-                    else
-                        FlowRouter.go "/p/customer_dashboard"
-                else
-                    FlowRouter.go "/p/customer_dashboard"
+            else
+                console.log 'yea'
+            # if Meteor.user()
+            #     if Meteor.user().roles
+            #         if 'office' in Meteor.user().roles
+            #             FlowRouter.go "/p/office_tickets/#{Meteor.user().office_jpid}"
+            #         else if 'customer' in Meteor.user().roles
+            #             FlowRouter.go "/p/customer_dashboard"
+            #         else
+            #             FlowRouter.go "/p/customer_dashboard"
+            #     else
+            #         FlowRouter.go "/p/customer_dashboard"
 
     'keyup .username, keyup .password': (e,t)->
         if e.which is 13 #enter
@@ -61,50 +40,50 @@ Template.login.events
                 if err
                     alert err
                 # console.log 'res', Meteor.user()
-                if Meteor.user()
-                    if Meteor.user().roles
-                        if 'office' in Meteor.user().roles
-                            FlowRouter.go "/p/office_tickets/#{Meteor.user().office_jpid}"
-                        else if 'customer' in Meteor.user().roles
-                            FlowRouter.go "/p/customer_dashboard"
-                        else
-                            FlowRouter.go "/p/customer_dashboard"
-                    else
-                        FlowRouter.go "/p/customer_dashboard"
+                # if Meteor.user()
+                #     if Meteor.user().roles
+                #         if 'office' in Meteor.user().roles
+                #             FlowRouter.go "/p/office_tickets/#{Meteor.user().office_jpid}"
+                #         else if 'customer' in Meteor.user().roles
+                #             FlowRouter.go "/p/customer_dashboard"
+                #         else
+                #             FlowRouter.go "/p/customer_dashboard"
+                #     else
+                #         FlowRouter.go "/p/customer_dashboard"
 
     'click #login_demo_admin': ->
         Meteor.loginWithPassword 'demo_admin', 'demoadminpassword', (err,res)->
-            if err then console.error err
-            else
-                FlowRouter.go '/p/admin'
+            # if err then console.error err
+            # else
+            #     FlowRouter.go '/p/admin'
 
     'click #login_demo_office': ->
         Meteor.loginWithPassword 'demo_office', 'demoofficepassword', (err,res)->
-            if err then console.error err
-            else
-                Meteor.call 'find_office_from_jpid', '15793131',(err,res)->
-                    if err then console.error err
-                FlowRouter.go "/p/office_tickets/15793131"
+            # if err then console.error err
+            # else
+            #     Meteor.call 'find_office_from_jpid', '15793131',(err,res)->
+            #         if err then console.error err
+            #     FlowRouter.go "/p/office_tickets/15793131"
 
     'click #login_demo_customer': ->
         Meteor.loginWithPassword 'demo_customer', 'democustomerpassword', (err,res)->
-            if err then console.error err
-            else
-                FlowRouter.go '/p/customer_dashboard'
+            # if err then console.error err
+            # else
+            #     FlowRouter.go '/p/customer_dashboard'
 
 
 Template.login.helpers
-    login_button_class: ->
-        if Meteor.loggingIn()
-            'loading'
-        else if Meteor.user()
-            ''
+    # login_button_class: ->
+    #     if Meteor.loggingIn()
+    #         'loading disabled'
+    #     else if Meteor.user()
+    #         ''
 
-    demo_class: ->
-        if Meteor.loggingIn()
-            ''
-        # else if Meteor.user()
-        #     'disabled'
+    # demo_class: ->
+    #     if Meteor.loggingIn()
+    #         ''
+    #     # else if Meteor.user()
+    #     #     'disabled'
 
 
 

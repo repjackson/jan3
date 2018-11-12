@@ -1,9 +1,3 @@
-FlowRouter.route '/data',
-    name:'data'
-    action: ->
-        BlazeLayout.render 'layout',
-            main: 'delta'
-
 Template.delta_results.onCreated ->
     @autorun => Meteor.subscribe 'schema_fields'
     @autorun => Meteor.subscribe 'schema_actions'
@@ -18,17 +12,17 @@ Template.delta.onCreated ->
     @autorun => Meteor.subscribe 'schema_fields'
 
 Template.delta.onRendered ->
-    Meteor.setTimeout ->
-        $('.dropdown').dropdown()
-    , 700
-    Meteor.setTimeout ->
-        $('.ui.button').popup()
-    , 1000
+    # Meteor.setTimeout ->
+    #     $('.dropdown').dropdown()
+    # , 700
+    # Meteor.setTimeout ->
+    #     $('.ui.button').popup()
+    # , 1000
 
-Template.delta_results.onRendered ->
-    Meteor.setTimeout ->
-        $('.ui.button').popup()
-    , 1000
+# Template.delta_results.onRendered ->
+#     Meteor.setTimeout ->
+#         $('.ui.button').popup()
+#     , 1000
 
 
 Template.delta.helpers
@@ -58,7 +52,7 @@ Template.delta.helpers
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
         delta_fields = []
-        if current_type
+        if Meteor.user() and current_type
             if 'dev' in Meteor.user().roles
                 Docs.find({
                     type:'field'
@@ -77,15 +71,20 @@ Template.delta.helpers
     fields: ->
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
-        fields = Docs.find({
-            type:'field'
-            schema_slugs: $in: [current_type]
-        }, {sort:{rank:1}}).fetch()
-        # console.log fields
-        fields
+        if current_type
+            fields = Docs.find({
+                type:'field'
+                schema_slugs: $in: [current_type]
+            }, {sort:{rank:1}}).fetch()
+            # console.log fields
+            fields
 
 
 Template.delta.events
+    'click #logout': ->
+        Meteor.logout ->
+
+
     'click .view_schamas': ->
         delta = Docs.findOne type:'delta'
 

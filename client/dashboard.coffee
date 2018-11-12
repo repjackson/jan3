@@ -1,7 +1,3 @@
-FlowRouter.route '/dashboard', action: ->
-    BlazeLayout.render 'layout',
-        main: 'dashboard'
-
 Template.dashboard.onCreated ->
     @autorun -> Meteor.subscribe 'my_blocks'
 

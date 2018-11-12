@@ -376,127 +376,103 @@ Meteor.publish 'my_office_contacts', ()->
 
     Meteor.users.find {}, limit:5
 
-publishComposite 'doc', (id)->
-    {
-        find: -> Docs.find id
-        # children: [
-        #     {
-        #         find: (doc)-> Meteor.users.find _id:doc.author_id
-        #     }
-        #     {
-        #         find: (doc)->
-        #             Docs.find
-        #                 type:'office'
-        #                 jpid:doc.office_jpid
-        #     }
-        #     {
-        #         find: (doc)->
-        #             Docs.find
-        #                 type:'customer'
-        #                 jpid:doc.customer_jpid
-        #     }
-        #     {
-        #         find: (doc)-> Docs.find _id:doc.parent_id
-        #     }
-        # ]
-    }
+Meteor.publish 'doc', (id)-> Docs.find id
 
+# publishComposite 'ticket', (id)->
+#     {
+#         find: -> Docs.find id
+#         children: [
+#             {
+#                 find: (ticket)-> Meteor.users.find _id:ticket.author_id
+#             }
+#             {
+#                 find: (ticket)->
+#                     # customer doc
+#                     Docs.find
+#                         type:'customer'
+#                         jpid: ticket.customer_jpid
 
-publishComposite 'ticket', (id)->
-    {
-        find: -> Docs.find id
-        children: [
-            {
-                find: (ticket)-> Meteor.users.find _id:ticket.author_id
-            }
-            {
-                find: (ticket)->
-                    # customer doc
-                    Docs.find
-                        type:'customer'
-                        jpid: ticket.customer_jpid
+#             }
+#             {
+#                 find: (ticket)->
+#                     Docs.find
+#                         jpid: ticket.office_jpid
+#                         type:'office'
 
-            }
-            {
-                find: (ticket)->
-                    Docs.find
-                        jpid: ticket.office_jpid
-                        type:'office'
-
-            }
-            # {
-            #     find: (ticket)-> Docs.find _id:doc.referenced_customer_id
-            # }
-            {
-                find: (ticket)->
-                    Docs.find
-                        type:'feedback'
-                        parent_id:ticket._id
-            }
-        ]
-    }
+#             }
+#             # {
+#             #     find: (ticket)-> Docs.find _id:doc.referenced_customer_id
+#             # }
+#             {
+#                 find: (ticket)->
+#                     Docs.find
+#                         type:'feedback'
+#                         parent_id:ticket._id
+#             }
+#         ]
+#     }
 
 
 
-publishComposite 'me', ()->
-    {
-        find: ->
-            Meteor.users.find @userId
-        # children: [
-        #     {
-        #         find: (user)->
-        #             # users customer account
-        #             if user.profile
-        #                 if user.customer_jpid
-        #                     Docs.find
-        #                         jpid: user.customer_jpid
-        #                         type:'customer'
-        #                 if user.office_jpid
-        #                     Docs.find
-        #                         jpid: user.office_jpid
-        #                         type:'office'
+# publishComposite 'me', ()->
+#     {
+#         find: ->
+#             Meteor.users.find @userId
+#         # children: [
+#         #     {
+#         #         find: (user)->
+#         #             # users customer account
+#         #             if user.profile
+#         #                 if user.customer_jpid
+#         #                     Docs.find
+#         #                         jpid: user.customer_jpid
+#         #                         type:'customer'
+#         #                 if user.office_jpid
+#         #                     Docs.find
+#         #                         jpid: user.office_jpid
+#         #                         type:'office'
 
-        #         # children: [
-        #         #     # {
-        #         #     #     find: (customer)->
-        #         #     #         # parent tickets
-        #         #     #         Docs.find
-        #         #     #             customer_jpid: customer.jpid
-        #         #     #             type:'ticket'
-        #         #     # }
-        #         #     # {
-        #         #     #     find: (customer)->
-        #         #     #         # parent franchisee
-        #         #     #         Docs.find
-        #         #     #             franchisee: customer.franchisee
-        #         #     #             type:'franchisee'
-        #         #     # }
-        #         #     # {
-        #         #     #     find: (customer)->
-        #         #     #         # special services
-        #         #     #         Docs.find
-        #         #     #             "ev.CUSTOMER": customer.cust_name
-        #         #     #             type:'special_service'
-        #         #     # }
-        #         #     # {
-        #         #     #     find: (customer)->
-        #         #     #         # grandparent office
-        #         #     #         Docs.find
-        #         #     #             # "ev.MASTER_LICENSEE": customer.ev.MASTER_LICENSEE
-        #         #     #             type:'office'
-        #         #     #     # children: [
-        #         #     #     #     {
-        #         #     #     #         find: (office)->
-        #         #     #     #             # offices users
-        #         #     #     #             # Meteor.users.find
-        #         #     #     #             #     "office_name": office.ev.MASTER_OFFICE_NAME
-        #         #     #     #     }
-        #         #     #     # ]
-        #         #     # }
-        #         # ]
-        #     }
-        # ]
-    }
+#         #         # children: [
+#         #         #     # {
+#         #         #     #     find: (customer)->
+#         #         #     #         # parent tickets
+#         #         #     #         Docs.find
+#         #         #     #             customer_jpid: customer.jpid
+#         #         #     #             type:'ticket'
+#         #         #     # }
+#         #         #     # {
+#         #         #     #     find: (customer)->
+#         #         #     #         # parent franchisee
+#         #         #     #         Docs.find
+#         #         #     #             franchisee: customer.franchisee
+#         #         #     #             type:'franchisee'
+#         #         #     # }
+#         #         #     # {
+#         #         #     #     find: (customer)->
+#         #         #     #         # special services
+#         #         #     #         Docs.find
+#         #         #     #             "ev.CUSTOMER": customer.cust_name
+#         #         #     #             type:'special_service'
+#         #         #     # }
+#         #         #     # {
+#         #         #     #     find: (customer)->
+#         #         #     #         # grandparent office
+#         #         #     #         Docs.find
+#         #         #     #             # "ev.MASTER_LICENSEE": customer.ev.MASTER_LICENSEE
+#         #         #     #             type:'office'
+#         #         #     #     # children: [
+#         #         #     #     #     {
+#         #         #     #     #         find: (office)->
+#         #         #     #     #             # offices users
+#         #         #     #     #             # Meteor.users.find
+#         #         #     #     #             #     "office_name": office.ev.MASTER_OFFICE_NAME
+#         #         #     #     #     }
+#         #         #     #     # ]
+#         #         #     # }
+#         #         # ]
+#         #     }
+#         # ]
+#     }
 
 
 

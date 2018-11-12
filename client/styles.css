@@ -7,7 +7,7 @@
 
 .nav_bar.ui.menu {
   /*border: 0px solid transparent; */
-  border: none !important;
+  /*border: none !important;*/
   /*background: #01336C; //dark blue*/
   /*background: rgba(0, 20, 137) !important;*/
   background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 96%,rgba(132,189,0,1) 96%, rgba(132,189,0,1) 100%) !important;
@@ -37,13 +37,13 @@
 body {
   /*margin-top:52px;*/
   /*font-family: "Open Sans",sans-serif;*/
-  font-family: 'Lato', sans-serif !important;
+  font-family: 'Ubuntu', sans-serif !important;
   min-height: 500px;
   background: #f4f7f9;
 }
 
 .ui.header{
-  font-family: 'Lato', sans-serif !important;
+  font-family: 'Ubuntu', sans-serif !important;
 }
 
 .ui.button{

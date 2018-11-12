@@ -24,7 +24,6 @@ momentjs:moment
 reactive-var@1.0.11
 matb33:collection-hooks
 less@2.8.0
-reywood:publish-composite
 http@1.4.1
 underscore@1.0.10
 peerlibrary:xml2js
@@ -33,6 +32,5 @@ coffeescript
 percolate:synced-cron
 random@1.1.0
 modules@0.13.0
-meteorhacks:ssr
 lepozepo:cloudinary
 juliancwirko:postcss@=1.2.0
