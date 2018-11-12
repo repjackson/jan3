@@ -13,12 +13,6 @@ Meteor.publish 'my_bookmarks', ->
     Docs.find
         bookmark_ids:$in:[Meteor.userId()]
 
-Meteor.publish 'my_blocks', ->
-    Docs.find
-        type:'block'
-        block_type: 'dashboard'
-        # author_id: Meteor.userId()
-
 Meteor.publish 'office_jpid', (jpid)->
     console.log jpid
     Docs.find
@@ -36,153 +30,6 @@ Meteor.publish 'customer_jpid', (jpid)->
     Docs.find
         type:'customer'
         customer_jpid: jpid
-
-
-Meteor.publish 'block_children', (
-    block_doc_id,
-    filter_key=null,
-    filter_value=null,
-    query=null,
-    limit=10,
-    sort_key='timestamp',
-    sort_direction=1,
-    skip=0,
-    status
-    page_jpid
-    query_params
-    doc_id
-    )->
-        block = Docs.findOne block_doc_id
-        collection = if block.children_collection is 'users' then "Meteor.users" else "Docs"
-        if block.filter_source
-            if block.filter_source is "{page_slug}"
-                filter_source_doc = Docs.findOne jpid:page_jpid
-            else if block.filter_source is "{doc_id}"
-                filter_source_doc = Docs.findOne doc_id
-            else if block.filter_source is "{current_user}"
-                filter_source_doc = Meteor.user()
-        if page_jpid
-            doc_object = Docs.findOne jpid:page_jpid
-        else if doc_id
-            doc_object = Docs.findOne doc_id
-        # else
-
-        match = {}
-        unless block.children_collection is 'users'
-            match.type = block.children_doc_type
-        if status then match["ev.ACCOUNT_STATUS"] = "ACTIVE"
-        if query then match["$text"] = "$search":query
-        # if block.children_doc_type is 'event'
-        calculated_value =
-            switch filter_value
-                when "{source_key}"
-                    if filter_source_doc
-                        if block.filter_key_ev_subset
-                            result = filter_source_doc.ev["#{block.filter_source_key}"]
-                        else
-                            result = filter_source_doc["#{block.filter_source_key}"]
-                        # if block.children_doc_type is 'event'
-                        result
-                    else
-                when "{current_user_customer_name}"
-                    if Meteor.user()
-                        found_customer = Docs.findOne
-                            type:'customer'
-                            customer_jpid:Meteor.user().customer_jpid
-                        found_customer.ev.CUST_NAME
-                when "{current_user_office_name}"
-                    if Meteor.user()
-                        found_office = Docs.findOne
-                            type:'office'
-                            office_jpid:Meteor.user().office_jpid
-                        found_office.ev.MASTER_LICENSEE
-                when "{current_user_franchisee_name}"
-                    found_franchisee = Docs.findOne
-                        type:'franchisee'
-                        franchisee_jpid:Meteor.user().franchisee_jpid
-                    found_franchisee.ev.FRANCHISEE
-                # user
-                when "{current_user_customer_jpid}"
-                    Meteor.user().customer_jpid
-                when "{current_user_office_jpid}"
-                    Meteor.user().office_jpid
-                when "{current_user_franchisee_jpid}"
-                    Meteor.user().franchisee_jpid
-                # page
-                when "{current_page_jpid}"
-                    if page_jpid
-                        page_jpid
-                when "{current_page_doc_id}"
-                    if doc_id
-                        doc_id
-                # when "{current_page_customer_name}"
-                #     if doc_object
-                #         if doc_object.ev.CUST_NAME.length > 0
-                #             doc_object.ev.CUST_NAME
-                #         if doc_object.ev.CUST_NAME.length is 0
-                #             @stop()
-                when "{current_page_office_name}"
-                    # if doc_object
-                    #     if doc_object.ev.MASTER_LICENSEE.length > 0
-                    #         doc_object.ev.MASTER_LICENSEE
-                    #     if doc_object.ev.MASTER_LICENSEE.length is 0
-                    #         @stop()
-                    doc_object.ev.MASTER_LICENSEE
-                when "{current_page_franchisee_name}"
-                    if doc_object
-                        if doc_object.ev.FRANCHISEE.length > 0
-                            doc_object.ev.FRANCHISEE
-                        if doc_object.ev.FRANCHISEE.length is 0
-                            @stop()
-                else filter_value
-        if filter_key and calculated_value then match["#{filter_key}"] = calculated_value
-        # if block.children_doc_type is 'event'
-        user = Meteor.user()
-
-        if block.children_collection
-            unless block.children_collection is 'users'
-                if user and user.roles
-                    # unless 'customer' in user.roles
-                    match.submitted = $ne: false
-
-        if -1 > limit > 100
-            limit = 100
-
-        if block.context is 'link'
-            match = "#{block.source_key}": query_params["#{block.query_param1}"]
-            if block.source_collection is 'users'
-                source =
-                    Meteor.users.findOne match
-            else
-                source =
-                    Docs.findOne
-                        type: block.children_doc_type
-                        # fix
-                        # "#{block.target_key}":
-            source_value = source["#{block.source_match_key}"]
-            source_match = {}
-            source_match["#{block.target_key}"] = source_value
-            source_match.type = block.source_match_type
-            if block.target_collection is 'docs'
-                cursor = Docs.find source_match
-                return cursor
-                @stop
-
-        else if block.context is 'direct'
-            match = query_params
-        if block.children_collection is 'users'
-            cursor = Meteor.users.find match,{
-                skip: skip
-                limit:limit
-                sort:"#{sort_key}":parseInt("#{sort_direction}")
-            }
-            cursor
-        else
-            Docs.find match,{
-                skip: skip
-                limit:limit
-                sort:"#{sort_key}":parseInt("#{sort_direction}")
-            }
 
 
 Meteor.publish 'assigned_to_users', (ticket_doc_id)->
@@ -245,12 +92,6 @@ Meteor.publish 'parent_doc', (child_id)->
     child =  Docs.findOne child_id
     Docs.find
         _id: child.parent_id
-
-Meteor.publish 'static_office_employees', (office_jpid)->
-    office_doc = Docs.findOne "jpid":office_jpid
-    Meteor.users.find
-        "office_name": office_doc.ev.MASTER_LICENSEE
-
 
 
 Meteor.publish 'users_docs',(username) ->
@@ -334,146 +175,9 @@ Meteor.publish 'my_office', ->
                     office_jpid: user.office_jpid
                     type:'office'
 
-Meteor.publish 'my_special_services', ->
-    user = Meteor.user()
-    if user and user.customer_jpid
-        customer_doc = Docs.findOne
-            jpid: user.customer_jpid
-            type:'customer'
-            # grandparent office
-        Docs.find {
-            type:'special_service'
-            # "ev.CUSTOMER": customer_doc.ev.CUST_NAME
-        }, limit: 5
-
-Meteor.publish 'my_office_contacts', ()->
-    # user = Meteor.user()
-    # if Meteor.user()
-    #     if Meteor.user().customer_jpid
-    #         customer_doc = Docs.findOne
-    #             jpid: Meteor.user().customer_jpid
-    #             type:'customer'
-    #         Meteor.users.find {
-    #             # published: true
-    #             office_jpid: customer_doc.office_jpid
-    #         }
-
     Meteor.users.find {}, limit:5
 
 Meteor.publish 'doc', (id)-> Docs.find id
-
-# publishComposite 'ticket', (id)->
-#     {
-#         find: -> Docs.find id
-#         children: [
-#             {
-#                 find: (ticket)-> Meteor.users.find _id:ticket.author_id
-#             }
-#             {
-#                 find: (ticket)->
-#                     # customer doc
-#                     Docs.find
-#                         type:'customer'
-#                         jpid: ticket.customer_jpid
-
-#             }
-#             {
-#                 find: (ticket)->
-#                     Docs.find
-#                         jpid: ticket.office_jpid
-#                         type:'office'
-
-#             }
-#             # {
-#             #     find: (ticket)-> Docs.find _id:doc.referenced_customer_id
-#             # }
-#             {
-#                 find: (ticket)->
-#                     Docs.find
-#                         type:'feedback'
-#                         parent_id:ticket._id
-#             }
-#         ]
-#     }
-
-
-
-# publishComposite 'me', ()->
-#     {
-#         find: ->
-#             Meteor.users.find @userId
-#         # children: [
-#         #     {
-#         #         find: (user)->
-#         #             # users customer account
-#         #             if user.profile
-#         #                 if user.customer_jpid
-#         #                     Docs.find
-#         #                         jpid: user.customer_jpid
-#         #                         type:'customer'
-#         #                 if user.office_jpid
-#         #                     Docs.find
-#         #                         jpid: user.office_jpid
-#         #                         type:'office'
-
-#         #         # children: [
-#         #         #     # {
-#         #         #     #     find: (customer)->
-#         #         #     #         # parent tickets
-#         #         #     #         Docs.find
-#         #         #     #             customer_jpid: customer.jpid
-#         #         #     #             type:'ticket'
-#         #         #     # }
-#         #         #     # {
-#         #         #     #     find: (customer)->
-#         #         #     #         # parent franchisee
-#         #         #     #         Docs.find
-#         #         #     #             franchisee: customer.franchisee
-#         #         #     #             type:'franchisee'
-#         #         #     # }
-#         #         #     # {
-#         #         #     #     find: (customer)->
-#         #         #     #         # special services
-#         #         #     #         Docs.find
-#         #         #     #             "ev.CUSTOMER": customer.cust_name
-#         #         #     #             type:'special_service'
-#         #         #     # }
-#         #         #     # {
-#         #         #     #     find: (customer)->
-#         #         #     #         # grandparent office
-#         #         #     #         Docs.find
-#         #         #     #             # "ev.MASTER_LICENSEE": customer.ev.MASTER_LICENSEE
-#         #         #     #             type:'office'
-#         #         #     #     # children: [
-#         #         #     #     #     {
-#         #         #     #     #         find: (office)->
-#         #         #     #     #             # offices users
-#         #         #     #     #             # Meteor.users.find
-#         #         #     #     #             #     "office_name": office.ev.MASTER_OFFICE_NAME
-#         #         #     #     #     }
-#         #         #     #     # ]
-#         #         #     # }
-#         #         # ]
-#         #     }
-#         # ]
-#     }
-
-
-
-# Meteor.publish 'userStatus', ->
-#     Meteor.users.find { 'status.online': true },
-#         fields:
-#             points: 1
-#             tags: 1
-
-
-
-# Meteor.publish 'user_status_notification', ->
-#     Meteor.users.find('status.online': true).observe
-#         added: (id) ->
-#         removed: (id) ->
-
-
 
 
 Meteor.publish 'schema_doc', (child_doc_id)->
@@ -511,32 +215,11 @@ Meteor.publish 'author_array', (author_array)->
     Meteor.users.find(_id: $in: author_array)
 
 
-
-Meteor.publish 'blocks', (parent_id)->
-    Docs.find
-        type:'block'
-        parent_id:parent_id
-
-Meteor.publish 'blocks_by_page_slug', (page_slug)->
-    # parent = Docs.findOne
-    #     type:'page'
-    #     slug:page_slug
-    Docs.find
-        type:'block'
-        parent_slug:page_slug
-
 Meteor.publish 'events_by_type', (type)->
     Docs.find
         type:'event'
         event_type:type
 
-
-
-
-Meteor.publish 'page_by_slug', (slug)->
-    Docs.find
-        type:'page'
-        slug:slug
 
 
 Meteor.publish 'doc_by_jpid', (jpid)->
