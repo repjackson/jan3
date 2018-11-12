@@ -7,11 +7,12 @@ template(name='delta')
                 //     // img.ui.small.center.aligned.image.view_schamas(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
                 .twelve.wide.blue.column
                     a.toggle_menu(href='#')
-                        h1.ui.center.aligned.inverted.header
+                        h1.ui.inverted.header
                             if current_type.icon
                                 +icon name=current_type.icon classes='spaced'
-                            | #{current_type.plural}
+                            | #{current_type.title}
                     if delta_doc.viewing_menu
+                        .ui.hidden.divider
                         each bookmarks
                             a.ui.compact.button.pick_delta(title=title)
                                 i.icon
@@ -40,7 +41,6 @@ template(name='delta')
                     .four.wide.column.scrolling
                         if current_type
                             if can_add
-                                .ui.hidden.divider
                                 .ui.fluid.icon.compact.margined.button.add_doc(title="Add #{current_type.title}")
                                     // +icon name='plus'
                                     i.green.large.plus.icon

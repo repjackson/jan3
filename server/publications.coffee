@@ -246,19 +246,6 @@ Meteor.publish 'parent_doc', (child_id)->
     Docs.find
         _id: child.parent_id
 
-
-Meteor.publish 'has_key', (key)->
-    Docs.find "ev.#{key}": $exists: true
-    # Docs.find "ev.FRANCH_NAME": $exists: true
-
-
-Meteor.publish 'has_key_value', (key, value)->
-    Docs.find "ev.#{key}": value
-    # Docs.find "ev.FRANCH_NAME": $exists: true
-
-
-
-
 Meteor.publish 'static_office_employees', (office_jpid)->
     office_doc = Docs.findOne "jpid":office_jpid
     Meteor.users.find
@@ -277,6 +264,10 @@ Meteor.publish 'user_events',(username) ->
             author_id: user._id
             type:'event'
             }, {limit:20})
+
+
+Meteor.publish 'me', ->
+    Meteor.users.find @userId
 
 Meteor.publish 'my_profile', ->
     Meteor.users.find @userId,

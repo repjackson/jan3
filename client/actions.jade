@@ -133,14 +133,14 @@ template(name='voting')
 
 template(name='voting_pane')
     .ui.header
-        +icon name='facebook-like'
+        +icon name='collapse-arrow'
         |Upvoters
     .ui.list
         each upvoters
             +user_list_view
 
     .ui.header
-        +icon name='thumbs-down'
+        +icon name='expand-arrow'
         |Downvoters
     .ui.list
         each downvoters

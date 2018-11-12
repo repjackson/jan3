@@ -271,7 +271,7 @@ Meteor.methods
                     "filter_type": [target.slug]
                     current_page: 0
                     detail_id:null
-                    viewing_children:false
+                    viewing_menu:false
                     viewing_detail:false
                     editing_mode:false
                     config_mode:false

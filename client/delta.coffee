@@ -23,38 +23,14 @@ Template.delta.onCreated ->
     @autorun -> Meteor.subscribe 'my_bookmarks'
 
 
-Template.nav.onRendered ->
-    # Meteor.setTimeout ->
-    #     $('.item').popup()
-    # , 1000
-
-
-
-# Template.nav.onRendered ->
-#     Meteor.setTimeout ->
-#         $('.dropdown').dropdown()
-#     , 500
 
 
 Template.delta.helpers
     bookmarks: ->
-        Docs.find
+        Docs.find {
             # bookmark_ids: $in:[Meteor.userId()]
             type:'schema'
-
-
-Template.delta.onRendered ->
-    # Meteor.setTimeout ->
-    #     $('.dropdown').dropdown()
-    # , 700
-    # Meteor.setTimeout ->
-    #     $('.ui.button').popup()
-    # , 1000
-
-# Template.delta_results.onRendered ->
-#     Meteor.setTimeout ->
-#         $('.ui.button').popup()
-#     , 1000
+        }, sort:title:1
 
 
 Template.delta.helpers
@@ -85,7 +61,7 @@ Template.delta.helpers
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
         delta_fields = []
-        if Meteor.user() and current_type
+        if Meteor.user() and Meteor.user().roles and current_type
             if 'dev' in Meteor.user().roles
                 Docs.find({
                     type:'field'
@@ -599,7 +575,7 @@ Template.task_text.onCreated ->
     @editing = new ReactiveVar false
 
 Template.task_text.helpers
-    editing: -> Template.currentData().editing.get()
+    editing: -> Template.instance().editing.get()
 
 Template.task_text.events
     'change .text_val': (e,t)->

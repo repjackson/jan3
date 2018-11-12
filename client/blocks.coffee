@@ -241,19 +241,6 @@ Template.set_key_value.events
             { $set: "#{@key}": @value }
 
 
-Template.set_page_key_value.events
-    'click .set_page_key_value': ->
-        page = Docs.findOne
-            type:'page'
-            slug:FlowRouter.getParam('page_slug')
-        Docs.update page._id,
-            { $set: "#{@key}": @value }
-
-Template.set_key_value_2.events
-    'click .set_key_value': ->
-        Docs.update Template.parentData(2)._id,
-            { $set: "#{@key}": @value }
-
 Template.set_key_value.helpers
     set_value_button_class: ->
         if Template.parentData()["#{@key}"] is @value then 'green' else ''
@@ -289,6 +276,7 @@ Template.edit_block_number_field.helpers
         block_doc = Template.parentData()
         if block_doc
             block_doc["#{@key}"]
+
 Template.edit_block_number_field.events
     'change .number_field': (e,t)->
         number_value = parseInt e.currentTarget.value
@@ -307,12 +295,6 @@ Template.toggle_block_field_boolean.events
 Template.toggle_block_field_boolean.helpers
     toggle_value_button_class: ->
         if Template.parentData(2)["#{@key}"] is true then 'green' else ''
-
-
-
-Template.view_button.helpers
-    url:-> "/p/#{@type}?doc_id=#{@_id}&jpid=#{@jpid}"
-
 
 
 
