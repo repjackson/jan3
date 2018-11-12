@@ -5,11 +5,6 @@ Template.accounts_layout.onCreated ->
     @autorun -> Meteor.subscribe 'me'
 
 Template.login.events
-    # 'click #logout': (e,t)->
-    #     e.preventDefault()
-    #     Meteor.logout()
-        # FlowRouter.go '/login'
-
     'click .login': (e,t)->
         # e.preventDefault()
         # comment = $('#register_comment').val().trim()

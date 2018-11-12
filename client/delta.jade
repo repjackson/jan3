@@ -2,9 +2,9 @@ template(name='delta')
     .ui.stackable.padded.grid
         if currentUser
             .centered.row
-                .one.wide.blue.column
-                    .ui.inverted.header JP
-                    // img.ui.small.center.aligned.image.view_schamas(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
+                // .one.wide.blue.column
+                //     .ui.inverted.header JP
+                //     // img.ui.small.center.aligned.image.view_schamas(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
                 .twelve.wide.blue.column
                     a.toggle_menu(href='#')
                         h1.ui.center.aligned.inverted.header
@@ -17,7 +17,7 @@ template(name='delta')
                                 i.icon
                                     +icon name=icon
                                 | #{title}
-                .three.wide.blue.column
+                .four.wide.blue.column
                     .ui.button
                         if currentUser.image_id
                             i.large.icon
