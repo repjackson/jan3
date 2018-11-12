@@ -74,10 +74,6 @@ Template.registerHelper 'my_office', () ->
     else null
 
 
-Template.registerHelper 'is_current_route', (name) ->
-    if FlowRouter.current().route.name is name then 'active' else ''
-
-
 Template.registerHelper 'is_admin', () ->
     if Meteor.user() and Meteor.user().roles
         'admin' in Meteor.user().roles

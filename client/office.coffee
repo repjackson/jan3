@@ -29,12 +29,6 @@ Template.office_service_settings.events
                     $set: services: [@slug]
 
 
-Template.toggle_sla_boolean.onRendered ->
-    Meteor.setTimeout ->
-        $('.button').popup()
-    , 400
-
-
 Template.office_sla.onCreated ->
     @autorun -> Meteor.subscribe 'type', 'ticket_type'
     @autorun -> Meteor.subscribe 'type', 'rule'

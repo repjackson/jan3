@@ -117,7 +117,6 @@ Template.register_customer.events
             if err
                 alert err
             else
-                FlowRouter.go '/p/customer_dashboard'
                 Docs.insert
                     type:'message'
                     username:options.username
@@ -244,9 +243,6 @@ Template.register_office.events
         Accounts.createUser(options, (err,res)=>
             if err
                 alert err
-            else
-                # Meteor.call
-                FlowRouter.go "/p/office_tickets/#{office_jpid}/"
         )
 
     'keyup #username': (e,t)->

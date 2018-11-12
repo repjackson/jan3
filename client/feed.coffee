@@ -1,13 +1,5 @@
 
 
-Template.users_feed.onCreated ->
-    @autorun => Meteor.subscribe 'users_feed', FlowRouter.getParam('username')
-
-Template.users_feed.helpers
-    user_feed_events: ->
-        Docs.find {type:'event'}, sort:timestamp:-1
-
-
 Template.global_feed.onCreated ->
     @autorun => Meteor.subscribe 'type', 'event', 20
 
@@ -40,21 +32,10 @@ Template.small_doc_history.helpers
 
 
 
-Template.full_doc_history.onCreated ->
-    @autorun =>  Meteor.subscribe 'child_docs', FlowRouter.getQueryParam('doc_id')
-    @autorun =>  Meteor.subscribe 'type', 'event_type'
-
 
 Template.event.onCreated ->
     @autorun =>  Meteor.subscribe 'user_profile', @data.author_id
     @autorun =>  Meteor.subscribe 'doc', @data.parent_id
-Template.full_doc_history.helpers
-    doc_history_events: ->
-        Docs.find {
-            parent_id: FlowRouter.getQueryParam('doc_id')
-            type:'event'
-        }, sort:timestamp:-1
-
 
 
 
@@ -64,10 +45,3 @@ Template.event.events
 
 Template.event.helpers
     is_escalation: -> @event_type is 'escalate'
-
-
-# Template.full_doc_history.events
-#     'click #clear_events':
-#         doc_id = FlowRouter.getQueryParam('doc_id')
-#         if confirm 'Clear all events? Irriversible.'
-#             Meteor.call 'clear_ticket_events', doc_id

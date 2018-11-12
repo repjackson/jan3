@@ -1,11 +1,3 @@
-Template.add_ticket_button.events
-    'click #add_ticket': ->
-        Meteor.call 'log_ticket', (err,res)->
-            if err then console.error err
-            else
-                FlowRouter.go "/p/submit_ticket?doc_id=#{res}"
-
-
 Template.ticket_type_label.onRendered ->
     Meteor.setTimeout ->
         $('img').popup()
@@ -72,23 +64,6 @@ Template.level_icon.helpers
 Template.submit_ticket.onCreated ->
     @autorun -> Meteor.subscribe 'type','ticket_type'
 #     @autorun -> Meteor.subscribe 'type','rule'
-#     @autorun -> Meteor.subscribe 'ticket', FlowRouter.getQueryParam('doc_id')
-
-
-Template.submit_ticket.helpers
-    ticket_type_docs: -> Docs.find type:'ticket_type'
-    can_submit: ->
-        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        user = Meteor.user()
-        is_customer = user and user.roles and ('customer' in user.roles)
-        ticket.service_date and ticket.ticket_details and ticket.ticket_type and is_customer
-
-Template.submit_ticket.events
-    'click .submit': ->
-        doc_id = FlowRouter.getQueryParam 'doc_id'
-
-        FlowRouter.go "/p/ticket_customer_view?doc_id=#{doc_id}"
-        Meteor.call 'submit_ticket', doc_id, (err,res)->
 
 
 
@@ -149,114 +124,6 @@ Template.ticket_status.events
         t.is_closing.set false
 
 
-Template.feedback_widget.onCreated ->
-    @autorun => Meteor.subscribe 'feedback_doc', FlowRouter.getQueryParam('doc_id')
-Template.feedback_widget.helpers
-    page_context: ->
-        page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-
-    feedback_doc: ->
-        Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-
-    good_class: ->
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        if feedback_doc.rating
-            if feedback_doc.rating is 'good'
-                'green'
-            else
-                'grey outline'
-    bad_class: ->
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        if feedback_doc.rating
-            if feedback_doc.rating is 'bad'
-                'red'
-            else
-                'grey outline'
-Template.feedback_widget.events
-    'click .add_feedback': ->
-        ticket = Docs.findOne FlowRouter.getQueryParam('doc_id')
-        Docs.update FlowRouter.getQueryParam('doc_id'),
-            $set: feedback:true
-        Docs.insert
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-
-    'click .thumbs.up': ->
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        Docs.update feedback_doc._id,
-            $set: rating: 'good'
-
-    'click .thumbs.down': ->
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        Docs.update feedback_doc._id,
-            $set: rating: 'bad'
-
-    'blur .feedback_details': (e,t)->
-        details = e.currentTarget.value
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        Docs.update feedback_doc._id,
-            $set:details:details
-
-    'click .submit_feedback': (e,t)->
-        feedback_doc = Docs.findOne
-            type:'feedback'
-            parent_id: FlowRouter.getQueryParam('doc_id')
-        Docs.update feedback_doc._id,
-            $set:submitted:true
-
-
-Template.complete_ticket_task.onCreated ()->
-    doc_id = FlowRouter.getQueryParam 'doc_id'
-    @autorun => Meteor.subscribe 'doc', doc_id
-
-Template.complete_ticket_task.onRendered ()->
-    @autorun () =>
-        if @subscriptionsReady()
-            doc_id = FlowRouter.getQueryParam 'doc_id'
-            if ticket
-                ticket = Docs.findOne doc_id
-            # if unassigned_username
-                # console.log 'found unassign', unassigned_username
-
-
-Template.complete_ticket_task.events
-    'click .submit_note': (e,t)->
-        note_val = t.$('#completion_details').val()
-        unassigned_username = FlowRouter.getQueryParam 'unassign'
-        ticket_id = FlowRouter.getQueryParam('doc_id')
-        ticket = Docs.findOne ticket_id
-        Docs.insert
-            type:'event'
-            parent_id: ticket_id
-            ticket_id: ticket_id
-            event_type:'note'
-            office_jpid: ticket.office_jpid
-            franchisee_jpid: ticket.franchisee_jpid
-            customer_jpid: ticket.customer_jpid
-            text: "#{unassigned_username} added note: #{note_val}."
-        FlowRouter.go("/p/ticket_admin_view?doc_id=#{ticket_id}")
-
-
-    'click .submit_and_complete_task': (e,t)->
-        completion_details = t.$('#completion_details').val()
-        unassigned_username = FlowRouter.getQueryParam 'unassign'
-        ticket_id = FlowRouter.getQueryParam('doc_id')
-        Meteor.call 'complete_ticket_task', ticket_id, unassigned_username, completion_details, (err,res)->
-            if err then console.error err
-            else
-                FlowRouter.go("/p/ticket_admin_view?doc_id=#{ticket_id}")
 
 Template.ticket_close_user_info.onCreated ()->
     unassign_username = FlowRouter.getQueryParam 'unassign'
@@ -265,20 +132,6 @@ Template.ticket_close_user_info.helpers
     completing_user: ->
         unassign_username = FlowRouter.getQueryParam 'unassign'
         Meteor.users.findOne username:unassign_username
-
-
-
-Template.office_ticket_widget.onCreated ()->
-    @autorun => Meteor.subscribe 'jpid', FlowRouter.getQueryParam 'jpid'
-    @autorun => Meteor.subscribe 'type', 'rule'
-    @autorun => Meteor.subscribe 'office_stats', FlowRouter.getQueryParam 'jpid'
-
-Template.office_ticket_widget.helpers
-    page_office: ->
-        Docs.findOne
-            office_jpid: FlowRouter.getQueryParam 'jpid'
-            type:'office'
-    rules: -> Docs.find {type:'rule'}, sort:number:-1
 
 
 
