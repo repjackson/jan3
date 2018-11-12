@@ -81,8 +81,18 @@ Template.delta.helpers
 
 
 Template.delta.events
-    'click #logout': ->
-        Meteor.logout ->
+    'click .toggle_menu': ->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set: viewing_menu: !delta.viewing_menu
+
+
+    'click .pick_delta': (e,t)->
+        e.preventDefault()
+        Session.set 'is_calculating', true
+        # console.log 'hi call'
+        Meteor.call 'set_schema', @, ->
+            Session.set 'is_calculating', false
 
 
     'click .view_schamas': ->

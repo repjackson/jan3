@@ -13,6 +13,7 @@ Template.login.events
     'click .login': (e,t)->
         # e.preventDefault()
         # comment = $('#register_comment').val().trim()
+        console.log 'yea'
         username = $('.username').val()
         password = $('.password').val()
         Meteor.loginWithPassword username, password, (err,res)->
@@ -73,11 +74,11 @@ Template.login.events
 
 
 Template.login.helpers
-    # login_button_class: ->
-    #     if Meteor.loggingIn()
-    #         'loading disabled'
-    #     else if Meteor.user()
-    #         ''
+    login_button_class: ->
+        if Meteor.loggingIn()
+            'loading disabled'
+        else if Meteor.user()
+            ''
 
     # demo_class: ->
     #     if Meteor.loggingIn()

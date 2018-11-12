@@ -219,7 +219,7 @@ template(name='task_card')
                         .ui.basic.label #{this}
                 .column
                     if complete
-                        +icon name='checked-radio-button' classes='spaced'
+                        +icon name='checked-checkbox' classes='spaced'
                         | Complete
                         if full_mode
                             div
@@ -227,7 +227,7 @@ template(name='task_card')
                                 +iconsmall name='unchecked-checkbox'
                                 | Mark Incomplete
                     else
-                        +icon name='unchecked-radio-button' classes='spaced'
+                        +icon name='unchecked-checkbox' classes='spaced'
                         | Incomplete
                         if full_mode
                             div

@@ -169,21 +169,6 @@ Template.franchisee_card.helpers
 
 
 
-# Template.view_stat.onCreated ->
-#     @autorun =>  Meteor.subscribe 'stat', @data.doc_type, @data.stat_type
-# Template.view_stat.helpers
-#     stat_value: ->
-#         inputs = Template.currentData(0)
-#         doc =
-#             Stats.findOne
-#                 doc_type:inputs.doc_type
-#                 stat_type:inputs.stat_type
-#         if doc
-#             doc.amount
-
-
-
-
 
 Template.assignment_widget.onCreated ()->
     @autorun => Meteor.subscribe 'assigned_users', FlowRouter.getQueryParam('doc_id')
@@ -334,3 +319,25 @@ Template.view_button.helpers
 
 Template.user_list_view.onCreated ->
     @autorun => Meteor.subscribe 'single_user', @data._id
+
+
+
+
+
+
+
+
+Template.logout_button.onCreated ->
+    @signing_out = new ReactiveVar false
+
+Template.logout_button.events
+    'click #logout': (e,t)->
+        # e.preventDefault()
+        t.signing_out.set true
+        Meteor.logout ->
+            # FlowRouter.go '/login'
+            t.signing_out.set false
+
+Template.logout_button.helpers
+    signing_out: -> Template.instance().signing_out.get()
+

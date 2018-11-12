@@ -10,13 +10,13 @@ Cloudinary.config
     api_secret: Meteor.settings.cloudinary_secret
 
 
-Meteor.startup(() =>
-    Docs._ensureIndex({ "$**": "text" })
+# Meteor.startup(() =>
+#     Docs._ensureIndex({ "$**": "text" })
 
-    Meteor.users._ensureIndex({ "$**": "text" })
+#     Meteor.users._ensureIndex({ "$**": "text" })
 
-    Meteor.users._ensureIndex( { "username": 1 }, { unique: true } )
-)
+#     Meteor.users._ensureIndex( { "username": 1 }, { unique: true } )
+# )
 
 
 Accounts.onCreateUser (options=null, user)=>
@@ -51,14 +51,6 @@ if Meteor.isProduction
             job: ->
                 console.log 'running site escalation check'
                 Meteor.call 'run_site_escalation_check', (err,res)->
-                    if err then console.error err
-        },{
-            name: 'Log Stats'
-            schedule: (parser) ->
-                parser.text 'every 6 hours'
-            job: ->
-                console.log 'logging stats/6 hours'
-                Meteor.call 'log_stats', (err, res)->
                     if err then console.error err
         },{
             name: 'Update customers'
