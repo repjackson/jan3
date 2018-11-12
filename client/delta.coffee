@@ -28,10 +28,11 @@ Template.delta.onRendered ->
 Template.delta.helpers
     current_type: ->
         delta = Docs.findOne type:'delta'
-        type_key = delta.filter_type[0]
-        Docs.findOne
-            type:'schema'
-            slug:type_key
+        if delta and delta.filter_type
+            type_key = delta.filter_type[0]
+            Docs.findOne
+                type:'schema'
+                slug:type_key
 
     viewing_schemas: ->
         delta = Docs.findOne type:'delta'
