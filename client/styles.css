@@ -35,18 +35,22 @@
 }
 
 .toggle_value {
-  border-style: dotted !important;
+  /*border-style: dotted !important;*/
   border-width: 1px !important;
   width: 100px !important;
 }
 
+.dotted {
+  border-style: dotted !important;
+}
 
 body {
   /*margin-top:52px;*/
   /*font-family: "Open Sans",sans-serif;*/
   font-family: 'Ubuntu', sans-serif !important;
   min-height: 500px;
-  background: #f4f7f9;
+  /*background: #f4f7f9;*/
+  background: rgba(244, 247, 249, 0);
 }
 
 .ui.header{

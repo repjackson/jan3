@@ -186,6 +186,16 @@ Template.delta_card.helpers
         if doc and doc.type
             if doc.type is 'task' then 'task_card' else 'default_card'
 
+    local_doc: ->
+        if @data
+            Docs.findOne @data.valueOf()
+        else
+            Docs.findOne @valueOf()
+
+    delta_card_class: ->
+        delta = Docs.findOne type:'delta'
+        if delta.detail_id is @_id then 'sixteen wide'
+
 
 
 Template.delta_results.helpers
@@ -193,7 +203,8 @@ Template.delta_results.helpers
 
     results_class: ->
         delta = Docs.findOne type:'delta'
-        if delta.viewing_profile then 'nine wide' else 'twelve wide'
+        if delta.viewing_detail then 'sixteen wide'
+        else if delta.viewing_profile then 'nine wide' else 'twelve wide'
 
 
     multiple_pages: ->
@@ -292,24 +303,18 @@ Template.task_card.events
                     detail_id: @_id
 
 
-Template.delta_card.helpers
-    local_doc: ->
-        if @data
-            Docs.findOne @data.valueOf()
-        else
-            Docs.findOne @valueOf()
-
 
 
 Template.task_card.helpers
-    expand_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.expand_id is @_id then 'blue'
+    # expand_class: ->
+    #     delta = Docs.findOne type:'delta'
+    #     if delta.expand_id is @_id then 'blue'
 
 
-    maximize_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.detail_id is @_id then 'blue'
+    # maximize_class: ->
+    #     delta = Docs.findOne type:'delta'
+    #     if delta.detail_id is @_id then 'blue'
+
 
 
 
@@ -318,10 +323,7 @@ Template.task_card.helpers
 Template.default_card.helpers
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
-        classes = []
-        if delta.detail_id then classes.push 'fluid'
-        if delta.detail_id is @_id then classes.push 'raised fluid'
-        classes
+        if delta.detail_id is @_id then 'sixteen wide'
 
 
 
@@ -479,7 +481,7 @@ Template.delta_results.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'active' else ''
+        if @value is delta.page_size then 'blue' else ''
 
 
 Template.set_page_size.events

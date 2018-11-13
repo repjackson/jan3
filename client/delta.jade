@@ -24,6 +24,7 @@ template(name='delta')
                         // |#{current_type.title}
 
                 a.one.wide.column(href='#')
+                a.one.wide.column(href='#')
                     +icon name='edit'
                 a.two.wide.column.toggle_profile(href='#')
                     .ui.inverted.header
@@ -49,8 +50,8 @@ template(name='delta')
                 unless delta_doc.viewing_detail
                     .four.wide.column.scrolling
 
-                        .ui.compact.icon.button.delete_delta(title='Clear Session')
-                            i.remove.icon
+                        // .ui.compact.icon.button.delete_delta(title='Clear Session')
+                        //     i.remove.icon
                             // |Clear
                         // .ui.compact.icon.button.run_fo(title='Reload Session')
                         //     i.refresh.icon
@@ -70,9 +71,9 @@ template(name='delta')
 
 template(name='delta_results')
     .column(class=results_class)
-        if is_dev
-            unless delta_doc.viewing_detail
-                +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
+        // if is_dev
+        //     unless delta_doc.viewing_detail
+        //         +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
         // +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand Cards'
         if delta_doc.config_mode
             .scrolling
@@ -106,30 +107,29 @@ template(name='delta_results')
             if delta_doc.result_ids
                 if delta_doc.result_ids.length
                     unless delta_doc.viewing_detail
-                        .ui.horizontal.list
-                            .item
+                        .ui.middle.aligned.grid
+                            .row
                                 +set_page_size value=10
                                 +set_page_size value=20
                                 +set_page_size value=50
-                            .item
-                                if multiple_pages
-                                    .ui.basic.label
-                                        | #{delta_doc.current_page}/#{delta_doc.page_amount}
-                                | #{delta_doc.total} Results
-                            .item
-                                .ui.buttons
-                                    if show_page_down
-                                        a.ui.page_down.icon.button(title='Previous Page')
-                                            i.left.chevron.grey.icon
-                                    if show_page_up
-                                        a.ui.page_up.icon.button(title='Next Page')
-                                            i.right.chevron.grey.icon
-                            .item
-                                .ui.button
+                                .three.wide.column
+                                    if multiple_pages
+                                        .ui.basic.label
+                                            | #{delta_doc.current_page}/#{delta_doc.page_amount}
+                                    | #{delta_doc.total} Results
+                                .three.wide.column
+                                    .ui.buttons
+                                        if show_page_down
+                                            a.page_down(title='Previous Page')
+                                                +icon name='chevron-left'
+                                        if show_page_up
+                                            a.page_up(title='Next Page')
+                                                +icon name='chevron-right'
+                                .one.wide.column
                                     +icon name='grid'
-                                .ui.button
+                                .one.wide.column
                                     +icon name='list'
-                        // .ui.hidden.divider
+                        .ui.hidden.divider
                     if is_calculating
                         .ui.hidden.divider
                         .ui.active.indeterminate.massive.centered.inline.loader
@@ -168,7 +168,7 @@ template(name='children_view')
         |No schema found.
 
 template(name='set_page_size')
-    .ui.icon.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
+    .one.wide.column.set_page_size(class=page_size_class title='Set Page Size') #{value}
 
 template(name='set_delta_key')
     .ui.button.set_delta_key(class=set_delta_key_class)
@@ -194,7 +194,7 @@ template(name='selector')
             .large120 #{name}
                 small #{count}
     else
-        .ui.toggle_value.compact.small.button(class=toggle_value_class)
+        .column.toggle_value(class=toggle_value_class)
             .large110 Null
                 small #{count}
 
@@ -210,8 +210,9 @@ template(name='edit_field_number')
 
 
 template(name='delta_card')
-    with local_doc
-        +Template.dynamic template=card_template
+    .column(class=delta_card_class)
+        with local_doc
+            +Template.dynamic template=card_template
 
 
 template(name='default_card')
