@@ -4,7 +4,7 @@ template(name='delta')
             .centered.middle.aligned.blue.row
                 .two.wide.column
                     img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                .ten.wide.column
+                .eight.wide.column
                     a.toggle_menu(href='#')
                         .ui.inverted.header
                             if current_type.icon
@@ -17,6 +17,12 @@ template(name='delta')
                                 i.icon
                                     +icon name=icon
                                 | #{title}
+                a.one.wide.column.add_doc(title="Add #{current_type.title}" href='#')
+                    if current_type
+                        // if can_add
+                        +icon name='plus'
+                        // |#{current_type.title}
+
                 a.one.wide.column(href='#')
                     +icon name='edit'
                 a.two.wide.column.toggle_profile(href='#')
@@ -42,16 +48,10 @@ template(name='delta')
             if delta_doc
                 unless delta_doc.viewing_detail
                     .four.wide.column.scrolling
-                        if current_type
-                            if can_add
-                                .ui.fluid.icon.compact.margined.button.add_doc(title="Add #{current_type.title}")
-                                    // +icon name='plus'
-                                    i.green.large.plus.icon
-                                    // |#{current_type.title}
 
-                        // .ui.compact.icon.button.delete_delta(title='Clear Session')
-                        //     i.remove.icon
-                        //     // |Clear
+                        .ui.compact.icon.button.delete_delta(title='Clear Session')
+                            i.remove.icon
+                            // |Clear
                         // .ui.compact.icon.button.run_fo(title='Reload Session')
                         //     i.refresh.icon
                         //     // |Reset
@@ -60,8 +60,8 @@ template(name='delta')
                         //         i.code.icon
                         // .ui.vertical.segments
                         each delta_fields
-                            .ui.hidden.divider
                             +facet
+                            .ui.hidden.divider
                 +delta_results
                 if delta_doc.viewing_profile
                     .three.wide.green.column
@@ -119,12 +119,17 @@ template(name='delta_results')
                             .item
                                 .ui.buttons
                                     if show_page_down
-                                        a.ui.page_down.small.compact.icon.button(title='Previous Page')
+                                        a.ui.page_down.icon.button(title='Previous Page')
                                             i.left.chevron.grey.icon
                                     if show_page_up
-                                        a.ui.page_up.small.compact.icon.button(title='Next Page')
+                                        a.ui.page_up.icon.button(title='Next Page')
                                             i.right.chevron.grey.icon
-                        .ui.hidden.divider
+                            .item
+                                .ui.button
+                                    +icon name='grid'
+                                .ui.button
+                                    +icon name='list'
+                        // .ui.hidden.divider
                     if is_calculating
                         .ui.hidden.divider
                         .ui.active.indeterminate.massive.centered.inline.loader
@@ -163,7 +168,7 @@ template(name='children_view')
         |No schema found.
 
 template(name='set_page_size')
-    .ui.small.compact.icon.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
+    .ui.icon.button.set_page_size(class=page_size_class title='Set Page Size') #{value}
 
 template(name='set_delta_key')
     .ui.button.set_delta_key(class=set_delta_key_class)
@@ -179,14 +184,15 @@ template(name='facet')
                         +iconsmall name=icon
                 |#{title}
         .active.content
-            each values
-                +selector
+            .ui.equal.width.grid
+                each values
+                    +selector
 
 template(name='selector')
     if name
-        .ui.toggle_value.compact.small.margined.button(class=toggle_value_class)
-            | #{name}
-            small #{count}
+        .column.toggle_value(class=toggle_value_class)
+            .large120 #{name}
+                small #{count}
     else
         .ui.toggle_value.compact.small.button(class=toggle_value_class)
             .large110 Null

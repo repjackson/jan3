@@ -34,6 +34,13 @@
 
 }
 
+.toggle_value {
+  border-style: dotted !important;
+  border-width: 1px !important;
+  width: 100px !important;
+}
+
+
 body {
   /*margin-top:52px;*/
   /*font-family: "Open Sans",sans-serif;*/
