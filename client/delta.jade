@@ -60,9 +60,9 @@ template(name='delta')
                             .ui.hidden.divider
                             +facet
                 +delta_results
-        unless loggingIn
-            unless currentUser
-                +login
+        // unless loggingIn
+        // unless currentUser
+        //     +login
 
 
 
@@ -207,7 +207,7 @@ template(name='delta_card')
 
 
 template(name='default_card')
-    .ui.fluid.card.delta_card(class=delta_card_class)
+    .ui.fluid.segment.delta_card(class=delta_card_class)
         if doc_header_fields
             .content
                 h3.ui.header

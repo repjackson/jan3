@@ -24,5 +24,12 @@ head
     // script(src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js")
 
 body
-    +delta
+    +home
     // +footer
+
+
+template(name='home')
+    if currentUser
+        +delta
+    else
+        +login

@@ -6,21 +6,21 @@ template(name='set_schema_button')
 
 
 template(name='bookmark_widget')
-    .ui.header
+    .ui.small.header
         +icon name='bookmark-ribbon'
         |Bookmarks
-    if bookmarked
-        .ui.red.compact.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
-            +iconsmall name='bookmark-ribbon'
-            if full_mode
-                |Bookmarked
-    else
-        .ui.compact.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
-            // +iconsmall name='bookmark-ribbon'
-            img(src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png")
-            if full_mode
-                |Bookmark
     if full_mode
+        if bookmarked
+            .ui.red.compact.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
+                +iconsmall name='bookmark-ribbon'
+                if full_mode
+                    |Bookmarked
+        else
+            .ui.compact.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
+                // +iconsmall name='bookmark-ribbon'
+                img(src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png")
+                if full_mode
+                    |Bookmark
         +bookmark_pane
 
 
@@ -36,18 +36,17 @@ template(name='bookmark_pane')
 
 
 template(name='mark_read_button')
-    .ui.header
+    .ui.small.header
         +icon name='open-envelope'
         | Read
-    if read
-        .ui.green.compact.button.toggle_read(title='Mark Unread')
-            +iconsmall name='open-envelope'
-            if full_mode
+    if full_mode
+        if read
+            .ui.green.compact.button.toggle_read(title='Mark Unread')
+                +iconsmall name='open-envelope'
                 | Read
-    else
-        .ui.compact.button.toggle_read(title='Mark Read')
-            +iconsmall name='secured-letter'
-            if full_mode
+        else
+            .ui.compact.button.toggle_read(title='Mark Read')
+                +iconsmall name='secured-letter'
                 | Unread
 
 template(name='mark_read_pane')
@@ -58,20 +57,18 @@ template(name='mark_read_pane')
 
 
 template(name='subscribe')
-    .ui.header
+    .ui.small.header
         +icon name='renew-subscription'
         | Subscriptions
-    if subscribed
-        .ui.teal.compact.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
-            +iconsmall name='renew-subscription'
-            if full_mode
-                | Subscribed
-    else
-        .ui.compact.button.toggle_subscribe(title='Subscribe' class=subscription_class)
-            +iconsmall name='renew-subscription'
-            if full_mode
-                | Subscribe
     if full_mode
+        if subscribed
+            .ui.teal.compact.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
+                +iconsmall name='renew-subscription'
+                | Subscribed
+        else
+            .ui.compact.button.toggle_subscribe(title='Subscribe' class=subscription_class)
+                +iconsmall name='renew-subscription'
+                | Subscribe
         +subscribe_pane
 
 
@@ -84,7 +81,7 @@ template(name='subscribe_pane')
 
 
 template(name='comment_pane')
-    .ui.header
+    .ui.small.header
         +icon name='comments'
         | Comments
     .ui.list
@@ -117,22 +114,22 @@ template(name='comment_pane')
 
 
 template(name='voting')
-    .ui.header
+    .ui.small.header
         +icon name='leaderboard'
         | Priority
-    .ui.icon.compact.button.upvote(class=upvote_class)
-        +iconsmall name='collapse-arrow'
-    .ui.icon.compact.button.downvote(class=downvote_class)
-        +iconsmall name='expand-arrow'
     .ui.mini.statistic
         .value #{points}
         .label Points
     if full_mode
+        .ui.icon.compact.button.upvote(class=upvote_class)
+            +iconsmall name='collapse-arrow'
+        .ui.icon.compact.button.downvote(class=downvote_class)
+            +iconsmall name='expand-arrow'
         +voting_pane
 
 
 template(name='voting_pane')
-    .ui.header
+    .ui.small.header
         +icon name='collapse-arrow'
         |Upvoters
     .ui.list
@@ -149,7 +146,7 @@ template(name='voting_pane')
 
 
 template(name='assignments')
-    .ui.header
+    .ui.small.header
         +icon name='checked-user-male'
         | Assignments
     p(title="{{ from_now ticket_assignment_timestamp }}") Last Assigned {{ long_format ticket_assignment_timestamp }}
@@ -187,7 +184,7 @@ template(name='assignments')
 
 
 template(name='approval')
-    .ui.header
+    .ui.small.header
         +icon name='approval'
         | Approval
     if full_mode

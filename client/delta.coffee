@@ -13,14 +13,14 @@ Template.delta.onCreated ->
 
 
 
-Template.delta.onCreated ->
-    @autorun -> Meteor.subscribe 'me'
-    @autorun -> Meteor.subscribe 'nav_items'
-    @autorun -> Meteor.subscribe 'my_customer_account'
-    @autorun -> Meteor.subscribe 'my_franchisee'
-    @autorun -> Meteor.subscribe 'my_office'
-    @autorun -> Meteor.subscribe 'my_schemas'
-    @autorun -> Meteor.subscribe 'my_bookmarks'
+# Template.delta.onCreated ->
+#     @autorun -> Meteor.subscribe 'me'
+#     @autorun -> Meteor.subscribe 'nav_items'
+#     @autorun -> Meteor.subscribe 'my_customer_account'
+#     @autorun -> Meteor.subscribe 'my_franchisee'
+#     @autorun -> Meteor.subscribe 'my_office'
+#     @autorun -> Meteor.subscribe 'my_schemas'
+#     @autorun -> Meteor.subscribe 'my_bookmarks'
 
 
 

@@ -79,6 +79,31 @@ template(name='string_edit')
         input.string_val(type='text' value=value)
 
 
+template(name='header')
+    if editing
+        .ui.form
+            .field
+                label Title
+                input.string_val(type='text' value=value)
+    else
+        .ui.header.toggle_size #{title}
+    if full_mode
+        .edit.ui.small.compact.icon.button
+            i.pencil.icon
+
+
+template(name='textarea')
+    if editing
+            .field
+                label Description
+                textarea.text_val(rows='3') #{text}
+    else
+        .large120 #{text}
+    if full_mode
+        .edit.ui.small.compact.icon.button
+            i.pencil.icon
+
+
 
 
 template(name='textarea_edit')
@@ -129,24 +154,6 @@ template(name='field_view')
                         .ui.basic.label #{this}
                 else
                     strong &nbsp; #{value}
-
-
-
-template(name='task_text')
-    if editing
-        .ui.form
-            .field
-                label Title
-                input.string_val(type='text' value=value)
-            .field
-                label Description
-                textarea.text_val(rows='3') #{text}
-    else
-        .ui.header.toggle_size #{title}
-        .large120 #{text}
-    if full_mode
-        .edit.ui.small.compact.icon.button
-            i.pencil.icon
 
 
 

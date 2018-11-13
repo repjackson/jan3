@@ -71,6 +71,6 @@
     "rtl": false,
     "striped": false,
     "timeline": false,
-    "twitter": false
+    "twitter": true
   }
 }

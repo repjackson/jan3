@@ -145,21 +145,25 @@ template(name='ticket_notes')
 
 
 
+
+
 template(name='task_card')
-    .ui.fluid.card(class=delta_card_class)
-        .content
-            .ui.divided.stackable.grid
+    .ui.fluid.segment(class=delta_card_class)
+        .ui.stackable.equal.width.grid
+            .row
                 .fourteen.wide.column.maximize
-                    +task_text
+                    +header
                 a.one.wide.center.aligned.column.expand(class=expand_class)
                     +icon name='resize-vertical' title='Expand'
                 a.one.wide.center.aligned.column.toggle_size(class=maximize_class)
                     +icon name='resize' title='Maximize'
-        if expanded
-            .content
-                .ui.equal.width.divided.stackable.grid
+            .row
+                .sixteen.wide.column
+                    +textarea
+            if expanded
+                .row
                     .column
-                        .ui.header
+                        .ui.small.header
                             +icon name='quill-with-ink'
                             | Author
                         +author_info
@@ -167,21 +171,21 @@ template(name='task_card')
                         |#{long_time}
                     if customer_jpid
                         .column
-                            .ui.header
+                            .ui.small.header
                                 +icon name='headset'
                                 | Customer
                             .ui.small.header ##{customer_jpid}
                             .ui.small.header #{customer_name}
                     if franchisee_jpid
                         .column
-                            .ui.header
+                            .ui.small.header
                                 +icon name='business'
                                 | Franchisee
                             .ui.small.header ##{franchisee_jpid}
                             .ui.small.header #{franchisee_name}
                     if office_jpid
                         .column
-                            .ui.header
+                            .ui.small.header
                                 +icon name='building'
                                 | Office
                             .ui.small.header ##{office_jpid}
@@ -205,27 +209,29 @@ template(name='task_card')
                                 .ui.compact.button.mark_complete
                                     +iconsmall name='checkmark'
                                     | Mark Complete
-            .content
-                .ui.equal.width.divided.stackable.grid
                     .column
-                        .ui.header
+                        +mark_read_button
+                        if full_mode
+                            +mark_read_pane
+
+                .row
+                    .column
+                        .ui.small.header
                             +icon name='calendar'
                             | Due Date
                     .column
-                        .ui.header
+                        .ui.small.header
                             +icon name='calendar'
                             | Assigned Date
                     .column
-                        .ui.header
+                        .ui.small.header
                             +icon name='calendar'
                             | Completion Date
                     .column
-                        .ui.header
+                        .ui.small.header
                             +icon name='calendar'
                             | Estimated Time
-
-            .content
-                .ui.equal.width.divided.stackable.grid
+                .row
                     .column
                         +bookmark_widget
                     .column
@@ -243,12 +249,7 @@ template(name='task_card')
                         +voting
                     .column
                         +subscribe
-                    .column
-                        +mark_read_button
-                        if full_mode
-                            +mark_read_pane
-            .content
-                .ui.equal.width.divided.stackable.grid
+                .row
                     .column
                         +comments
                     .column
