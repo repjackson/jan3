@@ -8,7 +8,6 @@ template(name='level_icon')
     if is_level_four
         img.ui.mini.image(src="/level4icon.png" data-content='Level 4')
 
-
 template(name='ticket_type_label')
     if ticket_type_label
         +iconsmall name=ticket_type_icon popup=ticket_type_label classes='inline'
@@ -17,8 +16,6 @@ template(name='ticket_type_label')
 template(name='ticket_type_small')
     if ticket_type_label
         +iconsmall name=ticket_type_icon title=ticket_type_label classes='inline'
-
-
 
 template(name='submit_ticket')
     .ui.header
@@ -32,8 +29,6 @@ template(name='submit_ticket')
     .submit.ui.fluid.jpgreen.inverted.button
         | Submit
 
-
-
 template(name='view_sla_contact')
     // .ui.header SLA Contact #{key}
     with user_ob
@@ -44,8 +39,6 @@ template(name='view_sla_contact')
         div #{ev.WORK_TELEPHONE}
         div #{ev.HOME_TELEPHONE}
         div #{phone}
-
-
 
 template(name='complete_ticket_task')
     .ui.form
@@ -58,8 +51,6 @@ template(name='complete_ticket_task')
         .field
             .ui.submit_and_complete_task.fluid.jpgreen.inverted.button
                 |Submit and Complete Task
-
-
 
 template(name='ticket_status')
     .ui.header
@@ -96,10 +87,6 @@ template(name='ticket_status')
             if editing_mode
                 i.reopen.link.undo.icon(title='Reopen')
 
-
-
-
-
 template(name='feedback_widget')
     with page_context
         unless page_context.open
@@ -121,14 +108,9 @@ template(name='feedback_widget')
                     .ui.jpgreen.inverted.submit_feedback.button
                         | Submit
 
-
-
-
 template(name='ticket_close_user_info')
     with completing_user
         .ui.header #{ev.FIRST_NAME} #{ev.LAST_NAME} @#{username}
-
-
 
 template(name='ticket_notes')
     if adding_note
@@ -143,25 +125,21 @@ template(name='ticket_notes')
             |Add Note
 
 
-
-
-
-
 template(name='task_card')
     .ui.stackable.equal.width.celled.padded.grid
         .row
             .fourteen.wide.column.expand
                 +header
-            a.one.wide.center.aligned.column.expand(class=expand_class href='#')
+            a.one.wide.column.expand.pointer(class=expand_class href='#')
                 if expanded
-                    +icon name='collapse-arrow' title='Collapse'
+                    +icon name='collapse-arrow' title='Collapse' classes='centered mini'
                 else
-                    +icon name='expand-arrow' title='Expand'
-            a.one.wide.center.aligned.column.toggle_size(class=maximize_class href='#')
+                    +icon name='expand-arrow' title='Expand' classes='centered mini'
+            a.one.wide.column.toggle_full.pointer(class=maximize_class href='#')
                 if delta_doc.viewing_detail
-                    +icon name='compress' title='Compress'
+                    +icon name='compress' title='Compress' classes='centered mini'
                 else
-                    +icon name='resize-diagonal' title='Enlarge'
+                    +icon name='resize-diagonal' title='Enlarge' classes='centered mini'
         .row
             .sixteen.wide.column
                 +textarea
@@ -199,7 +177,7 @@ template(name='task_card')
                     +array icon='tags' title='Tags'
                 .column
                     if complete
-                        +icon name='checked-checkbox' classes='spaced'
+                        +icon name='checked-checkbox' classes='spaced mini'
                         | Complete
                         if full_mode
                             div
@@ -207,7 +185,7 @@ template(name='task_card')
                                 +iconsmall name='unchecked-checkbox'
                                 | Mark Incomplete
                     else
-                        +icon name='unchecked-checkbox' classes='spaced'
+                        +icon name='unchecked-checkbox' classes='spaced mini'
                         | Incomplete
                         if full_mode
                             div

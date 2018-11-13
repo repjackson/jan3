@@ -29,8 +29,9 @@ body
 
 
 template(name='home')
-    if currentUser
-        +delta
-    // else
-    //     .ui.container
-    //         +login
+    if Template.subscriptionsReady
+        if currentUser
+            +delta
+        else
+            .ui.container
+                +login

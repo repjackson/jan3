@@ -33,10 +33,17 @@
   background: rgba(132, 189, 0) !important;
 
 }
+.toggle_value {
+}
 
 .toggle_value {
-  /*border-style: dotted !important;*/
-  border-width: 1px !important;
+  /*border-bottom-style: solid !important;*/
+  /*border-left-style: solid !important;*/
+  /*border-right-style: solid !important;*/
+  /*border-top-style: solid !important;*/
+  /*border-width: 1px !important;*/
+  /*border-color: #d4d4d5 !important;*/
+  box-shadow: -1px 1px 0px 0px #d4d4d5 !important;
   width: 100px !important;
 }
 
@@ -50,7 +57,7 @@ body {
   font-family: 'Ubuntu', sans-serif !important;
   min-height: 500px;
   /*background: #f4f7f9;*/
-  background: rgba(244, 247, 249, 0);
+  background: rgba(244, 247, 249, 0.25);
 }
 
 .ui.header{
@@ -134,6 +141,23 @@ body {
 /*    max-height: 300px;*/
         /*min-width: 100%;*/
 /*  }*/
+
+.userbar {
+    margin-top: -1rem !important;
+    margin-bottom: -1rem !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.alphablue {
+  background: rgba(0, 20, 137, 0.5) !important;
+
+}
+
+.pointer {cursor: pointer;}
+.n-resize {cursor: n-resize;}
+.ne-resize {cursor: ne-resize;}
+
 
 #dash_header.masthead {
   /*background: rgba(0,20,137,1);*/

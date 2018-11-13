@@ -4,11 +4,11 @@ template(name='delta')
             .centered.middle.aligned.blue.row
                 .two.wide.column
                     img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                .eight.wide.column
+                .nine.wide.column
                     a.toggle_menu(href='#')
                         .ui.inverted.header
                             if current_type.icon
-                                +icon name=current_type.icon classes='spaced'
+                                +icon name=current_type.icon classes='spaced mini'
                             | #{current_type.title}
                     if delta_doc.viewing_menu
                         .ui.hidden.divider
@@ -20,53 +20,51 @@ template(name='delta')
                 a.one.wide.column.add_doc(title="Add #{current_type.title}" href='#')
                     if current_type
                         // if can_add
-                        +icon name='plus'
-                        // |#{current_type.title}
-
+                        +icon name='plus' classes='mini'
                 a.one.wide.column(href='#')
-                a.one.wide.column(href='#')
-                    +icon name='edit'
+                    +icon name='edit' classes='mini'
                 a.two.wide.column.toggle_profile(href='#')
                     .ui.inverted.header
                         if currentUser.image_id
                             i.large.icon
                                 img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         else
-                            +icon name='gender-neutral-user' classes='spaced'
+                            +icon name='gender-neutral-user' classes='mini spaced'
                         |#{currentUser.username}
 
                 a.one.wide.column(href='#')
                     +logout_button
-
         if currentUser
-            unless delta_doc
-                .row
+            .row
+                unless delta_doc
                     .sixteen.wide.column
                         if currentUser
                             .create_delta.ui.button(title='Create Session')
                                 i.green.plus.icon
                                 | Session
-            if delta_doc
-                unless delta_doc.viewing_detail
-                    .four.wide.column.scrolling
+                if delta_doc
+                    unless delta_doc.viewing_detail
+                        .four.wide.column.scrolling
 
-                        // .ui.compact.icon.button.delete_delta(title='Clear Session')
-                        //     i.remove.icon
-                            // |Clear
-                        // .ui.compact.icon.button.run_fo(title='Reload Session')
-                        //     i.refresh.icon
-                        //     // |Reset
-                        // if is_dev
-                        //     .ui.icon.compact.button.show_delta
-                        //         i.code.icon
-                        // .ui.vertical.segments
-                        each delta_fields
-                            +facet
-                            .ui.hidden.divider
-                +delta_results
-                if delta_doc.viewing_profile
-                    .three.wide.green.column
-                        .ui.header hi
+                            // .ui.compact.icon.button.delete_delta(title='Clear Session')
+                            //     i.remove.icon
+                                // |Clear
+                            // .ui.compact.icon.button.run_fo(title='Reload Session')
+                            //     i.refresh.icon
+                            //     // |Reset
+                            // if is_dev
+                            //     .ui.icon.compact.button.show_delta
+                            //         i.code.icon
+                            each delta_fields
+                                +facet
+                                .ui.hidden.divider
+                    +delta_results
+                    if delta_doc.viewing_userbar
+                        +userbar
+
+template(name='userbar')
+    .three.wide.column.userbar.alphablue
+        .ui.header hi
 
 
 template(name='delta_results')
@@ -118,17 +116,18 @@ template(name='delta_results')
                                             | #{delta_doc.current_page}/#{delta_doc.page_amount}
                                     | #{delta_doc.total} Results
                                 .three.wide.column
-                                    .ui.buttons
-                                        if show_page_down
-                                            a.page_down(title='Previous Page')
-                                                +icon name='chevron-left'
-                                        if show_page_up
-                                            a.page_up(title='Next Page')
-                                                +icon name='chevron-right'
+                                    if show_page_down
+                                        a.page_down(title='Previous Page')
+                                            +icon name='chevron-left' classes='mini'
+                                    if show_page_up
+                                        a.page_up(title='Next Page')
+                                            +icon name='chevron-right' classes='mini'
                                 .one.wide.column
                                     +icon name='grid'
                                 .one.wide.column
                                     +icon name='list'
+                                .one.wide.column
+                                    +icon name='double-down'
                         .ui.hidden.divider
                     if is_calculating
                         .ui.hidden.divider
@@ -168,7 +167,8 @@ template(name='children_view')
         |No schema found.
 
 template(name='set_page_size')
-    .one.wide.column.set_page_size(class=page_size_class title='Set Page Size') #{value}
+    .one.wide.column.set_page_size(class=page_size_class title='Set Page Size')
+        .ui.small.header #{value}
 
 template(name='set_delta_key')
     .ui.button.set_delta_key(class=set_delta_key_class)
@@ -184,18 +184,18 @@ template(name='facet')
                         +iconsmall name=icon
                 |#{title}
         .active.content
-            .ui.equal.width.grid
+            .ui.equal.width.grid.facet_class
                 each values
                     +selector
 
 template(name='selector')
     if name
-        .column.toggle_value(class=toggle_value_class)
-            .large120 #{name}
-                small #{count}
+        .column.toggle_value.pointer(class=toggle_value_class)
+            | #{name}
+            small #{count}
     else
-        .column.toggle_value(class=toggle_value_class)
-            .large110 Null
+        .column.toggle_value.pointer(class=toggle_value_class)
+            .large110 [none]
                 small #{count}
 
 template(name='edit_field_text')
@@ -257,6 +257,6 @@ template(name='logout_button')
         if signing_out
             i.notched.circle.loading.big.icon
         else
-            +icon name='exit'
+            +icon name='exit' classes='mini'
         //     i.sign.out.alternate.icon
 

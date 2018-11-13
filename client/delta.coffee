@@ -98,7 +98,7 @@ Template.delta.events
     'click .toggle_profile': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set: viewing_profile: !delta.viewing_profile
+            $set: viewing_userbar: !delta.viewing_userbar
 
 
     'click .pick_delta': (e,t)->
@@ -204,7 +204,7 @@ Template.delta_results.helpers
     results_class: ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail then 'sixteen wide'
-        else if delta.viewing_profile then 'nine wide' else 'twelve wide'
+        else if delta.viewing_userbar then 'nine wide' else 'twelve wide'
 
 
     multiple_pages: ->
@@ -280,7 +280,7 @@ Template.task_card.events
             Docs.update delta._id,
                 $set: expand_id: @_id
 
-    'click .toggle_size': ->
+    'click .toggle_full': ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail
             Docs.update delta._id,
@@ -291,6 +291,7 @@ Template.task_card.events
             Docs.update delta._id,
                 $set:
                     viewing_detail: true
+                    viewing_userbar: true
                     detail_id: @_id
                     expand_id: @_id
 
@@ -481,7 +482,7 @@ Template.delta_results.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'blue' else ''
+        if @value is delta.page_size then 'userbar alphablue' else ''
 
 
 Template.set_page_size.events
@@ -513,7 +514,7 @@ Template.selector.helpers
         delta = Docs.findOne type:'delta'
         filter = Template.parentData()
         filter_list = delta["filter_#{filter.key}"]
-        if filter_list and @name in filter_list then 'blue' else ''
+        if filter_list and @name in filter_list then 'alphablue' else ''
 
 
 
