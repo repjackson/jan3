@@ -255,6 +255,15 @@ Template.task_card.events
             $set: complete:false
 
 
+    'click .expand': ->
+        delta = Docs.findOne type:'delta'
+        if delta.expand_id is @_id
+            Docs.update delta._id,
+                $set: expand_id: null
+        else
+            Docs.update delta._id,
+                $set: expand_id: @_id
+
     'click .toggle_size': ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail
@@ -263,6 +272,14 @@ Template.task_card.events
                     viewing_detail: false
                     detail_id: null
         else
+            Docs.update delta._id,
+                $set:
+                    viewing_detail: true
+                    detail_id: @_id
+
+    'click .maximize': ->
+        delta = Docs.findOne type:'delta'
+        unless delta.viewing_detail
             Docs.update delta._id,
                 $set:
                     viewing_detail: true
@@ -279,11 +296,14 @@ Template.delta_card.helpers
 
 
 Template.task_card.helpers
-    size_column_class: ->
+    expand_class: ->
         delta = Docs.findOne type:'delta'
-        classes = []
-        if delta.detail_id is @_id then classes.push 'blue'
-        classes
+        if delta.expand_id is @_id then 'blue'
+
+
+    maximize_class: ->
+        delta = Docs.findOne type:'delta'
+        if delta.detail_id is @_id then 'blue'
 
 
 
@@ -553,49 +573,4 @@ Template.selector.events
             if err then console.log err
             else
                 Session.set 'is_calculating', false
-
-Template.edit_field_text.helpers
-    field_value: ->
-        field = Template.parentData()
-        field["#{@key}"]
-
-
-Template.edit_field_text.events
-    'change .text_val': (e,t)->
-        text_value = e.currentTarget.value
-        # console.log @filter_id
-        Docs.update @filter_id,
-            { $set: "#{@key}": text_value }
-
-
-
-
-
-Template.task_text.onCreated ->
-    @editing = new ReactiveVar false
-
-Template.task_text.helpers
-    editing: -> Template.instance().editing.get()
-
-Template.task_text.events
-    'change .text_val': (e,t)->
-        text_value = e.currentTarget.value
-        # console.log @filter_id
-        Docs.update @filter_id,
-            { $set: text: text_value }
-
-
-Template.edit_field_number.helpers
-    field_value: ->
-        field = Template.parentData()
-        field["#{@key}"]
-
-
-Template.edit_field_number.events
-    'change .number_val': (e,t)->
-        number_value = parseInt e.currentTarget.value
-        # console.log @filter_id
-        Docs.update @filter_id,
-            { $set: "#{@key}": number_value }
-
 

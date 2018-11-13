@@ -149,61 +149,81 @@ template(name='task_card')
     .ui.fluid.card(class=delta_card_class)
         .content
             .ui.divided.stackable.grid
-                .fifteen.wide.column
+                .fourteen.wide.column.maximize
                     +task_text
-                a.one.wide.center.aligned.column.toggle_size(class=size_column_class)
-                    +icon name='resize-diagonal' title='Maximize'
-        .content
-            .ui.equal.width.divided.stackable.grid
-                .column
-                    .ui.header
-                        +icon name='quill-with-ink'
-                        | Author
-                    +author_info
-                    +when_template
-                    |#{long_time}
-                .column
-                    .ui.header
-                        +icon name='headset'
-                        | Customer
-                    .ui.small.header ##{customer_jpid}
-                    .ui.small.header #{customer_name}
-                .column
-                    .ui.header
-                        +icon name='business'
-                        | Franchisee
-                    .ui.small.header ##{franchisee_jpid}
-                    .ui.small.header #{franchisee_name}
-                .column
-                    .ui.header
-                        +icon name='building'
-                        | Office
-                    .ui.small.header ##{office_jpid}
-                    .ui.small.header #{office_name}
-                .column
-                    .ui.header
-                        +icon name='tags'
-                        |Tags
-                    each tags
-                        .ui.basic.label #{this}
-                .column
-                    if complete
-                        +icon name='checked-checkbox' classes='spaced'
-                        | Complete
-                        if full_mode
-                            div
-                            .ui.compact.button.mark_incomplete
-                                +iconsmall name='unchecked-checkbox'
-                                | Mark Incomplete
-                    else
-                        +icon name='unchecked-checkbox' classes='spaced'
-                        | Incomplete
-                        if full_mode
-                            div
-                            .ui.compact.button.mark_complete
-                                +iconsmall name='checkmark'
-                                | Mark Complete
-        if actions
+                a.one.wide.center.aligned.column.expand(class=expand_class)
+                    +icon name='resize-vertical' title='Expand'
+                a.one.wide.center.aligned.column.toggle_size(class=maximize_class)
+                    +icon name='resize' title='Maximize'
+        if expanded
+            .content
+                .ui.equal.width.divided.stackable.grid
+                    .column
+                        .ui.header
+                            +icon name='quill-with-ink'
+                            | Author
+                        +author_info
+                        +when_template
+                        |#{long_time}
+                    if customer_jpid
+                        .column
+                            .ui.header
+                                +icon name='headset'
+                                | Customer
+                            .ui.small.header ##{customer_jpid}
+                            .ui.small.header #{customer_name}
+                    if franchisee_jpid
+                        .column
+                            .ui.header
+                                +icon name='business'
+                                | Franchisee
+                            .ui.small.header ##{franchisee_jpid}
+                            .ui.small.header #{franchisee_name}
+                    if office_jpid
+                        .column
+                            .ui.header
+                                +icon name='building'
+                                | Office
+                            .ui.small.header ##{office_jpid}
+                            .ui.small.header #{office_name}
+                    .column
+                        +array icon='tags' title='Tags'
+                    .column
+                        if complete
+                            +icon name='checked-checkbox' classes='spaced'
+                            | Complete
+                            if full_mode
+                                div
+                                .ui.compact.button.mark_incomplete
+                                    +iconsmall name='unchecked-checkbox'
+                                    | Mark Incomplete
+                        else
+                            +icon name='unchecked-checkbox' classes='spaced'
+                            | Incomplete
+                            if full_mode
+                                div
+                                .ui.compact.button.mark_complete
+                                    +iconsmall name='checkmark'
+                                    | Mark Complete
+            .content
+                .ui.equal.width.divided.stackable.grid
+                    .column
+                        .ui.header
+                            +icon name='calendar'
+                            | Due Date
+                    .column
+                        .ui.header
+                            +icon name='calendar'
+                            | Assigned Date
+                    .column
+                        .ui.header
+                            +icon name='calendar'
+                            | Completion Date
+                    .column
+                        .ui.header
+                            +icon name='calendar'
+                            | Estimated Time
+
             .content
                 .ui.equal.width.divided.stackable.grid
                     .column
@@ -227,28 +247,20 @@ template(name='task_card')
                         +mark_read_button
                         if full_mode
                             +mark_read_pane
-        .content
-            .ui.equal.width.divided.stackable.grid
-                .column
-                    +comments
-                .column
-                    +approval
-                .column
-                    +assignments
-                .column
-                    .ui.header
-                        +icon name='rss' classes='spaced'
-                        | Events
-                    if full_mode
-                        +global_feed
+            .content
+                .ui.equal.width.divided.stackable.grid
+                    .column
+                        +comments
+                    .column
+                        +approval
+                    .column
+                        +assignments
+                    .column
+                        .ui.header
+                            +icon name='rss' classes='spaced'
+                            | Events
+                        if full_mode
+                            +global_feed
 
 
-
-template(name='task_text')
-    if editing
-        .ui.form
-            .field
-                textarea.text_val(rows='3') #{text}
-    else
-        .large120 #{text}
 

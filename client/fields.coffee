@@ -56,10 +56,21 @@ Template.textarea_edit.events
 
         val = e.currentTarget.value
         Docs.update target_doc._id,
-            $set:
-                "#{t.data.key}": val
+            $set: "#{t.data.key}": val
 
-Template.array_edit.events
+
+Template.array.onCreated ->
+    @editing = new ReactiveVar false
+
+Template.array.helpers
+    value: ->
+        parent = Template.parentData()
+        parent["#{@key}"]
+
+
+Template.array.events
+    'click .edit': (e,t)-> t.editing.set !t.editing.get()
+
     'keyup .add_array_element': (e,t)->
         if e.which is 13
             delta = Docs.findOne type:'delta'
@@ -140,11 +151,12 @@ Template.textarea_edit.helpers
         value = editing_doc?["#{@key}"]
 
 
-Template.array_edit.helpers
-    value: ->
-        delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
-        target_doc?["#{@key}"]
+
+
+
+
+
+
 
 Template.multiref_edit.onCreated ->
     @autorun => Meteor.subscribe 'type', @data.ref_schema
@@ -226,3 +238,60 @@ Template.ref_edit.helpers
             else if @slug then @slug
             else if @username then @username
         if target_doc?["#{parent.key}"] is value then 'teal' else 'basic'
+
+
+
+
+
+
+Template.task_text.onCreated ->
+    @editing = new ReactiveVar false
+
+Template.task_text.events
+    'click .edit': (e,t)-> t.editing.set !t.editing.get()
+
+
+    'blur .text_val': (e,t)->
+        text_value = e.currentTarget.value
+
+        Docs.update @_id,
+            { $set: text: text_value }
+
+    'blur .string_val': (e,t)->
+        text_value = e.currentTarget.value
+        # console.log @filter_id
+        Docs.update @_id,
+            { $set: title: text_value }
+
+
+Template.edit_field_number.helpers
+    field_value: ->
+        field = Template.parentData()
+        field["#{@key}"]
+
+
+Template.edit_field_number.events
+    'change .number_val': (e,t)->
+        number_value = parseInt e.currentTarget.value
+        # console.log @filter_id
+        Docs.update @filter_id,
+            { $set: "#{@key}": number_value }
+
+Template.edit_field_text.helpers
+    field_value: ->
+        field = Template.parentData()
+        field["#{@key}"]
+
+
+Template.edit_field_text.events
+    'change .text_val': (e,t)->
+        text_value = e.currentTarget.value
+        # console.log @filter_id
+        Docs.update @filter_id,
+            { $set: "#{@key}": text_value }
+
+
+
+
+
+

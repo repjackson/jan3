@@ -13,19 +13,30 @@ template(name='boolean_edit')
                 +icon name=icon
         |#{title}
 
-template(name='array_edit')
+
+
+template(name='array')
     .ui.small.header
         if icon
             +icon name=icon classes='inline spaced'
         |#{title}
-    .ui.fluid.labeled.right.icon.input
-        input.add_array_element(type='text' placholder='add')
-        i.plus.icon
-    if value
-        each value
-            .ui.large.basic.label
-                i.pull_element.remove.link.icon
-                |#{this}
+    unless editing
+        if value
+            each value
+                .ui.large.basic.label
+                    |#{this}
+    if editing
+        .ui.fluid.labeled.right.icon.input
+            input.add_array_element(type='text' placholder='add')
+            i.plus.icon
+        if value
+            each value
+                .ui.large.basic.label
+                    i.pull_element.remove.link.icon
+                    |#{this}
+    if full_mode
+        .edit.ui.compact.icon.button
+            i.pencil.icon
 
 
 
@@ -121,6 +132,21 @@ template(name='field_view')
 
 
 
+template(name='task_text')
+    if editing
+        .ui.form
+            .field
+                label Title
+                input.string_val(type='text' value=value)
+            .field
+                label Description
+                textarea.text_val(rows='3') #{text}
+    else
+        .ui.header.toggle_size #{title}
+        .large120 #{text}
+    if full_mode
+        .edit.ui.small.compact.icon.button
+            i.pencil.icon
 
 
 

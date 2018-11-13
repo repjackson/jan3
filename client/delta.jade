@@ -60,8 +60,9 @@ template(name='delta')
                             .ui.hidden.divider
                             +facet
                 +delta_results
-        unless currentUser
-            +login
+        unless loggingIn
+            unless currentUser
+                +login
 
 
 

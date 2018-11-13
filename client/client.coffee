@@ -34,7 +34,6 @@ Template.registerHelper 'long_format', (input) ->
     if input
         moment(input).format('MMMM Do h:mma')
 
-Template.registerHelper 'doc', () -> Docs.findOne FlowRouter.getQueryParam('doc_id')
 Template.registerHelper 'delta_doc', () -> Docs.findOne type:'delta'
 
 Template.registerHelper 'is_level_one', () -> @level is 1
@@ -51,6 +50,8 @@ Template.registerHelper 'ticket_color_class', () ->
             when 4 then 'red'
 
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
+Template.registerHelper 'editing', () -> Template.instance().editing.get()
+
 
 Template.registerHelper 'my_office', () ->
     if Meteor.user()
@@ -120,10 +121,9 @@ Template.registerHelper 'full_mode', ()->
     delta = Docs.findOne type:'delta'
     delta.viewing_detail
 
-
-
-Template.registerHelper 'action_button_template', ()-> "#{@slug}_button"
-Template.registerHelper 'action_pane_template', ()-> "#{@slug}_pane"
+Template.registerHelper 'expanded', ()->
+    delta = Docs.findOne type:'delta'
+    delta.expand_id is @_id
 
 
 Template.registerHelper 'can_add', ()->
