@@ -246,34 +246,27 @@ Template.ref_edit.helpers
 
 Template.header.onCreated ->
     @editing = new ReactiveVar false
-Template.texarea.onCreated ->
+Template.textarea.onCreated ->
     @editing = new ReactiveVar false
 
 Template.header.events
     'click .edit': (e,t)-> t.editing.set !t.editing.get()
-
-
-    'blur .text_val': (e,t)->
-        text_value = e.currentTarget.value
-
-        Docs.update @_id,
-            { $set: text: text_value }
-
-Template.texarea.events
-    'click .edit': (e,t)-> t.editing.set !t.editing.get()
-
-
-    'blur .text_val': (e,t)->
-        text_value = e.currentTarget.value
-
-        Docs.update @_id,
-            { $set: text: text_value }
 
     'blur .string_val': (e,t)->
         text_value = e.currentTarget.value
         # console.log @filter_id
         Docs.update @_id,
             { $set: title: text_value }
+
+Template.textarea.events
+    'click .edit': (e,t)-> t.editing.set !t.editing.get()
+
+    'blur .text_val': (e,t)->
+        text_value = e.currentTarget.value
+
+        Docs.update @_id,
+            { $set: text: text_value }
+
 
 
 Template.edit_field_number.helpers

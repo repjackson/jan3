@@ -86,7 +86,7 @@ template(name='header')
                 label Title
                 input.string_val(type='text' value=value)
     else
-        .ui.header.toggle_size #{title}
+        .ui.header #{title}
     if full_mode
         .edit.ui.small.compact.icon.button
             i.pencil.icon
@@ -94,6 +94,7 @@ template(name='header')
 
 template(name='textarea')
     if editing
+        .ui.form
             .field
                 label Description
                 textarea.text_val(rows='3') #{text}

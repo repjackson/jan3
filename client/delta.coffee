@@ -1,8 +1,8 @@
 Template.delta_results.onCreated ->
-    @autorun => Meteor.subscribe 'schema_fields'
+    # @autorun => Meteor.subscribe 'schema_fields'
     @autorun => Meteor.subscribe 'schema_actions'
     @autorun => Meteor.subscribe 'type', 'action'
-    @autorun => Meteor.subscribe 'type', 'field', 200
+    # @autorun => Meteor.subscribe 'type', 'field', 200
     @autorun => Meteor.subscribe 'type', 'schema', 200
 
     Session.setDefault 'is_calculating', false
@@ -10,11 +10,11 @@ Template.delta_results.onCreated ->
 Template.delta.onCreated ->
     @autorun -> Meteor.subscribe 'delta'
     @autorun => Meteor.subscribe 'schema_fields'
+    @autorun -> Meteor.subscribe 'me'
 
 
 
 # Template.delta.onCreated ->
-#     @autorun -> Meteor.subscribe 'me'
 #     @autorun -> Meteor.subscribe 'nav_items'
 #     @autorun -> Meteor.subscribe 'my_customer_account'
 #     @autorun -> Meteor.subscribe 'my_franchisee'
@@ -94,6 +94,11 @@ Template.delta.events
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set: viewing_menu: !delta.viewing_menu
+
+    'click .toggle_profile': ->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set: viewing_profile: !delta.viewing_profile
 
 
     'click .pick_delta': (e,t)->
@@ -188,7 +193,7 @@ Template.delta_results.helpers
 
     results_class: ->
         delta = Docs.findOne type:'delta'
-        if delta.viewing_detail then 'sixteen wide' else 'twelve wide'
+        if delta.viewing_profile then 'nine wide' else 'twelve wide'
 
 
     multiple_pages: ->
@@ -276,6 +281,7 @@ Template.task_card.events
                 $set:
                     viewing_detail: true
                     detail_id: @_id
+                    expand_id: @_id
 
     'click .maximize': ->
         delta = Docs.findOne type:'delta'

@@ -151,11 +151,11 @@ template(name='task_card')
     .ui.fluid.segment(class=delta_card_class)
         .ui.stackable.equal.width.grid
             .row
-                .fourteen.wide.column.maximize
+                .fourteen.wide.column.expand
                     +header
-                a.one.wide.center.aligned.column.expand(class=expand_class)
+                a.one.wide.center.aligned.column.expand(class=expand_class href='#')
                     +icon name='resize-vertical' title='Expand'
-                a.one.wide.center.aligned.column.toggle_size(class=maximize_class)
+                a.one.wide.center.aligned.column.toggle_size(class=maximize_class href='#')
                     +icon name='resize' title='Maximize'
             .row
                 .sixteen.wide.column
@@ -242,9 +242,16 @@ template(name='task_card')
                             .ui.small.header #{parent.title}
                         else
                             .ui.small.header No parent
-                        .ui.small.compact.button.add_child
-                            +iconsmall name='tree-structure' classes='spaced'
-                            | Add Sub Task
+                        if children.length
+                            .ui.list
+                                each children
+                                    .item #{title}
+                        else
+                            .ui.small.header No children
+                        if full_mode
+                            .ui.small.compact.button.add_child
+                                +iconsmall name='tree-structure' classes='spaced'
+                                | Add Sub Task
                     .column
                         +voting
                     .column

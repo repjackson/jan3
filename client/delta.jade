@@ -1,13 +1,12 @@
 template(name='delta')
     .ui.stackable.padded.grid
         if currentUser
-            .centered.row
-                // .one.wide.blue.column
-                //     .ui.inverted.header JP
-                //     // img.ui.small.center.aligned.image.view_schamas(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
-                .twelve.wide.blue.column
+            .centered.middle.aligned.blue.row
+                .two.wide.column
+                    img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                .ten.wide.column
                     a.toggle_menu(href='#')
-                        h1.ui.inverted.header
+                        .ui.inverted.header
                             if current_type.icon
                                 +icon name=current_type.icon classes='spaced'
                             | #{current_type.title}
@@ -18,14 +17,18 @@ template(name='delta')
                                 i.icon
                                     +icon name=icon
                                 | #{title}
-                .four.wide.blue.column
-                    .ui.button
+                a.one.wide.column(href='#')
+                    +icon name='edit'
+                a.two.wide.column.toggle_profile(href='#')
+                    .ui.inverted.header
                         if currentUser.image_id
                             i.large.icon
                                 img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         else
-                            i.user.icon
+                            +icon name='gender-neutral-user' classes='spaced'
                         |#{currentUser.username}
+
+                a.one.wide.column(href='#')
                     +logout_button
 
         if currentUser
@@ -46,24 +49,23 @@ template(name='delta')
                                     i.green.large.plus.icon
                                     // |#{current_type.title}
 
-                        .ui.compact.icon.button.delete_delta(title='Clear Session')
-                            i.remove.icon
-                            // |Clear
-                        .ui.compact.icon.button.run_fo(title='Reload Session')
-                            i.refresh.icon
-                            // |Reset
-                        if is_dev
-                            .ui.icon.compact.button.show_delta
-                                i.code.icon
+                        // .ui.compact.icon.button.delete_delta(title='Clear Session')
+                        //     i.remove.icon
+                        //     // |Clear
+                        // .ui.compact.icon.button.run_fo(title='Reload Session')
+                        //     i.refresh.icon
+                        //     // |Reset
+                        // if is_dev
+                        //     .ui.icon.compact.button.show_delta
+                        //         i.code.icon
                         // .ui.vertical.segments
                         each delta_fields
                             .ui.hidden.divider
                             +facet
                 +delta_results
-        // unless loggingIn
-        // unless currentUser
-        //     +login
-
+                if delta_doc.viewing_profile
+                    .three.wide.green.column
+                        .ui.header hi
 
 
 template(name='delta_results')
@@ -244,9 +246,10 @@ template(name='default_card')
 
 
 template(name='logout_button')
-    #logout.ui.icon.button(title='Sign Out')
+    #logout(title='Sign Out')
         if signing_out
-            i.notched.circle.loading.icon
+            i.notched.circle.loading.big.icon
         else
-            i.sign.out.alternate.icon
+            +icon name='exit'
+        //     i.sign.out.alternate.icon
 
