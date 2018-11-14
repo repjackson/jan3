@@ -33,7 +33,6 @@ Template.delta.helpers
         }, sort:title:1
 
 
-Template.delta.helpers
     current_type: ->
         delta = Docs.findOne type:'delta'
         if delta and delta.filter_type
@@ -89,15 +88,20 @@ Template.delta.helpers
 
 
 Template.delta.events
-    'click .toggle_menu': ->
+    'click .toggle_topbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set: viewing_menu: !delta.viewing_menu
 
-    'click .toggle_profile': ->
+    'click .toggle_userbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set: viewing_userbar: !delta.viewing_userbar
+
+    'click .toggle_navbar': ->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set: viewing_navbar: !delta.viewing_navbar
 
 
     'click .pick_delta': (e,t)->
@@ -191,14 +195,11 @@ Template.delta_card.helpers
             Docs.findOne @valueOf()
 
     delta_card_class: ->
-        console.log @valueOf()
         delta = Docs.findOne type:'delta'
         if delta.detail_id is @valueOf()
             if delta.viewing_userbar
-                console.log 'viewing'
                 'eight wide'
             else
-                console.log 'NOT viewing'
                 'twelve wide'
         # else
         #     'sixteen wide'
@@ -297,7 +298,7 @@ Template.task_card.events
             Docs.update delta._id,
                 $set:
                     viewing_detail: true
-                    viewing_userbar: true
+                    viewing_userbar: false
                     detail_id: @_id
                     expand_id: @_id
 

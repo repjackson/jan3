@@ -47,7 +47,7 @@ template(name='task_card')
                         .ui.small.header ##{office_jpid}
                         .ui.small.header #{office_name}
                 .column
-                    +array icon='tags' title='Tags'
+                    +array icon='tags' title='Tags' key='tags'
                 .column
                     if complete
                         +icon name='checked-checkbox' classes='spaced mini'

@@ -68,6 +68,7 @@ Template.array.helpers
         parent["#{@key}"]
 
 
+
 Template.array.events
     'click .edit': (e,t)-> t.editing.set !t.editing.get()
 
@@ -75,12 +76,14 @@ Template.array.events
         if e.which is 13
             delta = Docs.findOne type:'delta'
             target_doc = Docs.findOne _id:delta.detail_id
-
-            val = e.currentTarget.value
-            Docs.update target_doc._id,
-                $addToSet:
-                    "#{t.data.key}": val
-            t.$('.add_array_element').val('')
+            if t.data.key
+                val = e.currentTarget.value
+                Docs.update target_doc._id,
+                    $addToSet:
+                        "#{t.data.key}": val
+                t.$('.add_array_element').val('')
+            else
+                console.log 'no key bitch'
 
     'click .pull_element': (e,t)->
         delta = Docs.findOne type:'delta'

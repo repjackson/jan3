@@ -130,14 +130,14 @@ template(name='voting')
 
 template(name='voting_pane')
     .ui.small.header
-        +icon name='collapse-arrow'
+        +icon name='collapse-arrow' classes='mini spaced'
         |Upvoters
     .ui.list
         each upvoters
             +user_list_view
 
-    .ui.header
-        +icon name='expand-arrow'
+    .ui.small.header
+        +icon name='expand-arrow' classes='mini spaced'
         |Downvoters
     .ui.list
         each downvoters

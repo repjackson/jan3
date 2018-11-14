@@ -2,9 +2,7 @@ template(name='delta')
     .ui.stackable.padded.grid
         if currentUser
             .centered.nav_bar.row
-                .two.wide.column
-                    img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                .twelve.wide.column.pointer.toggle_menu
+                .two.wide.column.pointer.toggle_navbar
                     .ui.inverted.header
                         if current_type.icon
                             +icon name=current_type.icon classes='spaced mini'
@@ -16,19 +14,17 @@ template(name='delta')
                                 i.icon
                                     +icon name=icon
                                 | #{title}
+                .twelve.wide.column
+                    img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                 .one.wide.column.add_doc.pointer(title="Add #{current_type.title}")
                     if current_type
                         // if can_add
-                        +icon name='plus' classes='mini'
-                .one.wide.column.toggle_profile.pointer
-                    .ui.inverted.header
-                        if currentUser.image_id
-                            i.large.icon
-                                img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        else
-                            +icon name='gender-neutral-user' classes='mini spaced'
-                    // .ui.inverted.smal.header #{currentUser.username}
-                // .one.wide.column.toggle_profile.pointer
+                        +icon name='plus' classes='mini centered'
+                .one.wide.column.toggle_userbar.pointer
+                    if currentUser.image_id
+                        img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    else
+                        +icon name='gender-neutral-user' classes='mini centered'
 
         if currentUser
             .row
@@ -39,6 +35,8 @@ template(name='delta')
                                 i.green.plus.icon
                                 | Session
                 if delta_doc
+                    if delta_doc.viewing_navbar
+                        +navbar
                     unless delta_doc.viewing_detail
                         .four.wide.column.scrolling
 
@@ -60,6 +58,30 @@ template(name='delta')
 
 template(name='userbar')
     .three.wide.column.userbar
+        .ui.grid
+            .row
+                .sixteen.wide.column
+                    .ui.inverted.header
+                        | #{currentUser.first_name} #{currentUser.last_name}
+                        small @#{currentUser.username}
+            .row
+                .sixteen.wide.column
+                    .ui.inverted.header
+                        +icon name='settings' classes='mini centered'
+                        | Settings
+            .row
+                .sixteen.wide.column
+                    #logout.ui.inverted.header
+                        // +icon name='exit' classes='mini centered'
+                        if signing_out
+                            i.notched.circle.loading.big.icon
+                        else
+                            +icon name='exit' classes='mini'
+                        | Log Out
+
+
+template(name='navbar')
+    .three.wide.column.navbar
         .ui.grid
             .row
                 .sixteen.wide.column
@@ -183,8 +205,8 @@ template(name='children_view')
         |No schema found.
 
 template(name='set_page_size')
-    .one.wide.column.set_page_size(class=page_size_class title='Set Page Size')
-        .ui.small.header #{value}
+    .one.wide.center.aligned.pointer.column.rounded.set_page_size(class=page_size_class title='Set Page Size')
+        | #{value}
 
 template(name='set_delta_key')
     .ui.button.set_delta_key(class=set_delta_key_class)
@@ -214,15 +236,6 @@ template(name='selector')
             .large110 [none]
                 small #{count}
 
-template(name='edit_field_text')
-    .ui.labeled.fluid.input
-        .ui.basic.label(title=key) #{label}
-        input.text_val(type='text' value=field_value)
-
-template(name='edit_field_number')
-    .ui.labeled.fluid.input
-        .ui.basic.label(title=key) #{label}
-        input.number_val(type='number' value=field_value)
 
 
 template(name='delta_card')

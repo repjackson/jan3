@@ -106,6 +106,15 @@ template(name='textarea')
 
 
 
+template(name='edit_field_text')
+    .ui.labeled.fluid.input
+        .ui.basic.label(title=key) #{label}
+        input.text_val(type='text' value=field_value)
+
+template(name='edit_field_number')
+    .ui.labeled.fluid.input
+        .ui.basic.label(title=key) #{label}
+        input.number_val(type='number' value=field_value)
 
 template(name='textarea_edit')
     .ui.small.header

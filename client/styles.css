@@ -34,7 +34,7 @@
   bottom: 0;
   width: 100%;
   margin: 0 !important;
-  background: linear-gradient(to top, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
+  background: linear-gradient(to top, rgba(0,20,137,1) 0%,rgba(0,20,137,.9) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
   margin: 0 !important;
   border: 0 !important;
   /*background: rgba(0, 20, 137) !important;*/
@@ -137,12 +137,18 @@ body {
   margin-bottom: .2em !important;
 }
 
+.rounded {
+  border-radius: 15px
+}
+
+
+
 .userbar {
     margin-top: -1rem !important;
     margin-bottom: -1rem !important;
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
-    background: linear-gradient(to left, rgba(0,20,137,0.8) 0%,rgba(0,20,137,1) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
+    background: linear-gradient(to left, rgba(0,20,137,.9) 0%,rgba(0,20,137,.9) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
 }
 .userbar > .grid > .row {
     padding: 1em;
@@ -152,8 +158,29 @@ body {
 .userbar > .grid > .row:hover {
     /*background: linear-gradient(to left, rgba(0,20,137,0.5) 0%,rgba(0,20,137,0.5) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;*/
     background: rgba(0,20,137,0.5) ;
-
 }
+
+
+
+.navbar {
+    margin-top: -1rem !important;
+    margin-bottom: -1rem !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    background: linear-gradient(to right, rgba(0,20,137,.9) 0%,rgba(0,20,137,.9) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
+}
+.navbar > .grid > .row {
+    padding: 1em;
+    color: white !important;
+    cursor: pointer !important;
+}
+.navbar > .grid > .row:hover {
+    /*background: linear-gradient(to left, rgba(0,20,137,0.5) 0%,rgba(0,20,137,0.5) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;*/
+    background: rgba(0,20,137,0.5) ;
+}
+
+
+
 
 .alphablue {
   /*background: rgba(0, 20, 137, 0.5) !important;*/
