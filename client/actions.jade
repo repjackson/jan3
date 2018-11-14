@@ -7,7 +7,7 @@ template(name='set_schema_button')
 
 template(name='bookmark_widget')
     .ui.small.header
-        +icon name='bookmark-ribbon'
+        +icon name='bookmark-ribbon' classes='mini spaced'
         |Bookmarks
     if full_mode
         if bookmarked
@@ -37,7 +37,7 @@ template(name='bookmark_pane')
 
 template(name='mark_read_button')
     .ui.small.header
-        +icon name='open-envelope'
+        +icon name='open-envelope' classes='mini spaced'
         | Read
     if full_mode
         if read
@@ -58,7 +58,7 @@ template(name='mark_read_pane')
 
 template(name='subscribe')
     .ui.small.header
-        +icon name='renew-subscription'
+        +icon name='renew-subscription' classes='mini spaced'
         | Subscriptions
     if full_mode
         if subscribed
@@ -82,7 +82,7 @@ template(name='subscribe_pane')
 
 template(name='comment_pane')
     .ui.small.header
-        +icon name='comments'
+        +icon name='comments' classes='mini spaced'
         | Comments
     .ui.list
         each comments
@@ -115,7 +115,7 @@ template(name='comment_pane')
 
 template(name='voting')
     .ui.small.header
-        +icon name='leaderboard'
+        +icon name='leaderboard' classes='mini spaced'
         | Priority
     .ui.mini.statistic
         .value #{points}
@@ -147,7 +147,7 @@ template(name='voting_pane')
 
 template(name='assignments')
     .ui.small.header
-        +icon name='checked-user-male'
+        +icon name='checked-user-male' classes='mini spaced'
         | Assignments
     p(title="{{ from_now ticket_assignment_timestamp }}") Last Assigned {{ long_format ticket_assignment_timestamp }}
     if full_mode
@@ -185,7 +185,7 @@ template(name='assignments')
 
 template(name='approval')
     .ui.small.header
-        +icon name='approval'
+        +icon name='approval' classes='mini spaced'
         | Approval
     if full_mode
         .ui.form

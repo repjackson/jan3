@@ -20,7 +20,7 @@ template(name='task_card')
             .row
                 .column
                     .ui.small.header
-                        +icon name='quill-with-ink'
+                        +icon name='quill-with-ink' classes='mini spaced'
                         | Author
                     +author_info
                     +when_template
@@ -28,21 +28,21 @@ template(name='task_card')
                 if customer_jpid
                     .column
                         .ui.small.header
-                            +icon name='headset'
+                            +icon name='headset' classes='mini spaced'
                             | Customer
                         .ui.small.header ##{customer_jpid}
                         .ui.small.header #{customer_name}
                 if franchisee_jpid
                     .column
                         .ui.small.header
-                            +icon name='business'
+                            +icon name='business' classes='mini spaced'
                             | Franchisee
                         .ui.small.header ##{franchisee_jpid}
                         .ui.small.header #{franchisee_name}
                 if office_jpid
                     .column
                         .ui.small.header
-                            +icon name='building'
+                            +icon name='building' classes='mini spaced'
                             | Office
                         .ui.small.header ##{office_jpid}
                         .ui.small.header #{office_name}
@@ -69,30 +69,29 @@ template(name='task_card')
                     +mark_read_button
                     if full_mode
                         +mark_read_pane
-
             .row
                 .column
                     .ui.small.header
-                        +icon name='calendar'
+                        +icon name='calendar' classes='mini spaced'
                         | Due Date
                 .column
                     .ui.small.header
-                        +icon name='calendar'
+                        +icon name='calendar' classes='mini spaced'
                         | Assigned Date
                 .column
                     .ui.small.header
-                        +icon name='calendar'
+                        +icon name='calendar' classes='mini spaced'
                         | Completion Date
                 .column
                     .ui.small.header
-                        +icon name='calendar'
+                        +icon name='calendar' classes='mini spaced'
                         | Estimated Time
             .row
                 .column
                     +bookmark_widget
                 .column
                     .ui.header
-                        +icon name='tree-structure'
+                        +icon name='tree-structure' classes='mini spaced'
                         |Relations
                     if parent
                         .ui.small.header #{parent.title}

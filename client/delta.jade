@@ -7,14 +7,7 @@ template(name='delta')
                         if current_type.icon
                             +icon name=current_type.icon classes='spaced mini'
                         | #{current_type.title}
-                    if delta_doc.viewing_menu
-                        .ui.hidden.divider
-                        each bookmarks
-                            a.ui.compact.button.pick_delta(title=title)
-                                i.icon
-                                    +icon name=icon
-                                | #{title}
-                .twelve.wide.column
+                .twelve.wide.column.pointer.toggle_topbar
                     img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                 .one.wide.column.add_doc.pointer(title="Add #{current_type.title}")
                     if current_type
@@ -25,7 +18,10 @@ template(name='delta')
                         img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         +icon name='gender-neutral-user' classes='mini centered'
-
+            if delta_doc.viewing_topbar
+                .centered.nav_bar.row
+                    .sixteen.wide.column
+                        .ui.inverted.header hi!
         if currentUser
             .row
                 unless delta_doc
@@ -37,27 +33,21 @@ template(name='delta')
                 if delta_doc
                     if delta_doc.viewing_navbar
                         +navbar
-                    unless delta_doc.viewing_detail
-                        .four.wide.column.scrolling
-
-                            // .ui.compact.icon.button.delete_delta(title='Clear Session')
-                            //     i.remove.icon
-                                // |Clear
-                            // .ui.compact.icon.button.run_fo(title='Reload Session')
-                            //     i.refresh.icon
-                            //     // |Reset
-                            // if is_dev
-                            //     .ui.icon.compact.button.show_delta
-                            //         i.code.icon
-                            each delta_fields
-                                +facet
-                                .ui.hidden.divider
+                    unless delta_doc.viewing_navbar
+                        unless delta_doc.viewing_detail
+                            unless delta_doc.viewing_userbar
+                                .four.wide.column.scrolling
+                                    each delta_fields
+                                        +facet
+                                        .ui.hidden.divider
                     +delta_results
                     if delta_doc.viewing_userbar
                         +userbar
 
-template(name='userbar')
-    .three.wide.column.userbar
+
+
+template(name='navbar')
+    .four.wide.column.navbar
         .ui.grid
             .row
                 .sixteen.wide.column
@@ -80,8 +70,10 @@ template(name='userbar')
                         | Log Out
 
 
-template(name='navbar')
-    .three.wide.column.navbar
+
+
+template(name='userbar')
+    .four.wide.column.userbar
         .ui.grid
             .row
                 .sixteen.wide.column
@@ -95,7 +87,18 @@ template(name='navbar')
                         | Settings
             .row
                 .sixteen.wide.column
-                    #logout.ui.inverted.header
+                    .ui.compact.icon.button.delete_delta(title='Clear Session')
+                        i.remove.icon
+                        |Clear
+                    .ui.compact.icon.button.run_fo(title='Reload Session')
+                        i.refresh.icon
+                        // |Reset
+                    if is_dev
+                        .ui.icon.compact.button.show_delta
+                            i.code.icon
+            .row
+                #logout.sixteen.wide.column
+                    .ui.inverted.header
                         // +icon name='exit' classes='mini centered'
                         if signing_out
                             i.notched.circle.loading.big.icon

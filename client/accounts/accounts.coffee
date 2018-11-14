@@ -1,7 +1,6 @@
 Template.login.events
     'click .login': (e,t)->
         # e.preventDefault()
-        console.log 'start'
         username = $('.username').val()
         password = $('.password').val()
         Meteor.loginWithPassword username, password, (err,res)->

@@ -25,7 +25,7 @@ Template.delta.onCreated ->
 
 
 
-Template.delta.helpers
+Template.navbar.helpers
     bookmarks: ->
         Docs.find {
             # bookmark_ids: $in:[Meteor.userId()]
@@ -33,6 +33,7 @@ Template.delta.helpers
         }, sort:title:1
 
 
+Template.delta.helpers
     current_type: ->
         delta = Docs.findOne type:'delta'
         if delta and delta.filter_type
@@ -91,7 +92,7 @@ Template.delta.events
     'click .toggle_topbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set: viewing_menu: !delta.viewing_menu
+            $set: viewing_topbar: !delta.viewing_topbar
 
     'click .toggle_userbar': ->
         delta = Docs.findOne type:'delta'
@@ -197,10 +198,10 @@ Template.delta_card.helpers
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
         if delta.detail_id is @valueOf()
-            if delta.viewing_userbar
-                'eight wide'
-            else
-                'twelve wide'
+            # if delta.viewing_userbar
+            #     'eight wide'
+            # else
+            'twelve wide'
         # else
         #     'sixteen wide'
 
@@ -212,10 +213,10 @@ Template.delta_results.helpers
     results_class: ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail
-            if delta.viewing_userbar then 'thirteen wide' else 'sixteen wide'
+            if delta.viewing_userbar then 'twelve wide' else 'sixteen wide'
         else
-            if delta.viewing_userbar then 'nine wide' else 'twelve wide'
-
+        #     if delta.viewing_userbar then 'nine wide' else 'twelve wide'
+            'twelve wide'
 
     multiple_pages: ->
         delta = Docs.findOne type:'delta'

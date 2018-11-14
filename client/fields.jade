@@ -18,7 +18,7 @@ template(name='boolean_edit')
 template(name='array')
     .ui.small.header
         if icon
-            +icon name=icon classes='inline spaced'
+            +icon name=icon classes='mini spaced'
         |#{title}
     unless editing
         if value
@@ -87,9 +87,9 @@ template(name='header')
                 input.string_val(type='text' value=value)
     else
         .ui.header #{title}
-    // if full_mode
-    //     .edit.ui.small.compact.icon.button
-    //         i.pencil.icon
+    if full_mode
+        .edit.ui.small.compact.icon.button
+            i.pencil.icon
 
 
 template(name='textarea')
@@ -100,9 +100,9 @@ template(name='textarea')
                 textarea.text_val(rows='3') #{text}
     else
         .large120 #{text}
-    // if full_mode
-    //     .edit.ui.small.compact.icon.button
-    //         i.pencil.icon
+    if full_mode
+        .edit.ui.small.compact.icon.button
+            i.pencil.icon
 
 
 
