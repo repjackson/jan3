@@ -4,7 +4,7 @@ template(name='delta')
             .centered.nav_bar.row
                 .two.wide.column
                     img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                .ten.wide.column.pointer.toggle_menu
+                .twelve.wide.column.pointer.toggle_menu
                     .ui.inverted.header
                         if current_type.icon
                             +icon name=current_type.icon classes='spaced mini'
@@ -20,8 +20,6 @@ template(name='delta')
                     if current_type
                         // if can_add
                         +icon name='plus' classes='mini'
-                .one.wide.column.pointer
-                    +icon name='edit' classes='mini'
                 .one.wide.column.toggle_profile.pointer
                     .ui.inverted.header
                         if currentUser.image_id
@@ -29,8 +27,8 @@ template(name='delta')
                                 img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         else
                             +icon name='gender-neutral-user' classes='mini spaced'
-                .one.wide.column.toggle_profile.pointer
-                    .ui.inverted.header #{currentUser.username}
+                    // .ui.inverted.smal.header #{currentUser.username}
+                // .one.wide.column.toggle_profile.pointer
 
         if currentUser
             .row
@@ -61,26 +59,27 @@ template(name='delta')
                         +userbar
 
 template(name='userbar')
-    .three.wide.column.userbar.alphablue
-        .ui.inverted.header
-            | #{currentUser.first_name} #{currentUser.last_name}
-        .ui.inverted.header
-            | @#{currentUser.username}
-        .ui.inverted.header
-            +icon name='exit' classes='mini centered'
-        .ui.inverted.header
-            +icon name='settings' classes='mini centered'
-            |Settings
-        .ui.inverted.header
-            +icon name='exit' classes='mini centered'
-        .ui.inverted.header
-            +icon name='exit' classes='mini centered'
-        .ui.inverted.header
-            +icon name='exit' classes='mini centered'
-        .ui.inverted.header
-            +icon name='exit' classes='mini centered'
-                // .ui.small.center.aligned.inverted.header Logout
-                // +logout_button
+    .three.wide.column.userbar
+        .ui.grid
+            .row
+                .sixteen.wide.column
+                    .ui.inverted.header
+                        | #{currentUser.first_name} #{currentUser.last_name}
+                        small @#{currentUser.username}
+            .row
+                .sixteen.wide.column
+                    .ui.inverted.header
+                        +icon name='settings' classes='mini centered'
+                        | Settings
+            .row
+                .sixteen.wide.column
+                    #logout.ui.inverted.header
+                        // +icon name='exit' classes='mini centered'
+                        if signing_out
+                            i.notched.circle.loading.big.icon
+                        else
+                            +icon name='exit' classes='mini'
+                        | Log Out
 
 
 
@@ -266,14 +265,4 @@ template(name='default_card')
             .content
                 each actions
                     +Template.dynamic template=action_button_template data=detail_doc
-
-
-
-template(name='logout_button')
-    #logout(title='Sign Out')
-        if signing_out
-            i.notched.circle.loading.big.icon
-        else
-            +icon name='exit' classes='mini'
-        //     i.sign.out.alternate.icon
 

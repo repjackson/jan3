@@ -85,7 +85,6 @@ Template.delta.helpers
                 type:'field'
                 schema_slugs: $in: [current_type]
             }, {sort:{rank:1}}).fetch()
-            # console.log fields
             fields
 
 
@@ -104,7 +103,6 @@ Template.delta.events
     'click .pick_delta': (e,t)->
         e.preventDefault()
         Session.set 'is_calculating', true
-        # console.log 'hi call'
         Meteor.call 'set_schema', @, ->
             Session.set 'is_calculating', false
 
@@ -193,8 +191,17 @@ Template.delta_card.helpers
             Docs.findOne @valueOf()
 
     delta_card_class: ->
+        console.log @valueOf()
         delta = Docs.findOne type:'delta'
-        if delta.detail_id is @_id then 'sixteen wide'
+        if delta.detail_id is @valueOf()
+            if delta.viewing_userbar
+                console.log 'viewing'
+                'eight wide'
+            else
+                console.log 'NOT viewing'
+                'twelve wide'
+        # else
+        #     'sixteen wide'
 
 
 
@@ -203,8 +210,10 @@ Template.delta_results.helpers
 
     results_class: ->
         delta = Docs.findOne type:'delta'
-        if delta.viewing_detail then 'sixteen wide'
-        else if delta.viewing_userbar then 'nine wide' else 'twelve wide'
+        if delta.viewing_detail
+            if delta.viewing_userbar then 'thirteen wide' else 'sixteen wide'
+        else
+            if delta.viewing_userbar then 'nine wide' else 'twelve wide'
 
 
     multiple_pages: ->
@@ -233,7 +242,6 @@ Template.delta_results.helpers
             type:'field'
             schema_slugs: $in: [current_type]
         }, {sort:{rank:1}}).fetch()
-        # console.log fields
         fields
 
     schema_actions: ->
@@ -243,7 +251,6 @@ Template.delta_results.helpers
             type:'action'
             schema_slugs: $in: [current_type]
         }, {sort:{rank:1}}).fetch()
-        # console.log fields
         actions
 
 
@@ -257,7 +264,6 @@ Template.delta_results.helpers
 
 
 Template.delta_card.onCreated ->
-    # console.log @
     @autorun => Meteor.subscribe 'doc', @data
 
 
@@ -317,18 +323,7 @@ Template.task_card.helpers
     #     if delta.detail_id is @_id then 'blue'
 
 
-
-
-
-
 Template.default_card.helpers
-    delta_card_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.detail_id is @_id then 'sixteen wide'
-
-
-
-
     field_docs: ->
         delta = Docs.findOne type:'delta'
         local_doc =
@@ -375,7 +370,6 @@ Template.default_card.helpers
 
 
     value: ->
-        # console.log @
         delta = Docs.findOne type:'delta'
         schema = Docs.findOne
             type:'schema'
@@ -384,7 +378,6 @@ Template.default_card.helpers
         field_doc = Docs.findOne
             type:'field'
             schema_slugs:$in:[schema.slug]
-        # console.log 'field doc', field_doc
         parent["#{@key}"]
 
     doc_header_fields: ->
@@ -505,7 +498,6 @@ Template.selector.helpers
         switch typeof @name
             when 'string' then @name
             when 'boolean'
-                # console.log @name
                 if @name is true then 'True'
                 else if @name is false then 'False'
             when 'number' then @name
@@ -562,7 +554,6 @@ Template.facet.events
 
 Template.selector.events
     'click .toggle_value': ->
-        # console.log @
         filter = Template.parentData()
         delta = Docs.findOne type:'delta'
         filter_list = delta["filter_#{filter.key}"]

@@ -3,12 +3,12 @@ template(name='task_card')
         .row
             .fourteen.wide.column.expand.pointer
                 +header
-            a.one.wide.column.expand.pointer(class=expand_class href='#')
+            .one.wide.column.expand.pointer(class=expand_class)
                 if expanded
                     +icon name='collapse-arrow' title='Collapse' classes='centered mini'
                 else
                     +icon name='expand-arrow' title='Expand' classes='centered mini'
-            a.one.wide.column.toggle_full.pointer(class=maximize_class href='#')
+            .one.wide.column.toggle_full.pointer(class=maximize_class)
                 if delta_doc.viewing_detail
                     +icon name='compress' title='Compress' classes='centered mini'
                 else
