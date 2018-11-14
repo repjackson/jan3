@@ -1,15 +1,14 @@
 template(name='delta')
     .ui.stackable.padded.grid
         if currentUser
-            .centered.middle.aligned.blue.row
+            .centered.nav_bar.row
                 .two.wide.column
                     img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                .nine.wide.column
-                    a.toggle_menu(href='#')
-                        .ui.inverted.header
-                            if current_type.icon
-                                +icon name=current_type.icon classes='spaced mini'
-                            | #{current_type.title}
+                .ten.wide.column.pointer.toggle_menu
+                    .ui.inverted.header
+                        if current_type.icon
+                            +icon name=current_type.icon classes='spaced mini'
+                        | #{current_type.title}
                     if delta_doc.viewing_menu
                         .ui.hidden.divider
                         each bookmarks
@@ -17,23 +16,22 @@ template(name='delta')
                                 i.icon
                                     +icon name=icon
                                 | #{title}
-                a.one.wide.column.add_doc(title="Add #{current_type.title}" href='#')
+                .one.wide.column.add_doc.pointer(title="Add #{current_type.title}")
                     if current_type
                         // if can_add
                         +icon name='plus' classes='mini'
-                a.one.wide.column(href='#')
+                .one.wide.column.pointer
                     +icon name='edit' classes='mini'
-                a.two.wide.column.toggle_profile(href='#')
+                .one.wide.column.toggle_profile.pointer
                     .ui.inverted.header
                         if currentUser.image_id
                             i.large.icon
                                 img.ui.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         else
                             +icon name='gender-neutral-user' classes='mini spaced'
-                        |#{currentUser.username}
+                .one.wide.column.toggle_profile.pointer
+                    .ui.inverted.header #{currentUser.username}
 
-                a.one.wide.column(href='#')
-                    +logout_button
         if currentUser
             .row
                 unless delta_doc
@@ -64,7 +62,26 @@ template(name='delta')
 
 template(name='userbar')
     .three.wide.column.userbar.alphablue
-        .ui.header hi
+        .ui.inverted.header
+            | #{currentUser.first_name} #{currentUser.last_name}
+        .ui.inverted.header
+            | @#{currentUser.username}
+        .ui.inverted.header
+            +icon name='exit' classes='mini centered'
+        .ui.inverted.header
+            +icon name='settings' classes='mini centered'
+            |Settings
+        .ui.inverted.header
+            +icon name='exit' classes='mini centered'
+        .ui.inverted.header
+            +icon name='exit' classes='mini centered'
+        .ui.inverted.header
+            +icon name='exit' classes='mini centered'
+        .ui.inverted.header
+            +icon name='exit' classes='mini centered'
+                // .ui.small.center.aligned.inverted.header Logout
+                // +logout_button
+
 
 
 template(name='delta_results')
@@ -122,12 +139,12 @@ template(name='delta_results')
                                     if show_page_up
                                         a.page_up(title='Next Page')
                                             +icon name='chevron-right' classes='mini'
-                                .one.wide.column
-                                    +icon name='grid'
-                                .one.wide.column
-                                    +icon name='list'
-                                .one.wide.column
-                                    +icon name='double-down'
+                                .two.wide.column
+                                    +icon name='grid' classes='mini'
+                                .two.wide.column
+                                    +icon name='list' classes='mini'
+                                .two.wide.column
+                                    +icon name='double-down' classes='mini'
                         .ui.hidden.divider
                     if is_calculating
                         .ui.hidden.divider

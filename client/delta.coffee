@@ -541,7 +541,8 @@ Template.set_delta_key.helpers
 Template.facet.helpers
     values: ->
         delta = Docs.findOne type:'delta'
-        delta["#{@key}_return"]?[..20]
+        # delta["#{@key}_return"]?[..20]
+        delta["#{@key}_return"]
 
     # set_delta_key_class: ->
     #     delta = Docs.findOne type:'delta'

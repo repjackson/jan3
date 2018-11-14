@@ -163,6 +163,8 @@ Meteor.methods
         for result in results_cursor.fetch()
             result_ids.push result._id
 
+        # console.log built_query
+
 
         Docs.update {_id:delta._id},
             {$set:
@@ -180,7 +182,8 @@ Meteor.methods
         options = {
             explain:false
             }
-        # console.log key
+        console.log key
+        console.log query
         if type in ['array','multiref']
             pipe =  [
                 { $match: query }
@@ -188,7 +191,7 @@ Meteor.methods
                 { $unwind: "$#{key}" }
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 15 }
+                { $limit: 20 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
         else
@@ -197,7 +200,7 @@ Meteor.methods
                 { $project: "#{key}": 1 }
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 15 }
+                { $limit: 20 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
 
