@@ -17,7 +17,7 @@ template(name='tasks')
         | Tasks
     .ui.inverted.link.list
         each todos
-            a.item.todo #{title}
+            a.item.todo(class=item_class) #{title}
 
 
 template(name='bookmarks')

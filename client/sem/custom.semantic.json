@@ -3,7 +3,7 @@
     "accordion": true,
     "ad": false,
     "api": false,
-    "breadcrumb": false,
+    "breadcrumb": true,
     "button": true,
     "card": true,
     "checkbox": true,
@@ -43,7 +43,7 @@
     "statistic": true,
     "step": false,
     "sticky": true,
-    "tab": true,
+    "tab": false,
     "table": true,
     "transition": true,
     "visibility": true

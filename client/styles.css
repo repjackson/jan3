@@ -53,8 +53,8 @@
 
 }
 .toggle_value:hover {
-  background: rgba(0, 20, 137, .5) !important;
-
+  background: rgba(0, 20, 137, .8) !important;
+  color:white !important;
 }
 
 .toggle_value {
@@ -62,7 +62,7 @@
   /*border-left-style: solid !important;*/
   /*border-right-style: solid !important;*/
   /*border-top-style: solid !important;*/
-  /*border-width: 1px !important;*/
+  border-width: 0px !important;
   /*border-color: #d4d4d5 !important;*/
   box-shadow: -1px 1px 0px 0px #d4d4d5 !important;
   width: 100px !important;
@@ -147,38 +147,38 @@ body {
 
 
 
-.userbar {
+.rightbar {
     margin-top: -1rem !important;
     margin-bottom: -1rem !important;
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
     background: linear-gradient(to left, rgba(0,20,137,.9) 0%,rgba(0,20,137,.9) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
 }
-.userbar > .grid > .row {
+.rightbar > .grid > .row {
     padding: 1em;
     color: white !important;
     cursor: pointer !important;
 }
-.userbar > .grid > .row:hover {
+.rightbar > .grid > .row:hover {
     /*background: linear-gradient(to left, rgba(0,20,137,0.5) 0%,rgba(0,20,137,0.5) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;*/
     background: rgba(0,20,137,0.5) ;
 }
 
 
 
-.navbar {
+.leftbar {
     margin-top: -1rem !important;
     margin-bottom: -1rem !important;
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
     background: linear-gradient(to right, rgba(0,20,137,.9) 0%,rgba(0,20,137,.9) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
 }
-.navbar > .grid > .row {
+.leftbar > .grid > .row {
     padding: 1em;
     color: white !important;
     cursor: pointer !important;
 }
-.navbar > .grid > .row:hover {
+.leftbar > .grid > .row:hover {
     /*background: linear-gradient(to left, rgba(0,20,137,0.5) 0%,rgba(0,20,137,0.5) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;*/
     background: rgba(0,20,137,0.5) ;
 }
@@ -193,6 +193,11 @@ body {
 }
 
 .pointer {cursor: pointer;}
+
+.pointer:hover {
+    -webkit-filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
+}
+
 .n-resize {cursor: n-resize;}
 .ne-resize {cursor: ne-resize;}
 

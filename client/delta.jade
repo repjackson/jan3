@@ -21,14 +21,23 @@ template(name='delta')
             if delta_doc.viewing_topbar
                 +topbar
         if currentUser
-            .row
-                unless delta_doc
+            unless delta_doc
+                .row
                     .sixteen.wide.column
                         if currentUser
                             .create_delta.ui.button(title='Create Session')
                                 i.green.plus.icon
                                 | Session
-                if delta_doc
+            if delta_doc
+                // .row
+                //     .sixteen.wide.column
+                //         .ui.breadcrumb
+                //             a.section Home
+                //             i.right.chevron.icon.divider
+                //             a.section Registration
+                //             i.right.arrow.icon.divider
+                //             .active.section Personal Information
+                .row
                     if delta_doc.viewing_leftbar
                         +leftbar
                     unless delta_doc.viewing_leftbar

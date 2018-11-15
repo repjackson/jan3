@@ -9,6 +9,10 @@ if Meteor.isClient
                 assigned_ids: $in: [Meteor.userId()]
             }, limit:5
 
+        item_class: ->
+            delta = Docs.findOne type:'delta'
+            if delta.viewing_detail and delta.detail_id is @_id then 'active' else ''
+
     Template.tasks.events
         'click .todo': ->
             delta = Docs.findOne type:'delta'

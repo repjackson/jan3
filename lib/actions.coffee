@@ -244,8 +244,8 @@ Meteor.methods
                     editing_mode:false
                     config_mode:false
                     viewing_page:false
-                    viewing_navbar:false
-                    viewing_userbar:false
+                    viewing_leftbar:false
+                    viewing_rightbar:false
             Meteor.call 'fo', (err,res)->
         else
             return null
