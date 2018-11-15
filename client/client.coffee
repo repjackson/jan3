@@ -52,7 +52,6 @@ Template.registerHelper 'ticket_color_class', () ->
 Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
 Template.registerHelper 'editing', () -> Template.instance().editing.get()
 
-
 Template.registerHelper 'my_office', () ->
     if Meteor.user()
         if Meteor.user().office_jpid
@@ -87,8 +86,6 @@ Template.registerHelper 'dev_mode', ()->
 Template.registerHelper 'is_eric', ()->
     if Meteor.user()
         'Bda8mRG925DnxTjQC' is Meteor.userId()
-
-
 
 
 

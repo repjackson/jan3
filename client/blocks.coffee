@@ -38,18 +38,3 @@ Template.user_list_view.onCreated ->
 
 
 
-
-
-Template.userbar.onCreated ->
-    @signing_out = new ReactiveVar false
-
-Template.userbar.events
-    'click #logout': (e,t)->
-        # e.preventDefault()
-        t.signing_out.set true
-        Meteor.logout ->
-            t.signing_out.set false
-
-Template.userbar.helpers
-    signing_out: -> Template.instance().signing_out.get()
-

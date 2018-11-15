@@ -7,12 +7,17 @@ template(name='messages')
     .ui.inverted.header
         +icon name='mailbox-with-letter' classes='mini spaced'
         | Messages
+    .ui.icon.button
+        +iconsmall name='compose' title='Compose'
 
 
 template(name='tasks')
     .ui.inverted.header
         +icon name='to-do' classes='mini spaced'
         | Tasks
+    .ui.inverted.link.list
+        each todos
+            a.item.todo #{title}
 
 
 template(name='bookmarks')

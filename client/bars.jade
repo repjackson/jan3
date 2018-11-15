@@ -1,0 +1,56 @@
+template(name='topbar')
+    .centered.nav_bar.row
+        .four.wide.column
+            +notifications
+        .four.wide.column
+            +messages
+        .four.wide.column
+            +tasks
+        .four.wide.column
+            +bookmarks
+
+
+
+template(name='leftbar')
+    .four.wide.column.navbar
+        .ui.grid
+            each bookmarks
+                a.ui.button.pick_delta.margined(title=title)
+                    i.icon
+                        +icon name=icon
+                    | #{title}
+
+
+template(name='rightbar')
+    .four.wide.column.userbar
+        .ui.grid
+            .row
+                .sixteen.wide.column
+                    .ui.inverted.header
+                        | #{currentUser.first_name} #{currentUser.last_name}
+                        small @#{currentUser.username}
+            .row
+                .sixteen.wide.column.settings
+                    .ui.inverted.header
+                        +icon name='settings' classes='mini centered'
+                        | Settings
+            .row
+                .sixteen.wide.column
+                    .ui.compact.icon.button.delete_delta(title='Clear Session')
+                        i.remove.icon
+                        |Clear
+                    .ui.compact.icon.button.run_fo(title='Reload Session')
+                        i.refresh.icon
+                        // |Reset
+                    if is_dev
+                        .ui.icon.compact.button.show_delta
+                            i.code.icon
+            .row
+                #logout.sixteen.wide.column
+                    .ui.inverted.header
+                        // +icon name='exit' classes='mini centered'
+                        if signing_out
+                            i.notched.circle.loading.big.icon
+                        else
+                            +icon name='exit' classes='mini'
+                        | Log Out

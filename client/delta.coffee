@@ -24,14 +24,6 @@ Template.delta.onCreated ->
 
 
 
-Template.navbar.helpers
-    bookmarks: ->
-        Docs.find {
-            # bookmark_ids: $in:[Meteor.userId()]
-            type:'schema'
-        }, sort:title:1
-
-
 Template.delta.helpers
     current_type: ->
         delta = Docs.findOne type:'delta'
@@ -93,15 +85,17 @@ Template.delta.events
         Docs.update delta._id,
             $set: viewing_topbar: !delta.viewing_topbar
 
-    'click .toggle_userbar': ->
+    'click .toggle_rightbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set: viewing_userbar: !delta.viewing_userbar
+            $set:
+                viewing_rightbar: !delta.viewing_rightbar
+                viewing_leftbar:false
 
-    'click .toggle_navbar': ->
+    'click .toggle_leftbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set: viewing_navbar: !delta.viewing_navbar
+            $set: viewing_leftbar: !delta.viewing_leftbar
 
 
     'click .pick_delta': (e,t)->
@@ -109,7 +103,6 @@ Template.delta.events
         Session.set 'is_calculating', true
         Meteor.call 'set_schema', @, ->
             Session.set 'is_calculating', false
-
 
     'click .view_schamas': ->
         delta = Docs.findOne type:'delta'
@@ -197,7 +190,7 @@ Template.delta_card.helpers
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
         if delta.detail_id is @valueOf()
-            # if delta.viewing_userbar
+            # if delta.viewing_rightbar
             #     'eight wide'
             # else
             'twelve wide'
@@ -212,9 +205,9 @@ Template.delta_results.helpers
     results_class: ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail
-            if delta.viewing_userbar then 'twelve wide' else 'sixteen wide'
+            if delta.viewing_rightbar then 'twelve wide' else 'sixteen wide'
         else
-        #     if delta.viewing_userbar then 'nine wide' else 'twelve wide'
+        #     if delta.viewing_rightbar then 'nine wide' else 'twelve wide'
             'twelve wide'
 
     multiple_pages: ->
@@ -298,7 +291,7 @@ Template.task_card.events
             Docs.update delta._id,
                 $set:
                     viewing_detail: true
-                    viewing_userbar: false
+                    viewing_rightbar: false
                     detail_id: @_id
                     expand_id: @_id
 
@@ -476,7 +469,7 @@ Template.delta_results.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'userbar alphablue' else ''
+        if @value is delta.page_size then 'rightbar alphablue' else ''
 
 
 Template.set_page_size.events

@@ -24,7 +24,6 @@ if Meteor.isClient
         bookmarked: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then true else false
     Template.bookmark_widget.events
         'click .toggle_bookmark': (e,t)->
-            console.log @
             Meteor.call 'user_toggle_list', @, 'bookmark_ids'
 
     Template.bookmark_pane.onCreated ->
@@ -86,18 +85,6 @@ if Meteor.isClient
                     _id: $in: target.downvoter_ids
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     # Template.comment_button.helpers
     #     commentd: -> if @comment_ids and Meteor.userId() in @comment_ids then true else false
     # Template.comment_button.events
@@ -113,8 +100,6 @@ if Meteor.isClient
                 Docs.find
                     type:'comment'
                     parent_id: target._id
-
-
 
 
 
@@ -192,10 +177,10 @@ if Meteor.isClient
 
 
 
+
+
     # approval
     #
-
-
     Template.approval.onCreated ->
         @autorun => Meteor.subscribe 'user_list_users', @data, 'approver_ids'
         @user_results = new ReactiveVar( [] )
@@ -243,28 +228,11 @@ if Meteor.isClient
                 Meteor.users.find(_id: $in: target.approver_ids)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Meteor.methods
     set_schema: (target)->
-        # console.log 'target',target
         delta = Docs.findOne
             type:'delta'
             author_id:Meteor.userId()
-        # console.log 'delta',delta
         if delta and target.slug
             Docs.update delta._id,
                 $set:
@@ -278,13 +246,11 @@ Meteor.methods
                     viewing_page:false
                     viewing_navbar:false
                     viewing_userbar:false
-            # console.log 'hi call'
             Meteor.call 'fo', (err,res)->
         else
             return null
 
     user_toggle_list: (target, key)->
-        # console.log target
         list = target["#{key}"]
         if list and Meteor.userId() in list
             Docs.update target._id,
