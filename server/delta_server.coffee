@@ -163,7 +163,6 @@ Meteor.methods
         for result in results_cursor.fetch()
             result_ids.push result._id
 
-        # console.log built_query
 
 
         Docs.update {_id:delta._id},
@@ -182,8 +181,6 @@ Meteor.methods
         options = {
             explain:false
             }
-        console.log key
-        console.log query
         if type in ['array','multiref']
             pipe =  [
                 { $match: query }

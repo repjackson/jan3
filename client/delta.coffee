@@ -1,13 +1,12 @@
 Template.delta_results.onCreated ->
-    # @autorun => Meteor.subscribe 'schema_fields'
     @autorun => Meteor.subscribe 'schema_actions'
     @autorun => Meteor.subscribe 'type', 'action'
-    # @autorun => Meteor.subscribe 'type', 'field', 200
-    @autorun => Meteor.subscribe 'type', 'schema', 200
 
     Session.setDefault 'is_calculating', false
 
 Template.delta.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'field', 200
+    @autorun => Meteor.subscribe 'type', 'schema', 200
     @autorun -> Meteor.subscribe 'delta'
     @autorun => Meteor.subscribe 'schema_fields'
     @autorun -> Meteor.subscribe 'me'

@@ -1,13 +1,22 @@
 template(name='task_card')
     .ui.stackable.equal.width.celled.padded.grid
         .row
-            .fourteen.wide.column.expand.pointer
-                +header
-            .one.wide.column.expand.pointer(class=expand_class)
-                if expanded
-                    +icon name='collapse-arrow' title='Collapse' classes='centered mini'
+            .one.wide.column
+                if complete
+                    +icon name='checked-checkbox' classes='spaced mini'
                 else
-                    +icon name='expand-arrow' title='Expand' classes='centered mini'
+                    +icon name='unchecked-checkbox' classes='spaced mini'
+            .thirteen.wide.column.pointer
+                +header
+            if full_mode
+                .one.wide.column.pointer(class=expand_class)
+                    +icon name='pencil' title='Edit' classes='centered mini'
+            else
+                .one.wide.column.expand.pointer(class=expand_class)
+                    if expanded
+                        +icon name='collapse-arrow' title='Collapse' classes='centered mini'
+                    else
+                        +icon name='expand-arrow' title='Expand' classes='centered mini'
             .one.wide.column.toggle_full.pointer(class=maximize_class)
                 if delta_doc.viewing_detail
                     +icon name='compress' title='Compress' classes='centered mini'

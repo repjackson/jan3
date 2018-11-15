@@ -275,6 +275,9 @@ Meteor.methods
                     viewing_detail:false
                     editing_mode:false
                     config_mode:false
+                    viewing_page:false
+                    viewing_navbar:false
+                    viewing_userbar:false
             # console.log 'hi call'
             Meteor.call 'fo', (err,res)->
         else

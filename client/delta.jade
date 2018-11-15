@@ -19,9 +19,7 @@ template(name='delta')
                     else
                         +icon name='gender-neutral-user' classes='mini centered'
             if delta_doc.viewing_topbar
-                .centered.nav_bar.row
-                    .sixteen.wide.column
-                        .ui.inverted.header hi!
+                +topbar
         if currentUser
             .row
                 unless delta_doc
@@ -40,10 +38,25 @@ template(name='delta')
                                     each delta_fields
                                         +facet
                                         .ui.hidden.divider
-                    +delta_results
+                    if delta_doc.viewing_page
+                        .twelve.wide.column
+                            +Template.dynamic template=delta_doc.page_template
+                    else
+                        +delta_results
                     if delta_doc.viewing_userbar
                         +userbar
 
+
+template(name='topbar')
+    .centered.nav_bar.row
+        .four.wide.column
+            +notifications
+        .four.wide.column
+            +messages
+        .four.wide.column
+            +tasks
+        .four.wide.column
+            +bookmarks
 
 
 template(name='navbar')
@@ -54,6 +67,11 @@ template(name='navbar')
                     .ui.inverted.header
                         | #{currentUser.first_name} #{currentUser.last_name}
                         small @#{currentUser.username}
+            each bookmarks
+                a.ui.button.pick_delta.margined(title=title)
+                    i.icon
+                        +icon name=icon
+                    | #{title}
             .row
                 .sixteen.wide.column
                     .ui.inverted.header
@@ -70,8 +88,6 @@ template(name='navbar')
                         | Log Out
 
 
-
-
 template(name='userbar')
     .four.wide.column.userbar
         .ui.grid
@@ -81,7 +97,7 @@ template(name='userbar')
                         | #{currentUser.first_name} #{currentUser.last_name}
                         small @#{currentUser.username}
             .row
-                .sixteen.wide.column
+                .sixteen.wide.column.settings
                     .ui.inverted.header
                         +icon name='settings' classes='mini centered'
                         | Settings
@@ -105,7 +121,6 @@ template(name='userbar')
                         else
                             +icon name='exit' classes='mini'
                         | Log Out
-
 
 
 template(name='delta_results')
