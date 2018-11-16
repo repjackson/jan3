@@ -29,11 +29,11 @@ template(name='rightbar')
                 .ui.inverted.header
                     | #{currentUser.first_name} #{currentUser.last_name}
                     small @#{currentUser.username}
-            .row
+            .row.settings
                 .ui.inverted.header
                     +icon name='settings' classes='mini centered'
                     | Settings
-            .row
+            .row.sla
                 .ui.inverted.header
                     +icon name='workflow' classes='mini centered'
                     | SLA Settings

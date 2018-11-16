@@ -50,11 +50,11 @@
   },
   "themes": {
     "amazon": false,
-    "basic": false,
+    "basic": true,
     "bookish": false,
     "bootstrap3": false,
     "chubby": false,
-    "classic": false,
+    "classic": true,
     "colored": false,
     "default": true,
     "duo": false,
@@ -65,12 +65,12 @@
     "instagram": false,
     "material": false,
     "pulsar": false,
-    "raised": false,
+    "raised": true,
     "resetcss": false,
     "round": true,
     "rtl": false,
     "striped": false,
     "timeline": false,
-    "twitter": false
+    "twitter": true
   }
 }

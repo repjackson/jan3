@@ -57,16 +57,16 @@
   color:white !important;
 }
 
-.toggle_value {
+/*.toggle_value {*/
   /*border-bottom-style: solid !important;*/
   /*border-left-style: solid !important;*/
   /*border-right-style: solid !important;*/
   /*border-top-style: solid !important;*/
-  border-width: 0px !important;
+/*  border-width: 0px !important;*/
   /*border-color: #d4d4d5 !important;*/
-  box-shadow: -1px 1px 0px 0px #d4d4d5 !important;
-  width: 100px !important;
-}
+/*  box-shadow: -1px 1px 0px 0px #d4d4d5 !important;*/
+/*  width: 100px !important;*/
+/*}*/
 
 .dotted {
   border-style: dotted !important;

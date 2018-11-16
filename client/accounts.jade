@@ -78,15 +78,15 @@ template(name='register_customer')
                                 .content
                                     // .ui.header
                                     //     |Customer
-                                    .ui.medium.header #{ev.CUST_NAME}
+                                    .ui.medium.header #{customer_name}
                                     .ui.list
-                                        .item ##{ev.ID}
-                                        .item #{ev.CUST_CONT_PERSON}
-                                        .item #{ev.CUST_CONTACT_EMAIL}
-                                        .item #{ev.TELEPHONE}
-                                        .item #{ev.ADDR_STREET}
-                                        .item #{ev.ADDR_STREET_2}
-                                        .item #{ev.ADDR_CITY} #{ev.ADDR_STATE}
+                                        .item ##{jpid}
+                                        .item #{customer_contact_person}
+                                        .item #{customer_contact_email}
+                                        .item #{phone}
+                                        .item #{address}
+                                        .item #{address2}
+                                        .item #{city} #{state}
             .eight.wide.basic.column
                 .ui.form
                     .field

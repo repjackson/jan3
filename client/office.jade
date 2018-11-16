@@ -8,7 +8,7 @@ template(name='office_roles')
                     option(value=username)
                         if image_id
                             img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
-                        |#{ev.FIRST_NAME} #{ev.LAST_NAME} @#{username}
+                        |#{first_name} #{last_name} @#{username}
 
 
 

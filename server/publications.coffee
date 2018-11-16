@@ -175,7 +175,7 @@ Meteor.publish 'my_office', ->
                     office_jpid: user.office_jpid
                     type:'office'
 
-    Meteor.users.find {}, limit:5
+    # Meteor.users.find {}, limit:5
 
 
 Meteor.publish 'doc', (id)-> Docs.find id

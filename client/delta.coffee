@@ -76,7 +76,7 @@ Template.delta.helpers
             else
                 Docs.find({
                     type:'field'
-                    view_roles: $in: Meteor.user().roles
+                    # view_roles: $in: Meteor.user().roles
                     schema_slugs:$in:[current_type]
                     faceted: true
                 }, {sort:{rank:1}}).fetch()
@@ -334,7 +334,7 @@ Template.default_card.helpers
             Docs.find({
                 type:'field'
                 schema_slugs: $in: [schema.slug]
-                view_roles: $in: Meteor.user().roles
+                # view_roles: $in: Meteor.user().roles
             }, {sort:{rank:1}}).fetch()
 
     # actions: ->
@@ -466,7 +466,7 @@ Template.delta_results.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'rightbar alphablue' else ''
+        if @value is delta.page_size then 'rightbar active' else ''
 
 
 Template.set_page_size.events
@@ -497,7 +497,7 @@ Template.selector.helpers
         delta = Docs.findOne type:'delta'
         filter = Template.parentData()
         filter_list = delta["filter_#{filter.key}"]
-        if filter_list and @name in filter_list then 'alphablue' else ''
+        if filter_list and @name in filter_list then 'active' else ''
 
 
 

@@ -26,10 +26,12 @@ Template.rightbar.onCreated ->
 Template.rightbar.events
     'click .settings': ->
         delta = Docs.findOne type:'delta'
+        # console.log @
         Docs.update delta._id,
             $set:
                 viewing_page:true
                 page_template:'account_settings'
+                viewing_delta:false
 
 
     'click .delete_delta': ->
@@ -53,6 +55,7 @@ Template.rightbar.events
             $set:
                 viewing_page:true
                 page_template:'office_sla'
+                viewing_delta:false
 
     'click #logout': (e,t)->
         # e.preventDefault()
