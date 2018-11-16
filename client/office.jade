@@ -28,6 +28,9 @@ template(name='office_messages')
 
 
 template(name='office_sla')
+    .ui.center.aligned.header
+        +icon name='workflow'
+        | SLA Settings
     each ticket_types
         .select_ticket_type.ui.button(class=select_ticket_type_button_class)
             if icon
@@ -181,3 +184,10 @@ template(name='secondary_contact_widget')
             //     |#{secondary.first_name} #{secondary.last_name}
             // | #{secondary_contact}
         i.remove.link.pull_secondary.circular.icon(title="Clear #{secondary_contact}")
+
+
+
+template(name='toggle_sla_boolean')
+    .ui.trigger.icon.button(class=toggle_boolean_button_class title=title)
+        +iconsmall name=icon
+

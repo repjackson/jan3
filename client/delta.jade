@@ -43,15 +43,16 @@ template(name='delta')
                     unless delta_doc.viewing_leftbar
                         unless delta_doc.viewing_detail
                             unless delta_doc.viewing_rightbar
-                                .four.wide.column.scrolling
-                                    each delta_fields
-                                        +facet
-                                        .ui.hidden.divider
-                    if delta_doc.viewing_page
-                        .twelve.wide.column
+                                unless delta_doc.viewing_page
+                                    .four.wide.column.scrolling
+                                        each delta_fields
+                                            +facet
+                                            .ui.hidden.divider
+                    .center_column(class=center_column_class)
+                        if delta_doc.viewing_page
                             +Template.dynamic template=delta_doc.page_template
-                    else
-                        +delta_results
+                        else
+                            +delta_results
                     if delta_doc.viewing_rightbar
                         +rightbar
 

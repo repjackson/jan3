@@ -22,9 +22,19 @@ Template.delta.onCreated ->
 #     @autorun -> Meteor.subscribe 'my_bookmarks'
 
 
-
-
 Template.delta.helpers
+    center_column_class: ->
+        delta = Docs.findOne type:'delta'
+        size = 16
+        if delta.viewing_rightbar then size -= 4
+        if delta.viewing_leftbar then size -= 4
+        switch size
+            when 16 then 'sixteen wide column'
+            when 13 then 'thirteen wide column'
+            when 10 then 'ten wide column'
+            when 12 then 'twelve wide column'
+            when 8 then 'eight wide column'
+
     current_type: ->
         delta = Docs.findOne type:'delta'
         if delta and delta.filter_type

@@ -8,7 +8,7 @@ Template.office_service_settings.helpers
             Docs.findOne
                 office_jpid:Meteor.user().office_jpid
                 type:'office'
-        if @slug in page_office.services then 'green' else ''
+        if @slug in page_office.services then 'active' else ''
 
 Template.office_service_settings.events
     'click .select_service': ->
@@ -57,7 +57,7 @@ Template.office_sla.helpers
                 type:'office'
         return page_office
     ticket_types: -> Docs.find {type:'ticket_type'}
-    select_ticket_type_button_class: -> if Session.equals('ticket_type_selection', @slug) then 'green' else ''
+    select_ticket_type_button_class: -> if Session.equals('ticket_type_selection', @slug) then 'active' else ''
     selected_ticket_type: -> Session.get 'ticket_type_selection'
     is_initial: -> Template.parentData().number is 1
     rule_docs: -> Docs.find {type:'rule'}, sort:number:1
