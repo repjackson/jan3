@@ -12,44 +12,41 @@ template(name='topbar')
 
 
 template(name='leftbar')
-    .four.wide.column.leftbar
-        .ui.grid
+    .three.wide.column.leftbar.scrolling
+        .ui.one.column.grid
             each bookmarks
-                a.ui.button.pick_delta.margined(title=title)
-                    i.icon
-                        +icon name=icon
-                    | #{title}
+                .row.pick_delta
+                    .ui.small.inverted.header(title=title)
+                        i.icon
+                            +icon name=icon
+                        | #{title}
 
 
 template(name='rightbar')
-    .four.wide.column.rightbar
-        .ui.grid
+    .three.wide.column.rightbar
+        .ui.one.column.grid
             .row
-                .sixteen.wide.column
-                    .ui.inverted.header
-                        | #{currentUser.first_name} #{currentUser.last_name}
-                        small @#{currentUser.username}
+                .ui.inverted.header
+                    | #{currentUser.first_name} #{currentUser.last_name}
+                    small @#{currentUser.username}
             .row
-                .sixteen.wide.column.settings
-                    .ui.inverted.header
-                        +icon name='settings' classes='mini centered'
-                        | Settings
+                .ui.inverted.header
+                    +icon name='settings' classes='mini centered'
+                    | Settings
             .row
-                .sixteen.wide.column.sla
-                    .ui.inverted.header
-                        +icon name='workflow' classes='mini centered'
-                        | SLA Settings
+                .ui.inverted.header
+                    +icon name='workflow' classes='mini centered'
+                    | SLA Settings
             .row
-                .sixteen.wide.column
-                    .ui.compact.icon.button.delete_delta(title='Clear Session')
-                        i.remove.icon
-                        |Clear
-                    .ui.compact.icon.button.run_fo(title='Reload Session')
-                        i.refresh.icon
-                        // |Reset
-                    if is_dev
-                        .ui.icon.compact.button.show_delta
-                            i.code.icon
+                .ui.compact.icon.button.delete_delta(title='Clear Session')
+                    i.remove.icon
+                    |Clear
+                .ui.compact.icon.button.run_fo(title='Reload Session')
+                    i.refresh.icon
+                    // |Reset
+                if is_dev
+                    .ui.icon.compact.button.show_delta
+                        i.code.icon
             .row
                 #logout.sixteen.wide.column
                     .ui.inverted.header

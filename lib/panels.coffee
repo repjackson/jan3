@@ -22,6 +22,8 @@ if Meteor.isClient
                     viewing_rightbar: false
                     detail_id: @_id
                     expand_id: @_id
+                    viewing_page: false
+                    viewing_delta: false
 
 if Meteor.isServer
     Meteor.publish 'top_todos', ->

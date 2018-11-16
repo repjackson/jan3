@@ -241,6 +241,7 @@ Meteor.methods
                     detail_id:null
                     viewing_menu:false
                     viewing_detail:false
+                    viewing_delta:true
                     editing_mode:false
                     config_mode:false
                     viewing_page:false

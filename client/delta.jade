@@ -18,17 +18,17 @@ template(name='delta')
                         img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         +icon name='gender-neutral-user' classes='mini centered'
-            if delta_doc.viewing_topbar
+            if delta.viewing_topbar
                 +topbar
         if currentUser
-            unless delta_doc
+            unless delta
                 .row
                     .sixteen.wide.column
                         if currentUser
                             .create_delta.ui.button(title='Create Session')
                                 i.green.plus.icon
                                 | Session
-            if delta_doc
+            if delta
                 // .row
                 //     .sixteen.wide.column
                 //         .ui.breadcrumb
@@ -38,22 +38,23 @@ template(name='delta')
                 //             i.right.arrow.icon.divider
                 //             .active.section Personal Information
                 .row
-                    if delta_doc.viewing_leftbar
+                    if delta.viewing_leftbar
                         +leftbar
-                    unless delta_doc.viewing_leftbar
-                        unless delta_doc.viewing_detail
-                            unless delta_doc.viewing_rightbar
-                                unless delta_doc.viewing_page
-                                    .four.wide.column.scrolling
-                                        each delta_fields
-                                            +facet
-                                            .ui.hidden.divider
+                    if delta.viewing_delta
+                        .four.wide.column.scrolling
+                            each delta_fields
+                                +facet
+                                .ui.hidden.divider
+                    // unless delta.viewing_leftbar
+                    //     unless delta.viewing_detail
+                    //         unless delta.viewing_rightbar
+                    //             unless delta.viewing_page
                     .center_column(class=center_column_class)
-                        if delta_doc.viewing_page
-                            +Template.dynamic template=delta_doc.page_template
+                        if delta.viewing_page
+                            +Template.dynamic template=delta.page_template
                         else
                             +delta_results
-                    if delta_doc.viewing_rightbar
+                    if delta.viewing_rightbar
                         +rightbar
 
 
@@ -64,10 +65,10 @@ template(name='delta')
 template(name='delta_results')
     .column(class=results_class)
         // if is_dev
-        //     unless delta_doc.viewing_detail
+        //     unless delta.viewing_detail
         //         +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
         // +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand Cards'
-        if delta_doc.config_mode
+        if delta.config_mode
             .scrolling
                 .ui.header
                     +icon name='administrative-tools'
@@ -96,9 +97,9 @@ template(name='delta_results')
                         each schema_actions
                             +delta_card data=_id
         else
-            if delta_doc.result_ids
-                if delta_doc.result_ids.length
-                    unless delta_doc.viewing_detail
+            if delta.result_ids
+                if delta.result_ids.length
+                    unless delta.viewing_detail
                         .ui.middle.aligned.grid
                             .row
                                 +set_page_size value=10
@@ -107,8 +108,8 @@ template(name='delta_results')
                                 .three.wide.column
                                     if multiple_pages
                                         .ui.basic.label
-                                            | #{delta_doc.current_page}/#{delta_doc.page_amount}
-                                    | #{delta_doc.total} Results
+                                            | #{delta.current_page}/#{delta.page_amount}
+                                    | #{delta.total} Results
                                 .three.wide.column
                                     if show_page_down
                                         a.page_down.pointer(title='Previous Page')
@@ -127,17 +128,17 @@ template(name='delta_results')
                         .ui.hidden.divider
                         .ui.active.indeterminate.massive.centered.inline.loader
                     else
-                        if delta_doc.viewing_detail
-                            with delta_doc.detail_id
+                        if delta.viewing_detail
+                            with delta.detail_id
                                 +delta_card
                         else
                             .scrolling.delta_cards
-                                each delta_doc.result_ids
+                                each delta.result_ids
                                     +delta_card
                                     .ui.hidden.divider
             else
                 |No results
-    // if delta_doc.viewing_detail
+    // if delta.viewing_detail
     //     .column.scrolling
     //         +detail_pane
 
@@ -210,7 +211,7 @@ template(name='default_card')
                     each doc_header_fields
                         |#{value}
                         |&nbsp;
-        if delta_doc.view_full
+        if delta.view_full
             .content
                 .ui.list
                     each field_docs

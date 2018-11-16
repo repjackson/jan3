@@ -1,10 +1,22 @@
+Template.leftbar.onCreated ->
+    @autorun => Meteor.subscribe 'type', 'schema', 200
+
+
 Template.leftbar.helpers
     bookmarks: ->
-        Docs.find {
-            # bookmark_ids: $in:[Meteor.userId()]
-            type:'schema'
-        }, sort:title:1
+        if Meteor.user() and Meteor.user().roles
+            Docs.find {
+                view_roles: $in:Meteor.user().roles
+                type:'schema'
+            }, sort:title:1
 
+Template.leftbar.events
+    'click .pick_delta': (e,t)->
+        e.preventDefault()
+        # console.log @
+        Session.set 'is_calculating', true
+        Meteor.call 'set_schema', @, ->
+            Session.set 'is_calculating', false
 
 
 
@@ -18,6 +30,22 @@ Template.rightbar.events
             $set:
                 viewing_page:true
                 page_template:'account_settings'
+
+
+    'click .delete_delta': ->
+        if confirm 'Clear Session?'
+            delta = Docs.findOne type:'delta'
+            Docs.remove delta._id
+
+    'click .run_fo': ->
+        delta = Docs.findOne type:'delta'
+        Session.set 'is_calculating', true
+        Meteor.call 'fo', (err,res)->
+            if err then console.log err
+            else
+                Session.set 'is_calculating', false
+
+
 
     'click .sla': ->
         delta = Docs.findOne type:'delta'

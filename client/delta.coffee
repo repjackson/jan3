@@ -26,14 +26,18 @@ Template.delta.helpers
     center_column_class: ->
         delta = Docs.findOne type:'delta'
         size = 16
-        if delta.viewing_rightbar then size -= 4
-        if delta.viewing_leftbar then size -= 4
+        if delta.viewing_rightbar then size -= 3
+        if delta.viewing_leftbar then size -= 3
+        if delta.viewing_delta then size -= 4
+        # console.log size
         switch size
             when 16 then 'sixteen wide column'
             when 13 then 'thirteen wide column'
             when 10 then 'ten wide column'
             when 12 then 'twelve wide column'
+            when 9 then 'nine wide column'
             when 8 then 'eight wide column'
+            when 6 then 'six wide column'
 
     current_type: ->
         delta = Docs.findOne type:'delta'
@@ -100,7 +104,7 @@ Template.delta.events
         Docs.update delta._id,
             $set:
                 viewing_rightbar: !delta.viewing_rightbar
-                viewing_leftbar:false
+                # viewing_leftbar:false
 
     'click .toggle_leftbar': ->
         delta = Docs.findOne type:'delta'
@@ -108,11 +112,6 @@ Template.delta.events
             $set: viewing_leftbar: !delta.viewing_leftbar
 
 
-    'click .pick_delta': (e,t)->
-        e.preventDefault()
-        Session.set 'is_calculating', true
-        Meteor.call 'set_schema', @, ->
-            Session.set 'is_calculating', false
 
     'click .view_schamas': ->
         delta = Docs.findOne type:'delta'
@@ -155,18 +154,6 @@ Template.delta.events
 
 
 
-    'click .delete_delta': ->
-        if confirm 'Clear Session?'
-            delta = Docs.findOne type:'delta'
-            Docs.remove delta._id
-
-    'click .run_fo': ->
-        delta = Docs.findOne type:'delta'
-        Session.set 'is_calculating', true
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
 
     'click .create_delta': (e,t)->
         new_delta_id =
