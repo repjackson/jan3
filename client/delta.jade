@@ -113,16 +113,16 @@ template(name='delta_results')
                                 .three.wide.column
                                     if show_page_down
                                         a.page_down.pointer(title='Previous Page')
-                                            +icon name='chevron-left' classes='mini'
+                                            +icon name='chevron-left' classes='mini spaced'
                                     if show_page_up
                                         a.page_up.pointer(title='Next Page')
-                                            +icon name='chevron-right' classes='mini'
-                                .two.wide.column
-                                    +icon name='grid' classes='mini'
-                                .two.wide.column
-                                    +icon name='list' classes='mini'
-                                .two.wide.column
-                                    +icon name='double-down' classes='mini'
+                                            +icon name='chevron-right' classes='mini spaced'
+                                .two.wide.column.delta_selected.set_grid_view
+                                    +icon name='grid' classes='mini centered'
+                                .two.wide.column.delta_selector.set_list_view
+                                    +icon name='list' classes='mini centered'
+                                // .two.wide.column.delta_selector
+                                //     +icon name='double-down' classes='mini centered'
                         .ui.hidden.divider
                     if is_calculating
                         .ui.hidden.divider
@@ -133,9 +133,10 @@ template(name='delta_results')
                                 +delta_card
                         else
                             .scrolling.delta_cards
-                                each delta.result_ids
-                                    +delta_card
-                                    .ui.hidden.divider
+                                .ui.stackable.grid
+                                    each delta.result_ids
+                                        +delta_card
+                                        .ui.hidden.divider
             else
                 |No results
     if delta.detail_pane
@@ -190,20 +191,21 @@ template(name='selector')
             | #{name}
             small #{count}
     else
-        .column.toggle_value.pointer(class=toggle_value_class)
+        // .column.toggle_value.pointer(class=toggle_value_class)
+        .ui.compact.margined.toggle_value.button(class=toggle_value_class)
             .large110 [none]
                 small #{count}
 
 
 
 template(name='delta_card')
-    .column(class=delta_card_class)
+    div(class=delta_card_class)
         with local_doc
             +Template.dynamic template=card_template
 
 
 template(name='default_card')
-    .ui.fluid.segment.delta_card(class=delta_card_class)
+    .ui.fluid.segment.delta_card(class=default_card_class)
         if doc_header_fields
             .content
                 h3.ui.header

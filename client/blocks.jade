@@ -161,11 +161,11 @@ template(name='office_card')
                     |Office
             .content
                 h4.ui.header #{office_name}
-                div ##{office_jpid}
-                div #{address} #{address_2}
-                div #{city} #{state}
-                div #{zipcode} #{country}
-                div
+                .black ##{office_jpid}
+                .black #{address} #{address_2}
+                .black #{city} #{state}
+                .black #{zipcode} #{country}
+                .black
                     a(href="tel:#{telephone}") #{telephone}
 
 
@@ -378,18 +378,18 @@ template(name='customer_card')
         with customer_doc
             .content
                 .ui.header
-                    +icon name='headset'
+                    +icon name='headset' classes='spaced mini'
                     |Customer Account
             .content
                 h4.ui.header #{customer_name}
                 .ui.list
-                    .item ##{customer_jpid}
-                    .item #{customer_contact_person}
-                    .item #{customer_contact_email}
-                    .item #{phone}
-                    .item #{address}
-                    .item #{address_2}
-                    .item #{city} #{state}
+                    .black.item ##{customer_jpid}
+                    .black.item #{customer_contact_person}
+                    .black.item #{customer_contact_email}
+                    .black.item #{phone}
+                    .black.item #{address}
+                    .black.item #{address_2}
+                    .black.item #{city} #{state}
             //   "office_name": "JAN-PRO Central Ontario",
             //   "customer_name": "H&S Massage Spa Canada Corporation",
             //   "customer_contact_person": "Erica Ho / Gigi Harding",

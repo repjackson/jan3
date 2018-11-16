@@ -11,8 +11,23 @@
 }
 
 
+.delta_selector:hover {
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.75);
+  cursor: pointer;
+  border-radius: 15px
+}
+.delta_selected {
+  box-shadow: inset 0px 0px 10px rgba(0,0,0,0.75);
+  cursor: pointer;
+  border-radius: 15px
+
+}
+
 .white {
   color:white !important;
+}
+.black {
+  color:black !important;
 }
 
 .nav_bar > .column {
@@ -52,10 +67,10 @@
   background: rgba(132, 189, 0) !important;
 
 }
-.toggle_value:hover {
-  background: rgba(0, 20, 137, .8) !important;
-  color:white !important;
-}
+/*.toggle_value:hover {*/
+/*  background: rgba(0, 20, 137, .8) !important;*/
+/*  color:white !important;*/
+/*}*/
 
 /*.toggle_value {*/
   /*border-bottom-style: solid !important;*/

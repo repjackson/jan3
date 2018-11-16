@@ -178,13 +178,21 @@ Template.delta_card.helpers
         if doc and doc.type
             if doc.type is 'task' then 'task_card' else 'default_card'
 
+    delta_card_class: ->
+        delta = Docs.findOne type:'delta'
+        if delta.view_mode is 'grid'
+            'six wide column'
+        else
+            'sixteen wide column'
+
     local_doc: ->
         if @data
             Docs.findOne @data.valueOf()
         else
             Docs.findOne @valueOf()
 
-    delta_card_class: ->
+Template.default_card.helpers
+    default_card_class: ->
         delta = Docs.findOne type:'delta'
         if delta.detail_id is @valueOf()
             # if delta.viewing_rightbar
@@ -426,6 +434,16 @@ Template.delta_results.events
         Docs.update delta._id,
             $set: viewing_detail: false
 
+    'click .set_grid_view': ->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set: view_mode: 'grid'
+
+    'click .set_list_view': ->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set: view_mode: 'list'
+
 
     'click .page_up': (e,t)->
         delta = Docs.findOne type:'delta'
@@ -466,7 +484,7 @@ Template.delta_results.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'rightbar active' else ''
+        if @value is delta.page_size then 'rightbar white delta_selected' else ''
 
 
 Template.set_page_size.events
