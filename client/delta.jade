@@ -117,10 +117,10 @@ template(name='delta_results')
                                     if show_page_up
                                         a.page_up.pointer(title='Next Page')
                                             +icon name='chevron-right' classes='mini spaced'
-                                .two.wide.column.delta_selected.set_grid_view
-                                    +icon name='grid' classes='mini centered'
-                                .two.wide.column.delta_selector.set_list_view
-                                    +icon name='list' classes='mini centered'
+                                .two.wide.column.set_grid_view(class=grid_view_class title='Grid View')
+                                    +icon name='activity-grid-2' classes='mini centered'
+                                .two.wide.column.set_list_view(class=list_view_class title='List View')
+                                    +icon name='menu' classes='mini centered'
                                 // .two.wide.column.delta_selector
                                 //     +icon name='double-down' classes='mini centered'
                         .ui.hidden.divider
@@ -163,8 +163,8 @@ template(name='children_view')
         |No schema found.
 
 template(name='set_page_size')
-    .one.wide.center.aligned.pointer.column.rounded.set_page_size(class=page_size_class title='Set Page Size')
-        | #{value}
+    .one.wide.center.aligned.pointer.column.rounded.set_page_size(class=page_size_class title='Page Size')
+        strong #{value}
 
 template(name='set_delta_key')
     .ui.button.set_delta_key(class=set_delta_key_class)

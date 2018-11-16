@@ -207,6 +207,14 @@ Template.default_card.helpers
 Template.delta_results.helpers
     is_calculating: -> Session.get('is_calculating')
 
+    grid_view_class: ->
+        delta = Docs.findOne type:'delta'
+        if delta.view_mode is 'grid' then 'delta_selected' else 'delta_selector'
+
+    list_view_class: ->
+        delta = Docs.findOne type:'delta'
+        if delta.view_mode is 'list' then 'delta_selected' else 'delta_selector'
+
     results_class: ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail
@@ -484,7 +492,7 @@ Template.delta_results.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'rightbar white delta_selected' else ''
+        if @value is delta.page_size then 'delta_selected' else ''
 
 
 Template.set_page_size.events

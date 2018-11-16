@@ -12,14 +12,17 @@
 
 
 .delta_selector:hover {
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.75);
+  /*box-shadow: 0px 0px 10px rgba(0,0,0,0.75);*/
   cursor: pointer;
-  border-radius: 15px
+  /*border-radius: 15px*/
+  -webkit-filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
 }
 .delta_selected {
-  box-shadow: inset 0px 0px 10px rgba(0,0,0,0.75);
-  cursor: pointer;
-  border-radius: 15px
+/*  box-shadow: inset 0px 0px 10px rgba(0,0,0,0.75);*/
+/*  cursor: pointer;*/
+/*  border-radius: 15px;*/
+/*  padding:10px;*/
+  -webkit-filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.75));
 
 }
 
