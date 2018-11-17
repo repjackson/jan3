@@ -7,8 +7,16 @@ template(name='delta')
                         if current_type.icon
                             +icon name=current_type.icon classes='spaced mini'
                         | #{current_type.title}
-                .ten.wide.column.pointer.toggle_topbar
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='contacts' classes='mini centered'
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='shopping-cart' classes='mini centered'
+                .six.wide.column.pointer.toggle_topbar
                     img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='bookmark-ribbon' classes='mini centered'
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='tasks' classes='mini centered'
                 .one.wide.column.toggle_topbar.pointer
                     +icon name='mailbox-with-letter' classes='mini centered'
                 .one.wide.column.toggle_topbar.pointer
