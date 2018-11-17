@@ -20,10 +20,13 @@ template(name='delta')
                 //             i.right.arrow.icon.divider
                 //             .active.section Personal Information
                 .row
-                    if delta.viewing_leftbar
-                        +leftbar
                     if delta.viewing_delta
                         .four.wide.column.scrolling
+                            .ui.large.header
+                                if current_type.icon
+                                    +icon name=current_type.icon classes='spaced mini'
+                                | #{current_type.plural}
+
                             each delta_fields
                                 +facet
                                 .ui.hidden.divider
@@ -47,11 +50,11 @@ template(name='delta')
 
 template(name='toggle_delta_config')
     if boolean_true
-        .ui.active.icon.button.disable_key(title=label)
+        .ui.active.icon.compact.button.disable_key(title=label)
             +iconsmall name=icon
             // | #{label}
     else
-        .ui.icon.button.enable_key(title=label)
+        .ui.icon.compact.button.enable_key(title=label)
             +iconsmall name=icon
             // | #{label}
 
@@ -88,8 +91,8 @@ template(name='selector')
     if name
         // .column.toggle_value.pointer(class=toggle_value_class)
         .ui.compact.margined.toggle_value.button(class=toggle_value_class)
-            | #{name}
-            small #{count}
+            .large110 #{name}
+            // small #{count}
     else
         // .column.toggle_value.pointer(class=toggle_value_class)
         .ui.compact.margined.toggle_value.button(class=toggle_value_class)
@@ -103,7 +106,7 @@ template(name='delta_card')
         with local_doc
             if doc_header_fields
                 .content
-                    h3.ui.header
+                    h4.ui.header
                         if icon
                             +icon name=icon
                         each doc_header_fields

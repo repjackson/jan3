@@ -8,7 +8,7 @@ Template.leftbar.onRendered ->
             Meteor.setTimeout ->
                 $('.context.example .ui.left.sidebar')
                     .sidebar({
-                        context: $('.context.example .bottom.segment')
+                        context: $('.context.example .segment')
                         dimPage: false
                         transition:  'overlay'
                         scrollLock: false
@@ -23,7 +23,7 @@ Template.topbar.onRendered ->
             Meteor.setTimeout ->
                 $('.context.example .ui.top.sidebar')
                     .sidebar({
-                        context: $('.context.example .bottom.segment')
+                        context: $('.context.example .segment')
                         dimPage: false
                         transition:  'overlay'
                         scrollLock: false
@@ -37,7 +37,7 @@ Template.rightbar.onRendered ->
             Meteor.setTimeout ->
                 $('.context.example .ui.right.sidebar')
                     .sidebar({
-                        context: $('.context.example .bottom.segment')
+                        context: $('.context.example .segment')
                         dimPage: false
                         transition:  'overlay'
                         scrollLock: false
