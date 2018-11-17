@@ -54,18 +54,27 @@
   /*background: rgba(0, 20, 137, .8) !important;*/
 }
 
-.footer_area {
-  /*position: absolute !important;*/
-  bottom: 0;
-  width: 100%;
-  margin: 0 !important;
-  background: linear-gradient(to top, rgba(0,20,137,1) 0%,rgba(0,20,137,.9) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
-  margin: 0 !important;
-  border: 0 !important;
-  /*background: rgba(0, 20, 137) !important;*/
+#footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   background:#6cf;
 }
 
-.footer_area .sitemap_list{
+
+
+#footer_area {
+/*    position: absolute !important;*/
+    /*height:250px;*/
+/*    bottom: 0;*/
+/*    width: 100%;*/
+    margin: 0 !important;
+    background: linear-gradient(to top, rgba(0,20,137,1) 0%,rgba(0,20,137,.9) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
+/*    border: 0 !important;*/
+    /*background: rgba(0, 20, 137) !important;*/
+}
+
+#footer_area .sitemap_list{
   color:white !important;
 }
 
@@ -97,10 +106,30 @@ body {
   /*margin-top:52px;*/
   /*font-family: "Open Sans",sans-serif;*/
   font-family: 'Ubuntu', sans-serif !important;
-  min-height: 500px;
+  margin:0;
+  padding:0;
+  height:100%;
   /*background: #f4f7f9;*/
-  background: rgba(244, 247, 249, 0.25);
+  background: rgba(244, 247, 249);
 }
+#container {
+   /*min-height:100%;*/
+   /*position:relative;*/
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+}
+#main {
+   /*min-height:100%;*/
+   /*position:relative;*/
+   /*padding:10px;*/
+   /*padding-bottom:200px;*/
+   /*height:100%;*/
+  flex: 1;
+}
+
+
 
 .ui.header{
   font-family: 'Ubuntu', sans-serif !important;
@@ -170,13 +199,14 @@ body {
 
 .rightbar {
     margin-top: -1rem !important;
-    margin-bottom: -1rem !important;
+    /*margin-bottom: -1rem !important;*/
     padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
+    /*padding-bottom: 1rem !important;*/
+    /*height:100%;*/
     background: linear-gradient(to left, rgba(0,20,137,.9) 0%,rgba(0,20,137,.9) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
 }
 .rightbar > .grid > .row {
-    padding: 1em;
+    /*padding: 1em;*/
     color: white !important;
     cursor: pointer !important;
 }
