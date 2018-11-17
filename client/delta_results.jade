@@ -61,7 +61,7 @@ template(name='delta_results')
                                     +icon name='data-sheet-filled' classes='mini centered'
                                 // .two.wide.column.delta_selector
                                 //     +icon name='double-down' classes='mini centered'
-                        .ui.hidden.divider
+                        // .ui.hidden.divider
                     if is_calculating
                         .ui.hidden.divider
                         .ui.active.indeterminate.massive.centered.inline.loader
@@ -74,7 +74,6 @@ template(name='delta_results')
                                 .ui.stackable.grid
                                     each delta.result_ids
                                         +delta_card
-                                        .ui.hidden.divider
             else
                 |No results
     if delta.detail_pane

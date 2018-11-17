@@ -7,8 +7,12 @@ template(name='delta')
                         if current_type.icon
                             +icon name=current_type.icon classes='spaced mini'
                         | #{current_type.title}
-                .twelve.wide.column.pointer.toggle_topbar
+                .ten.wide.column.pointer.toggle_topbar
                     img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='mailbox-with-letter' classes='mini centered'
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='appointment-reminders' classes='mini centered'
                 .one.wide.column.toggle_rightbar.pointer
                     if currentUser.image_id
                         img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")

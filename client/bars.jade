@@ -29,6 +29,14 @@ template(name='rightbar')
                 .ui.inverted.header
                     | #{currentUser.first_name} #{currentUser.last_name}
                     small @#{currentUser.username}
+            .row.profile
+                .ui.inverted.header
+                    +icon name='leaderboard' classes='mini centered'
+                    | Leaderboard
+            .row.profile
+                .ui.inverted.header
+                    +icon name='contacts' classes='mini centered'
+                    | Profile
             .row.settings
                 .ui.inverted.header
                     +icon name='settings' classes='mini centered'
@@ -56,3 +64,33 @@ template(name='rightbar')
                         else
                             +icon name='exit' classes='mini'
                         | Log Out
+
+
+
+
+template(name='notifications')
+    a.ui.inverted.header.set_notifications(href='#')
+        +icon name='appointment-reminders' classes='mini spaced'
+        | Notifications
+
+template(name='messages')
+    a.ui.inverted.header.set_messages(href='#')
+        +icon name='mailbox-with-letter' classes='mini spaced'
+        | Messages
+
+    +iconsmall name='compose' title='Compose' classes='pointer'
+
+
+template(name='tasks')
+    a.ui.inverted.header.set_tasks(href='#')
+        +icon name='to-do' classes='mini spaced'
+        | Tasks
+    .ui.inverted.link.list
+        each todos
+            a.item.todo(class=item_class) #{title}
+
+
+template(name='bookmarks')
+    a.ui.inverted.header.set_bookmarks(href='#')
+        +icon name='bookmark-ribbon' classes='mini spaced'
+        | Bookmarks

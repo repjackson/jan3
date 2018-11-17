@@ -15,7 +15,29 @@ Template.leftbar.events
         e.preventDefault()
         # console.log @
         Session.set 'is_calculating', true
-        Meteor.call 'set_schema', @, ->
+        Meteor.call 'set_schema', @slug, ->
+            Session.set 'is_calculating', false
+
+
+Template.topbar.events
+    'click .set_notifications': (e,t)->
+        Session.set 'is_calculating', true
+        Meteor.call 'set_schema', 'notification', ->
+            Session.set 'is_calculating', false
+
+    'click .set_messages': (e,t)->
+        Session.set 'is_calculating', true
+        Meteor.call 'set_schema', 'message', ->
+            Session.set 'is_calculating', false
+
+    'click .set_bookmarks': (e,t)->
+        Session.set 'is_calculating', true
+        Meteor.call 'set_schema', 'bookmark', ->
+            Session.set 'is_calculating', false
+
+    'click .set_tasks': (e,t)->
+        Session.set 'is_calculating', true
+        Meteor.call 'set_schema', 'task', ->
             Session.set 'is_calculating', false
 
 

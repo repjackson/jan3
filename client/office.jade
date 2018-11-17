@@ -31,12 +31,13 @@ template(name='office_sla')
     .ui.center.aligned.header
         +icon name='workflow'
         | SLA Settings
-    each ticket_types
-        .select_ticket_type.ui.button(class=select_ticket_type_button_class)
-            if icon
-                i.icon
-                    +icon name=icon
-            |#{title}
+    .ui.center.aligned.basic.compact.segment
+        each ticket_types
+            .select_ticket_type.ui.compact.button(class=select_ticket_type_button_class)
+                if icon
+                    i.icon
+                        +icon name=icon
+                |#{title}
     if selected_ticket_type
         table.ui.celled.table
             thead

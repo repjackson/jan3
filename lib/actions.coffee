@@ -6,7 +6,7 @@ if Meteor.isClient
 
             Docs.update delta._id,
                 $set:
-                    "filter_type": [card_doc.slug]
+                    filter_type: [card_doc.slug]
                     current_page: 0
                     detail_id:null
                     viewing_children:false
@@ -229,14 +229,14 @@ if Meteor.isClient
 
 
 Meteor.methods
-    set_schema: (target)->
+    set_schema: (schema_slug)->
         delta = Docs.findOne
             type:'delta'
             author_id:Meteor.userId()
-        if delta and target.slug
+        if delta and schema_slug
             Docs.update delta._id,
                 $set:
-                    "filter_type": [target.slug]
+                    filter_type: [schema_slug]
                     current_page: 0
                     detail_id:null
                     viewing_menu:false
