@@ -162,42 +162,27 @@ Template.delta.events
                 view_full:true
         Meteor.call 'fo', new_delta_id
 
-
-    'click .show_delta': (e,t)->
-        delta = Docs.findOne type:'delta'
-        console.log delta
-
 Template.delta_card.helpers
     card_template: ->
         doc = Docs.findOne @valueOf()
         if doc and doc.type
             if doc.type is 'task' then 'task_card' else 'delta_card'
 
+
+
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
-        if delta.view_mode is 'grid'
-            'six wide column'
-        else
-            'sixteen wide column'
+        if delta.total is 1 then 'fluid' else ''
+        # if delta.view_mode is 'grid'
+        #     'six wide column'
+        # else
+        #     'sixteen wide column'
 
     local_doc: ->
         if @data
             Docs.findOne @data.valueOf()
         else
             Docs.findOne @valueOf()
-
-Template.delta_card.helpers
-    delta_card_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.detail_id is @valueOf()
-            # if delta.viewing_rightbar
-            #     'eight wide'
-            # else
-            'twelve wide'
-        # else
-        #     'sixteen wide'
-
-
 
 
 
@@ -432,7 +417,15 @@ Template.facet.helpers
     values: ->
         delta = Docs.findOne type:'delta'
         # delta["#{@key}_return"]?[..20]
-        delta["#{@key}_return"]
+        filtered_values = []
+        fo_values = delta["#{@key}_return"]
+        filters = delta["filter_#{@key}"]
+        for value in fo_values
+            if value.name in filters
+                filtered_values.push value
+            else if value.count < delta.total
+                filtered_values.push value
+        filtered_values
 
     # set_delta_key_class: ->
     #     delta = Docs.findOne type:'delta'

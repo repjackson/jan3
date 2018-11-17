@@ -1,5 +1,6 @@
 template(name='delta_results')
-    .column(class=results_class)
+    // .column(class=results_class)
+    .twelve.wide.column
         if is_dev
             unless delta.viewing_detail
                 +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
@@ -53,12 +54,12 @@ template(name='delta_results')
                                     if show_page_up
                                         a.page_up.pointer(title='Next Page')
                                             +icon name='chevron-right' classes='mini spaced'
-                                .two.wide.column.set_grid_view(class=grid_view_class title='Grid View')
-                                    +icon name='activity-grid-2' classes='mini centered'
-                                .two.wide.column.set_list_view(class=list_view_class title='List View')
-                                    +icon name='menu' classes='mini centered'
-                                .two.wide.column.set_table_view(class=table_view_class title='Table View')
-                                    +icon name='data-sheet-filled' classes='mini centered'
+                                // .two.wide.column.set_grid_view(class=grid_view_class title='Grid View')
+                                //     +icon name='activity-grid-2' classes='mini centered'
+                                // .two.wide.column.set_list_view(class=list_view_class title='List View')
+                                //     +icon name='menu' classes='mini centered'
+                                // .two.wide.column.set_table_view(class=table_view_class title='Table View')
+                                //     +icon name='data-sheet-filled' classes='mini centered'
                                 // .two.wide.column.delta_selector
                                 //     +icon name='double-down' classes='mini centered'
                         // .ui.hidden.divider
@@ -71,11 +72,11 @@ template(name='delta_results')
                                 +delta_card
                         else
                             .scrolling.delta_cards
-                                .ui.cards
+                                .ui.cards(class=cards_class)
                                     each delta.result_ids
                                         +delta_card
             else
                 |No results
-    if delta.detail_pane
-        .column.scrolling
-            +detail_pane
+    // if delta.detail_pane
+    //     .column.scrolling
+    //         +detail_pane

@@ -25,6 +25,14 @@ Template.delta_results.helpers
         #     if delta.viewing_rightbar then 'nine wide' else 'twelve wide'
             'twelve wide'
 
+    cards_class: ->
+        delta = Docs.findOne type:'delta'
+        switch delta.total
+            when 2 then 'two'
+            when 1 then 'one'
+            else 'three'
+
+
     multiple_pages: ->
         delta = Docs.findOne type:'delta'
         delta.page_amount > 1

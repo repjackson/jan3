@@ -117,6 +117,11 @@ Template.rightbar.events
 
 
 
+    'click .show_delta': (e,t)->
+        delta = Docs.findOne type:'delta'
+        console.log delta
+
+
     'click .sla': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,

@@ -1,7 +1,7 @@
 
 
 template(name='delta')
-    .ui.stackable.grid
+    .ui.stackable.padded.grid
         if currentUser
             unless delta
                 .row
@@ -99,7 +99,7 @@ template(name='selector')
 
 
 template(name='delta_card')
-    .ui.card.delta_card(class=default_card_class)
+    .ui.card.delta_card(class=delta_card_class)
         with local_doc
             if doc_header_fields
                 .content
