@@ -26,12 +26,22 @@ template(name='nav')
 
 
 
-
-
-
 template(name='topbar')
-    .ui.top.sidebar.segment.push.nav_bar.row.topbar
-        .ui.grid
+    .ui.top.sidebar.push.nav_bar.topbar
+        .ui.padded.grid
+            .four.wide.column
+                +notifications
+            .four.wide.column
+                +messages
+            .four.wide.column
+                +tasks
+            .four.wide.column
+                +bookmarks
+
+
+template(name='bottombar')
+    .ui.bottom.sidebar.push.nav_bar.bottombar
+        .ui.padded.grid
             .four.wide.column
                 +notifications
             .four.wide.column

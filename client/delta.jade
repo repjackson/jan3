@@ -25,7 +25,13 @@ template(name='delta')
                             .ui.large.header
                                 if current_type.icon
                                     +icon name=current_type.icon classes='spaced mini'
-                                | #{current_type.plural}
+                                if current_type.plural
+                                    | #{current_type.plural}
+                                else
+                                    | #{current_type.title}
+                            if can_add
+                                .ui.button.add_doc
+                                    i.plus.icon
 
                             each delta_fields
                                 +facet

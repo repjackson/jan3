@@ -129,20 +129,21 @@ Template.registerHelper 'can_add', ()->
     schema = Docs.findOne
         type:'schema'
         slug:type_key
-    if 'dev' in Meteor.user().roles
-        true
-    else
-        my_role = Meteor.user()?.roles?[0]
-        if schema and my_role
-            if schema.add_roles
-                if my_role in schema.add_roles
-                    true
+    if Meteor.user() and Meteor.user().roles
+        if 'dev' in Meteor.user()?.roles
+            true
+        else
+            my_role = Meteor.user()?.roles?[0]
+            if schema and my_role
+                if schema.add_roles
+                    if my_role in schema.add_roles
+                        true
+                    else
+                        false
                 else
                     false
             else
                 false
-        else
-            false
 
 
 Template.registerHelper 'my_role', ()->
