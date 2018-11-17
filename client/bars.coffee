@@ -10,7 +10,9 @@ Template.leftbar.onRendered ->
                     .sidebar({
                         context: $('.context.example .bottom.segment')
                         dimPage: false
-                        transition:  'push'
+                        transition:  'overlay'
+                        scrollLock: false
+                        exclusive: true
                     })
                     .sidebar('attach events', '.context.example .menu .toggle_leftbar')
             , 750
@@ -23,7 +25,9 @@ Template.topbar.onRendered ->
                     .sidebar({
                         context: $('.context.example .bottom.segment')
                         dimPage: false
-                        transition:  'push'
+                        transition:  'overlay'
+                        scrollLock: false
+                        exclusive: true
                     })
                     .sidebar('attach events', '.context.example .menu .toggle_topbar')
             , 750
@@ -35,7 +39,9 @@ Template.rightbar.onRendered ->
                     .sidebar({
                         context: $('.context.example .bottom.segment')
                         dimPage: false
-                        transition:  'push'
+                        transition:  'overlay'
+                        scrollLock: false
+                        exclusive: true
                     })
                     .sidebar('attach events', '.context.example .menu .toggle_rightbar')
             , 750

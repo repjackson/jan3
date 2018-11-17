@@ -59,27 +59,27 @@ template(name='leftbar')
 
 template(name='rightbar')
     .ui.right.vertical.sidebar.nav_bar.menu.rightbar
-        .item
+        a.item(href='#')
             .ui.inverted.header
                 | #{currentUser.first_name} #{currentUser.last_name}
                 small @#{currentUser.username}
-        .item.profile
+        a.item.profile(href='#')
             .ui.inverted.small.header
                 +icon name='leaderboard' classes='mini centered'
                 | Leaderboard
-        .item.profile
+        a.item.profile(href='#')
             .ui.inverted.small.header
                 +icon name='contacts' classes='mini centered'
                 | Profile
-        .item.settings
+        a.item.settings(href='#')
             .ui.inverted.small.header
                 +icon name='settings' classes='mini centered'
                 | Settings
-        .item.sla
+        a.item.sla(href='#')
             .ui.inverted.small.header
                 +icon name='workflow' classes='mini centered'
                 | SLA Settings
-        .item
+        a.item(href='#')
             .ui.compact.icon.button.delete_delta(title='Clear Session')
                 i.remove.icon
                 |Clear
@@ -89,7 +89,7 @@ template(name='rightbar')
             if is_dev
                 .ui.icon.compact.button.show_delta
                     i.code.icon
-        .item
+        a.item(href='#')
             #logout.sixteen.wide.column
                 .ui.inverted.small.header
                     // +icon name='exit' classes='mini centered'
