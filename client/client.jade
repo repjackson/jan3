@@ -24,11 +24,26 @@ head
     // script(src="https://cdn.rawgit.com/mdehoog/Semantic-UI-Calendar/76959c6f7d33a527b49be76789e984a0a407350b/dist/calendar.min.js")
 
 body
-    #container
-        #main
-            +home
-        #footer_area
-            +footer
+    #container.context.example
+        +nav
+        .ui.bottom.attached.basic.segment.pushable
+            +leftbar
+            .pusher
+                #main
+                    +home
+            #footer_area
+                +footer
+
+    // .context.example
+    //     +nav
+    //     .ui.bottom.attached.basic.segment.pushable
+    //         +left_sidebar
+    //         .pusher
+    //             #main_area
+    //                 +Template.dynamic template=sub_nav
+    //                 +Template.dynamic template=main
+    //         +footer
+
 
 
 template(name='home')

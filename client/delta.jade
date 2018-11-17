@@ -1,3 +1,12 @@
+template(name='nav')
+    .ui.fluid.inverted.menu
+        .item nav
+        a.toggle_left_sidebar.icon.item
+            i.bars.icon
+
+
+
+
 template(name='delta')
     .ui.stackable.padded.grid
         if currentUser
@@ -127,43 +136,38 @@ template(name='selector')
 
 
 template(name='delta_card')
-    div(class=delta_card_class)
+    .ui.card.delta_card(class=default_card_class)
         with local_doc
-            +Template.dynamic template=card_template
-
-
-template(name='default_card')
-    .ui.fluid.segment.delta_card(class=default_card_class)
-        if doc_header_fields
+            if doc_header_fields
+                .content
+                    h3.ui.header
+                        if icon
+                            +icon name=icon
+                        each doc_header_fields
+                            |#{value}
+                            |&nbsp;
+            // if delta.view_full
             .content
-                h3.ui.header
-                    if icon
-                        +icon name=icon
-                    each doc_header_fields
-                        |#{value}
-                        |&nbsp;
-        // if delta.view_full
-        .content
-            .ui.list
-                each field_docs
-                    if value
-                        .item
-                            if field_template
-                                +Template.dynamic template=field_template
-                            else
-                                .content
-                                    if icon
-                                        i.large.icon
-                                            +icon name=icon
-                                    | #{title}
-                                    |&nbsp;
-                                    if is_array
-                                        each value
-                                            .ui.basic.label #{this}
-                                    else
-                                        strong #{value}
-        if actions
-            .content
-                each actions
-                    +Template.dynamic template=action_button_template data=detail_doc
+                .ui.list
+                    each field_docs
+                        if value
+                            .item
+                                if field_template
+                                    +Template.dynamic template=field_template
+                                else
+                                    .content
+                                        if icon
+                                            i.large.icon
+                                                +icon name=icon
+                                        | #{title}
+                                        |&nbsp;
+                                        if is_array
+                                            each value
+                                                .ui.basic.label #{this}
+                                        else
+                                            strong #{value}
+            if actions
+                .content
+                    each actions
+                        +Template.dynamic template=action_button_template data=detail_doc
 

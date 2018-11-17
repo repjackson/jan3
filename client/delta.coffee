@@ -171,7 +171,7 @@ Template.delta_card.helpers
     card_template: ->
         doc = Docs.findOne @valueOf()
         if doc and doc.type
-            if doc.type is 'task' then 'task_card' else 'default_card'
+            if doc.type is 'task' then 'task_card' else 'delta_card'
 
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
@@ -186,8 +186,8 @@ Template.delta_card.helpers
         else
             Docs.findOne @valueOf()
 
-Template.default_card.helpers
-    default_card_class: ->
+Template.delta_card.helpers
+    delta_card_class: ->
         delta = Docs.findOne type:'delta'
         if delta.detail_id is @valueOf()
             # if delta.viewing_rightbar
@@ -262,7 +262,7 @@ Template.task_card.helpers
     #     if delta.detail_id is @_id then 'blue'
 
 
-Template.default_card.helpers
+Template.delta_card.helpers
     field_docs: ->
         delta = Docs.findOne type:'delta'
         local_doc =

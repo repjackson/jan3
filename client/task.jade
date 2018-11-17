@@ -1,6 +1,7 @@
 template(name='task_card')
-    .ui.stackable.equal.width.bgwhite.padded.grid
-        .row
+    // .ui.stackable.equal.width.bgwhite.padded.grid
+    .ui.card
+        .content
             .one.wide.column
                 if complete
                     +icon name='checked-checkbox' classes='spaced mini'
@@ -22,11 +23,11 @@ template(name='task_card')
                     +icon name='compress' title='Compress' classes='centered mini'
                 else
                     +icon name='resize-diagonal' title='Enlarge' classes='centered mini'
-        .row
+        .content
             .sixteen.wide.column
                 +textarea
         if expanded
-            .row
+            .content
                 .column
                     .ui.small.header
                         +icon name='quill-with-ink' classes='mini spaced'
@@ -78,7 +79,7 @@ template(name='task_card')
                     +mark_read_button
                     if full_mode
                         +mark_read_pane
-            .row
+            .content
                 .column
                     .ui.small.header
                         +icon name='calendar' classes='mini spaced'
@@ -95,7 +96,7 @@ template(name='task_card')
                     .ui.small.header
                         +icon name='calendar' classes='mini spaced'
                         | Estimated Time
-            .row
+            .content
                 .column
                     +bookmark_widget
                 .column
@@ -120,7 +121,7 @@ template(name='task_card')
                     +voting
                 .column
                     +subscribe
-            .row
+            .content
                 .column
                     +comments
                 .column
