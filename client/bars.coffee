@@ -2,6 +2,46 @@ Template.leftbar.onCreated ->
     @autorun => Meteor.subscribe 'type', 'schema', 200
 
 
+Template.leftbar.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.context.example .ui.left.sidebar')
+                    .sidebar({
+                        context: $('.context.example .bottom.segment')
+                        dimPage: false
+                        transition:  'push'
+                    })
+                    .sidebar('attach events', '.context.example .menu .toggle_leftbar')
+            , 750
+
+Template.topbar.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.context.example .ui.top.sidebar')
+                    .sidebar({
+                        context: $('.context.example .bottom.segment')
+                        dimPage: false
+                        transition:  'push'
+                    })
+                    .sidebar('attach events', '.context.example .menu .toggle_topbar')
+            , 750
+
+Template.rightbar.onRendered ->
+    if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.context.example .ui.right.sidebar')
+                    .sidebar({
+                        context: $('.context.example .bottom.segment')
+                        dimPage: false
+                        transition:  'push'
+                    })
+                    .sidebar('attach events', '.context.example .menu .toggle_rightbar')
+            , 750
+
+
+
 Template.leftbar.helpers
     bookmarks: ->
         if Meteor.user() and Meteor.user().roles

@@ -7,7 +7,9 @@
   /*border: none !important;*/
   /*background: #01336C; //dark blue*/
   /*background: rgba(0, 20, 137) !important;*/
-  box-shadow: none
+  /*box-shadow: none*/
+  background: linear-gradient(to bottom, rgba(0,20,137,1) 0%,rgba(0,20,137,1) 96%,rgba(132,189,0,1) 96%, rgba(132,189,0,1) 100%) !important;
+
 }
 
 

@@ -1,3 +1,38 @@
+template(name='nav')
+    .ui.stackable.padded.grid.menu
+        if currentUser
+            .centered.nav_bar.row
+                .one.wide.column.pointer.toggle_leftbar.item
+                    .ui.inverted.header
+                        +icon name='menu' classes='spaced mini'
+                        if current_type.icon
+                            +icon name=current_type.icon classes='spaced mini'
+                        | #{current_type.title}
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='contacts' classes='mini centered'
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='shopping-cart' classes='mini centered'
+                .eight.wide.column.pointer.toggle_topbar.item
+                    img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='bookmark-ribbon' classes='mini centered'
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='tasks' classes='mini centered'
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='mailbox-with-letter' classes='mini centered'
+                .one.wide.column.toggle_topbar.pointer
+                    +icon name='appointment-reminders' classes='mini centered'
+                .one.wide.column.toggle_rightbar.pointer.item
+                    if currentUser.image_id
+                        img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    else
+                        +icon name='gender-neutral-user' classes='mini centered'
+
+
+
+
+
+
 template(name='topbar')
     .ui.top.sidebar.segment.push.nav_bar.row.topbar
         .ui.grid
@@ -23,47 +58,46 @@ template(name='leftbar')
 
 
 template(name='rightbar')
-    .three.wide.column.rightbar
-        .ui.one.column.grid
-            .row
-                .ui.inverted.header
-                    | #{currentUser.first_name} #{currentUser.last_name}
-                    small @#{currentUser.username}
-            .row.profile
-                .ui.inverted.header
-                    +icon name='leaderboard' classes='mini centered'
-                    | Leaderboard
-            .row.profile
-                .ui.inverted.header
-                    +icon name='contacts' classes='mini centered'
-                    | Profile
-            .row.settings
-                .ui.inverted.header
-                    +icon name='settings' classes='mini centered'
-                    | Settings
-            .row.sla
-                .ui.inverted.header
-                    +icon name='workflow' classes='mini centered'
-                    | SLA Settings
-            .row
-                .ui.compact.icon.button.delete_delta(title='Clear Session')
-                    i.remove.icon
-                    |Clear
-                .ui.compact.icon.button.run_fo(title='Reload Session')
-                    i.refresh.icon
-                    // |Reset
-                if is_dev
-                    .ui.icon.compact.button.show_delta
-                        i.code.icon
-            .row
-                #logout.sixteen.wide.column
-                    .ui.inverted.header
-                        // +icon name='exit' classes='mini centered'
-                        if signing_out
-                            i.notched.circle.loading.big.icon
-                        else
-                            +icon name='exit' classes='mini'
-                        | Log Out
+    .ui.right.vertical.sidebar.nav_bar.menu.rightbar
+        .item
+            .ui.inverted.header
+                | #{currentUser.first_name} #{currentUser.last_name}
+                small @#{currentUser.username}
+        .item.profile
+            .ui.inverted.small.header
+                +icon name='leaderboard' classes='mini centered'
+                | Leaderboard
+        .item.profile
+            .ui.inverted.small.header
+                +icon name='contacts' classes='mini centered'
+                | Profile
+        .item.settings
+            .ui.inverted.small.header
+                +icon name='settings' classes='mini centered'
+                | Settings
+        .item.sla
+            .ui.inverted.small.header
+                +icon name='workflow' classes='mini centered'
+                | SLA Settings
+        .item
+            .ui.compact.icon.button.delete_delta(title='Clear Session')
+                i.remove.icon
+                |Clear
+            .ui.compact.icon.button.run_fo(title='Reload Session')
+                i.refresh.icon
+                // |Reset
+            if is_dev
+                .ui.icon.compact.button.show_delta
+                    i.code.icon
+        .item
+            #logout.sixteen.wide.column
+                .ui.inverted.small.header
+                    // +icon name='exit' classes='mini centered'
+                    if signing_out
+                        i.notched.circle.loading.big.icon
+                    else
+                        +icon name='exit' classes='mini'
+                    | Log Out
 
 
 
