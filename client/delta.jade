@@ -1,18 +1,10 @@
 template(name='nav')
-    .ui.fluid.inverted.menu
-        .item nav
-        a.toggle_left_sidebar.icon.item
-            i.bars.icon
-
-
-
-
-template(name='delta')
-    .ui.stackable.padded.grid
+    .ui.stackable.padded.grid.menu
         if currentUser
             .centered.nav_bar.row
-                .three.wide.column.pointer.toggle_leftbar
+                .three.wide.column.pointer.toggle_leftbar.item
                     .ui.inverted.header
+                        +icon name='menu' classes='spaced mini'
                         if current_type.icon
                             +icon name=current_type.icon classes='spaced mini'
                         | #{current_type.title}
@@ -20,7 +12,7 @@ template(name='delta')
                     +icon name='contacts' classes='mini centered'
                 .one.wide.column.toggle_topbar.pointer
                     +icon name='shopping-cart' classes='mini centered'
-                .six.wide.column.pointer.toggle_topbar
+                .six.wide.column.pointer.toggle_topbar.item
                     img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                 .one.wide.column.toggle_topbar.pointer
                     +icon name='bookmark-ribbon' classes='mini centered'
@@ -35,8 +27,11 @@ template(name='delta')
                         img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
                         +icon name='gender-neutral-user' classes='mini centered'
-            if delta.viewing_topbar
-                +topbar
+
+
+
+
+template(name='delta')
         if currentUser
             unless delta
                 .row

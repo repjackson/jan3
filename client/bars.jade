@@ -1,26 +1,25 @@
 template(name='topbar')
-    .centered.nav_bar.row.topbar
-        .four.wide.column
-            +notifications
-        .four.wide.column
-            +messages
-        .four.wide.column
-            +tasks
-        .four.wide.column
-            +bookmarks
+    .ui.top.sidebar.segment.push.nav_bar.row.topbar
+        .ui.grid
+            .four.wide.column
+                +notifications
+            .four.wide.column
+                +messages
+            .four.wide.column
+                +tasks
+            .four.wide.column
+                +bookmarks
 
 
 
 template(name='leftbar')
-    .ui.left.vertical.sidebar.inverted.nav_bar.thin.menu
-        .three.wide.column.leftbar
-            .ui.one.column.grid
-                each bookmarks
-                    .row.pick_delta
-                        .ui.small.inverted.header(title=title)
-                            i.icon
-                                +icon name=icon
-                            | #{title}
+    .ui.left.vertical.sidebar.nav_bar.menu.leftbar
+        each bookmarks
+            a.item.pick_delta.toggle_leftbar(href='#')
+                .ui.small.inverted.header(title=title)
+                    i.icon
+                        +icon name=icon
+                    | #{title}
 
 
 template(name='rightbar')

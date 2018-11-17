@@ -204,7 +204,20 @@ Template.leftbar.onRendered ->
                         dimPage: false
                         transition:  'push'
                     })
-                    .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')
+                    .sidebar('attach events', '.context.example .menu .toggle_leftbar.item')
+            , 750
+
+Template.topbar.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.context.example .ui.top.sidebar')
+                    .sidebar({
+                        context: $('.context.example .bottom.segment')
+                        dimPage: false
+                        transition:  'push'
+                    })
+                    .sidebar('attach events', '.context.example .menu .toggle_topbar.item')
             , 750
 
     # if @subscriptionsReady()
@@ -216,5 +229,5 @@ Template.leftbar.onRendered ->
     #                     transition:  'push'
     #                 })
     #                 .sidebar('attach events', '.toggle_right_sidebar.item')
-    #                 # .sidebar('attach events', '.context.example .menu .toggle_left_sidebar.item')
+    #                 # .sidebar('attach events', '.context.example .menu .toggle_leftbar.item')
     #         , 1500
