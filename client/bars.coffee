@@ -15,7 +15,7 @@ Template.leftbar.onRendered ->
                         exclusive: true
                     })
                     .sidebar('attach events', '.context .menu .toggle_leftbar')
-            , 750
+            , 1000
 
 Template.topbar.onRendered ->
     @autorun =>
@@ -30,7 +30,7 @@ Template.topbar.onRendered ->
                         exclusive: true
                     })
                     .sidebar('attach events', '.context .menu .toggle_topbar')
-            , 750
+            , 1000
 
 Template.bottombar.onRendered ->
     @autorun =>
@@ -45,7 +45,7 @@ Template.bottombar.onRendered ->
                         exclusive: true
                     })
                     .sidebar('attach events', '.context .menu .toggle_topbar')
-            , 750
+            , 1000
 
 Template.rightbar.onRendered ->
     if @subscriptionsReady()
@@ -59,7 +59,7 @@ Template.rightbar.onRendered ->
                         exclusive: true
                     })
                     .sidebar('attach events', '.context .menu .toggle_rightbar')
-            , 750
+            , 1000
 
 
 

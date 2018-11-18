@@ -1,5 +1,3 @@
-
-
 template(name='delta')
     .ui.stackable.padded.grid
         if currentUser
@@ -21,21 +19,23 @@ template(name='delta')
                 //             .active.section Personal Information
                 .row
                     if delta.viewing_delta
-                        .four.wide.column.scrolling
-                            .ui.large.header
-                                if current_type.icon
-                                    +icon name=current_type.icon classes='spaced mini'
-                                if current_type.plural
-                                    | #{current_type.plural}
-                                else
-                                    | #{current_type.title}
-                            if can_add
-                                .ui.button.add_doc
-                                    i.plus.icon
+                        unless delta.viewing_detail
+                            .four.wide.column.scrolling
+                                .ui.large.header
+                                    if current_type.icon
+                                        +icon name=current_type.icon classes='spaced mini'
+                                    if current_type.plural
+                                        | #{current_type.plural}
+                                    else
+                                        | #{current_type.title}
+                                if can_add
+                                    .ui.fluid.small.compact.button.add_doc
+                                        i.plus.icon
+                                        | #{current_type.title}
 
-                            each delta_fields
-                                +facet
-                                .ui.hidden.divider
+                                each delta_fields
+                                    .ui.hidden.divider
+                                    +facet
                     // unless delta.viewing_leftbar
                     //     unless delta.viewing_detail
                     //         unless delta.viewing_rightbar
@@ -45,13 +45,6 @@ template(name='delta')
                             +Template.dynamic template=delta.page_template
                         else
                             +delta_results
-
-
-
-
-
-
-
 
 
 template(name='toggle_delta_config')
@@ -65,11 +58,6 @@ template(name='toggle_delta_config')
             // | #{label}
 
 
-template(name='children_view')
-    if axon_schema
-        .ui.header #{axon_schema.title}
-    else
-        |No schema found.
 
 template(name='set_page_size')
     .one.wide.center.aligned.pointer.column.rounded.set_page_size(class=page_size_class title='Page Size')
@@ -108,17 +96,40 @@ template(name='selector')
 
 
 template(name='delta_card')
+    if delta.editing_mode
+        .ui.center.aligned.large.header
+            if detail_doc.icon
+                i.large.icon
+                    +icon name=detail_doc.icon
+            else
+                i.large.icon
+                    +icon name='pencil'
+            |Edit #{detail_doc.title} #{current_type.title}
+    unless delta.editing_mode
+        .ui.header
+            if detail_doc.icon
+                i.icon
+                    +icon name=detail_doc.icon
+            |#{detail_doc.title} Details
     .ui.card.delta_card(class=delta_card_class)
         with local_doc
             if doc_header_fields
                 .content
+                    .right.floated
+                        if delta.editing_mode
+                            .ui.green.large.icon.button.save
+                                i.large.checkmark.icon
+                            .ui.red.icon.basic.compact.button.remove_doc
+                                i.remove.icon
+                        else if full_mode
+                            .ui.icon.button.edit
+                                i.blue.pencil.icon
                     h4.ui.header
                         if icon
                             +icon name=icon
                         each doc_header_fields
                             |#{value}
                             |&nbsp;
-            // if delta.view_full
             .content
                 .ui.list
                     each field_docs
@@ -138,6 +149,19 @@ template(name='delta_card')
                                                 .ui.basic.label #{this}
                                         else
                                             strong #{value}
+            .content
+                if delta.editing_mode
+                    each edit_fields
+                        +field_edit
+                        // .ui.hidden.divider
+                else
+                    each fields
+                        .field
+                            +field_view
+            unless delta.editing_mode
+                each actions
+                    .content
+                        +Template.dynamic template=action_pane_template data=detail_doc
             if actions
                 .content
                     each actions

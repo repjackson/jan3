@@ -20,19 +20,20 @@ Template.delta.onCreated ->
 Template.delta.helpers
     center_column_class: ->
         delta = Docs.findOne type:'delta'
-        size = 16
-        if delta.viewing_rightbar then size -= 3
-        if delta.viewing_leftbar then size -= 3
-        if delta.viewing_delta then size -= 4
-        # console.log size
-        switch size
-            when 16 then 'sixteen wide column'
-            when 13 then 'thirteen wide column'
-            when 10 then 'ten wide column'
-            when 12 then 'twelve wide column'
-            when 9 then 'nine wide column'
-            when 8 then 'eight wide column'
-            when 6 then 'six wide column'
+        if delta.viewing_detail
+            return 'sixteen wide column'
+        else
+            size = 16
+            if delta.viewing_delta then size -= 4
+            # console.log size
+            switch size
+                when 16 then 'sixteen wide column'
+                when 13 then 'thirteen wide column'
+                when 10 then 'ten wide column'
+                when 12 then 'twelve wide column'
+                when 9 then 'nine wide column'
+                when 8 then 'eight wide column'
+                when 6 then 'six wide column'
 
     current_type: ->
         delta = Docs.findOne type:'delta'
@@ -148,8 +149,6 @@ Template.delta.events
                 Session.set 'is_calculating', false
 
 
-
-
     'click .create_delta': (e,t)->
         new_delta_id =
             Docs.insert
@@ -161,30 +160,6 @@ Template.delta.events
                 skip_amount:0
                 view_full:true
         Meteor.call 'fo', new_delta_id
-
-Template.delta_card.helpers
-    card_template: ->
-        doc = Docs.findOne @valueOf()
-        if doc and doc.type
-            if doc.type is 'task' then 'task_card' else 'delta_card'
-
-
-
-    delta_card_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.total is 1 then 'fluid' else ''
-        # if delta.view_mode is 'grid'
-        #     'six wide column'
-        # else
-        #     'sixteen wide column'
-
-    local_doc: ->
-        if @data
-            Docs.findOne @data.valueOf()
-        else
-            Docs.findOne @valueOf()
-
-
 
 
 Template.delta_card.onCreated ->
@@ -248,6 +223,26 @@ Template.task_card.helpers
 
 
 Template.delta_card.helpers
+    card_template: ->
+        doc = Docs.findOne @valueOf()
+        if doc and doc.type
+            if doc.type is 'task' then 'task_card' else 'delta_card'
+
+    delta_card_class: ->
+        delta = Docs.findOne type:'delta'
+        if delta.viewing_detail then 'fluid blue raised' else ''
+        # if delta.view_mode is 'grid'
+        #     'six wide column'
+        # else
+        #     'sixteen wide column'
+
+    local_doc: ->
+        if @data
+            Docs.findOne @data.valueOf()
+        else
+            Docs.findOne @valueOf()
+
+
     field_docs: ->
         delta = Docs.findOne type:'delta'
         local_doc =
@@ -392,7 +387,16 @@ Template.selector.helpers
         if filter_list and @name in filter_list then 'active' else ''
 
 
+Template.delta_card.events
+    'click .save': ->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:editing_mode:false
 
+    'click .edit': ->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:editing_mode:true
 
 
 Template.facet.onRendered ->

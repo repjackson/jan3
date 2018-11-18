@@ -1,9 +1,9 @@
-Template.detail_pane.onCreated ->
+Template.delta_card.onCreated ->
     delta = Docs.findOne type:'delta'
     @autorun => Meteor.subscribe 'schema_fields'
     @autorun => Meteor.subscribe 'doc', delta.detail_id
 
-Template.detail_pane.onRendered ->
+Template.delta_card.onRendered ->
     Meteor.setTimeout ->
         $('.accordion').accordion();
     , 500
@@ -13,7 +13,7 @@ Template.detail_pane.onRendered ->
 
 
 
-Template.detail_pane.events
+Template.delta_card.events
     'click .remove_doc': ->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
@@ -42,7 +42,7 @@ Template.detail_pane.events
             $set:editing_mode:false
 
 
-Template.detail_pane.helpers
+Template.delta_card.helpers
     detail_doc: ->
         delta = Docs.findOne type:'delta'
         Docs.findOne delta.detail_id
