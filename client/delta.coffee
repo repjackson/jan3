@@ -119,7 +119,7 @@ Template.delta.events
                 detail_id:null
                 viewing_children:false
                 viewing_detail:false
-                editing_mode:false
+                editing:false
                 config_mode:false
         Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
@@ -141,7 +141,7 @@ Template.delta.events
             $set:
                 viewing_detail:true
                 detail_id:new_id
-                editing_mode:true
+                editing:true
         Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
             if err then console.log err
@@ -166,7 +166,7 @@ Template.delta_card.onCreated ->
     @autorun => Meteor.subscribe 'doc', @data
 
 
-Template.task_card.events
+Template.delta_card.events
     'click .mark_complete': ->
         Docs.update @_id,
             $set: complete:true
@@ -196,7 +196,6 @@ Template.task_card.events
             Docs.update delta._id,
                 $set:
                     viewing_detail: true
-                    viewing_rightbar: false
                     detail_id: @_id
                     expand_id: @_id
 
@@ -309,7 +308,7 @@ Template.delta_card.helpers
         if local_doc?.type is 'field'
             Docs.find({
                 type:'field'
-                axon:$ne:true
+                # axon:$ne:true
                 header:true
                 schema_slugs: $in: ['field']
             }, {sort:{rank:1}}).fetch()
@@ -321,7 +320,7 @@ Template.delta_card.helpers
                 type:'field'
                 schema_slugs: $in: [schema.slug]
                 header:true
-                axon:$ne:true
+                # axon:$ne:true
             }, {sort:{rank:1}}).fetch()
 
 
@@ -391,12 +390,12 @@ Template.delta_card.events
     'click .save': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set:editing_mode:false
+            $set:editing:false
 
     'click .edit': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set:editing_mode:true
+            $set:editing:true
 
 
 Template.facet.onRendered ->

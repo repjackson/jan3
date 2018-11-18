@@ -52,7 +52,7 @@ template(name='event')
             .summary #{action} #{text}
             .meta
                 span(title="{{ long_format timestamp }}") #{when}
-                if editing_mode
+                if editing
                     span(title='Event Type') #{event_type}
                     span #{parent_id}
                 if author_id
@@ -66,7 +66,7 @@ template(name='event')
                     i.building.icon(title="Office #{office_jpid}")
                     a(href="/p/office?jpid=#{office_jpid}")
                         |#{parent.ticket_office_name}
-                if editing_mode
+                if editing
                     i.remove_event.remove.link.icon
                 a(href="/p/ticket_admin_view?doc_id=#{parent_id}")
                     i.ticket.icon

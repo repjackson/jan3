@@ -153,11 +153,6 @@ Template.registerHelper 'my_role', ()->
             type:'role'
             slug: role_slug
 
-# Template.registerHelper 'editing_mode', ()->
-#     if Meteor.user() and Meteor.user().roles
-#         'dev' in Meteor.user().roles and Session.get('editing_mode')
-
-
 
 Template.registerHelper 'is_editor', () ->
     if Meteor.user() and Meteor.user().roles

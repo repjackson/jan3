@@ -11,7 +11,7 @@ if Meteor.isClient
                     detail_id:null
                     viewing_children:false
                     viewing_detail:false
-                    editing_mode:false
+                    editing:false
                     config_mode:false
             Session.set 'is_calculating', true
             Meteor.call 'fo', (err,res)->
@@ -242,7 +242,7 @@ Meteor.methods
                     viewing_menu:false
                     viewing_detail:false
                     viewing_delta:true
-                    editing_mode:false
+                    editing:false
                     config_mode:false
                     viewing_page:false
                     viewing_leftbar:false

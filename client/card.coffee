@@ -22,7 +22,7 @@ Template.delta_card.events
             Docs.update delta._id,
                 $set:
                     detail_id:null
-                    editing_mode:false
+                    editing:false
                     viewing_detail:false
         Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
@@ -34,12 +34,12 @@ Template.delta_card.events
     'click .enable_editing': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set:editing_mode:true
+            $set:editing:true
 
     'click .disable_editing': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set:editing_mode:false
+            $set:editing:false
 
 
 Template.delta_card.helpers
@@ -123,7 +123,7 @@ Template.delta_card.helpers
             else
                 Docs.find({
                     type:'field'
-                    edit_roles: $in: Meteor.user().roles
+                    # edit_roles: $in: Meteor.user().roles
                     schema_slugs: $in: [current_type]
                 }, {sort:{rank:1}}).fetch()
 

@@ -84,7 +84,7 @@ template(name='ticket_status')
                 p
                 p #{close_details}
         unless open
-            if editing_mode
+            if editing
                 i.reopen.link.undo.icon(title='Reopen')
 
 template(name='feedback_widget')
