@@ -110,7 +110,7 @@ body {
   flex-direction: column;
 }
 #main {
-   /*min-height:100%;*/
+   min-height:500px;
    /*position:relative;*/
    /*padding:10px;*/
    /*padding-bottom:200px;*/

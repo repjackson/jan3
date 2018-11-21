@@ -1,38 +1,42 @@
 template(name='delta_results')
     // .column(class=results_class)
     .twelve.wide.column
-        if is_dev
-            unless delta.viewing_detail
-                +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
         // +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand Cards'
         if delta.config_mode
             .scrolling
                 .ui.header
                     +icon name='administrative-tools'
                     | Edit Schema '#{current_type.title}'
-                .ui.accordion
-                    .active.title
-                        .ui.small.header
-                            +icon name='rename'
-                            |Fields
-                    .active.content
-                        .ui.button.add_field
-                            i.plus.icon
-                            | Field
-                        each schema_fields
-                            +delta_card data=_id
-                .ui.hidden.divider
-                .ui.accordion
-                    .active.title
-                        .ui.small.header
-                            +icon name='action'
-                            | Actions
-                    .active.content
-                        .ui.button.add_action
-                            i.plus.icon
-                            | Action
-                        each schema_actions
-                            +delta_card data=_id
+                unless delta.viewing_detail
+                    .ui.accordion
+                        .active.title
+                            .ui.small.header
+                                +icon name='rename'
+                                |Fields
+                        .active.content
+                            .ui.button.add_field
+                                i.plus.icon
+                                | Field
+                            .ui.cards
+                                each schema_fields
+                                    +delta_card data=_id
+                    .ui.hidden.divider
+                    .ui.accordion
+                        .active.title
+                            .ui.small.header
+                                +icon name='action'
+                                | Actions
+                        .active.content
+                            .ui.button.add_action
+                                i.plus.icon
+                                | Action
+                            .ui.cards
+                                each schema_actions
+                                    +delta_card data=_id
+                else
+                    with delta.detail_id
+                        +delta_card
+
         else
             if delta.result_ids
                 if delta.result_ids.length

@@ -28,8 +28,10 @@ template(name='delta')
                                         | #{current_type.plural}
                                     else
                                         | #{current_type.title}
+                                if is_dev
+                                    +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
                                 if can_add
-                                    .ui.fluid.small.compact.button.add_doc
+                                    .ui.fluid.small.button.add_doc
                                         i.plus.icon
                                         | #{current_type.title}
 
@@ -49,11 +51,11 @@ template(name='delta')
 
 template(name='toggle_delta_config')
     if boolean_true
-        .ui.active.icon.compact.button.disable_key(title=label)
+        .ui.active.icon.button.disable_key(title=label)
             +iconsmall name=icon
             // | #{label}
     else
-        .ui.icon.compact.button.enable_key(title=label)
+        .ui.icon.button.enable_key(title=label)
             +iconsmall name=icon
             // | #{label}
 
@@ -84,9 +86,9 @@ template(name='facet')
 template(name='selector')
     if name
         // .column.toggle_value.pointer(class=toggle_value_class)
-        .ui.compact.margined.toggle_value.button(class=toggle_value_class)
+        .ui.compact.margined.toggle_value.small.button(class=toggle_value_class)
             .large110 #{name}
-            // small #{count}
+                small #{count}
     else
         // .column.toggle_value.pointer(class=toggle_value_class)
         .ui.compact.margined.toggle_value.button(class=toggle_value_class)

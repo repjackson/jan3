@@ -1,20 +1,20 @@
 template(name='delta_card')
     if full_mode
-        if delta.editing
-            .ui.center.aligned.large.header
-                if detail_doc.icon
-                    i.large.icon
-                        +icon name=detail_doc.icon
-                else
-                    i.large.icon
-                        +icon name='pencil'
-                |Edit #{detail_doc.title} #{current_type.title}
+        // if delta.editing
+        //     .ui.center.aligned.large.header
+        //         if detail_doc.icon
+        //             i.large.icon
+        //                 +icon name=detail_doc.icon
+        //         else
+        //             i.large.icon
+        //                 +icon name='pencil'
+        //         | Edit #{detail_doc.title} #{current_type.title}
         unless delta.editing
-            .ui.header
+            .ui.center.aligned.large.header
                 if detail_doc.icon
                     i.icon
                         +icon name=detail_doc.icon
-                |#{detail_doc.title} Details
+                |'#{detail_doc.title}' Details
     .ui.card.delta_card(class=delta_card_class)
         with local_doc
             .content
@@ -25,22 +25,24 @@ template(name='delta_card')
                         .ui.red.icon.compact.button.remove_doc
                             i.remove.icon
                     else if full_mode
-                        .ui.icon.button.toggle_full
-                            i.caret.down.icon
-                        .ui.icon.button.edit
+                        .ui.big.icon.button.toggle_full
+                            i.caret.down.large.icon
+                        .ui.big.icon.button.edit
                             i.blue.pencil.icon
                     else
-                        .ui.icon.button.expand.toggle_full
-                            i.caret.up.icon
-                h4.ui.header
+                        .ui.icon.compact.button.toggle_full
+                            i.caret.up.large.icon
+                if delta.editing
+                    em Edit
+                strong
                     if icon
-                        +icon name=icon
+                        +icon name=icon classes='spaced mini'
                 if doc_header_fields
                     each doc_header_fields
-                        |#{value}
+                        strong #{value}
                         |&nbsp;
-            .content
-                unless delta.editing
+            unless delta.editing
+                .content
                     .ui.list
                         each field_docs
                             if value
@@ -71,9 +73,9 @@ template(name='delta_card')
                 //     each fields
                 //         .field
                 //             +field_view
-            unless delta.editing
-                each actions
-                    .content
-                        .ui.header #{title}
-                        +Template.dynamic template=action_pane_template data=detail_doc
+            // unless delta.editing
+            //     each actions
+            //         .content
+            //             .ui.header #{title}
+            //             +Template.dynamic template=action_pane_template data=detail_doc
 

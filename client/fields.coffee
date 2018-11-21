@@ -37,6 +37,8 @@ Template.number_edit.events
             $set:
                 "#{t.data.key}": val
 
+
+
 Template.date_edit.events
     'blur .date_val': (e,t)->
         # console.log Template.parentData()
@@ -47,6 +49,8 @@ Template.date_edit.events
         Docs.update target_doc._id,
             $set:
                 "#{t.data.key}": val
+
+
 
 Template.textarea_edit.events
     'blur .textarea_val': (e,t)->
