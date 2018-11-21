@@ -53,7 +53,11 @@ Template.ticket_type_small.helpers
             when 'other' then 'grey'
 
 Template.level_icon.helpers
-    is_level_one: -> @level is 1
+    is_level_one: ->
+        # console.log @
+        # console.log Template.currentData()
+        # console.log Template.parentData()
+        @level is 1
     is_level_two: -> @level is 2
     is_level_three: -> @level is 3
     is_level_four: -> @level is 4
@@ -61,7 +65,7 @@ Template.level_icon.helpers
 
 
 
-Template.submit_ticket.onCreated ->
+Template.submit_big.onCreated ->
     @autorun -> Meteor.subscribe 'type','ticket_type'
 #     @autorun -> Meteor.subscribe 'type','rule'
 

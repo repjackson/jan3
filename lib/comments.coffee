@@ -1,6 +1,6 @@
 if Meteor.isClient
     Template.comments_big.onCreated ->
-        @autorun => Meteor.subscribe 'comments', @data._id
+        @autorun => Meteor.subscribe 'comments', @_id
 
     Template.comments_big.helpers
         comments: ->

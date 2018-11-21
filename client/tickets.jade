@@ -1,4 +1,5 @@
 template(name='level_icon')
+    .ui.header level icon
     if is_level_one
         img.ui.mini.image(src="/level1icon.png" data-content='Level 1')
     if is_level_two
@@ -17,14 +18,14 @@ template(name='ticket_type_small')
     if ticket_type_label
         +iconsmall name=ticket_type_icon title=ticket_type_label classes='inline'
 
-template(name='submit_ticket')
+template(name='submit_big')
     .ui.header
         +icon name='category'
         |Type
     each ticket_type_docs
         +toggle_key key='ticket_type' value=slug label=title icon=icon
-    +edit_textarea label='Details' key='ticket_details' icon='view-details'
-    +edit_datetime_field key='service_date' label='Service Time'
+    +textarea_edit label='Details' key='ticket_details' icon='view-details'
+    +date_edit key='service_date' label='Service Time'
     .ui.hidden.divider
     .submit.ui.fluid.jpgreen.inverted.button
         | Submit

@@ -33,7 +33,10 @@ template(name='users_feed')
             +event
 
 
-template(name='full_doc_history')
+template(name='events_big')
+    .ui.small.header
+        |Events
+        +icon name='rss'
     .ui.feed
         each doc_history_events
             +event
@@ -73,7 +76,7 @@ template(name='event')
                     |Ticket ##{parent.ticket_number}
 
 
-template(name='small_doc_history')
+template(name='events_small')
     // .ui.header History
     .ui.feed
         each doc_history_events

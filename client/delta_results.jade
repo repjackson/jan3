@@ -24,14 +24,14 @@ template(name='delta_results')
                     .ui.accordion
                         .active.title
                             .ui.small.header
-                                +icon name='action'
-                                | Actions
+                                +icon name='component'
+                                | Parts
                         .active.content
                             .ui.button.add_action
                                 i.plus.icon
-                                | Action
+                                | Part
                             .ui.cards
-                                each schema_actions
+                                each schema_parts
                                     +delta_card data=_id
                 else
                     with delta.detail_id

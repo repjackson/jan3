@@ -1,6 +1,6 @@
 Template.delta_results.onCreated ->
-    @autorun => Meteor.subscribe 'schema_actions'
-    @autorun => Meteor.subscribe 'type', 'action'
+    @autorun => Meteor.subscribe 'schema_parts'
+    @autorun => Meteor.subscribe 'type', 'part'
     Session.setDefault 'is_calculating', false
 
 
@@ -61,14 +61,14 @@ Template.delta_results.helpers
         }, {sort:{rank:1}}).fetch()
         fields
 
-    schema_actions: ->
+    schema_parts: ->
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
-        actions = Docs.find({
-            type:'action'
+        parts = Docs.find({
+            type:'part'
             schema_slugs: $in: [current_type]
         }, {sort:{rank:1}}).fetch()
-        actions
+        parts
 
 
     current_type: ->

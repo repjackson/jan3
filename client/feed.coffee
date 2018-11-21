@@ -1,16 +1,16 @@
 
 
-Template.global_feed.onCreated ->
+Template.events_big.onCreated ->
     @autorun => Meteor.subscribe 'type', 'event', 20
 
-Template.global_feed.helpers
+Template.events_big.helpers
     feed_events: ->
         context = Template.currentData()
         # Docs.find {type:'event', doc_type:context.doc_type}, sort:timestamp:-1
         Docs.find {type:'event'}, sort:timestamp:-1
 
 
-Template.global_feed.events
+Template.events_big.events
     'click .remove_event': ->
         if confirm 'Delete Event?'
             Docs.remove @_id
@@ -18,9 +18,9 @@ Template.global_feed.events
 
 
 
-Template.small_doc_history.onCreated ->
+Template.events_small.onCreated ->
     @autorun =>  Meteor.subscribe 'child_docs', @data._id, 1
-Template.small_doc_history.helpers
+Template.events_small.helpers
     doc_history_events: ->
         cursor =
             Docs.find {

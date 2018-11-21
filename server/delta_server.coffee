@@ -28,7 +28,7 @@ Meteor.publish 'schema_fields', ->
             type:'field'
             schema_slugs:$in:[current_type, 'field']
 
-Meteor.publish 'schema_actions', ->
+Meteor.publish 'schema_parts', ->
     delta = Docs.findOne
         type:'delta'
         author_id: Meteor.userId()
@@ -36,7 +36,7 @@ Meteor.publish 'schema_actions', ->
     if delta and delta.filter_type
         current_type = delta.filter_type?[0]
         Docs.find
-            type:'action'
+            type:'part'
             schema_slugs:$in:[current_type, 'field']
 
 Meteor.publish 'schema', ->

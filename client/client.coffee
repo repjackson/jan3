@@ -97,7 +97,7 @@ Template.registerHelper 'is_eric', ()->
 
 
 
-Template.registerHelper 'actions', ()->
+Template.registerHelper 'parts', ()->
     delta = Docs.findOne type:'delta'
     local_doc =
         if @data
@@ -106,7 +106,7 @@ Template.registerHelper 'actions', ()->
             Docs.findOne @valueOf()
     if local_doc?.type is 'field'
         Docs.find({
-            type:'action'
+            type:'part'
             schema_slugs: $in: ['field']
         }, {sort:{rank:1}}).fetch()
     else
@@ -114,7 +114,7 @@ Template.registerHelper 'actions', ()->
             type:'schema'
             slug:delta.filter_type[0]
         Docs.find({
-            type:'action'
+            type:'part'
             # visible:true
             schema_slugs: $in: [schema.slug]
         }, {sort:{rank:1}}).fetch()

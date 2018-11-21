@@ -66,6 +66,8 @@ template(name='mark_read_big')
 
 
 
+
+
 template(name='subscribe_small')
     if subscribed
         .ui.teal.compact.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
@@ -88,7 +90,13 @@ template(name='subscribe_big')
         .ui.compact.button.toggle_subscribe(title='Subscribe' class=subscription_class)
             +iconsmall name='renew-subscription'
             | Subscribe
-        // +subscribe_big
+    if subscribed
+        .ui.buttons
+            .ui.button Immediate
+            .ui.button Daily
+        .ui.buttons
+            .ui.button SMS
+            .ui.button Email
     .ui.list
         each subscribers
             +user_list_view
