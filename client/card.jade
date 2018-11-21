@@ -76,11 +76,16 @@ template(name='delta_card')
                 //         .field
                 //             +field_view
             unless delta.editing
-                .content
-                    each actions
-                        if full_mode
+                unless full_mode
+                    .content
+                        each actions
+                            +Template.dynamic template=action_small_template data=local_doc
+    unless delta.editing
+        if full_mode
+            .ui.two.centered.cards
+                each actions
+                    .card
+                        .content
                             +Template.dynamic template=action_big_template data=detail_doc
-                        else
-                            +Template.dynamic template=action_small_template data=detail_doc
 
 

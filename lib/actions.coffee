@@ -20,14 +20,21 @@ if Meteor.isClient
                     Session.set 'is_calculating', false
 
 
+
+    Template.bookmark_big.onCreated ->
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'bookmark_ids'
+
+    Template.bookmark_small.onCreated ->
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'bookmark_ids'
+
+
     Template.bookmark_big.helpers
+        bookmarked: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then true else false
+    Template.bookmark_small.helpers
         bookmarked: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then true else false
     Template.bookmark_big.events
         'click .toggle_bookmark': (e,t)->
             Meteor.call 'user_toggle_list', @, 'bookmark_ids'
-
-    Template.bookmark_big.onCreated ->
-        @autorun -> Meteor.subscribe 'user_list_users', @data, 'bookmark_ids'
     Template.bookmark_big.helpers
         bookmark_users: ->
             target = Template.currentData()
@@ -36,16 +43,29 @@ if Meteor.isClient
                     _id: $in: target.bookmark_ids
 
 
+    Template.subscribe_big.onCreated ->
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'subscribe_ids'
+    Template.subscribe_small.onCreated ->
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'subscribe_ids'
 
+
+    Template.subscribe_big.helpers
+        subscribed: -> if @subscribe_ids and Meteor.userId() in @subscribe_ids then true else false
     Template.subscribe_small.helpers
         subscribed: -> if @subscribe_ids and Meteor.userId() in @subscribe_ids then true else false
-    Template.subscribe_small.events
+    Template.subscribe_big.events
         'click .toggle_subscribe': (e,t)->
             Meteor.call 'user_toggle_list', @, 'subscribe_ids'
 
-    Template.subscribe_big.onCreated ->
-        @autorun -> Meteor.subscribe 'user_list_users', @data, 'subscribe_ids'
     Template.subscribe_big.helpers
+        subscribers: ->
+            target = Template.currentData()
+            if target and target.subscribe_ids
+                Meteor.users.find
+                    _id: $in: target.subscribe_ids
+
+
+    Template.subscribe_small.helpers
         subscribers: ->
             target = Template.currentData()
             if target and target.subscribe_ids
@@ -84,15 +104,33 @@ if Meteor.isClient
                 Meteor.users.find
                     _id: $in: target.downvoter_ids
 
+
+
     Template.mark_read_small.helpers
         read: -> if @read_ids and Meteor.userId() in @read_ids then true else false
+    Template.mark_read_big.helpers
+        read: -> if @read_ids and Meteor.userId() in @read_ids then true else false
+
     Template.mark_read_small.events
+        'click .toggle_read': (e,t)->
+            Meteor.call 'user_toggle_list', @, 'read_ids'
+
+    Template.mark_read_big.events
         'click .toggle_read': (e,t)->
             Meteor.call 'user_toggle_list', @, 'read_ids'
 
     Template.mark_read_big.onCreated ->
         @autorun -> Meteor.subscribe 'user_list_users', @data, 'read_ids'
+    Template.mark_read_small.onCreated ->
+        @autorun -> Meteor.subscribe 'user_list_users', @data, 'read_ids'
     Template.mark_read_big.helpers
+        read_users: ->
+            target = Template.currentData()
+            if target and target.read_ids
+                Meteor.users.find
+                    _id: $in: target.read_ids
+
+    Template.mark_read_small.helpers
         read_users: ->
             target = Template.currentData()
             if target and target.read_ids
@@ -108,6 +146,9 @@ if Meteor.isClient
 
 
     Template.assignment_small.onCreated ->
+        @autorun => Meteor.subscribe 'user_list_users', @data, 'assigned_ids'
+        @user_results = new ReactiveVar( [] )
+    Template.assignment_big.onCreated ->
         @autorun => Meteor.subscribe 'user_list_users', @data, 'assigned_ids'
         @user_results = new ReactiveVar( [] )
 
@@ -157,11 +198,24 @@ if Meteor.isClient
                 Meteor.users.find(_id: $in: target.assigned_ids)
 
 
+    Template.assignment_small.helpers
+        ticket_assignment_timestamp: ->
+            delta = Docs.findOne type:'delta'
+            target =  Docs.findOne delta.detail_id
+            if target
+                target.assignment_timestamp
+
+        user_results: -> Template.instance().user_results.get()
+
+        assigned_users: ->
+            delta = Docs.findOne type:'delta'
+            target =  Docs.findOne delta.detail_id
+            if target and target.assigned_ids
+                Meteor.users.find(_id: $in: target.assigned_ids)
 
 
 
-    # approval
-    #
+
     Template.approval_big.onCreated ->
         @autorun => Meteor.subscribe 'user_list_users', @data, 'approver_ids'
         @user_results = new ReactiveVar( [] )
