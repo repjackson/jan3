@@ -51,13 +51,13 @@ template(name='delta')
 
 template(name='toggle_delta_config')
     if boolean_true
-        .ui.active.icon.button.disable_key(title=label)
+        .ui.active.button.disable_key(title=label)
             +iconsmall name=icon
-            // | #{label}
+            | #{label}
     else
-        .ui.icon.button.enable_key(title=label)
+        .ui.button.enable_key(title=label)
             +iconsmall name=icon
-            // | #{label}
+            | #{label}
 
 
 

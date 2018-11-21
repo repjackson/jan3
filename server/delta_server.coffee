@@ -79,7 +79,7 @@ Meteor.methods
 
         delta_fields.push
             key:'type'
-            primative:'string'
+            primitive:'string'
 
         filter_keys = []
         for filter in delta_fields
@@ -89,7 +89,7 @@ Meteor.methods
         for delta_field in delta_fields
             filter_list = delta["filter_#{delta_field.key}"]
             if filter_list and filter_list.length > 0
-                if delta_field.primative is 'array'
+                if delta_field.primitive is 'array'
                     built_query["#{delta_field.key}"] = $all: filter_list
                 else
                     built_query["#{delta_field.key}"] = $in: filter_list
@@ -133,9 +133,9 @@ Meteor.methods
             key_return = []
             example_doc = Docs.findOne({"#{delta_field.key}":$exists:true})
             example_value = example_doc?["#{delta_field.key}"]
-            primative = typeof example_value
+            primitive = typeof example_value
 
-            test_calc = Meteor.call 'agg', built_query, delta_field.primative, delta_field.key
+            test_calc = Meteor.call 'agg', built_query, delta_field.primitive, delta_field.key
 
             Docs.update {_id:delta._id},
                 { $set:"#{delta_field.key}_return":test_calc }

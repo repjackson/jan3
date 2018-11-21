@@ -112,8 +112,11 @@ Template.registerHelper 'actions', ()->
         }, {sort:{rank:1}}).fetch()
 
 
-Template.registerHelper 'is_array', ()-> @primative in ['array','multiref']
-
+Template.registerHelper 'is_array', ()->
+    if @primitive
+        @primitive in ['array','multiref']
+    else
+        console.log 'no primitive', @
 Template.registerHelper 'full_mode', ()->
     delta = Docs.findOne type:'delta'
     delta.viewing_detail

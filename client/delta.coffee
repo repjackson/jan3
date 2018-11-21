@@ -395,7 +395,10 @@ Template.delta_card.events
     'click .edit': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set:editing:true
+            $set:
+                editing:true
+                viewing_detail: true
+                detail_id: @_id
 
 
 Template.facet.onRendered ->
