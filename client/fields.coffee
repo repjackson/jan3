@@ -23,7 +23,18 @@ Template.string_edit.events
             $set:
                 "#{t.data.key}": val
 
-
+    'click .slugify': (e,t)->
+        delta = Docs.findOne type:'delta'
+        target_doc = Docs.findOne _id:delta.detail_id
+        val = t.$('.string_val').val()
+        console.log val
+        Meteor.call 'slugify', target_doc.title, (err,res)->
+            if err then console.log err
+            else
+                console.log res
+                Docs.update target_doc._id,
+                    $set:
+                        slug: res
 
 
 Template.number_edit.events
@@ -119,6 +130,10 @@ Template.boolean_edit.helpers
         if bool_value and bool_value is true then 'teal' else 'basic'
 
 Template.string_edit.helpers
+    is_slug: ->
+        @key is 'slug'
+
+
     value: ->
         delta = Docs.findOne type:'delta'
         editing_doc = Docs.findOne _id:delta.detail_id

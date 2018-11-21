@@ -363,8 +363,10 @@ Meteor.methods
             text:"Task was marked incomplete by #{Meteor.user().username}."
 
 
-    slugify: (doc_id, field_object, title)->
+    slugify: (title)->
         slug = title.toString().toLowerCase().replace(/\s+/g, '_').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '_').replace(/^-+/, '').replace(/-+$/,'')
+        console.log 'title', title
+        console.log 'slug', slug
         return slug
         # # Docs.update { _id:doc_id, fields:field_object },
         # Docs.update { _id:doc_id, fields:field_object },

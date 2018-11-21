@@ -106,3 +106,35 @@ green
 rgba(132, 189, 0, 1)
 
 i want the customer account with the ev.ID from the user matching the queryParam username value of customer_jpid
+
+
+
+//*[@id="f_cust_num_days_service"]/select
+<select defaultselected="101884" tabindex="115" name="p_cust_num_days_service" required="">
+value="{NULL}">* None *
+value="446655">3/2 Alternate Weekly
+selected="" value="101884">Special Only
+value="1127">1
+value="1137">2
+value="1132">3
+value="1142">4
+value="1147">5
+value="1152">6
+value="1157">7
+value="70293">1x month - 1st week
+value="70318">1x month - 2nd week
+value="70323">1x month - 3rd week
+value="70328">1x month - 4th week
+value="372190">1x month - last week
+value="70298">2x month - 1st &amp; 3rd
+value="70333">2x month - 2nd &amp; 4th
+value="28982">Biweekly
+value="70313">Weekly
+value="654442">Monthly - 1
+value="654447">Bi Monthly - 2
+value="654452">Quarterly - 3
+value="654457">Bi Annually - 6
+value="654462">Annually 12
+value="654637">3x month: 1st and last week / alternate 3rd in between
+value="654642">1st 3 weeks of every month
+value="654647">Last 3 weeks of every month</select>
