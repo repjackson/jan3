@@ -1,5 +1,5 @@
 if Meteor.isClient
-    Template.set_schema_button.events
+    Template.set_schema_small.events
         'click .set_schema': ->
             delta = Docs.findOne type:'delta'
             card_doc = Template.parentData(4)
@@ -20,15 +20,15 @@ if Meteor.isClient
                     Session.set 'is_calculating', false
 
 
-    Template.bookmark_widget.helpers
+    Template.bookmark_big.helpers
         bookmarked: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then true else false
-    Template.bookmark_widget.events
+    Template.bookmark_big.events
         'click .toggle_bookmark': (e,t)->
             Meteor.call 'user_toggle_list', @, 'bookmark_ids'
 
-    Template.bookmark_pane.onCreated ->
+    Template.bookmark_big.onCreated ->
         @autorun -> Meteor.subscribe 'user_list_users', @data, 'bookmark_ids'
-    Template.bookmark_pane.helpers
+    Template.bookmark_big.helpers
         bookmark_users: ->
             target = Template.currentData()
             if target and target.bookmark_ids
@@ -37,15 +37,15 @@ if Meteor.isClient
 
 
 
-    Template.subscribe.helpers
+    Template.subscribe_small.helpers
         subscribed: -> if @subscribe_ids and Meteor.userId() in @subscribe_ids then true else false
-    Template.subscribe.events
+    Template.subscribe_small.events
         'click .toggle_subscribe': (e,t)->
             Meteor.call 'user_toggle_list', @, 'subscribe_ids'
 
-    Template.subscribe_pane.onCreated ->
+    Template.subscribe_big.onCreated ->
         @autorun -> Meteor.subscribe 'user_list_users', @data, 'subscribe_ids'
-    Template.subscribe_pane.helpers
+    Template.subscribe_big.helpers
         subscribers: ->
             target = Template.currentData()
             if target and target.subscribe_ids
@@ -57,21 +57,21 @@ if Meteor.isClient
 
 
 
-    Template.voting.helpers
+    Template.voting_small.helpers
         upvoted: -> if @upvoter_ids and Meteor.userId() in @upvoter_ids then true else false
         downvoted: -> if @downvoter_ids and Meteor.userId() in @downvoter_ids then true else false
 
         upvote_class: -> if @upvoter_ids and Meteor.userId() in @upvoter_ids then 'green' else false
         downvote_class: -> if @downvoter_ids and Meteor.userId() in @downvoter_ids then 'red' else false
 
-    Template.voting.events
+    Template.voting_small.events
         'click .upvote': (e,t)-> Meteor.call 'upvote', @_id
         'click .downvote': (e,t)-> Meteor.call 'downvote', @_id
 
-    Template.voting_pane.onCreated ->
+    Template.voting_big.onCreated ->
         @autorun -> Meteor.subscribe 'user_list_users', @data, 'upvoter_ids'
         @autorun -> Meteor.subscribe 'user_list_users', @data, 'downvoter_ids'
-    Template.voting_pane.helpers
+    Template.voting_big.helpers
         upvoters: ->
             target = Template.currentData()
             if target and target.upvoter_ids
@@ -84,34 +84,15 @@ if Meteor.isClient
                 Meteor.users.find
                     _id: $in: target.downvoter_ids
 
-
-    # Template.comment_button.helpers
-    #     commentd: -> if @comment_ids and Meteor.userId() in @comment_ids then true else false
-    # Template.comment_button.events
-    #     'click .toggle_comment': (e,t)->
-    #         Meteor.call 'user_toggle_list', @, 'comment_ids'
-
-    Template.comment_pane.onCreated ->
-        @autorun -> Meteor.subscribe 'comments', @data
-    Template.comment_pane.helpers
-        comments: ->
-            target = Template.currentData()
-            if target
-                Docs.find
-                    type:'comment'
-                    parent_id: target._id
-
-
-
-    Template.mark_read_button.helpers
+    Template.mark_read_small.helpers
         read: -> if @read_ids and Meteor.userId() in @read_ids then true else false
-    Template.mark_read_button.events
+    Template.mark_read_small.events
         'click .toggle_read': (e,t)->
             Meteor.call 'user_toggle_list', @, 'read_ids'
 
-    Template.mark_read_pane.onCreated ->
+    Template.mark_read_big.onCreated ->
         @autorun -> Meteor.subscribe 'user_list_users', @data, 'read_ids'
-    Template.mark_read_pane.helpers
+    Template.mark_read_big.helpers
         read_users: ->
             target = Template.currentData()
             if target and target.read_ids
@@ -126,11 +107,11 @@ if Meteor.isClient
 
 
 
-    Template.assignments.onCreated ->
+    Template.assignment_small.onCreated ->
         @autorun => Meteor.subscribe 'user_list_users', @data, 'assigned_ids'
         @user_results = new ReactiveVar( [] )
 
-    Template.assignments.events
+    Template.assignment_big.events
         'click .clear_results': (e,t)->
             t.user_results.set null
 
@@ -160,7 +141,7 @@ if Meteor.isClient
                 Meteor.call 'list_remove_user', Template.currentData()._id, 'assigned_ids', @
 
 
-    Template.assignments.helpers
+    Template.assignment_big.helpers
         ticket_assignment_timestamp: ->
             delta = Docs.findOne type:'delta'
             target =  Docs.findOne delta.detail_id
@@ -181,11 +162,11 @@ if Meteor.isClient
 
     # approval
     #
-    Template.approval.onCreated ->
+    Template.approval_big.onCreated ->
         @autorun => Meteor.subscribe 'user_list_users', @data, 'approver_ids'
         @user_results = new ReactiveVar( [] )
 
-    Template.approval.events
+    Template.approval_big.events
         'click .clear_results': (e,t)->
             t.user_results.set null
 
@@ -212,7 +193,7 @@ if Meteor.isClient
                 Meteor.call 'list_remove_user', Template.currentData()._id, 'approver_ids', @
 
 
-    Template.approval.helpers
+    Template.approval_big.helpers
         ticket_assignment_timestamp: ->
             delta = Docs.findOne type:'delta'
             target =  Docs.findOne delta.detail_id

@@ -1,8 +1,8 @@
 if Meteor.isClient
-    Template.comments.onCreated ->
+    Template.comments_big.onCreated ->
         @autorun => Meteor.subscribe 'comments', @data._id
 
-    Template.comments.helpers
+    Template.comments_big.helpers
         comments: ->
             delta = Docs.findOne type:'delta'
             # if delta
@@ -11,18 +11,18 @@ if Meteor.isClient
                 type:'comment'
 
 
-    Template.comments.onRendered ->
+    Template.comments_big.onRendered ->
         # Meteor.setTimeout ->
         #     $('.ui.accordion').accordion()
         # , 400
 
-    Template.comments.events
+    Template.comments_big.events
         'keyup #new_comment': (e,t)->
-            e.preventDefault()
             delta = Docs.findOne type:'delta'
             if delta
-                text = $('#new_comment').val().trim()
-                if e.which is 13 #enter
+                if e.which is 13
+                    text = $('#new_comment').val().trim()
+                    e.preventDefault()
                     $('#new_comment').val ''
                     new_comment_id =
                         Docs.insert

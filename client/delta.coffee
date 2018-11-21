@@ -261,7 +261,7 @@ Template.delta_card.helpers
             Docs.find({
                 type:'field'
                 schema_slugs: $in: [schema.slug]
-                # view_roles: $in: Meteor.user().roles
+                view_roles: $in: Meteor.user().roles
             }, {sort:{rank:1}}).fetch()
 
     # actions: ->

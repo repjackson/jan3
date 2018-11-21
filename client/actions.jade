@@ -1,30 +1,28 @@
-template(name='set_schema_button')
+template(name='set_schema_small')
     .ui.icon.compact.button.set_schema(title='View Schema')
         // | View
         // i.right.chevron.icon
         +iconsmall name='chevron-right'
 
 
-template(name='bookmark_widget')
+template(name='bookmark_small')
     .ui.small.header
         +icon name='bookmark-ribbon' classes='mini spaced'
         |Bookmarks
-    if full_mode
-        if bookmarked
-            .ui.red.compact.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
-                +iconsmall name='bookmark-ribbon'
-                if full_mode
-                    |Bookmarked
-        else
-            .ui.compact.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
-                // +iconsmall name='bookmark-ribbon'
-                img.ui.inline.image(src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png")
-                if full_mode
-                    |Bookmark
-        +bookmark_pane
 
 
-template(name='bookmark_pane')
+template(name='bookmark_big')
+    if bookmarked
+        .ui.red.compact.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
+            +iconsmall name='bookmark-ribbon'
+            if full_mode
+                |Bookmarked
+    else
+        .ui.compact.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
+            // +iconsmall name='bookmark-ribbon'
+            img.ui.inline.image(src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png")
+            if full_mode
+                |Bookmark
     .ui.list
         each bookmark_users
             +user_list_view
@@ -35,7 +33,7 @@ template(name='bookmark_pane')
 
 
 
-template(name='mark_read_button')
+template(name='mark_read_small')
     .ui.small.header
         +icon name='open-envelope' classes='mini spaced'
         | Read
@@ -49,14 +47,14 @@ template(name='mark_read_button')
                 +iconsmall name='secured-letter'
                 | Unread
 
-template(name='mark_read_pane')
+template(name='mark_read_big')
     .ui.list
         each read_users
             +user_list_view
 
 
 
-template(name='subscribe')
+template(name='subscribe_small')
     .ui.small.header
         +icon name='renew-subscription' classes='mini spaced'
         | Subscriptions
@@ -69,51 +67,19 @@ template(name='subscribe')
             .ui.compact.button.toggle_subscribe(title='Subscribe' class=subscription_class)
                 +iconsmall name='renew-subscription'
                 | Subscribe
-        +subscribe_pane
+        // +subscribe_big
 
 
 
-template(name='subscribe_pane')
+template(name='subscribe_big')
     .ui.list
         each subscribers
             +user_list_view
 
 
 
-template(name='comment_pane')
-    .ui.small.header
-        +icon name='comments' classes='mini spaced'
-        | Comments
-    .ui.list
-        each comments
-            .ui.header #{text}
-    .ui.fluid.left.icon.input
-        i.plus.icon
-        input#new_comment(type='text' placeholder='Add...')
-    .ui.comments
-        each comments
-            .comment
-                a.avatar(href="/user/#{author.username}")
-                    if author.image_id
-                        img.ui.avatar.spaced.image(src="{{c.url author.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                    else
-                        i.user.icon
-                .content
-                    a.author(href="/user/#{author.username}") #{author.username}
-                    .metadata
-                        span.date #{when}
-                    .text
-                        p #{text}
-                    .actions
-                        // a.reply Reply
-                        if is_admin
-                            a.delete_comment delete
 
-
-
-
-
-template(name='voting')
+template(name='voting_small')
     .ui.small.header
         +icon name='leaderboard' classes='mini spaced'
         | Priority
@@ -125,10 +91,10 @@ template(name='voting')
             +iconsmall name='collapse-arrow'
         .ui.icon.compact.button.downvote(class=downvote_class)
             +iconsmall name='expand-arrow'
-        +voting_pane
+        // +voting_big
 
 
-template(name='voting_pane')
+template(name='voting_big')
     .ui.small.header
         +icon name='collapse-arrow' classes='mini spaced'
         |Upvoters
@@ -145,74 +111,76 @@ template(name='voting_pane')
 
 
 
-template(name='assignments')
+template(name='assignment_small')
     .ui.small.header
         +icon name='checked-user-male' classes='mini spaced'
         | Assignments
+
+template(name='assignment_big')
     p(title="{{ from_now ticket_assignment_timestamp }}") Last Assigned {{ long_format ticket_assignment_timestamp }}
-    if full_mode
-        .ui.form
-            .field
-                .ui.icon.input
-                    if user_results
-                        i.link.remove.icon.clear_results
-                    else
-                        i.search.icon
-                    input#multiple_user_select_input(type='text' placeholder='Search Office User')
-            if user_results
-                .ui.segment
-                    .ui.middle.aligned.selection.animated.list
-                        each user_results
-                            .select_user.item
-                                h5.ui.header
-                                    img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                    |#{username}
-            .field
-                .ui.list
-                    each assigned_users
-                        .item
-                            .right.floated.content
-                                i.pull_user.remove.link.icon
-                            .image
+    .ui.form
+        .field
+            .ui.icon.input
+                if user_results
+                    i.link.remove.icon.clear_results
+                else
+                    i.search.icon
+                input#multiple_user_select_input(type='text' placeholder='Search Office User')
+        if user_results
+            .ui.segment
+                .ui.middle.aligned.selection.animated.list
+                    each user_results
+                        .select_user.item
+                            h5.ui.header
                                 img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            .content
-                                h4.ui.header
-                                    |#{first_name} #{last_name}
-                                    small @#{username}
+                                |#{username}
+        .field
+            .ui.list
+                each assigned_users
+                    .item
+                        .right.floated.content
+                            i.pull_user.remove.link.icon
+                        .image
+                            img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            h4.ui.header
+                                |#{first_name} #{last_name}
+                                small @#{username}
 
 
 
 
-template(name='approval')
+template(name='approval_small')
     .ui.small.header
         +icon name='approval' classes='mini spaced'
         | Approval
-    if full_mode
-        .ui.form
-            .field
-                .ui.icon.input
-                    if user_results
-                        i.link.remove.icon.clear_results
-                    else
-                        i.search.icon
-                    input#multiple_user_select_input(type='text' placeholder='Search Office User')
-            if user_results
-                .ui.segment
-                    .ui.middle.aligned.selection.animated.list
-                        each user_results
-                            .select_user.item
-                                h5.ui.header
-                                    img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                    |#{username}
-            .field
-                .ui.list
-                    each assigned_users
-                        .item
-                            .right.floated.content
-                                i.pull_user.remove.link.icon
-                            .image
+
+template(name='approval_big')
+    .ui.form
+        .field
+            .ui.icon.input
+                if user_results
+                    i.link.remove.icon.clear_results
+                else
+                    i.search.icon
+                input#multiple_user_select_input(type='text' placeholder='Search Office User')
+        if user_results
+            .ui.segment
+                .ui.middle.aligned.selection.animated.list
+                    each user_results
+                        .select_user.item
+                            h5.ui.header
                                 img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            .content
-                                h4.ui.header
-                                    |#{first_name} #{last_name}
-                                    small @#{username}
+                                |#{username}
+        .field
+            .ui.list
+                each assigned_users
+                    .item
+                        .right.floated.content
+                            i.pull_user.remove.link.icon
+                        .image
+                            img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        .content
+                            h4.ui.header
+                                |#{first_name} #{last_name}
+                                small @#{username}

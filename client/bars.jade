@@ -86,15 +86,15 @@ template(name='rightbar')
                 +icon name='workflow' classes='mini centered'
                 | SLA Settings
         a.item(href='#')
-            // .ui.compact.icon.button.delete_delta(title='Clear Session')
-            //     i.remove.icon
-            //     |Clear
-            // .ui.compact.icon.button.run_fo(title='Reload Session')
-            //     i.refresh.icon
-            //     // |Reset
-            // if is_dev
-            //     .ui.icon.compact.button.show_delta
-            //         i.code.icon
+            .ui.compact.icon.button.delete_delta(title='Clear Session')
+                i.remove.icon
+                |Clear
+            .ui.compact.icon.button.run_fo(title='Reload Session')
+                i.refresh.icon
+                // |Reset
+            if is_dev
+                .ui.icon.compact.button.show_delta
+                    i.code.icon
         a.item(href='#')
             #logout.sixteen.wide.column
                 .ui.inverted.small.header

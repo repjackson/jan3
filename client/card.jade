@@ -56,13 +56,13 @@ template(name='delta_card')
                                             if icon
                                                 i.large.icon
                                                     +icon name=icon
-                                            | #{title}
+                                            strong #{title}
                                             |&nbsp;
                                             if is_array
                                                 each value
                                                     .ui.basic.label #{this}
                                             else
-                                                strong #{value}
+                                                | #{value}
             if delta.editing
                 .content
                     .ui.stackable.two.column.grid
@@ -75,9 +75,12 @@ template(name='delta_card')
                 //     each fields
                 //         .field
                 //             +field_view
-            // unless delta.editing
-            //     each actions
-            //         .content
-            //             .ui.header #{title}
-            //             +Template.dynamic template=action_pane_template data=detail_doc
+            unless delta.editing
+                .content
+                    each actions
+                        if full_mode
+                            +Template.dynamic template=action_big_template data=detail_doc
+                        else
+                            +Template.dynamic template=action_small_template data=detail_doc
+
 

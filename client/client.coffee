@@ -21,6 +21,14 @@ Template.registerHelper 'cell_value', () ->
     @["#{cell_object.key}"]
 
 
+
+Template.registerHelper 'action_big_template', () -> "#{@slug}_big"
+
+
+Template.registerHelper 'action_small_template', () -> "#{@slug}_small"
+
+
+
 # Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
 
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()
@@ -115,8 +123,8 @@ Template.registerHelper 'actions', ()->
 Template.registerHelper 'is_array', ()->
     if @primitive
         @primitive in ['array','multiref']
-    else
-        console.log 'no primitive', @
+    # else
+    #     console.log 'no primitive', @
 Template.registerHelper 'full_mode', ()->
     delta = Docs.findOne type:'delta'
     delta.viewing_detail

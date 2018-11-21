@@ -135,11 +135,17 @@ Meteor.methods
             example_value = example_doc?["#{delta_field.key}"]
             primitive = typeof example_value
 
-            test_calc = Meteor.call 'agg', built_query, delta_field.primitive, delta_field.key
+            if delta_field.primitive
+                test_calc = Meteor.call 'agg', built_query, delta_field.primitive, delta_field.key
+            else
+                console.log 'no primitive', delta_field
+            if delta_field.key
+                Docs.update {_id:delta._id},
+                    { $set:"#{delta_field.key}_return":test_calc }
+                    , ->
+            else
+                console.log 'no delta field key', delta_field
 
-            Docs.update {_id:delta._id},
-                { $set:"#{delta_field.key}_return":test_calc }
-                , ->
 
         calc_page_size = if delta.page_size then delta.page_size else 10
 
@@ -178,6 +184,8 @@ Meteor.methods
 
 
     agg: (query, type, key)->
+        # console.log query
+        # console.log type
         options = {
             explain:false
             }

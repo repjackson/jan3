@@ -7,7 +7,7 @@ template(name='boolean_edit')
             i.icon
                 +icon name=icon
         |#{title}
-    .ui.compact.button.toggle_field(class=bool_switch_class title=key)
+    .ui.compact.margined.button.toggle_field(class=bool_switch_class title=key)
         if icon
             i.icon
                 +icon name=icon
@@ -47,7 +47,7 @@ template(name='multiref_edit')
             +icon name=icon classes='inline spaced'
         |#{title}
     each choices
-        .ui.compact.button.toggle_element(class=element_class)
+        .ui.compact.margined.button.toggle_element(class=element_class)
             if icon
                 i.icon
                     +icon name=icon
@@ -61,7 +61,7 @@ template(name='ref_edit')
             +icon name=icon classes='inline spaced'
         |#{title}
     each choices
-        .ui.compact.button.choose_element(class=element_class)
+        .ui.compact.margined.button.choose_element(class=element_class)
             if icon
                 i.icon
                     +icon name=icon

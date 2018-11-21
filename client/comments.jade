@@ -1,28 +1,27 @@
-template(name='comments')
+template(name='comments_big')
     .ui.small.header
         +icon name='comments'
         |#{comment_count} Comments
-    if full_mode
-        .ui.fluid.left.icon.input
-            i.plus.icon
-            input#new_comment(type='text' placeholder='Add...')
-        .ui.comments
-            each comments
-                .comment
-                    a.avatar(href="/user/#{author.username}")
-                        if author.image_id
-                            img.ui.avatar.spaced.image(src="{{c.url author.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        else
-                            i.user.icon
-                    .content
-                        a.author(href="/user/#{author.username}") #{author.username}
-                        .metadata
-                            span.date #{when}
-                        .text
-                            p #{text}
-                        .actions
-                            // a.reply Reply
-                            a.delete_comment
-                                i.trash.icon
-                            a.vote_up
-                                i.thumbs.up.icon
+    .ui.fluid.left.icon.input
+        i.plus.icon
+        input#new_comment(type='text' placeholder='Add...')
+    .ui.comments
+        each comments
+            .comment
+                a.avatar(href="/user/#{author.username}")
+                    if author.image_id
+                        img.ui.avatar.spaced.image(src="{{c.url author.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    else
+                        i.user.icon
+                .content
+                    a.author(href="/user/#{author.username}") #{author.username}
+                    .metadata
+                        span.date #{when}
+                    .text
+                        p #{text}
+                    .actions
+                        // a.reply Reply
+                        a.delete_comment
+                            i.trash.icon
+                        a.vote_up
+                            i.thumbs.up.icon
