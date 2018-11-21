@@ -27,11 +27,9 @@ Template.string_edit.events
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
         val = t.$('.string_val').val()
-        console.log val
         Meteor.call 'slugify', target_doc.title, (err,res)->
             if err then console.log err
             else
-                console.log res
                 Docs.update target_doc._id,
                     $set:
                         slug: res

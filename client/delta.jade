@@ -31,7 +31,7 @@ template(name='delta')
                                 if is_dev
                                     +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
                                 if can_add
-                                    .ui.fluid.small.button.add_doc
+                                    .ui.fluid.button.add_doc
                                         i.plus.icon
                                         | #{current_type.title}
 
@@ -62,8 +62,8 @@ template(name='toggle_delta_config')
 
 
 template(name='set_page_size')
-    .one.wide.center.aligned.pointer.column.rounded.set_page_size(class=page_size_class title='Page Size')
-        strong #{value}
+    .ui.compact.icon.button.set_page_size(class=page_size_class title='Page Size')
+        .middle.aligned #{value}
 
 template(name='set_delta_key')
     .ui.button.set_delta_key(class=set_delta_key_class)

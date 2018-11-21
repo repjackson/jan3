@@ -53,11 +53,13 @@ template(name='delta_results')
                                     | #{delta.total} Results
                                 .three.wide.column
                                     if show_page_down
-                                        a.page_down.pointer(title='Previous Page')
-                                            +icon name='chevron-left' classes='mini spaced'
+                                        .ui.icon.button.page_down(title='Previous Page')
+                                            i.left.chevron.icon
+                                            // +icon name='chevron-left' classes='mini spaced'
                                     if show_page_up
-                                        a.page_up.pointer(title='Next Page')
-                                            +icon name='chevron-right' classes='mini spaced'
+                                        .ui.icon.button.page_up(title='Next Page')
+                                            i.right.chevron.icon
+                                            // +icon name='chevron-right' classes='mini spaced'
                                 // .two.wide.column.set_grid_view(class=grid_view_class title='Grid View')
                                 //     +icon name='activity-grid-2' classes='mini centered'
                                 // .two.wide.column.set_list_view(class=list_view_class title='List View')
