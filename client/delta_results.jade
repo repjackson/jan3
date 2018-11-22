@@ -3,40 +3,15 @@ template(name='delta_results')
     .twelve.wide.column
         // +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand Cards'
         if delta.config_mode
-            .scrolling
-                .ui.header
-                    +icon name='administrative-tools'
-                    | Edit Schema '#{current_type.title}'
-                unless delta.viewing_detail
-                    .ui.accordion
-                        .active.title
-                            .ui.small.header
-                                +icon name='rename'
-                                |Fields
-                        .active.content
-                            .ui.button.add_field
-                                i.plus.icon
-                                | Field
-                            .ui.cards
-                                each schema_fields
-                                    +delta_card data=_id
-                    .ui.hidden.divider
-                    .ui.accordion
-                        .active.title
-                            .ui.small.header
-                                +icon name='component'
-                                | Parts
-                        .active.content
-                            .ui.button.add_action
-                                i.plus.icon
-                                | Part
-                            .ui.cards
-                                each schema_parts
-                                    +delta_card data=_id
-                else
-                    with delta.detail_id
-                        +delta_card
-
+            .ui.header
+                +icon name='administrative-tools'
+                | Edit Schema '#{current_type.title}' Blocks
+            .ui.button.add_block
+                i.plus.icon
+                | Block
+            .ui.cards
+                each schema_blocks
+                    +delta_card data=_id
         else
             if delta.result_ids
                 if delta.result_ids.length
@@ -59,16 +34,6 @@ template(name='delta_results')
                                     if show_page_up
                                         .ui.icon.button.page_up(title='Next Page')
                                             i.right.chevron.icon
-                                            // +icon name='chevron-right' classes='mini spaced'
-                                // .two.wide.column.set_grid_view(class=grid_view_class title='Grid View')
-                                //     +icon name='activity-grid-2' classes='mini centered'
-                                // .two.wide.column.set_list_view(class=list_view_class title='List View')
-                                //     +icon name='menu' classes='mini centered'
-                                // .two.wide.column.set_table_view(class=table_view_class title='Table View')
-                                //     +icon name='data-sheet-filled' classes='mini centered'
-                                // .two.wide.column.delta_selector
-                                //     +icon name='double-down' classes='mini centered'
-                        // .ui.hidden.divider
                     if is_calculating
                         .ui.hidden.divider
                         .ui.active.indeterminate.massive.centered.inline.loader

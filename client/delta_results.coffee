@@ -45,21 +45,21 @@ Template.delta_results.helpers
         delta = Docs.findOne type:'delta'
         delta.current_page < delta.page_amount
 
-    field_fields: ->
+    block_blocks: ->
         Docs.find({
-            type:'field'
-            schema_slugs: $in: ['field']
+            type:'block'
+            schema_slugs: $in: ['block']
         }, {sort:{rank:1}}).fetch()
 
 
-    schema_fields: ->
+    schema_blocks: ->
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
-        fields = Docs.find({
-            type:'field'
+        blocks = Docs.find({
+            type:'block'
             schema_slugs: $in: [current_type]
         }, {sort:{rank:1}}).fetch()
-        fields
+        blocks
 
     schema_parts: ->
         delta = Docs.findOne type:'delta'
@@ -128,11 +128,11 @@ Template.delta_results.events
 
 
 
-    'click .add_field': (e,t)->
+    'click .add_block': (e,t)->
         delta = Docs.findOne type:'delta'
         type = delta.filter_type[0]
         Docs.insert
-            type:'field'
+            type:'block'
             schema_slugs:[type]
         Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->

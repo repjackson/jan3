@@ -128,11 +128,12 @@ template(name='delta_card')
                 i.caret.down.large.icon
             .ui.big.icon.button.edit
                 i.blue.pencil.icon
-            .content
+            .ui.stackable.four.cards
                 each parts
-                    +Template.dynamic template=part_big_template data=local_doc
-            unless delta.editing
-                .ui.stackable.four.cards
+                    .card
+                        .content
+                            +Template.dynamic template=part_big_template data=local_doc
+                unless delta.editing
                     each field_docs
                         if value
                             .card
@@ -150,3 +151,11 @@ template(name='delta_card')
                                                 .ui.basic.label #{this}
                                         else
                                             | #{value}
+                if delta.editing
+                    .ui.stackable.four.cards
+                        each edit_fields
+                            .card
+                                .content
+                                    +field_edit
+
+                                    // .ui.hidden.divider
