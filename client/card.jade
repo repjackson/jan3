@@ -1,91 +1,152 @@
+// template(name='delta_card')
+//     // if full_mode
+//     //     // if delta.editing
+//     //     //     .ui.center.aligned.large.header
+//     //     //         if detail_doc.icon
+//     //     //             i.large.icon
+//     //     //                 +icon name=detail_doc.icon
+//     //     //         else
+//     //     //             i.large.icon
+//     //     //                 +icon name='pencil'
+//     //     //         | Edit #{detail_doc.title} #{current_type.title}
+//     //     unless delta.editing
+//     //         .ui.center.aligned.large.header
+//     //             if detail_doc.icon
+//     //                 i.icon
+//     //                     +icon name=detail_doc.icon
+//     //             |'#{detail_doc.title}' Details
+
+//     .ui.card.delta_card(class=delta_card_class)
+//         with local_doc
+//             .content
+//                 if delta.editing
+//                     em Edit
+//                 strong
+//                     if icon
+//                         +icon name=icon classes='spaced mini'
+//                 if doc_header_fields
+//                     each doc_header_fields
+//                         strong #{value}
+//                         |&nbsp;
+//             .content
+//                 if delta.editing
+//                     .ui.green.big.icon.button.save
+//                         i.large.checkmark.icon
+//                     .ui.red.icon.button.remove_doc
+//                         i.remove.icon
+//                 else if full_mode
+//                     .ui.big.icon.button.toggle_full
+//                         i.caret.down.large.icon
+//                     .ui.big.icon.button.edit
+//                         i.blue.pencil.icon
+//                 else
+//                     .ui.icon.button.edit
+//                         i.blue.pencil.icon
+//                     .ui.icon.button.toggle_full
+//                         i.caret.up.large.icon
+//             unless full_mode
+
+//     unless delta.editing
+//         .ui.stackable.four.cards
+//             each field_docs
+//                 if local_doc.value
+//                     .card
+//                         if field_template
+//                             +Template.dynamic template=local_doc.field_template data=local_doc
+//                         else
+//                             .content
+//                                 if icon
+//                                     i.large.icon
+//                                         +icon name=icon
+//                                 strong #{title}
+//                                 |&nbsp;
+//                                 if is_array
+//                                     each value
+//                                         .ui.basic.label #{this}
+//                                 else
+//                                     | #{value}
+//     if delta.editing
+//         .ui.stackable.four.cards
+//             each edit_fields
+//                 .card
+//                     .content
+//                         +field_edit
+
+//                         // .ui.hidden.divider
+//                 // else
+//                 //     each fields
+//                 //         .field
+//                 //             +field_view
+//     unless delta.editing
+//         if full_mode
+//             .ui.four.centered.stackable.cards
+//                 each parts
+//                     .card
+//                         .content
+//                             +Template.dynamic template=action_big_template data=detail_doc
+
+
 template(name='delta_card')
-    if full_mode
-        // if delta.editing
-        //     .ui.center.aligned.large.header
-        //         if detail_doc.icon
-        //             i.large.icon
-        //                 +icon name=detail_doc.icon
-        //         else
-        //             i.large.icon
-        //                 +icon name='pencil'
-        //         | Edit #{detail_doc.title} #{current_type.title}
-        unless delta.editing
-            .ui.center.aligned.large.header
-                if detail_doc.icon
-                    i.icon
-                        +icon name=detail_doc.icon
-                |'#{detail_doc.title}' Details
-    .ui.card.delta_card(class=delta_card_class)
-        with local_doc
-            .content
-                if delta.editing
-                    em Edit
-                strong
-                    if icon
-                        +icon name=icon classes='spaced mini'
-                if doc_header_fields
-                    each doc_header_fields
-                        strong #{value}
-                        |&nbsp;
-            .content
-                if delta.editing
-                    .ui.green.big.icon.button.save
-                        i.large.checkmark.icon
-                    .ui.red.icon.button.remove_doc
-                        i.remove.icon
-                else if full_mode
-                    .ui.big.icon.button.toggle_full
-                        i.caret.down.large.icon
-                    .ui.big.icon.button.edit
-                        i.blue.pencil.icon
-                else
-                    .ui.icon.button.edit
-                        i.blue.pencil.icon
-                    .ui.icon.button.toggle_full
-                        i.caret.up.large.icon
-            unless delta.editing
+    with local_doc
+        unless full_mode
+            .ui.card.delta_card(class=delta_card_class)
                 .content
-                    .ui.list
-                        each field_docs
-                            if value
-                                .item
-                                    if field_template
-                                        +Template.dynamic template=field_template data=local_doc
-                                    else
-                                        .content
-                                            if icon
-                                                i.large.icon
-                                                    +icon name=icon
-                                            strong #{title}
-                                            |&nbsp;
-                                            if is_array
-                                                each value
-                                                    .ui.basic.label #{this}
-                                            else
-                                                | #{value}
-    if delta.editing
-        .ui.stackable.four.cards
-            each edit_fields
-                .card
-                    .content
-                        +field_edit
+                    if delta.editing
+                        .ui.green.big.icon.button.save
+                            i.large.checkmark.icon
+                        .ui.red.icon.button.remove_doc
+                            i.remove.icon
+                    else
+                        .ui.icon.button.edit
+                            i.blue.pencil.icon
+                        .ui.icon.button.toggle_full
+                            i.caret.up.large.icon
+                .content
+                    each field_docs
+                        if value
+                            .card
+                                if field_template
+                                    +Template.dynamic template=local_doc.field_template data=local_doc
+                                else
+                                    .content
+                                        if icon
+                                            i.large.icon
+                                                +icon name=icon
+                                        strong #{title}
+                                        |&nbsp;
+                                        if is_array
+                                            each value
+                                                .ui.basic.label #{this}
+                                        else
+                                            | #{value}
 
-                        // .ui.hidden.divider
-                // else
-                //     each fields
-                //         .field
-                //             +field_view
-            unless delta.editing
-                unless full_mode
-                    .content
-                        each parts
-                            +Template.dynamic template=action_small_template data=local_doc
-    unless delta.editing
+                .content
+                    each parts
+                        +Template.dynamic template=part_small_template data=local_doc
         if full_mode
-            .ui.four.centered.stackable.cards
+            .ui.big.icon.button.toggle_full
+                i.caret.down.large.icon
+            .ui.big.icon.button.edit
+                i.blue.pencil.icon
+            .content
                 each parts
-                    .card
-                        .content
-                            +Template.dynamic template=action_big_template data=detail_doc
-
-
+                    +Template.dynamic template=part_big_template data=local_doc
+            unless delta.editing
+                .ui.stackable.four.cards
+                    each field_docs
+                        if value
+                            .card
+                                if field_template
+                                    +Template.dynamic template=local_doc.field_template data=local_doc
+                                else
+                                    .content
+                                        if icon
+                                            i.large.icon
+                                                +icon name=icon
+                                        strong #{title}
+                                        |&nbsp;
+                                        if is_array
+                                            each value
+                                                .ui.basic.label #{this}
+                                        else
+                                            | #{value}

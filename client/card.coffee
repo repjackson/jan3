@@ -134,11 +134,6 @@ Template.delta_card.helpers
 
 
 Template.delta_card.helpers
-    card_template: ->
-        doc = Docs.findOne @valueOf()
-        if doc and doc.type
-            if doc.type is 'task' then 'task_card' else 'delta_card'
-
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail then 'fluid blue raised' else ''

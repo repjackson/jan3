@@ -22,10 +22,10 @@ Template.registerHelper 'cell_value', () ->
 
 
 
-Template.registerHelper 'action_big_template', () -> "#{@slug}_big"
+Template.registerHelper 'part_big_template', () -> "#{@slug}_big"
 
 
-Template.registerHelper 'action_small_template', () -> "#{@slug}_small"
+Template.registerHelper 'part_small_template', () -> "#{@slug}_small"
 
 
 

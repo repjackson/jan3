@@ -78,7 +78,7 @@ template(name='delta_results')
                                 +delta_card
                         else
                             .scrolling.delta_cards
-                                .ui.cards(class=cards_class)
+                                .ui.stackable.cards(class=cards_class)
                                     each delta.result_ids
                                         +delta_card
             else
