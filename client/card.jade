@@ -91,47 +91,57 @@ template(name='delta_card')
         unless full_mode
             .ui.card.delta_card(class=delta_card_class)
                 .content
-                    if delta.editing
-                        .ui.green.big.icon.button.save
-                            i.large.checkmark.icon
-                        .ui.red.icon.button.remove_doc
-                            i.remove.icon
-                    else
-                        .ui.icon.button.edit
-                            i.blue.pencil.icon
-                        .ui.icon.button.toggle_full
-                            i.caret.up.large.icon
+                    if icon
+                        i.large.icon
+                            +icon name=icon
+                    strong #{title}
+
+                .content
+                    .ui.icon.button.edit
+                        i.blue.pencil.icon
+                    .ui.icon.button.toggle_full
+                        i.caret.up.large.icon
                 .content
                     each block_docs
                         if value
                             .card
-                                // if local_doc.template
-                                //     +Template.dynamic template=local_doc.template data=local_doc
-                                // else
-                                .content
-                                    if icon
-                                        i.icon
-                                            +icon name=icon
-                                    strong #{title}
-                                    |&nbsp;
-                                    if is_array
-                                        each value
-                                            .ui.basic.label #{this}
-                                    else
-                                        | #{value}
+                                if local_doc.template
+                                    +Template.dynamic template=local_doc.template data=local_doc
+                                else
+                                    .content
+                                        if icon
+                                            i.icon
+                                                +icon name=icon
+                                        strong #{title}
+                                        |&nbsp;
+                                        if is_array
+                                            each value
+                                                .ui.basic.label #{this}
+                                        else
+                                            | #{value}
 
                 .content
                     each block_docs
                         +Template.dynamic template=block_small_template data=local_doc
         if full_mode
-            .ui.big.icon.button.toggle_full
-                i.caret.down.large.icon
-            .ui.big.icon.button.edit
-                i.blue.pencil.icon
+            if delta.editing
+                .ui.green.big.icon.button.save
+                    i.large.checkmark.icon
+                .ui.red.icon.button.remove_doc
+                    i.remove.icon
+            else
+                .ui.big.icon.button.toggle_full
+                    i.caret.down.large.icon
+                .ui.big.icon.button.edit
+                    i.blue.pencil.icon
             .ui.stackable.four.cards
                 each blocks
                     .card
                         .content
+                            if icon
+                                i.large.icon
+                                    +icon name=icon
+                            strong #{title}
                             +Template.dynamic template=block_big_template data=local_doc
                 unless delta.editing
                     each block_docs
