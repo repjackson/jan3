@@ -18,15 +18,15 @@ Meteor.publish 'my_schemas', ->
             )
 
 
-Meteor.publish 'schema_fields', ->
+Meteor.publish 'schema_blocks', ->
     delta = Docs.findOne
         type:'delta'
         author_id: Meteor.userId()
     if delta and delta.filter_type
         current_type = delta.filter_type[0]
         Docs.find
-            type:'field'
-            schema_slugs:$in:[current_type, 'field']
+            type:'block'
+            schema_slugs:$in:[current_type, 'block']
 
 Meteor.publish 'schema_parts', ->
     delta = Docs.findOne
@@ -37,7 +37,7 @@ Meteor.publish 'schema_parts', ->
         current_type = delta.filter_type?[0]
         Docs.find
             type:'part'
-            schema_slugs:$in:[current_type, 'field']
+            schema_slugs:$in:[current_type, 'block']
 
 Meteor.publish 'schema', ->
     delta = Docs.findOne
@@ -58,7 +58,7 @@ Meteor.methods
 
         current_type = delta.filter_type?[0]
 
-        delta_fields = []
+        delta_blocks = []
 
         if delta.filter_type and delta.filter_type.length > 0
             schema =
@@ -66,9 +66,9 @@ Meteor.methods
                     type:'schema'
                     slug:current_type
             if schema
-                delta_fields =
+                delta_blocks =
                     Docs.find(
-                        type:'field'
+                        type:'block'
                         schema_slugs:$in:[current_type]
                         faceted:true
                     ).fetch()
@@ -77,25 +77,25 @@ Meteor.methods
 
         built_query = {}
 
-        delta_fields.push
+        delta_blocks.push
             key:'type'
             primitive:'string'
 
         filter_keys = []
-        for filter in delta_fields
+        for filter in delta_blocks
             unless filter.key in filter_keys
                 filter_keys.push filter.key
 
-        for delta_field in delta_fields
-            filter_list = delta["filter_#{delta_field.key}"]
+        for delta_block in delta_blocks
+            filter_list = delta["filter_#{delta_block.key}"]
             if filter_list and filter_list.length > 0
-                if delta_field.primitive is 'array'
-                    built_query["#{delta_field.key}"] = $all: filter_list
+                if delta_block.primitive is 'array'
+                    built_query["#{delta_block.key}"] = $all: filter_list
                 else
-                    built_query["#{delta_field.key}"] = $in: filter_list
+                    built_query["#{delta_block.key}"] = $in: filter_list
             else
                 Docs.update delta._id,
-                    $set: "filter_#{delta_field.key}":[]
+                    $set: "filter_#{delta_block.key}":[]
 
 
 
@@ -128,23 +128,23 @@ Meteor.methods
 
         total = Docs.find(built_query).count()
 
-        for delta_field in delta_fields
+        for delta_block in delta_blocks
             values = []
             key_return = []
-            example_doc = Docs.findOne({"#{delta_field.key}":$exists:true})
-            example_value = example_doc?["#{delta_field.key}"]
+            example_doc = Docs.findOne({"#{delta_block.key}":$exists:true})
+            example_value = example_doc?["#{delta_block.key}"]
             primitive = typeof example_value
 
-            if delta_field.primitive
-                test_calc = Meteor.call 'agg', built_query, delta_field.primitive, delta_field.key
+            if delta_block.primitive
+                test_calc = Meteor.call 'agg', built_query, delta_block.primitive, delta_block.key
             else
-                console.log 'no primitive', delta_field
-            if delta_field.key
+                console.log 'no primitive', delta_block
+            if delta_block.key
                 Docs.update {_id:delta._id},
-                    { $set:"#{delta_field.key}_return":test_calc }
+                    { $set:"#{delta_block.key}_return":test_calc }
                     , ->
             else
-                console.log 'no delta field key', delta_field
+                console.log 'no delta block key', delta_block
 
 
         calc_page_size = if delta.page_size then delta.page_size else 10
@@ -158,7 +158,7 @@ Meteor.methods
         results_cursor =
             Docs.find( built_query,
                 {
-                    fields:_id:1
+                    blocks:_id:1
                     limit:calc_page_size
                     sort:"#{delta.sort_key}":delta.sort_direction
                     skip:skip_amount

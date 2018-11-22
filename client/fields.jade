@@ -1,4 +1,4 @@
-template(name='field_edit')
+template(name='block_edit')
     +Template.dynamic template=edit_template
 
 template(name='boolean_edit')
@@ -109,15 +109,15 @@ template(name='textarea')
 
 
 
-template(name='edit_field_text')
+template(name='edit_block_text')
     .ui.labeled.fluid.input
         .ui.basic.label(title=key) #{label}
-        input.text_val(type='text' value=field_value)
+        input.text_val(type='text' value=block_value)
 
-template(name='edit_field_number')
+template(name='edit_block_number')
     .ui.labeled.fluid.input
         .ui.basic.label(title=key) #{label}
-        input.number_val(type='number' value=field_value)
+        input.number_val(type='number' value=block_value)
 
 template(name='textarea_edit')
     .ui.small.header
@@ -150,11 +150,11 @@ template(name='date_edit')
         input.date_val(type='date' value=value)
 
 
-template(name='field_view')
+template(name='block_view')
     if value
         .item
-            if field_template
-                +Template.dynamic template=field_template
+            if block_template
+                +Template.dynamic template=block_template
             else
                 if icon
                     i.icon

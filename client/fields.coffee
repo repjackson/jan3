@@ -1,5 +1,5 @@
 Template.boolean_edit.events
-    'click .toggle_field': (e,t)->
+    'click .toggle_block': (e,t)->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
         bool_value = target_doc["#{@key}"]
@@ -101,17 +101,17 @@ Template.array.events
     'click .pull_element': (e,t)->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
-        field_doc = Template.currentData()
+        block_doc = Template.currentData()
 
         Docs.update target_doc._id,
             $pull:
-                "#{field_doc.key}": @valueOf()
+                "#{block_doc.key}": @valueOf()
 
 
 
 
 
-Template.field_edit.helpers
+Template.block_edit.helpers
     can_edit: -> @editable
 
     edit_template: ->
@@ -147,7 +147,7 @@ Template.date_edit.helpers
         # console.log 'target doc', editing_doc
         value = editing_doc?["#{@key}"]
 
-Template.field_view.helpers
+Template.block_view.helpers
     value: ->
         delta = Docs.findOne type:'delta'
         editing_doc = Docs.findOne _id:delta.detail_id
@@ -214,22 +214,22 @@ Template.multiref_edit.events
     'click .toggle_element': (e,t)->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
-        editing_field = Template.currentData().key
+        editing_block = Template.currentData().key
         value =
             if @key then @key
             else if @slug then @slug
             else if @username then @username
         if target_doc and value
-            if target_doc["#{editing_field}"]
-                if value in target_doc["#{editing_field}"]
+            if target_doc["#{editing_block}"]
+                if value in target_doc["#{editing_block}"]
                     Docs.update target_doc._id,
-                        $pull:"#{editing_field}": value
+                        $pull:"#{editing_block}": value
                 else
                     Docs.update target_doc._id,
-                        $addToSet:"#{editing_field}": value
+                        $addToSet:"#{editing_block}": value
             else
                 Docs.update target_doc._id,
-                    $addToSet:"#{editing_field}": value
+                    $addToSet:"#{editing_block}": value
 
 
 
@@ -238,14 +238,14 @@ Template.ref_edit.events
     'click .choose_element': (e,t)->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
-        editing_field = Template.currentData().key
+        editing_block = Template.currentData().key
         value =
             if @key then @key
             else if @slug then @slug
             else if @username then @username
 
         Docs.update target_doc._id,
-            $set:"#{editing_field}": value
+            $set:"#{editing_block}": value
 
 Template.ref_edit.helpers
     choices: ->
@@ -292,26 +292,26 @@ Template.textarea.events
 
 
 
-Template.edit_field_number.helpers
-    field_value: ->
+Template.edit_block_number.helpers
+    block_value: ->
         field = Template.parentData()
         field["#{@key}"]
 
 
-Template.edit_field_number.events
+Template.edit_block_number.events
     'change .number_val': (e,t)->
         number_value = parseInt e.currentTarget.value
         # console.log @filter_id
         Docs.update @filter_id,
             { $set: "#{@key}": number_value }
 
-Template.edit_field_text.helpers
-    field_value: ->
+Template.edit_block_text.helpers
+    block_value: ->
         field = Template.parentData()
         field["#{@key}"]
 
 
-Template.edit_field_text.events
+Template.edit_block_text.events
     'change .text_val': (e,t)->
         text_value = e.currentTarget.value
         # console.log @filter_id

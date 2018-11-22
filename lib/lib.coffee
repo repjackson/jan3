@@ -117,23 +117,3 @@ Docs.helpers
 
 
 
-Meteor.methods
-    move: (doc_id, array, from_index, to_index)->
-        array.splice(to_index, 0, array.splice(from_index, 1)[0] );
-        Docs.update doc_id,
-            $set: fields: array
-
-
-    update_block_field: (block_doc_id, field_object, key, value)->
-        Docs.update { _id:block_doc_id, fields:field_object },
-            { $set: "fields.$.#{key}": value }
-
-
-    remove_block_field_object: (block_doc_id, field_object)->
-        Docs.update { _id:block_doc_id },
-            { $pull: "fields": field_object }
-
-
-    update_row_key: (page_doc_id, row_object, key, value)->
-        Docs.update { _id:page_doc_id, rows:row_object },
-            { $set: "rows.$.#{key}": value }

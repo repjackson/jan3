@@ -22,10 +22,10 @@ Template.registerHelper 'cell_value', () ->
 
 
 
-Template.registerHelper 'part_big_template', () -> "#{@slug}_big"
+Template.registerHelper 'block_big_template', () -> "#{@slug}_big"
 
 
-Template.registerHelper 'part_small_template', () -> "#{@slug}_small"
+Template.registerHelper 'block_small_template', () -> "#{@slug}_small"
 
 
 
@@ -97,24 +97,24 @@ Template.registerHelper 'is_eric', ()->
 
 
 
-Template.registerHelper 'parts', ()->
+Template.registerHelper 'blocks', ()->
     delta = Docs.findOne type:'delta'
     local_doc =
         if @data
             Docs.findOne @data.valueOf()
         else
             Docs.findOne @valueOf()
-    if local_doc?.type is 'field'
+    if local_doc?.type is 'block'
         Docs.find({
-            type:'part'
-            schema_slugs: $in: ['field']
+            type:'block'
+            schema_slugs: $in: ['block']
         }, {sort:{rank:1}}).fetch()
     else
         schema = Docs.findOne
             type:'schema'
             slug:delta.filter_type[0]
         Docs.find({
-            type:'part'
+            type:'block'
             # visible:true
             schema_slugs: $in: [schema.slug]
         }, {sort:{rank:1}}).fetch()
@@ -184,10 +184,10 @@ Template.registerHelper 'has_user_customer_jpid', () ->
 Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
 
 
-Template.registerHelper 'block_field_value', ->
+Template.registerHelper 'block_block_value', ->
     sla_setting = Template.parentData(0)
-    field_key = Template.parentData(3).key
-    value = sla_setting["#{field_key}"]
+    block_key = Template.parentData(3).key
+    value = sla_setting["#{block_key}"]
 
 
 Template.registerHelper 'owner', () ->
