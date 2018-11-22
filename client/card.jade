@@ -31,7 +31,7 @@ template(name='delta_card')
                 if delta.editing
                     .ui.green.big.icon.button.save
                         i.large.checkmark.icon
-                    .ui.red.icon.compact.button.remove_doc
+                    .ui.red.icon.button.remove_doc
                         i.remove.icon
                 else if full_mode
                     .ui.big.icon.button.toggle_full
@@ -41,7 +41,7 @@ template(name='delta_card')
                 else
                     .ui.icon.button.edit
                         i.blue.pencil.icon
-                    .ui.icon.compact.button.toggle_full
+                    .ui.icon.button.toggle_full
                         i.caret.up.large.icon
             unless delta.editing
                 .content
@@ -63,12 +63,12 @@ template(name='delta_card')
                                                     .ui.basic.label #{this}
                                             else
                                                 | #{value}
-            if delta.editing
-                .content
-                    .ui.stackable.two.column.grid
-                        each edit_fields
-                            .column
-                                +field_edit
+    if delta.editing
+        .ui.stackable.four.cards
+            each edit_fields
+                .card
+                    .content
+                        +field_edit
 
                         // .ui.hidden.divider
                 // else
@@ -82,7 +82,7 @@ template(name='delta_card')
                             +Template.dynamic template=action_small_template data=local_doc
     unless delta.editing
         if full_mode
-            .ui.two.centered.cards
+            .ui.four.centered.stackable.cards
                 each parts
                     .card
                         .content

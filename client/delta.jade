@@ -36,7 +36,6 @@ template(name='delta')
                                         | #{current_type.title}
 
                                 each delta_fields
-                                    .ui.hidden.divider
                                     +facet
                     // unless delta.viewing_leftbar
                     //     unless delta.viewing_detail
@@ -71,17 +70,18 @@ template(name='set_delta_key')
 
 template(name='facet')
     // .ui.compact.segment
-    .ui.accordion
-        .active.title
-            .ui.header
-                if icon
-                    i.icon
-                        +iconsmall name=icon
-                |#{title}
-        .active.content
-            // .ui.equal.width.grid.facet_class
-            each values
-                +selector
+    if values
+        .ui.styled.accordion
+            .active.title
+                .ui.header
+                    if icon
+                        i.icon
+                            +iconsmall name=icon
+                    |#{title}
+            .active.content
+                // .ui.equal.width.grid.facet_class
+                each values
+                    +selector
 
 template(name='selector')
     if name
