@@ -35,7 +35,7 @@ template(name='delta')
                                         i.plus.icon
                                         | #{current_type.title}
 
-                                each delta_fields
+                                each faceted_blocks
                                     +facet
                     // unless delta.viewing_leftbar
                     //     unless delta.viewing_detail

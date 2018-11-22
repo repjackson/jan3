@@ -24,8 +24,8 @@
 //                 strong
 //                     if icon
 //                         +icon name=icon classes='spaced mini'
-//                 if doc_header_fields
-//                     each doc_header_fields
+//                 if doc_header_blocks
+//                     each doc_header_blocks
 //                         strong #{value}
 //                         |&nbsp;
 //             .content
@@ -48,11 +48,11 @@
 
 //     unless delta.editing
 //         .ui.stackable.four.cards
-//             each field_docs
+//             each block_docs
 //                 if local_doc.value
 //                     .card
-//                         if field_template
-//                             +Template.dynamic template=local_doc.field_template data=local_doc
+//                         if block_template
+//                             +Template.dynamic template=local_doc.block_template data=local_doc
 //                         else
 //                             .content
 //                                 if icon
@@ -67,16 +67,16 @@
 //                                     | #{value}
 //     if delta.editing
 //         .ui.stackable.four.cards
-//             each edit_fields
+//             each edit_blocks
 //                 .card
 //                     .content
-//                         +field_edit
+//                         +block_edit
 
 //                         // .ui.hidden.divider
 //                 // else
-//                 //     each fields
-//                 //         .field
-//                 //             +field_view
+//                 //     each blocks
+//                 //         .block
+//                 //             +block_view
 //     unless delta.editing
 //         if full_mode
 //             .ui.four.centered.stackable.cards
@@ -102,11 +102,11 @@ template(name='delta_card')
                         .ui.icon.button.toggle_full
                             i.caret.up.large.icon
                 .content
-                    each field_docs
+                    each block_docs
                         if value
                             .card
-                                if field_template
-                                    +Template.dynamic template=local_doc.field_template data=local_doc
+                                if block_template
+                                    +Template.dynamic template=local_doc.block_template data=local_doc
                                 else
                                     .content
                                         if icon
@@ -134,11 +134,11 @@ template(name='delta_card')
                         .content
                             +Template.dynamic template=part_big_template data=local_doc
                 unless delta.editing
-                    each field_docs
+                    each block_docs
                         if value
                             .card
-                                if field_template
-                                    +Template.dynamic template=local_doc.field_template data=local_doc
+                                if block_template
+                                    +Template.dynamic template=local_doc.block_template data=local_doc
                                 else
                                     .content
                                         if icon
@@ -153,9 +153,9 @@ template(name='delta_card')
                                             | #{value}
                 if delta.editing
                     .ui.stackable.four.cards
-                        each edit_fields
+                        each edit_blocks
                             .card
                                 .content
-                                    +field_edit
+                                    +block_edit
 
                                     // .ui.hidden.divider

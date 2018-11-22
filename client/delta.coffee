@@ -1,10 +1,10 @@
 
 Template.delta.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'field', 200
+    @autorun => Meteor.subscribe 'type', 'block', 200
     @autorun => Meteor.subscribe 'type', 'schema', 200
     @autorun => Meteor.subscribe 'type', 'part', 200
     @autorun -> Meteor.subscribe 'delta'
-    @autorun => Meteor.subscribe 'schema_fields'
+    @autorun => Meteor.subscribe 'schema_blocks'
     @autorun -> Meteor.subscribe 'me'
 
 
@@ -56,38 +56,38 @@ Template.delta.helpers
             schema = Docs.findOne
                 type:'schema'
                 slug:current_type
-            # for field in schema.fields
-            #     console.log 'found field', field
+            # for block in schema.blocks
+            #     console.log 'found block', block
 
-    delta_fields: ->
+    faceted_blocks: ->
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
-        delta_fields = []
+        delta_blocks = []
         if Meteor.user() and Meteor.user().roles and current_type
             if 'dev' in Meteor.user().roles
                 Docs.find({
-                    type:'field'
+                    type:'block'
                     schema_slugs:$in:[current_type]
                     faceted: true
                 }, {sort:{rank:1}}).fetch()
             else
                 Docs.find({
-                    type:'field'
+                    type:'block'
                     # view_roles: $in: Meteor.user().roles
                     schema_slugs:$in:[current_type]
                     faceted: true
                 }, {sort:{rank:1}}).fetch()
 
 
-    fields: ->
+    blocks: ->
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
         if current_type
-            fields = Docs.find({
-                type:'field'
+            blocks = Docs.find({
+                type:'block'
                 schema_slugs: $in: [current_type]
             }, {sort:{rank:1}}).fetch()
-            fields
+            blocks
 
 
 Template.delta.events
