@@ -87,16 +87,16 @@ Template.delta_card.helpers
                 type:'block'
                 schema_slugs: $in: ['block']
             }, {sort:{rank:1}}).fetch()
-        else if detail_doc?.type is 'part'
+        else if detail_doc?.type is 'block'
             Docs.find({
                 type:'block'
-                schema_slugs: $in: ['part']
+                schema_slugs: $in: ['block']
             }, {sort:{rank:1}}).fetch()
         else
             current_type = delta.filter_type[0]
             Docs.find({
                 type:'block'
-                view_roles: $in: Meteor.user().roles
+                # view_roles: $in: Meteor.user().roles
                 schema_slugs: $in: [current_type]
             }, {sort:{rank:1}}).fetch()
 
@@ -108,10 +108,10 @@ Template.delta_card.helpers
                 type:'block'
                 schema_slugs: $in: ['block']
             }, {sort:{rank:1}}).fetch()
-        else if detail_doc?.type is 'part'
+        else if detail_doc?.type is 'block'
             Docs.find({
                 type:'block'
-                schema_slugs: $in: ['part']
+                schema_slugs: $in: ['block']
             }, {sort:{rank:1}}).fetch()
         else
             current_type = delta.filter_type[0]
@@ -168,7 +168,7 @@ Template.delta_card.helpers
             Docs.find({
                 type:'block'
                 schema_slugs: $in: [schema.slug]
-                view_roles: $in: Meteor.user().roles
+                # view_roles: $in: Meteor.user().roles
             }, {sort:{rank:1}}).fetch()
 
     # actions: ->
@@ -180,7 +180,7 @@ Template.delta_card.helpers
     #             Docs.findOne @valueOf()
     #     if local_doc?.type is 'block'
     #         Docs.find({
-    #             type:'part'
+    #             type:'block'
     #             schema_slugs: $in: ['block']
     #         }, {sort:{rank:1}}).fetch()
     #     else
@@ -188,7 +188,7 @@ Template.delta_card.helpers
     #             type:'schema'
     #             slug:delta.filter_type[0]
     #         Docs.find({
-    #             type:'part'
+    #             type:'block'
     #             visible:true
     #             schema_slugs: $in: [schema.slug]
     #         }, {sort:{rank:1}}).fetch()
@@ -220,11 +220,11 @@ Template.delta_card.helpers
                 header:true
                 schema_slugs: $in: ['block']
             }, {sort:{rank:1}}).fetch()
-        else if detail_doc?.type is 'part'
+        else if detail_doc?.type is 'block'
             Docs.find({
                 type:'block'
                 header:true
-                schema_slugs: $in: ['part']
+                schema_slugs: $in: ['block']
             }, {sort:{rank:1}}).fetch()
         else
             schema = Docs.findOne

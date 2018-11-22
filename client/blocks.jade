@@ -430,3 +430,14 @@ template(name='ticket_customer_card')
             //         strong #{FRANCHISEE}
             //     div Office
             //         strong #{MASTER_LICENSEE}
+
+
+template(name='archive_small')
+    if archive_target.archive
+        .ui.green.disabled.button
+            i.archive.icon
+            | Archived
+    else
+        .ui.button.archive
+            i.archive.icon
+            |Archive

@@ -105,23 +105,23 @@ template(name='delta_card')
                     each block_docs
                         if value
                             .card
-                                if template
-                                    +Template.dynamic template=local_doc.template data=local_doc
-                                else
-                                    .content
-                                        if icon
-                                            i.large.icon
-                                                +icon name=icon
-                                        strong #{title}
-                                        |&nbsp;
-                                        if is_array
-                                            each value
-                                                .ui.basic.label #{this}
-                                        else
-                                            | #{value}
+                                // if local_doc.template
+                                //     +Template.dynamic template=local_doc.template data=local_doc
+                                // else
+                                .content
+                                    if icon
+                                        i.icon
+                                            +icon name=icon
+                                    strong #{title}
+                                    |&nbsp;
+                                    if is_array
+                                        each value
+                                            .ui.basic.label #{this}
+                                    else
+                                        | #{value}
 
                 .content
-                    each blocks
+                    each block_docs
                         +Template.dynamic template=block_small_template data=local_doc
         if full_mode
             .ui.big.icon.button.toggle_full

@@ -368,3 +368,16 @@ Template.toggle_block_field_boolean.helpers
 
 Template.user_list_view.onCreated ->
     @autorun => Meteor.subscribe 'single_user', @data._id
+
+
+Template.archive_small.helpers
+    archive_target: ->
+        target = Template.parentData(4)
+Template.archive_small.events
+    'click .archive': ->
+        # console.log Template.parentData(3)
+        target = Template.parentData(4)
+        Docs.update target._id,
+            $set:
+                archive:true
+                archive_time: Date.now()

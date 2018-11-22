@@ -99,8 +99,8 @@ body {
   padding:0;
   height:100%;
   /*background: #f4f7f9;*/
-  /*background: rgba(244, 247, 249);*/
-  background: rgba(250, 250, 250, 1);
+  background: rgba(244, 247, 249);
+  /*background: rgba(250, 250, 250, 1);*/
   /*background: #f9f8fd;*/
 }
 #container {
