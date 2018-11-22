@@ -51,8 +51,8 @@
 //             each block_docs
 //                 if local_doc.value
 //                     .card
-//                         if block_template
-//                             +Template.dynamic template=local_doc.block_template data=local_doc
+//                         if template
+//                             +Template.dynamic template=local_doc.template data=local_doc
 //                         else
 //                             .content
 //                                 if icon
@@ -80,7 +80,7 @@
 //     unless delta.editing
 //         if full_mode
 //             .ui.four.centered.stackable.cards
-//                 each parts
+//                 each blocks
 //                     .card
 //                         .content
 //                             +Template.dynamic template=action_big_template data=detail_doc
@@ -105,8 +105,8 @@ template(name='delta_card')
                     each block_docs
                         if value
                             .card
-                                if block_template
-                                    +Template.dynamic template=local_doc.block_template data=local_doc
+                                if template
+                                    +Template.dynamic template=local_doc.template data=local_doc
                                 else
                                     .content
                                         if icon
@@ -121,24 +121,24 @@ template(name='delta_card')
                                             | #{value}
 
                 .content
-                    each parts
-                        +Template.dynamic template=part_small_template data=local_doc
+                    each blocks
+                        +Template.dynamic template=block_small_template data=local_doc
         if full_mode
             .ui.big.icon.button.toggle_full
                 i.caret.down.large.icon
             .ui.big.icon.button.edit
                 i.blue.pencil.icon
             .ui.stackable.four.cards
-                each parts
+                each blocks
                     .card
                         .content
-                            +Template.dynamic template=part_big_template data=local_doc
+                            +Template.dynamic template=block_big_template data=local_doc
                 unless delta.editing
                     each block_docs
                         if value
                             .card
-                                if block_template
-                                    +Template.dynamic template=local_doc.block_template data=local_doc
+                                if template
+                                    +Template.dynamic template=local_doc.template data=local_doc
                                 else
                                     .content
                                         if icon

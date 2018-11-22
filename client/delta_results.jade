@@ -9,9 +9,13 @@ template(name='delta_results')
             .ui.button.add_block
                 i.plus.icon
                 | Block
-            .ui.cards
-                each schema_blocks
-                    +delta_card data=_id
+            if delta.viewing_detail
+                with delta.detail_id
+                    +delta_card
+            else
+                .ui.cards
+                    each schema_blocks
+                        +delta_card data=_id
         else
             if delta.result_ids
                 if delta.result_ids.length
