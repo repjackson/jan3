@@ -102,23 +102,22 @@ template(name='delta_card')
                     .ui.icon.button.toggle_full
                         i.caret.up.large.icon
                 .content
-                    each block_docs
-                        if value
-                            .card
-                                if local_doc.template
-                                    +Template.dynamic template=local_doc.template data=local_doc
-                                else
-                                    .content
-                                        if icon
-                                            i.icon
-                                                +icon name=icon
-                                        strong #{title}
-                                        |&nbsp;
-                                        if is_array
-                                            each value
-                                                .ui.basic.label #{this}
-                                        else
-                                            | #{value}
+                    each blocks
+                        .card
+                            if local_doc.template
+                                +Template.dynamic template=local_doc.template data=local_doc
+                            else
+                                .content
+                                    if icon
+                                        i.icon
+                                            +icon name=icon
+                                    strong #{title}
+                                    |&nbsp;
+                                    if is_array
+                                        each value
+                                            .ui.basic.label #{this}
+                                    else
+                                        | #{value}
 
                 .content
                     each block_docs
@@ -135,32 +134,32 @@ template(name='delta_card')
                 .ui.big.icon.button.edit
                     i.blue.pencil.icon
             .ui.stackable.four.cards
-                each blocks
-                    .card
-                        .content
-                            if icon
-                                i.large.icon
-                                    +icon name=icon
-                            strong #{title}
-                            +Template.dynamic template=block_big_template data=local_doc
+                // each blocks
+                //     .card
+                //         .content
+                //             if icon
+                //                 i.large.icon
+                //                     +icon name=icon
+                //             strong #{title}
                 unless delta.editing
-                    each block_docs
-                        if value
-                            .card
-                                if template
-                                    +Template.dynamic template=local_doc.template data=local_doc
+                    each blocks
+                        .card
+                            .content
+                                +Template.dynamic template=block_big_template data=local_doc
+                                // if template
+                                //     +Template.dynamic template=local_doc.template data=local_doc
+                                // else
+                            .content
+                                if icon
+                                    i.large.icon
+                                        +icon name=icon
+                                strong #{title}
+                                |&nbsp;
+                                if is_array
+                                    each value
+                                        .ui.basic.label #{this}
                                 else
-                                    .content
-                                        if icon
-                                            i.large.icon
-                                                +icon name=icon
-                                        strong #{title}
-                                        |&nbsp;
-                                        if is_array
-                                            each value
-                                                .ui.basic.label #{this}
-                                        else
-                                            | #{value}
+                                    | #{value}
                 if delta.editing
                     .ui.stackable.four.cards
                         each edit_blocks

@@ -149,29 +149,7 @@ Template.delta_card.helpers
             Docs.findOne @valueOf()
 
 
-    block_docs: ->
-        delta = Docs.findOne type:'delta'
-        local_doc =
-            if @data
-                Docs.findOne @data.valueOf()
-            else
-                Docs.findOne @valueOf()
-        if local_doc?.type is 'block'
-            Docs.find({
-                type:'block'
-                schema_slugs: $in: ['block']
-            }, {sort:{rank:1}}).fetch()
-        else
-            schema = Docs.findOne
-                type:'schema'
-                slug:delta.filter_type[0]
-            Docs.find({
-                type:'block'
-                schema_slugs: $in: [schema.slug]
-                # view_roles: $in: Meteor.user().roles
-            }, {sort:{rank:1}}).fetch()
-
-    # actions: ->
+    # block_docs: ->
     #     delta = Docs.findOne type:'delta'
     #     local_doc =
     #         if @data
@@ -189,10 +167,9 @@ Template.delta_card.helpers
     #             slug:delta.filter_type[0]
     #         Docs.find({
     #             type:'block'
-    #             visible:true
     #             schema_slugs: $in: [schema.slug]
+    #             # view_roles: $in: Meteor.user().roles
     #         }, {sort:{rank:1}}).fetch()
-
 
     value: ->
         delta = Docs.findOne type:'delta'

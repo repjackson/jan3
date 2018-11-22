@@ -1,6 +1,6 @@
 Template.delta_results.onCreated ->
-    @autorun => Meteor.subscribe 'schema_parts'
-    @autorun => Meteor.subscribe 'type', 'part'
+    @autorun => Meteor.subscribe 'schema_blocks'
+    @autorun => Meteor.subscribe 'block_blocks'
     Session.setDefault 'is_calculating', false
 
 
@@ -61,16 +61,6 @@ Template.delta_results.helpers
         }, {sort:{rank:1}}).fetch()
         blocks
 
-    schema_parts: ->
-        delta = Docs.findOne type:'delta'
-        current_type = delta.filter_type[0]
-        parts = Docs.find({
-            type:'part'
-            schema_slugs: $in: [current_type]
-        }, {sort:{rank:1}}).fetch()
-        parts
-
-
     current_type: ->
         delta = Docs.findOne type:'delta'
         type_key = delta.filter_type[0]
@@ -81,31 +71,6 @@ Template.delta_results.helpers
 
 
 Template.delta_results.events
-    'click .close_details': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set: viewing_detail: false
-
-
-
-    'click .set_grid_view': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set: view_mode: 'grid'
-
-    'click .set_list_view': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set: view_mode: 'list'
-
-    'click .set_table_view': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set: view_mode: 'table'
-
-
-
-
     'click .page_up': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,

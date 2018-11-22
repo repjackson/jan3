@@ -28,7 +28,7 @@ Meteor.publish 'schema_blocks', ->
             type:'block'
             schema_slugs:$in:[current_type, 'block']
 
-Meteor.publish 'schema_parts', ->
+Meteor.publish 'schema_blocks', ->
     delta = Docs.findOne
         type:'delta'
         author_id: Meteor.userId()
@@ -36,8 +36,9 @@ Meteor.publish 'schema_parts', ->
     if delta and delta.filter_type
         current_type = delta.filter_type?[0]
         Docs.find
-            type:'part'
+            type:'block'
             schema_slugs:$in:[current_type, 'block']
+            archive:$ne:true
 
 Meteor.publish 'schema', ->
     delta = Docs.findOne
@@ -109,21 +110,21 @@ Meteor.methods
         if current_type is 'schema'
             unless 'dev' in Meteor.user().roles
                 built_query['view_roles'] = $in:Meteor.user().roles
-        if current_type is 'customer'
-            if Meteor.user().office_jpid
-                my_office =
-                    Docs.findOne
-                        type:'office'
-                        office_jpid:Meteor.user().office_jpid
-                built_query['office_name'] = my_office.office_name
+        # if current_type is 'customer'
+        #     if Meteor.user().office_jpid
+        #         my_office =
+        #             Docs.findOne
+        #                 type:'office'
+        #                 office_jpid:Meteor.user().office_jpid
+        #         built_query['office_name'] = my_office.office_name
 
-        if current_type is 'franchisee'
-            if Meteor.user().office_jpid
-                my_office =
-                    Docs.findOne
-                        type:'office'
-                        office_jpid:Meteor.user().office_jpid
-                built_query['office_name'] = my_office.office_name
+        # if current_type is 'franchisee'
+        #     if Meteor.user().office_jpid
+        #         my_office =
+        #             Docs.findOne
+        #                 type:'office'
+        #                 office_jpid:Meteor.user().office_jpid
+        #         built_query['office_name'] = my_office.office_name
 
 
         total = Docs.find(built_query).count()

@@ -1,8 +1,7 @@
 
 Template.delta.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'block', 200
+    # @autorun => Meteor.subscribe 'type', 'block', 200
     @autorun => Meteor.subscribe 'type', 'schema', 200
-    @autorun => Meteor.subscribe 'type', 'part', 200
     @autorun -> Meteor.subscribe 'delta'
     @autorun => Meteor.subscribe 'schema_blocks'
     @autorun -> Meteor.subscribe 'me'
