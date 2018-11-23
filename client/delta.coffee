@@ -166,16 +166,9 @@ Template.delta_card.onCreated ->
     @autorun => Meteor.subscribe 'doc', @data
 
 
+
+
 Template.delta_card.events
-    'click .mark_complete': ->
-        Docs.update @_id,
-            $set: complete:true
-
-    'click .mark_incomplete': ->
-        Docs.update @_id,
-            $set: complete:false
-
-
     'click .expand': ->
         delta = Docs.findOne type:'delta'
         if delta.expand_id is @_id

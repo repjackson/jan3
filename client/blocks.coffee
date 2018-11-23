@@ -181,9 +181,9 @@ Template.customer_big.helpers
 
 
 
-Template.ticket_franchisee_big.onCreated ->
+Template.franchisee_big.onCreated ->
     @autorun =>  Meteor.subscribe 'franchisee_jpid', @data.franchisee_jpid
-Template.ticket_franchisee_big.helpers
+Template.franchisee_big.helpers
     franchisee_doc: ->
         context = Template.currentData(0)
         doc =

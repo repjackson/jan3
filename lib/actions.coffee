@@ -166,6 +166,14 @@ if Meteor.isClient
 
 
 
+    Template.complete_big.events
+        'click .mark_complete': ->
+            Docs.update Template.parentData(4)._id,
+                $set: complete:true
+
+        'click .mark_incomplete': ->
+            Docs.update Template.parentData(4)._id,
+                $set: complete:false
 
 
 

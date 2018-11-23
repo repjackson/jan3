@@ -69,6 +69,41 @@ template(name='mark_read_big')
 
 
 
+
+
+
+template(name='complete_small')
+    if block_parent.complete
+        .ui.small.header
+            +icon name='checkmark' classes='spaced mini'
+            | Complete
+    else
+        .ui.small.header
+            +icon name='clock' classes='spaced mini'
+            | Incomplete
+
+template(name='complete_big')
+    if block_parent.complete
+        +icon name='checkmark' classes='spaced mini'
+        | Complete
+        if full_mode
+            div
+            .ui.compact.button.mark_incomplete
+                +iconsmall name='clock'
+                | Mark Incomplete
+    else
+        +icon name='clock' classes='spaced mini'
+        | Incomplete
+        if full_mode
+            div
+            .ui.compact.button.mark_complete
+                +iconsmall name='checkmark'
+                | Mark Complete
+
+
+
+
+
 template(name='subscribe_small')
     if subscribed
         .ui.teal.compact.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)

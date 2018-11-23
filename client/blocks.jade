@@ -163,15 +163,31 @@ template(name='office_big')
     with block_parent
         h4.ui.header #{office_name}
         .black ##{office_jpid}
-    with my_office
-        .content
-            h4.ui.header #{office_name}
-            .black ##{office_jpid}
-            .black #{address} #{address_2}
-            .black #{city} #{state}
-            .black #{zipcode} #{country}
-            .black
-                a(href="tel:#{telephone}") #{telephone}
+    // with my_office
+    //     .content
+    //         h4.ui.header #{office_name}
+    //         .black ##{office_jpid}
+    //         .black #{address} #{address_2}
+    //         .black #{city} #{state}
+    //         .black #{zipcode} #{country}
+    //         .black
+    //             a(href="tel:#{telephone}") #{telephone}
+
+
+template(name='office_small')
+    with block_parent
+        .ui.small.header(title='Office')
+            +icon name='building' classes='mini spaced'
+            | #{office_name}
+    // with my_office
+    //     .content
+    //         h4.ui.header #{office_name}
+    //         .black ##{office_jpid}
+    //         .black #{address} #{address_2}
+    //         .black #{city} #{state}
+    //         .black #{zipcode} #{country}
+    //         .black
+    //             a(href="tel:#{telephone}") #{telephone}
 
 
 
@@ -215,16 +231,28 @@ template(name='toggle_key')
 
 
 
-template(name='ticket_franchisee_big')
+template(name='franchisee_small')
+    with block_parent
+        .ui.header(title='Franchisee')
+            +icon name='business' classes='inline mini'
+            |#{franch_name} #{ticket_franchisee}
+        .ui.list
+            .item(title='JPID') JPID ##{franchisee_jpid}
+            .item #{email}
+            .item(title='Short Name') Short Name: #{franch_name}
+            .item(title='Call Number')
+                a(href="tel:#{cell}") #{cell}
+
+template(name='franchisee_big')
     with block_parent
         .ui.header
             +icon name='business' classes='inline mini'
             |Franchisee
         h4.ui.header #{franch_name} #{ticket_franchisee}
         .ui.list
-            .item(title='JPID') ##{franchisee_jpid}
+            .item(title='JPID') JPID ##{franchisee_jpid}
             .item #{email}
-            // .item(title='Short Name') #{franch_name}
+            .item(title='Short Name') Short Name: #{franch_name}
             .item(title='Call Number')
                 a(href="tel:#{cell}") #{cell}
 
@@ -393,6 +421,16 @@ template(name='archive_small')
             i.archive.icon
             |Archive
 
+template(name='archive_big')
+    if block_parent.archive
+        .ui.green.active.fluid.button.unarchive
+            i.archive.icon
+            | Archived
+    else
+        .ui.fluid.button.archive
+            i.archive.icon
+            |Archive
+
 
 
 template(name='address_block_big')
@@ -407,15 +445,16 @@ template(name='address_block_big')
 
 template(name='address_block_small')
     with block_parent
-        .ui.small.header
-            +icon name='location' classes='inline mini'
-            |Address
-        .ui.list
-            .item
-                |#{address}
-            .item #{address_2}
-            .item #{city} #{state}
-            .item #{country}
+        if address
+            .ui.small.header
+                +icon name='location' classes='inline mini'
+                |Address
+            .ui.list
+                .item
+                    |#{address}
+                .item #{address_2}
+                .item #{city} #{state}
+                .item #{country}
 
 
 template(name='customer_name_small')
