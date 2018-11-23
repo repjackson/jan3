@@ -1,11 +1,12 @@
-Template.ticket_type_label.onRendered ->
+Template.ticket_type_big.onRendered ->
     Meteor.setTimeout ->
         $('img').popup()
     , 2000
 
-Template.ticket_type_label.helpers
-    ticket_type_label: ->
-        switch @ticket_type
+Template.ticket_type_big.helpers
+    ticket_type_big: ->
+        block_parent = Template.parentData(4)
+        switch block_parent.ticket_type
             when 'missed_service' then 'Missed Service'
             when 'team_member_infraction' then 'Team Member Infraction'
             when 'change_service' then 'Request a Change of Service'
@@ -15,7 +16,8 @@ Template.ticket_type_label.helpers
             when 'other' then 'Other'
 
     ticket_type_icon: ->
-        switch @ticket_type
+        block_parent = Template.parentData(4)
+        switch block_parent.ticket_type
             when 'missed_service' then 'leave'
             when 'team_member_infraction' then 'unfriend-male'
             when 'change_service' then 'transfer-between-users'
@@ -26,7 +28,8 @@ Template.ticket_type_label.helpers
 
 Template.ticket_type_small.helpers
     ticket_type_label: ->
-        switch @ticket_type
+        block_parent = Template.parentData(4)
+        switch block_parent.ticket_type
             when 'missed_service' then 'Missed Service'
             when 'team_member_infraction' then 'Team Member Infraction'
             when 'change_service' then 'Request a Change of Service'
@@ -35,7 +38,8 @@ Template.ticket_type_small.helpers
             when 'other' then 'Other'
 
     type_label_class: ->
-        switch @ticket_type
+        block_parent = Template.parentData(4)
+        switch block_parent.ticket_type
             when 'missed_service' then 'blue'
             when 'team_member_infraction' then 'green'
             when 'change_service' then 'teal'
@@ -44,7 +48,8 @@ Template.ticket_type_small.helpers
             when 'other' then 'grey'
 
     ticket_type_icon: ->
-        switch @ticket_type
+        block_parent = Template.parentData(4)
+        switch block_parent.ticket_type
             when 'missed_service' then 'leave'
             when 'team_member_infraction' then 'unfriend-male'
             when 'change_service' then 'transfer-between-users'

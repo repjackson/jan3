@@ -171,6 +171,9 @@ template(name='voting_big')
 
 
 template(name='assignment_small')
+    .ui.small.dividing.header
+        +icon name='checked-user-male' classes='mini spaced'
+        | Assignments
     .ui.list
         each assigned_users
             .item

@@ -72,9 +72,6 @@ Template.textarea_edit.events
             $set: "#{t.data.key}": val
 
 
-Template.array_edit.onCreated ->
-    @editing = new ReactiveVar false
-
 Template.array_edit.helpers
     items: ->
         parent = Template.parentData(5)
@@ -88,7 +85,7 @@ Template.array_edit.events
     'keyup .add_array_element': (e,t)->
         if e.which is 13
             delta = Docs.findOne type:'delta'
-            target_doc = Template.parentData(4)
+            target_doc = Template.parentData(5)
             val = e.currentTarget.value
             Docs.update target_doc._id,
                 $addToSet:
@@ -98,11 +95,11 @@ Template.array_edit.events
     'click .pull_element': (e,t)->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
-        block_doc = Template.currentData()
+        parent = Template.parentData(5)
 
         Docs.update target_doc._id,
             $pull:
-                "#{block_doc.key}": @valueOf()
+                "#{parent.key}": @valueOf()
 
 
 

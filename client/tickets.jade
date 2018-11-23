@@ -7,23 +7,27 @@ template(name='level_big')
         +level_icon
 
 template(name='level_icon')
-    if is_level_one
-        img.ui.mini.image(src="/level1icon.png" data-content='Level 1')
-    if is_level_two
-        img.ui.mini.image(src="/level2icon.png" data-content='Level 2')
-    if is_level_three
-        img.ui.mini.image(src="/level3icon.png" data-content='Level 3')
-    if is_level_four
-        img.ui.mini.image(src="/level4icon.png" data-content='Level 4')
+    .ui.small.header
+        | Level
+        if is_level_one
+            img.ui.image(src="/level1icon.png" data-content='Level 1')
+        if is_level_two
+            img.ui.image(src="/level2icon.png" data-content='Level 2')
+        if is_level_three
+            img.ui.image(src="/level3icon.png" data-content='Level 3')
+        if is_level_four
+            img.ui.image(src="/level4icon.png" data-content='Level 4')
 
-template(name='ticket_type_label')
-    if ticket_type_label
-        +iconsmall name=ticket_type_icon popup=ticket_type_label classes='inline'
-        | &nbsp; #{ticket_type_label}
+template(name='ticket_type_big')
+    if ticket_type_big
+        +iconsmall name=ticket_type_icon popup=ticket_type_big classes='inline'
+        | &nbsp; #{ticket_type_big}
 
 template(name='ticket_type_small')
     if ticket_type_label
-        +iconsmall name=ticket_type_icon title=ticket_type_label classes='inline'
+        .ui.small.header
+            +iconsmall name=ticket_type_icon classes='inline'
+            | #{ticket_type_label}
 
 template(name='submit_big')
     .ui.header

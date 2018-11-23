@@ -88,7 +88,7 @@ template(name='iconlarge')
     img.ui.image(src="https://png.icons8.com/office/80/000000/#{name}.png")
 
 template(name='iconsmall')
-    img.ui.inline.image(src="https://png.icons8.com/office/24/000000/#{name}.png" class=classes title=title)
+    img.ui.image(src="https://png.icons8.com/office/24/000000/#{name}.png" class=classes title=title)
 
 template(name='message_button')
     .ui.message
@@ -233,13 +233,15 @@ template(name='toggle_key')
 
 template(name='franchisee_small')
     with block_parent
-        .ui.header(title='Franchisee')
+        .ui.small.header(title='Franchisee')
             +icon name='business' classes='inline mini'
-            |#{franch_name} #{ticket_franchisee}
+            |#{franch_name} #{ticket_franchisee} #{franchisee} #{franchisee_name}
         .ui.list
-            .item(title='JPID') JPID ##{franchisee_jpid}
+            if franchisee_jpid
+                .item(title='JPID') JPID ##{franchisee_jpid}
             .item #{email}
-            .item(title='Short Name') Short Name: #{franch_name}
+            if franch_name
+                .item(title='Short Name') Short Name: #{franch_name}
             .item(title='Call Number')
                 a(href="tel:#{cell}") #{cell}
 
@@ -379,36 +381,41 @@ template(name='customer_tickets')
                         |#{when}
 
 
+template(name='customer_small')
+    .ui.small.header
+        +icon name='headset' classes='mini spaced'
+        |#{block_parent.customer_name}
 
 template(name='customer_big')
     .ui.header
         +icon name='headset' classes='spaced mini'
-        |Customer Account
-    h4.ui.header #{customer_name}
-    .ui.list
-        .black.item ##{customer_jpid}
-        .black.item #{customer_contact_person}
-        .black.item #{customer_contact_email}
-        .black.item #{phone}
-        .black.item #{address}
-        .black.item #{address_2}
-        .black.item #{city} #{state}
-            //   "office_name": "JAN-PRO Central Ontario",
-            //   "customer_name": "H&S Massage Spa Canada Corporation",
-            //   "customer_contact_person": "Erica Ho / Gigi Harding",
-            //   "customer_contact_email": "gigiharding@handandstone.ca",
-            //   "status": "ACTIVE",
-            //   "phone": "905-737-6467",
-            //   "address": "1550 16th Ave Building D Unit 6 - 8",
-            //   "address_2": "",
-            //   "franchisee_name": "Ken Valdez",
-            //   "city": "Richmond Hill",
-            //   "state": "ON",
-            //   "customer_number_days_service": "2",
-            //   "customer_days_service": "W|Sa",
-            //   "customer_regular_service_amount": "245.00",
-            //   "customer_jpid": "38243242"
-            // }
+        |Customer
+    with block_parent
+        h4.ui.header #{customer_name}
+        .ui.list
+            .black.item ##{customer_jpid}
+            .black.item #{customer_contact_person}
+            .black.item #{customer_contact_email}
+            .black.item #{phone}
+            .black.item #{address}
+            .black.item #{address_2}
+            .black.item #{city} #{state}
+                //   "office_name": "JAN-PRO Central Ontario",
+                //   "customer_name": "H&S Massage Spa Canada Corporation",
+                //   "customer_contact_person": "Erica Ho / Gigi Harding",
+                //   "customer_contact_email": "gigiharding@handandstone.ca",
+                //   "status": "ACTIVE",
+                //   "phone": "905-737-6467",
+                //   "address": "1550 16th Ave Building D Unit 6 - 8",
+                //   "address_2": "",
+                //   "franchisee_name": "Ken Valdez",
+                //   "city": "Richmond Hill",
+                //   "state": "ON",
+                //   "customer_number_days_service": "2",
+                //   "customer_days_service": "W|Sa",
+                //   "customer_regular_service_amount": "245.00",
+                //   "customer_jpid": "38243242"
+                // }
 
 
 template(name='archive_small')
@@ -446,23 +453,15 @@ template(name='address_block_big')
 template(name='address_block_small')
     with block_parent
         if address
-            .ui.small.header
-                +icon name='location' classes='inline mini'
-                |Address
-            .ui.list
-                .item
-                    |#{address}
-                .item #{address_2}
-                .item #{city} #{state}
-                .item #{country}
-
-
-template(name='customer_name_small')
-    .ui.header #{block_parent.customer_name}
-
-
-template(name='customer_name_big')
-    .ui.large.header #{block_parent.customer_name}
+            .ui.items
+                .item(title='Address')
+                    // +iconsmall name='location' classes=''
+                    .content
+                        .description
+                            |#{address}
+                            .item #{address_2}
+                            .item #{city} #{state}
+                            .item #{country}
 
 
 
@@ -593,14 +592,48 @@ template(name='ticket_number_small')
 template(name='text_small')
     .large110(title='Text')
         +icon name='note' classes='inline mini'
-        |#{block_parent.text}
+        |#{block_parent.text} #{block_parent.body}
 
 
 template(name='text_big')
     .ui.header
         +icon name='note'
         | Text
-    .large110 #{block_parent.text}
+    .large110 #{block_parent.text} #{block_parent.body}
+
+
+template(name='details_small')
+    .large110(title='details')
+        +icon name='note' classes='inline mini'
+        |#{block_parent.details} #{block_parent.ticket_details}
+
+
+template(name='details_big')
+    .ui.header
+        +icon name='note'
+        | Details
+    .large110 #{block_parent.details} #{block_parent.ticket_details}
+
+
+
+
+
+template(name='contact_small')
+    if block_parent.customer_contact_person
+        .ui.small.header
+            +icon name='email'
+            | Contact
+        with block_parent
+            .ui.list
+                .item Customer Contact Person: #{customer_contact_person}
+
+template(name='contact_big')
+    .ui.small.header
+        +icon name='email'
+        | Contact
+    with block_parent
+        .ui.list
+            .item Customer Contact Person: #{customer_contact_person}
 
 
 
