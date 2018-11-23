@@ -637,3 +637,26 @@ template(name='contact_big')
 
 
 
+
+
+template(name='created_small')
+    .ui.small.header
+        +icon name='internal'
+        | Created
+    with block_parent
+        .ui.list
+            .item
+                +when_template
+            .item
+                +author_info
+
+template(name='created_big')
+    .ui.small.header
+        +icon name='email'
+        | created
+    with block_parent
+        .ui.list
+            .item Customer created Person: #{customer_created_person}
+
+
+
