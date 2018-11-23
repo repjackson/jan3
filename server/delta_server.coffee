@@ -26,19 +26,9 @@ Meteor.publish 'schema_blocks', ->
         current_type = delta.filter_type[0]
         Docs.find
             type:'block'
-            schema_slugs:$in:[current_type, 'block']
-
-Meteor.publish 'schema_blocks', ->
-    delta = Docs.findOne
-        type:'delta'
-        author_id: Meteor.userId()
-
-    if delta and delta.filter_type
-        current_type = delta.filter_type?[0]
-        Docs.find
-            type:'block'
-            schema_slugs:$in:[current_type, 'block']
             archive:$ne:true
+            schema_slugs:$in:[current_type, 'block']
+
 
 Meteor.publish 'schema', ->
     delta = Docs.findOne

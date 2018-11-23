@@ -281,7 +281,7 @@ Template.selector.helpers
         delta = Docs.findOne type:'delta'
         filter = Template.parentData()
         filter_list = delta["filter_#{filter.key}"]
-        if filter_list and @name in filter_list then 'active' else ''
+        if filter_list and @name in filter_list then 'blue tertiary' else ''
 
 
 Template.delta_card.events
