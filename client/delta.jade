@@ -69,7 +69,7 @@ template(name='set_delta_key')
         |#{label}
 
 template(name='facet')
-    // .ui.compact.segment
+    p
     if values
         .ui.styled.accordion
             .active.title
@@ -86,12 +86,12 @@ template(name='facet')
 template(name='selector')
     if name
         // .column.toggle_value.pointer(class=toggle_value_class)
-        .ui.compact.margined.toggle_value.button(class=toggle_value_class)
+        .ui.margined.toggle_value.button(class=toggle_value_class)
             | #{name}
             small #{count}
     else
         // .column.toggle_value.pointer(class=toggle_value_class)
-        .ui.compact.margined.toggle_value.button(class=toggle_value_class)
+        .ui.margined.toggle_value.button(class=toggle_value_class)
             | [none]
             small #{count}
 
