@@ -19,6 +19,26 @@ if Meteor.isClient
                 else
                     Session.set 'is_calculating', false
 
+    Template.set_schema_big.events
+        'click .set_schema': ->
+            delta = Docs.findOne type:'delta'
+            card_doc = Template.parentData(4)
+
+            Docs.update delta._id,
+                $set:
+                    filter_type: [card_doc.slug]
+                    current_page: 0
+                    detail_id:null
+                    viewing_children:false
+                    viewing_detail:false
+                    editing:false
+                    config_mode:false
+            Session.set 'is_calculating', true
+            Meteor.call 'fo', (err,res)->
+                if err then console.log err
+                else
+                    Session.set 'is_calculating', false
+
 
 
     Template.bookmark_big.onCreated ->

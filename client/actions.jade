@@ -5,6 +5,11 @@ template(name='set_schema_small')
         | Go
         +iconsmall name='chevron-right'
 
+template(name='set_schema_big')
+    .ui.icon.button.set_schema(title='View Schema')
+        | View Section
+        +icon name='chevron-right' classes='inline mini'
+
 
 template(name='bookmark_small')
     if bookmarked
