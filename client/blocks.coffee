@@ -380,7 +380,15 @@ Template.archive_small.events
         Docs.update target._id,
             $set:
                 archive:true
-                archive_time: Date.now()
+            $addToSet:archive_timestamps: Date.now()
+
+    'click .unarchive': ->
+        # console.log Template.parentData(3)
+        target = Template.parentData(4)
+        Docs.update target._id,
+            $set:
+                archive:false
+            $addToSet: unarchive_timestamps: Date.now()
 
 
 

@@ -8,7 +8,17 @@ template(name='delta_card')
                 //             +icon name=icon
                 //     strong #{title}
 
+
                 .content
+                    .ui.large.button.toggle_full
+                        | View
+                        i.chevron.right.icon
+                    .ui.large.icon.button.edit
+                        i.blue.pencil.icon
+                .content
+                    each blocks
+                        +Template.dynamic template=block_small_template data=local_doc
+                .ui.secondary.segment
                     each blocks
                         .card
                             if local_doc.template
@@ -25,16 +35,6 @@ template(name='delta_card')
                                             .ui.basic.label #{this}
                                     else
                                         | #{value}
-
-                .content
-                    .ui.large.button.toggle_full
-                        | View
-                        i.chevron.right.icon
-                    .ui.large.icon.button.edit
-                        i.blue.pencil.icon
-                .content
-                    each blocks
-                        +Template.dynamic template=block_small_template data=local_doc
         if full_mode
             .ui.padded.stackable.grid
                 .row

@@ -82,7 +82,12 @@ Template.delta_card.helpers
     blocks: ->
         delta = Docs.findOne type:'delta'
         detail_doc = Docs.findOne delta.detail_id
-        if detail_doc?.type is 'block'
+        if delta.config_mode is true
+            Docs.find({
+                type:'block'
+                schema_slugs: $in: ['block']
+            }, {sort:{rank:1}}).fetch()
+        else if detail_doc?.type is 'block'
             Docs.find({
                 type:'block'
                 schema_slugs: $in: ['block']

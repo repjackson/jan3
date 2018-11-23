@@ -434,7 +434,7 @@ template(name='ticket_customer_card')
 
 template(name='archive_small')
     if archive_target.archive
-        .ui.green.disabled.button
+        .ui.green.active.button.unarchive
             i.archive.icon
             | Archived
     else
@@ -464,3 +464,15 @@ template(name='address_block_small')
                 |#{address}
             .item #{address_2}
             .item #{city} #{state}
+            .item #{country}
+
+
+template(name='customer_name_small')
+    .ui.header #{block_parent.customer_name}
+
+
+template(name='customer_name_big')
+    .ui.large.header #{block_parent.customer_name}
+
+
+
