@@ -196,9 +196,9 @@ Template.customer_card.helpers
 #         doc
 
 
-Template.franchisee_card.onCreated ->
+Template.ticket_franchisee_big.onCreated ->
     @autorun =>  Meteor.subscribe 'franchisee_jpid', @data.franchisee_jpid
-Template.franchisee_card.helpers
+Template.ticket_franchisee_big.helpers
     franchisee_doc: ->
         context = Template.currentData(0)
         doc =
@@ -206,21 +206,6 @@ Template.franchisee_card.helpers
                 type:'franchisee'
                 franchisee_jpid: context.franchisee_jpid
         doc
-
-
-
-# Template.view_stat.onCreated ->
-#     @autorun =>  Meteor.subscribe 'stat', @data.doc_type, @data.stat_type
-# Template.view_stat.helpers
-#     stat_value: ->
-#         inputs = Template.currentData(0)
-#         doc =
-#             Stats.findOne
-#                 doc_type:inputs.doc_type
-#                 stat_type:inputs.stat_type
-#         if doc
-#             doc.amount
-
 
 
 

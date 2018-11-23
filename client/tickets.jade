@@ -1,5 +1,12 @@
+
+template(name='level_small')
+    +level_icon
+template(name='level_big')
+    .ui.header
+        |Level
+        +level_icon
+
 template(name='level_icon')
-    .ui.header level icon
     if is_level_one
         img.ui.mini.image(src="/level1icon.png" data-content='Level 1')
     if is_level_two

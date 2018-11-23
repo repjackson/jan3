@@ -228,26 +228,18 @@ template(name='ticket_office_card')
 
 
 
-template(name='franchisee_card')
-    .ui.card
-        with franchisee_doc
-            .content
-                a(href="/v/#{_id}")
-                    .ui.header
-                        +icon name='conference'
-                        |Franchisee
-            .content
-                a(href="/v/#{_id}")
-                    h4.ui.header #{franch_name}
-                .ui.list
-                    .item(title='JPID') ##{franchisee_jpid}
-                    .item #{email}
-                    // .item(title='Short Name') #{franch_name}
-                    .item(title='Call Number')
-                        a(href="tel:#{cell}") #{cell}
-
-template(name='view_stat')
-    |#{stat_value}
+template(name='ticket_franchisee_big')
+    with block_parent
+        .ui.header
+            +icon name='business' classes='inline mini'
+            |Franchisee
+        h4.ui.header #{franch_name} #{ticket_franchisee}
+        .ui.list
+            .item(title='JPID') ##{franchisee_jpid}
+            .item #{email}
+            // .item(title='Short Name') #{franch_name}
+            .item(title='Call Number')
+                a(href="tel:#{cell}") #{cell}
 
 
 template(name='assignment_widget')
@@ -407,30 +399,6 @@ template(name='customer_card')
             //   "customer_jpid": "38243242"
             // }
 
-template(name='ticket_customer_card')
-    .ui.card
-        with customer_doc
-            .content
-                a.ui.header(href="/p/customer?doc_id=#{_id}&jpid=#{ID}")
-                    +icon name='headset'
-                    |Customer Account
-            .content
-                a(href="/p/customer?doc_id=#{_id}&jpid=#{ID}")
-                    h4.ui.header #{CUST_NAME}
-                .ui.list
-                    .item ##{ID}
-                    .item #{CUST_CONT_PERSON}
-                    .item #{CUST_CONTACT_EMAIL}
-                    .item #{TELEPHONE}
-                    .item #{ADDR_STREET}
-                    .item #{ADDR_STREET_2}
-                    .item #{ADDR_CITY} #{ADDR_STATE}
-            // .content
-            //     div Franchisee
-            //         strong #{FRANCHISEE}
-            //     div Office
-            //         strong #{MASTER_LICENSEE}
-
 
 template(name='archive_small')
     if archive_target.archive
@@ -476,20 +444,30 @@ template(name='customer_name_big')
 
 
 template(name='title_small')
-    .ui.center.aligned.dividing.header(title='Title') #{block_parent.title}
+    .ui.center.aligned.dividing.header(title='Title')
+        if block_parent.icon
+            +icon name=block_parent.icon classes='mini spaced'
+        |#{block_parent.title}
+
 template(name='title_big')
-    .ui.large.center.aligned.header(title='Title') #{block_parent.title}
+    .ui.large.center.aligned.header(title='Title')
+        if block_parent.icon
+            +icon name=block_parent.icon
+        |#{block_parent.title}
 
 
 
-template(name='icon_small')
-    .ui.small.header
-        +icon name=block_parent.icon classes='mini'
-        |Icon: #{block_parent.icon}
-template(name='icon_big')
-    .ui.header
-        +icon name=block_parent.icon classes='mini'
-        |Icon: #{block_parent.icon}
+// template(name='icon_small')
+//     .ui.small.header
+//         +icon name=block_parent.icon classes='mini'
+//         |Icon: #{block_parent.icon}
+
+// template(name='icon_big')
+//     .ui.header
+//         +icon name=block_parent.icon classes='mini'
+//         |Icon: #{block_parent.icon}
+
+
 
 
 template(name='faceted_small')
@@ -522,5 +500,23 @@ template(name='rank_small')
         .label Rank
         .value #{block_parent.rank}
     div
+
+
+
+
+template(name='ticket_number_big')
+    div
+    .ui.statistic
+        .label
+            +icon name='hashtag' classes='mini spaced'
+        .value #{block_parent.ticket_number}
+    div
+
+
+template(name='ticket_number_small')
+    .ui.horizontal.small.statistic(title='Ticket Number')
+        .label
+            +icon name='hashtag' classes='mini spaced'
+        .value #{block_parent.ticket_number}
 
 

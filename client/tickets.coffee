@@ -54,13 +54,17 @@ Template.ticket_type_small.helpers
 
 Template.level_icon.helpers
     is_level_one: ->
-        # console.log @
-        # console.log Template.currentData()
-        # console.log Template.parentData()
-        @level is 1
-    is_level_two: -> @level is 2
-    is_level_three: -> @level is 3
-    is_level_four: -> @level is 4
+        target = Template.parentData(4)
+        target.level is 1
+    is_level_two: ->
+        target = Template.parentData(4)
+        target.level is 2
+    is_level_three: ->
+        target = Template.parentData(4)
+        target.level is 3
+    is_level_four: ->
+        target = Template.parentData(4)
+        target.level is 4
 
 
 

@@ -28,7 +28,7 @@ template(name='delta_card')
                                     if icon
                                         i.icon
                                             +icon name=icon
-                                    strong #{title}
+                                    strong #{title} (#{slug})
                                     |&nbsp;
                                     if is_array
                                         each value
@@ -88,7 +88,7 @@ template(name='delta_card')
                                         if icon
                                             i.large.icon
                                                 +icon name=icon
-                                        strong #{title}
+                                        strong #{title} (#{slug})
                                         |&nbsp;
                                         if is_array
                                             each value
