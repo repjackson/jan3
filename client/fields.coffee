@@ -72,31 +72,28 @@ Template.textarea_edit.events
             $set: "#{t.data.key}": val
 
 
-Template.array.onCreated ->
+Template.array_edit.onCreated ->
     @editing = new ReactiveVar false
 
-Template.array.helpers
-    value: ->
-        parent = Template.parentData()
+Template.array_edit.helpers
+    items: ->
+        parent = Template.parentData(5)
         parent["#{@key}"]
 
 
 
-Template.array.events
+Template.array_edit.events
     'click .edit': (e,t)-> t.editing.set !t.editing.get()
 
     'keyup .add_array_element': (e,t)->
         if e.which is 13
             delta = Docs.findOne type:'delta'
-            target_doc = Docs.findOne _id:delta.detail_id
-            if t.data.key
-                val = e.currentTarget.value
-                Docs.update target_doc._id,
-                    $addToSet:
-                        "#{t.data.key}": val
-                t.$('.add_array_element').val('')
-            else
-                console.log 'no key bitch'
+            target_doc = Template.parentData(4)
+            val = e.currentTarget.value
+            Docs.update target_doc._id,
+                $addToSet:
+                    "#{@key}": val
+            t.$('.add_array_element').val('')
 
     'click .pull_element': (e,t)->
         delta = Docs.findOne type:'delta'

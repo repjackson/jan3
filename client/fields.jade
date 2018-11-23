@@ -15,28 +15,21 @@ template(name='boolean_edit')
 
 
 
-template(name='array')
+template(name='array_edit')
     .ui.small.header
         if icon
             +icon name=icon classes='mini spaced'
         |#{title}
-    unless editing
-        if value
-            each value
-                .ui.large.basic.label
-                    |#{this}
-    if editing
-        .ui.fluid.labeled.right.icon.input
-            input.add_array_element(type='text' placholder='add')
-            i.plus.icon
-        if value
-            each value
-                .ui.large.basic.label
-                    i.pull_element.remove.link.icon
-                    |#{this}
-    if full_mode
-        .edit.ui.compact.icon.button
-            i.pencil.icon
+    .ui.fluid.labeled.right.icon.input
+        input.add_array_element(type='text' placholder='add')
+        i.plus.icon
+    each items
+        .ui.large.basic.label
+            i.pull_element.remove.link.icon
+            |#{this}
+    // if full_mode
+    //     .edit.ui.compact.icon.button
+    //         i.pencil.icon
 
 
 

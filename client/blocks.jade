@@ -451,10 +451,10 @@ template(name='tags_small')
 
 template(name='tags_big')
     .ui.header
-        +icon name='tags'
+        +icon name='tags' classes='inline mini'
         |Tags
     each block_parent.tags
-        .ui.label #{this}
+        .ui.large.basic.label #{this}
 
 
 template(name='title_small')
