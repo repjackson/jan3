@@ -26,7 +26,9 @@ template(name='footer')
                         +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
             .four.wide.column
                 unless is_admin
-                    +office_big office_jpid=currentUser.office_jpid
+                    .ui.card
+                        .content
+                            +office_big office_jpid=currentUser.office_jpid
         .centered.row
             .ui.center.aligned.inverted.grey.header
                 i.copyright.outline.icon

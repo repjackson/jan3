@@ -49,7 +49,11 @@ template(name='ticket_assignment_cell')
                     .description
                         | @#{username}
 
-template(name='call_phone_button')
+template(name='phone_small')
+    a.ui.fluid.button(href="tel:#{phone_number}")
+        i.phone.icon
+        | Call #{phone_number}
+template(name='phone_big')
     a.ui.fluid.button(href="tel:#{phone_number}")
         i.phone.icon
         | Call #{phone_number}
@@ -422,6 +426,37 @@ template(name='customer_name_big')
     .ui.large.header #{block_parent.customer_name}
 
 
+
+template(name='view_roles_small')
+    .ui.small.header
+        +icon name='view-file' classes='inline mini'
+        | View Roles
+        each block_parent.view_roles
+            .ui.margined.large.basic.label(class=tag_class) #{this}
+
+template(name='view_roles_big')
+    .ui.big.header
+        +icon name='view-file' classes='inline mini'
+        | View Roles
+        each block_parent.view_roles
+            .ui.margined.large.basic.label(class=tag_class) #{this}
+
+
+template(name='tags_small')
+    .ui.small.header
+        +icon name='tags' classes='inline mini'
+        |Tags
+        each block_parent.tags
+            .ui.margined.label(class=tag_class) #{this}
+
+template(name='tags_big')
+    .ui.header
+        +icon name='tags'
+        |Tags
+    each block_parent.tags
+        .ui.label #{this}
+
+
 template(name='title_small')
     .ui.center.aligned.dividing.header(title='Title')
         if block_parent.icon
@@ -514,5 +549,19 @@ template(name='ticket_number_small')
         .label
             +icon name='hashtag' classes='mini spaced'
         .value #{block_parent.ticket_number}
+
+
+template(name='text_small')
+    .large110(title='Text')
+        +icon name='note' classes='inline mini'
+        |#{block_parent.text}
+
+
+template(name='text_big')
+    .ui.header
+        +icon name='note'
+        | Text
+    .large110 #{block_parent.text}
+
 
 

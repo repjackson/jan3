@@ -21,9 +21,9 @@ template(name='delta')
                     if delta.viewing_delta
                         unless delta.viewing_detail
                             .four.wide.column.scrolling
-                                .ui.large.header
+                                .ui.large.center.aligned.header
                                     if current_type.icon
-                                        +icon name=current_type.icon classes='spaced mini'
+                                        +icon name=current_type.icon classes='spaced large'
                                     if current_type.plural
                                         | #{current_type.plural}
                                     else

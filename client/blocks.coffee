@@ -362,7 +362,7 @@ Template.archive_small.events
 
 
 
-Template.address_block_small.helpers
-    target: ->
-        target = Template.parentData(4)
-        target
+Template.tags_small.helpers
+    tag_class: ->
+        delta = Docs.findOne type:'delta'
+        if delta.filter_tags and @valueOf() in delta.filter_tags then 'green' else 'basic'
