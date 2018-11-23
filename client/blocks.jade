@@ -492,6 +492,15 @@ template(name='icon_big')
         |Icon: #{block_parent.icon}
 
 
+template(name='faceted_small')
+    if block_parent.faceted
+        +icon name='diamond' classes='mini' title='Faceted'
+
+template(name='faceted_big')
+    if block_parent.faceted
+        +icon name='diamond' classes='mini'
+
+
 
 
 

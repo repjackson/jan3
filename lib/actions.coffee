@@ -22,44 +22,64 @@ if Meteor.isClient
 
 
     Template.bookmark_big.onCreated ->
-        @autorun -> Meteor.subscribe 'user_list_users', @data, 'bookmark_ids'
+        @autorun -> Meteor.subscribe 'user_list_users', Template.parentData(4), 'bookmark_ids'
 
     Template.bookmark_small.onCreated ->
-        @autorun -> Meteor.subscribe 'user_list_users', @data, 'bookmark_ids'
+        @autorun -> Meteor.subscribe 'user_list_users', Template.parentData(4), 'bookmark_ids'
 
 
     Template.bookmark_big.helpers
-        bookmarked: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then true else false
+        bookmarked: ->
+            target = Template.parentData(4)
+            if target.bookmark_ids and Meteor.userId() in target.bookmark_ids then true else false
     Template.bookmark_small.helpers
-        bookmarked: -> if @bookmark_ids and Meteor.userId() in @bookmark_ids then true else false
+        bookmarked: ->
+            target = Template.parentData(4)
+            if target.bookmark_ids and Meteor.userId() in target.bookmark_ids then true else false
+
+
     Template.bookmark_big.events
         'click .toggle_bookmark': (e,t)->
-            Meteor.call 'user_toggle_list', @, 'bookmark_ids'
+            target = Template.parentData(4)
+            Meteor.call 'user_toggle_list', target, 'bookmark_ids'
+    Template.bookmark_small.events
+        'click .toggle_bookmark': (e,t)->
+            target = Template.parentData(4)
+            Meteor.call 'user_toggle_list', target, 'bookmark_ids'
+
+
     Template.bookmark_big.helpers
         bookmark_users: ->
-            target = Template.currentData()
+            target = Template.parentData(4)
             if target and target.bookmark_ids
                 Meteor.users.find
                     _id: $in: target.bookmark_ids
 
 
     Template.subscribe_big.onCreated ->
-        @autorun -> Meteor.subscribe 'user_list_users', @data, 'subscribe_ids'
+        @autorun -> Meteor.subscribe 'user_list_users', Template.parentData(4), 'subscribe_ids'
     Template.subscribe_small.onCreated ->
-        @autorun -> Meteor.subscribe 'user_list_users', @data, 'subscribe_ids'
+        @autorun -> Meteor.subscribe 'user_list_users', Template.parentData(4), 'subscribe_ids'
 
 
     Template.subscribe_big.helpers
-        subscribed: -> if @subscribe_ids and Meteor.userId() in @subscribe_ids then true else false
+        subscribed: ->
+            target = Template.parentData(4)
+            if target.subscribe_ids and Meteor.userId() in target.subscribe_ids then true else false
     Template.subscribe_small.helpers
-        subscribed: -> if @subscribe_ids and Meteor.userId() in @subscribe_ids then true else false
+        subscribed: ->
+            target = Template.parentData(4)
+            if target.subscribe_ids and Meteor.userId() in target.subscribe_ids then true else false
     Template.subscribe_big.events
         'click .toggle_subscribe': (e,t)->
-            Meteor.call 'user_toggle_list', @, 'subscribe_ids'
+            Meteor.call 'user_toggle_list', Template.parentData(4), 'subscribe_ids'
+    Template.subscribe_small.events
+        'click .toggle_subscribe': (e,t)->
+            Meteor.call 'user_toggle_list', Template.parentData(4), 'subscribe_ids'
 
     Template.subscribe_big.helpers
         subscribers: ->
-            target = Template.currentData()
+            target = Template.parentData(4)
             if target and target.subscribe_ids
                 Meteor.users.find
                     _id: $in: target.subscribe_ids
@@ -67,7 +87,7 @@ if Meteor.isClient
 
     Template.subscribe_small.helpers
         subscribers: ->
-            target = Template.currentData()
+            target = Template.parentData(4)
             if target and target.subscribe_ids
                 Meteor.users.find
                     _id: $in: target.subscribe_ids
@@ -93,13 +113,13 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'user_list_users', @data, 'downvoter_ids'
     Template.voting_big.helpers
         upvoters: ->
-            target = Template.currentData()
+            target = Template.parentData(4)
             if target and target.upvoter_ids
                 Meteor.users.find
                     _id: $in: target.upvoter_ids
 
         downvoters: ->
-            target = Template.currentData()
+            target = Template.parentData(4)
             if target and target.downvoter_ids
                 Meteor.users.find
                     _id: $in: target.downvoter_ids
@@ -107,32 +127,38 @@ if Meteor.isClient
 
 
     Template.mark_read_small.helpers
-        read: -> if @read_ids and Meteor.userId() in @read_ids then true else false
+        read: ->
+            target = Template.parentData(4)
+            if target.read_ids and Meteor.userId() in target.read_ids then true else false
     Template.mark_read_big.helpers
-        read: -> if @read_ids and Meteor.userId() in @read_ids then true else false
+        read: ->
+            target = Template.parentData(4)
+            if target.read_ids and Meteor.userId() in target.read_ids then true else false
 
     Template.mark_read_small.events
         'click .toggle_read': (e,t)->
-            Meteor.call 'user_toggle_list', @, 'read_ids'
+            target = Template.parentData(4)
+            Meteor.call 'user_toggle_list', target, 'read_ids'
 
     Template.mark_read_big.events
         'click .toggle_read': (e,t)->
-            Meteor.call 'user_toggle_list', @, 'read_ids'
+            target = Template.parentData(4)
+            Meteor.call 'user_toggle_list', target, 'read_ids'
 
     Template.mark_read_big.onCreated ->
-        @autorun -> Meteor.subscribe 'user_list_users', @data, 'read_ids'
+        @autorun -> Meteor.subscribe 'user_list_users', Template.parentData(4), 'read_ids'
     Template.mark_read_small.onCreated ->
-        @autorun -> Meteor.subscribe 'user_list_users', @data, 'read_ids'
+        @autorun -> Meteor.subscribe 'user_list_users', Template.parentData(4), 'read_ids'
     Template.mark_read_big.helpers
         read_users: ->
-            target = Template.currentData()
+            target = Template.parentData(4)
             if target and target.read_ids
                 Meteor.users.find
                     _id: $in: target.read_ids
 
     Template.mark_read_small.helpers
         read_users: ->
-            target = Template.currentData()
+            target = Template.parentData(4)
             if target and target.read_ids
                 Meteor.users.find
                     _id: $in: target.read_ids
