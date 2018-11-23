@@ -441,3 +441,26 @@ template(name='archive_small')
         .ui.button.archive
             i.archive.icon
             |Archive
+
+
+
+template(name='address_block_big')
+    .ui.header
+        +icon name='location' classes='inline mini'
+        |Address
+    with block_parent
+        .ui.list
+            .item #{address}
+            .item #{address_2}
+            .item #{city} #{state}
+
+template(name='address_block_small')
+    with block_parent
+        .ui.small.header
+            +icon name='location' classes='inline mini'
+            |Address
+        .ui.list
+            .item
+                |#{address}
+            .item #{address_2}
+            .item #{city} #{state}

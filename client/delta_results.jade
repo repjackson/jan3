@@ -20,24 +20,25 @@ template(name='delta_results')
             if delta.result_ids
                 if delta.result_ids.length
                     unless delta.viewing_detail
-                        .ui.middle.aligned.grid
-                            .row
+                        .ui.horizontal.list
+                            .item
                                 +set_page_size value=10
                                 +set_page_size value=20
                                 +set_page_size value=50
-                                .three.wide.column
-                                    if multiple_pages
-                                        .ui.basic.label
-                                            | #{delta.current_page}/#{delta.page_amount}
+                            .item
+                                if multiple_pages
+                                    .ui.label
+                                        | Page #{delta.current_page}/#{delta.page_amount}
+                            .item
                                     | #{delta.total} Results
-                                .three.wide.column
-                                    if show_page_down
-                                        .ui.icon.button.page_down(title='Previous Page')
-                                            i.left.chevron.icon
-                                            // +icon name='chevron-left' classes='mini spaced'
-                                    if show_page_up
-                                        .ui.icon.button.page_up(title='Next Page')
-                                            i.right.chevron.icon
+                            .item
+                                if show_page_down
+                                    .ui.icon.button.page_down(title='Previous Page')
+                                        i.left.chevron.icon
+                                        // +icon name='chevron-left' classes='mini spaced'
+                                if show_page_up
+                                    .ui.icon.button.page_up(title='Next Page')
+                                        i.right.chevron.icon
                     if is_calculating
                         .ui.hidden.divider
                         .ui.active.indeterminate.massive.centered.inline.loader
@@ -46,7 +47,8 @@ template(name='delta_results')
                             with delta.detail_id
                                 +delta_card
                         else
-                            .scrolling.delta_cards
+                            // .scrolling.delta_cards
+                            .delta_cards
                                 .ui.stackable.cards(class=cards_class)
                                     each delta.result_ids
                                         +delta_card

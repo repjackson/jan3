@@ -381,3 +381,10 @@ Template.archive_small.events
             $set:
                 archive:true
                 archive_time: Date.now()
+
+
+
+Template.address_block_small.helpers
+    target: ->
+        target = Template.parentData(4)
+        target

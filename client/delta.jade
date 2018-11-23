@@ -31,8 +31,8 @@ template(name='delta')
                                 if is_dev
                                     +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
                                 if can_add
-                                    .ui.fluid.button.add_doc
-                                        i.plus.icon
+                                    .ui.fluid.large.button.add_doc
+                                        i.green.plus.icon
                                         | #{current_type.title}
 
                                 each faceted_blocks
@@ -85,7 +85,6 @@ template(name='facet')
 
 template(name='selector')
     if name
-        // .column.toggle_value.pointer(class=toggle_value_class)
         .ui.margined.toggle_value.button(class=toggle_value_class)
             | #{name}
             small #{count}

@@ -33,9 +33,8 @@ Template.registerHelper 'block_small_template', () -> "#{@slug}_small"
 
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()
 
-Template.registerHelper 'databank_docs': ->
-    Docs.find { type:Session.get('selected_doc_type') }
 
+Template.registerHelper 'block_parent', () -> Template.parentData(4)
 
 Template.registerHelper 'from_now', (input) -> moment(input).fromNow()
 Template.registerHelper 'long_format', (input) ->
