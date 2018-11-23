@@ -14,27 +14,28 @@ template(name='delta_card')
                         +Template.dynamic template=block_small_template data=local_doc
                 .content
                     .ui.large.button.toggle_full
-                        | View
+                        | Details
                         i.chevron.right.icon
                     .ui.large.icon.button.edit
                         i.blue.pencil.icon
-                .ui.secondary.segment
-                    each blocks
-                        .card
-                            if local_doc.template
-                                +Template.dynamic template=local_doc.template data=local_doc
-                            else
-                                .content
-                                    if icon
-                                        i.icon
-                                            +icon name=icon
-                                    strong #{title} (#{slug})
-                                    |&nbsp;
-                                    if is_array
-                                        each value
-                                            .ui.basic.label #{this}
-                                    else
-                                        | #{value}
+                if is_dev
+                    .ui.secondary.segment
+                        each blocks
+                            .card
+                                if local_doc.template
+                                    +Template.dynamic template=local_doc.template data=local_doc
+                                else
+                                    .content
+                                        if icon
+                                            i.icon
+                                                +icon name=icon
+                                        strong #{title} (#{slug})
+                                        |&nbsp;
+                                        if is_array
+                                            each value
+                                                .ui.basic.label #{this}
+                                        else
+                                            | #{value}
         if full_mode
             .ui.padded.stackable.grid
                 .row
@@ -81,9 +82,6 @@ template(name='delta_card')
                                 .card
                                     .content
                                         +Template.dynamic template=block_big_template data=local_doc
-                                        // if template
-                                        //     +Template.dynamic template=local_doc.template data=local_doc
-                                        // else
                                     .ui.secondary.segment
                                         if icon
                                             i.large.icon

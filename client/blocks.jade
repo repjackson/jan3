@@ -152,21 +152,22 @@ template(name='user_card')
             h5 #{ev.EMAIL}
 
 
-template(name='office_card')
-    .ui.card
-        with my_office
-            .content
-                .ui.header
-                    +icon name='building' classes='mini spaced'
-                    |Office
-            .content
-                h4.ui.header #{office_name}
-                .black ##{office_jpid}
-                .black #{address} #{address_2}
-                .black #{city} #{state}
-                .black #{zipcode} #{country}
-                .black
-                    a(href="tel:#{telephone}") #{telephone}
+template(name='office_big')
+    .ui.header
+        +icon name='building' classes='mini spaced'
+        |Office
+    with block_parent
+        h4.ui.header #{office_name}
+        .black ##{office_jpid}
+    with my_office
+        .content
+            h4.ui.header #{office_name}
+            .black ##{office_jpid}
+            .black #{address} #{address_2}
+            .black #{city} #{state}
+            .black #{zipcode} #{country}
+            .black
+                a(href="tel:#{telephone}") #{telephone}
 
 
 
@@ -207,24 +208,6 @@ template(name='toggle_key')
         |#{label}
 
 
-
-
-
-template(name='ticket_office_card')
-    .ui.card
-        with office_doc
-            .content
-                .ui.header
-                    +icon name='building'
-                    |Office
-            .content
-                h4.ui.header #{office_name}
-                div ##{office_jpid}
-                div #{address} #{address_2}
-                div #{city} #{state}
-                div #{zipcode} #{country}
-                div
-                    a(href="tel:#{telephone}") #{telephone}
 
 
 
@@ -365,23 +348,19 @@ template(name='customer_tickets')
 
 
 
-template(name='customer_card')
-    .ui.card
-        with customer_doc
-            .content
-                .ui.header
-                    +icon name='headset' classes='spaced mini'
-                    |Customer Account
-            .content
-                h4.ui.header #{customer_name}
-                .ui.list
-                    .black.item ##{customer_jpid}
-                    .black.item #{customer_contact_person}
-                    .black.item #{customer_contact_email}
-                    .black.item #{phone}
-                    .black.item #{address}
-                    .black.item #{address_2}
-                    .black.item #{city} #{state}
+template(name='customer_big')
+    .ui.header
+        +icon name='headset' classes='spaced mini'
+        |Customer Account
+    h4.ui.header #{customer_name}
+    .ui.list
+        .black.item ##{customer_jpid}
+        .black.item #{customer_contact_person}
+        .black.item #{customer_contact_email}
+        .black.item #{phone}
+        .black.item #{address}
+        .black.item #{address_2}
+        .black.item #{city} #{state}
             //   "office_name": "JAN-PRO Central Ontario",
             //   "customer_name": "H&S Massage Spa Canada Corporation",
             //   "customer_contact_person": "Erica Ho / Gigi Harding",
@@ -401,7 +380,7 @@ template(name='customer_card')
 
 
 template(name='archive_small')
-    if archive_target.archive
+    if block_parent.archive
         .ui.green.active.button.unarchive
             i.archive.icon
             | Archived
@@ -462,10 +441,10 @@ template(name='title_big')
 //         +icon name=block_parent.icon classes='mini'
 //         |Icon: #{block_parent.icon}
 
-// template(name='icon_big')
-//     .ui.header
-//         +icon name=block_parent.icon classes='mini'
-//         |Icon: #{block_parent.icon}
+template(name='icon_big')
+    .ui.header
+        +icon name=block_parent.icon classes='mini'
+        |Icon: #{block_parent.icon}
 
 
 
@@ -476,7 +455,24 @@ template(name='faceted_small')
 
 template(name='faceted_big')
     if block_parent.faceted
-        +icon name='diamond' classes='mini'
+        .ui.header
+            +icon name='diamond' classes='mini'
+            | Faceted
+    else
+        .ui.header Not Faceted
+
+
+
+
+template(name='slug_small')
+    .ui.small.header
+        +icon name='slug' classes='mini' title='slug'
+        |Slug: #{block_parent.slug}
+
+template(name='slug_big')
+    .ui.header
+        +icon name='slug' classes='mini'
+        |Slug: #{block_parent.slug}
 
 
 
@@ -488,10 +484,10 @@ template(name='rank_big')
         .label Rank
         .value #{block_parent.rank}
     div
-    .ui.icon.button
-        i.up.caret.large.icon
-    .ui.icon.button
-        i.down.caret.large.icon
+    // .ui.icon.button
+    //     i.up.caret.large.icon
+    // .ui.icon.button
+    //     i.down.caret.large.icon
 
 
 template(name='rank_small')

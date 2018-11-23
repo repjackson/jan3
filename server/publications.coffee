@@ -3,7 +3,7 @@ Meteor.publish 'type', (type, limit)->
         limit_val = limit
     else
         limit_val = 400
-    Docs.find {type:type},
+    Docs.find {type:type, archive:$ne:true},
         {
             limit:limit_val
             sort: timestamp:-1

@@ -92,16 +92,11 @@ Template.delta_card.helpers
                 type:'block'
                 schema_slugs: $in: ['block']
             }, {sort:{rank:1}}).fetch()
-        else if detail_doc?.type is 'block'
-            Docs.find({
-                type:'block'
-                schema_slugs: $in: ['block']
-            }, {sort:{rank:1}}).fetch()
         else
             current_type = delta.filter_type[0]
             Docs.find({
                 type:'block'
-                # view_roles: $in: Meteor.user().roles
+                view_roles: $in: Meteor.user().roles
                 schema_slugs: $in: [current_type]
             }, {sort:{rank:1}}).fetch()
 
@@ -109,11 +104,6 @@ Template.delta_card.helpers
         delta = Docs.findOne type:'delta'
         detail_doc = Docs.findOne delta.detail_id
         if detail_doc?.type is 'block'
-            Docs.find({
-                type:'block'
-                schema_slugs: $in: ['block']
-            }, {sort:{rank:1}}).fetch()
-        else if detail_doc?.type is 'block'
             Docs.find({
                 type:'block'
                 schema_slugs: $in: ['block']

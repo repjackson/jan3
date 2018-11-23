@@ -145,32 +145,32 @@ Template.toggle_user_published.events
 
 
 
-Template.office_card.onCreated ->
+Template.office_big.onCreated ->
     @autorun =>  Meteor.subscribe 'my_office'
 
-# Template.ticket_office_card.onCreated ->
-#     page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-#     if page_doc
-#         console.log page_doc
-#         @autorun =>  Meteor.subscribe 'doc_by_jpid', page_doc.office_jpid
+Template.office_big.onCreated ->
+    # page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
+    # if page_doc
+    #     console.log page_doc
+    #     @autorun =>  Meteor.subscribe 'doc_by_jpid', page_doc.office_jpid
 
 
 
-# Template.ticket_office_card.helpers
-#     office_doc: ->
-#         context =
-#             if FlowRouter.getQueryParam('doc_id')
-#                 Docs.findOne FlowRouter.getQueryParam('doc_id')
-#         if context
-#             doc = Docs.findOne
-#                 type:'office'
-#                 office_jpid: context.office_jpid
-#         console.log doc
-#         doc
+Template.office_big.helpers
+    # office_doc: ->
+    #     context =
+    #         if FlowRouter.getQueryParam('doc_id')
+    #             Docs.findOne FlowRouter.getQueryParam('doc_id')
+    #     if context
+    #         doc = Docs.findOne
+    #             type:'office'
+    #             office_jpid: context.office_jpid
+    #     console.log doc
+    #     doc
 
-Template.customer_card.onCreated ->
+Template.customer_big.onCreated ->
     @autorun =>  Meteor.subscribe 'customer_jpid', @data.customer_jpid
-Template.customer_card.helpers
+Template.customer_big.helpers
     customer_doc: ->
         context = Template.currentData(0)
         doc =
@@ -179,21 +179,6 @@ Template.customer_card.helpers
                 customer_jpid: context.customer_jpid
         doc
 
-# Template.ticket_customer_card.onCreated ->
-#     page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
-#     if page_doc
-#         console.log page_doc
-#         @autorun =>  Meteor.subscribe 'doc_by_jpid', page_doc.office_jpid
-# Template.ticket_customer_card.helpers
-#     customer_doc: ->
-#         context =
-#             if FlowRouter.getQueryParam('doc_id')
-#                 Docs.findOne FlowRouter.getQueryParam('doc_id')
-#         doc =
-#             Docs.findOne
-#                 type:'customer'
-#                 customer_jpid: context.customer_jpid
-#         doc
 
 
 Template.ticket_franchisee_big.onCreated ->
