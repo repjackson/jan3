@@ -475,4 +475,43 @@ template(name='customer_name_big')
     .ui.large.header #{block_parent.customer_name}
 
 
+template(name='title_small')
+    .ui.center.aligned.dividing.header(title='Title') #{block_parent.title}
+template(name='title_big')
+    .ui.large.center.aligned.header(title='Title') #{block_parent.title}
+
+
+
+template(name='icon_small')
+    .ui.small.header
+        +icon name=block_parent.icon classes='mini'
+        |Icon: #{block_parent.icon}
+template(name='icon_big')
+    .ui.header
+        +icon name=block_parent.icon classes='mini'
+        |Icon: #{block_parent.icon}
+
+
+
+
+
+template(name='rank_big')
+    div
+    .ui.statistic
+        .label Rank
+        .value #{block_parent.rank}
+    div
+    .ui.icon.button
+        i.up.caret.large.icon
+    .ui.icon.button
+        i.down.caret.large.icon
+
+
+template(name='rank_small')
+    div
+    .ui.horizontal.statistic
+        .label Rank
+        .value #{block_parent.rank}
+    div
+
 

@@ -250,7 +250,7 @@ Template.toggle_delta_config.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'active' else ''
+        if @value is delta.page_size then 'active green' else ''
 
 
 Template.set_page_size.events

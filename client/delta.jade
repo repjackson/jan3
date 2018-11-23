@@ -49,19 +49,21 @@ template(name='delta')
 
 
 template(name='toggle_delta_config')
+    div
     if boolean_true
-        .ui.active.button.disable_key
+        .ui.green.active.button.disable_key
             +iconsmall name=icon
             | #{label}
     else
         .ui.button.enable_key
             +iconsmall name=icon
             | #{label}
+    p
 
 
 
 template(name='set_page_size')
-    .ui.compact.icon.button.set_page_size(class=page_size_class title='Page Size')
+    .ui.icon.button.set_page_size(class=page_size_class title='Page Size')
         .middle.aligned #{value}
 
 template(name='set_delta_key')

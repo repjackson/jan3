@@ -10,14 +10,14 @@ template(name='delta_card')
 
 
                 .content
+                    each blocks
+                        +Template.dynamic template=block_small_template data=local_doc
+                .content
                     .ui.large.button.toggle_full
                         | View
                         i.chevron.right.icon
                     .ui.large.icon.button.edit
                         i.blue.pencil.icon
-                .content
-                    each blocks
-                        +Template.dynamic template=block_small_template data=local_doc
                 .ui.secondary.segment
                     each blocks
                         .card

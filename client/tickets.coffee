@@ -84,7 +84,7 @@ Template.ticket_status.onCreated ->
 Template.ticket_status.helpers
     ticket: -> Docs.findOne FlowRouter.getQueryParam('doc_id')
     is_closing: -> Template.instance().is_closing.get()
-    closing_class: -> if Template.instance().is_closing.get() is true then 'active' else ''
+    closing_class: -> if Template.instance().is_closing.get() is true then 'active green' else ''
     close_ticket_types: -> Docs.find type:'close_ticket_type'
 
 Template.ticket_status.events

@@ -89,8 +89,8 @@ Template.call_method.events
 #     toggle_key_button_class: ->
 #         current_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
 #         if @value
-#             if current_doc["#{@key}"] is @value then 'active'
-#         # else if current_doc["#{@key}"] is true then 'active' else ''
+#             if current_doc["#{@key}"] is @value then 'active green'
+#         # else if current_doc["#{@key}"] is true then 'active green' else ''
 #         else ''
 
 # Template.toggle_key.events
@@ -118,13 +118,13 @@ Template.set_sla_key_value.events
 Template.set_sla_key_value.helpers
     set_value_button_class: ->
         sla_doc = Template.parentData(1)
-        if sla_doc["#{@key}"] is @value then 'active' else ''
+        if sla_doc["#{@key}"] is @value then 'active green' else ''
 
 
 Template.toggle_sla_boolean.helpers
     toggle_boolean_button_class: ->
         sla_doc = Template.parentData(1)
-        if sla_doc["#{@key}"] is true then 'active'
+        if sla_doc["#{@key}"] is true then 'active green'
         else ''
 
 Template.toggle_sla_boolean.events
@@ -311,7 +311,7 @@ Template.set_key_value_2.events
 
 Template.set_key_value.helpers
     set_value_button_class: ->
-        if Template.parentData()["#{@key}"] is @value then 'active' else ''
+        if Template.parentData()["#{@key}"] is @value then 'active green' else ''
 
 
 Template.set_page_key_value.helpers
@@ -324,7 +324,7 @@ Template.set_page_key_value.helpers
 
 Template.set_key_value_2.helpers
     set_value_button_class: ->
-        if Template.parentData(2)["#{@key}"] is @value then 'active' else ''
+        if Template.parentData(2)["#{@key}"] is @value then 'active green' else ''
 
 
 Template.edit_block_text_field.helpers
@@ -361,7 +361,7 @@ Template.toggle_block_field_boolean.events
 
 Template.toggle_block_field_boolean.helpers
     toggle_value_button_class: ->
-        if Template.parentData(2)["#{@key}"] is true then 'active' else ''
+        if Template.parentData(2)["#{@key}"] is true then 'active green' else ''
 
 
 
