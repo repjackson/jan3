@@ -9,17 +9,17 @@ template(name='delta_card')
                 //         |#{title}
 
 
-                if children_sets
-                    .content
-                        each children_sets
-                            if is_single
-                                .ui.header single
-                            if is_multi
-                                .ui.header multi
-                            .ui.dividing.header
-                                if icon
-                                    +icon name=icon classes='spaced mini'
-                                |#{plural}
+                // if children_sets
+                //     .content
+                //         each children_sets
+                //             if is_single
+                //                 .ui.header single
+                //             if is_multi
+                //                 .ui.header multi
+                //             .ui.dividing.header
+                //                 if icon
+                //                     +icon name=icon classes='spaced mini'
+                //                 |#{plural}
                 if blocks
                     .content
                         each blocks

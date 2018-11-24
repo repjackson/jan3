@@ -52,12 +52,22 @@ Template.delta_results.helpers
         }, {sort:{rank:1}}).fetch()
 
 
-    schema_blocks: ->
+    child_sets: ->
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
         blocks = Docs.find({
             type:'schema'
             parent_sets: $in: [current_type]
+        }, {sort:{rank:1}}).fetch()
+        blocks
+
+
+    schema_blocks: ->
+        delta = Docs.findOne type:'delta'
+        current_type = delta.filter_type[0]
+        blocks = Docs.find({
+            type:'block'
+            schema_slugs: $in: [current_type]
         }, {sort:{rank:1}}).fetch()
         blocks
 
