@@ -24,11 +24,11 @@ Meteor.publish 'schema_blocks', ->
         author_id: Meteor.userId()
     if delta and delta.filter_type
         current_type = delta.filter_type[0]
-        Docs.find
+        Docs.find {
             type:'block'
             archive:$ne:true
             schema_slugs:$in:[current_type, 'block']
-
+        }, limit:100
 
 Meteor.publish 'schema', ->
     delta = Docs.findOne

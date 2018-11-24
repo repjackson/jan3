@@ -1,7 +1,7 @@
 
 
-Template.ticket_assignment_cell.onCreated ->
-    @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
+# Template.ticket_assignment_cell.onCreated ->
+#     @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
 
 Template.ticket_assignment_cell.helpers
     # ticket_assignment_cell_class: ->
@@ -25,13 +25,13 @@ Template.call_method.events
 
 
 
-Template.author_info.onCreated ->
-    @autorun => Meteor.subscribe 'author', @data.author_id
+# Template.author_info.onCreated ->
+#     @autorun => Meteor.subscribe 'author', @data.author_id
 
 
 
-Template.user_list_view.onCreated ->
-    @autorun => Meteor.subscribe 'single_user', @data._id
+# Template.user_list_view.onCreated ->
+#     @autorun => Meteor.subscribe 'single_user', @data._id
 
 
 
@@ -61,8 +61,8 @@ Template.user_list_view.onCreated ->
 
 
 
-Template.ticket_assignment_cell.onCreated ->
-    @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
+# Template.ticket_assignment_cell.onCreated ->
+#     @autorun =>  Meteor.subscribe 'assigned_to_users', @data._id
 
 Template.ticket_assignment_cell.helpers
     # ticket_assignment_cell_class: ->
@@ -145,10 +145,10 @@ Template.toggle_user_published.events
 
 
 
-Template.office_big.onCreated ->
-    @autorun =>  Meteor.subscribe 'my_office'
+# Template.office_big.onCreated ->
+#     @autorun =>  Meteor.subscribe 'my_office'
 
-Template.office_big.onCreated ->
+# Template.office_big.onCreated ->
     # page_doc = Docs.findOne FlowRouter.getQueryParam('doc_id')
     # if page_doc
     #     console.log page_doc
@@ -168,8 +168,8 @@ Template.office_big.helpers
     #     console.log doc
     #     doc
 
-Template.customer_big.onCreated ->
-    @autorun =>  Meteor.subscribe 'customer_jpid', @data.customer_jpid
+# Template.customer_big.onCreated ->
+#     @autorun =>  Meteor.subscribe 'customer_jpid', @data.customer_jpid
 Template.customer_big.helpers
     customer_doc: ->
         context = Template.currentData(0)
@@ -181,8 +181,8 @@ Template.customer_big.helpers
 
 
 
-Template.franchisee_big.onCreated ->
-    @autorun =>  Meteor.subscribe 'franchisee_jpid', @data.franchisee_jpid
+# Template.franchisee_big.onCreated ->
+#     @autorun =>  Meteor.subscribe 'franchisee_jpid', @data.franchisee_jpid
 Template.franchisee_big.helpers
     franchisee_doc: ->
         context = Template.currentData(0)
@@ -195,9 +195,9 @@ Template.franchisee_big.helpers
 
 
 
-Template.assignment_widget.onCreated ()->
-    @autorun => Meteor.subscribe 'assigned_users', FlowRouter.getQueryParam('doc_id')
-    @user_results = new ReactiveVar( [] )
+# Template.assignment_widget.onCreated ()->
+#     @autorun => Meteor.subscribe 'assigned_users', FlowRouter.getQueryParam('doc_id')
+#     @user_results = new ReactiveVar( [] )
 
 
 
@@ -247,8 +247,8 @@ Template.assignment_widget.helpers
             Meteor.users.find(_id: $in: parent_doc.assigned_to)
 
 
-Template.author_info.onCreated ->
-    @autorun => Meteor.subscribe 'author', @data.author_id
+# Template.author_info.onCreated ->
+#     @autorun => Meteor.subscribe 'author', @data.author_id
 
 # Template.blocks.onCreated ->
     # if @data.tags and typeof @data.tags is 'string'
@@ -336,8 +336,8 @@ Template.toggle_block_field_boolean.helpers
 
 
 
-Template.user_list_view.onCreated ->
-    @autorun => Meteor.subscribe 'single_user', @data._id
+# Template.user_list_view.onCreated ->
+#     @autorun => Meteor.subscribe 'single_user', @data._id
 
 
 Template.archive_small.helpers

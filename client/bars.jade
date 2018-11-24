@@ -57,7 +57,7 @@ template(name='leftbar')
     .ui.left.vertical.sidebar.nav_bar.menu.leftbar
         each bookmarks
             a.item.pick_delta.toggle_leftbar(href='#')
-                .ui.small.inverted.header(title=title)
+                .ui.inverted.header(title=title)
                     i.icon
                         +icon name=icon
                     | #{plural}

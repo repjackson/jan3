@@ -81,18 +81,20 @@ template(name='delta_card')
                                     .card
                                         .content
                                             +Template.dynamic template=block_big_template data=local_doc
-                                        unless block_big_template_exists
-                                            .ui.segment
-                                                if icon
-                                                    i.large.icon
-                                                        +icon name=icon
-                                                strong #{title} s:#{slug} k:#{key}
-                                                |&nbsp;
-                                                if is_array
-                                                    each value
-                                                        .ui.basic.label #{this}
-                                                else
-                                                    | #{value}
+                                        // unless block_big_template_exists
+                                        //     .ui.segment
+                                        //         if icon
+                                        //             i.large.icon
+                                        //                 +icon name=icon
+                                        //         strong #{title}
+                                        //         if is_dev
+                                        //             s:#{slug} k:#{key}
+                                        //         |&nbsp;
+                                        //         if is_array
+                                        //             each value
+                                        //                 .ui.basic.label #{this}
+                                        //         else
+                                        //             | #{value}
                             if delta.editing
                                 each edit_blocks
                                     .card
