@@ -23,6 +23,11 @@ template(name='delta_card')
                 if blocks
                     .content
                         each blocks
+                            .ui.header
+                                if is_multi
+                                    |multi
+                                if is_sinlge
+                                    |single
                             +Template.dynamic template=block_small_template data=local_doc
 
                 .content
@@ -32,21 +37,21 @@ template(name='delta_card')
                     .ui.large.button.toggle_full
                         | Details
                         i.chevron.right.icon
-                // .ui.segment
-                //     .ui.list
-                //         each blocks
-                //             unless block_small_template_exists
-                //                 .item
-                //                     if icon
-                //                         +icon name=icon classes='avatar'
-                //                     strong #{title}
-                //                     // s:#{slug} k:#{key}
-                //                     |&nbsp;
-                //                     if is_array
-                //                         each value
-                //                             .ui.basic.label #{this}
-                //                     else
-                //                         | #{value}
+                .ui.segment
+                    .ui.list
+                        each blocks
+                            unless block_small_template_exists
+                                .item
+                                    if icon
+                                        +icon name=icon classes='avatar'
+                                    strong #{title}
+                                    // s:#{slug} k:#{key}
+                                    |&nbsp;
+                                    if is_array
+                                        each value
+                                            .ui.basic.label #{this}
+                                    else
+                                        | #{value}
         if full_mode
             .ui.padded.stackable.grid
                 .row
@@ -90,46 +95,46 @@ template(name='delta_card')
                                                 +icon name=icon
                                         strong #{title}
                             unless delta.editing
-                                // each blocks
-                                //     .column
-                                //         .ui.segment
-                                //             .ui.dividing.header
-                                //                 if icon
-                                //                     +icon name=icon
-                                //                 |#{title}
-                                //             +Template.dynamic template=block_big_template data=local_doc
+                                each blocks
+                                    .column
+                                        .ui.segment
+                                            .ui.dividing.header
+                                                if icon
+                                                    +icon name=icon
+                                                |#{title}
+                                            +Template.dynamic template=block_big_template data=local_doc
                                 // .ui.header children sets
-                                if children_sets
-                                    each children_sets
-                                        .column
-                                            .ui.segment
-                                                .ui.dividing.header
-                                                    if icon
-                                                        +icon name=icon classes='spaced mini'
-                                                    |#{plural}
-                                                .ui.add_grandchild.button
-                                                    |Add #{title}
-                                                .ui.comments
-                                                    each set_children
-                                                        .comment
-                                                            .avatar
-                                                                if author.image_id
-                                                                    img.ui.avatar.spaced.image(src="{{c.url author.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                                                                else
-                                                                    i.user.icon
-                                                            .content
-                                                                strong #{author.username}
-                                                                .metadata
-                                                                    span.date #{when}
-                                                                .text
-                                                                    p #{text}
-                                                                .actions
-                                                                    a.edit
-                                                                        i.pencil.icon
-                                                                    a.delete
-                                                                        i.trash.icon
-                                                                    a.vote_up
-                                                                        i.thumbs.up.icon
+                                // if children_sets
+                                //     each children_sets
+                                //         .column
+                                //             .ui.segment
+                                //                 .ui.dividing.header
+                                //                     if icon
+                                //                         +icon name=icon classes='spaced mini'
+                                //                     |#{plural}
+                                //                 .ui.add_grandchild.button
+                                //                     |Add #{title}
+                                //                 .ui.comments
+                                //                     each set_children
+                                //                         .comment
+                                //                             .avatar
+                                //                                 if author.image_id
+                                //                                     img.ui.avatar.spaced.image(src="{{c.url author.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                                //                                 else
+                                //                                     i.user.icon
+                                //                             .content
+                                //                                 strong #{author.username}
+                                //                                 .metadata
+                                //                                     span.date #{when}
+                                //                                 .text
+                                //                                     p #{text}
+                                //                                 .actions
+                                //                                     a.edit
+                                //                                         i.pencil.icon
+                                //                                     a.delete
+                                //                                         i.trash.icon
+                                //                                     a.vote_up
+                                //                                         i.thumbs.up.icon
                             if delta.editing
                                 each edit_blocks
                                     .column
