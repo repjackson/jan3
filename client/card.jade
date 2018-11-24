@@ -119,8 +119,8 @@ template(name='delta_card')
                                                                         i.thumbs.up.icon
                             if delta.editing
                                 each edit_blocks
-                                    .card
-                                        .content
+                                    .column
+                                        .ui.segment
                                             +block_edit
 
                                                 // .ui.hidden.divider
