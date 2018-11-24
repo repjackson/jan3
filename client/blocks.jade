@@ -200,12 +200,12 @@ template(name='office_small')
 
 template(name='toggle_boolean')
     if is_on
-        #turn_off.ui.green.compact.button
+        #turn_off.ui.green.button
             if icon
                 i.icon(class=icon)
             |#{yes_label}
     else
-        #turn_on.ui.compact.button
+        #turn_on.ui.button
             if icon
                 i.icon(class=icon)
             |#{yes_label}
@@ -299,24 +299,24 @@ template(name='edit_block_number_field')
         input.number_field(type='number' min='0' value=block_key_value)
 
 template(name='set_key_value')
-    .set_key_value.ui.small.compact.button(class=set_value_button_class)
+    .set_key_value.ui.small.button(class=set_value_button_class)
         if icon
             i.icon
                 +icon name=icon
         |#{label}
 
 template(name='set_page_key_value')
-    .set_page_key_value.ui.compact.button(class=set_value_button_class)
+    .set_page_key_value.ui.button(class=set_value_button_class)
         if icon
             i.icon
                 +icon name=icon
         |#{label}
 
 template(name='set_field_key_value')
-    .set_field_key_value.ui.compact.button(class=set_value_button_class) #{label}
+    .set_field_key_value.ui.button(class=set_value_button_class) #{label}
 
 template(name='toggle_block_field_boolean')
-    .toggle_block_field_boolean.ui.compact.button(class=toggle_value_button_class) #{label}
+    .toggle_block_field_boolean.ui.button(class=toggle_value_button_class) #{label}
 
 template(name='set_key_value_2')
     .set_key_value.ui.button(class=set_value_button_class)
@@ -336,7 +336,7 @@ template(name='event_type_icon')
 template(name='user_avatar')
     img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
     .ui.popup
-        img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
+        img.ui.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
     // a(href="/user/#{username}") #{first_name} #{last_name}
 
 template(name='view_ticket_link')
@@ -357,7 +357,7 @@ template(name='user_list_view')
     .item
         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 crop='fill' gravity='face'}}")
         // .ui.popup
-        //     img.ui.small.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
+        //     img.ui.image(src="{{c.url image_id height=500 width=500 crop='fill' gravity='face'}}")
         .content
             .header #{first_name} #{last_name}
             .description @#{username}
@@ -376,7 +376,7 @@ template(name='customer_tickets')
 
 
 template(name='customer_small')
-    .ui.small.header
+    .ui.header
         +icon name='headset' classes='mini spaced'
         |#{block_parent.customer_name}
 
@@ -454,7 +454,7 @@ template(name='address_block_small')
 
 
 template(name='view_roles_small')
-    .ui.small.header
+    .ui.header
         +icon name='view-file' classes='inline mini'
         | View Roles
         each block_parent.view_roles
@@ -469,7 +469,7 @@ template(name='view_roles_big')
 
 
 template(name='tags_small')
-    .ui.small.header
+    .ui.header
         +icon name='tags' classes='inline mini'
         |Tags
         each block_parent.tags
@@ -498,7 +498,7 @@ template(name='title_big')
 
 
 // template(name='icon_small')
-//     .ui.small.header
+//     .ui.header
 //         +icon name=block_parent.icon classes='mini'
 //         |Icon: #{block_parent.icon}
 
@@ -526,7 +526,7 @@ template(name='faceted_big')
 
 
 template(name='slug_small')
-    .ui.small.header
+    .ui.header
         +icon name='slug' classes='mini' title='slug'
         |Slug: #{block_parent.slug}
 
@@ -571,7 +571,7 @@ template(name='ticket_number_big')
 
 
 template(name='ticket_number_small')
-    .ui.horizontal.small.statistic(title='Ticket Number')
+    .ui.horizontal.statistic(title='Ticket Number')
         .label
             +icon name='hashtag' classes='mini spaced'
         .value #{block_parent.ticket_number}
@@ -604,7 +604,7 @@ template(name='details_big')
 
 
 template(name='contact_small')
-    .ui.small.header
+    .ui.header
         +icon name='email'
         | Contact
     with block_parent

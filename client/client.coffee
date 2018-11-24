@@ -24,6 +24,8 @@ Template.registerHelper 'cell_value', () ->
 
 Template.registerHelper 'block_big_template', () -> "#{@slug}_big"
 
+Template.registerHelper 'is_multi', () -> @relation is 'multi'
+Template.registerHelper 'is_single', () -> @relation is 'single'
 
 Template.registerHelper 'block_small_template', () -> "#{@slug}_small"
 

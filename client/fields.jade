@@ -7,7 +7,7 @@ template(name='boolean_edit')
             i.icon
                 +icon name=icon
         |#{title}
-    .ui.compact.margined.button.toggle_block(class=bool_switch_class title=key)
+    .ui.margined.button.toggle_block(class=bool_switch_class title=key)
         if icon
             i.icon
                 +icon name=icon
@@ -28,7 +28,7 @@ template(name='array_edit')
             i.pull_element.remove.link.icon
             |#{this}
     // if full_mode
-    //     .edit.ui.compact.icon.button
+    //     .edit.ui.icon.button
     //         i.pencil.icon
 
 
@@ -40,7 +40,7 @@ template(name='multiref_edit')
             +icon name=icon classes='inline spaced'
         |#{title}
     each choices
-        .ui.compact.margined.button.toggle_element(class=element_class)
+        .ui.margined.button.toggle_element(class=element_class)
             if icon
                 i.icon
                     +icon name=icon
@@ -54,7 +54,7 @@ template(name='ref_edit')
             +icon name=icon classes='inline spaced'
         |#{title}
     each choices
-        .ui.compact.margined.button.choose_element(class=element_class)
+        .ui.margined.button.choose_element(class=element_class)
             if icon
                 i.icon
                     +icon name=icon
@@ -84,7 +84,7 @@ template(name='header')
     else
         .ui.header #{title}
     if full_mode
-        .edit.ui.small.compact.icon.button
+        .edit.ui.small.icon.button
             i.pencil.icon
 
 
@@ -97,7 +97,7 @@ template(name='textarea')
     else
         .large120 #{text}
     if full_mode
-        .edit.ui.small.compact.icon.button
+        .edit.ui.small.icon.button
             i.pencil.icon
 
 

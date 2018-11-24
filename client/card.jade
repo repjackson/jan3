@@ -2,22 +2,28 @@ template(name='delta_card')
     with local_doc
         unless full_mode
             .ui.card.delta_card(class=delta_card_class)
-                .content
-                    if icon
-                        i.large.icon
-                            +icon name=icon
-                    strong #{title}
+                // .content
+                //     .ui.header
+                //         if icon
+                //             +icon name=icon
+                //         |#{title}
 
 
                 if children_sets
                     .content
                         each children_sets
+                            if is_single
+                                .ui.header single
+                            if is_multi
+                                .ui.header multi
                             .ui.dividing.header
                                 if icon
                                     +icon name=icon classes='spaced mini'
                                 |#{plural}
-                    // each blocks
-                    //     +Template.dynamic template=block_small_template data=local_doc
+                if blocks
+                    .content
+                        each blocks
+                            +Template.dynamic template=block_small_template data=local_doc
 
                 .content
                     .ui.large.button.edit
