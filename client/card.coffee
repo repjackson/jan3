@@ -33,6 +33,12 @@ Template.delta_card.events
                 Session.set 'is_calculating', false
 
 
+    'click .add_grandchild': ->
+        delta = Docs.findOne type:'delta'
+        Docs.insert
+            parent_id:delta.detail_id
+            type:@slug
+
     'click .enable_editing': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
@@ -96,7 +102,6 @@ Template.delta_card.helpers
         delta = Docs.findOne type:'delta'
         detail_doc = Docs.findOne delta.detail_id
         current_type = delta.filter_type[0]
-        console.log @
         Docs.find({
             type:@slug
             parent_id:detail_doc._id

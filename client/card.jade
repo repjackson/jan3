@@ -92,15 +92,32 @@ template(name='delta_card')
                                             .content
                                                 .header
                                                     if icon
-                                                        +icon name=icon classes='inline mini'
+                                                        +icon name=icon classes='spaced mini'
                                                     |#{plural}
                                             .content
-                                                .ui.add_child.button
+                                                .ui.add_grandchild.button
                                                     |Add #{title}
                                             .content
-                                                .ui.list
+                                                .ui.comments
                                                     each set_children
-                                                        .item #{title} #{text}
+                                                        .comment
+                                                            .avatar
+                                                                if author.image_id
+                                                                    img.ui.avatar.spaced.image(src="{{c.url author.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                                                                else
+                                                                    i.user.icon
+                                                            .content
+                                                                .author #{author.username}
+                                                                .metadata
+                                                                    span.date #{when}
+                                                                .text
+                                                                    p #{text}
+                                                                .actions
+                                                                    // a.reply Reply
+                                                                    a.delete_comment
+                                                                        i.trash.icon
+                                                                    a.vote_up
+                                                                        i.thumbs.up.icon
                             if delta.editing
                                 each edit_blocks
                                     .card
