@@ -114,6 +114,3 @@ Docs.helpers
     #         type:'customer'
     #         customer_jpid: user.customer_jpid
     #     found
-
-
-

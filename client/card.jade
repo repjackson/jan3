@@ -19,24 +19,21 @@ template(name='delta_card')
                     .ui.large.button.toggle_full
                         | Details
                         i.chevron.right.icon
-                if is_dev
-                    .ui.secondary.segment
+                .ui.segment
+                    .ui.list
                         each blocks
-                            .card
-                                if local_doc.template
-                                    +Template.dynamic template=local_doc.template data=local_doc
-                                else
-                                    .content
-                                        if icon
-                                            i.icon
-                                                +icon name=icon
-                                        strong #{title} s:#{slug} k:#{key}
-                                        |&nbsp;
-                                        if is_array
-                                            each value
-                                                .ui.basic.label #{this}
-                                        else
-                                            | #{value}
+                            unless block_small_template_exists
+                                .item
+                                    if icon
+                                        +icon name=icon classes='avatar'
+                                    strong #{title}
+                                    // s:#{slug} k:#{key}
+                                    |&nbsp;
+                                    if is_array
+                                        each value
+                                            .ui.basic.label #{this}
+                                    else
+                                        | #{value}
         if full_mode
             .ui.padded.stackable.grid
                 .row
@@ -84,17 +81,18 @@ template(name='delta_card')
                                     .card
                                         .content
                                             +Template.dynamic template=block_big_template data=local_doc
-                                        .ui.secondary.segment
-                                            if icon
-                                                i.large.icon
-                                                    +icon name=icon
-                                            strong #{title} s:#{slug} k:#{key}
-                                            |&nbsp;
-                                            if is_array
-                                                each value
-                                                    .ui.basic.label #{this}
-                                            else
-                                                | #{value}
+                                        unless block_big_template_exists
+                                            .ui.segment
+                                                if icon
+                                                    i.large.icon
+                                                        +icon name=icon
+                                                strong #{title} s:#{slug} k:#{key}
+                                                |&nbsp;
+                                                if is_array
+                                                    each value
+                                                        .ui.basic.label #{this}
+                                                else
+                                                    | #{value}
                             if delta.editing
                                 each edit_blocks
                                     .card

@@ -27,6 +27,14 @@ Template.registerHelper 'block_big_template', () -> "#{@slug}_big"
 
 Template.registerHelper 'block_small_template', () -> "#{@slug}_small"
 
+Template.registerHelper 'block_small_template_exists', () ->
+    name = "#{@slug}_small"
+    if Template[name] then true else false
+
+Template.registerHelper 'block_big_template_exists', () ->
+    name = "#{@slug}_big"
+    if Template[name] then true else false
+
 
 
 # Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
@@ -90,6 +98,7 @@ Template.registerHelper 'is_dev', () ->
 Template.registerHelper 'dev_mode', ()->
     if Meteor.user() and Meteor.user().roles
         'dev' in Meteor.user().roles and Session.get('dev_mode')
+
 Template.registerHelper 'is_eric', ()->
     if Meteor.user()
         'Bda8mRG925DnxTjQC' is Meteor.userId()

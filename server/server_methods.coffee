@@ -274,6 +274,8 @@ Meteor.methods
         Docs.remove doc_id
 
 
+
+
     refresh_customer_jpids: (username)->
         user = Meteor.users.findOne username:username
         if user and user.customer_jpid
