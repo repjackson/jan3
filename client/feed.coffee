@@ -1,13 +1,16 @@
 
 
-Template.events_big.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'event', 20
+# Template.events_big.onCreated ->
+#     @autorun => Meteor.subscribe 'type', 'event', 20
 
 Template.events_big.helpers
-    feed_events: ->
-        context = Template.currentData()
+    child_events: ->
+        context = Template.parentData(4)
         # Docs.find {type:'event', doc_type:context.doc_type}, sort:timestamp:-1
-        Docs.find {type:'event'}, sort:timestamp:-1
+        Docs.find {
+            type:'event'
+            # parent_id:context._id
+            }, sort:timestamp:-1
 
 
 Template.events_big.events

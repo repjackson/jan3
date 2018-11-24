@@ -34,11 +34,11 @@ template(name='users_feed')
 
 
 template(name='events_big')
-    .ui.small.header
-        |Events
+    .ui.header
         +icon name='rss'
+        |Events
     .ui.feed
-        each doc_history_events
+        each child_events
             +event
 
 template(name='event')

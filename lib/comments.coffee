@@ -29,6 +29,11 @@ if Meteor.isClient
                             type:'comment'
                             text:text
                             parent_id: delta.detail_id
+                    Docs.insert
+                        type:'event'
+                        text:"#{Meteor.user().username} commented: #{text}"
+                        parent_id: delta.detail_id
+                        event_type:'comment'
 
 
         'click .delete_comment': ->

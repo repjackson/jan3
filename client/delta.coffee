@@ -203,21 +203,6 @@ Template.delta_card.events
 
 
 
-Template.task_card.helpers
-    # expand_class: ->
-    #     delta = Docs.findOne type:'delta'
-    #     if delta.expand_id is @_id then 'blue'
-
-
-    # maximize_class: ->
-    #     delta = Docs.findOne type:'delta'
-    #     if delta.detail_id is @_id then 'blue'
-
-
-
-
-
-
 
 Template.toggle_delta_config.helpers
     boolean_true: ->

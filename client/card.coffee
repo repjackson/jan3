@@ -2,6 +2,7 @@ Template.delta_card.onCreated ->
     delta = Docs.findOne type:'delta'
     @autorun => Meteor.subscribe 'schema_blocks'
     @autorun => Meteor.subscribe 'doc', delta.detail_id
+    @autorun => Meteor.subscribe 'children', delta.detail_id
 
 Template.delta_card.onRendered ->
     Meteor.setTimeout ->

@@ -82,7 +82,7 @@ Meteor.publish 'events', (doc_type, limit=10, sort_key='timestamp', sort_directi
 
 
 
-Meteor.publish 'child_docs', (doc_id, limit)->
+Meteor.publish 'children', (doc_id, limit)->
     if limit
         Docs.find {parent_id:doc_id}, {limit:limit, sort:timestamp:-1}
     else
