@@ -80,6 +80,10 @@ template(name='delta_card')
                                 each blocks
                                     .card
                                         .content
+                                            .ui.dividing.header
+                                                if icon
+                                                    +icon name=icon
+                                                |#{title}
                                             +Template.dynamic template=block_big_template data=local_doc
                                         // unless block_big_template_exists
                                         //     .ui.segment

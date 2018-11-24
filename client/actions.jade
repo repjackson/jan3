@@ -22,9 +22,6 @@ template(name='bookmark_small')
 
 
 template(name='bookmark_big')
-    .ui.small.dividing.header
-        +icon name='bookmark-ribbon' classes='mini spaced'
-        |Bookmarks
     if bookmarked
         .ui.red.compact.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
             +iconsmall name='bookmark-ribbon'
@@ -55,9 +52,6 @@ template(name='mark_read_small')
             +iconsmall name='secured-letter'
 
 template(name='mark_read_big')
-    .ui.small.dividing.header
-        +icon name='open-envelope' classes='mini spaced'
-        | Read
     if read
         .ui.green.compact.button.toggle_read(title='Mark Unread')
             +iconsmall name='open-envelope'
@@ -120,9 +114,6 @@ template(name='subscribe_small')
 
 
 template(name='subscribe_big')
-    .ui.small.dividing.header
-        +icon name='renew-subscription' classes='mini spaced'
-        | Subscriptions
     if subscribed
         .ui.teal.compact.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
             +iconsmall name='renew-subscription'

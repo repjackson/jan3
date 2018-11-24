@@ -157,9 +157,6 @@ template(name='user_card')
 
 
 template(name='office_big')
-    .ui.header
-        +icon name='building' classes='mini spaced'
-        |Office
     with block_parent
         h4.ui.header #{office_name}
         .black ##{office_jpid}
@@ -247,9 +244,6 @@ template(name='franchisee_small')
 
 template(name='franchisee_big')
     with block_parent
-        .ui.header
-            +icon name='business' classes='inline mini'
-            |Franchisee
         h4.ui.header #{franch_name} #{ticket_franchisee}
         .ui.list
             .item(title='JPID') JPID ##{franchisee_jpid}
@@ -387,9 +381,6 @@ template(name='customer_small')
         |#{block_parent.customer_name}
 
 template(name='customer_big')
-    .ui.header
-        +icon name='headset' classes='spaced mini'
-        |Customer
     with block_parent
         h4.ui.header #{customer_name}
         .ui.list
@@ -441,9 +432,6 @@ template(name='archive_big')
 
 
 template(name='address_block_big')
-    .ui.header
-        +icon name='location' classes='inline mini'
-        |Address
     with block_parent
         .ui.list
             .item #{address}
@@ -596,9 +584,6 @@ template(name='text_small')
 
 
 template(name='text_big')
-    .ui.header
-        +icon name='note'
-        | Text
     .large110 #{block_parent.text} #{block_parent.body}
 
 
@@ -629,9 +614,6 @@ template(name='contact_small')
 
 
 template(name='contact_big')
-    .ui.small.header
-        +icon name='email'
-        | Contact
     with block_parent
         .ui.list
             .item Customer Contact Person: #{customer_contact_person}
@@ -655,9 +637,6 @@ template(name='created_small')
                 +author_info
 
 template(name='created_big')
-    .ui.small.header
-        +icon name='email'
-        | Created
     with block_parent
         .ui.list
             .item
@@ -684,9 +663,6 @@ template(name='finance_small')
             .item Total Tax: #{total_tax}
 
 template(name='finance_big')
-    .ui.small.header
-        +icon name='money'
-        | Finance
     with block_parent
         .ui.list
             .item Extra Price: #{extra_price}
