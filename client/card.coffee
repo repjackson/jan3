@@ -81,6 +81,14 @@ Template.delta_card.helpers
                     false
 
 
+    children_sets: ->
+        delta = Docs.findOne type:'delta'
+        detail_doc = Docs.findOne delta.detail_id
+        current_type = delta.filter_type[0]
+        Docs.find({
+            type:'schema'
+            parent_sets: $in: [current_type]
+        }, {sort:{rank:1}}).fetch()
     blocks: ->
         delta = Docs.findOne type:'delta'
         detail_doc = Docs.findOne delta.detail_id

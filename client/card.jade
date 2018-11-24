@@ -85,6 +85,12 @@ template(name='delta_card')
                                                     +icon name=icon
                                                 |#{title}
                                             +Template.dynamic template=block_big_template data=local_doc
+                                if children_sets
+                                    .ui.header children sets
+                                    each children_sets
+                                        .card
+                                            .content
+                                                .header #{title}
                                         // unless block_big_template_exists
                                         //     .ui.segment
                                         //         if icon
