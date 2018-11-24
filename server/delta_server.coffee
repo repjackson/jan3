@@ -146,12 +146,15 @@ Meteor.methods
 
         skip_amount = current_page*calc_page_size-calc_page_size
 
+        final_sort_key = if delta.sort_key then delta.sort_key else 'timestamp'
+        final_sort_direction = if delta.sort_direction then delta.sort_direction else -1
+
         results_cursor =
             Docs.find( built_query,
                 {
                     blocks:_id:1
                     limit:calc_page_size
-                    sort:"#{delta.sort_key}":delta.sort_direction
+                    sort:"#{final_sort_key}":final_sort_direction
                     skip:skip_amount
                 }
             )

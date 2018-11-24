@@ -82,13 +82,13 @@ template(name='delta_card')
                 .row
                     .sixteen.wide.column
                         .ui.stackable.three.column.padded.grid
-                            // each blocks
-                            //     .card
-                            //         .content
-                            //             if icon
-                            //                 i.large.icon
-                            //                     +icon name=icon
-                            //             strong #{title}
+                            each blocks
+                                .card
+                                    .content
+                                        if icon
+                                            i.large.icon
+                                                +icon name=icon
+                                        strong #{title}
                             unless delta.editing
                                 // each blocks
                                 //     .column
