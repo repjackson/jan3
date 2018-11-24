@@ -85,26 +85,22 @@ template(name='delta_card')
                                                     +icon name=icon
                                                 |#{title}
                                             +Template.dynamic template=block_big_template data=local_doc
+                                .ui.header children sets
                                 if children_sets
-                                    .ui.header children sets
                                     each children_sets
                                         .card
                                             .content
-                                                .header #{title}
-                                        // unless block_big_template_exists
-                                        //     .ui.segment
-                                        //         if icon
-                                        //             i.large.icon
-                                        //                 +icon name=icon
-                                        //         strong #{title}
-                                        //         if is_dev
-                                        //             s:#{slug} k:#{key}
-                                        //         |&nbsp;
-                                        //         if is_array
-                                        //             each value
-                                        //                 .ui.basic.label #{this}
-                                        //         else
-                                        //             | #{value}
+                                                .header
+                                                    if icon
+                                                        +icon name=icon classes='inline mini'
+                                                    |#{plural}
+                                            .content
+                                                .ui.add_child.button
+                                                    |Add #{title}
+                                            .content
+                                                .ui.list
+                                                    each set_children
+                                                        .item #{title} #{text}
                             if delta.editing
                                 each edit_blocks
                                     .card
