@@ -41,7 +41,7 @@ Template.ticket_type_small.helpers
         block_parent = Template.parentData(4)
         switch block_parent.ticket_type
             when 'missed_service' then 'blue'
-            when 'team_member_infraction' then 'green'
+            when 'team_member_infraction' then 'blue'
             when 'change_service' then 'teal'
             when 'problem' then 'yellow'
             when 'special_request' then 'orange'
@@ -93,7 +93,7 @@ Template.ticket_status.onCreated ->
 Template.ticket_status.helpers
     ticket: -> Docs.findOne FlowRouter.getQueryParam('doc_id')
     is_closing: -> Template.instance().is_closing.get()
-    closing_class: -> if Template.instance().is_closing.get() is true then 'active green' else ''
+    closing_class: -> if Template.instance().is_closing.get() is true then 'active blue' else ''
     close_ticket_types: -> Docs.find type:'close_ticket_type'
 
 Template.ticket_status.events

@@ -59,7 +59,7 @@ Template.registerHelper 'is_level_four', () -> @level is 4
 Template.registerHelper 'ticket_color_class', () ->
     if @level
         color = switch @level
-            when 1 then 'green'
+            when 1 then 'blue'
             when 2 then 'yellow'
             when 3 then 'orange'
             when 4 then 'red'

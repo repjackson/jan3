@@ -119,7 +119,7 @@ Template.boolean_edit.helpers
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
         bool_value = target_doc?["#{@key}"]
-        if bool_value and bool_value is true then 'active green' else ''
+        if bool_value and bool_value is true then 'active blue' else ''
 
 Template.string_edit.helpers
     is_slug: ->
@@ -201,7 +201,7 @@ Template.multiref_edit.helpers
             else if @username then @username
         if parent and target_doc and value
             if target_doc["#{parent.key}"]
-                if value in target_doc["#{parent.key}"] then 'active green' else ''
+                if value in target_doc["#{parent.key}"] then 'active blue' else ''
 
 
 Template.multiref_edit.events
@@ -254,7 +254,7 @@ Template.ref_edit.helpers
             if @key then @key
             else if @slug then @slug
             else if @username then @username
-        if target_doc?["#{parent.key}"] is value then 'active green' else ''
+        if target_doc?["#{parent.key}"] is value then 'active blue' else ''
 
 
 

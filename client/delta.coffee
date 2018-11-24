@@ -228,7 +228,7 @@ Template.toggle_delta_config.events
 Template.set_page_size.helpers
     page_size_class: ->
         delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'active green' else ''
+        if @value is delta.page_size then 'active blue' else ''
 
 
 Template.set_page_size.events
@@ -259,7 +259,7 @@ Template.selector.helpers
         delta = Docs.findOne type:'delta'
         filter = Template.parentData()
         filter_list = delta["filter_#{filter.key}"]
-        if filter_list and @name in filter_list then 'green active' else ''
+        if filter_list and @name in filter_list then 'blue active' else ''
 
 
 Template.delta_card.events
