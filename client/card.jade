@@ -68,7 +68,7 @@ template(name='delta_card')
                                 | Edit
                 .row
                     .sixteen.wide.column
-                        .ui.stackable.four.cards
+                        .ui.stackable.three.column.padded.grid
                             // each blocks
                             //     .card
                             //         .content
@@ -78,8 +78,8 @@ template(name='delta_card')
                             //             strong #{title}
                             unless delta.editing
                                 each blocks
-                                    .card
-                                        .content
+                                    .column
+                                        .ui.segment
                                             .ui.dividing.header
                                                 if icon
                                                     +icon name=icon
@@ -88,16 +88,14 @@ template(name='delta_card')
                                 .ui.header children sets
                                 if children_sets
                                     each children_sets
-                                        .card
-                                            .content
-                                                .header
+                                        .column
+                                            .ui.segment
+                                                .ui.dividing.header
                                                     if icon
                                                         +icon name=icon classes='spaced mini'
                                                     |#{plural}
-                                            .content
                                                 .ui.add_grandchild.button
                                                     |Add #{title}
-                                            .content
                                                 .ui.comments
                                                     each set_children
                                                         .comment
@@ -107,14 +105,15 @@ template(name='delta_card')
                                                                 else
                                                                     i.user.icon
                                                             .content
-                                                                .author #{author.username}
+                                                                strong #{author.username}
                                                                 .metadata
                                                                     span.date #{when}
                                                                 .text
                                                                     p #{text}
                                                                 .actions
-                                                                    // a.reply Reply
-                                                                    a.delete_comment
+                                                                    a.edit
+                                                                        i.pencil.icon
+                                                                    a.delete
                                                                         i.trash.icon
                                                                     a.vote_up
                                                                         i.thumbs.up.icon

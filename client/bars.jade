@@ -1,29 +1,40 @@
 template(name='nav')
-    .ui.stackable.padded.grid.menu
-        if currentUser
-            .centered.nav_bar.row
-                .one.wide.column.pointer.toggle_leftbar.item
-                    +icon name='menu' classes='spaced mini'
-                .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    +icon name='bookmark-ribbon' classes='mini centered'
-                .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    +icon name='contacts' classes='mini centered'
-                .mobile.hidden.eight.wide.column.pointer.toggle_topbar.item
-                    img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    +icon name='tasks' classes='mini centered'
-                .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    +icon name='shopping-cart' classes='mini centered'
-                .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    +icon name='mailbox-with-letter' classes='mini centered'
-                .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    +icon name='appointment-reminders' classes='mini centered'
-                .one.wide.column.toggle_rightbar.pointer.item
-                    if currentUser.image_id
-                        img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                    else
-                        +icon name='gender-neutral-user' classes='mini centered'
-
+    .mobile.hidden
+        .ui.stackable.padded.grid.menu
+            if currentUser
+                .centered.nav_bar.row
+                    .one.wide.column.pointer.toggle_leftbar.item
+                        +icon name='menu' classes='spaced centered mini'
+                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    //     +icon name='bookmark-ribbon' classes='mini centered'
+                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    //     +icon name='contacts' classes='mini centered'
+                    .mobile.hidden.twelve.wide.column.pointer.toggle_topbar.item
+                        img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    //     +icon name='tasks' classes='mini centered'
+                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    //     +icon name='shopping-cart' classes='mini centered'
+                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    //     +icon name='mailbox-with-letter' classes='mini centered'
+                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    //     +icon name='appointment-reminders' classes='mini centered'
+                    .one.wide.column.toggle_rightbar.pointer.item
+                        if currentUser.image_id
+                            img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        else
+                            +icon name='gender-neutral-user' classes='mini centered'
+    .mobile.only
+        .ui.padded.grid.menu
+            if currentUser
+                .centered.nav_bar.row
+                    .eight.twelve.wide.column.pointer.toggle_leftbar.item
+                        img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                    .four.wide.column.toggle_rightbar.pointer.item
+                        if currentUser.image_id
+                            img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                        else
+                            +icon name='gender-neutral-user' classes='mini centered'
 
 
 template(name='topbar')
@@ -57,7 +68,7 @@ template(name='leftbar')
     .ui.left.vertical.sidebar.nav_bar.menu.leftbar
         each bookmarks
             a.item.pick_delta.toggle_leftbar(href='#')
-                .ui.inverted.header(title=title)
+                .ui.inverted.small.header(title=title)
                     i.icon
                         +icon name=icon
                     | #{plural}
