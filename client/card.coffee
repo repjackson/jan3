@@ -121,7 +121,7 @@ Template.delta_card.helpers
             Docs.findOne
                 type:'schema'
                 slug:'block'
-        if schema_doc
+        if current_schema
             if delta.config_mode is true
                 Docs.find({
                     type:'block'
@@ -136,7 +136,7 @@ Template.delta_card.helpers
                 Docs.find({
                     type:'block'
                     # view_roles: $in: Meteor.user().roles
-                    slug: $in: schema_doc.attached_blocks
+                    slug: $in: current_schema.attached_blocks
                 }, {sort:{rank:1}}).fetch()
 
     edit_blocks: ->

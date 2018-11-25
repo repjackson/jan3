@@ -86,7 +86,7 @@ Template.array_edit.events
         if e.which is 13
             delta = Docs.findOne type:'delta'
             target_doc = Template.parentData(5)
-            val = e.currentTarget.value
+            val = e.currentTarget.value.toLowerCase()
             Docs.update target_doc._id,
                 $addToSet:
                     "#{@key}": val
@@ -95,12 +95,13 @@ Template.array_edit.events
     'click .pull_element': (e,t)->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
-        parent = Template.parentData(5)
+        target = Template.parentData(5)
 
-        console.log parent
-        Docs.update target_doc._id,
+        array_block = Template.parentData(4)
+
+        Docs.update target._id,
             $pull:
-                "#{parent.key}": @valueOf()
+                "#{array_block.key}": @valueOf()
 
 
 
