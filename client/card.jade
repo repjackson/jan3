@@ -49,7 +49,7 @@ template(name='delta_card')
                                     |&nbsp;
                                     if is_array
                                         each value
-                                            .ui.basic.label #{this}
+                                            .ui.label #{this}
                                     else
                                         | #{value}
         if full_mode
@@ -62,8 +62,9 @@ template(name='delta_card')
                                 | Save
                         .ten.wide.center.aligned.column
                             .ui.header
-                                i.pencil.icon
-                                |Edit '#{detail_doc.title}' #{current_type.title}
+                                +icon name=icon classes='inline'
+                                |Edit '#{detail_doc.title}'
+                                // #{current_type.title}
                         .right.floated.three.wide.column
                             .ui.button.remove_doc
                                 i.red.remove.icon
@@ -111,7 +112,7 @@ template(name='delta_card')
                                                 |&nbsp;
                                                 if is_array
                                                     each value
-                                                        .ui.basic.label #{this}
+                                                        .ui.label #{this}
                                                 else
                                                     | #{value}
 

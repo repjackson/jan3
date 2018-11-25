@@ -5,10 +5,10 @@ template(name='delta_results')
         if delta.config_mode
             .ui.header
                 +icon name='administrative-tools'
-                | Edit Schema '#{current_type.title}' Blocks
+                | Edit '#{current_type.title}' parts
             .ui.button.add_block
                 i.plus.icon
-                | Block
+                | Part
             if delta.viewing_detail
                 with delta.detail_id
                     +delta_card
