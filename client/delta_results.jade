@@ -47,10 +47,10 @@ template(name='delta_results')
                             with delta.detail_id
                                 +delta_card
                         else
-                            // .scrolling.delta_cards
-                            .delta_cards
-                                .ui.stackable.cards(class=cards_class)
-                                    each delta.result_ids
-                                        +delta_card
+                            .scrolling_small
+                                .delta_cards
+                                    .ui.stackable.cards(class=cards_class)
+                                        each delta.result_ids
+                                            +delta_card
             else
                 |No results

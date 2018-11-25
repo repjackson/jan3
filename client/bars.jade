@@ -52,7 +52,7 @@ template(name='topbar')
 
 
 template(name='leftbar')
-    .ui.left.vertical.sidebar.nav_bar.menu.leftbar
+    .ui.left.vertical.sidebar.nav_bar.menu.alphablue
         each bookmarks
             a.item.pick_delta.toggle_leftbar(href='#')
                 .ui.inverted.small.header(title=title)
@@ -62,7 +62,7 @@ template(name='leftbar')
 
 
 template(name='rightbar')
-    .ui.right.vertical.sidebar.nav_bar.menu.rightbar
+    .ui.right.vertical.sidebar.alphablue.menu.rightbar
         a.item(href='#')
             .ui.inverted.header
                 | #{currentUser.first_name} #{currentUser.last_name}

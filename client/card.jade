@@ -101,15 +101,15 @@ template(name='delta_card')
                                         .ui.segment
                                             .ui.dividing.header
                                                 if icon
-                                                    +icon name=icon
+                                                    +icon name=icon classes='mini'
                                                 |#{title}
                                             +Template.dynamic template=block_big_template data=local_doc
-                                            .ui.segment
-                                                if icon
-                                                    i.icon
-                                                        +icon name=icon
-                                                strong #{title}
-                                                |&nbsp;
+                                            .ui.basic.segment
+                                                // if icon
+                                                //     i.icon
+                                                //         +icon name=icon
+                                                // strong #{title}
+                                                // |&nbsp;
                                                 if is_array
                                                     each value
                                                         .ui.label #{this}
