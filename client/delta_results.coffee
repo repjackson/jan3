@@ -65,11 +65,18 @@ Template.delta_results.helpers
     schema_blocks: ->
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
-        blocks = Docs.find({
-            type:'block'
-            schema_slugs: $in: [current_type]
-        }, {sort:{rank:1}}).fetch()
-        blocks
+
+        schema_doc =
+            Docs.findOne
+                type:'schema'
+                slug:current_type
+        if schema_doc
+            blocks = Docs.find({
+                type:'block'
+                slug: $in: schema_doc.attached_blocks
+            }, {sort:{rank:1}}).fetch()
+            blocks
+
 
     current_type: ->
         delta = Docs.findOne type:'delta'

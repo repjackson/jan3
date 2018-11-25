@@ -24,11 +24,16 @@ Meteor.publish 'schema_blocks', ->
         author_id: Meteor.userId()
     if delta and delta.filter_type
         current_type = delta.filter_type[0]
-        Docs.find {
-            type:'block'
-            archive:$ne:true
-            schema_slugs:$in:[current_type, 'block']
-        }, limit:100
+        schema_doc =
+            Docs.findOne
+                type:'schema'
+                slug:current_type
+        if schema_doc
+            Docs.find {
+                type:'block'
+                archive:$ne:true
+                slug: $in: schema_doc.attached_blocks
+            }, limit:100
 
 Meteor.publish 'schema', ->
     delta = Docs.findOne
@@ -57,12 +62,11 @@ Meteor.methods
                     type:'schema'
                     slug:current_type
             if schema
-                delta_blocks =
-                    Docs.find(
-                        type:'block'
-                        schema_slugs:$in:[current_type]
-                        faceted:true
-                    ).fetch()
+                delta_blocks = Docs.find({
+                    type:'block'
+                    slug: $in: schema.attached_blocks
+                    faceted:true
+                }, {sort:{rank:1}}).fetch()
         else
             return
 
@@ -90,13 +94,13 @@ Meteor.methods
 
 
 
-        if Meteor.user().roles
-            if 'office' in Meteor.user().roles
-                if current_type is 'ticket'
-                    built_query['office_jpid'] = Meteor.user().office_jpid
-            if 'customer' in Meteor.user().roles
-                if current_type is 'ticket'
-                    built_query['customer_jpid'] = Meteor.user().customer_jpid
+        # if Meteor.user().roles
+        #     if 'office' in Meteor.user().roles
+        #         if current_type is 'ticket'
+        #             built_query['office_jpid'] = Meteor.user().office_jpid
+        #     if 'customer' in Meteor.user().roles
+        #         if current_type is 'ticket'
+        #             built_query['customer_jpid'] = Meteor.user().customer_jpid
         if current_type is 'schema'
             unless 'dev' in Meteor.user().roles
                 built_query['view_roles'] = $in:Meteor.user().roles
@@ -190,7 +194,7 @@ Meteor.methods
                 { $unwind: "$#{key}" }
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
+                { $limit: 50 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
         else
@@ -199,7 +203,7 @@ Meteor.methods
                 { $project: "#{key}": 1 }
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
+                { $limit: 50 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
 

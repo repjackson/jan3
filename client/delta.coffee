@@ -61,30 +61,32 @@ Template.delta.helpers
     faceted_blocks: ->
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
-        delta_blocks = []
-        if Meteor.user() and Meteor.user().roles and current_type
-            if 'dev' in Meteor.user().roles
-                Docs.find({
-                    type:'block'
-                    schema_slugs:$in:[current_type]
-                    faceted: true
-                }, {sort:{rank:1}}).fetch()
-            else
-                Docs.find({
-                    type:'block'
-                    # view_roles: $in: Meteor.user().roles
-                    schema_slugs:$in:[current_type]
-                    faceted: true
-                }, {sort:{rank:1}}).fetch()
+
+        schema_doc =
+            Docs.findOne
+                type:'schema'
+                slug:current_type
+        if schema_doc
+            blocks = Docs.find({
+                type:'block'
+                slug: $in: schema_doc.attached_blocks
+                faceted:true
+            }, {sort:{rank:1}}).fetch()
+            blocks
 
 
     blocks: ->
         delta = Docs.findOne type:'delta'
         current_type = delta.filter_type[0]
-        if current_type
+
+        schema_doc =
+            Docs.findOne
+                type:'schema'
+                slug:current_type
+        if schema_doc
             blocks = Docs.find({
                 type:'block'
-                schema_slugs: $in: [current_type]
+                slug: $in: schema_doc.attached_blocks
             }, {sort:{rank:1}}).fetch()
             blocks
 

@@ -2,11 +2,11 @@ template(name='delta_card')
     with local_doc
         unless full_mode
             .ui.card.delta_card(class=delta_card_class)
-                // .content
-                //     .ui.header
-                //         if icon
-                //             +icon name=icon
-                //         |#{title}
+                .content
+                    .ui.header
+                        if icon
+                            +icon name=icon
+                        |#{title}
 
 
                 // if children_sets
@@ -23,11 +23,11 @@ template(name='delta_card')
                 if blocks
                     .content
                         each blocks
-                            .ui.header
-                                if is_multi
-                                    |multi
-                                if is_sinlge
-                                    |single
+                            // .ui.header
+                            //     if is_multi
+                            //         |multi
+                            //     if is_sinlge
+                            //         |single
                             +Template.dynamic template=block_small_template data=local_doc
 
                 .content

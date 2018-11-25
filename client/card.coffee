@@ -112,45 +112,55 @@ Template.delta_card.helpers
     blocks: ->
         delta = Docs.findOne type:'delta'
         detail_doc = Docs.findOne delta.detail_id
-        if delta.config_mode is true
-            Docs.find({
-                type:'block'
-                schema_slugs: $in: ['block']
-            }, {sort:{rank:1}}).fetch()
-        else if detail_doc?.type is 'block'
-            Docs.find({
-                type:'block'
-                schema_slugs: $in: ['block']
-            }, {sort:{rank:1}}).fetch()
-        else
-            current_type = delta.filter_type[0]
-            Docs.find({
-                type:'block'
-                view_roles: $in: Meteor.user().roles
-                schema_slugs: $in: [current_type]
-            }, {sort:{rank:1}}).fetch()
-
-    edit_blocks: ->
-        delta = Docs.findOne type:'delta'
-        detail_doc = Docs.findOne delta.detail_id
-        if detail_doc?.type is 'block'
-            Docs.find({
-                type:'block'
-                schema_slugs: $in: ['block']
-            }, {sort:{rank:1}}).fetch()
-        else
-            current_type = delta.filter_type[0]
-            if 'dev' in Meteor.user().roles
+        current_type = delta.filter_type[0]
+        schema_doc =
+            Docs.findOne
+                type:'schema'
+                slug:current_type
+        if schema_doc
+            if delta.config_mode is true
                 Docs.find({
                     type:'block'
-                    schema_slugs: $in: [current_type]
+                    slug: $in: ['block']
+                }, {sort:{rank:1}}).fetch()
+            else if detail_doc?.type is 'block'
+                Docs.find({
+                    type:'block'
+                    schema_slugs: $in: ['block']
                 }, {sort:{rank:1}}).fetch()
             else
                 Docs.find({
                     type:'block'
-                    # edit_roles: $in: Meteor.user().roles
-                    schema_slugs: $in: [current_type]
+                    # view_roles: $in: Meteor.user().roles
+                    slug: $in: schema_doc.attached_blocks
                 }, {sort:{rank:1}}).fetch()
+
+    edit_blocks: ->
+        delta = Docs.findOne type:'delta'
+        detail_doc = Docs.findOne delta.detail_id
+        current_type = delta.filter_type[0]
+        schema_doc =
+            Docs.findOne
+                type:'schema'
+                slug:current_type
+        if schema_doc
+            if detail_doc?.type is 'block'
+                Docs.find({
+                    type:'block'
+                    schema_slugs: $in: ['block']
+                }, {sort:{rank:1}}).fetch()
+            else
+                if 'dev' in Meteor.user().roles
+                    Docs.find({
+                        type:'block'
+                        slug: $in: schema_doc.attached_blocks
+                    }, {sort:{rank:1}}).fetch()
+                else
+                    Docs.find({
+                        type:'block'
+                        # edit_roles: $in: Meteor.user().roles
+                        slug: $in: schema_doc.attached_blocks
+                    }, {sort:{rank:1}}).fetch()
 
 
     child_schema_blocks: ->
