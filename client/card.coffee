@@ -113,20 +113,24 @@ Template.delta_card.helpers
         delta = Docs.findOne type:'delta'
         detail_doc = Docs.findOne delta.detail_id
         current_type = delta.filter_type[0]
-        schema_doc =
+        current_schema =
             Docs.findOne
                 type:'schema'
                 slug:current_type
+        blocks_schema =
+            Docs.findOne
+                type:'schema'
+                slug:'block'
         if schema_doc
             if delta.config_mode is true
                 Docs.find({
                     type:'block'
-                    slug: $in: ['block']
+                    slug: $in: blocks_schema.attached_blocks
                 }, {sort:{rank:1}}).fetch()
             else if detail_doc?.type is 'block'
                 Docs.find({
                     type:'block'
-                    schema_slugs: $in: ['block']
+                    slug: $in: blocks_schema.attached_blocks
                 }, {sort:{rank:1}}).fetch()
             else
                 Docs.find({
@@ -143,11 +147,16 @@ Template.delta_card.helpers
             Docs.findOne
                 type:'schema'
                 slug:current_type
+        blocks_schema =
+            Docs.findOne
+                type:'schema'
+                slug:'block'
+
         if schema_doc
             if detail_doc?.type is 'block'
                 Docs.find({
                     type:'block'
-                    schema_slugs: $in: ['block']
+                    slug: $in: blocks_schema.attached_blocks
                 }, {sort:{rank:1}}).fetch()
             else
                 if 'dev' in Meteor.user().roles
@@ -184,37 +193,12 @@ Template.delta_card.helpers
             Docs.findOne @valueOf()
 
 
-    # block_docs: ->
-    #     delta = Docs.findOne type:'delta'
-    #     local_doc =
-    #         if @data
-    #             Docs.findOne @data.valueOf()
-    #         else
-    #             Docs.findOne @valueOf()
-    #     if local_doc?.type is 'block'
-    #         Docs.find({
-    #             type:'block'
-    #             schema_slugs: $in: ['block']
-    #         }, {sort:{rank:1}}).fetch()
-    #     else
-    #         schema = Docs.findOne
-    #             type:'schema'
-    #             slug:delta.filter_type[0]
-    #         Docs.find({
-    #             type:'block'
-    #             schema_slugs: $in: [schema.slug]
-    #             # view_roles: $in: Meteor.user().roles
-    #         }, {sort:{rank:1}}).fetch()
-
     value: ->
         delta = Docs.findOne type:'delta'
         schema = Docs.findOne
             type:'schema'
             slug:delta.filter_type[0]
         parent = Template.parentData()
-        block_doc = Docs.findOne
-            type:'block'
-            schema_slugs:$in:[schema.slug]
         parent["#{@key}"]
 
 
@@ -225,18 +209,23 @@ Template.delta_card.helpers
                 Docs.findOne @data.valueOf()
             else
                 Docs.findOne @valueOf()
+        blocks_schema =
+            Docs.findOne
+                type:'schema'
+                slug:'block'
+
         if local_doc?.type is 'block'
             Docs.find({
                 type:'block'
                 # axon:$ne:true
                 header:true
-                schema_slugs: $in: ['block']
+                slug: $in: blocks_schema.attached_blocks
             }, {sort:{rank:1}}).fetch()
         else if detail_doc?.type is 'block'
             Docs.find({
                 type:'block'
                 header:true
-                schema_slugs: $in: ['block']
+                slug: $in: blocks_schema.attached_blocks
             }, {sort:{rank:1}}).fetch()
         else
             schema = Docs.findOne
@@ -244,7 +233,7 @@ Template.delta_card.helpers
                 slug:delta.filter_type[0]
             linked_blocks = Docs.find({
                 type:'block'
-                schema_slugs: $in: [schema.slug]
+                slug: $in: blocks_schema.attached_blocks
                 header:true
                 # axon:$ne:true
             }, {sort:{rank:1}}).fetch()

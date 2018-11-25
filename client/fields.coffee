@@ -97,6 +97,7 @@ Template.array_edit.events
         target_doc = Docs.findOne _id:delta.detail_id
         parent = Template.parentData(5)
 
+        console.log parent
         Docs.update target_doc._id,
             $pull:
                 "#{parent.key}": @valueOf()
@@ -181,8 +182,8 @@ Template.multiref_edit.helpers
     choices: ->
         Docs.find {type:@ref_schema},
             {sort:
-                rank:1
                 title:1
+                rank:1
             }
 
     value: ->

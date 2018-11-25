@@ -15,6 +15,7 @@ template(name='delta_results')
             else
                 .ui.cards
                     each schema_blocks
+                        |#{title}
                         +delta_card data=_id
         else
             if delta.result_ids

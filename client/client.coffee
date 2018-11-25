@@ -114,10 +114,15 @@ Template.registerHelper 'blocks', ()->
             Docs.findOne @data.valueOf()
         else
             Docs.findOne @valueOf()
+    blocks_schema =
+        Docs.findOne
+            type:'schema'
+            slug:'block'
+
     if local_doc?.type is 'block'
         Docs.find({
             type:'block'
-            schema_slugs: $in: ['block']
+            slug: $in: blocks_schema.attached_blocks
         }, {sort:{rank:1}}).fetch()
     else
         schema = Docs.findOne
@@ -126,7 +131,7 @@ Template.registerHelper 'blocks', ()->
         Docs.find({
             type:'block'
             # visible:true
-            schema_slugs: $in: [schema.slug]
+            slug: $in: schema.attached_blocks
         }, {sort:{rank:1}}).fetch()
 
 
