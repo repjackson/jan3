@@ -362,7 +362,7 @@ Template.archive_small.events
 
 
 
-Template.tags_small.helpers
-    tag_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.filter_tags and @valueOf() in delta.filter_tags then 'blue' else 'basic'
+# Template.tags_small.helpers
+#     tag_class: ->
+#         delta = Docs.findOne type:'delta'
+#         if delta.filter_tags and @valueOf() in delta.filter_tags then 'blue' else 'basic'

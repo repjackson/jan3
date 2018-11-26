@@ -1,17 +1,15 @@
-template(name='set_schema_small')
+template(name='set_schema_block')
     .ui.icon.button.set_schema(title='View Schema')
         // | View
         // i.right.chevron.icon
         | Go
         +iconsmall name='chevron-right'
-
-template(name='set_schema_big')
     .ui.icon.button.set_schema(title='View Schema')
         | View Section
         +icon name='chevron-right' classes='inline mini'
 
 
-template(name='bookmark_small')
+template(name='bookmark_block')
     if bookmarked
         .ui.red.compact.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
             +iconsmall name='bookmark-ribbon'
@@ -21,9 +19,6 @@ template(name='bookmark_small')
             // +iconsmall name='bookmark-ribbon'
             img.ui.inline.image(src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png")
             |Bookmark
-
-
-template(name='bookmark_big')
     if bookmarked
         .ui.red.compact.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
             +iconsmall name='bookmark-ribbon'
@@ -43,25 +38,15 @@ template(name='bookmark_big')
 
 
 
-template(name='mark_read_small')
+template(name='mark_read_block')
     if read
-        .ui.green.compact.button.toggle_read(title='Mark Unread')
-            +iconsmall name='open-envelope'
-            |Mark Unread
-    else
-        .ui.compact.button.toggle_read(title='Mark Read')
-            +iconsmall name='secured-letter'
-            | Mark Read
-
-template(name='mark_read_big')
-    if read
-        .ui.green.compact.button.toggle_read(title='Mark Unread')
-            +iconsmall name='open-envelope'
+        .ui.blue.fluid.button.toggle_read(title='Mark Unread')
+            +iconsmall name='open-envelope' classes='spaced'
             | Read
     else
-        .ui.compact.button.toggle_read(title='Mark Read')
-            +iconsmall name='secured-letter'
-            | Unread
+        .ui.fluid.button.toggle_read(title='Mark Read')
+            +iconsmall name='secured-letter' classes='spaced'
+            | Read
     .ui.list
         each read_users
             +user_list_view
@@ -73,7 +58,7 @@ template(name='mark_read_big')
 
 
 
-template(name='complete_small')
+template(name='complete_block')
     if block_parent.complete
         .ui.small.header
             +icon name='checkmark' classes='spaced mini'
@@ -82,8 +67,6 @@ template(name='complete_small')
         .ui.small.header
             +icon name='clock' classes='spaced mini'
             | Incomplete
-
-template(name='complete_big')
     if block_parent.complete
         +icon name='checkmark' classes='spaced mini'
         | Complete
@@ -105,7 +88,7 @@ template(name='complete_big')
 
 
 
-template(name='subscribe_small')
+template(name='subscribe_block')
     if subscribed
         .ui.teal.compact.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
             +iconsmall name='renew-subscription'
@@ -113,9 +96,6 @@ template(name='subscribe_small')
         .ui.compact.button.toggle_subscribe(title='Subscribe' class=subscription_class)
             +iconsmall name='renew-subscription'
 
-
-
-template(name='subscribe_big')
     if subscribed
         .ui.teal.compact.button.toggle_subscribe(title='Unsubscribe' class=subscription_class)
             +iconsmall name='renew-subscription'
@@ -138,14 +118,11 @@ template(name='subscribe_big')
 
 
 
-template(name='voting_small')
+template(name='voting_block')
     .ui.mini.statistic
         .value #{points}
         .label Points
         // +voting_big
-
-
-template(name='voting_big')
     .ui.small.dividing.header
         +icon name='leaderboard' classes='mini spaced'
         | Priority
@@ -168,7 +145,7 @@ template(name='voting_big')
 
 
 
-template(name='assignment_small')
+template(name='assignment_block')
     .ui.small.dividing.header
         +icon name='checked-user-male' classes='mini spaced'
         | Assignments
@@ -181,10 +158,6 @@ template(name='assignment_small')
                 //     h4.ui.header
                 //         |#{first_name} #{last_name}
                 //         small @#{username}
-
-
-
-template(name='assignment_big')
     .ui.small.dividing.header
         +icon name='checked-user-male' classes='mini spaced'
         | Assignments
@@ -221,12 +194,10 @@ template(name='assignment_big')
 
 
 
-template(name='approval_small')
+template(name='approval_block')
     .ui.small.dividing.header
         +icon name='approval' classes='mini spaced'
         | Approval
-
-template(name='approval_big')
     .ui.form
         .field
             .ui.icon.input

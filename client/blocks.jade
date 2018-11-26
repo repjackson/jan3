@@ -82,13 +82,13 @@ template(name='call_method')
             |#{name}
 
 template(name='icon')
-    img.ui.image(src="https://png.icons8.com/office/80/000000/#{name}.png" class=classes data-content=popup title=title)
+    img.ui.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes data-content=popup title=title)
 
 template(name='iconlarge')
-    img.ui.image(src="https://png.icons8.com/office/80/000000/#{name}.png")
+    img.ui.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png")
 
 template(name='iconsmall')
-    img.ui.image(src="https://png.icons8.com/office/24/000000/#{name}.png" class=classes title=title)
+    img.ui.image(src="https://png.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes title=title)
 
 template(name='message_button')
     .ui.message
@@ -468,20 +468,6 @@ template(name='view_roles_big')
             .ui.margined.large.basic.label(class=tag_class) #{this}
 
 
-template(name='tags_small')
-    .ui.header
-        +icon name='tags' classes='inline mini'
-        |Tags
-        each block_parent.tags
-            .ui.margined.label(class=tag_class) #{this}
-
-template(name='tags_big')
-    .ui.header
-        +icon name='tags' classes='inline mini'
-        |Tags
-    each block_parent.tags
-        .ui.large.basic.label #{this}
-
 
 template(name='title_small')
     .ui.center.aligned.dividing.header(title='Title')
@@ -539,24 +525,24 @@ template(name='slug_big')
 
 
 
-template(name='rank_big')
-    div
-    .ui.statistic
-        .label Rank
-        .value #{block_parent.rank}
-    div
+// template(name='rank_big')
+//     div
+//     .ui.statistic
+//         .label Rank
+//         .value #{block_parent.rank}
+//     div
     // .ui.icon.button
     //     i.up.caret.large.icon
     // .ui.icon.button
     //     i.down.caret.large.icon
 
 
-template(name='rank_small')
-    div
-    .ui.horizontal.statistic
-        .label Rank
-        .value #{block_parent.rank}
-    div
+// template(name='rank_small')
+//     div
+//     .ui.horizontal.statistic
+//         .label Rank
+//         .value #{block_parent.rank}
+//     div
 
 
 
