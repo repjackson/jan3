@@ -56,8 +56,7 @@ template(name='delta_card')
                     if delta.editing
                         .three.wide.column
                             .ui.fluid.button.remove_doc
-                                i.red.remove.icon
-                                |Delete
+                                +iconsmall name='delete' classes='spaced'
                         .ten.wide.center.aligned.column
                             .ui.header
                                 if icon
@@ -65,9 +64,8 @@ template(name='delta_card')
                                 |Edit '#{detail_doc.title}'
                                 // #{current_type.title}
                         .right.floated.three.wide.column
-                            .ui.big.fluid.button.save
-                                i.green.checkmark.icon
-                                | Save
+                            .ui.icon.fluid.button.save
+                                +iconsmall name='checkmark' classes='spaced'
                             // .ui.button.archive
                             //     i.archive.icon
                             //     |Archive
@@ -79,11 +77,13 @@ template(name='delta_card')
                                 | #{current_type.plural}
                         .ten.wide.center.aligned.column
                             .ui.header
+                                if icon
+                                    +icon name=icon classes='inline'
                                 |'#{local_doc.title}' #{current_type.title}
                         .right.floated.three.wide.column
-                            .ui.fluid.button.edit
+                            .ui.fluid.icon.button.edit
                                 +iconsmall name='pencil' classes='spaced'
-                                | Edit
+                                // | Edit
                 .row
                     .sixteen.wide.column
                         .ui.stackable.three.column.padded.grid

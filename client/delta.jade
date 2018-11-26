@@ -28,6 +28,8 @@ template(name='delta')
                                         | #{current_type.plural}
                                     else
                                         | #{current_type.title}
+                                if current_type.details
+                                    p #{current_type.details}
                                 .scrolling_small
                                     if is_dev
                                         +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
