@@ -1,7 +1,7 @@
 template(name='set_schema_part')
     .ui.fluid.button.set_schema
         | View Section
-        +iconsmall name='chevron-right'
+        +iconsmall name='chevron-right' classes='inline'
 
 
 template(name='bookmark_part')
@@ -99,18 +99,20 @@ template(name='voting_part')
         +iconsmall name='collapse-arrow'
     .ui.icon.compact.button.downvote(class=downvote_class)
         +iconsmall name='expand-arrow'
-    .ui.small.dividing.header
-        +icon name='collapse-arrow' classes='mini spaced'
-        |Upvoters
-    .ui.list
-        each upvoters
-            +user_list_view
-    .ui.small.dividing.header
-        +icon name='expand-arrow' classes='mini spaced'
-        |Downvoters
-    .ui.list
-        each downvoters
-            +user_list_view
+    if upvoters
+        .ui.small.dividing.header
+            +icon name='collapse-arrow' classes='mini spaced'
+            |Upvoters
+        .ui.list
+            each upvoters
+                +user_list_view
+    if downvoters
+        .ui.small.dividing.header
+            +icon name='expand-arrow' classes='mini spaced'
+            |Downvoters
+        .ui.list
+            each downvoters
+                +user_list_view
 
 
 

@@ -20,7 +20,7 @@ template(name='delta')
                 .row
                     if delta.viewing_delta
                         unless delta.viewing_detail
-                            .four.wide.column.scrolling_small
+                            .four.wide.column
                                 .ui.large.center.aligned.header
                                     if current_type.icon
                                         +icon name=current_type.icon classes='spaced large'
@@ -28,15 +28,16 @@ template(name='delta')
                                         | #{current_type.plural}
                                     else
                                         | #{current_type.title}
-                                if is_dev
-                                    +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
-                                if can_add
-                                    .ui.fluid.button.add_doc
-                                        i.plus.icon
-                                        | #{current_type.title}
+                                .scrolling_small
+                                    if is_dev
+                                        +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
+                                    if can_add
+                                        .ui.fluid.button.add_doc
+                                            i.plus.icon
+                                            | #{current_type.title}
 
-                                each faceted_blocks
-                                    +facet
+                                    each faceted_blocks
+                                        +facet
                     // unless delta.viewing_leftbar
                     //     unless delta.viewing_detail
                     //         unless delta.viewing_rightbar

@@ -175,13 +175,13 @@ Template.textarea_edit.helpers
 
 
 Template.multiref_edit.onCreated ->
-    @autorun => Meteor.subscribe 'type', @data.ref_schema
+    @autorun => Meteor.subscribe 'type', @data.referenced_schema
 Template.ref_edit.onCreated ->
-    @autorun => Meteor.subscribe 'type', @data.ref_schema
+    @autorun => Meteor.subscribe 'type', @data.referenced_schema
 
 Template.multiref_edit.helpers
     choices: ->
-        Docs.find {type:@ref_schema},
+        Docs.find {type:@referenced_schema},
             {sort:
                 title:1
                 rank:1
@@ -237,7 +237,8 @@ Template.ref_edit.events
 Template.ref_edit.helpers
     choices: ->
         Docs.find
-            type:@ref_schema
+            type:@referenced_schema
+
     element_class: ->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id

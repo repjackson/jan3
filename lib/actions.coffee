@@ -263,6 +263,30 @@ Meteor.methods
         else
             return null
 
+    edit_schema: (schema_slug)->
+        delta = Docs.findOne
+            type:'delta'
+            author_id:Meteor.userId()
+
+        schema_doc =
+            Docs.findOne
+                type:'schema'
+                slug:schema_slug
+
+        if delta and schema_slug
+            Docs.update delta._id,
+                $set:
+                    filter_type: [schema_slug]
+                    current_page: 0
+                    viewing_detail:true
+                    detail_id:schema_doc._id
+                    editing:true
+                    config_mode:false
+                    viewing_page:false
+            # Meteor.call 'fo', (err,res)->
+        else
+            return null
+
     user_toggle_list: (target, key)->
         list = target["#{key}"]
         if list and Meteor.userId() in list

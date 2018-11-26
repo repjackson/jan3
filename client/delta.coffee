@@ -110,7 +110,6 @@ Template.delta.events
             $set: viewing_leftbar: !delta.viewing_leftbar
 
 
-
     'click .view_schamas': ->
         delta = Docs.findOne type:'delta'
 

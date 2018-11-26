@@ -31,7 +31,7 @@ template(name='delta_card')
                 .content
                     .ui.list
                         each blocks
-                            unless block_small_template_exists
+                            unless part_template_exists
                                 .item
                                     if icon
                                         +iconsmall name=icon
@@ -40,7 +40,7 @@ template(name='delta_card')
                                     |&nbsp;
                                     if is_array
                                         each value
-                                            .ui.label #{this}
+                                            .ui.margined.label #{this}
                                     else
                                         | #{value}
                 if is_dev
@@ -73,16 +73,16 @@ template(name='delta_card')
                             //     |Archive
                     else
                         .three.wide.column
-                            .ui.large.fluid.button.toggle_full
-                                i.caret.left.large.icon
-                                // +icon name=current_type.icon classes='spaced mini'
+                            .ui.fluid.button.toggle_full
+                                // i.caret.left.large.icon
+                                +iconsmall name=current_type.icon classes='spaced'
                                 | #{current_type.plural}
                         .ten.wide.center.aligned.column
                             .ui.header
                                 |'#{local_doc.title}' #{current_type.title}
                         .right.floated.three.wide.column
-                            .ui.large.fluid.button.edit
-                                i.pencil.icon
+                            .ui.fluid.button.edit
+                                +iconsmall name='pencil' classes='spaced'
                                 | Edit
                 .row
                     .sixteen.wide.column
@@ -102,7 +102,7 @@ template(name='delta_card')
                                                 if icon
                                                     +icon name=icon classes='mini'
                                                 |#{title}
-                                            +Template.dynamic template=block_big_template data=local_doc
+                                            +Template.dynamic template=part_template data=local_doc
                                             .ui.basic.segment
                                                 // if icon
                                                 //     i.icon

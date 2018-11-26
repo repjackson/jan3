@@ -480,7 +480,7 @@ template(name='address_part')
 
 
 template(name='title_part')
-    .ui.center.aligned.dividing.header(title='Title')
+    .ui.header(title='Title')
         if block_parent.icon
             +icon name=block_parent.icon classes='mini spaced'
         |#{block_parent.title}

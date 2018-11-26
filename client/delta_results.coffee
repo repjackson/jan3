@@ -115,15 +115,17 @@ Template.delta_results.events
 
 
 
-    # 'click .add_block': (e,t)->
-    #     delta = Docs.findOne type:'delta'
-    #     type = delta.filter_type[0]
-    #     Docs.insert
-    #         type:'block'
-    #         schema_slugs:[type]
-    #     Session.set 'is_calculating', true
-    #     Meteor.call 'fo', (err,res)->
-    #         if err then console.log err
-    #         else
-    #             Session.set 'is_calculating', false
-
+    'click .add_part': (e,t)->
+        delta = Docs.findOne type:'delta'
+        type = delta.filter_type[0]
+        # Meteor.call 'edit_schema', type
+        schema = Docs.findOne
+            type:'schema'
+            slug:type
+        Docs.update delta._id,
+            $set:
+                filter_type:['schema']
+                editing:true
+                viewing_detail: true
+                detail_id: schema._id
+        location.reload()
