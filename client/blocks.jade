@@ -1,8 +1,8 @@
-template(name='author_info')
+template(name='author_part')
     with author
+        |&nbsp; by &nbsp;
         if image_id
             img.ui.avatar.spaced.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
-        |&nbsp;
         a(href="/user/#{username}") #{username}
         // +staus_indicator
     // .ui.sub.header #{when}
@@ -50,12 +50,10 @@ template(name='ticket_assignment_cell')
                         | @#{username}
 
 template(name='phone_part')
-    a.ui.fluid.button(href="tel:#{phone_number}")
-        i.phone.icon
-        | Call #{phone_number}
-    a.ui.fluid.button(href="tel:#{phone_number}")
-        i.phone.icon
-        | Call #{phone_number}
+    if phone_number
+        a.ui.fluid.button(href="tel:#{phone_number}")
+            i.phone.icon
+            | Call #{phone_number}
 
 template(name='link_button')
     a.ui.button(href=link title=label)
@@ -162,26 +160,12 @@ template(name='user_card')
             h5 #{ev.EMAIL}
 
 
-template(name='office_big')
-    with block_parent
-        h4.ui.header #{office_name}
-        .black ##{office_jpid}
-    // with my_office
-    //     .content
-    //         h4.ui.header #{office_name}
-    //         .black ##{office_jpid}
-    //         .black #{address} #{address_2}
-    //         .black #{city} #{state}
-    //         .black #{zipcode} #{country}
-    //         .black
-    //             a(href="tel:#{telephone}") #{telephone}
-
 
 template(name='office_part')
     with block_parent
         .ui.small.header(title='Office')
             +icon name='building' classes='mini spaced'
-            | #{office_name}
+            | #{office_name} #{office_jpid}
     // with my_office
     //     .content
     //         h4.ui.header #{office_name}
@@ -264,9 +248,6 @@ template(name='assignment_part')
                 //     h4.ui.header
                 //         |#{first_name} #{last_name}
                 //         small @#{username}
-    .ui.small.dividing.header
-        +icon name='checked-user-male' classes='mini spaced'
-        | Assignments
     p(title="{{ from_now ticket_assignment_timestamp }}") Last Assigned {{ long_format ticket_assignment_timestamp }}
     .ui.form
         .field
@@ -525,24 +506,13 @@ template(name='title_part')
 
 
 
-template(name='ticket_number_part')
-    div
-    .ui.statistic
-        .label
-            +icon name='hashtag' classes='mini spaced'
-        .value #{block_parent.ticket_number}
-    .ui.horizontal.statistic(title='Ticket Number')
-        .label
-            +icon name='hashtag' classes='mini spaced'
-        .value #{block_parent.ticket_number}
-
 
 template(name='text_part')
     .large110(title='Text')
         +icon name='note' classes='inline mini'
         |#{block_parent.text} #{block_parent.body}
 
-    .large110 #{block_parent.text} #{block_parent.body}
+    // .large110 #{block_parent.text} #{block_parent.body}
 
 
 template(name='details_part')
@@ -550,28 +520,23 @@ template(name='details_part')
         +icon name='note' classes='inline mini'
         |#{block_parent.details} #{block_parent.ticket_details}
 
-    .ui.header
-        +icon name='note'
-        | Details
-    .large110 #{block_parent.details} #{block_parent.ticket_details}
 
 
 
 
+// template(name='contact_part')
+//     .ui.header
+//         +icon name='email'
+//         | Contact
+//     with block_parent
+//         .ui.list
+//             .item Customer Contact Person: #{customer_contact_person}
+//             .item Customer Operations Manager: #{customer_operations_manager}
 
-template(name='contact_part')
-    .ui.header
-        +icon name='email'
-        | Contact
-    with block_parent
-        .ui.list
-            .item Customer Contact Person: #{customer_contact_person}
-            .item Customer Operations Manager: #{customer_operations_manager}
-
-    with block_parent
-        .ui.list
-            .item Customer Contact Person: #{customer_contact_person}
-            .item Customer Operations Manager: #{customer_operations_manager}
+//     with block_parent
+//         .ui.list
+//             .item Customer Contact Person: #{customer_contact_person}
+//             .item Customer Operations Manager: #{customer_operations_manager}
 
 
 
@@ -588,7 +553,7 @@ template(name='created_part')
             .item #{date_created}
             .item #{long_timestamp}
             .item
-                +author_info
+                +author_part
 
 
 

@@ -190,42 +190,37 @@ Template.multiref_edit.helpers
     value: ->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
-        target_doc["#{@key}"]
+        target_doc["#{@slug}"]
 
     element_class: ->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
-        parent = Template.parentData()
+        block_slug = Template.parentData().slug
+        current_value = @slug
 
-        value =
-            if @key then @key
-            else if @slug then @slug
-            else if @username then @username
-        if parent and target_doc and value
-            if target_doc["#{parent.key}"]
-                if value in target_doc["#{parent.key}"] then 'active blue' else ''
+        if parent and target_doc and current_value
+            if target_doc["#{block_slug}"]
+                if current_value in target_doc["#{block_slug}"] then 'active blue' else ''
 
 
 Template.multiref_edit.events
     'click .toggle_element': (e,t)->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
-        editing_block = Template.currentData().key
-        value =
-            if @key then @key
-            else if @slug then @slug
-            else if @username then @username
-        if target_doc and value
-            if target_doc["#{editing_block}"]
-                if value in target_doc["#{editing_block}"]
+        block_slug = Template.currentData().slug
+        selected_value = @slug
+
+        if target_doc and selected_value
+            if target_doc["#{block_slug}"]
+                if selected_value in target_doc["#{block_slug}"]
                     Docs.update target_doc._id,
-                        $pull:"#{editing_block}": value
+                        $pull:"#{block_slug}": selected_value
                 else
                     Docs.update target_doc._id,
-                        $addToSet:"#{editing_block}": value
+                        $addToSet:"#{block_slug}": selected_value
             else
                 Docs.update target_doc._id,
-                    $addToSet:"#{editing_block}": value
+                    $addToSet:"#{block_slug}": selected_value
 
 
 
@@ -234,14 +229,10 @@ Template.ref_edit.events
     'click .choose_element': (e,t)->
         delta = Docs.findOne type:'delta'
         target_doc = Docs.findOne _id:delta.detail_id
-        editing_block = Template.currentData().key
-        value =
-            if @key then @key
-            else if @slug then @slug
-            else if @username then @username
+        slug = Template.currentData().slug
 
         Docs.update target_doc._id,
-            $set:"#{editing_block}": value
+            $set:"#{slug}": value
 
 Template.ref_edit.helpers
     choices: ->
@@ -252,11 +243,7 @@ Template.ref_edit.helpers
         target_doc = Docs.findOne _id:delta.detail_id
         parent = Template.parentData()
 
-        value =
-            if @key then @key
-            else if @slug then @slug
-            else if @username then @username
-        if target_doc?["#{parent.key}"] is value then 'active blue' else ''
+        if target_doc?["#{parent.slug}"] is value then 'active blue' else ''
 
 
 

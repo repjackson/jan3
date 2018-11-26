@@ -25,8 +25,8 @@
 
 
 
-# # Template.author_info.onCreated ->
-# #     @autorun => Meteor.subscribe 'author', @data.author_id
+Template.author_part.onCreated ->
+    @autorun => Meteor.subscribe 'author', @data.author_id
 
 
 
