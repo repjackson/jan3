@@ -1,29 +1,28 @@
 template(name='nav')
     .mobile.hidden
         .ui.stackable.padded.grid.menu
-            if currentUser
-                .centered.nav_bar.row
-                    .one.wide.column.pointer.toggle_leftbar.item
-                        +icon name='menu' classes='spaced centered mini'
-                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    //     +icon name='bookmark-ribbon' classes='mini centered'
-                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    //     +icon name='contacts' classes='mini centered'
-                    .mobile.hidden.twelve.wide.column.pointer.toggle_topbar.item
-                        img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    //     +icon name='tasks' classes='mini centered'
-                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    //     +icon name='shopping-cart' classes='mini centered'
-                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    //     +icon name='mailbox-with-letter' classes='mini centered'
-                    // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                    //     +icon name='appointment-reminders' classes='mini centered'
-                    .one.wide.column.toggle_rightbar.pointer.item
-                        if currentUser.image_id
-                            img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        else
-                            +icon name='gender-neutral-user' classes='mini centered'
+            .centered.nav_bar.row
+                .one.wide.column.pointer.toggle_leftbar.item
+                    +icon name='menu' classes='spaced centered mini'
+                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                //     +icon name='bookmark-ribbon' classes='mini centered'
+                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                //     +icon name='contacts' classes='mini centered'
+                .mobile.hidden.twelve.wide.column.pointer.toggle_topbar.item
+                    img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                //     +icon name='tasks' classes='mini centered'
+                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                //     +icon name='shopping-cart' classes='mini centered'
+                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                //     +icon name='mailbox-with-letter' classes='mini centered'
+                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                //     +icon name='appointment-reminders' classes='mini centered'
+                .one.wide.column.toggle_rightbar.pointer.item
+                    if currentUser.image_id
+                        img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    else
+                        +icon name='gender-neutral-user' classes='mini centered'
     .mobile.only
         .ui.padded.grid.menu
             if currentUser
@@ -61,23 +60,23 @@ template(name='leftbar')
 
 
 template(name='rightbar')
-    .ui.right.vertical.sidebar.alphablue.menu.rightbar
+    .ui.right.vertical.sidebar.alphablue.inverted.big.menu.rightbar
         a.item(href='#')
             .ui.inverted.header
                 | #{currentUser.first_name} #{currentUser.last_name}
                 small @#{currentUser.username}
         a.item.profile(href='#')
-            .ui.inverted.small.header
+            i.icon
                 +icon name='contacts' classes='mini centered'
-                | Profile
+            | Profile
         a.item.settings(href='#')
-            .ui.inverted.small.header
+            i.icon
                 +icon name='settings' classes='mini centered'
-                | Settings
+            | Settings
         a.item.sla(href='#')
-            .ui.inverted.small.header
+            i.icon
                 +icon name='workflow' classes='mini centered'
-                | SLA Settings
+            | SLA Settings
         a.item(href='#')
             .ui.compact.icon.button.delete_delta(title='Clear Session')
                 i.remove.icon
@@ -88,15 +87,14 @@ template(name='rightbar')
             if is_dev
                 .ui.icon.compact.button.show_delta
                     i.code.icon
-        a.item(href='#')
-            #logout.sixteen.wide.column
-                .ui.inverted.small.header
-                    // +icon name='exit' classes='mini centered'
-                    if signing_out
-                        i.notched.circle.loading.big.icon
-                    else
-                        +icon name='exit' classes='mini'
-                    | Log Out
+        a#logout.item(href='#')
+            // +icon name='exit' classes='mini centered'
+            if signing_out
+                i.notched.circle.loading.icon
+            else
+                i.icon
+                    +icon name='exit' classes='mini'
+            | Log Out
 
 
 

@@ -43,9 +43,10 @@ template(name='delta_card')
                                             .ui.label #{this}
                                     else
                                         | #{value}
-                .ui.icon.large.button.toggle_full
-                    // | Details
-                    i.chevron.right.large.icon
+                if is_dev
+                    .ui.icon.large.button.toggle_full
+                        // | Details
+                        i.chevron.right.large.icon
         if full_mode
             .ui.padded.stackable.grid
                 .row
