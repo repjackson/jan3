@@ -43,13 +43,13 @@ template(name='delta_card')
                                             .ui.margined.label #{this}
                                     else
                                         | #{value}
-                if is_dev
-                    .ui.buttons
-                        .ui.icon.button.edit
-                            i.pencil.icon
-                        .ui.icon.button.toggle_full
-                            // | Details
-                            i.chevron.right.icon
+                // if is_dev
+                .ui.buttons
+                    .ui.icon.button.edit
+                        i.pencil.icon
+                    .ui.icon.button.toggle_full
+                        // | Details
+                        i.chevron.right.icon
         if full_mode
             .ui.padded.stackable.grid
                 .row
