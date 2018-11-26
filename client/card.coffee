@@ -57,14 +57,12 @@ Template.delta_card.helpers
 
     delta_doc: -> Docs.findOne type:'delta'
 
-
     current_type: ->
         delta = Docs.findOne type:'delta'
         type_key = delta.filter_type[0]
         Docs.findOne
             type:'schema'
             slug:type_key
-
 
     can_edit: ->
         delta = Docs.findOne type:'delta'
@@ -86,7 +84,6 @@ Template.delta_card.helpers
                 else
                     false
 
-
     children_sets: ->
         delta = Docs.findOne type:'delta'
         detail_doc = Docs.findOne delta.detail_id
@@ -96,8 +93,6 @@ Template.delta_card.helpers
             parent_sets: $in: [current_type]
         }, {sort:{rank:1}}).fetch()
 
-
-
     set_children: ->
         delta = Docs.findOne type:'delta'
         detail_doc = Docs.findOne delta.detail_id
@@ -106,8 +101,6 @@ Template.delta_card.helpers
             type:@slug
             parent_id:detail_doc._id
         }, {sort:{rank:1}}).fetch()
-
-
 
     blocks: ->
         delta = Docs.findOne type:'delta'

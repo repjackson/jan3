@@ -23,7 +23,7 @@ template(name='delta_card')
                 if blocks
                     .content
                         each blocks
-                            +Template.dynamic template=block_small_template data=local_doc
+                            +Template.dynamic template=part_template data=local_doc
 
                 // .ui.fluid.button.edit
                 //     i.pencil.icon
@@ -34,7 +34,7 @@ template(name='delta_card')
                             unless block_small_template_exists
                                 .item
                                     if icon
-                                        +icon name=icon classes='avatar'
+                                        +iconsmall name=icon
                                     strong #{title}
                                     // s:#{slug} k:#{key}
                                     |&nbsp;
@@ -44,9 +44,12 @@ template(name='delta_card')
                                     else
                                         | #{value}
                 if is_dev
-                    .ui.icon.large.button.toggle_full
-                        // | Details
-                        i.chevron.right.large.icon
+                    .ui.buttons
+                        .ui.icon.button.edit
+                            i.pencil.icon
+                        .ui.icon.button.toggle_full
+                            // | Details
+                            i.chevron.right.icon
         if full_mode
             .ui.padded.stackable.grid
                 .row

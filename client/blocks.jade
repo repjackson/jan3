@@ -49,11 +49,10 @@ template(name='ticket_assignment_cell')
                     .description
                         | @#{username}
 
-template(name='phone_small')
+template(name='phone_part')
     a.ui.fluid.button(href="tel:#{phone_number}")
         i.phone.icon
         | Call #{phone_number}
-template(name='phone_big')
     a.ui.fluid.button(href="tel:#{phone_number}")
         i.phone.icon
         | Call #{phone_number}
@@ -66,6 +65,8 @@ template(name='link_button')
                 +icon name=icon classes='centered'
         // i.left.chevron.icon
         | #{label}
+
+
 
 template(name='edit_link')
     .field
@@ -81,6 +82,8 @@ template(name='call_method')
         else
             |#{name}
 
+
+
 template(name='icon')
     img.ui.image(src="https://png.icons8.com/ultraviolet/80/000000/#{name}.png" class=classes data-content=popup title=title)
 
@@ -89,6 +92,9 @@ template(name='iconlarge')
 
 template(name='iconsmall')
     img.ui.image(src="https://png.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes title=title)
+
+
+
 
 template(name='message_button')
     .ui.message
@@ -171,7 +177,7 @@ template(name='office_big')
     //             a(href="tel:#{telephone}") #{telephone}
 
 
-template(name='office_small')
+template(name='office_part')
     with block_parent
         .ui.small.header(title='Office')
             +icon name='building' classes='mini spaced'
@@ -185,12 +191,6 @@ template(name='office_small')
     //         .black #{zipcode} #{country}
     //         .black
     //             a(href="tel:#{telephone}") #{telephone}
-
-
-
-
-
-
 
 
 
@@ -228,7 +228,7 @@ template(name='toggle_key')
 
 
 
-template(name='franchisee_small')
+template(name='franchisee_part')
     with block_parent
         .ui.small.header(title='Franchisee')
             +icon name='business' classes='inline mini'
@@ -241,8 +241,6 @@ template(name='franchisee_small')
                 .item(title='Short Name') Short Name: #{franch_name}
             .item(title='Call Number')
                 a(href="tel:#{cell}") #{cell}
-
-template(name='franchisee_big')
     with block_parent
         h4.ui.header #{franch_name} #{ticket_franchisee}
         .ui.list
@@ -253,12 +251,23 @@ template(name='franchisee_big')
                 a(href="tel:#{cell}") #{cell}
 
 
-template(name='assignment_widget')
+template(name='assignment_part')
+    .ui.small.dividing.header
+        +icon name='checked-user-male' classes='mini spaced'
+        | Assignments
+    .ui.list
+        each assigned_users
+            .item
+                .image
+                    img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                // .content
+                //     h4.ui.header
+                //         |#{first_name} #{last_name}
+                //         small @#{username}
+    .ui.small.dividing.header
+        +icon name='checked-user-male' classes='mini spaced'
+        | Assignments
     p(title="{{ from_now ticket_assignment_timestamp }}") Last Assigned {{ long_format ticket_assignment_timestamp }}
-    // if overdue
-    //     |overdue
-    // else
-    //     |not overdue
     .ui.form
         .field
             .ui.icon.input
@@ -288,15 +297,60 @@ template(name='assignment_widget')
                                 |#{first_name} #{last_name}
                                 small @#{username}
 
+
+
+
+// template(name='assignment_part')
+//     p(title="{{ from_now ticket_assignment_timestamp }}") Last Assigned {{ long_format ticket_assignment_timestamp }}
+//     // if overdue
+//     //     |overdue
+//     // else
+//     //     |not overdue
+//     .ui.form
+//         .field
+//             .ui.icon.input
+//                 if user_results
+//                     i.link.remove.icon.clear_results
+//                 else
+//                     i.search.icon
+//                 input#multiple_user_select_input(type='text' placeholder='Search Office User')
+//         if user_results
+//             .ui.segment
+//                 .ui.middle.aligned.selection.animated.list
+//                     each user_results
+//                         .select_user.item
+//                             h5.ui.header
+//                                 img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+//                                 |#{username}
+//         .field
+//             .ui.list
+//                 each assigned_users
+//                     .item
+//                         .right.floated.content
+//                             i.pull_user.remove.link.icon
+//                         .image
+//                             img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+//                         .content
+//                             h4.ui.header
+//                                 |#{first_name} #{last_name}
+//                                 small @#{username}
+
+
+
+
 template(name='edit_block_text_field')
     .inline.field
         label #{label}
         input.text_field(type='text' value=block_key_value)
 
+
+
 template(name='edit_block_number_field')
     .inline.field
         label #{label}
         input.number_field(type='number' min='0' value=block_key_value)
+
+
 
 template(name='set_key_value')
     .set_key_value.ui.small.button(class=set_value_button_class)
@@ -305,12 +359,16 @@ template(name='set_key_value')
                 +icon name=icon
         |#{label}
 
+
+
 template(name='set_page_key_value')
     .set_page_key_value.ui.button(class=set_value_button_class)
         if icon
             i.icon
                 +icon name=icon
         |#{label}
+
+
 
 template(name='set_field_key_value')
     .set_field_key_value.ui.button(class=set_value_button_class) #{label}
@@ -375,22 +433,20 @@ template(name='customer_tickets')
                         |#{when}
 
 
-template(name='customer_small')
+template(name='customer_part')
     .ui.header
         +icon name='headset' classes='mini spaced'
         |#{block_parent.customer_name}
-
-template(name='customer_big')
     with block_parent
         h4.ui.header #{customer_name}
         .ui.list
-            .black.item ##{customer_jpid}
-            .black.item #{customer_contact_person}
-            .black.item #{customer_contact_email}
-            .black.item #{phone}
-            .black.item #{address}
-            .black.item #{address_2}
-            .black.item #{city} #{state}
+            .item ##{customer_jpid}
+            .item #{customer_contact_person}
+            .item #{customer_contact_email}
+            .item #{phone}
+            .item #{address}
+            .item #{address_2}
+            .item #{city} #{state}
                 //   "office_name": "JAN-PRO Central Ontario",
                 //   "customer_name": "H&S Massage Spa Canada Corporation",
                 //   "customer_contact_person": "Erica Ho / Gigi Harding",
@@ -409,7 +465,7 @@ template(name='customer_big')
                 // }
 
 
-template(name='archive_small')
+template(name='archive_part')
     if block_parent.archive
         .ui.green.active.button.unarchive
             i.archive.icon
@@ -418,8 +474,6 @@ template(name='archive_small')
         .ui.button.archive
             i.archive.icon
             |Archive
-
-template(name='archive_big')
     if block_parent.archive
         .ui.green.active.fluid.button.unarchive
             i.archive.icon
@@ -431,14 +485,12 @@ template(name='archive_big')
 
 
 
-template(name='address_block_big')
+template(name='address_part')
     with block_parent
         .ui.list
             .item #{address}
             .item #{address_2}
             .item #{city} #{state}
-
-template(name='address_block_small')
     with block_parent
         if address
             .ui.items
@@ -453,42 +505,19 @@ template(name='address_block_small')
 
 
 
-template(name='view_roles_small')
-    .ui.header
-        +icon name='view-file' classes='inline mini'
-        | View Roles
-        each block_parent.view_roles
-            .ui.margined.large.basic.label(class=tag_class) #{this}
 
-template(name='view_roles_big')
-    .ui.big.header
-        +icon name='view-file' classes='inline mini'
-        | View Roles
-        each block_parent.view_roles
-            .ui.margined.large.basic.label(class=tag_class) #{this}
-
-
-
-template(name='title_small')
+template(name='title_part')
     .ui.center.aligned.dividing.header(title='Title')
         if block_parent.icon
             +icon name=block_parent.icon classes='mini spaced'
         |#{block_parent.title}
-
-template(name='title_big')
     .ui.large.center.aligned.header(title='Title')
         if block_parent.icon
             +icon name=block_parent.icon
         |#{block_parent.title}
 
 
-
-// template(name='icon_small')
-//     .ui.header
-//         +icon name=block_parent.icon classes='mini'
-//         |Icon: #{block_parent.icon}
-
-template(name='icon_big')
+template(name='icon_part')
     .ui.header
         +icon name=block_parent.icon classes='mini'
         |Icon: #{block_parent.icon}
@@ -496,11 +525,9 @@ template(name='icon_big')
 
 
 
-template(name='faceted_small')
+template(name='faceted_part')
     if block_parent.faceted
         +icon name='diamond' classes='mini' title='Faceted'
-
-template(name='faceted_big')
     if block_parent.faceted
         .ui.header
             +icon name='diamond' classes='mini'
@@ -511,16 +538,13 @@ template(name='faceted_big')
 
 
 
-template(name='slug_small')
+template(name='slug_part')
     .ui.header
         +icon name='slug' classes='mini' title='slug'
         |Slug: #{block_parent.slug}
-
-template(name='slug_big')
     .ui.header
         +icon name='slug' classes='mini'
         |Slug: #{block_parent.slug}
-
 
 
 
@@ -535,9 +559,6 @@ template(name='slug_big')
     //     i.up.caret.large.icon
     // .ui.icon.button
     //     i.down.caret.large.icon
-
-
-// template(name='rank_small')
 //     div
 //     .ui.horizontal.statistic
 //         .label Rank
@@ -547,39 +568,31 @@ template(name='slug_big')
 
 
 
-template(name='ticket_number_big')
+template(name='ticket_number_part')
     div
     .ui.statistic
         .label
             +icon name='hashtag' classes='mini spaced'
         .value #{block_parent.ticket_number}
-    div
-
-
-template(name='ticket_number_small')
     .ui.horizontal.statistic(title='Ticket Number')
         .label
             +icon name='hashtag' classes='mini spaced'
         .value #{block_parent.ticket_number}
 
 
-template(name='text_small')
+template(name='text_part')
     .large110(title='Text')
         +icon name='note' classes='inline mini'
         |#{block_parent.text} #{block_parent.body}
 
-
-template(name='text_big')
     .large110 #{block_parent.text} #{block_parent.body}
 
 
-template(name='details_small')
+template(name='details_part')
     .large110(title='details')
         +icon name='note' classes='inline mini'
         |#{block_parent.details} #{block_parent.ticket_details}
 
-
-template(name='details_big')
     .ui.header
         +icon name='note'
         | Details
@@ -589,7 +602,7 @@ template(name='details_big')
 
 
 
-template(name='contact_small')
+template(name='contact_part')
     .ui.header
         +icon name='email'
         | Contact
@@ -598,8 +611,6 @@ template(name='contact_small')
             .item Customer Contact Person: #{customer_contact_person}
             .item Customer Operations Manager: #{customer_operations_manager}
 
-
-template(name='contact_big')
     with block_parent
         .ui.list
             .item Customer Contact Person: #{customer_contact_person}
@@ -609,7 +620,7 @@ template(name='contact_big')
 
 
 
-template(name='created_small')
+template(name='created_part')
     .ui.small.header
         +icon name='internal'
         | Created
@@ -621,8 +632,6 @@ template(name='created_small')
             .item #{long_timestamp}
             .item
                 +author_info
-
-template(name='created_big')
     with block_parent
         .ui.list
             .item
@@ -635,7 +644,7 @@ template(name='created_big')
 
 
 
-template(name='finance_small')
+template(name='finance_part')
     .ui.small.header
         +icon name='money'
         | Finance
@@ -647,8 +656,6 @@ template(name='finance_small')
             .item Specials: #{specials}
             .item Balance: #{balance}
             .item Total Tax: #{total_tax}
-
-template(name='finance_big')
     with block_parent
         .ui.list
             .item Extra Price: #{extra_price}

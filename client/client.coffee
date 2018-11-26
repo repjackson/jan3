@@ -22,19 +22,14 @@ Template.registerHelper 'cell_value', () ->
 
 
 
-Template.registerHelper 'block_big_template', () -> "#{@slug}_big"
+Template.registerHelper 'part_template', () -> "#{@slug}_part"
+
 
 Template.registerHelper 'is_multi', () -> @relation_type is 'multi'
 Template.registerHelper 'is_single', () -> @relation_type is 'single'
 
-Template.registerHelper 'block_small_template', () -> "#{@slug}_small"
-
-Template.registerHelper 'block_small_template_exists', () ->
-    name = "#{@slug}_small"
-    if Template[name] then true else false
-
-Template.registerHelper 'block_big_template_exists', () ->
-    name = "#{@slug}_big"
+Template.registerHelper 'part_template_exists', () ->
+    name = "#{@slug}_part"
     if Template[name] then true else false
 
 
@@ -140,6 +135,8 @@ Template.registerHelper 'is_array', ()->
         @primitive in ['array','multiref']
     # else
     #     console.log 'no primitive', @
+
+
 Template.registerHelper 'full_mode', ()->
     delta = Docs.findOne type:'delta'
     delta.viewing_detail
