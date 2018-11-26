@@ -1,35 +1,48 @@
 template(name='footer')
     .ui.stackable.equal.height.centered.padded.grid
-        // .row
-            // .four.wide.inverted.column
-            //     else
-                    // img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                    // .ui.list
-                    //     .sitemap_list.item Why JAN-PRO
-                    //     .sitemap_list.item Commercial Cleaning
-                    //     .sitemap_list.item About Us
-                    // .ui.list
-                    //     .sitemap_list.item Contact Us
-                    //     .sitemap_list.item Legal/ Privacy Policy
-                    // .ui.list
-                    //     .sitemap_list.item Icons by &nbsp;
-                    //         a(href="https://icons8.com/")
-                    //             |Icons8
-            // .four.wide.column
-            //     // if is_customer
-            //     //     +customer_card customer_jpid=currentUser.customer_jpid
-            // if currentUser.franchisee_jpid
-            //     .four.wide.column
-            //         if is_customer
-            //             +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
-            // .four.wide.column
+        .row
+            .four.wide.inverted.column
+                if is_eric
+                    +role_switcher
+                else
+                    img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                    .ui.list
+                        .sitemap_list.item Why JAN-PRO
+                        .sitemap_list.item Commercial Cleaning
+                        .sitemap_list.item About Us
+                    .ui.list
+                        .sitemap_list.item Contact Us
+                        .sitemap_list.item Legal/ Privacy Policy
+                    .ui.list
+                        .sitemap_list.item Icons by &nbsp;
+                            a(href="https://icons8.com/")
+                                |Icons8
+            .four.wide.column
+                .ui.inverted.header
+                    +icon name='chat' classes='inline mini'
+                    | Chat
+                each chat_messages
+                    .ui.comment
+                        .content #{text}
+                .ui.transparent.input
+                    input(type='text' placeholder='add...')
+                // if is_customer
+                //     +customer_card customer_jpid=currentUser.customer_jpid
+            .four.wide.column
+                +tasks
+                    // if is_customer
+                    //     +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
+            .four.wide.column
+                .ui.small.inverted.header
+                    +iconsmall name='connected'
+                    | Online Users
+                each online_users
+                    .ui.inverted.header #{username}
                 // unless is_admin
                 //     .ui.card
                 //         .content
                 //             +office_big office_jpid=currentUser.office_jpid
         .centered.row
-            if is_eric
-                +role_switcher
             .ui.center.aligned.inverted.grey.header
                 i.copyright.outline.icon
                 | 2018 JAN-PRO Franchising, Inc.

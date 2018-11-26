@@ -79,6 +79,16 @@ Meteor.publish 'events', (doc_type, limit=10, sort_key='timestamp', sort_directi
             sort:"#{sort_key}":parseInt("#{sort_direction}")
         }
 
+Meteor.users.find({ "status.online": true }).observe
+    added: (id)->
+        console.log id, 'came online'
+    removed: (id)->
+        console.log id, 'went offline'
+
+
+Meteor.publish "user_status", ()->
+    Meteor.users.find({ "status.online": true })
+
 
 
 

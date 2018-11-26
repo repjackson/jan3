@@ -1,6 +1,9 @@
 Template.leftbar.onCreated ->
     @autorun => Meteor.subscribe 'type', 'schema', 200
 
+Template.footer.onCreated ->
+    @autorun => Meteor.subscribe 'user_status'
+
 
 Template.leftbar.onRendered ->
     @autorun =>

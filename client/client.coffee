@@ -209,6 +209,8 @@ Template.registerHelper 'secondary', () ->
 
 
 
+Template.registerHelper 'online_users', () ->
+    Meteor.users.find({ "status.online": true })
 
 
 
