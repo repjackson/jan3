@@ -38,7 +38,7 @@ template(name='nav')
 
 
 template(name='topbar')
-    .ui.top.sidebar.push.nav_bar.topbar
+    .ui.top.sidebar.push.alphablue.topbar
         .ui.padded.grid
             .four.wide.column
                 +notifications
@@ -52,13 +52,12 @@ template(name='topbar')
 
 
 template(name='leftbar')
-    .ui.left.vertical.sidebar.nav_bar.menu.alphablue
+    .ui.left.vertical.sidebar.nav_bar.inverted.big.menu.alphablue
         each bookmarks
-            a.item.pick_delta.toggle_leftbar(href='#')
-                .ui.inverted.small.header(title=title)
-                    i.icon
-                        +icon name=icon
-                    | #{plural}
+            a.item.pick_delta.toggle_leftbar(href='#' title=title)
+                i.icon
+                    +icon name=icon
+                | #{plural}
 
 
 template(name='rightbar')
@@ -67,10 +66,6 @@ template(name='rightbar')
             .ui.inverted.header
                 | #{currentUser.first_name} #{currentUser.last_name}
                 small @#{currentUser.username}
-        a.item.profile(href='#')
-            .ui.inverted.small.header
-                +icon name='leaderboard' classes='mini centered'
-                | Leaderboard
         a.item.profile(href='#')
             .ui.inverted.small.header
                 +icon name='contacts' classes='mini centered'
@@ -86,7 +81,7 @@ template(name='rightbar')
         a.item(href='#')
             .ui.compact.icon.button.delete_delta(title='Clear Session')
                 i.remove.icon
-                |Clear
+                |Reset Session
             .ui.compact.icon.button.run_fo(title='Reload Session')
                 i.refresh.icon
                 // |Reset

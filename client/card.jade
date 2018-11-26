@@ -23,21 +23,12 @@ template(name='delta_card')
                 if blocks
                     .content
                         each blocks
-                            // .ui.header
-                            //     if is_multi
-                            //         |multi
-                            //     if is_sinlge
-                            //         |single
                             +Template.dynamic template=block_small_template data=local_doc
 
-                .content
-                    .ui.large.button.edit
-                        i.pencil.icon
-                        | Edit
-                    .ui.large.button.toggle_full
-                        | Details
-                        i.chevron.right.icon
-                .ui.segment
+                // .ui.fluid.button.edit
+                //     i.pencil.icon
+                //     | Edit
+                .ui.basic.segment
                     .ui.list
                         each blocks
                             unless block_small_template_exists
@@ -52,29 +43,33 @@ template(name='delta_card')
                                             .ui.label #{this}
                                     else
                                         | #{value}
+                .ui.icon.large.button.toggle_full
+                    // | Details
+                    i.chevron.right.large.icon
         if full_mode
             .ui.padded.stackable.grid
                 .row
                     if delta.editing
                         .three.wide.column
-                            .ui.big.button.save
-                                i.green.checkmark.icon
-                                | Save
+                            .ui.fluid.button.remove_doc
+                                i.red.remove.icon
+                                |Delete
                         .ten.wide.center.aligned.column
                             .ui.header
-                                +icon name=icon classes='inline'
+                                if icon
+                                    +icon name=icon classes='inline'
                                 |Edit '#{detail_doc.title}'
                                 // #{current_type.title}
                         .right.floated.three.wide.column
-                            .ui.button.remove_doc
-                                i.red.remove.icon
-                                |Delete
-                            .ui.button.archive
-                                i.archive.icon
-                                |Archive
+                            .ui.big.fluid.button.save
+                                i.green.checkmark.icon
+                                | Save
+                            // .ui.button.archive
+                            //     i.archive.icon
+                            //     |Archive
                     else
                         .three.wide.column
-                            .ui.large.button.toggle_full
+                            .ui.large.fluid.button.toggle_full
                                 i.caret.left.large.icon
                                 // +icon name=current_type.icon classes='spaced mini'
                                 | #{current_type.plural}
@@ -82,7 +77,7 @@ template(name='delta_card')
                             .ui.header
                                 |'#{local_doc.title}' #{current_type.title}
                         .right.floated.three.wide.column
-                            .ui.large.button.edit
+                            .ui.large.fluid.button.edit
                                 i.pencil.icon
                                 | Edit
                 .row
