@@ -232,7 +232,7 @@ Template.ref_edit.events
         slug = Template.currentData().slug
 
         Docs.update target_doc._id,
-            $set:"#{slug}": value
+            $set:"#{slug}": @slug
 
 Template.ref_edit.helpers
     choices: ->
@@ -243,7 +243,7 @@ Template.ref_edit.helpers
         target_doc = Docs.findOne _id:delta.detail_id
         parent = Template.parentData()
 
-        if target_doc?["#{parent.slug}"] is value then 'active blue' else ''
+        if target_doc?["#{parent.slug}"] is @slug then 'active blue' else ''
 
 
 

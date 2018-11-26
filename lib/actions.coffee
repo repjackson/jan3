@@ -65,11 +65,21 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'user_list_users', @data, 'downvoter_ids'
 
     Template.voting_part.helpers
-        upvoted: -> if @upvoter_ids and Meteor.userId() in @upvoter_ids then true else false
-        downvoted: -> if @downvoter_ids and Meteor.userId() in @downvoter_ids then true else false
+        upvoted: ->
+            target = Template.parentData(4)
+            if target.upvoter_ids and Meteor.userId() in target.upvoter_ids then true else false
+        downvoted: ->
+            target = Template.parentData(4)
+            if target.downvoter_ids and Meteor.userId() in target.downvoter_ids then true else false
 
-        upvote_class: -> if @upvoter_ids and Meteor.userId() in @upvoter_ids then 'green' else false
-        downvote_class: -> if @downvoter_ids and Meteor.userId() in @downvoter_ids then 'red' else false
+        upvote_class: ->
+            target = Template.parentData(4)
+            if target.upvoter_ids and Meteor.userId() in target.upvoter_ids then 'blue' else ''
+
+        downvote_class: ->
+            target = Template.parentData(4)
+            if target.downvoter_ids and Meteor.userId() in target.downvoter_ids then 'blue' else ''
+
 
         upvoters: ->
             target = Template.parentData(4)
@@ -84,8 +94,13 @@ if Meteor.isClient
                     _id: $in: target.downvoter_ids
 
     Template.voting_part.events
-        'click .upvote': (e,t)-> Meteor.call 'upvote', @_id
-        'click .downvote': (e,t)-> Meteor.call 'downvote', @_id
+        'click .upvote': (e,t)->
+            target = Template.parentData(4)
+            Meteor.call 'upvote', target._id
+
+        'click .downvote': (e,t)->
+            target = Template.parentData(4)
+            Meteor.call 'downvote', target._id
 
 
 

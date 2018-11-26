@@ -26,13 +26,13 @@ template(name='bookmark_part')
 
 template(name='mark_read_part')
     if read
-        .ui.blue.fluid.button.toggle_read(title='Mark Unread')
+        .ui.blue.fluid.button.toggle_read
             +iconsmall name='open-envelope' classes='spaced'
             | Read
     else
-        .ui.fluid.button.toggle_read(title='Mark Read')
+        .ui.fluid.button.toggle_read
             +iconsmall name='secured-letter' classes='spaced'
-            | Read
+            | Mark Read
     .ui.list
         each read_users
             +user_list_view
@@ -46,29 +46,19 @@ template(name='mark_read_part')
 
 template(name='complete_part')
     if block_parent.complete
-        .ui.small.header
-            +icon name='checkmark' classes='spaced mini'
-            | Complete
-    else
-        .ui.small.header
-            +icon name='clock' classes='spaced mini'
-            | Incomplete
-    if block_parent.complete
         +icon name='checkmark' classes='spaced mini'
         | Complete
-        if full_mode
-            div
-            .ui.button.mark_incomplete
-                +iconsmall name='clock'
-                | Mark Incomplete
+        div
+        .ui.fluid.button.mark_incomplete
+            +iconsmall name='clock'
+            | Mark Incomplete
     else
         +icon name='clock' classes='spaced mini'
         | Incomplete
-        if full_mode
-            div
-            .ui.button.mark_complete
-                +iconsmall name='checkmark'
-                | Mark Complete
+        div
+        .ui.fluid.button.mark_complete
+            +iconsmall name='checkmark'
+            | Mark Complete
 
 
 
@@ -102,13 +92,9 @@ template(name='subscribe_part')
 
 
 template(name='voting_part')
-    .ui.mini.statistic
-        .value #{points}
-        .label Points
-        // +voting_big
     .ui.small.dividing.header
         +icon name='leaderboard' classes='mini spaced'
-        | Priority
+        | Priority (#{block_parent.points})
     .ui.icon.compact.button.upvote(class=upvote_class)
         +iconsmall name='collapse-arrow'
     .ui.icon.compact.button.downvote(class=downvote_class)
