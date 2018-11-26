@@ -6,7 +6,7 @@ template(name='delta')
                     .sixteen.wide.column
                         if currentUser
                             .create_delta.ui.button(title='Create Session')
-                                i.green.plus.icon
+                                i.plus.icon
                                 | Session
             if delta
                 // .row
@@ -31,8 +31,8 @@ template(name='delta')
                                 if is_dev
                                     +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='settings'
                                 if can_add
-                                    .ui.fluid.large.button.add_doc
-                                        i.green.plus.icon
+                                    .ui.fluid.button.add_doc
+                                        i.plus.icon
                                         | #{current_type.title}
 
                                 each faceted_blocks

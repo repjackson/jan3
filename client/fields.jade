@@ -24,7 +24,7 @@ template(name='array_edit')
         input.add_array_element(type='text' placholder='add')
         i.plus.icon
     each items
-        .ui.large.basic.label
+        .ui.large.margined.label
             i.pull_element.remove.link.icon
             |#{this}
     // if full_mode
@@ -104,12 +104,12 @@ template(name='textarea')
 
 template(name='edit_block_text')
     .ui.labeled.fluid.input
-        .ui.basic.label(title=key) #{label}
+        .ui.label(title=key) #{label}
         input.text_val(type='text' value=block_value)
 
 template(name='edit_block_number')
     .ui.labeled.fluid.input
-        .ui.basic.label(title=key) #{label}
+        .ui.label(title=key) #{label}
         input.number_val(type='number' value=block_value)
 
 template(name='textarea_edit')
@@ -157,7 +157,7 @@ template(name='block_view')
                 |&nbsp;
                 if is_array
                     each value
-                        .ui.basic.label #{this}
+                        .ui.label #{this}
                 else
                     strong &nbsp; #{value}
 

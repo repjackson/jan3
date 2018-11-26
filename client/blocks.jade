@@ -467,15 +467,7 @@ template(name='customer_part')
 
 template(name='archive_part')
     if block_parent.archive
-        .ui.green.active.button.unarchive
-            i.archive.icon
-            | Archived
-    else
-        .ui.button.archive
-            i.archive.icon
-            |Archive
-    if block_parent.archive
-        .ui.green.active.fluid.button.unarchive
+        .ui.blue.active.fluid.button.unarchive
             i.archive.icon
             | Archived
     else
@@ -511,41 +503,6 @@ template(name='title_part')
         if block_parent.icon
             +icon name=block_parent.icon classes='mini spaced'
         |#{block_parent.title}
-    .ui.large.center.aligned.header(title='Title')
-        if block_parent.icon
-            +icon name=block_parent.icon
-        |#{block_parent.title}
-
-
-template(name='icon_part')
-    .ui.header
-        +icon name=block_parent.icon classes='mini'
-        |Icon: #{block_parent.icon}
-
-
-
-
-template(name='faceted_part')
-    if block_parent.faceted
-        +icon name='diamond' classes='mini' title='Faceted'
-    if block_parent.faceted
-        .ui.header
-            +icon name='diamond' classes='mini'
-            | Faceted
-    else
-        .ui.header Not Faceted
-
-
-
-
-template(name='slug_part')
-    .ui.header
-        +icon name='slug' classes='mini' title='slug'
-        |Slug: #{block_parent.slug}
-    .ui.header
-        +icon name='slug' classes='mini'
-        |Slug: #{block_parent.slug}
-
 
 
 
@@ -632,14 +589,6 @@ template(name='created_part')
             .item #{long_timestamp}
             .item
                 +author_info
-    with block_parent
-        .ui.list
-            .item
-                +when_template
-            .item #{date_created}
-            .item #{long_timestamp}
-            .item
-                +author_info
 
 
 
@@ -655,12 +604,4 @@ template(name='finance_part')
             .item Total: #{total}
             .item Specials: #{specials}
             .item Balance: #{balance}
-            .item Total Tax: #{total_tax}
-    with block_parent
-        .ui.list
-            .item Extra Price: #{extra_price}
-            .item RS Amount: #{rs_amount}
-            .item Total: #{total}
-            .item Balance: #{balance}
-            .item Specials: #{specials}
             .item Total Tax: #{total_tax}
