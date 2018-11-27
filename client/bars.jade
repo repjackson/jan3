@@ -53,11 +53,38 @@ template(name='topbar')
                 +bookmarks
 
 template(name='bottombar')
-    .ui.bottom.sidebar.push.alphablue.topbar
+    .ui.bottom.sidebar.push.alphablue.bottombar
         .ui.padded.grid
             .row
-                .sixteen.wide.column
-                    .ui.inverted.header Maybe event ticker
+                .four.wide.column
+                    if is_eric
+                        +role_switcher
+                .four.wide.column
+                    .ui.inverted.blue.segment
+                        .ui.header
+                            +icon name='chat' classes='inline mini'
+                            | Chat
+                        .ui.inverted.list
+                            each chat_messages
+                                .item
+                                    .content
+                                        .ui.small.header #{message}
+                                        small #{author_username} #{when}
+                    .ui.transparent.inverted.input
+                        input#new_chat(type='text' placeholder='add...')
+                .four.wide.column
+                    .ui.small.inverted.header
+                        +iconsmall name='connected' classes='spaced'
+                        | Online Users
+                    each online_users
+                        .ui.inverted.header #{username}
+                    // unless is_admin
+                    //     .ui.card
+                    //         .content
+                    //             +office_big office_jpid=currentUser.office_jpid
+
+                .four.wide.column
+                    +tasks
 
 
 template(name='leftbar')

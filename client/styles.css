@@ -62,20 +62,26 @@
   /*background: rgba(0, 20, 137, .8) !important;*/
 /*}*/
 
-#footer {
-   position:absolute;
-   bottom:0;
-   width:100%;
-   background:#6cf;
+/*#footer {*/
+/*   position:absolute !important;*/
+/*   bottom:0;*/
+/*   width:100%;*/
+/*   background:#6cf;*/
+/*}*/
+
+.bottombar {
+  /*margin:100px !important;*/
+  /*position: absolute !important;*/
+  /*bottom: 0px;*/
 }
 
 
-
 #footer_area {
-/*    position: absolute !important;*/
-    /*height:250px;*/
+    position: fixed !important;
+    /*max-height:50px;*/
     bottom: 0;
-    height: 100%;
+    width:100%;
+    height: 50px;
     margin: 0 !important;
     background: linear-gradient(to top, rgba(0,20,137,1) 0%,rgba(0,20,137,.9) 99%,rgba(132,189,0,1) 99%, rgba(132,189,0,1) 100%) !important;
 /*    border: 0 !important;*/
@@ -104,19 +110,19 @@ body {
   /*background: #f9f8fd;*/
 }
 #container {
-   /*min-height:100%;*/
+   /*height:80%;*/
    /*position:relative;*/
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+  /*display: flex;*/
+  /*min-height: 100vh;*/
+  /*flex-direction: column;*/
 }
 #main {
-   min-height:500px;
+   /*height:100%;*/
    /*position:relative;*/
    /*padding:10px;*/
    /*padding-bottom:200px;*/
    /*height:100%;*/
-  flex: 1;
+  /*flex: 1;*/
 }
 
 
@@ -277,7 +283,7 @@ body {
   overflow-y:scroll;
   overflow-x: hidden;
   padding-top: 20px;
-  max-height:1000px;
+  /*max-height:1000px;*/
 }
 
 .delta_cards{

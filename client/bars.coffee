@@ -35,14 +35,14 @@ Template.leftbar.onRendered ->
                         scrollLock: false
                         exclusive: true
                     })
-                    .sidebar('attach events', '.context .menu .toggle_leftbar')
+                    .sidebar('attach events', '.menu .toggle_leftbar')
             , 1300
 
 Template.topbar.onRendered ->
     @autorun =>
         if @subscriptionsReady()
             Meteor.setTimeout ->
-                $('.context .ui.top.sidebar')
+                $('.ui.top.sidebar')
                     .sidebar({
                         context: $('.context .pushable')
                         dimPage: false
@@ -50,29 +50,29 @@ Template.topbar.onRendered ->
                         scrollLock: false
                         exclusive: true
                     })
-                    .sidebar('attach events', '.context .menu .toggle_topbar')
+                    .sidebar('attach events', '.menu .toggle_topbar')
             , 1300
 
-Template.bottombar.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.context .ui.bottom.sidebar')
-                    .sidebar({
-                        context: $('.context .pushable')
-                        dimPage: false
-                        transition: 'overlay'
-                        scrollLock: false
-                        exclusive: true
-                    })
-                    .sidebar('attach events', '.footer .toggle_bottombar')
-            , 1300
+# Template.bottombar.onRendered ->
+#     @autorun =>
+#         if @subscriptionsReady()
+#             Meteor.setTimeout ->
+#                 $('.ui.bottom.sidebar')
+#                     .sidebar({
+#                         context: $('.context .pushable')
+#                         dimPage: false
+#                         transition: 'overlay'
+#                         scrollLock: false
+#                         exclusive: true
+#                     })
+#                     .sidebar('attach events', '.toggle_bottombar')
+#             , 1300
 
 
 Template.rightbar.onRendered ->
     if @subscriptionsReady()
             Meteor.setTimeout ->
-                $('.context .ui.right.sidebar')
+                $('.ui.right.sidebar')
                     .sidebar({
                         context: $('.context .pushable')
                         dimPage: false
@@ -80,7 +80,7 @@ Template.rightbar.onRendered ->
                         scrollLock: false
                         exclusive: true
                     })
-                    .sidebar('attach events', '.context .menu .toggle_rightbar')
+                    .sidebar('attach events', '.menu .toggle_rightbar')
             , 1300
 
 
