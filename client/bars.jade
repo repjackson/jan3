@@ -64,8 +64,8 @@ template(name='leftbar')
     .ui.left.vertical.sidebar.nav_bar.inverted.big.menu.alphablue
         each bookmarks
             a.item.pick_delta.toggle_leftbar(href='#' title=title)
-                +icon name=icon classes='mini spaced'
-                // i.large.icon
+                i.large.icon
+                    +icon name=icon classes='mini spaced'
                 | #{plural}
 
 

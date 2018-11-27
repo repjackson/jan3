@@ -1,11 +1,12 @@
 template(name='account_settings')
-    .ui.padded.centered.grid
+    .ui.padded.centered.equal.width.three.column.grid
         .centered.row
-            .twelve.wide.column
                 h1.ui.center.aligned.header
                     i.cog.blue.icon
                     | #{currentUser.username} Account Settings
+            .column
                 +change_password_widget
+            .column
                 .ui.secondary.segment
                     .ui.header
                         i.envelope.blue.icon
@@ -28,6 +29,7 @@ template(name='account_settings')
                         input#new_email(type='email')
                         #add_email.ui.submit.inverted.jpgreen.button
                             |Add Email
+            .column
                 .ui.secondary.segment
                     .ui.header
                         |Username:
