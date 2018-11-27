@@ -34,10 +34,10 @@ template(name='franchisee_view')
         .centered.middle.aligned.row
             .three.wide.center.aligned.column
                 if is_admin
-                    +link_button link='/p/admin_franchisees' icon='business' label='Franchisees'
+                    +link_button link='/p/admin_franchisees' icon=briefcase label='Franchisees'
             .ten.wide.column
                 h1.ui.center.aligned.grey.header
-                    +icon name='business'
+                    +icon name=briefcase
                     if ev.FRANCHISEE
                         |#{ev.FRANCHISEE}
                     else if ev.FRANCH_NAME
@@ -123,7 +123,7 @@ template(name='recipient_type')
     if is_secondary
         +icon name='user-male-circle' title='Secondary'
     if is_franchisee
-        +icon name='business' title='Franchisee'
+        +icon name=briefcase title='Franchisee'
     if is_customer
         +icon name='headset' title='Customer'
     // |#{recipient_type}

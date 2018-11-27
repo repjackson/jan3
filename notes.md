@@ -73,7 +73,7 @@ billions of documents, then when you're ready, trillions
 <!--'setting_default_escalation_time'  'sort-by-modified-date'-->
 <!--'emailed_owner'  'user-shield'-->
 <!--'emailed_secondary_contact'  'sent'-->
-<!--'emailed_franchisee_contact'  'business'-->
+<!--'emailed_franchisee_contact'  briefcase-->
 <!--'mark_complete'  'checked-checkbox'-->
 <!--'mark_incomplete'  'unchecked-checkbox'-->
 <!--'submit'  'internal'-->

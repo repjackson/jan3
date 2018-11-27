@@ -2,32 +2,10 @@ template(name='delta_card')
     with local_doc
         unless full_mode
             .ui.card.delta_card(class=delta_card_class)
-                // .content
-                //     .ui.header
-                //         if icon
-                //             +icon name=icon
-                //         |#{title}
-
-
-                // if children_sets
-                //     .content
-                //         each children_sets
-                //             if is_single
-                //                 .ui.header single
-                //             if is_multi
-                //                 .ui.header multi
-                //             .ui.dividing.header
-                //                 if icon
-                //                     +icon name=icon classes='spaced mini'
-                //                 |#{plural}
                 if blocks
                     .content
                         each blocks
                             +Template.dynamic template=part_template data=local_doc
-
-                // .ui.fluid.button.edit
-                //     i.pencil.icon
-                //     | Edit
                 unless delta.minimize
                     .content
                         .ui.list
@@ -50,107 +28,75 @@ template(name='delta_card')
                         +icon name='edit'
                     .ui.icon.button.toggle_full
                         +icon name='chevron-right'
-                if full_mode
-                    .ui.padded.stackable.grid
-                        .row
+        if full_mode
+            .ui.padded.stackable.grid
+                .row
+                    if delta.editing
+                        .three.wide.column
+                            .ui.fluid.button.remove_doc
+                                +icon name='trash'
+                        .ten.wide.center.aligned.column
+                            .ui.header
+                                if icon
+                                    +icon name=icon
+                                |Edit '#{detail_doc.title}'
+                                // #{current_type.title}
+                        .right.floated.three.wide.column
+                            .ui.icon.fluid.button.save
+                                +icon name='save'
+                            // .ui.button.archive
+                            //     i.archive.icon
+                            //     |Archive
+                    else
+                        .three.wide.column
+                            .ui.fluid.button.toggle_full
+                                // i.caret.left.large.icon
+                                +icon name=current_type.icon
+                                | #{current_type.plural}
+                        .ten.wide.center.aligned.column
+                            .ui.header
+                                if icon
+                                    +icon name=icon
+                                |'#{local_doc.title}' #{current_type.title}
+                        .right.floated.three.wide.column
+                            .ui.fluid.icon.button.edit
+                                +icon name='edit'
+                                // | Edit
+                .row
+                    .sixteen.wide.column
+                        .ui.stackable.two.column.padded.grid
+                            // each blocks
+                            //     .card
+                            //         .content
+                            //             if icon
+                            //                 i.large.icon
+                            //                     +icon name=icon
+                            //             strong #{title}
+                            unless delta.editing
+                                each blocks
+                                    .column
+                                        .ui.segment
+                                            .ui.dividing.header
+                                                if icon
+                                                    +icon name=icon classes='mini'
+                                                |#{title}
+                                            +Template.dynamic template=part_template data=local_doc
+                                            .ui.basic.segment
+                                                // if icon
+                                                //     i.icon
+                                                //         +icon name=icon
+                                                // strong #{title}
+                                                // |&nbsp;
+                                                if is_array
+                                                    each value
+                                                        .ui.label #{this}
+                                                else
+                                                    | #{value}
+
                             if delta.editing
-                                .three.wide.column
-                                    .ui.fluid.button.remove_doc
-                                        +icon name='trash'
-                                .ten.wide.center.aligned.column
-                                    .ui.header
-                                        if icon
-                                            +icon name=icon
-                                        |Edit '#{detail_doc.title}'
-                                        // #{current_type.title}
-                                .right.floated.three.wide.column
-                                    .ui.icon.fluid.button.save
-                                        +icon name='save'
-                                    // .ui.button.archive
-                                    //     i.archive.icon
-                                    //     |Archive
-                            else
-                                .three.wide.column
-                                    .ui.fluid.button.toggle_full
-                                        // i.caret.left.large.icon
-                                        +icon name=current_type.icon
-                                        | #{current_type.plural}
-                                .ten.wide.center.aligned.column
-                                    .ui.header
-                                        if icon
-                                            +icon name=icon
-                                        |'#{local_doc.title}' #{current_type.title}
-                                .right.floated.three.wide.column
-                                    .ui.fluid.icon.button.edit
-                                        +icon name='edit'
-                                        // | Edit
-                        .row
-                            .sixteen.wide.column
-                                .ui.stackable.two.column.padded.grid
-                                    // each blocks
-                                    //     .card
-                                    //         .content
-                                    //             if icon
-                                    //                 i.large.icon
-                                    //                     +icon name=icon
-                                    //             strong #{title}
-                                    unless delta.editing
-                                        each blocks
-                                            .column
-                                                .ui.segment
-                                                    .ui.dividing.header
-                                                        if icon
-                                                            +icon name=icon classes='mini'
-                                                        |#{title}
-                                                    +Template.dynamic template=part_template data=local_doc
-                                                    .ui.basic.segment
-                                                        // if icon
-                                                        //     i.icon
-                                                        //         +icon name=icon
-                                                        // strong #{title}
-                                                        // |&nbsp;
-                                                        if is_array
-                                                            each value
-                                                                .ui.label #{this}
-                                                        else
-                                                            | #{value}
+                                each edit_blocks
+                                    .column
+                                        .ui.segment
+                                            +block_edit
 
-                                        // .ui.header children sets
-                                        // if children_sets
-                                        //     each children_sets
-                                        //         .column
-                                        //             .ui.segment
-                                        //                 .ui.dividing.header
-                                        //                     if icon
-                                        //                         +icon name=icon classes='spaced mini'
-                                        //                     |#{plural}
-                                        //                 .ui.add_grandchild.button
-                                        //                     |Add #{title}
-                                        //                 .ui.comments
-                                        //                     each set_children
-                                        //                         .comment
-                                        //                             .avatar
-                                        //                                 if author.image_id
-                                        //                                     img.ui.avatar.spaced.image(src="{{c.url author.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                                        //                                 else
-                                        //                                     i.user.icon
-                                        //                             .content
-                                        //                                 strong #{author.username}
-                                        //                                 .metadata
-                                        //                                     span.date #{when}
-                                        //                                 .text
-                                        //                                     p #{text}
-                                        //                                 .actions
-                                        //                                     a.edit
-                                        //                                         i.pencil.icon
-                                        //                                     a.delete
-                                        //                                         i.trash.icon
-                                        //                                     a.vote_up
-                                        //                                         i.thumbs.up.icon
-                                    if delta.editing
-                                        each edit_blocks
-                                            .column
-                                                .ui.segment
-                                                    +block_edit
-
-                                                        // .ui.hidden.divider
+                                                // .ui.hidden.divider

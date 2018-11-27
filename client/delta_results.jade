@@ -34,20 +34,20 @@ template(name='delta_results')
                             .item
                                 if show_page_down
                                     .ui.icon.button.page_down(title='Previous Page')
-                                        i.left.chevron.icon
+                                        +icon name='chevron-left'
                                         // +icon name='chevron-left' classes='mini spaced'
                                 if show_page_up
                                     .ui.icon.button.page_up(title='Next Page')
-                                        i.right.chevron.icon
+                                        +icon name='chevron-right'
                             .item
-                                +toggle_delta_config key='minimize' title='Minimize' label='Minimize' icon='double-up'
+                                +toggle_delta_config key='minimize' title='Minimize' label='Minimize' icon='chevron-up'
                             .item
                                 .ui.disabled.button
-                                    i.filter.icon
+                                    +icon name='filter'
                                     |Sort By
                             .item
                                 .ui.disabled.button
-                                    i.filter.icon
+                                    +icon name='filter'
                                     | Toggle Fields
                     if is_calculating
                         .ui.hidden.divider
