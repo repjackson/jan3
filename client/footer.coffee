@@ -17,6 +17,13 @@ Template.footer.helpers
 
     bug_link: -> Session.get 'bug_link'
 
+    chat_messages: ->
+        Docs.find
+            type:'chat'
+
+
+Template.footer.onCreated ->
+    @autorun -> Meteor.subscribe 'type', 'chat'
 
 Template.footer.events
     "click #report_bug": ->
@@ -31,9 +38,8 @@ Template.footer.events
         if e.which is 13
             message = $('#new_chat').val()
             Docs.insert
-                type:'alert'
+                type:'chat'
                 message:message
-                to:'dev'
 
 
 Template.role_switcher.events

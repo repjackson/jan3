@@ -20,13 +20,17 @@ template(name='footer')
                             a(href="https://icons8.com/")
                                 |Icons8
             .four.wide.column
-                .ui.inverted.header
-                    +icon name='chat' classes='inline mini'
-                    | Chat
-                each chat_messages
-                    .ui.comment
-                        .content #{text}
-                .ui.transparent.input
+                .ui.inverted.blue.segment
+                    .ui.header
+                        +icon name='chat' classes='inline mini'
+                        | Chat
+                    .ui.inverted.list
+                        each chat_messages
+                            .item
+                                .content
+                                    .ui.small.header #{message}
+                                    small #{author_username} #{when}
+                .ui.transparent.inverted.input
                     input#new_chat(type='text' placeholder='add...')
                 // if is_customer
                 //     +customer_card customer_jpid=currentUser.customer_jpid
