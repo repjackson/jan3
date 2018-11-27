@@ -1,9 +1,9 @@
 template(name='nav')
     .mobile.hidden
         .ui.top.fixed.inverted.blue.large.menu
-            a.toggle_leftbar.icon.item(href='#')
+            a.new_nav.icon.item(href='#')
                 // i.fas.fa-menu(style="color:white;")
-                i.fas.fa-bars.fa-lg(style="color:white;")
+                // i.fas.fa-bars.fa-lg(style="color:white;")
                 img.ui.small.spaced.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                 // +icon name='menu' classes='spaced centered mini'
             a.mobile.hidden.toggle_topbar.icon.item(href='#')
@@ -32,7 +32,7 @@ template(name='nav')
         if delta.view_topbar
             +topbar
     .mobile.only
-        .ui.padded.grid.top.fixed.blue.menu
+        .ui.padded.grid.top.fixed.blue.topnav.menu
             if currentUser
                 .centered.nav_bar.row
                     .eight.twelve.wide.column.pointer.toggle_leftbar.item
@@ -99,6 +99,18 @@ template(name='leftbar')
                         | #{plural}
                         +icon name=icon
 
+template(name='dash')
+    .sixteen.wide.blue.column.topnav
+        .ui.equal.width.grid
+            each bookmarks
+                .four.wide.column
+                    .ui.inverted.blue.secondary.segment.pick_delta
+                        a.ui.header(href='#')
+                            +icon name=icon
+                            |#{plural}
+                        // .ui.basic.segment
+                        //     |#{details}
+
 
 template(name='rightbar')
     if delta.view_rightbar
@@ -145,7 +157,7 @@ template(name='rightbar')
 
 template(name='quick_idea')
     .ui.inverted.left.icon.large.transparent.input
-        i.yellow.lightbulb.icon
+        +icon name='lightbulb'
         input#idea_text(placeholder='Add thought...')
         // .ui.small.fluid.icon.button.submit_idea
         //     i.checkmark.icon
@@ -153,12 +165,12 @@ template(name='quick_idea')
 
 template(name='notifications')
     a.ui.inverted.header.set_notifications(href='#')
-        +icon name='appointment-reminders'
+        +icon name='bell'
         | Notifications
 
 template(name='messages')
     a.ui.inverted.header.set_messages(href='#')
-        +icon name='mailbox-with-letter'
+        +icon name='mail-bulk'
         | Messages
 
     // +iconsmall name='compose' title='Compose' classes='pointer'
@@ -166,7 +178,7 @@ template(name='messages')
 
 template(name='tasks')
     a.ui.inverted.header.set_tasks(href='#')
-        +icon name='to-do'
+        +icon name='tasks'
         | Tasks
     .ui.inverted.link.list
         each todos
@@ -175,5 +187,5 @@ template(name='tasks')
 
 template(name='bookmarks')
     a.ui.inverted.header.set_bookmarks(href='#')
-        +icon name='bookmark-ribbon'
+        +icon name='bookmark'
         | Bookmarks

@@ -7,12 +7,11 @@ template(name='set_schema_part')
 template(name='bookmark_part')
     if bookmarked
         .ui.blue.fluid.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
-            +iconsmall name='bookmark-ribbon'
+            +icon name='bookmark'
             |Bookmarked
     else
         .ui.fluid.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
-            // +iconsmall name='bookmark-ribbon'
-            img.ui.inline.image(src="https://img.icons8.com/wired/24/000000/bookmark-ribbon.png")
+            +icon name='bookmark'
             |Bookmark
     .ui.list
         each bookmark_users
@@ -27,11 +26,11 @@ template(name='bookmark_part')
 template(name='mark_read_part')
     if read
         .ui.blue.fluid.button.toggle_read
-            +iconsmall name='open-envelope' classes='spaced'
+            +icon name='envelope-open-text'
             | Read
     else
         .ui.fluid.button.toggle_read
-            +iconsmall name='secured-letter' classes='spaced'
+            +icon name='envelope'
             | Mark Read
     .ui.list
         each read_users
@@ -50,14 +49,14 @@ template(name='complete_part')
         | Complete
         div
         .ui.fluid.button.mark_incomplete
-            +iconsmall name='clock'
+            +icon name='clock'
             | Mark Incomplete
     else
         +icon name='clock' classes='spaced mini'
         | Incomplete
         div
         .ui.fluid.button.mark_complete
-            +iconsmall name='checkmark'
+            +icon name='check'
             | Mark Complete
 
 
@@ -67,23 +66,23 @@ template(name='complete_part')
 template(name='subscribe_part')
     if subscribed
         .ui.blue.fluid.button.toggle_subscribe(class=subscription_class)
-            +iconsmall name='renew-subscription'
+            +icon name='renew-subscription'
             | Subscribed
     else
         .ui.button.fluid.toggle_subscribe(class=subscription_class)
-            +iconsmall name='renew-subscription'
+            +icon name='renew-subscription'
             | Subscribe
     if subscribed
         .ui.two.buttons
             .ui.button(title='Immediate')
-                +iconsmall name='internal'
+                +icon name='internal'
             .ui.button(title='Daily')
-                +iconsmall name='present'
+                +icon name='present'
         .ui.two.buttons
             .ui.button(title='SMS')
-                +iconsmall name='cell-phone'
+                +icon name='cell-phone'
             .ui.button(title='Email')
-                +iconsmall name='email'
+                +icon name='email'
     .ui.list
         each subscribers
             +user_list_view
@@ -95,10 +94,10 @@ template(name='voting_part')
     .ui.small.dividing.header
         +icon name='leaderboard' classes='mini spaced'
         | Priority (#{block_parent.points})
-    .ui.icon.compact.button.upvote(class=upvote_class)
-        +iconsmall name='collapse-arrow'
-    .ui.icon.compact.button.downvote(class=downvote_class)
-        +iconsmall name='expand-arrow'
+    .ui.icon.button.upvote(class=upvote_class)
+        +icon name='thumbs-up'
+    .ui.icon.button.downvote(class=downvote_class)
+        +icon name='thumbs-down'
     if upvoters
         .ui.small.dividing.header
             +icon name='collapse-arrow' classes='mini spaced'

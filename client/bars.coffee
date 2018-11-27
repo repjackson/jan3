@@ -1,4 +1,4 @@
-Template.leftbar.onCreated ->
+Template.dash.onCreated ->
     @autorun => Meteor.subscribe 'type', 'schema', 200
 
 Template.footer.onCreated ->
@@ -23,7 +23,7 @@ Template.quick_idea.events
 
 
 
-Template.leftbar.helpers
+Template.dash.helpers
     bookmarks: ->
         if Meteor.user() and Meteor.user().roles
             Docs.find {
@@ -31,7 +31,7 @@ Template.leftbar.helpers
                 type:'schema'
             }, sort:title:1
 
-Template.leftbar.events
+Template.dash.events
     'click .pick_delta': (e,t)->
         e.preventDefault()
         # console.log @
@@ -60,6 +60,17 @@ Template.topbar.events
         Session.set 'is_calculating', true
         Meteor.call 'set_schema', 'task', ->
             Session.set 'is_calculating', false
+
+
+Template.nav.events
+    'click .new_nav': ->
+        delta = Docs.findOne type:'delta'
+
+        Docs.update delta._id,
+            $set:
+                viewing_page: !delta.viewing_page
+                page_template:'dash'
+                viewing_delta: !delta.viewing_delta
 
 
 

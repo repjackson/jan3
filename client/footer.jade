@@ -1,9 +1,9 @@
 template(name='footer')
-    .ui.bottom.fixed.inverted.blue.menu.grid
+    .ui.bottom.fixed.inverted.footer.menu.grid
         if delta.expand_footer
             .row
-                .ui.stackable.padded.grid
-                    .row
+                .sixteen.wide.column
+                    .ui.stackable.padded.grid
                         .four.wide.inverted.column
                             img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                             .ui.list
@@ -14,27 +14,26 @@ template(name='footer')
                                 .sitemap_list.item Contact Us
                                 .sitemap_list.item Legal/ Privacy Policy
                         .four.wide.column
-                            .ui.inverted.blue.segment
-                                .ui.header
-                                    +icon name='chat'
-                                    | Chat
-                                .ui.inverted.list
-                                    each chat_messages
-                                        .item
-                                            .content
-                                                .ui.small.header #{message}
-                                                small #{author_username} #{when}
+                            .ui.inverted.header
+                                +icon name='comments'
+                                | Chat
+                            .ui.inverted.list
+                                each chat_messages
+                                    .item
+                                        .content
+                                            .ui.small.header #{message}
+                                            small #{author_username} #{when}
                             .ui.transparent.inverted.input
                                 input#new_chat(type='text' placeholder='add...')
                         .four.wide.column
-                            .ui.small.inverted.header
-                                +iconsmall name='connected'
+                            .ui.inverted.header
+                                +icon name='globe'
                                 | Online Users
                             each online_users
                                 .ui.inverted.header #{username}
                         .four.wide.column
                             +tasks
-        .row
+        .middle.aligned.row
             if delta.expand_footer
                 a.four.wide.column.minimize_footer(href='#')
                     .ui.white.header
@@ -46,13 +45,16 @@ template(name='footer')
                         +icon name='bars'
                         | Menu
             .twelve.wide.column
-                .ui.inverted.grey.header
-                    +ricon name='copyright'
-                    | 2018 JAN-PRO Franchising, Inc.
+                if is_eric
+                    +role_switcher
+                else
+                    .ui.inverted.grey.header
+                        +ricon name='copyright'
+                        | 2018 JAN-PRO Franchising, Inc.
 
 
 
 template(name='role_switcher')
     each role_docs
-        .change_role.ui.margined.button(class=role_button_class)
+        .change_role.ui.margined.compact.button(class=role_button_class)
             |#{title}
