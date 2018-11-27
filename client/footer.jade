@@ -1,6 +1,6 @@
 template(name='footer')
     .ui.bottom.fixed.inverted.blue.menu
-        .ui.stackable.centered.padded.grid
+        .ui.stackable.padded.grid
             if delta.expand_footer
                 .row
                     .four.wide.inverted.column
@@ -38,13 +38,18 @@ template(name='footer')
                     .four.wide.column
                         +tasks
 
-            .row
-                .four.wide.column
-                    +toggle_delta_config key='expand_footer' title='Expand Footer' label='Expand Footer' icon='double-up'
-                .twelve.wide.column
-                    .ui.inverted.grey.header
-                        i.copyright.outline.icon
-                        | 2018 JAN-PRO Franchising, Inc.
+            .item
+                if delta.expand_footer
+                    .ui.blue.button.minimize_footer
+                        +icon name='double-down' classes='mini'
+                else
+                    .ui.blue.button.expand_footer
+                        // i.double.up.chevron.icon
+                        +icon name='double-up' classes='mini'
+            .item
+                .ui.inverted.grey.header
+                    i.copyright.outline.icon
+                    | 2018 JAN-PRO Franchising, Inc.
 
 
 

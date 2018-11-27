@@ -42,6 +42,16 @@ Template.footer.events
                 message:message
 
 
+    'click .minimize_footer': ->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:expand_footer:false
+
+    'click .expand_footer': ->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:expand_footer:true
+
 Template.role_switcher.events
     'click .change_role': ->
         cursor = Docs.find(type:'role').fetch()
