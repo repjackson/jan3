@@ -238,6 +238,11 @@ body {
   background: rgba(0, 20, 137, 1) !important;
   color: white;
 }
+.blue80 {
+  /*background: rgba(0, 20, 137, 0.5) !important;*/
+  background: rgba(0, 20, 137, .8) !important;
+  color: white;
+}
 
 .pointer {cursor: pointer;}
 

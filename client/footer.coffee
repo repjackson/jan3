@@ -27,6 +27,14 @@ Template.footer.events
             link:window.location.pathname
         FlowRouter.go("/edit/#{new_bug_id}")
 
+    'keyup #new_chat': (e,t)->
+        if e.which is 13
+            message = $('#new_chat').val()
+            Docs.insert
+                type:'alert'
+                message:message
+                to:'dev'
+
 
 Template.role_switcher.events
     'click .change_role': ->

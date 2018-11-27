@@ -90,6 +90,10 @@ Meteor.publish "user_status", ()->
     Meteor.users.find({ "status.online": true })
 
 
+Meteor.publish 'my_alerts', ()->
+    Docs.find
+        type:'alert'
+        to:Meteor.user().username
 
 
 Meteor.publish 'children', (doc_id, limit)->

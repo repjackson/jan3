@@ -5,6 +5,8 @@ Template.delta.onCreated ->
     @autorun -> Meteor.subscribe 'delta'
     @autorun => Meteor.subscribe 'schema_blocks'
     @autorun -> Meteor.subscribe 'me'
+    @autorun -> Meteor.subscribe 'my_alerts'
+
 
 
 
@@ -18,6 +20,9 @@ Template.delta.onCreated ->
 
 
 Template.delta.helpers
+    unread_alerts: ->
+        Docs.find
+            type:'alert'
     center_column_class: ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail
