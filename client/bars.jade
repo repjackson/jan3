@@ -92,8 +92,8 @@ template(name='bottombar')
 
 template(name='leftbar')
     if delta.view_leftbar
-        .four.wide.column.alphablue
-            .ui.vertical.blue.inverted.big.menu
+        .four.wide.blue.column
+            .ui.vertical.blue.inverted.large.fluid.menu
                 each bookmarks
                     a.item.pick_delta.toggle_leftbar(href='#' title=title)
                         | #{plural}

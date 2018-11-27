@@ -19,7 +19,7 @@ if Meteor.isClient
             Docs.update delta._id,
                 $set:
                     viewing_detail: true
-                    viewing_rightbar: false
+                    view_rightbar: false
                     detail_id: @_id
                     expand_id: @_id
                     viewing_page: false

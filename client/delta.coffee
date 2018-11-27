@@ -88,6 +88,7 @@ Template.nav.events
                 view_topbar: !delta.view_topbar
                 view_leftbar: false
                 view_rightbar: false
+                expand_footer: false
 
     'click .toggle_rightbar': ->
         delta = Docs.findOne type:'delta'
@@ -96,6 +97,7 @@ Template.nav.events
                 view_rightbar: !delta.view_rightbar
                 view_leftbar:false
                 view_topbar:false
+                expand_footer: false
 
     'click .toggle_leftbar': ->
         delta = Docs.findOne type:'delta'
@@ -104,6 +106,7 @@ Template.nav.events
                 view_leftbar: !delta.view_leftbar
                 view_rightbar:false
                 view_topbar:false
+                expand_footer: false
 
 
 Template.delta.events

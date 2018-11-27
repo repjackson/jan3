@@ -37,10 +37,14 @@ template(name='footer')
         .row
             if delta.expand_footer
                 a.four.wide.column.minimize_footer(href='#')
-                    +icon name='bars'
+                    .ui.white.header
+                        +icon name='bars'
+                        | Menu
             else
                 a.four.wide.column.expand_footer(href='#')
-                    +icon name='bars'
+                    .ui.grey.header
+                        +icon name='bars'
+                        | Menu
             .twelve.wide.column
                 .ui.inverted.grey.header
                     +ricon name='copyright'

@@ -20,9 +20,9 @@ Template.delta_results.helpers
     results_class: ->
         delta = Docs.findOne type:'delta'
         if delta.viewing_detail
-            if delta.viewing_rightbar then 'twelve wide' else 'sixteen wide'
+            if delta.view_rightbar then 'twelve wide' else 'sixteen wide'
         else
-        #     if delta.viewing_rightbar then 'nine wide' else 'twelve wide'
+        #     if delta.view_rightbar then 'nine wide' else 'twelve wide'
             'twelve wide'
 
     cards_class: ->
