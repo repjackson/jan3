@@ -60,8 +60,8 @@ template(name='leftbar')
     .ui.left.vertical.sidebar.nav_bar.inverted.big.menu.alphablue
         each bookmarks
             a.item.pick_delta.toggle_leftbar(href='#' title=title)
-                i.icon
-                    +icon name=icon
+                +icon name=icon classes='mini spaced'
+                // i.large.icon
                 | #{plural}
 
 
@@ -101,8 +101,20 @@ template(name='rightbar')
                 i.icon
                     +icon name='exit' classes='mini'
             | Log Out
+        .item
+            +quick_idea
 
 
+
+template(name='quick_idea')
+    .ui.inverted.form
+        .transparent.field
+            label
+                i.yellow.lightbulb.icon
+                |Add Idea
+            textarea#idea_text(rows='2')
+            .ui.small.fluid.icon.button.submit_idea
+                i.checkmark.icon
 
 
 template(name='notifications')

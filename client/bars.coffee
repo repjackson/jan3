@@ -4,6 +4,17 @@ Template.leftbar.onCreated ->
 Template.footer.onCreated ->
     @autorun => Meteor.subscribe 'user_status'
 
+Template.quick_idea.events
+    'click .submit_idea': (e,t)->
+        idea = t.$('#idea_text').val()
+        console.log idea
+
+    'keyup #idea_text': (e,t)->
+        if e.which is 13
+            idea = t.$('#idea_text').val()
+            console.log idea
+
+
 
 Template.leftbar.onRendered ->
     @autorun =>
