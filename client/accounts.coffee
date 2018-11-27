@@ -6,8 +6,8 @@ Template.login.events
         Meteor.loginWithPassword username, password, (err,res)->
             if err
                 alert err
-            else
-                console.log 'yea'
+            # else
+            #     console.log 'yea'
 
     'keyup .username, keyup .password': (e,t)->
         if e.which is 13 #enter

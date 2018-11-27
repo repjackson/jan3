@@ -117,9 +117,10 @@ body {
   /*flex-direction: column;*/
 }
 #main {
+   padding-top:75px;
+
    /*height:100%;*/
    /*position:relative;*/
-   /*padding:10px;*/
    /*padding-bottom:200px;*/
    /*height:100%;*/
   /*flex: 1;*/

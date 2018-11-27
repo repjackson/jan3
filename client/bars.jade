@@ -1,34 +1,36 @@
 template(name='nav')
     .mobile.hidden
-        .ui.stackable.grid.top.fixed.inverted.blue.menu
-            .one.wide.column.pointer.toggle_leftbar.item
-                +icon name='menu' classes='spaced centered mini'
-            .mobile.hidden.one.wide.column.toggle_topbar.pointer
+        .ui.top.fixed.inverted.blue.menu
+            a.toggle_leftbar.icon.item(href='#')
+                // i.fas.fa-menu(style="color:white;")
+                i.fas.fa-bars.fa-lg(style="color:white;")
+                // +icon name='menu' classes='spaced centered mini'
+            .mobile.hidden.toggle_topbar.icon.item
                 +icon name='bookmark-ribbon' classes='mini centered'
-            .mobile.hidden.one.wide.column.toggle_topbar.pointer
+            .mobile.hidden.toggle_topbar.item
                 +icon name='contacts' classes='mini centered'
-            .mobile.hidden.one.wide.column.toggle_topbar.pointer
+            .mobile.hidden.toggle_topbar.item
                 +icon name='stack-of-money' classes='mini centered'
-            .mobile.hidden.one.wide.column.toggle_topbar.pointer
+            .mobile.hidden.toggle_topbar.item
                 +icon name='calendar' classes='mini centered'
-            .mobile.hidden.six.wide.column.pointer.toggle_topbar.item
+            .mobile.hidden.six.wide.column.item.toggle_topbar.item
                 img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            .mobile.hidden.one.wide.column.toggle_topbar.pointer
+            .mobile.hidden.toggle_topbar.item
                 +icon name='tasks' classes='mini centered'
-            .mobile.hidden.one.wide.column.toggle_topbar.pointer
+            .mobile.hidden.toggle_topbar.item
                 +icon name='shopping-cart' classes='mini centered'
-            .mobile.hidden.one.wide.column.toggle_topbar.pointer
+            .mobile.hidden.toggle_topbar.item
                 +icon name='mailbox-with-letter' classes='mini centered'
-            .mobile.hidden.one.wide.column.toggle_topbar.pointer
+            .mobile.hidden.toggle_topbar.item
                 +icon name='appointment-reminders' classes='mini centered'
-            .one.wide.column.toggle_rightbar.pointer.item
+            .toggle_rightbar.pointer.item
                 if currentUser.image_id
                     img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 else
                     +icon name='gender-neutral-user' classes='mini centered'
             if delta.view_topbar
                 .row
-                    .ui.button hi
+                    +topbar
     .mobile.only
         .ui.padded.grid.top.fixed.blue.menu
             if currentUser
@@ -43,16 +45,14 @@ template(name='nav')
 
 
 template(name='topbar')
-    .ui.top.push.alphablue.topbar
-        .ui.padded.grid
-            .four.wide.column
-                +notifications
-            .four.wide.column
-                +messages
-            .four.wide.column
-                +tasks
-            .four.wide.column
-                +bookmarks
+    .four.wide.column
+        +notifications
+    .four.wide.column
+        +messages
+    .four.wide.column
+        +tasks
+    .four.wide.column
+        +bookmarks
 
 template(name='bottombar')
     .ui.bottom.push.alphablue.bottombar
@@ -92,7 +92,7 @@ template(name='bottombar')
 template(name='leftbar')
     if delta.view_leftbar
         .four.wide.column.alphablue
-            .ui.left.vertical.nav_bar.inverted.big.menu
+            .ui.left.vertical.blue.inverted.big.menu
                 each bookmarks
                     a.item.pick_delta.toggle_leftbar(href='#' title=title)
                         i.large.icon
@@ -103,7 +103,7 @@ template(name='leftbar')
 template(name='rightbar')
     if delta.view_rightbar
         .four.wide.column.alphablue
-            .ui.right.vertical.inverted.big.menu.rightbar
+            .ui.right.vertical.inverted.blue.big.menu
                 a.item(href='#')
                     .ui.inverted.header
                         | #{currentUser.first_name} #{currentUser.last_name}

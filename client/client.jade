@@ -14,6 +14,9 @@ head
     meta(name="msapplication-TileColor", content="#da532c")
     meta(name="theme-color", content="#01336C")
 
+    link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous")
+
+
     meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='black')
@@ -25,20 +28,16 @@ body
 
 
 template(name='home')
-    +nav
-    .ui.grid
-        // .left_column(class=left_column_class)
-        +leftbar
-        .middle_column(class=middle_column_class)
-            if Template.subscriptionsReady
-                if currentUser
+    if Template.subscriptionsReady
+        if currentUser
+            +nav
+            #main.ui.grid
+                +leftbar
+                .middle_column(class=middle_column_class)
                     +delta
-                else
-                    +login
-            else
-                i.loading.icon
-        // .right_column(class=right_column_class)
-        +rightbar
-        .bottomrow
-            +footer
+                +rightbar
+                .bottomrow
+                    +footer
+        else
+            +login
 

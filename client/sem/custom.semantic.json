@@ -18,7 +18,7 @@
     "form": true,
     "grid": true,
     "header": true,
-    "icon": true,
+    "icon": false,
     "image": true,
     "input": true,
     "item": true,
