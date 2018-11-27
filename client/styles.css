@@ -116,8 +116,11 @@ body {
   /*min-height: 100vh;*/
   /*flex-direction: column;*/
 }
+.topbar {
+   margin-top:50px !important;
+}
 #main {
-   padding-top:75px;
+   padding-top:50px;
 
    /*height:100%;*/
    /*position:relative;*/

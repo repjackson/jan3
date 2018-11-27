@@ -19,7 +19,7 @@ template(name='footer')
                     .four.wide.column
                         .ui.inverted.blue.segment
                             .ui.header
-                                +icon name='chat' classes='inline mini'
+                                +icon name='chat'
                                 | Chat
                             .ui.inverted.list
                                 each chat_messages
@@ -31,7 +31,7 @@ template(name='footer')
                             input#new_chat(type='text' placeholder='add...')
                     .four.wide.column
                         .ui.small.inverted.header
-                            +iconsmall name='connected' classes='spaced'
+                            +iconsmall name='connected'
                             | Online Users
                         each online_users
                             .ui.inverted.header #{username}
@@ -41,14 +41,14 @@ template(name='footer')
             .item
                 if delta.expand_footer
                     .ui.blue.button.minimize_footer
-                        +icon name='double-down' classes='mini'
+                        +icon name='chevron-double-down'
                 else
                     .ui.blue.button.expand_footer
                         // i.double.up.chevron.icon
-                        +icon name='double-up' classes='mini'
+                        +icon name='chevron-double-up'
             .item
                 .ui.inverted.grey.header
-                    i.copyright.outline.icon
+                    +icon name='copyrite'
                     | 2018 JAN-PRO Franchising, Inc.
 
 

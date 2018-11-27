@@ -1,36 +1,34 @@
 template(name='nav')
     .mobile.hidden
-        .ui.top.fixed.inverted.blue.menu
+        .ui.top.fixed.inverted.blue.large.menu
             a.toggle_leftbar.icon.item(href='#')
                 // i.fas.fa-menu(style="color:white;")
                 i.fas.fa-bars.fa-lg(style="color:white;")
+                img.ui.small.spaced.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
                 // +icon name='menu' classes='spaced centered mini'
-            .mobile.hidden.toggle_topbar.icon.item
-                +icon name='bookmark-ribbon' classes='mini centered'
-            .mobile.hidden.toggle_topbar.item
-                +icon name='contacts' classes='mini centered'
-            .mobile.hidden.toggle_topbar.item
-                +icon name='stack-of-money' classes='mini centered'
-            .mobile.hidden.toggle_topbar.item
-                +icon name='calendar' classes='mini centered'
-            .mobile.hidden.six.wide.column.item.toggle_topbar.item
-                img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            .mobile.hidden.toggle_topbar.item
-                +icon name='tasks' classes='mini centered'
-            .mobile.hidden.toggle_topbar.item
-                +icon name='shopping-cart' classes='mini centered'
-            .mobile.hidden.toggle_topbar.item
-                +icon name='mailbox-with-letter' classes='mini centered'
-            .mobile.hidden.toggle_topbar.item
-                +icon name='appointment-reminders' classes='mini centered'
-            .toggle_rightbar.pointer.item
+            a.mobile.hidden.toggle_topbar.icon.item(href='#')
+                +iconlarge name='bookmark'
+            a.mobile.hidden.toggle_topbar.item(href='#')
+                +iconlarge name='users'
+            a.mobile.hidden.toggle_topbar.item(href='#')
+                +iconlarge name='dollar-sign'
+            a.mobile.hidden.toggle_topbar.item(href='#')
+                +iconlarge name='calendar'
+            a.mobile.hidden.toggle_topbar.item(href='#')
+                +iconlarge name='tasks'
+            a.mobile.hidden.toggle_topbar.item(href='#')
+                +iconlarge name='shopping-cart'
+            a.mobile.hidden.toggle_topbar.item(href='#')
+                +iconlarge name='mailbox-with-letter'
+            a.mobile.hidden.toggle_topbar.item(href='#')
+                +iconlarge name='appointment-reminders'
+            .toggle_rightbar.icon.item
                 if currentUser.image_id
                     img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 else
-                    +icon name='gender-neutral-user' classes='mini centered'
-            if delta.view_topbar
-                .row
-                    +topbar
+                    +icon name='gender-neutral-user'
+        if delta.view_topbar
+            +topbar
     .mobile.only
         .ui.padded.grid.top.fixed.blue.menu
             if currentUser
@@ -41,18 +39,19 @@ template(name='nav')
                         if currentUser.image_id
                             img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                         else
-                            +icon name='gender-neutral-user' classes='mini centered'
+                            +icon name='gender-neutral-user'
 
 
 template(name='topbar')
-    .four.wide.column
-        +notifications
-    .four.wide.column
-        +messages
-    .four.wide.column
-        +tasks
-    .four.wide.column
-        +bookmarks
+    .ui.grid.alphablue.topbar
+        .four.wide.column
+            +notifications
+        .four.wide.column
+            +messages
+        .four.wide.column
+            +tasks
+        .four.wide.column
+            +bookmarks
 
 template(name='bottombar')
     .ui.bottom.push.alphablue.bottombar
@@ -92,12 +91,11 @@ template(name='bottombar')
 template(name='leftbar')
     if delta.view_leftbar
         .four.wide.column.alphablue
-            .ui.left.vertical.blue.inverted.big.menu
+            .ui.vertical.blue.inverted.big.menu
                 each bookmarks
                     a.item.pick_delta.toggle_leftbar(href='#' title=title)
-                        i.large.icon
-                            +icon name=icon classes='mini spaced'
                         | #{plural}
+                        +icon name=icon
 
 
 template(name='rightbar')
@@ -110,15 +108,15 @@ template(name='rightbar')
                         small @#{currentUser.username}
                 a.item.profile(href='#')
                     i.large.icon
-                        +icon name='contacts' classes='mini centered'
+                        +icon name='contacts'
                     | Profile
                 a.item.settings(href='#')
                     i.large.icon
-                        +icon name='settings' classes='mini centered'
+                        +icon name='settings'
                     | Settings
                 a.item.sla(href='#')
                     i.large.icon
-                        +icon name='workflow' classes='mini centered'
+                        +icon name='workflow'
                     | SLA Settings
                 a.item(href='#')
                     .ui.compact.icon.button.delete_delta(title='Clear Session')
@@ -133,7 +131,7 @@ template(name='rightbar')
                 .item
                     +quick_idea
                 a#logout.item(href='#')
-                    // +icon name='exit' classes='mini centered'
+                    // +icon name='exit'
                     if signing_out
                         i.notched.circle.loading.icon
                     else
@@ -153,12 +151,12 @@ template(name='quick_idea')
 
 template(name='notifications')
     a.ui.inverted.header.set_notifications(href='#')
-        +icon name='appointment-reminders' classes='mini spaced'
+        +icon name='appointment-reminders'
         | Notifications
 
 template(name='messages')
     a.ui.inverted.header.set_messages(href='#')
-        +icon name='mailbox-with-letter' classes='mini spaced'
+        +icon name='mailbox-with-letter'
         | Messages
 
     // +iconsmall name='compose' title='Compose' classes='pointer'
@@ -166,7 +164,7 @@ template(name='messages')
 
 template(name='tasks')
     a.ui.inverted.header.set_tasks(href='#')
-        +icon name='to-do' classes='mini spaced'
+        +icon name='to-do'
         | Tasks
     .ui.inverted.link.list
         each todos
@@ -175,5 +173,5 @@ template(name='tasks')
 
 template(name='bookmarks')
     a.ui.inverted.header.set_bookmarks(href='#')
-        +icon name='bookmark-ribbon' classes='mini spaced'
+        +icon name='bookmark-ribbon'
         | Bookmarks
