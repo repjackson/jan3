@@ -10,7 +10,7 @@ Template.quick_idea.events
         Docs.insert
             type:'idea'
             details: idea
-        idea = t.$('#idea_text').val('')
+        t.$('#idea_text').val('')
 
     'keyup #idea_text': (e,t)->
         if e.which is 13

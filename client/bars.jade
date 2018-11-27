@@ -76,15 +76,15 @@ template(name='rightbar')
                 | #{currentUser.first_name} #{currentUser.last_name}
                 small @#{currentUser.username}
         a.item.profile(href='#')
-            i.icon
+            i.large.icon
                 +icon name='contacts' classes='mini centered'
             | Profile
         a.item.settings(href='#')
-            i.icon
+            i.large.icon
                 +icon name='settings' classes='mini centered'
             | Settings
         a.item.sla(href='#')
-            i.icon
+            i.large.icon
                 +icon name='workflow' classes='mini centered'
             | SLA Settings
         a.item(href='#')
@@ -95,7 +95,7 @@ template(name='rightbar')
                 i.refresh.icon
                 // |Reset
             if is_dev
-                .ui.icon.compact.button.show_delta
+                .ui.large.icon.compact.button.show_delta
                     i.code.icon
         .item
             +quick_idea
@@ -104,7 +104,7 @@ template(name='rightbar')
             if signing_out
                 i.notched.circle.loading.icon
             else
-                i.icon
+                i.large.icon
                     +icon name='exit' classes='mini'
             | Log Out
 

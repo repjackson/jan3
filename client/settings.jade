@@ -2,14 +2,14 @@ template(name='account_settings')
     .ui.padded.centered.equal.width.three.column.grid
         .centered.row
                 h1.ui.center.aligned.header
-                    i.cog.blue.icon
+                    i.cog.icon
                     | #{currentUser.username} Account Settings
             .column
                 +change_password_widget
             .column
                 .ui.secondary.segment
                     .ui.header
-                        i.envelope.blue.icon
+                        i.envelope.icon
                         | Email
                     // #test_email.ui.big.button test email
                     .ui.divided.list
@@ -27,24 +27,27 @@ template(name='account_settings')
                                         .send_verification_email.ui.button Verify
                     .ui.action.fluid.input
                         input#new_email(type='email')
-                        #add_email.ui.submit.inverted.jpgreen.button
+                        #add_email.ui.submit.button
                             |Add Email
             .column
                 .ui.secondary.segment
                     .ui.header
-                        |Username:
-                        .ui.basic.label #{currentUser.username}
+                        i.user.icon
+                        |Username: #{currentUser.username}
                     .ui.action.fluid.input
-                        input#new_username(type='text' placeholder='change...')
-                        #change_username.ui.submit.jpgreen.inverted.button
+                        input#new_username(type='text' placeholder='new username...')
+                        #change_username.ui.submit.button
                             |Change
 
+                .ui.big.button.test test
 
 
 
 template(name='change_password_widget')
     .ui.secondary.segment
-        .ui.header Change Password
+        .ui.header
+            i.unlock.icon
+            |Change Password
         .ui.form
             .field
                 label Old Password
@@ -53,7 +56,6 @@ template(name='change_password_widget')
                 label New Password
                 input#new_password(type='password')
             .field
-                #change_password.ui.fluid.inverted.jpgreen.button
+                #change_password.ui.fluid.button
                     // +icon name='lock-2'
                     | Change Password
-

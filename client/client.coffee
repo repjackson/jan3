@@ -4,6 +4,9 @@ $.cloudinary.config
 Template.body.events
     'click .toggle_sidebar': -> $('.ui.sidebar').sidebar('toggle')
 
+    'click .mark_alert_read': -> console.log 'working'
+
+
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
 
 Template.registerHelper 'overdue', () ->
@@ -211,7 +214,3 @@ Template.registerHelper 'secondary', () ->
 
 Template.registerHelper 'online_users', () ->
     Meteor.users.find({ "status.online": true })
-
-
-
-
