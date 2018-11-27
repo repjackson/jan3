@@ -84,19 +84,26 @@ Template.nav.events
     'click .toggle_topbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set: view_topbar: !delta.view_topbar
+            $set:
+                view_topbar: !delta.view_topbar
+                view_leftbar: false
+                view_rightbar: false
 
     'click .toggle_rightbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
                 view_rightbar: !delta.view_rightbar
-                # viewing_leftbar:false
+                view_leftbar:false
+                view_topbar:false
 
     'click .toggle_leftbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set: view_leftbar: !delta.view_leftbar
+            $set:
+                view_leftbar: !delta.view_leftbar
+                view_rightbar:false
+                view_topbar:false
 
 
 Template.delta.events

@@ -84,12 +84,15 @@ template(name='call_method')
 
 template(name='icon')
     i.fas.fa-lg.icon(class="fa-#{name}")
+template(name='ricon')
+    i.fa.fa-lg.icon(class="fa-#{name}")
 
 template(name='iconlarge')
     i.fas.fa-lg.icon(class="fa-#{name}")
 
 template(name='iconsmall')
-    img.ui.image(src="https://png.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes title=title)
+    i.fas.icon(class="fa-#{name}")
+    // img.ui.image(src="https://png.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes title=title)
 
 
 

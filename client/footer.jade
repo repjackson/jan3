@@ -1,54 +1,49 @@
 template(name='footer')
-    .ui.bottom.fixed.inverted.blue.menu
-        .ui.stackable.padded.grid
+    .ui.bottom.fixed.inverted.blue.menu.grid
+        if delta.expand_footer
+            .row
+                .ui.stackable.padded.grid
+                    .row
+                        .four.wide.inverted.column
+                            img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                            .ui.list
+                                .sitemap_list.item Why JAN-PRO
+                                .sitemap_list.item Commercial Cleaning
+                                .sitemap_list.item About Us
+                            .ui.list
+                                .sitemap_list.item Contact Us
+                                .sitemap_list.item Legal/ Privacy Policy
+                        .four.wide.column
+                            .ui.inverted.blue.segment
+                                .ui.header
+                                    +icon name='chat'
+                                    | Chat
+                                .ui.inverted.list
+                                    each chat_messages
+                                        .item
+                                            .content
+                                                .ui.small.header #{message}
+                                                small #{author_username} #{when}
+                            .ui.transparent.inverted.input
+                                input#new_chat(type='text' placeholder='add...')
+                        .four.wide.column
+                            .ui.small.inverted.header
+                                +iconsmall name='connected'
+                                | Online Users
+                            each online_users
+                                .ui.inverted.header #{username}
+                        .four.wide.column
+                            +tasks
+        .row
             if delta.expand_footer
-                .row
-                    .four.wide.inverted.column
-                        img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                        .ui.list
-                            .sitemap_list.item Why JAN-PRO
-                            .sitemap_list.item Commercial Cleaning
-                            .sitemap_list.item About Us
-                        .ui.list
-                            .sitemap_list.item Contact Us
-                            .sitemap_list.item Legal/ Privacy Policy
-                        .ui.list
-                            .sitemap_list.item Icons by &nbsp;
-                                a(href="https://icons8.com/")
-                                    |Icons8
-                    .four.wide.column
-                        .ui.inverted.blue.segment
-                            .ui.header
-                                +icon name='chat'
-                                | Chat
-                            .ui.inverted.list
-                                each chat_messages
-                                    .item
-                                        .content
-                                            .ui.small.header #{message}
-                                            small #{author_username} #{when}
-                        .ui.transparent.inverted.input
-                            input#new_chat(type='text' placeholder='add...')
-                    .four.wide.column
-                        .ui.small.inverted.header
-                            +iconsmall name='connected'
-                            | Online Users
-                        each online_users
-                            .ui.inverted.header #{username}
-                    .four.wide.column
-                        +tasks
-
-            .item
-                if delta.expand_footer
-                    .ui.blue.button.minimize_footer
-                        +icon name='chevron-double-down'
-                else
-                    .ui.blue.button.expand_footer
-                        // i.double.up.chevron.icon
-                        +icon name='chevron-double-up'
-            .item
+                a.four.wide.column.minimize_footer(href='#')
+                    +icon name='bars'
+            else
+                a.four.wide.column.expand_footer(href='#')
+                    +icon name='bars'
+            .twelve.wide.column
                 .ui.inverted.grey.header
-                    +icon name='copyrite'
+                    +ricon name='copyright'
                     | 2018 JAN-PRO Franchising, Inc.
 
 

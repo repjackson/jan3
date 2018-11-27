@@ -22,11 +22,13 @@ template(name='nav')
                 +iconlarge name='mailbox-with-letter'
             a.mobile.hidden.toggle_topbar.item(href='#')
                 +iconlarge name='appointment-reminders'
-            .toggle_rightbar.icon.item
-                if currentUser.image_id
-                    img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                else
-                    +icon name='gender-neutral-user'
+            .right.menu
+                a.toggle_rightbar.item(href='#')
+                    if currentUser.image_id
+                        img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    else
+                        +iconlarge name='user'
+                    |#{currentUser.username}
         if delta.view_topbar
             +topbar
     .mobile.only
@@ -43,7 +45,7 @@ template(name='nav')
 
 
 template(name='topbar')
-    .ui.grid.alphablue.topbar
+    .ui.grid.alphablue.top.fixed.topbar
         .four.wide.column
             +notifications
         .four.wide.column
