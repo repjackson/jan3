@@ -35,6 +35,21 @@ Template.topbar.onRendered ->
                     .sidebar('attach events', '.context .menu .toggle_topbar')
             , 1300
 
+Template.bottombar.onRendered ->
+    @autorun =>
+        if @subscriptionsReady()
+            Meteor.setTimeout ->
+                $('.context .ui.bottom.sidebar')
+                    .sidebar({
+                        context: $('.context .pushable')
+                        dimPage: false
+                        transition: 'overlay'
+                        scrollLock: false
+                        exclusive: true
+                    })
+                    .sidebar('attach events', '.footer .toggle_bottombar')
+            , 1300
+
 
 Template.rightbar.onRendered ->
     if @subscriptionsReady()

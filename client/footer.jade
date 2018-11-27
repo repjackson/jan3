@@ -2,6 +2,8 @@ template(name='footer')
     .ui.stackable.equal.height.centered.padded.grid
         .row
             .four.wide.inverted.column
+                .ui.fluid.button.toggle_bottombar
+                    +iconsmall name='double-up' classes='spaced'
                 if is_eric
                     +role_switcher
                 else
@@ -34,7 +36,7 @@ template(name='footer')
                     //     +franchisee_card franchisee_jpid=currentUser.franchisee_jpid
             .four.wide.column
                 .ui.small.inverted.header
-                    +iconsmall name='connected'
+                    +iconsmall name='connected' classes='spaced'
                     | Online Users
                 each online_users
                     .ui.inverted.header #{username}

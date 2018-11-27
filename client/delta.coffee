@@ -303,11 +303,12 @@ Template.facet.helpers
         filtered_values = []
         fo_values = delta["#{@key}_return"]
         filters = delta["filter_#{@key}"]
-        for value in fo_values
-            if value.name in filters
-                filtered_values.push value
-            else if value.count < delta.total
-                filtered_values.push value
+        if fo_values
+            for value in fo_values
+                if value.name in filters
+                    filtered_values.push value
+                else if value.count < delta.total
+                    filtered_values.push value
         filtered_values
 
     # set_delta_key_class: ->
