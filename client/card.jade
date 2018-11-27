@@ -28,21 +28,22 @@ template(name='delta_card')
                 // .ui.fluid.button.edit
                 //     i.pencil.icon
                 //     | Edit
-                .content
-                    .ui.list
-                        each blocks
-                            unless part_template_exists
-                                .item
-                                    if icon
-                                        +iconsmall name=icon
-                                    strong #{title}
-                                    // s:#{slug} k:#{key}
-                                    |&nbsp;
-                                    if is_array
-                                        each value
-                                            .ui.margined.label #{this}
-                                    else
-                                        | #{value}
+                unless delta.minimize
+                    .content
+                        .ui.list
+                            each blocks
+                                unless part_template_exists
+                                    .item
+                                        if icon
+                                            +iconsmall name=icon
+                                        strong #{title}
+                                        // s:#{slug} k:#{key}
+                                        |&nbsp;
+                                        if is_array
+                                            each value
+                                                .ui.margined.label #{this}
+                                        else
+                                            | #{value}
                 // if is_dev
                 .ui.buttons
                     .ui.icon.button.edit

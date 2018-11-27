@@ -39,6 +39,16 @@ template(name='delta_results')
                                 if show_page_up
                                     .ui.icon.button.page_up(title='Next Page')
                                         i.right.chevron.icon
+                            .item
+                                +toggle_delta_config key='minimize' title='Minimize' label='Minimize' icon='double-up'
+                            .item
+                                .ui.disabled.button
+                                    i.filter.icon
+                                    |Sort By
+                            .item
+                                .ui.disabled.button
+                                    i.filter.icon
+                                    | Toggle Fields
                     if is_calculating
                         .ui.hidden.divider
                         .ui.active.indeterminate.massive.centered.inline.loader
