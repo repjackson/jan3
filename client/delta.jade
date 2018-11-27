@@ -56,11 +56,11 @@ template(name='delta')
                     //     unless delta.viewing_detail
                     //         unless delta.viewing_rightbar
                     //             unless delta.viewing_page
-                    .center_column(class=center_column_class)
-                        if delta.viewing_page
-                            +Template.dynamic template=delta.page_template
-                        else
-                            +delta_results
+                    // .center_column(class=center_column_class)
+                    if delta.viewing_page
+                        +Template.dynamic template=delta.page_template
+                    else
+                        +delta_results
 
 
 template(name='toggle_delta_config')

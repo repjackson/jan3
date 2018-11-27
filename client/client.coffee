@@ -214,3 +214,24 @@ Template.registerHelper 'secondary', () ->
 
 Template.registerHelper 'online_users', () ->
     Meteor.users.find({ "status.online": true })
+
+
+
+Template.home.helpers
+    middle_column_class: ->
+        delta = Docs.findOne type:'delta'
+        if delta.viewing_detail
+            return 'sixteen wide column'
+        else
+            size = 16
+            if delta.view_leftbar then size -= 4
+            if delta.view_rightbar then size -= 4
+            # console.log size
+            switch size
+                when 16 then 'sixteen wide column'
+                when 13 then 'thirteen wide column'
+                when 10 then 'ten wide column'
+                when 12 then 'twelve wide column'
+                when 9 then 'nine wide column'
+                when 8 then 'eight wide column'
+                when 6 then 'six wide column'

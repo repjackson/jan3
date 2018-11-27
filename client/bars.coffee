@@ -24,34 +24,34 @@ Template.quick_idea.events
 
 
 Template.leftbar.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.context .ui.left.sidebar')
-                    .sidebar({
-                        context: $('.context .pushable')
-                        dimPage: false
-                        transition: 'overlay'
-                        scrollLock: false
-                        exclusive: true
-                    })
-                    .sidebar('attach events', '.menu .toggle_leftbar')
-            , 1300
+    # @autorun =>
+    #     if @subscriptionsReady()
+    #         Meteor.setTimeout ->
+    #             $('.context .ui.left.sidebar')
+    #                 .sidebar({
+    #                     context: $('.context .pushable')
+    #                     dimPage: false
+    #                     transition: 'overlay'
+    #                     scrollLock: false
+    #                     exclusive: true
+    #                 })
+    #                 .sidebar('attach events', '.menu .toggle_leftbar')
+    #         , 1300
 
 Template.topbar.onRendered ->
-    @autorun =>
-        if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.ui.top.sidebar')
-                    .sidebar({
-                        context: $('.context .pushable')
-                        dimPage: false
-                        transition: 'overlay'
-                        scrollLock: false
-                        exclusive: true
-                    })
-                    .sidebar('attach events', '.menu .toggle_topbar')
-            , 1300
+    # @autorun =>
+    #     if @subscriptionsReady()
+    #         Meteor.setTimeout ->
+    #             $('.ui.top.sidebar')
+    #                 .sidebar({
+    #                     context: $('.context .pushable')
+    #                     dimPage: false
+    #                     transition: 'overlay'
+    #                     scrollLock: false
+    #                     exclusive: true
+    #                 })
+    #                 .sidebar('attach events', '.menu .toggle_topbar')
+    #         , 1300
 
 # Template.bottombar.onRendered ->
 #     @autorun =>
@@ -70,18 +70,18 @@ Template.topbar.onRendered ->
 
 
 Template.rightbar.onRendered ->
-    if @subscriptionsReady()
-            Meteor.setTimeout ->
-                $('.ui.right.sidebar')
-                    .sidebar({
-                        context: $('.context .pushable')
-                        dimPage: false
-                        transition: 'overlay'
-                        scrollLock: false
-                        exclusive: true
-                    })
-                    .sidebar('attach events', '.menu .toggle_rightbar')
-            , 1300
+    # if @subscriptionsReady()
+    #         Meteor.setTimeout ->
+    #             $('.ui.right.sidebar')
+    #                 .sidebar({
+    #                     context: $('.context .pushable')
+    #                     dimPage: false
+    #                     transition: 'overlay'
+    #                     scrollLock: false
+    #                     exclusive: true
+    #                 })
+    #                 .sidebar('attach events', '.menu .toggle_rightbar')
+    #         , 1300
 
 
 

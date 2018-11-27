@@ -1,5 +1,5 @@
 
-Template.delta.onCreated ->
+Template.home.onCreated ->
     # @autorun => Meteor.subscribe 'type', 'block', 200
     @autorun => Meteor.subscribe 'type', 'schema', 200
     @autorun -> Meteor.subscribe 'delta'
@@ -23,22 +23,6 @@ Template.delta.helpers
     unread_alerts: ->
         Docs.find
             type:'alert'
-    center_column_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.viewing_detail
-            return 'sixteen wide column'
-        else
-            size = 16
-            if delta.viewing_delta then size -= 4
-            # console.log size
-            switch size
-                when 16 then 'sixteen wide column'
-                when 13 then 'thirteen wide column'
-                when 10 then 'ten wide column'
-                when 12 then 'twelve wide column'
-                when 9 then 'nine wide column'
-                when 8 then 'eight wide column'
-                when 6 then 'six wide column'
 
     current_type: ->
         delta = Docs.findOne type:'delta'
@@ -96,25 +80,26 @@ Template.delta.helpers
             blocks
 
 
-Template.delta.events
+Template.nav.events
     'click .toggle_topbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set: viewing_topbar: !delta.viewing_topbar
+            $set: view_topbar: !delta.view_topbar
 
     'click .toggle_rightbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
-                viewing_rightbar: !delta.viewing_rightbar
+                view_rightbar: !delta.view_rightbar
                 # viewing_leftbar:false
 
     'click .toggle_leftbar': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $set: viewing_leftbar: !delta.viewing_leftbar
+            $set: view_leftbar: !delta.view_leftbar
 
 
+Template.delta.events
     'click .view_schamas': ->
         delta = Docs.findOne type:'delta'
 
