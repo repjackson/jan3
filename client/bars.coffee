@@ -7,12 +7,19 @@ Template.footer.onCreated ->
 Template.quick_idea.events
     'click .submit_idea': (e,t)->
         idea = t.$('#idea_text').val()
-        console.log idea
+        Docs.insert
+            type:'idea'
+            details: idea
+        idea = t.$('#idea_text').val('')
 
     'keyup #idea_text': (e,t)->
         if e.which is 13
             idea = t.$('#idea_text').val()
-            console.log idea
+            Docs.insert
+                type:'idea'
+                details: idea
+            idea = t.$('#idea_text').val('')
+
 
 
 

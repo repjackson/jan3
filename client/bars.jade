@@ -107,14 +107,11 @@ template(name='rightbar')
 
 
 template(name='quick_idea')
-    .ui.inverted.form
-        .transparent.field
-            label
-                i.yellow.lightbulb.icon
-                |Add Idea
-            textarea#idea_text(rows='2')
-            .ui.small.fluid.icon.button.submit_idea
-                i.checkmark.icon
+    .ui.inverted.left.icon.large.transparent.input
+        i.yellow.lightbulb.icon
+        input#idea_text(placeholder='Add Idea...')
+        // .ui.small.fluid.icon.button.submit_idea
+        //     i.checkmark.icon
 
 
 template(name='notifications')
