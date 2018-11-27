@@ -2,23 +2,23 @@ template(name='nav')
     .mobile.hidden
         .ui.stackable.padded.grid.menu
             .centered.nav_bar.row
-                .four.wide.column.pointer.toggle_leftbar.item
+                .one.wide.column.pointer.toggle_leftbar.item
                     +icon name='menu' classes='spaced centered mini'
-                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                //     +icon name='bookmark-ribbon' classes='mini centered'
-                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                //     +icon name='contacts' classes='mini centered'
+                .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    +icon name='bookmark-ribbon' classes='mini centered'
+                .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    +icon name='contacts' classes='mini centered'
                 .mobile.hidden.eight.wide.column.pointer.toggle_topbar.item
                     img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                //     +icon name='tasks' classes='mini centered'
-                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                //     +icon name='shopping-cart' classes='mini centered'
-                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                //     +icon name='mailbox-with-letter' classes='mini centered'
-                // .mobile.hidden.one.wide.column.toggle_topbar.pointer
-                //     +icon name='appointment-reminders' classes='mini centered'
-                .four.wide.column.toggle_rightbar.pointer.item
+                .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    +icon name='tasks' classes='mini centered'
+                .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    +icon name='shopping-cart' classes='mini centered'
+                .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    +icon name='mailbox-with-letter' classes='mini centered'
+                .mobile.hidden.one.wide.column.toggle_topbar.pointer
+                    +icon name='appointment-reminders' classes='mini centered'
+                .one.wide.column.toggle_rightbar.pointer.item
                     if currentUser.image_id
                         img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                     else
@@ -66,7 +66,7 @@ template(name='leftbar')
 
 
 template(name='rightbar')
-    .ui.right.vertical.sidebar.alphablue.inverted.big.menu.rightbar
+    .ui.right.vertical.wide.sidebar.alphablue.inverted.big.menu.rightbar
         a.item(href='#')
             .ui.inverted.header
                 | #{currentUser.first_name} #{currentUser.last_name}
@@ -93,6 +93,8 @@ template(name='rightbar')
             if is_dev
                 .ui.icon.compact.button.show_delta
                     i.code.icon
+        .item
+            +quick_idea
         a#logout.item(href='#')
             // +icon name='exit' classes='mini centered'
             if signing_out
@@ -101,15 +103,13 @@ template(name='rightbar')
                 i.icon
                     +icon name='exit' classes='mini'
             | Log Out
-        .item
-            +quick_idea
 
 
 
 template(name='quick_idea')
     .ui.inverted.left.icon.large.transparent.input
         i.yellow.lightbulb.icon
-        input#idea_text(placeholder='Add Idea...')
+        input#idea_text(placeholder='Add thought...')
         // .ui.small.fluid.icon.button.submit_idea
         //     i.checkmark.icon
 
