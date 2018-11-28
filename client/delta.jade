@@ -10,7 +10,9 @@ template(name='delta')
                                 | Session
             if delta
                 .row
-                    if delta.viewing_delta
+                    if delta.viewing_page
+                        +Template.dynamic template=delta.page_template
+                    else if delta.viewing_delta
                         unless delta.viewing_detail
                             .four.wide.column
                                 .ui.large.center.aligned.header
@@ -32,9 +34,7 @@ template(name='delta')
 
                                     each faceted_blocks
                                         +facet
-                            +delta_results
-                    if delta.viewing_page
-                        +Template.dynamic template=delta.page_template
+                        +delta_results
 
 
 

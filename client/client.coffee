@@ -140,7 +140,7 @@ Template.registerHelper 'is_array', ()->
 
 Template.registerHelper 'full_mode', ()->
     delta = Docs.findOne type:'delta'
-    console.log 'firing'
+    console.log delta.viewing_detail
     delta.viewing_detail
 
 Template.registerHelper 'expanded', ()->
