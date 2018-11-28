@@ -1,4 +1,6 @@
 
+Template.delta_card.onCreated ->
+    @autorun => Meteor.subscribe 'delta'
 Template.home.onCreated ->
     # @autorun => Meteor.subscribe 'type', 'block', 200
     @autorun => Meteor.subscribe 'type', 'schema', 200

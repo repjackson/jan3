@@ -109,32 +109,32 @@ Template.author_part.onCreated ->
 
 
 
-# Template.set_sla_key_value.events
-#     'click .set_page_key_value': ->
-#         sla_doc = Template.parentData(1)
-#         Docs.update sla_doc._id,
-#             { $set: "#{@key}": @value }
+Template.set_sla_key_value.events
+    'click .set_page_key_value': ->
+        sla_doc = Template.parentData(1)
+        Docs.update sla_doc._id,
+            { $set: "#{@key}": @value }
 
-# Template.set_sla_key_value.helpers
-#     set_value_button_class: ->
-#         sla_doc = Template.parentData(1)
-#         if sla_doc["#{@key}"] is @value then 'active blue' else ''
+Template.set_sla_key_value.helpers
+    set_value_button_class: ->
+        sla_doc = Template.parentData(1)
+        if sla_doc["#{@key}"] is @value then 'active blue' else ''
 
 
-# Template.toggle_sla_boolean.helpers
-#     toggle_boolean_button_class: ->
-#         sla_doc = Template.parentData(1)
-#         if sla_doc["#{@key}"] is true then 'active blue'
-#         else ''
+Template.toggle_sla_boolean.helpers
+    toggle_boolean_button_class: ->
+        sla_doc = Template.parentData(1)
+        if sla_doc["#{@key}"] is true then 'active blue'
+        else ''
 
-# Template.toggle_sla_boolean.events
-#     'click .trigger': (e,t)->
-#         sla_doc = Template.parentData(1)
-#         if sla_doc
-#             boolean_value = sla_doc["#{@key}"]
+Template.toggle_sla_boolean.events
+    'click .trigger': (e,t)->
+        sla_doc = Template.parentData(1)
+        if sla_doc
+            boolean_value = sla_doc["#{@key}"]
 
-#         Docs.update sla_doc._id,
-#             $set: "#{@key}": !boolean_value
+        Docs.update sla_doc._id,
+            $set: "#{@key}": !boolean_value
 
 # Template.toggle_user_published.events
 #     'click #toggle_button': (e,t)->
