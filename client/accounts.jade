@@ -46,20 +46,20 @@ template(name='login')
                     .ui.hidden.divider
                     .field
                         // unless currentUser
-                        .login.ui.fluid.jpgreen.inverted.big.button(class=login_button_class)
-                            // .large120 Login
-                            i.play.icon
+                        .login.ui.fluid.jpgreen.inverted.big.icon.button(class=login_button_class)
+                            +icon name='play'
             .four.wide.column
                 .ui.center.aligned.header Demo
-                #login_demo_customer.ui.fluid.button(class=demo_class)
-                    +iconsmall name='headset' classes='ui inline image'
-                    | &nbsp; Customer
-                #login_demo_office.ui.fluid.button(class=demo_class)
-                    +iconsmall name='building' classes='ui inline image'
-                    | &nbsp; Office
-                #login_demo_admin.ui.fluid.button(class=demo_class)
-                    +iconsmall name='user-shield' classes='ui inline image'
-                    | &nbsp; Admin
+                #login_demo_customer.ui.fluid.margined.large.button(class=demo_class)
+                    +icon name='headset'
+                    | Customer
+
+                #login_demo_office.ui.fluid.margined.large.button(class=demo_class)
+                    +icon name='building'
+                    | Office
+                #login_demo_admin.ui.fluid.margined.large.button(class=demo_class)
+                    +icon name='user-shield'
+                    | Admin
 
 
 
@@ -143,7 +143,6 @@ template(name='register_customer')
                 if can_register
                     #register.ui.fluid.inverted.jpgreen.button(class=register_button_class)
                         .large120 Register Customer
-            .four.wide.column
 
 
 template(name='register_office')

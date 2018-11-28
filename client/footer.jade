@@ -5,14 +5,17 @@ template(name='footer')
                 .sixteen.wide.column
                     .ui.stackable.padded.grid
                         .four.wide.inverted.column
-                            img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                            .ui.list
-                                .sitemap_list.item Why JAN-PRO
-                                .sitemap_list.item Commercial Cleaning
-                                .sitemap_list.item About Us
-                            .ui.list
-                                .sitemap_list.item Contact Us
-                                .sitemap_list.item Legal/ Privacy Policy
+                            if is_eric
+                                +role_switcher
+                            else
+                                img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                                .ui.list
+                                    .sitemap_list.item Why JAN-PRO
+                                    .sitemap_list.item Commercial Cleaning
+                                    .sitemap_list.item About Us
+                                .ui.list
+                                    .sitemap_list.item Contact Us
+                                    .sitemap_list.item Legal/ Privacy Policy
                         .four.wide.column
                             .ui.inverted.header
                                 +icon name='comments'
@@ -33,7 +36,7 @@ template(name='footer')
                                 .ui.inverted.header #{username}
                         .four.wide.column
                             +tasks
-        .middle.aligned.row
+        a.row.toggle_footer(href='#')
             if delta.expand_footer
                 a.four.wide.column.minimize_footer(href='#')
                     .ui.white.header
@@ -45,16 +48,13 @@ template(name='footer')
                         +icon name='bars'
                         | Menu
             .twelve.wide.column
-                if is_eric
-                    +role_switcher
-                else
-                    .ui.inverted.grey.header
-                        +ricon name='copyright'
-                        | 2018 JAN-PRO Franchising, Inc.
+                .ui.inverted.grey.header
+                    +ricon name='copyright'
+                    | 2018 JAN-PRO Franchising, Inc.
 
 
 
 template(name='role_switcher')
     each role_docs
-        .change_role.ui.margined.compact.button(class=role_button_class)
+        .change_role.ui.margined.small.compact.button(class=role_button_class)
             |#{title}

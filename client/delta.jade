@@ -9,26 +9,6 @@ template(name='delta')
                                 i.plus.icon
                                 | Session
             if delta
-                // if unread_alerts
-                // .row
-                //     .sixteen.wide.blue.column
-                //         .ui.equal.width.grid
-                //             .column
-                //                 .ui.inverted.header
-                //                     +icon name='megaphone' classes='mini inline'
-                //                     | Unread Alerts
-                //             each unread_alerts
-                //                 .column
-                //                     .ui.inverted.header #{message}
-
-                // .row
-                //     .sixteen.wide.column
-                //         .ui.breadcrumb
-                //             a.section Home
-                //             i.right.chevron.icon.divider
-                //             a.section Registration
-                //             i.right.arrow.icon.divider
-                //             .active.section Personal Information
                 .row
                     if delta.viewing_delta
                         unless delta.viewing_detail
@@ -40,8 +20,8 @@ template(name='delta')
                                         | #{current_type.plural}
                                     else
                                         | #{current_type.title}
-                                if current_type.details
-                                    p #{current_type.details}
+                                // if current_type.details
+                                //     p #{current_type.details}
                                 .scrolling_small
                                     if is_dev
                                         +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='cog'
@@ -52,15 +32,10 @@ template(name='delta')
 
                                     each faceted_blocks
                                         +facet
-                    // unless delta.view_leftbar
-                    //     unless delta.viewing_detail
-                    //         unless delta.view_rightbar
-                    //             unless delta.viewing_page
-                    // .center_column(class=center_column_class)
+                            +delta_results
                     if delta.viewing_page
                         +Template.dynamic template=delta.page_template
-                    else
-                        +delta_results
+
 
 
 template(name='toggle_delta_config')

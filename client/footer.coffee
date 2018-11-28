@@ -42,23 +42,23 @@ Template.footer.events
                 message:message
 
 
-    'click .minimize_footer': ->
+    'click .toggle_footer': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
-                expand_footer:false
+                expand_footer:!delta.expand_footer
                 view_leftbar:false
                 view_rightbar:false
                 view_topbar:false
 
-    'click .expand_footer': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                expand_footer:true
-                view_leftbar:false
-                view_rightbar:false
-                view_topbar:false
+    # 'click .expand_footer': ->
+    #     delta = Docs.findOne type:'delta'
+    #     Docs.update delta._id,
+    #         $set:
+    #             expand_footer:true
+    #             view_leftbar:false
+    #             view_rightbar:false
+    #             view_topbar:false
 
 Template.role_switcher.events
     'click .change_role': ->

@@ -92,7 +92,7 @@ template(name='bottombar')
 
 template(name='leftbar')
     if delta.view_leftbar
-        .four.wide.blue.column
+        .four.wide.leftbar.column
             .ui.vertical.blue.inverted.large.fluid.menu
                 each bookmarks
                     a.item.pick_delta.toggle_leftbar(href='#' title=title)
@@ -104,59 +104,56 @@ template(name='dash')
         .ui.equal.width.grid
             each bookmarks
                 .four.wide.column
-                    .ui.inverted.blue.secondary.segment.pick_delta
-                        a.ui.header(href='#')
+                    .ui.inverted.blue.secondary.segment.pick_delta.pointer
+                        .ui.header
                             +icon name=icon
                             |#{plural}
-                        // .ui.basic.segment
+                        // p
+                        // p
                         //     |#{details}
 
 
 template(name='rightbar')
     if delta.view_rightbar
-        .four.wide.column.alphablue
-            .ui.right.vertical.inverted.blue.big.menu
+        .four.wide.column.rightbar
+            .ui.right.vertical.inverted.blue.big.fluid.menu
                 a.item(href='#')
                     .ui.inverted.header
                         | #{currentUser.first_name} #{currentUser.last_name}
                         small @#{currentUser.username}
                 a.item.profile(href='#')
-                    i.large.icon
-                        +icon name='contacts'
+                    +icon name='users'
                     | Profile
                 a.item.settings(href='#')
-                    i.large.icon
-                        +icon name='settings'
+                    +icon name='cog'
                     | Settings
                 a.item.sla(href='#')
-                    i.large.icon
-                        +icon name='workflow'
+                    +icon name='draw-polygon'
                     | SLA Settings
-                a.item(href='#')
-                    .ui.compact.icon.button.delete_delta(title='Clear Session')
-                        i.remove.icon
-                        |Reset Session
-                    .ui.compact.icon.button.run_fo(title='Reload Session')
-                        i.refresh.icon
-                        // |Reset
-                    if is_dev
-                        .ui.large.icon.compact.button.show_delta
-                            i.code.icon
+                a.item.delete_delta(title='if always no results' href='#')
+                    +icon name='trash'
+                    |Clear Session
+                // a.item.run_fo(title='Reload Session' href='#')
+                //     +icon name='refresh'
+                //     |Reset
+                if is_dev
+                    a.item.show_delta(href='#')
+                        | Print Delta
+                        +icon name='code'
                 .item
                     +quick_idea
                 a#logout.item(href='#')
                     // +icon name='exit'
                     if signing_out
-                        i.notched.circle.loading.icon
+                        +icon name='loading'
                     else
-                        i.large.icon
-                            +icon name='exit' classes='mini'
+                        +icon name='sign-out-alt'
                     | Log Out
 
 
 
 template(name='quick_idea')
-    .ui.inverted.left.icon.large.transparent.input
+    .ui.inverted.left.icon.transparent.input
         +icon name='lightbulb'
         input#idea_text(placeholder='Add thought...')
         // .ui.small.fluid.icon.button.submit_idea

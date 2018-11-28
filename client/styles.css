@@ -213,9 +213,9 @@ body {
 }
 
 .rightbar {
-    margin-top: -1rem !important;
-    margin-bottom: -1rem !important;
-    padding-top: 1rem !important;
+    /*margin-top: -1rem !important;*/
+    /*margin-bottom: -1rem !important;*/
+    /*padding-top: 1rem !important;*/
     /*padding-bottom: 1rem !important;*/
     /*height:100vh;*/
     background: linear-gradient(to left, rgba(0,20,137,.9) 0%,rgba(0,20,137,.9) 99%,rgba(132,189,0,1) 99%, rgba(132,189,0,1) 100%) !important;
@@ -233,10 +233,10 @@ body {
 
 
 .leftbar {
-    margin-top: -1rem !important;
-    margin-bottom: -1rem !important;
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
+    /*margin-top: -1rem !important;*/
+    /*margin-bottom: -1rem !important;*/
+    /*padding-top: 1rem !important;*/
+    /*padding-bottom: 1rem !important;*/
     /*min-height: 100vh;*/
     background: linear-gradient(to right, rgba(0,20,137,.9) 0%,rgba(0,20,137,.9) 98%,rgba(132,189,0,1) 98%, rgba(132,189,0,1) 100%) !important;
 }
