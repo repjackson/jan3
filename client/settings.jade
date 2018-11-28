@@ -1,5 +1,5 @@
 template(name='account_settings')
-    .ui.padded.centered.equal.width.three.column.grid
+    .ui.padded.centered.equal.width.three.column.stackable.grid
         .centered.row
                 h1.ui.center.aligned.header
                     i.cog.icon
@@ -9,7 +9,7 @@ template(name='account_settings')
             .column
                 .ui.secondary.segment
                     .ui.header
-                        i.envelope.icon
+                        +icon name='envelope'
                         | Email
                     // #test_email.ui.big.button test email
                     .ui.divided.list

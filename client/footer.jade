@@ -1,60 +1,32 @@
+template(name='jp_footer')
+    img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+    .ui.list
+        .item Why JAN-PRO
+        .item Commercial Cleaning
+        .item About Us
+    .ui.list
+        .item Contact Us
+        .item Legal/ Privacy Policy
+
+
 template(name='footer')
-    .ui.bottom.fixed.inverted.footer.menu.grid
-        if delta.expand_footer
-            .row
-                .sixteen.wide.column
-                    .ui.stackable.padded.grid
-                        .four.wide.inverted.column
-                            if is_eric
-                                +role_switcher
-                            else
-                                img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                                .ui.list
-                                    .sitemap_list.item Why JAN-PRO
-                                    .sitemap_list.item Commercial Cleaning
-                                    .sitemap_list.item About Us
-                                .ui.list
-                                    .sitemap_list.item Contact Us
-                                    .sitemap_list.item Legal/ Privacy Policy
-                        .four.wide.column
-                            .ui.inverted.header
-                                +icon name='comments'
-                                | Chat
-                            .ui.inverted.list
-                                each chat_messages
-                                    .item
-                                        .content
-                                            .ui.small.header #{message}
-                                            small #{author_username} #{when}
-                            .ui.transparent.inverted.input
-                                input#new_chat(type='text' placeholder='add...')
-                        .four.wide.column
-                            .ui.inverted.header
-                                +icon name='globe'
-                                | Online Users
-                            .ui.list
-                                each online_users
-                                    .item #{username}
-                        .four.wide.column
-                            +tasks
-        a.row.toggle_footer(href='#')
-            if delta.expand_footer
-                a.four.wide.column.minimize_footer(href='#')
-                    .ui.white.header
-                        +icon name='bars'
-                        .mobile.hidden
-                            | Menu
-            else
-                a.four.wide.column.expand_footer(href='#')
-                    .ui.grey.header
-                        +icon name='bars'
-                        .mobile.hidden
-                            | Menu
-            .twelve.wide.column
-                .mobile.hidden
-                    .ui.inverted.grey.header
-                        +ricon name='copyright'
-                        | 2018 JAN-PRO Franchising, Inc.
+    .ui.bottom.fixed.inverted.footer.big.menu
+        .item
+            +icon name='bars'
+        .item
+            +icon name='bookmark'
+        .item
+            +icon name='users'
+        .item
+            +icon name='calendar'
+        .item
+            +icon name='tasks'
+
+        .item.item
+            .mobile.hidden
+                .ui.inverted.grey.header
+                    +ricon name='copyright'
+                    | 2018 JAN-PRO Franchising, Inc.
 
 
 
@@ -62,3 +34,25 @@ template(name='role_switcher')
     each role_docs
         .change_role.ui.margined.small.compact.button(class=role_button_class)
             |#{title}
+
+template(name='online_users')
+    .ui.header
+        +icon name='globe'
+        | Online Users
+    .ui.list
+        each online_users
+            .item #{username}
+
+
+template(name='chat')
+    .ui.header
+        +icon name='comments'
+        | Chat
+    .ui.list
+        each chat_messages
+            .item
+                .content
+                    .ui.small.header #{message}
+                    small #{author_username} #{when}
+    .ui.input
+        input#new_chat(type='text' placeholder='add...')

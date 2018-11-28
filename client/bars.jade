@@ -1,26 +1,24 @@
 template(name='nav')
     .ui.attached.inverted.blue.large.menu
         a.dash.icon.item(href='#')
-            // i.fas.fa-menu(style="color:white;")
-            // i.fas.fa-bars.fa-lg(style="color:white;")
-            img.ui.small.spaced.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            // +icon name='menu' classes='spaced centered mini'
-        a.mobile.hidden.toggle_topbar.icon.item(href='#')
+            .mobile.hidden
+                img.ui.small.spaced.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            .mobile.only
+                +icon name='bars'
+        a.bookmarks.icon.item(href='#')
             +iconlarge name='bookmark'
-        a.mobile.hidden.toggle_topbar.item(href='#')
-            +iconlarge name='users'
-        a.mobile.hidden.toggle_topbar.item(href='#')
-            +iconlarge name='dollar-sign'
-        a.mobile.hidden.toggle_topbar.item(href='#')
-            +iconlarge name='calendar'
-        a.mobile.hidden.toggle_topbar.item(href='#')
-            +iconlarge name='tasks'
-        a.mobile.hidden.toggle_topbar.item(href='#')
-            +iconlarge name='shopping-cart'
-        a.mobile.hidden.toggle_topbar.item(href='#')
-            +iconlarge name='envelope'
-        a.mobile.hidden.toggle_topbar.item(href='#')
+        a.chat.item(href='#')
+            +iconlarge name='comments'
+        a.notifications.item(href='#')
             +iconlarge name='bell'
+        a.toggle_topbar.item(href='#')
+            +iconlarge name='calendar'
+        a.tasks.item(href='#')
+            +iconlarge name='tasks'
+        a.toggle_topbar.item(href='#')
+            +iconlarge name='shopping-cart'
+        a.messages.item(href='#')
+            +iconlarge name='envelope'
         .right.menu
             a.cc.item(href='#')
                 if currentUser.image_id
@@ -28,58 +26,6 @@ template(name='nav')
                 else
                     +iconlarge name='user'
                 |#{currentUser.username}
-    if delta.view_topbar
-        +topbar
-
-
-template(name='topbar')
-    .ui.grid.alphablue.top.fixed.topbar
-        .four.wide.column
-            +notifications
-        .four.wide.column
-            +messages
-        .four.wide.column
-            +tasks
-        .four.wide.column
-            +bookmarks
-
-
-
-
-
-template(name='bottombar')
-    .ui.bottom.push.alphablue.bottombar
-        .ui.padded.grid
-            .row
-                .four.wide.column
-                    if is_eric
-                        +role_switcher
-                .four.wide.column
-                    .ui.inverted.blue.segment
-                        .ui.header
-                            +icon name='chat' classes='inline mini'
-                            | Chat
-                        .ui.inverted.list
-                            each chat_messages
-                                .item
-                                    .content
-                                        .ui.small.header #{message}
-                                        small #{author_username} #{when}
-                    .ui.transparent.inverted.input
-                        input#new_chat(type='text' placeholder='add...')
-                .four.wide.column
-                    .ui.small.inverted.header
-                        +iconsmall name='connected' classes='spaced'
-                        | Online Users
-                    each online_users
-                        .ui.inverted.header #{username}
-                    // unless is_admin
-                    //     .ui.card
-                    //         .content
-                    //             +office_big office_jpid=currentUser.office_jpid
-
-                .four.wide.column
-                    +tasks
 
 
 template(name='leftbar')
@@ -93,11 +39,11 @@ template(name='leftbar')
 
 template(name='dash')
     .sixteen.wide.blue.column.topnav
-        .ui.equal.width.stackable.grid
+        .ui.equal.width.two.column.grid
             each bookmarks
-                .four.wide.column
+                .column
                     .ui.inverted.blue.secondary.segment.pick_delta.pointer
-                        .ui.header
+                        .ui.small.header
                             +icon name=icon
                             |#{plural}
                         // p
@@ -106,48 +52,47 @@ template(name='dash')
 
 
 template(name='cc')
-    .sixteen.wide.blue.column.topnav
-        .ui.equal.width.stackable.grid
-            .four.wide.column
-                .ui.inverted.blue.secondary.segment.pointer
-                    .ui.inverted.header
-                        | #{currentUser.first_name} #{currentUser.last_name}
-                    small @#{currentUser.username}
-            .four.wide.column
-                .ui.inverted.blue.secondary.segment.profile.pointer
-                    +icon name='users'
-                    | Profile
-            .four.wide.column
-                .ui.inverted.blue.secondary.segment.settings.pointer
-                    +icon name='cog'
-                    | Settings
-            .four.wide.column
-                .ui.inverted.blue.secondary.segment.sla.pointer
-                    +icon name='draw-polygon'
-                    | SLA Settings
-            .four.wide.column
-                a.item.delete_delta(title='if always no results' href='#')
-                    +icon name='trash'
-                    |Clear Session
-            // a.item.run_fo(title='Reload Session' href='#')
-            //     +icon name='refresh'
-            //     |Reset
-            if is_dev
-                .four.wide.column
-                    a.ui.inverted.blue.secondary.segment.profile.pointer.show_delta(href='#')
-                        | Print Delta
-                        +icon name='code'
-            .four.wide.column
-                .ui.inverted.blue.secondary.segment.profile.pointer
-                    +quick_idea
-            .four.wide.column
-                a#logout.ui.inverted.blue.secondary.segment.profile.pointer(href='#')
-                    // +icon name='exit'
-                    if signing_out
-                        +icon name='loading'
-                    else
-                        +icon name='sign-out-alt'
-                    | Log Out
+    .ui.equal.width.two.column.grid.alphablue
+        .column
+            .ui.inverted.blue.secondary.segment.pointer
+                .ui.header
+                    | #{currentUser.first_name} #{currentUser.last_name}
+                small @#{currentUser.username}
+        .column
+            .ui.inverted.blue.secondary.segment.profile.pointer
+                +icon name='users'
+                | Profile
+        .column
+            .ui.inverted.blue.secondary.segment.settings.pointer
+                +icon name='cog'
+                | Settings
+        .column
+            .ui.inverted.blue.secondary.segment.sla.pointer
+                +icon name='draw-polygon'
+                | SLA Settings
+        .column
+            a.item.delete_delta(title='if always no results' href='#')
+                +icon name='trash'
+                |Clear Session
+        // a.item.run_fo(title='Reload Session' href='#')
+        //     +icon name='refresh'
+        //     |Reset
+        if is_dev
+            .column
+                a.ui.inverted.blue.secondary.segment.profile.pointer.show_delta(href='#')
+                    | Print Delta
+                    +icon name='code'
+        .column
+            .ui.inverted.blue.secondary.segment.profile.pointer
+                +quick_idea
+        .column
+            a#logout.ui.inverted.blue.secondary.segment.profile.pointer(href='#')
+                // +icon name='exit'
+                if signing_out
+                    +icon name='loading'
+                else
+                    +icon name='sign-out-alt'
+                | Log Out
 
 
 
@@ -160,12 +105,12 @@ template(name='quick_idea')
 
 
 template(name='notifications')
-    a.ui.inverted.header.set_notifications(href='#')
+    a.ui.header(href='#')
         +icon name='bell'
         | Notifications
 
 template(name='messages')
-    a.ui.inverted.header.set_messages(href='#')
+    a.ui.header(href='#')
         +icon name='mail-bulk'
         | Messages
 
@@ -173,7 +118,7 @@ template(name='messages')
 
 
 template(name='tasks')
-    a.ui.inverted.header.set_tasks(href='#')
+    a.ui.header.set_tasks(href='#')
         +icon name='tasks'
         | Tasks
     .ui.inverted.link.list
@@ -182,6 +127,6 @@ template(name='tasks')
 
 
 template(name='bookmarks')
-    a.ui.inverted.header.set_bookmarks(href='#')
+    .ui.center.aligned.header.set_bookmarks
         +icon name='bookmark'
         | Bookmarks

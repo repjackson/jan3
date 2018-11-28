@@ -40,26 +40,46 @@ Template.dash.events
             Session.set 'is_calculating', false
 
 
-Template.topbar.events
-    'click .set_notifications': (e,t)->
-        Session.set 'is_calculating', true
-        Meteor.call 'set_schema', 'notification', ->
-            Session.set 'is_calculating', false
+Template.nav.events
+    'click .bell': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_page: true
+                page_template:'notifications'
+                viewing_delta: false
 
-    'click .set_messages': (e,t)->
-        Session.set 'is_calculating', true
-        Meteor.call 'set_schema', 'message', ->
-            Session.set 'is_calculating', false
+    'click .messages': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_page: true
+                page_template:'messages'
+                viewing_delta: false
 
-    'click .set_bookmarks': (e,t)->
-        Session.set 'is_calculating', true
-        Meteor.call 'set_schema', 'bookmark', ->
-            Session.set 'is_calculating', false
+    'click .chat': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_page: true
+                page_template:'chat'
+                viewing_delta: false
 
-    'click .set_tasks': (e,t)->
-        Session.set 'is_calculating', true
-        Meteor.call 'set_schema', 'task', ->
-            Session.set 'is_calculating', false
+    'click .bookmarks': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_page: true
+                page_template:'bookmarks'
+                viewing_delta: false
+
+    'click .tasks': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_page: true
+                page_template:'tasks'
+                viewing_delta: false
 
 
 Template.nav.events

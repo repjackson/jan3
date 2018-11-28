@@ -28,14 +28,13 @@ body
 
 
 template(name='home')
-    if Template.subscriptionsReady
-        if currentUser
-            +nav
-            // #main.ui.grid
-            //     .middle_column(class=middle_column_class)
-            +delta
-            .bottomrow
-                +footer
-        else
-            +login
+    if currentUser
+        +nav
+        // #main.ui.grid
+        //     .middle_column(class=middle_column_class)
+        +delta
+        .bottomrow
+            +footer
+    else
+        +login
 
