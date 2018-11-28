@@ -32,8 +32,9 @@ template(name='footer')
                             .ui.inverted.header
                                 +icon name='globe'
                                 | Online Users
-                            each online_users
-                                .ui.inverted.header #{username}
+                            .ui.list
+                                each online_users
+                                    .item #{username}
                         .four.wide.column
                             +tasks
         a.row.toggle_footer(href='#')
@@ -41,16 +42,19 @@ template(name='footer')
                 a.four.wide.column.minimize_footer(href='#')
                     .ui.white.header
                         +icon name='bars'
-                        | Menu
+                        .mobile.hidden
+                            | Menu
             else
                 a.four.wide.column.expand_footer(href='#')
                     .ui.grey.header
                         +icon name='bars'
-                        | Menu
+                        .mobile.hidden
+                            | Menu
             .twelve.wide.column
-                .ui.inverted.grey.header
-                    +ricon name='copyright'
-                    | 2018 JAN-PRO Franchising, Inc.
+                .mobile.hidden
+                    .ui.inverted.grey.header
+                        +ricon name='copyright'
+                        | 2018 JAN-PRO Franchising, Inc.
 
 
 

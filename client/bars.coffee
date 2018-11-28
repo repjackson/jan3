@@ -63,7 +63,7 @@ Template.topbar.events
 
 
 Template.nav.events
-    'click .new_nav': ->
+    'click .dash': ->
         delta = Docs.findOne type:'delta'
 
         Docs.update delta._id,
@@ -72,12 +72,21 @@ Template.nav.events
                 page_template:'dash'
                 viewing_delta: !delta.viewing_delta
 
+    'click .cc': ->
+        delta = Docs.findOne type:'delta'
+
+        Docs.update delta._id,
+            $set:
+                viewing_page: !delta.viewing_page
+                page_template:'cc'
+                viewing_delta: !delta.viewing_delta
 
 
-Template.rightbar.onCreated ->
+
+Template.cc.onCreated ->
     @signing_out = new ReactiveVar false
 
-Template.rightbar.events
+Template.cc.events
     'click .settings': ->
         delta = Docs.findOne type:'delta'
         # console.log @
@@ -123,6 +132,6 @@ Template.rightbar.events
             t.signing_out.set false
 
 
-Template.rightbar.helpers
+Template.cc.helpers
     signing_out: -> Template.instance().signing_out.get()
 

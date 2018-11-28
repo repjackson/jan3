@@ -108,7 +108,7 @@
 }
 
 body {
-  /*margin-top:52px;*/
+  /*padding-top:502px;*/
   font-family: "Open Sans",sans-serif;
   /*font-family: 'Ubuntu', sans-serif !important;*/
   margin:0;
@@ -296,12 +296,20 @@ body {
   /*overflow-y:scroll;*/
   overflow-y:scroll;
   overflow-x: hidden;
-  padding-top: 20px;
-  max-height:700px;
+  /*padding-top: 20px;*/
+  max-height:650px;
+  /*height:100%;*/
+  /*display: inline-block;*/
+  /*min-height: inherit;*/
 }
 
-.delta_cards{
-}
+/*.results_panel{*/
+/*  height:100%;*/
+/*}*/
+
+/*.delta_cards{*/
+/*  padding-left:1.5em;*/
+/*}*/
 
 
 ::-webkit-scrollbar {

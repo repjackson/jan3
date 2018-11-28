@@ -1,47 +1,35 @@
 template(name='nav')
-    .mobile.hidden
-        .ui.top.fixed.inverted.blue.large.menu
-            a.new_nav.icon.item(href='#')
-                // i.fas.fa-menu(style="color:white;")
-                // i.fas.fa-bars.fa-lg(style="color:white;")
-                img.ui.small.spaced.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                // +icon name='menu' classes='spaced centered mini'
-            a.mobile.hidden.toggle_topbar.icon.item(href='#')
-                +iconlarge name='bookmark'
-            a.mobile.hidden.toggle_topbar.item(href='#')
-                +iconlarge name='users'
-            a.mobile.hidden.toggle_topbar.item(href='#')
-                +iconlarge name='dollar-sign'
-            a.mobile.hidden.toggle_topbar.item(href='#')
-                +iconlarge name='calendar'
-            a.mobile.hidden.toggle_topbar.item(href='#')
-                +iconlarge name='tasks'
-            a.mobile.hidden.toggle_topbar.item(href='#')
-                +iconlarge name='shopping-cart'
-            a.mobile.hidden.toggle_topbar.item(href='#')
-                +iconlarge name='mailbox-with-letter'
-            a.mobile.hidden.toggle_topbar.item(href='#')
-                +iconlarge name='appointment-reminders'
-            .right.menu
-                a.toggle_rightbar.item(href='#')
-                    if currentUser.image_id
-                        img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                    else
-                        +iconlarge name='user'
-                    |#{currentUser.username}
-        if delta.view_topbar
-            +topbar
-    .mobile.only
-        .ui.padded.grid.top.fixed.blue.topnav.menu
-            if currentUser
-                .centered.nav_bar.row
-                    .eight.twelve.wide.column.pointer.toggle_leftbar.item
-                        img.ui.small.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-                    .four.wide.column.toggle_rightbar.pointer.item
-                        if currentUser.image_id
-                            img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                        else
-                            +icon name='gender-neutral-user'
+    .ui.attached.inverted.blue.large.menu
+        a.dash.icon.item(href='#')
+            // i.fas.fa-menu(style="color:white;")
+            // i.fas.fa-bars.fa-lg(style="color:white;")
+            img.ui.small.spaced.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+            // +icon name='menu' classes='spaced centered mini'
+        a.mobile.hidden.toggle_topbar.icon.item(href='#')
+            +iconlarge name='bookmark'
+        a.mobile.hidden.toggle_topbar.item(href='#')
+            +iconlarge name='users'
+        a.mobile.hidden.toggle_topbar.item(href='#')
+            +iconlarge name='dollar-sign'
+        a.mobile.hidden.toggle_topbar.item(href='#')
+            +iconlarge name='calendar'
+        a.mobile.hidden.toggle_topbar.item(href='#')
+            +iconlarge name='tasks'
+        a.mobile.hidden.toggle_topbar.item(href='#')
+            +iconlarge name='shopping-cart'
+        a.mobile.hidden.toggle_topbar.item(href='#')
+            +iconlarge name='envelope'
+        a.mobile.hidden.toggle_topbar.item(href='#')
+            +iconlarge name='bell'
+        .right.menu
+            a.cc.item(href='#')
+                if currentUser.image_id
+                    img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                else
+                    +iconlarge name='user'
+                |#{currentUser.username}
+    if delta.view_topbar
+        +topbar
 
 
 template(name='topbar')
@@ -54,6 +42,10 @@ template(name='topbar')
             +tasks
         .four.wide.column
             +bookmarks
+
+
+
+
 
 template(name='bottombar')
     .ui.bottom.push.alphablue.bottombar
@@ -101,7 +93,7 @@ template(name='leftbar')
 
 template(name='dash')
     .sixteen.wide.blue.column.topnav
-        .ui.equal.width.grid
+        .ui.equal.width.stackable.grid
             each bookmarks
                 .four.wide.column
                     .ui.inverted.blue.secondary.segment.pick_delta.pointer
@@ -113,36 +105,43 @@ template(name='dash')
                         //     |#{details}
 
 
-template(name='rightbar')
-    if delta.view_rightbar
-        .four.wide.column.rightbar
-            .ui.right.vertical.inverted.blue.big.fluid.menu
-                a.item(href='#')
+template(name='cc')
+    .sixteen.wide.blue.column.topnav
+        .ui.equal.width.stackable.grid
+            .four.wide.column
+                .ui.inverted.blue.secondary.segment.pointer
                     .ui.inverted.header
                         | #{currentUser.first_name} #{currentUser.last_name}
-                        small @#{currentUser.username}
-                a.item.profile(href='#')
+                    small @#{currentUser.username}
+            .four.wide.column
+                .ui.inverted.blue.secondary.segment.profile.pointer
                     +icon name='users'
                     | Profile
-                a.item.settings(href='#')
+            .four.wide.column
+                .ui.inverted.blue.secondary.segment.settings.pointer
                     +icon name='cog'
                     | Settings
-                a.item.sla(href='#')
+            .four.wide.column
+                .ui.inverted.blue.secondary.segment.sla.pointer
                     +icon name='draw-polygon'
                     | SLA Settings
+            .four.wide.column
                 a.item.delete_delta(title='if always no results' href='#')
                     +icon name='trash'
                     |Clear Session
-                // a.item.run_fo(title='Reload Session' href='#')
-                //     +icon name='refresh'
-                //     |Reset
-                if is_dev
-                    a.item.show_delta(href='#')
+            // a.item.run_fo(title='Reload Session' href='#')
+            //     +icon name='refresh'
+            //     |Reset
+            if is_dev
+                .four.wide.column
+                    a.ui.inverted.blue.secondary.segment.profile.pointer.show_delta(href='#')
                         | Print Delta
                         +icon name='code'
-                .item
+            .four.wide.column
+                .ui.inverted.blue.secondary.segment.profile.pointer
                     +quick_idea
-                a#logout.item(href='#')
+            .four.wide.column
+                a#logout.ui.inverted.blue.secondary.segment.profile.pointer(href='#')
                     // +icon name='exit'
                     if signing_out
                         +icon name='loading'
