@@ -190,14 +190,22 @@ template(name='online_users')
 
 
 template(name='chat')
-    .ui.header
+    .ui.center.aligned.header
         +icon name='comments'
         | Chat
-    .ui.list
+    .ui.comments
         each chat_messages
-            .item
+            .comment
+                a.avatar
+                    if author.image_id
+                        img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    else
+                        +icon name='user'
                 .content
-                    .ui.small.header #{message}
-                    small #{author_username} #{when}
-    .ui.input
-        input#new_chat(type='text' placeholder='add...')
+                    a.author #{author_username}
+                    .metadata
+                        span.date #{when}
+                    .text #{message}
+    .ui.fluid.icon.input
+        +icon name='plus'
+        input#new_chat(type='text')

@@ -6,16 +6,19 @@ if Meteor.isClient
 
     Template.chat.helpers
         chat_messages: ->
-            Docs.find
+            Docs.find {
                 type:'chat'
+                }, sort:timestamp:1
+                
 
-    Template.chat.helpers
+    Template.chat.events
         'keyup #new_chat': (e,t)->
             if e.which is 13
                 message = $('#new_chat').val()
                 Docs.insert
                     type:'chat'
                     message:message
+                $('#new_chat').val('')
 
 
 
