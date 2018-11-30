@@ -1,8 +1,8 @@
 if Meteor.isClient
-    Template.tasks.onCreated ->
+    Template.todo.onCreated ->
         @autorun => Meteor.subscribe 'top_todos'
 
-    Template.tasks.helpers
+    Template.todo.helpers
         todos: ->
             Docs.find {
                 type:'task'
@@ -13,7 +13,7 @@ if Meteor.isClient
         #     delta = Docs.findOne type:'delta'
         #     if delta.viewing_detail and delta.detail_id is @_id then 'active' else ''
 
-    Template.tasks.events
+    Template.todo.events
         'click .todo': ->
             delta = Docs.findOne type:'delta'
             Docs.update delta._id,

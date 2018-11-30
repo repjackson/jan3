@@ -20,12 +20,12 @@ template(name='nav')
         a.messages.item(href='#')
             +iconlarge name='envelope'
         .right.menu
-            a.cc.item(href='#')
+            a.cc.item(href='#' class=cc_class)
                 if currentUser.image_id
-                    img.ui.mini.centered.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
+                    img.ui.mini.spaced.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 else
                     +iconlarge name='user'
-                |#{currentUser.username}
+                | &nbsp; #{currentUser.username}
 
 
 template(name='leftbar')
@@ -39,9 +39,9 @@ template(name='leftbar')
 
 template(name='dash')
     .sixteen.wide.blue.column.topnav
-        .ui.equal.width.three.column.stackable.padded.grid
+        .ui.equal.width.padded.grid
             each bookmarks
-                .column
+                .column.menu_segment
                     .ui.inverted.lightblue.segment.pick_delta.pointer
                         .ui.small.header
                             +icon name=icon
@@ -52,43 +52,52 @@ template(name='dash')
 
 
 template(name='cc')
-    .ui.equal.width.two.column.padded.grid.alphablue
-        .column
+    .ui.equal.width.padded.grid.alphablue
+        .column.menu_segment
             .ui.inverted.lightblue.segment.pointer
                 .ui.header
                     | #{currentUser.first_name} #{currentUser.last_name}
                 small @#{currentUser.username}
-        .column
+        .column.menu_segment
             .ui.inverted.lightblue.segment.profile.pointer
-                +icon name='users'
-                | Profile
-        .column
+                .ui.small.header
+                    +icon name='users'
+                    | Profile
+        .column.menu_segment
             .ui.inverted.lightblue.segment.settings.pointer
-                +icon name='cog'
-                | Settings
-        .column
+                .ui.small.header
+                    +icon name='cog'
+                    | Settings
+        .column.menu_segment
             .ui.inverted.lightblue.segment.sla.pointer
-                +icon name='draw-polygon'
-                | SLA Settings
+                .ui.small.header
+                    +icon name='draw-polygon'
+                    | SLA Settings
         if is_eric
-            .column
-                +role_switcher
-        .column
+            .column.menu_segment
+                .ui.inverted.lightblue.segment
+                    .ui.small.header Role Switcher
+                    +role_switcher
+        .column.menu_segment
             a.ui.inverted.lightblue.segment.delete_delta(title='if always no results' href='#')
                 +icon name='trash'
                 |Clear Session
+        .column.menu_segment
+            a.ui.inverted.lightblue.segment(title='Invert Colors' href='#')
+                +icon name='lightbulb'
+                | Night Mode
         // a.item.run_fo(title='Reload Session' href='#')
         //     +icon name='refresh'
         //     |Reset
         if is_dev
-            .column
+            .column.menu_segment
                 a.ui.inverted.lightblue.segment.profile.pointer.show_delta(href='#')
                     | Print Delta
                     +icon name='code'
-        .column
+        .column.menu_segment
             .ui.inverted.lightblue.segment.profile.pointer
                 +quick_idea
-        .column
+        .column.menu_segment
             a#logout.ui.inverted.lightblue.segment.profile.pointer(href='#')
                 // +icon name='exit'
                 if signing_out

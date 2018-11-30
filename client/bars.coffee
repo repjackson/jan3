@@ -34,7 +34,11 @@ Template.dash.helpers
 Template.nav.helpers
     header_class: -> 
         delta = Docs.findOne type:'delta'
-        if delta.page_template is 'dash' then 'lightblue' else ''
+        if delta.menu_template is 'dash' then 'lightblue' else ''
+
+    cc_class: -> 
+        delta = Docs.findOne type:'delta'
+        if delta.menu_template is 'cc' then 'lightblue' else ''
 
 
 Template.dash.events
@@ -104,7 +108,7 @@ Template.nav.events
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
-                viewing_menu: !delta.viewing_page
+                viewing_menu: !delta.viewing_menu
                 menu_template:'cc'
                 # viewing_delta: !delta.viewing_delta
 

@@ -9,9 +9,6 @@ Meteor.publish 'type', (type, limit)->
             sort: timestamp:-1
         }
 
-Meteor.publish 'my_bookmarks', ->
-    Docs.find
-        bookmark_ids:$in:[Meteor.userId()]
 
 Meteor.publish 'office_jpid', (jpid)->
     console.log jpid
@@ -91,9 +88,10 @@ Meteor.publish "user_status", ()->
 
 
 Meteor.publish 'my_alerts', ()->
-    Docs.find
-        type:'alert'
-        to:Meteor.user().username
+    if Meteor.user()
+        Docs.find
+            type:'alert'
+            to:Meteor.user().username
 
 
 Meteor.publish 'children', (doc_id, limit)->
