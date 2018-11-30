@@ -115,30 +115,3 @@ template(name='quick_idea')
         // .ui.small.fluid.icon.button.submit_idea
         //     i.checkmark.icon
 
-
-template(name='notifications')
-    a.ui.header(href='#')
-        +icon name='bell'
-        | Notifications
-
-template(name='messages')
-    a.ui.header(href='#')
-        +icon name='mail-bulk'
-        | Messages
-
-    // +iconsmall name='compose' title='Compose' classes='pointer'
-
-
-template(name='tasks')
-    a.ui.header.set_tasks(href='#')
-        +icon name='tasks'
-        | Tasks
-    .ui.inverted.link.list
-        each todos
-            a.item.todo(class=item_class) #{title}
-
-
-template(name='bookmarks')
-    .ui.center.aligned.header.set_bookmarks
-        +icon name='bookmark'
-        | Bookmarks

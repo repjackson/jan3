@@ -35,24 +35,3 @@ template(name='role_switcher')
         .change_role.ui.margined.small.compact.button(class=role_button_class)
             |#{title}
 
-template(name='online_users')
-    .ui.header
-        +icon name='globe'
-        | Online Users
-    .ui.list
-        each online_users
-            .item #{username}
-
-
-template(name='chat')
-    .ui.header
-        +icon name='comments'
-        | Chat
-    .ui.list
-        each chat_messages
-            .item
-                .content
-                    .ui.small.header #{message}
-                    small #{author_username} #{when}
-    .ui.input
-        input#new_chat(type='text' placeholder='add...')

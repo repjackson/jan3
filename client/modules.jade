@@ -4,7 +4,7 @@ template(name='set_schema_part')
         +icon name='chevron-right'
 
 
-template(name='bookmark')
+template(name='bookmark_button')
     if bookmarked
         .ui.blue.fluid.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
             +icon name='bookmark'
@@ -17,8 +17,35 @@ template(name='bookmark')
         each bookmark_users
             +user_list_view
 
+template(name='bookmark')
+    .ui.center.aligned.header.set_bookmarks
+        +icon name='bookmark'
+        | Bookmarks
 
 
+
+
+
+template(name='notifications')
+    a.ui.header(href='#')
+        +icon name='bell'
+        | Notifications
+
+template(name='messages')
+    a.ui.header(href='#')
+        +icon name='mail-bulk'
+        | Messages
+
+    // +iconsmall name='compose' title='Compose' classes='pointer'
+
+
+template(name='todo')
+    a.ui.header.set_tasks(href='#')
+        +icon name='tasks'
+        | Tasks
+    .ui.inverted.link.list
+        each todos
+            a.item.todo(class=item_class) #{title}
 
 
 
@@ -150,3 +177,27 @@ template(name='approval_part')
                             h4.ui.header
                                 |#{first_name} #{last_name}
                                 small @#{username}
+
+
+
+template(name='online_users')
+    .ui.header
+        +icon name='globe'
+        | Online Users
+    .ui.list
+        each online_users
+            .item #{username}
+
+
+template(name='chat')
+    .ui.header
+        +icon name='comments'
+        | Chat
+    .ui.list
+        each chat_messages
+            .item
+                .content
+                    .ui.small.header #{message}
+                    small #{author_username} #{when}
+    .ui.input
+        input#new_chat(type='text' placeholder='add...')

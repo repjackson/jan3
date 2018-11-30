@@ -84,16 +84,16 @@ Template.nav.events
             $set:
                 viewing_menu:false
                 viewing_page: true
-                page_template:'bookmarks'
+                page_template:'bookmark'
                 viewing_delta: false
 
-    'click .tasks': (e,t)->
+    'click .todo': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
                 viewing_menu:false
                 viewing_page: true
-                page_template:'tasks'
+                page_template:'todo'
                 viewing_delta: false
 
     'click .dash': ->

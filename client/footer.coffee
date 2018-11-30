@@ -10,44 +10,31 @@ Template.role_switcher.helpers
         if Meteor.user() and Meteor.user().roles and @slug in Meteor.user().roles then 'blue' else ''
 
 
-Template.footer.helpers
-    site_doc: ->
-        site_doc = Docs.findOne Session.get('current_site_id')
-        if site_doc then site_doc
+# Template.footer.helpers
+    # site_doc: ->
+    #     site_doc = Docs.findOne Session.get('current_site_id')
+    #     if site_doc then site_doc
 
-    bug_link: -> Session.get 'bug_link'
-
-    chat_messages: ->
-        Docs.find
-            type:'chat'
+    # bug_link: -> Session.get 'bug_link'
 
 
-Template.footer.onCreated ->
-    @autorun -> Meteor.subscribe 'type', 'chat'
 
-Template.footer.events
-    "click #report_bug": ->
-        Session.set 'bug_link', window.location.pathname
-        new_bug_id = Docs.insert
-            type:'bug'
-            complete:false
-            link:window.location.pathname
-        FlowRouter.go("/edit/#{new_bug_id}")
-
-    'keyup #new_chat': (e,t)->
-        if e.which is 13
-            message = $('#new_chat').val()
-            Docs.insert
-                type:'chat'
-                message:message
+# Template.footer.events
+    # "click #report_bug": ->
+    #     Session.set 'bug_link', window.location.pathname
+    #     new_bug_id = Docs.insert
+    #         type:'bug'
+    #         complete:false
+    #         link:window.location.pathname
+    #     FlowRouter.go("/edit/#{new_bug_id}")
 
 
-    'click .toggle_footer': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu: !delta.viewing_menu
-                menu_template: 'dash'
+    # 'click .toggle_footer': ->
+    #     delta = Docs.findOne type:'delta'
+    #     Docs.update delta._id,
+    #         $set:
+    #             viewing_menu: !delta.viewing_menu
+    #             menu_template: 'dash'
 
     # 'click .expand_footer': ->
     #     delta = Docs.findOne type:'delta'
