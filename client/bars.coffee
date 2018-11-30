@@ -178,6 +178,17 @@ Template.cc.events
                 viewing_delta:false
                 viewing_menu:false
 
+    'click .view_profile': ->
+        delta = Docs.findOne type:'delta'
+        # console.log @
+        Docs.update delta._id,
+            $set:
+                viewing_username: Meteor.user().username
+                viewing_page:true
+                page_template:'user_view'
+                viewing_delta:false
+                viewing_menu:false
+
 
     'click .delete_delta': ->
         if confirm 'Clear Session?'

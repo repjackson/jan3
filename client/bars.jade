@@ -54,7 +54,7 @@ template(name='dash')
 template(name='cc')
     .ui.equal.width.padded.grid.alphablue.cc
         .column.menu_segment
-            .ui.inverted.lightblue.segment.profile.pointer
+            .ui.inverted.lightblue.segment.view_profile.pointer
                 .ui.icon.header
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")

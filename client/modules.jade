@@ -230,3 +230,8 @@ template(name='chat')
     .ui.fluid.icon.input
         +icon name='plus'
         input#new_chat(type='text')
+        
+        
+template(name='user_view')
+    with target_user
+        .ui.header #{username}
