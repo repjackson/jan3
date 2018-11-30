@@ -50,8 +50,18 @@ Template.dash.events
             Session.set 'is_calculating', false
 
 
+Template.footer.events
+    'click .calendar': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_menu:false
+                viewing_page: true
+                page_template:'calendar'
+                viewing_delta: false
+
 Template.nav.events
-    'click .bell': (e,t)->
+    'click .notifications': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
@@ -94,6 +104,15 @@ Template.nav.events
                 viewing_menu:false
                 viewing_page: true
                 page_template:'todo'
+                viewing_delta: false
+    
+    'click .calendar': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_menu:false
+                viewing_page: true
+                page_template:'calendar'
                 viewing_delta: false
 
     'click .dash': ->

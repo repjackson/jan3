@@ -188,6 +188,20 @@ template(name='online_users')
         each online_users
             .item #{username}
 
+template(name='calendar')
+    .ui.center.aligned.header
+        +icon name='calendar'
+        | Calendar
+    .ui.button
+        | Day
+    .ui.button
+        | List
+    .ui.button
+        |Week
+    .ui.fluid.button
+        +icon name='plus'
+        | Event
+
 
 template(name='chat')
     .ui.center.aligned.header

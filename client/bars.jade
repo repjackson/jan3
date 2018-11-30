@@ -11,13 +11,13 @@ template(name='nav')
             +iconlarge name='comments'
         a.notifications.item(href='#')
             +iconlarge name='bell'
-        a.toggle_topbar.item(href='#')
-            +iconlarge name='calendar'
-        a.tasks.item(href='#')
+        // a.mobile.hidden.calendar.item(href='#')
+        //     +iconlarge name='calendar'
+        a.mobile.hidden.tasks.item(href='#')
             +iconlarge name='tasks'
-        a.toggle_topbar.item(href='#')
+        a.mobile.hidden.item(href='#')
             +iconlarge name='shopping-cart'
-        a.messages.item(href='#')
+        a.mobile.hidden.messages.item(href='#')
             +iconlarge name='envelope'
         .right.menu
             a.cc.item(href='#' class=cc_class)
@@ -114,4 +114,24 @@ template(name='quick_idea')
         input#idea_text(placeholder='Add thought...')
         // .ui.small.fluid.icon.button.submit_idea
         //     i.checkmark.icon
+
+
+template(name='footer')
+    .ui.bottom.fixed.inverted.footer.big.menu
+        a.item.toggle_footer(href='#')
+            +icon name='bars'
+        a.item.bookmarks(href='#')
+            +icon name='bookmark'
+        .item
+            +icon name='users'
+        a.item.calendar(href='#')
+            +icon name='calendar'
+        a.item.todo(href='#')
+            +icon name='tasks'
+
+        .item.item
+            .mobile.hidden
+                .ui.inverted.small.grey.header
+                    +ricon name='copyright'
+                    | 2018 JAN-PRO Franchising, Inc.
 
