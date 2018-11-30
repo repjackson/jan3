@@ -25,7 +25,7 @@ template(name='nav')
                     img.ui.mini.spaced.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 else
                     +iconlarge name='user'
-                | &nbsp; #{currentUser.username}
+                span.mobile.hidden &nbsp; #{currentUser.username}
 
 
 template(name='leftbar')
@@ -52,7 +52,7 @@ template(name='dash')
 
 
 template(name='cc')
-    .ui.equal.width.padded.grid.alphablue
+    .ui.equal.width.padded.grid.alphablue.cc
         .column.menu_segment
             .ui.inverted.lightblue.segment.profile.pointer
                 .ui.icon.header
