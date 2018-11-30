@@ -27,7 +27,7 @@ template(name='bookmark')
 
 
 template(name='notifications')
-    a.ui.header(href='#')
+    .ui.center.aligned.header
         +icon name='bell'
         | Notifications
 
@@ -141,6 +141,13 @@ template(name='voting_part')
                 +user_list_view
 
 
+
+template(name='users')
+    .ui.center.aligned.header
+        +icon name='users'
+        |Users
+    each users
+        .ui.header #{username}
 
 
 

@@ -59,6 +59,15 @@ Template.footer.events
                 viewing_page: true
                 page_template:'calendar'
                 viewing_delta: false
+    
+    'click .users': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_menu:false
+                viewing_page: true
+                page_template:'users'
+                viewing_delta: false
 
 Template.nav.events
     'click .notifications': (e,t)->

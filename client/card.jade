@@ -24,7 +24,7 @@ template(name='delta_card')
                                             | #{value}
                 // if is_dev
                 .ui.buttons
-                    .ui.icon.button.edit
+                    .ui.icon.blue.button.edit
                         +icon name='edit'
                     .ui.icon.button.toggle_full
                         +icon name='chevron-right'
@@ -33,7 +33,7 @@ template(name='delta_card')
                 .row
                     if delta.editing
                         .three.wide.column
-                            .ui.fluid.button.remove_doc
+                            .ui.fluid.red.button.remove_doc
                                 +icon name='trash'
                         .ten.wide.center.aligned.column
                             .ui.header
@@ -42,7 +42,7 @@ template(name='delta_card')
                                 |Edit '#{detail_doc.title}'
                                 // #{current_type.title}
                         .right.floated.three.wide.column
-                            .ui.icon.fluid.button.save
+                            .ui.icon.green.fluid.button.save
                                 +icon name='save'
                             // .ui.button.archive
                             //     i.archive.icon
@@ -59,7 +59,7 @@ template(name='delta_card')
                                     +icon name=icon
                                 |'#{local_doc.title}' #{current_type.title}
                         .right.floated.three.wide.column
-                            .ui.fluid.icon.button.edit
+                            .ui.fluid.icon.teal.button.edit
                                 +icon name='edit'
                                 // | Edit
                 .row
