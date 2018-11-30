@@ -1,6 +1,6 @@
 template(name='nav')
-    .ui.attached.inverted.blue.large.menu
-        a.dash.icon.item(href='#')
+    .ui.attached.inverted.inverted.topnav.large.menu
+        a.dash.icon.item(href='#' class=header_class)
             .mobile.hidden
                 img.ui.small.spaced.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             .mobile.only
@@ -39,10 +39,10 @@ template(name='leftbar')
 
 template(name='dash')
     .sixteen.wide.blue.column.topnav
-        .ui.equal.width.two.column.grid
+        .ui.equal.width.three.column.stackable.padded.grid
             each bookmarks
                 .column
-                    .ui.inverted.blue.secondary.segment.pick_delta.pointer
+                    .ui.inverted.lightblue.segment.pick_delta.pointer
                         .ui.small.header
                             +icon name=icon
                             |#{plural}
@@ -52,26 +52,29 @@ template(name='dash')
 
 
 template(name='cc')
-    .ui.equal.width.two.column.grid.alphablue
+    .ui.equal.width.two.column.padded.grid.alphablue
         .column
-            .ui.inverted.blue.secondary.segment.pointer
+            .ui.inverted.lightblue.segment.pointer
                 .ui.header
                     | #{currentUser.first_name} #{currentUser.last_name}
                 small @#{currentUser.username}
         .column
-            .ui.inverted.blue.secondary.segment.profile.pointer
+            .ui.inverted.lightblue.segment.profile.pointer
                 +icon name='users'
                 | Profile
         .column
-            .ui.inverted.blue.secondary.segment.settings.pointer
+            .ui.inverted.lightblue.segment.settings.pointer
                 +icon name='cog'
                 | Settings
         .column
-            .ui.inverted.blue.secondary.segment.sla.pointer
+            .ui.inverted.lightblue.segment.sla.pointer
                 +icon name='draw-polygon'
                 | SLA Settings
+        if is_eric
+            .column
+                +role_switcher
         .column
-            a.item.delete_delta(title='if always no results' href='#')
+            a.ui.inverted.lightblue.segment.delete_delta(title='if always no results' href='#')
                 +icon name='trash'
                 |Clear Session
         // a.item.run_fo(title='Reload Session' href='#')
@@ -79,14 +82,14 @@ template(name='cc')
         //     |Reset
         if is_dev
             .column
-                a.ui.inverted.blue.secondary.segment.profile.pointer.show_delta(href='#')
+                a.ui.inverted.lightblue.segment.profile.pointer.show_delta(href='#')
                     | Print Delta
                     +icon name='code'
         .column
-            .ui.inverted.blue.secondary.segment.profile.pointer
+            .ui.inverted.lightblue.segment.profile.pointer
                 +quick_idea
         .column
-            a#logout.ui.inverted.blue.secondary.segment.profile.pointer(href='#')
+            a#logout.ui.inverted.lightblue.segment.profile.pointer(href='#')
                 // +icon name='exit'
                 if signing_out
                     +icon name='loading'

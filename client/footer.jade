@@ -11,7 +11,7 @@ template(name='jp_footer')
 
 template(name='footer')
     .ui.bottom.fixed.inverted.footer.big.menu
-        .item
+        a.item.toggle_footer(href='#')
             +icon name='bars'
         .item
             +icon name='bookmark'
@@ -24,7 +24,7 @@ template(name='footer')
 
         .item.item
             .mobile.hidden
-                .ui.inverted.grey.header
+                .ui.inverted.small.grey.header
                     +ricon name='copyright'
                     | 2018 JAN-PRO Franchising, Inc.
 

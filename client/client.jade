@@ -30,9 +30,16 @@ body
 template(name='home')
     if currentUser
         +nav
-        // #main.ui.grid
+        if delta.viewing_menu
+            +Template.dynamic template=delta.menu_template
+        else if delta.viewing_page
+            .ui.padded.grid
+                .sixteen.wide.column
+                    +Template.dynamic template=delta.page_template
+        else
+            #main
+                +delta
         //     .middle_column(class=middle_column_class)
-        +delta
         .bottomrow
             +footer
     else

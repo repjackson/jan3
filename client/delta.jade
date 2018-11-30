@@ -4,12 +4,10 @@ template(name='delta')
             .sixteen.wide.column
                 if currentUser
                     .create_delta.ui.button(title='Create Session')
-                        i.plus.icon
+                        +icon name='plus'
                         | Session
     if delta
-        if delta.viewing_page
-            +Template.dynamic template=delta.page_template
-        else if delta.viewing_delta
+        if delta.viewing_delta
             .ui.stackable.padded.grid
                 .row
                     unless delta.viewing_detail

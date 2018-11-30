@@ -46,10 +46,8 @@ Template.footer.events
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
-                expand_footer:!delta.expand_footer
-                view_leftbar:false
-                view_rightbar:false
-                view_topbar:false
+                viewing_menu: !delta.viewing_menu
+                menu_template: 'dash'
 
     # 'click .expand_footer': ->
     #     delta = Docs.findOne type:'delta'

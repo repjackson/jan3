@@ -107,13 +107,17 @@
 
 }
 
+.lightblue {
+  background-color: #2f3fa1 !important;
+}
+
 body {
   /*padding-top:502px;*/
   font-family: "Open Sans",sans-serif;
   /*font-family: 'Ubuntu', sans-serif !important;*/
   margin:0;
   padding:0;
-  height:100%;
+  /*height:100%;*/
   background: #f4f7f9;
   /*background: rgba(244, 247, 249);*/
   /*background: rgba(250, 250, 250, 1);*/
@@ -130,7 +134,7 @@ body {
    margin-top:30px !important;
 }
 #main {
-   padding-top:60px;
+   /*padding-top:60px;*/
 
    /*height:100%;*/
    /*position:relative;*/
@@ -146,7 +150,7 @@ body {
 }
 
 .ui.button{
-  text-transform: none !important;
+  /*text-transform: none !important;*/
 }
 
 /* Mobile */

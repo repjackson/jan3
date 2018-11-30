@@ -30,6 +30,12 @@ Template.dash.helpers
                 view_roles: $in:Meteor.user().roles
                 type:'schema'
             }, sort:title:1
+            
+Template.nav.helpers
+    header_class: -> 
+        delta = Docs.findOne type:'delta'
+        if delta.page_template is 'dash' then 'lightblue' else ''
+
 
 Template.dash.events
     'click .pick_delta': (e,t)->
@@ -45,6 +51,7 @@ Template.nav.events
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
+                viewing_menu:false
                 viewing_page: true
                 page_template:'notifications'
                 viewing_delta: false
@@ -53,6 +60,7 @@ Template.nav.events
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
+                viewing_menu:false
                 viewing_page: true
                 page_template:'messages'
                 viewing_delta: false
@@ -61,6 +69,7 @@ Template.nav.events
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
+                viewing_menu:false
                 viewing_page: true
                 page_template:'chat'
                 viewing_delta: false
@@ -69,6 +78,7 @@ Template.nav.events
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
+                viewing_menu:false
                 viewing_page: true
                 page_template:'bookmarks'
                 viewing_delta: false
@@ -77,29 +87,26 @@ Template.nav.events
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
+                viewing_menu:false
                 viewing_page: true
                 page_template:'tasks'
                 viewing_delta: false
 
-
-Template.nav.events
     'click .dash': ->
         delta = Docs.findOne type:'delta'
-
         Docs.update delta._id,
             $set:
-                viewing_page: !delta.viewing_page
-                page_template:'dash'
-                viewing_delta: !delta.viewing_delta
+                viewing_menu: !delta.viewing_menu
+                menu_template:'dash'
+                # viewing_delta: !delta.viewing_delta
 
     'click .cc': ->
         delta = Docs.findOne type:'delta'
-
         Docs.update delta._id,
             $set:
-                viewing_page: !delta.viewing_page
-                page_template:'cc'
-                viewing_delta: !delta.viewing_delta
+                viewing_menu: !delta.viewing_page
+                menu_template:'cc'
+                # viewing_delta: !delta.viewing_delta
 
 
 
