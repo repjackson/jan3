@@ -69,6 +69,28 @@ Template.footer.events
                 page_template:'users'
                 viewing_delta: false
 
+    'click .bookmarks': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_menu:false
+                viewing_page: true
+                page_template:'bookmark'
+                viewing_delta: false
+    
+    'click .todo': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_menu:false
+                viewing_page: true
+                page_template:'todo'
+                viewing_delta: false
+    
+
+
+
+
 Template.nav.events
     'click .notifications': (e,t)->
         delta = Docs.findOne type:'delta'
@@ -154,6 +176,7 @@ Template.cc.events
                 viewing_page:true
                 page_template:'account_settings'
                 viewing_delta:false
+                viewing_menu:false
 
 
     'click .delete_delta': ->
@@ -183,6 +206,7 @@ Template.cc.events
                 viewing_page:true
                 page_template:'office_sla'
                 viewing_delta:false
+                viewing_menu:false
 
     'click #logout': (e,t)->
         # e.preventDefault()

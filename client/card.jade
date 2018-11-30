@@ -23,11 +23,11 @@ template(name='delta_card')
                                         else
                                             | #{value}
                 // if is_dev
-                .ui.buttons
-                    .ui.icon.blue.button.edit
-                        +icon name='edit'
-                    .ui.icon.button.toggle_full
-                        +icon name='chevron-right'
+                // .ui.buttons
+                //     .ui.icon.button.edit
+                //         +icon name='pencil-alt'
+                .ui.icon.button.toggle_full
+                    +icon name='chevron-right'
         if full_mode
             .ui.padded.stackable.grid
                 .row
@@ -59,8 +59,8 @@ template(name='delta_card')
                                     +icon name=icon
                                 |'#{local_doc.title}' #{current_type.title}
                         .right.floated.three.wide.column
-                            .ui.fluid.icon.teal.button.edit
-                                +icon name='edit'
+                            .ui.fluid.icon.button.edit
+                                +icon name='pencil-alt'
                                 // | Edit
                 .row
                     .sixteen.wide.column

@@ -27,21 +27,24 @@ template(name='reset_password')
 
 template(name='login')
     .ui.stackable.padded.grid
-        .centered.row
-            .eight.wide.column
-                img.ui.medium.image(src="{{c.url 'jan_full_logo'}}")
+        .centered.alphablue.row
+            .eight.wide.center.aligned.column
+                // img.ui.medium.centered.image(src="{{c.url 'jan_full_logo'}}")
+                img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
         .centered.row
             .eight.wide.column
                 h1.ui.center.aligned.header
                     // img.ui.spaced.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
                     | Login
                 .ui.basic.segment
-                    .ui.labeled.fluid.input
-                        .ui.label Username
+                    .ui.labeled.fluid.icon.input
+                        .ui.basic.label Username
                         input.username(type='text')
+                        +icon name='user'
                     .ui.hidden.divider
-                    .ui.labeled.fluid.input
-                        .ui.label Password
+                    .ui.labeled.fluid.icon.input
+                        +icon name='lock'
+                        .ui.basic.label Password
                         input.password(type='password')
                     .ui.hidden.divider
                     .field

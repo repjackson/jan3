@@ -54,15 +54,25 @@ template(name='dash')
 template(name='cc')
     .ui.equal.width.padded.grid.alphablue
         .column.menu_segment
-            .ui.inverted.lightblue.segment.pointer
-                .ui.header
-                    | #{currentUser.first_name} #{currentUser.last_name}
-                small @#{currentUser.username}
-        .column.menu_segment
             .ui.inverted.lightblue.segment.profile.pointer
+                .ui.icon.header
+                    if currentUser.image_id
+                        img.ui.avatar.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    else
+                        +icon name='user'
+                    | #{currentUser.first_name} #{currentUser.last_name}
+                | @#{currentUser.username}
+        // .column.menu_segment
+        //     .ui.inverted.lightblue.segment.profile.pointer
+        //         .ui.small.header
+        //             +icon name='users'
+        //             | Profile
+        .column.menu_segment
+            .ui.inverted.lightblue.segment.tasks.pointer
                 .ui.small.header
-                    +icon name='users'
-                    | Profile
+                    +iconlarge name='tasks'
+                    | Todo
+
         .column.menu_segment
             .ui.inverted.lightblue.segment.settings.pointer
                 .ui.small.header
