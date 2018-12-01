@@ -242,25 +242,33 @@ template(name='chat')
     .ui.fluid.input
         // +icon name='plus'
         input#new_chat(type='text' placeholder='Add Message...')
-    .ui.comments.scrolling_small
-        each chat_messages
-            .comment
-                a.avatar
-                    if author.image_id
-                        img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                    else
-                        +icon name='user'
-                .content
-                    a.author #{author_username}
-                    .metadata
-                        span.date #{when}
-                    .text #{message}
-                    .actions
-                        a.delete(href='#')
-                            +icon name='trash' 
-                        a.mark_read(href='#')
-                            +icon name='envelope' 
-            
+    each chat_messages
+        .ui.segment(class=comment_class)
+            .large120 #{message}
+            .content
+                if author.image_id
+                    img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                else
+                    +icon name='user'
+                .ui.horizontal.list
+                    .item
+                        | #{author_username}
+                    .item
+                        |#{when}
+                    .item
+                        +icon name='trash' classes='delete'
+                    .item
+                        if has_read
+                            .mark_unread
+                                +icon name='envelope-open' 
+                        else
+                            a.mark_read(href='#')
+                                +icon name='envelope' 
+                    .item
+                        .ui.small.horizontal.list
+                            each read_users
+                                .item(title='Read by') #{username}
+                
         
 template(name='user_view')
     with target_user

@@ -1,9 +1,14 @@
 $.cloudinary.config
     cloud_name:"facet"
 
-Template.body.events
-    'click .mark_alert_read': -> console.log 'working'
 
+Template.registerHelper 'has_read', () ->
+    if @read_ids and Meteor.userId() in @read_ids then true else false
+
+Template.registerHelper 'read_users', () ->
+    if @read_ids
+        Meteor.users.find
+            _id: $in: @read_ids
 
 Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
 

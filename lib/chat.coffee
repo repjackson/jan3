@@ -5,6 +5,8 @@ if Meteor.isClient
     
 
     Template.chat.helpers
+        comment_class: ->
+            if @read_ids and Meteor.userId() in @read_ids then 'secondary' else ''
         chat_messages: ->
             Docs.find {
                 type:'chat'
@@ -22,10 +24,20 @@ if Meteor.isClient
         
         'click .delete': (e,t)->
             if confirm "Delete message from #{@author_username}?"
-                $(e.currentTarget).closest('.comment').transition('fly left')
+                $(e.currentTarget).closest('.segment').transition('fly left')
                 Meteor.setTimeout ->
                     Docs.remove @_id
                 , 500
+
+        'click .mark_read': (e,t)->
+            Docs.update @_id, 
+                $addToSet: read_ids: Meteor.userId()
+            $(e.currentTarget).closest('.segment').transition('pulse')
+
+        'click .mark_unread': (e,t)->
+            Docs.update @_id, 
+                $pull: read_ids: Meteor.userId()
+            $(e.currentTarget).closest('.segment').transition('pulse')
 
 
 if Meteor.isServer
