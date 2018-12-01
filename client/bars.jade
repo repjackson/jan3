@@ -1,8 +1,8 @@
 template(name='nav')
-    .ui.attached.inverted.inverted.topnav.large.menu
+    .ui.fixed.inverted.topnav.menu
         a.dash.icon.item(href='#' class=header_class)
             .mobile.hidden
-                img.ui.small.spaced.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+                img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             .mobile.only
                 +icon name='bars'
         a.bookmarks.icon.item(href='#')
@@ -72,12 +72,9 @@ template(name='cc')
                 .ui.small.header
                     +icon name='cog'
                     | Settings
-                .ui.small.subheader
-                    .item Password
-                .ui.small.subheader
-                    .item Email
-                .ui.small.subheader
-                    .item Username
+                .item Password
+                .item Email
+                .item Username
         .column.menu_segment
             .ui.inverted.lightblue.segment.sla.pointer
                 .ui.small.header
@@ -126,9 +123,9 @@ template(name='quick_idea')
 
 
 template(name='footer')
-    .ui.bottom.fixed.inverted.footer.big.menu
-        a.item.toggle_footer(href='#')
-            +icon name='bars'
+    .ui.bottom.fixed.inverted.footer.menu
+        // a.item.toggle_footer(href='#')
+        //     +icon name='bars'
         a.item.bookmarks(href='#')
             +icon name='bookmark'
         a.item.users(href='#')

@@ -8,7 +8,7 @@ if Meteor.isClient
         chat_messages: ->
             Docs.find {
                 type:'chat'
-                }, sort:timestamp:1
+                }, sort:timestamp:-1
                 
 
     Template.chat.events
@@ -19,7 +19,13 @@ if Meteor.isClient
                     type:'chat'
                     message:message
                 $('#new_chat').val('')
-
+        
+        'click .delete': (e,t)->
+            if confirm "Delete message from #{@author_username}?"
+                $(e.currentTarget).closest('.comment').transition('fly left')
+                Meteor.setTimeout ->
+                    Docs.remove @_id
+                , 500
 
 
 if Meteor.isServer

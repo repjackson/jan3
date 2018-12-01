@@ -38,7 +38,7 @@ Template.nav.helpers
 
     cc_class: -> 
         delta = Docs.findOne type:'delta'
-        if delta.menu_template is 'cc' then 'lightblue' else ''
+        if delta and delta.menu_template is 'cc' then 'lightblue' else ''
 
 
 Template.dash.events
