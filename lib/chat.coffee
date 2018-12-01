@@ -27,17 +27,17 @@ if Meteor.isClient
                 $(e.currentTarget).closest('.segment').transition('fly left')
                 Meteor.setTimeout ->
                     Docs.remove @_id
-                , 500
+                , 300
 
         'click .mark_read': (e,t)->
             Docs.update @_id, 
                 $addToSet: read_ids: Meteor.userId()
-            $(e.currentTarget).closest('.segment').transition('pulse')
+            $(e.currentTarget).closest('.item').transition('pulse')
 
         'click .mark_unread': (e,t)->
             Docs.update @_id, 
                 $pull: read_ids: Meteor.userId()
-            $(e.currentTarget).closest('.segment').transition('pulse')
+            $(e.currentTarget).closest('.item').transition('pulse')
 
 
 if Meteor.isServer

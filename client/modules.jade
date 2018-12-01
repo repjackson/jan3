@@ -35,16 +35,27 @@ template(name='messages')
     a.ui.header(href='#')
         i.envelope.outline.icon
         | Messages
-
-    // +iconsmall name='compose' title='Compose' classes='pointer'
+    .ui.button
+        i.inbox.icon
+        |Inbox
+    .ui.button
+        i.sent.icon
+        |Sent
+    .ui.button
+        i.draft.icon
+        |Drafs
+    .ui.button
+        i.setting.icon
+        |Settings
+        
 
 
 template(name='todo')
-    .ui.large.header
+    .ui.header
         i.tasks.icon
         | Tasks
     .ui.fluid.icon.input
-        input(type='text' placeholder='New Task...')
+        input(type='text')
         i.plus.icon
     each todos
         .ui.rounded.segment(class=todo_segment_class)
@@ -56,15 +67,15 @@ template(name='todo')
                             |#{author.first_name} #{author.last_name} #{when} 
                 .item
                     if complete
-                        .ui.rounded.button.mark_incomplete
+                        .ui.circular.icon.button.mark_incomplete
                             i.green.check.icon
-                            | Complete
+                            // | Complete
                     else
-                        .ui.rounded.button.mark_complete
-                            i.circle.outline.icon
-                            |Incomplete
+                        .ui.circular.icon.button.mark_complete
+                            i.square.outline.icon
+                            // |Incomplete
                 .item
-                    .ui.rounded.icon.button
+                    .ui.icon.compact.small.button
                         i.remove.icon
 
 template(name='mark_read_part')
@@ -221,7 +232,7 @@ template(name='online_users')
 
 template(name='calendar')
     .ui.header
-        i.calendar.outline
+        i.calendar.outline.icon
         | Calendar
     .ui.button
         | Day
@@ -256,12 +267,15 @@ template(name='chat')
                     .item
                         |#{when}
                     .item
-                        i.link.delete.icon
+                        .ui.icon.button.delete
+                            i.remove.icon
                     .item
                         if has_read
-                            i.envelope.mark_unread.link.icon(title='Mark Unread')
+                            .ui.icon.green.button.mark_unread(title='Mark Unread')
+                                i.envelope.link.icon
                         else
-                            i.mark_read.link.envelope.icon(title='Mark Read')
+                            .ui.icon.button.mark_read(title='Mark Read')
+                                i.envelope.icon
                     .item
                         .ui.small.horizontal.list
                             each read_users
@@ -269,6 +283,23 @@ template(name='chat')
                 
         
 template(name='user_view')
+    with target_user
+        .ui.header #{first_name} #{last_name}
+        .ui.header #{username}
+        .ui.list
+            .item Customer: #{customer_name}
+            .item Customer JPID: #{customer_jpid}
+            .item Office: #{office_name}
+            .item Office JPID: #{office_jpid}
+        img.ui.medium.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+        .ui.button
+            +icon name='bell'
+            |Subscribe
+        .ui.button
+            +icon name=''
+            |Message
+        
+template(name='ideas')
     with target_user
         .ui.header #{first_name} #{last_name}
         .ui.header #{username}

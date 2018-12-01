@@ -1,40 +1,37 @@
 template(name='nav')
-    .ui.fixed.inverted.jpblue.menu
+    .ui.fixed.inverted.jpblue.big.menu
         a.dash.icon.item(href='#' class=header_class)
             .mobile.hidden
                 img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             .mobile.only
-                i.large.bars.icon
-        a.icon.item.tickets(href='#' title='Tickets')
-            i.large.ticket.icon
+                i.dashboard.icon
+        a.toggle_cc.item(href='#' class=cc_class)
+            if currentUser.image_id
+                img.ui.avatar.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            else
+                i.user.icon
+            span.mobile.hidden &nbsp; #{currentUser.username}
+        a.add.icon.item(href='#')
+            i.plus.icon
+        a.icon.item.tickets(href='#')
+            i.ticket.icon
                 
-        a.bookmarks.icon.item(href='#')
-            i.bookmark.large.outline.icon
         a.chat.icon.item(href='#')
-            i.comment.large.outline.icon
+            i.comment.outline.icon
         a.notifications.icon.item(href='#')
-            i.bell.large.outline.icon
+            i.bell.outline.icon
         a.mobile.hidden.icon.tasks.item(href='#')
-            i.tasks.large.icon
+            i.tasks.icon
         // a.mobile.hidden.item(href='#')
-        //     i.shopping.cart.large.icon
+        //     i.shopping.cart.icon
         a.mobile.hidden.messages.icon.item(href='#')
-            i.envelope.large.outline.icon
-        .right.menu
-            a.mobile.hidden.add.icon.item(href='#')
-                i.plus.large.icon
-            a.toggle_cc.icon.item(href='#' class=cc_class)
-                if currentUser.image_id
-                    img.ui.mini.spaced.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
-                else
-                    i.user.icon
-                span.mobile.hidden &nbsp; #{currentUser.username}
+            i.envelope.outline.icon
 
 
 template(name='leftbar')
     if delta.view_leftbar
         .four.wide.leftbar.column
-            .ui.vertical.blue.inverted.large.fluid.menu
+            .ui.vertical.blue.inverted.fluid.menu
                 each bookmarks
                     a.item.pick_delta.toggle_leftbar(href='#' title=title)
                         | #{plural}
@@ -127,15 +124,15 @@ template(name='quick_idea')
 
 
 template(name='footer')
-    .ui.bottom.fixed.inverted.footer.menu
-        a.icon.item.bookmarks(href='#' title='Bookmarks')
-            i.large.outline.bookmark.icon
-        a.icon.item.users(href='#' title='Contacts')
-            i.large.address.book.outline.icon
-        a.icon.item.calendar(href='#' title='Calendar')
-            i.large.outline.calendar.icon
-        a.icon.item.todo(href='#' title='Todo')
-            i.large.tasks.icon
+    .ui.bottom.fixed.inverted.footer.big.menu
+        a.icon.item.bookmarks(href='#')
+            i.outline.bookmark.icon
+        a.icon.item.users(href='#')
+            i.address.book.outline.icon
+        a.icon.item.calendar(href='#')
+            i.outline.calendar.icon
+        a.icon.item.todo(href='#')
+            i.tasks.icon
         .item.item
             .mobile.hidden
                 .ui.inverted.small.grey.header
