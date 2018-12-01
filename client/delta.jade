@@ -21,13 +21,12 @@ template(name='delta')
                                     | #{current_type.title}
                             // if current_type.details
                             //     p #{current_type.details}
-                            .scrolling_small
-                                if is_dev
-                                    +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='cog'
-                                if can_add
-                                    .ui.fluid.button.add_doc
-                                        +icon name='plus'
-                                        | #{current_type.title}
+                            if is_dev
+                                +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='cog'
+                            if can_add
+                                .ui.fluid.button.add_doc
+                                    +icon name='plus'
+                                    | #{current_type.title}
 
                                 each faceted_blocks
                                     +facet
@@ -40,11 +39,11 @@ template(name='toggle_delta_config')
     if boolean_true
         .ui.blue.active.fluid.button.disable_key
             +iconsmall name=icon classes='inline'
-            | #{label}
+            // | #{label}
     else
         .ui.fluid.button.enable_key
             +iconsmall name=icon classes='inline'
-            | #{label}
+            // | #{label}
     p
 
 
@@ -60,16 +59,11 @@ template(name='set_delta_key')
 template(name='facet')
     p
     if values
-        .ui.large.accordion
-            .active.title
-                .ui.header
-                    if icon
-                        +icon name=icon classes='inline mini'
-                    |#{title}
-            .active.content
-                // .ui.equal.width.grid.facet_class
-                each values
-                    +selector
+        // if icon
+        //     +icon name=icon classes='inline mini'
+        .ui.small.header.inline_header #{title}
+        each values
+            +selector
 
 template(name='selector')
     if name

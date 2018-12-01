@@ -132,6 +132,11 @@ body {
   margin-bottom: 50px;
 }
 
+.inline_header {
+  display:inline;
+  margin-right: .5em !important;
+}
+
 .ui.header{
   font-family: 'Open Sans', sans-serif !important;
 }
