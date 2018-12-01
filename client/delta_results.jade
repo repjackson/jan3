@@ -20,11 +20,11 @@ template(name='delta_results')
             if delta.result_ids
                 if delta.result_ids.length
                     unless delta.viewing_detail
-                        .ui.horizontal.list
-                            .item
-                                +set_page_size value=10
-                                +set_page_size value=20
-                                +set_page_size value=50
+                        // .ui.horizontal.list
+                        //     .item
+                        //         +set_page_size value=10
+                        //         +set_page_size value=20
+                        //         +set_page_size value=50
                             // .item
                             //     if multiple_pages
                             //         .ui.label
@@ -57,10 +57,8 @@ template(name='delta_results')
                             with delta.detail_id
                                 +delta_card
                         else
-                            .scrolling_small
-                                .delta_cards
-                                    .ui.stackable.cards(class=cards_class)
-                                        each delta.result_ids
-                                            +delta_card
+                            .ui.stackable.cards(class=cards_class)
+                                each delta.result_ids
+                                    +delta_card
             else
                 |No results

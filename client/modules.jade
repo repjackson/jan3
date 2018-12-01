@@ -1,16 +1,16 @@
 template(name='set_schema_part')
-    .ui.fluid.right.labeled.icon.button.set_schema
+    .ui.right.labeled.icon.button.set_schema
         | View Section
         +icon name='chevron-right'
 
 
 template(name='bookmark_button')
     if bookmarked
-        .ui.blue.fluid.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
+        .ui.blue.button.toggle_bookmark(title='Unbookmark' class=bookmark_class)
             +icon name='bookmark'
             |Bookmarked
     else
-        .ui.fluid.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
+        .ui.button.toggle_bookmark(title='Bookmark' class=bookmark_class)
             +icon name='bookmark'
             |Bookmark
     .ui.list
@@ -80,12 +80,12 @@ template(name='todo')
 
 template(name='mark_read_part')
     if read
-        .ui.blue.fluid.button.toggle_read
-            +icon name='envelope-open-text'
+        .ui.blue.button.toggle_read
+            i.envelope.open.outline.icon
             | Read
     else
-        .ui.fluid.button.toggle_read
-            +icon name='envelope'
+        .ui.button.toggle_read
+            i.envelope.icon
             | Mark Read
     .ui.list
         each read_users
@@ -95,28 +95,22 @@ template(name='mark_read_part')
 
 template(name='complete_part')
     if block_parent.complete
-        +icon name='checkmark' classes='spaced mini'
-        | Complete
-        div
-        .ui.fluid.button.mark_incomplete
-            +icon name='clock'
-            | Mark Incomplete
+        .ui.green.margined.button.mark_incomplete
+            i.check.icon
+            | Complete
     else
-        +icon name='clock' classes='spaced mini'
-        | Incomplete
-        div
-        .ui.fluid.button.mark_complete
-            +icon name='check'
-            | Mark Complete
+        .ui.margined.button.mark_complete
+            i.unchecked.checkbox.icon
+            | Incomplete
 
 
 template(name='subscribe_part')
     if subscribed
-        .ui.blue.fluid.button.toggle_subscribe(class=subscription_class)
+        .ui.blue.button.toggle_subscribe(class=subscription_class)
             +icon name='renew-subscription'
             | Subscribed
     else
-        .ui.button.fluid.toggle_subscribe(class=subscription_class)
+        .ui.button.toggle_subscribe(class=subscription_class)
             +icon name='renew-subscription'
             | Subscribe
     if subscribed
@@ -135,27 +129,24 @@ template(name='subscribe_part')
             +user_list_view
 
 template(name='voting_part')
-    .ui.small.dividing.header
-        +icon name='leaderboard' classes='mini spaced'
-        | Priority (#{block_parent.points})
     .ui.icon.button.upvote(class=upvote_class)
         +icon name='thumbs-up'
     .ui.icon.button.downvote(class=downvote_class)
         +icon name='thumbs-down'
     if upvoters
-        .ui.small.dividing.header
-            +icon name='collapse-arrow' classes='mini spaced'
-            |Upvoters
-        .ui.list
-            each upvoters
-                +user_list_view
+        i.thumbs.up.outline.icon
+        // .ui.small.inline_header.header
+            // |Upvoters
+        each upvoters
+            .ui.label #{username}
+            // +user_list_view
     if downvoters
-        .ui.small.dividing.header
-            +icon name='expand-arrow' classes='mini spaced'
-            |Downvoters
-        .ui.list
-            each downvoters
-                +user_list_view
+        i.thumbs.down.outline.icon
+        // .ui.small.inline_header.header
+            // |Downvoters
+        each downvoters
+            // +user_list_view
+            .ui.label #{username}
 
 template(name='users')
     .ui.header
@@ -240,7 +231,7 @@ template(name='calendar')
         | List
     .ui.button
         |Week
-    .ui.fluid.button
+    .ui.button
         +icon name='plus'
         | Event
 
