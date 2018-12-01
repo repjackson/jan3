@@ -254,27 +254,27 @@ template(name='chat')
         input#new_chat(type='text' placeholder='Add Message...')
     each chat_messages
         .ui.rounded.segment(class=comment_class)
-            .large120 #{message}
+            .large130 #{message}
             .ui.hidden.fitted.divider
             .content
-                if author.image_id
-                    img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                else
-                    i.user.icon
                 .ui.horizontal.list
                     .item
+                        if author.image_id
+                            img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        else
+                            i.user.icon
                         | #{author_username}
                     .item
                         |#{when}
                     .item
-                        .ui.icon.button.delete
+                        .ui.icon.compact.button.delete
                             i.remove.icon
                     .item
                         if has_read
-                            .ui.icon.green.button.mark_unread(title='Mark Unread')
+                            .ui.icon.blue.compact.button.mark_unread(title='Mark Unread')
                                 i.envelope.link.icon
                         else
-                            .ui.icon.button.mark_read(title='Mark Read')
+                            .ui.icon.compact.button.mark_read(title='Mark Read')
                                 i.envelope.icon
                     .item
                         .ui.small.horizontal.list

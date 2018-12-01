@@ -146,8 +146,8 @@ template(name='tickets')
         .ui.rounded.segment(class=comment_class)
             .large120 #{ticket_details}
             .ui.hidden.fitted.divider
-            .content
-                .ui.basic.large.rounded.margined.label
+            .ui.segments
+                .ui.segment
                     .ui.small.header Created
                     // |#{long_timestamp}/ 
                     if author.image_id
@@ -156,24 +156,24 @@ template(name='tickets')
                         i.user.icon
                     | #{author_username}
                     span(title=long_timestamp) #{when}
-                .ui.basic.large.rounded.large.margined.label(title='Ticket Number')
+                .ui.segment(title='Ticket Number')
                     |##{ticket_number}
-                .ui.basic.large.rounded.margined.label(title="Franchisee ##{franchisee_jpid}")
+                .ui.segment(title="Franchisee ##{franchisee_jpid}")
                     i.outline.briefcase.icon
                     | #{ticket_franchisee}
-                .ui.basic.large.rounded.margined.label(title="Office ##{office_jpid}")
+                .ui.segment(title="Office ##{office_jpid}")
                     i.building.outline.icon
                     | #{ticket_office_name}
-                .ui.basic.large.rounded.margined.label(title="Customer ##{customer_jpid}")
+                .ui.segment(title="Customer ##{customer_jpid}")
                     i.headset.icon
                     | #{customer_name}
-                .ui.basic.large.rounded.margined.label
+                .ui.segment
                     |Type: #{ticket_type}
                 .ui.rounded.icon.button
                     i.delete.icon
-                .ui.rounded.basic.margined.label
+                .ui.segment
                     | Open: #{open}
-                .ui.rounded.basic.margined.label
+                .ui.segment
                     | Status: #{status}
                 if has_read
                     .ui.rounded.button.mark_unread
@@ -183,7 +183,7 @@ template(name='tickets')
                     .ui.rounded.button.mark_read
                         i.envelope.outline.icon
                         | Mark Read
-                .ui.basic.rounded.label
+                .ui.segment
                     |Read by
                     each read_users
                         .item(title='Read by') #{username}
