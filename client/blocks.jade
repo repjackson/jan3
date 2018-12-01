@@ -410,7 +410,7 @@ template(name='user_list_view')
 
 template(name='customer_part')
     .ui.header
-        +icon name='headset' classes='mini spaced'
+        i.handshake.outline.icon classes='mini spaced'
         |#{block_parent.customer_name}
     with block_parent
         h4.ui.header #{customer_name}

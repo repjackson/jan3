@@ -3,7 +3,7 @@ template(name='my_customer_account_card')
         with currentUser.users_customer
             .content
                 a.ui.header(href="/v/#{_id}")
-                    +icon name='headset'
+                    i.handshake.outline.icon
                     |Customer Account
             .content
                 div Customer Owner: #{customer_owner}
@@ -125,7 +125,7 @@ template(name='recipient_type')
     if is_franchisee
         +icon name=briefcase title='Franchisee'
     if is_customer
-        +icon name='headset' title='Customer'
+        i.handshake.outline.icon title='Customer'
     // |#{recipient_type}
 
 

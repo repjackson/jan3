@@ -166,7 +166,7 @@ template(name='tickets')
                     | #{ticket_office_name}
                 .ui.basic.large.rounded.margined.label(title="Customer ##{customer_jpid}")
                     i.headset.icon
-                    | #{ticket_office_name}
+                    | #{customer_name}
                 .ui.basic.large.rounded.margined.label
                     |Type: #{ticket_type}
                 .ui.rounded.icon.button
@@ -174,7 +174,7 @@ template(name='tickets')
                 .ui.rounded.basic.margined.label
                     | Open: #{open}
                 .ui.rounded.basic.margined.label
-                    | Open: #{open}
+                    | Status: #{status}
                 if has_read
                     .ui.rounded.button.mark_unread
                         i.outline.envelope.open.icon
@@ -190,23 +190,6 @@ template(name='tickets')
 
 
 
-//   "ticket_number": 11,
-//   "franchisee_jpid": "20224665",
-//   "office_jpid": "15793131",
-//   "customer_jpid": "39295511",
-//   "customer_name": "Advanced Dermatology Assoc Coop City",
-//   "level": 4,
-//   "open": true,
-//   "submitted": true,
-//   "timestamp": 1537737008028,
-//   "updated": 1537764002298,
-//   "long_timestamp": "Sunday, September 23rd 2018, 9:10:08 pm",
-//   "timestamp_tags": [
-//     "sunday",
-//     "september",
-//     "23rd",
-//     "2018"
-//   ],
 //   "author_id": "XJgKeF5ddXFLCxSQz",
 //   "ticket_type": "change_service",
 //   "ticket_details": "ddfghjkl",

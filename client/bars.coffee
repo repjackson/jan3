@@ -25,6 +25,7 @@ Template.quick_idea.events
                 type:'idea'
                 details: idea
             idea = t.$('#idea_text').val('')
+            t.$('#idea_text').closest('.blue80').transition('pulse')
 
 
 
@@ -115,7 +116,16 @@ Template.nav.events
                 viewing_page: true
                 page_template:'notifications'
                 viewing_delta: false
+    'click .tickets': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_menu:false
+                viewing_page: true
+                page_template:'tickets'
+                viewing_delta: false
     
+
     'click .add': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,

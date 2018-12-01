@@ -1,10 +1,13 @@
 template(name='nav')
-    .ui.fixed.inverted.topnav.large.menu
+    .ui.fixed.inverted.jpblue.menu
         a.dash.icon.item(href='#' class=header_class)
             .mobile.hidden
                 img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             .mobile.only
                 i.large.bars.icon
+        a.icon.item.tickets(href='#' title='Tickets')
+            i.large.ticket.icon
+                
         a.bookmarks.icon.item(href='#')
             i.bookmark.large.outline.icon
         a.chat.icon.item(href='#')
@@ -38,12 +41,12 @@ template(name='leftbar')
                         +icon name=icon
 
 template(name='dash')
-    .sixteen.wide.blue.column.topnav
+    .sixteen.wide.blue.column.lightblue
         .ui.equal.width.padded.grid
             each bookmarks
                 .column.menu_segment
-                    .ui.inverted.lightblue.segment.pick_delta.pointer
-                        .ui.small.header
+                    .ui.inverted.blue80.segment.pick_delta.pointer
+                        h4.ui.small.header
                             +icon name=icon
                             |#{plural}
                         // p
@@ -52,9 +55,9 @@ template(name='dash')
 
 
 template(name='cc')
-    .ui.equal.width.padded.grid.alphablue.cc
+    .ui.equal.width.padded.grid.lightblue.cc
         .column.menu_segment
-            .ui.inverted.lightblue.segment.view_profile.pointer
+            .ui.inverted.blue80.segment.view_profile.pointer
                 .ui.icon.header
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -63,30 +66,30 @@ template(name='cc')
                     | #{currentUser.first_name} #{currentUser.last_name}
                 | @#{currentUser.username}
         .column.menu_segment.todos
-            .ui.inverted.lightblue.segment.todos.pointer
+            .ui.inverted.blue80.segment.todos.pointer
                 .ui.small.header
-                    +iconlarge name='tasks'
+                    i.tasks.icon
                     | Todos
         .column.menu_segment
-            .ui.inverted.lightblue.segment.settings.pointer
+            .ui.inverted.blue80.segment.settings.pointer
                 .ui.small.header
-                    i.cog.icon
+                    i.setting.icon
                     | Settings
                 .item Password
                 .item Email
                 .item Username
         .column.menu_segment
-            .ui.inverted.lightblue.segment.sla.pointer
+            .ui.inverted.blue80.segment.sla.pointer
                 .ui.small.header
-                    +icon name='draw-polygon'
+                    i.clock.outline.icon
                     | SLA Settings
         if is_eric
             .column.menu_segment
-                .ui.inverted.lightblue.segment
+                .ui.inverted.blue80.segment
                     .ui.small.header Role Switcher
                     +role_switcher
         .column.menu_segment
-            .ui.inverted.lightblue.segment.delete_delta(title='If no data results.')
+            .ui.inverted.blue80.segment.delete_delta(title='If no data results.')
                 +icon name='trash'
                 |Clear Session
         // .column.menu_segment
@@ -98,14 +101,14 @@ template(name='cc')
         //     |Reset
         if is_dev
             .column.menu_segment
-                a.ui.inverted.lightblue.segment.profile.pointer.show_delta(href='#')
+                a.ui.inverted.blue80.segment.profile.pointer.show_delta(href='#')
                     | Print Delta
                     +icon name='code'
         .column.menu_segment
-            .ui.inverted.lightblue.segment.profile.pointer
+            .ui.inverted.blue80.segment
                 +quick_idea
         .column.menu_segment
-            a#logout.ui.inverted.lightblue.segment.profile.pointer(href='#')
+            a#logout.ui.inverted.blue80.segment.profile.pointer(href='#')
                 if signing_out
                     // +icon name='spinner' classes='fa-pulse'
                     i.spinner.loading.icon
@@ -118,15 +121,13 @@ template(name='cc')
 template(name='quick_idea')
     .ui.inverted.left.icon.transparent.input
         +icon name='lightbulb'
-        input#idea_text(placeholder='Quick thought...')
+        input#idea_text(placeholder='Add idea')
         // .ui.small.fluid.icon.button.submit_idea
         //     i.checkmark.icon
 
 
 template(name='footer')
     .ui.bottom.fixed.inverted.footer.menu
-        a.icon.item.tickets(href='#' title='Tickets')
-            i.large.ticket.icon
         a.icon.item.bookmarks(href='#' title='Bookmarks')
             i.large.outline.bookmark.icon
         a.icon.item.users(href='#' title='Contacts')

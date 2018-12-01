@@ -32,7 +32,7 @@ template(name='login')
                 // img.ui.medium.centered.image(src="{{c.url 'jan_full_logo'}}")
                 img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
         .centered.row
-            .eight.wide.column
+            .twelve.wide.column
                 h1.ui.center.aligned.header
                     // img.ui.spaced.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
                     | Login
@@ -50,18 +50,17 @@ template(name='login')
                     .field
                         // unless currentUser
                         .login.ui.fluid.jpgreen.inverted.big.icon.button(class=login_button_class)
-                            +icon name='play'
+                            i.play.icon
             .four.wide.column
                 .ui.center.aligned.header Demo
                 #login_demo_customer.ui.fluid.margined.large.button(class=demo_class)
-                    +icon name='headset'
+                    i.handshake.outline.icon
                     | Customer
-
                 #login_demo_office.ui.fluid.margined.large.button(class=demo_class)
-                    +icon name='building'
+                    i.building.outline.icon
                     | Office
                 #login_demo_admin.ui.fluid.margined.large.button(class=demo_class)
-                    +icon name='user-shield'
+                    i.shield.alternate.icon
                     | Admin
 
 
