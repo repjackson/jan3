@@ -1,30 +1,28 @@
 template(name='nav')
-    .ui.fixed.inverted.topnav.menu
+    .ui.fixed.inverted.topnav.large.menu
         a.dash.icon.item(href='#' class=header_class)
             .mobile.hidden
                 img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             .mobile.only
-                +icon name='bars'
+                i.bars.icon
         a.bookmarks.icon.item(href='#')
-            +iconlarge name='bookmark'
-        a.chat.item(href='#')
-            +iconlarge name='comments'
-        a.notifications.item(href='#')
-            +iconlarge name='bell'
-        // a.mobile.hidden.calendar.item(href='#')
-        //     +iconlarge name='calendar'
-        a.mobile.hidden.tasks.item(href='#')
-            +iconlarge name='tasks'
+            i.bookmark.icon
+        a.chat.icon.item(href='#')
+            i.comments.icon
+        a.notifications.icon.item(href='#')
+            i.bell.icon
+        a.mobile.hidden.icon.tasks.item(href='#')
+            i.tasks.icon
         a.mobile.hidden.item(href='#')
             +iconlarge name='shopping-cart'
-        a.mobile.hidden.messages.item(href='#')
-            +iconlarge name='envelope'
+        a.mobile.hidden.messages.icon.item(href='#')
+            i.envelope.icon
         .right.menu
-            a.cc.item(href='#' class=cc_class)
+            a.toggle_cc.icon.item(href='#' class=cc_class)
                 if currentUser.image_id
                     img.ui.mini.spaced.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
                 else
-                    +iconlarge name='user'
+                    i.user.icon
                 span.mobile.hidden &nbsp; #{currentUser.username}
 
 
@@ -70,7 +68,7 @@ template(name='cc')
         .column.menu_segment
             .ui.inverted.lightblue.segment.settings.pointer
                 .ui.small.header
-                    +icon name='cog'
+                    i.cog.icon
                     | Settings
                 .item Password
                 .item Email
@@ -107,9 +105,10 @@ template(name='cc')
         .column.menu_segment
             a#logout.ui.inverted.lightblue.segment.profile.pointer(href='#')
                 if signing_out
-                    +icon name='spinner' classes='fa-pulse'
+                    // +icon name='spinner' classes='fa-pulse'
+                    i.spinner.loading.icon
                 else
-                    +icon name='sign-out-alt'
+                    i.sign.out.icon
                 strong &nbsp; Log Out
 
 
@@ -123,21 +122,20 @@ template(name='quick_idea')
 
 
 template(name='footer')
-    .ui.bottom.fixed.inverted.footer.menu
-        // a.item.toggle_footer(href='#')
-        //     +icon name='bars'
-        a.item.bookmarks(href='#')
-            +icon name='bookmark'
-        a.item.users(href='#')
-            +icon name='users'
-        a.item.calendar(href='#')
-            +icon name='calendar'
-        a.item.todo(href='#')
-            +icon name='tasks'
-
+    .ui.bottom.fixed.inverted.footer.large.menu
+        a.icon.item.tickets(href='#')
+            i.ticket.icon
+        a.icon.item.bookmarks(href='#')
+            i.bookmark.icon
+        a.icon.item.users(href='#')
+            i.users.icon
+        a.icon.item.calendar(href='#')
+            i.calendar.icon
+        a.icon.item.todo(href='#')
+            i.tasks.icon
         .item.item
             .mobile.hidden
                 .ui.inverted.small.grey.header
-                    +ricon name='copyright'
+                    i.copyright.outline.icon
                     | 2018 JAN-PRO Franchising, Inc.
 

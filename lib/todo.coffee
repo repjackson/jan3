@@ -9,9 +9,8 @@ if Meteor.isClient
                 # assigned_ids: $in: [Meteor.userId()]
             }, limit:5
 
-        # item_class: ->
-        #     delta = Docs.findOne type:'delta'
-        #     if delta.viewing_detail and delta.detail_id is @_id then 'active' else ''
+        todo_segment_class: ->
+            if @complete then 'green secondary' else ''
 
     Template.todo.events
         'click .todo': ->
@@ -30,4 +29,4 @@ if Meteor.isServer
         Docs.find {
             type:'task'
             # assigned_ids: $in: [Meteor.userId()]
-        }, limit: 5
+        }, limit: 10

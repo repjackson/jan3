@@ -154,7 +154,7 @@ Template.nav.events
                 menu_template:'dash'
                 # viewing_delta: !delta.viewing_delta
 
-    'click .cc': ->
+    'click .toggle_cc': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:

@@ -40,29 +40,31 @@ template(name='messages')
 
 
 template(name='todo')
-    .ui.center.aligned.header
-        +icon name='tasks'
+    .ui.large.header
+        i.tasks.icon
         | Tasks
     .ui.fluid.icon.input
         input(type='text' placeholder='New Task...')
         +icon name='plus'
-    .ui.relaxed.large.list
-        each todos
-            a.item(href='#')
-                .right.floated.content
-                    .ui.small.icon.button
-                        +icon name='trash'
-                if complete
-                    +icon name='check' classes='middle aligned'
-                else 
-                    +ricon name='circle' classes='middle aligned'
-                .content
-                    .header #{title}
-                    .description
-                        |#{author.first_name} #{author.last_name} #{when} 
-
-
-
+    each todos
+        .ui.rounded.segment(class=todo_segment_class)
+            .ui.small.header #{title}
+            .ui.horizontal.list
+                .item
+                    .content
+                        .description
+                            |#{author.first_name} #{author.last_name} #{when} 
+                .item
+                    if complete
+                        .ui.rounded.button
+                            i.green.check.icon
+                            | Complete
+                    else
+                        .ui.rounded.button
+                            i.circle.outline.icon
+                            |Incomplete
+                .item
+                    i.remove.link.icon
 
 template(name='mark_read_part')
     if read
@@ -76,11 +78,6 @@ template(name='mark_read_part')
     .ui.list
         each read_users
             +user_list_view
-
-
-
-
-
 
 
 
@@ -99,9 +96,6 @@ template(name='complete_part')
         .ui.fluid.button.mark_complete
             +icon name='check'
             | Mark Complete
-
-
-
 
 
 template(name='subscribe_part')
@@ -128,9 +122,6 @@ template(name='subscribe_part')
         each subscribers
             +user_list_view
 
-
-
-
 template(name='voting_part')
     .ui.small.dividing.header
         +icon name='leaderboard' classes='mini spaced'
@@ -154,25 +145,32 @@ template(name='voting_part')
             each downvoters
                 +user_list_view
 
-
-
 template(name='users')
     .ui.center.aligned.header
         +icon name='users'
         |Users
-    .ui.segments
-        each users
-            .ui.segment
+    each users
+        .ui.segment
+            .ui.small.header
                 if author.image_id
                     img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
                 else
                     +icon name='user'
-                .content
-                    .header #{first_name} #{last_name}
-                    .description
-                        |#{username}
-                        each roles
-                            .ui.basic.label #{this}
+                |#{first_name} #{last_name}
+            .description
+                |@#{username}
+            .ui.horizontal.list
+                .item
+                    +icon name='shield-alt'
+                    each roles
+                        .ui.basic.label #{this}
+                .item
+                    +icon name='at'
+                    |#{email}
+                .item
+                    if status.online
+                        i.green.globe.icon
+                    
 
 
 
@@ -243,8 +241,9 @@ template(name='chat')
         // +icon name='plus'
         input#new_chat(type='text' placeholder='Add Message...')
     each chat_messages
-        .ui.segment(class=comment_class)
+        .ui.rounded.segment(class=comment_class)
             .large120 #{message}
+            .ui.hidden.fitted.divider
             .content
                 if author.image_id
                     img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -256,14 +255,12 @@ template(name='chat')
                     .item
                         |#{when}
                     .item
-                        +icon name='trash' classes='delete'
+                        i.link.delete.icon
                     .item
                         if has_read
-                            .mark_unread
-                                +icon name='envelope-open' 
+                            i.envelope.mark_unread.link.icon(title='Mark Unread')
                         else
-                            a.mark_read(href='#')
-                                +icon name='envelope' 
+                            i.mark_read.link.envelope.icon(title='Mark Read')
                     .item
                         .ui.small.horizontal.list
                             each read_users
