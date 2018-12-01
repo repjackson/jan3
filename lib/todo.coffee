@@ -6,7 +6,7 @@ if Meteor.isClient
         todos: ->
             Docs.find {
                 type:'task'
-                assigned_ids: $in: [Meteor.userId()]
+                # assigned_ids: $in: [Meteor.userId()]
             }, limit:5
 
         # item_class: ->
@@ -29,5 +29,5 @@ if Meteor.isServer
     Meteor.publish 'top_todos', ->
         Docs.find {
             type:'task'
-            assigned_ids: $in: [Meteor.userId()]
+            # assigned_ids: $in: [Meteor.userId()]
         }, limit: 5

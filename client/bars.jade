@@ -62,22 +62,22 @@ template(name='cc')
                         +icon name='user'
                     | #{currentUser.first_name} #{currentUser.last_name}
                 | @#{currentUser.username}
-        // .column.menu_segment
-        //     .ui.inverted.lightblue.segment.profile.pointer
-        //         .ui.small.header
-        //             +icon name='users'
-        //             | Profile
-        .column.menu_segment
-            .ui.inverted.lightblue.segment.tasks.pointer
+        .column.menu_segment.todos
+            .ui.inverted.lightblue.segment.todos.pointer
                 .ui.small.header
                     +iconlarge name='tasks'
-                    | Todo
-
+                    | Todos
         .column.menu_segment
             .ui.inverted.lightblue.segment.settings.pointer
                 .ui.small.header
                     +icon name='cog'
                     | Settings
+                .ui.small.subheader
+                    .item Password
+                .ui.small.subheader
+                    .item Email
+                .ui.small.subheader
+                    .item Username
         .column.menu_segment
             .ui.inverted.lightblue.segment.sla.pointer
                 .ui.small.header
@@ -89,13 +89,13 @@ template(name='cc')
                     .ui.small.header Role Switcher
                     +role_switcher
         .column.menu_segment
-            a.ui.inverted.lightblue.segment.delete_delta(title='if always no results' href='#')
+            .ui.inverted.lightblue.segment.delete_delta(title='If no data results.')
                 +icon name='trash'
                 |Clear Session
-        .column.menu_segment
-            a.ui.inverted.lightblue.segment(title='Invert Colors' href='#')
-                +icon name='lightbulb'
-                | Night Mode
+        // .column.menu_segment
+        //     a.ui.inverted.lightblue.segment(title='Invert Colors' href='#')
+        //         +icon name='lightbulb'
+        //         | Night Mode
         // a.item.run_fo(title='Reload Session' href='#')
         //     +icon name='refresh'
         //     |Reset
@@ -109,12 +109,11 @@ template(name='cc')
                 +quick_idea
         .column.menu_segment
             a#logout.ui.inverted.lightblue.segment.profile.pointer(href='#')
-                // +icon name='exit'
                 if signing_out
-                    +icon name='loading'
+                    +icon name='spinner' classes='fa-pulse'
                 else
                     +icon name='sign-out-alt'
-                | Log Out
+                strong &nbsp; Log Out
 
 
 

@@ -40,12 +40,22 @@ template(name='messages')
 
 
 template(name='todo')
-    a.ui.header.set_tasks(href='#')
+    .ui.center.aligned.header
         +icon name='tasks'
         | Tasks
-    .ui.inverted.link.list
+    .ui.fluid.input
+        input(type='text' placeholder='New Task...')
+    .ui.icon.button.add_todo
+        +icon name='plus'
+    .ui.divided.list
         each todos
-            a.item.todo(class=item_class) #{title}
+            a.item
+                if complete
+                    +icon name='check'
+                else 
+                    +icon name='circle'
+                .content
+                    .header #{title}
 
 
 

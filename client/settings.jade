@@ -2,7 +2,7 @@ template(name='account_settings')
     .ui.padded.centered.equal.width.three.column.stackable.grid
         .centered.row
                 h1.ui.center.aligned.header
-                    i.cog.icon
+                    +icon name='cog'
                     | #{currentUser.username} Account Settings
             .column
                 +change_password_widget
@@ -27,7 +27,7 @@ template(name='account_settings')
                                         .send_verification_email.ui.button Verify
                     .ui.action.fluid.input
                         input#new_email(type='email')
-                        #add_email.ui.submit.button
+                        #add_email.ui.submit.green.button
                             |Add Email
             .column
                 .ui.secondary.segment
@@ -35,8 +35,8 @@ template(name='account_settings')
                         i.user.icon
                         |Username: #{currentUser.username}
                     .ui.action.fluid.input
-                        input#new_username(type='text' placeholder='new username...')
-                        #change_username.ui.submit.button
+                        input#new_username(type='text' placeholder='New Username...')
+                        #change_username.ui.submit.green.button
                             |Change
 
 
@@ -44,7 +44,7 @@ template(name='account_settings')
 template(name='change_password_widget')
     .ui.secondary.segment
         .ui.header
-            i.unlock.icon
+            +icon name='key'
             |Change Password
         .ui.form
             .field
@@ -54,6 +54,6 @@ template(name='change_password_widget')
                 label New Password
                 input#new_password(type='password')
             .field
-                #change_password.ui.fluid.button
+                #change_password.ui.fluid.green.button
                     // +icon name='lock-2'
                     | Change Password
