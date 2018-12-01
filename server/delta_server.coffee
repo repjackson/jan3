@@ -142,7 +142,8 @@ Meteor.methods
                 console.log 'no delta block key', delta_block
 
 
-        calc_page_size = if delta.page_size then delta.page_size else 10
+        # calc_page_size = if delta.page_size then delta.page_size else 10
+        calc_page_size = 1
 
         page_amount = Math.ceil(total/calc_page_size)
 
