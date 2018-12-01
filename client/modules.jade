@@ -18,8 +18,8 @@ template(name='bookmark_button')
             +user_list_view
 
 template(name='bookmark')
-    .ui.center.aligned.header.set_bookmarks
-        +icon name='bookmark'
+    .ui.header.set_bookmarks
+        i.bookmark.outline.icon
         | Bookmarks
 
 
@@ -27,13 +27,13 @@ template(name='bookmark')
 
 
 template(name='notifications')
-    .ui.center.aligned.header
-        +icon name='bell'
+    .ui.header
+        i.bell.outline.icon
         | Notifications
 
 template(name='messages')
     a.ui.header(href='#')
-        +icon name='mail-bulk'
+        i.envelope.outline.icon
         | Messages
 
     // +iconsmall name='compose' title='Compose' classes='pointer'
@@ -45,7 +45,7 @@ template(name='todo')
         | Tasks
     .ui.fluid.icon.input
         input(type='text' placeholder='New Task...')
-        +icon name='plus'
+        i.plus.icon
     each todos
         .ui.rounded.segment(class=todo_segment_class)
             .ui.small.header #{title}
@@ -56,15 +56,16 @@ template(name='todo')
                             |#{author.first_name} #{author.last_name} #{when} 
                 .item
                     if complete
-                        .ui.rounded.button
+                        .ui.rounded.button.mark_incomplete
                             i.green.check.icon
                             | Complete
                     else
-                        .ui.rounded.button
+                        .ui.rounded.button.mark_complete
                             i.circle.outline.icon
                             |Incomplete
                 .item
-                    i.remove.link.icon
+                    .ui.rounded.icon.button
+                        i.remove.icon
 
 template(name='mark_read_part')
     if read
@@ -146,8 +147,8 @@ template(name='voting_part')
                 +user_list_view
 
 template(name='users')
-    .ui.center.aligned.header
-        +icon name='users'
+    .ui.header
+        i.address.book.outline.icon
         |Users
     each users
         .ui.segment
@@ -155,7 +156,7 @@ template(name='users')
                 if author.image_id
                     img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
                 else
-                    +icon name='user'
+                    i.user.icon
                 |#{first_name} #{last_name}
             .description
                 |@#{username}
@@ -219,8 +220,8 @@ template(name='online_users')
             .item #{username}
 
 template(name='calendar')
-    .ui.center.aligned.header
-        +icon name='calendar'
+    .ui.header
+        i.calendar.outline
         | Calendar
     .ui.button
         | Day
@@ -234,8 +235,8 @@ template(name='calendar')
 
 
 template(name='chat')
-    .ui.center.aligned.header
-        +icon name='comments'
+    .ui.header
+        i.comment.outline.icon
         | Chat
     .ui.fluid.input
         // +icon name='plus'
@@ -248,7 +249,7 @@ template(name='chat')
                 if author.image_id
                     img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
                 else
-                    +icon name='user'
+                    i.user.icon
                 .ui.horizontal.list
                     .item
                         | #{author_username}
@@ -284,4 +285,19 @@ template(name='user_view')
             +icon name=''
             |Message
         
+template(name='add')
+    .ui.rounded.button
+        |Ticket
+    .ui.rounded.button        
+        |Request
+    .ui.rounded.button        
+        |Request
+    .ui.rounded.button        
+        |Request
+    .ui.rounded.button        
+        |Request
+    .ui.rounded.button        
+        |Request
+    .ui.rounded.button        
+        |Request
         

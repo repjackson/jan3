@@ -7,7 +7,7 @@ if Meteor.isClient
             Docs.find {
                 type:'task'
                 # assigned_ids: $in: [Meteor.userId()]
-            }, limit:5
+            }, limit:20
 
         todo_segment_class: ->
             if @complete then 'green secondary' else ''
@@ -23,10 +23,17 @@ if Meteor.isClient
                     expand_id: @_id
                     viewing_page: false
                     viewing_delta: false
+            
+        'click .mark_complete': ->
+            Docs.update @_id,
+                $set: complete: true
+        'click .mark_incomplete': ->
+            Docs.update @_id,
+                $set: complete: false
 
 if Meteor.isServer
     Meteor.publish 'top_todos', ->
         Docs.find {
             type:'task'
             # assigned_ids: $in: [Meteor.userId()]
-        }, limit: 10
+        }, limit: 20

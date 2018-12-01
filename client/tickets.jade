@@ -137,3 +137,97 @@ template(name='ticket_notes')
             |Add Note
 
 
+
+template(name='tickets')
+    .ui.header
+        i.ticket.icon
+        | Tickets
+    each tickets
+        .ui.rounded.segment(class=comment_class)
+            .large120 #{ticket_details}
+            .ui.hidden.fitted.divider
+            .content
+                .ui.basic.large.rounded.margined.label
+                    .ui.small.header Created
+                    // |#{long_timestamp}/ 
+                    if author.image_id
+                        img.ui.avatar.image(src="{{c.url author.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                    else
+                        i.user.icon
+                    | #{author_username}
+                    span(title=long_timestamp) #{when}
+                .ui.basic.large.rounded.large.margined.label(title='Ticket Number')
+                    |##{ticket_number}
+                .ui.basic.large.rounded.margined.label(title="Franchisee ##{franchisee_jpid}")
+                    i.outline.briefcase.icon
+                    | #{ticket_franchisee}
+                .ui.basic.large.rounded.margined.label(title="Office ##{office_jpid}")
+                    i.building.outline.icon
+                    | #{ticket_office_name}
+                .ui.basic.large.rounded.margined.label(title="Customer ##{customer_jpid}")
+                    i.headset.icon
+                    | #{ticket_office_name}
+                .ui.basic.large.rounded.margined.label
+                    |Type: #{ticket_type}
+                .ui.rounded.icon.button
+                    i.delete.icon
+                .ui.rounded.basic.margined.label
+                    | Open: #{open}
+                .ui.rounded.basic.margined.label
+                    | Open: #{open}
+                if has_read
+                    .ui.rounded.button.mark_unread
+                        i.outline.envelope.open.icon
+                        | Read
+                else
+                    .ui.rounded.button.mark_read
+                        i.envelope.outline.icon
+                        | Mark Read
+                .ui.basic.rounded.label
+                    |Read by
+                    each read_users
+                        .item(title='Read by') #{username}
+
+
+
+//   "ticket_number": 11,
+//   "franchisee_jpid": "20224665",
+//   "office_jpid": "15793131",
+//   "customer_jpid": "39295511",
+//   "customer_name": "Advanced Dermatology Assoc Coop City",
+//   "level": 4,
+//   "open": true,
+//   "submitted": true,
+//   "timestamp": 1537737008028,
+//   "updated": 1537764002298,
+//   "long_timestamp": "Sunday, September 23rd 2018, 9:10:08 pm",
+//   "timestamp_tags": [
+//     "sunday",
+//     "september",
+//     "23rd",
+//     "2018"
+//   ],
+//   "author_id": "XJgKeF5ddXFLCxSQz",
+//   "ticket_type": "change_service",
+//   "ticket_details": "ddfghjkl",
+//   "service_date": "September 3, 2018 5:15 AM",
+//   "submitted_datetime": 1537737017752,
+//   "last_updated_datetime": 1537737017752,
+//   "assigned_to": [
+//     "f786gHwS4Rc3d94Ls"
+//   ],
+//   "assignment_timestamp": 1542839568561,
+//   "subscribe_ids": [
+//     "Bda8mRG925DnxTjQC"
+//   ],
+//   "bookmark_ids": [
+//     "Bda8mRG925DnxTjQC"
+//   ],
+//   "read_ids": [
+//     "Bda8mRG925DnxTjQC"
+//   ],
+//   "assigned_ids": [
+//     "x2ydn6sSjQW7W6yCE"
+//   ],
+//   "ticket_status": "open"
+// }

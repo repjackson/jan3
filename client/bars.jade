@@ -4,20 +4,22 @@ template(name='nav')
             .mobile.hidden
                 img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             .mobile.only
-                i.bars.icon
+                i.large.bars.icon
         a.bookmarks.icon.item(href='#')
-            i.bookmark.icon
+            i.bookmark.large.outline.icon
         a.chat.icon.item(href='#')
-            i.comments.icon
+            i.comment.large.outline.icon
         a.notifications.icon.item(href='#')
-            i.bell.icon
+            i.bell.large.outline.icon
         a.mobile.hidden.icon.tasks.item(href='#')
-            i.tasks.icon
-        a.mobile.hidden.item(href='#')
-            +iconlarge name='shopping-cart'
+            i.tasks.large.icon
+        // a.mobile.hidden.item(href='#')
+        //     i.shopping.cart.large.icon
         a.mobile.hidden.messages.icon.item(href='#')
-            i.envelope.icon
+            i.envelope.large.outline.icon
         .right.menu
+            a.mobile.hidden.add.icon.item(href='#')
+                i.plus.large.icon
             a.toggle_cc.icon.item(href='#' class=cc_class)
                 if currentUser.image_id
                     img.ui.mini.spaced.image(src="{{c.url currentUser.image_id width=50 height=50 gravity='face' crop='fill'}}")
@@ -57,7 +59,7 @@ template(name='cc')
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
                     else
-                        +icon name='user'
+                        i.user.icon
                     | #{currentUser.first_name} #{currentUser.last_name}
                 | @#{currentUser.username}
         .column.menu_segment.todos
@@ -116,26 +118,26 @@ template(name='cc')
 template(name='quick_idea')
     .ui.inverted.left.icon.transparent.input
         +icon name='lightbulb'
-        input#idea_text(placeholder='Add thought...')
+        input#idea_text(placeholder='Quick thought...')
         // .ui.small.fluid.icon.button.submit_idea
         //     i.checkmark.icon
 
 
 template(name='footer')
-    .ui.bottom.fixed.inverted.footer.large.menu
-        a.icon.item.tickets(href='#')
-            i.ticket.icon
-        a.icon.item.bookmarks(href='#')
-            i.bookmark.icon
-        a.icon.item.users(href='#')
-            i.users.icon
-        a.icon.item.calendar(href='#')
-            i.calendar.icon
-        a.icon.item.todo(href='#')
-            i.tasks.icon
+    .ui.bottom.fixed.inverted.footer.menu
+        a.icon.item.tickets(href='#' title='Tickets')
+            i.large.ticket.icon
+        a.icon.item.bookmarks(href='#' title='Bookmarks')
+            i.large.outline.bookmark.icon
+        a.icon.item.users(href='#' title='Contacts')
+            i.large.address.book.outline.icon
+        a.icon.item.calendar(href='#' title='Calendar')
+            i.large.outline.calendar.icon
+        a.icon.item.todo(href='#' title='Todo')
+            i.large.tasks.icon
         .item.item
             .mobile.hidden
                 .ui.inverted.small.grey.header
-                    i.copyright.outline.icon
+                    i.copyright.outline.small.icon
                     | 2018 JAN-PRO Franchising, Inc.
 

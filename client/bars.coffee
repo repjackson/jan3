@@ -4,6 +4,12 @@ Template.dash.onCreated ->
 Template.footer.onCreated ->
     @autorun => Meteor.subscribe 'user_status'
 
+
+Template.footer.onRendered ->
+    Meteor.setTimeout ->
+        $('.item').popup()
+    , 1000
+
 Template.quick_idea.events
     'click .submit_idea': (e,t)->
         idea = t.$('#idea_text').val()
@@ -60,6 +66,15 @@ Template.footer.events
                 page_template:'calendar'
                 viewing_delta: false
     
+    'click .tickets': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_menu:false
+                viewing_page: true
+                page_template:'tickets'
+                viewing_delta: false
+    
     'click .users': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
@@ -99,6 +114,15 @@ Template.nav.events
                 viewing_menu:false
                 viewing_page: true
                 page_template:'notifications'
+                viewing_delta: false
+    
+    'click .add': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_menu:false
+                viewing_page: true
+                page_template:'add'
                 viewing_delta: false
 
     'click .messages': (e,t)->
@@ -212,8 +236,6 @@ Template.cc.events
             if err then console.log err
             else
                 Session.set 'is_calculating', false
-
-
 
     'click .show_delta': (e,t)->
         delta = Docs.findOne type:'delta'

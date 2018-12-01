@@ -406,16 +406,6 @@ template(name='user_list_view')
             .description @#{username}
 
 
-template(name='customer_tickets')
-    .ui.four.cards
-        each customer_ticket_docs
-            .card
-                .content
-                    .header
-                        +ticket_type_small
-                        |&nbsp; #{ticket_details}
-                    .meta
-                        |#{when}
 
 
 template(name='customer_part')
