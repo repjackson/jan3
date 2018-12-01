@@ -43,7 +43,7 @@ template(name='event')
         .label
             // img.ui.avatar.image(src="{{c.url author.profile.image_id width=100 height=100 gravity='face' crop='fill'}}")
             if is_escalation
-                +level_icon
+                +level_part
             else if event_type_doc.icon
                 +icon name=event_type_doc.icon
             else

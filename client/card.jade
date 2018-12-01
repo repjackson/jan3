@@ -1,33 +1,30 @@
 template(name='delta_card')
     with local_doc
         unless full_mode
-            .ui.card.delta_card(class=delta_card_class)
+            .ui.segment.delta_card(class=delta_card_class)
                 if blocks
-                    .content
+                    .ui.segments
                         each blocks
-                            +Template.dynamic template=part_template data=local_doc
-                unless delta.minimize
-                    .content
-                        .ui.list
-                            each blocks
-                                unless part_template_exists
-                                    .item
-                                        // if icon
-                                        //     +icon name=icon
-                                        strong #{title}
-                                        // s:#{slug} k:#{key}
-                                        |&nbsp;
-                                        if is_array
-                                            each value
-                                                .ui.margined.label #{this}
-                                        else
-                                            | #{value}
+                            .ui.segment
+                                if part_template_exists
+                                    +Template.dynamic template=part_template data=local_doc
+                                else
+                                    // if icon
+                                    //     +icon name=icon
+                                    strong #{title}
+                                    // s:#{slug} k:#{key}
+                                    |&nbsp;
+                                    if is_array
+                                        each value
+                                            .ui.margined.label #{this}
+                                    else
+                                        | #{value}
                 // if is_dev
                 // .ui.buttons
                 //     .ui.icon.button.edit
                 //         +icon name='pencil-alt'
-                .ui.icon.button.toggle_full
-                    +icon name='chevron-right'
+                .ui.fluid.button.toggle_full
+                    i.chevron.right.icon
         if full_mode
             .ui.padded.stackable.grid
                 .row
@@ -60,8 +57,7 @@ template(name='delta_card')
                                 |'#{local_doc.title}' #{current_type.title}
                         .right.floated.three.wide.column
                             .ui.fluid.icon.button.edit
-                                +icon name='pencil-alt'
-                                // | Edit
+                                i.large.pencil.icon
                 .row
                     .sixteen.wide.column
                         .ui.stackable.two.column.padded.grid

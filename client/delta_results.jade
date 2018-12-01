@@ -57,8 +57,7 @@ template(name='delta_results')
                             with delta.detail_id
                                 +delta_card
                         else
-                            .ui.stackable.cards(class=cards_class)
-                                each delta.result_ids
-                                    +delta_card
+                            each delta.result_ids
+                                +delta_card
             else
                 |No results

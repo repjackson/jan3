@@ -1,33 +1,10 @@
 if Meteor.isClient
-    Template.ticket_type_big.onRendered ->
+    Template.ticket_type_part.onRendered ->
         Meteor.setTimeout ->
             $('img').popup()
         , 2000
     
-    Template.ticket_type_big.helpers
-        ticket_type_big: ->
-            block_parent = Template.parentData(4)
-            switch block_parent.ticket_type
-                when 'missed_service' then 'Missed Service'
-                when 'team_member_infraction' then 'Team Member Infraction'
-                when 'change_service' then 'Request a Change of Service'
-                when 'problem' then 'Report a Problem or Service Issue'
-                when 'supply_request' then 'Supply Request'
-                when 'special_request' then 'Request a Special Service'
-                when 'other' then 'Other'
-    
-        ticket_type_icon: ->
-            block_parent = Template.parentData(4)
-            switch block_parent.ticket_type
-                when 'missed_service' then 'leave'
-                when 'team_member_infraction' then 'unfriend-male'
-                when 'change_service' then 'transfer-between-users'
-                when 'problem' then 'box-important'
-                when 'supply_request' then 'toilet-paper'
-                when 'special_request' then 'carpet-cleaning'
-                when 'other' then 'grey'
-    
-    Template.ticket_type_small.helpers
+    Template.ticket_type_part.helpers
         ticket_type_label: ->
             block_parent = Template.parentData(4)
             switch block_parent.ticket_type
@@ -58,7 +35,7 @@ if Meteor.isClient
                 when 'special_request' then 'carpet-cleaning'
                 when 'other' then 'grey'
     
-    Template.level_icon.helpers
+    Template.level_part.helpers
         is_level_one: ->
             target = Template.parentData(4)
             target.level is 1

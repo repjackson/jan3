@@ -1,12 +1,5 @@
 
-template(name='level_small')
-    +level_icon
-template(name='level_big')
-    .ui.header
-        |Level
-        +level_icon
-
-template(name='level_icon')
+template(name='level_part')
     .ui.small.header
         | Level
         if is_level_one
@@ -18,12 +11,7 @@ template(name='level_icon')
         if is_level_four
             img.ui.image(src="/level4icon.png" data-content='Level 4')
 
-template(name='ticket_type_big')
-    if ticket_type_big
-        +iconsmall name=ticket_type_icon popup=ticket_type_big classes='inline'
-        | &nbsp; #{ticket_type_big}
-
-template(name='ticket_type_small')
+template(name='ticket_type_part')
     if ticket_type_label
         .ui.small.header
             +iconsmall name=ticket_type_icon classes='inline'

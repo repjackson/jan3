@@ -240,8 +240,9 @@ template(name='franchisee_part')
 
 
 template(name='assignment_part')
-    .ui.small.dividing.header
-        +icon name='checked-user-male' classes='mini spaced'
+    div
+    .ui.small.inline_header.header
+        i.user.shield.icon
         | Assignments
     .ui.list
         each assigned_users
