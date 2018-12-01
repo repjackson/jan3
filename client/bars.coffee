@@ -69,12 +69,9 @@ Template.footer.events
     
     'click .tickets': (e,t)->
         delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'tickets'
-                viewing_delta: false
+        Session.set 'is_calculating', true
+        Meteor.call 'set_schema', 'ticket', ->
+            Session.set 'is_calculating', false
     
     'click .users': (e,t)->
         delta = Docs.findOne type:'delta'
@@ -116,15 +113,12 @@ Template.nav.events
                 viewing_page: true
                 page_template:'notifications'
                 viewing_delta: false
+   
     'click .tickets': (e,t)->
         delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'tickets'
-                viewing_delta: false
-    
+        Session.set 'is_calculating', true
+        Meteor.call 'set_schema', 'ticket', ->
+            Session.set 'is_calculating', false
 
     'click .add': (e,t)->
         delta = Docs.findOne type:'delta'
