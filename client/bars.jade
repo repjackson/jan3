@@ -1,10 +1,12 @@
 template(name='nav')
     .ui.fixed.inverted.jpblue.big.menu
+        a.icon.item.inbox(href='#')
+            i.inbox.icon
         a.dash.icon.item(href='#' class=header_class)
             .mobile.hidden
                 img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             .mobile.only
-                i.dashboard.icon
+                i.database.icon
         a.toggle_cc.item(href='#' class=cc_class)
             if currentUser.image_id
                 img.ui.avatar.nav_profile_icon.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -15,8 +17,6 @@ template(name='nav')
             i.ticket.icon
         a.chat.icon.item(href='#')
             i.comment.outline.icon
-        a.notifications.icon.item(href='#')
-            i.bell.outline.icon
         a.mobile.hidden.icon.tasks.item(href='#')
             i.tasks.icon
         // a.mobile.hidden.item(href='#')

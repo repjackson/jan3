@@ -105,13 +105,13 @@ Template.footer.events
 
 
 Template.nav.events
-    'click .notifications': (e,t)->
+    'click .inbox': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
                 viewing_menu:false
                 viewing_page: true
-                page_template:'notifications'
+                page_template:'inbox'
                 viewing_delta: false
    
     'click .tickets': (e,t)->
