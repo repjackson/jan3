@@ -9,17 +9,17 @@ template(name='delta_results')
             .ui.button.add_part
                 i.plus.icon
                 | Part
-            if delta.viewing_detail
-                with delta.detail_id
+            if delta.doc_view
+                with delta.doc_id
                     +delta_card
             else
-                .ui.cards
+                .ui.segments
                     each schema_blocks
                         +delta_card data=_id
         else
             if delta.result_ids
                 if delta.result_ids.length
-                    unless delta.viewing_detail
+                    // unless delta.doc_view
                         // .ui.horizontal.list
                         //     .item
                         //         +set_page_size value=10
@@ -53,11 +53,12 @@ template(name='delta_results')
                         .ui.hidden.divider
                         .ui.active.indeterminate.massive.centered.inline.loader
                     else
-                        if delta.viewing_detail
-                            with delta.detail_id
+                        if delta.doc_view
+                            with delta.doc_id
                                 +delta_card
                         else
-                            each delta.result_ids
-                                +delta_card
+                            .ui.stackable.equal.width.grid
+                                each delta.result_ids
+                                    +delta_card
             else
                 |No results

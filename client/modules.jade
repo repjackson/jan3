@@ -50,32 +50,32 @@ template(name='messages')
         
 
 
-template(name='work')
-    .ui.inline_header.header
-        i.lightning.icon
-        | Work
-    .ui.icon.button.add_work    
-        i.plus.icon
-    each joules
-        .ui.rounded.segment(class=todo_segment_class)
-            .ui.small.header #{title}
-            .ui.horizontal.list
-                .item
-                    .content
-                        .description
-                            |#{author.first_name} #{author.last_name} #{when} 
-                .item
-                    if complete
-                        .ui.circular.icon.button.mark_incomplete
-                            i.green.check.icon
-                            // | Complete
-                    else
-                        .ui.circular.icon.button.mark_complete
-                            i.square.outline.icon
-                            // |Incomplete
-                .item
-                    .ui.icon.compact.small.button
-                        i.remove.icon
+// template(name='work')
+//     .ui.inline_header.header
+//         i.tasks.icon
+//         | Work
+//     .ui.icon.button.add_work    
+//         i.plus.icon
+//     each joules
+//         .ui.rounded.segment(class=todo_segment_class)
+//             .ui.small.header #{title}
+//             .ui.horizontal.list
+//                 .item
+//                     .content
+//                         .description
+//                             |#{author.first_name} #{author.last_name} #{when} 
+//                 .item
+//                     if complete
+//                         .ui.circular.icon.button.mark_incomplete
+//                             i.green.check.icon
+//                             // | Complete
+//                     else
+//                         .ui.circular.icon.button.mark_complete
+//                             i.square.outline.icon
+//                             // |Incomplete
+//                 .item
+//                     .ui.icon.compact.small.button
+//                         i.remove.icon
 
 template(name='mark_read_part')
     if read

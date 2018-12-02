@@ -1,9 +1,9 @@
 Template.delta_card.onCreated ->
     delta = Docs.findOne type:'delta'
     @autorun => Meteor.subscribe 'schema_blocks'
-    if delta.detail_id
-        @autorun => Meteor.subscribe 'doc', delta.detail_id
-        @autorun => Meteor.subscribe 'children', delta.detail_id
+    if delta.doc_id
+        @autorun => Meteor.subscribe 'doc', delta.doc_id
+        @autorun => Meteor.subscribe 'children', delta.doc_id
 
 Template.delta.onRendered ->
     Meteor.setTimeout ->
@@ -18,14 +18,14 @@ Template.delta.onRendered ->
 Template.delta_card.events
     'click .remove_doc': ->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
         if confirm "Delete #{target_doc.title}?"
             Docs.remove target_doc._id
             Docs.update delta._id,
                 $set:
-                    detail_id:null
+                    doc_id:null
                     editing:false
-                    viewing_detail:false
+                    doc_view:false
         Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
             if err then console.log err
@@ -36,7 +36,7 @@ Template.delta_card.events
     'click .add_grandchild': ->
         delta = Docs.findOne type:'delta'
         Docs.insert
-            parent_id:delta.detail_id
+            parent_id:delta.doc_id
             type:@slug
 
     'click .enable_editing': ->
@@ -53,7 +53,7 @@ Template.delta_card.events
 Template.delta_card.helpers
     detail_doc: ->
         delta = Docs.findOne type:'delta'
-        Docs.findOne delta.detail_id
+        Docs.findOne delta.doc_id
 
     delta_doc: -> Docs.findOne type:'delta'
 
@@ -86,7 +86,7 @@ Template.delta_card.helpers
 
     children_sets: ->
         delta = Docs.findOne type:'delta'
-        detail_doc = Docs.findOne delta.detail_id
+        detail_doc = Docs.findOne delta.doc_id
         current_type = delta.filter_type[0]
         Docs.find({
             type:'schema'
@@ -95,7 +95,7 @@ Template.delta_card.helpers
 
     set_children: ->
         delta = Docs.findOne type:'delta'
-        detail_doc = Docs.findOne delta.detail_id
+        detail_doc = Docs.findOne delta.doc_id
         current_type = delta.filter_type[0]
         Docs.find({
             type:@slug
@@ -104,7 +104,7 @@ Template.delta_card.helpers
 
     blocks: ->
         delta = Docs.findOne type:'delta'
-        detail_doc = Docs.findOne delta.detail_id
+        detail_doc = Docs.findOne delta.doc_id
         current_type = delta.filter_type[0]
         current_schema =
             Docs.findOne
@@ -134,7 +134,7 @@ Template.delta_card.helpers
 
     edit_blocks: ->
         delta = Docs.findOne type:'delta'
-        detail_doc = Docs.findOne delta.detail_id
+        detail_doc = Docs.findOne delta.doc_id
         current_type = delta.filter_type[0]
         schema_doc =
             Docs.findOne
@@ -173,7 +173,7 @@ Template.delta_card.helpers
 Template.delta_card.helpers
     delta_card_class: ->
         delta = Docs.findOne type:'delta'
-        if delta.viewing_detail then 'fluid blue raised' else ''
+        if delta.doc_view then 'fluid blue raised' else ''
         # if delta.view_mode is 'grid'
         #     'six wide column'
         # else

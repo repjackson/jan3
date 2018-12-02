@@ -145,7 +145,7 @@ Template.registerHelper 'is_array', ()->
 
 Template.registerHelper 'full_mode', ()->
     delta = Docs.findOne type:'delta'
-    delta.viewing_detail
+    delta.doc_view
 
 Template.registerHelper 'expanded', ()->
     delta = Docs.findOne type:'delta'
@@ -223,7 +223,7 @@ Template.registerHelper 'online_users', () ->
 Template.home.helpers
     # middle_column_class: ->
     #     delta = Docs.findOne type:'delta'
-    #     if delta.viewing_detail
+    #     if delta.doc_view
     #         return 'sixteen wide column'
     #     else
     #         size = 16

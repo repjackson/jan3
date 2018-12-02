@@ -1,7 +1,7 @@
 Template.boolean_edit.events
     'click .toggle_block': (e,t)->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
         bool_value = target_doc["#{@key}"]
         # console.log t.data
         # console.log @
@@ -16,7 +16,7 @@ Template.boolean_edit.events
 Template.string_edit.events
     'blur .string_val': (e,t)->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
 
         val = t.$('.string_val').val()
         Docs.update target_doc._id,
@@ -25,7 +25,7 @@ Template.string_edit.events
 
     'click .slugify': (e,t)->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
         val = t.$('.string_val').val()
         Meteor.call 'slugify', target_doc.title, (err,res)->
             if err then console.log err
@@ -39,7 +39,7 @@ Template.number_edit.events
     'blur .number_val': (e,t)->
         # console.log Template.parentData()
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
 
         val = parseInt e.currentTarget.value
         Docs.update target_doc._id,
@@ -52,7 +52,7 @@ Template.date_edit.events
     'blur .date_val': (e,t)->
         # console.log Template.parentData()
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
 
         val = e.currentTarget.value
         Docs.update target_doc._id,
@@ -65,7 +65,7 @@ Template.textarea_edit.events
     'blur .textarea_val': (e,t)->
         # console.log Template.parentData()
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
 
         val = e.currentTarget.value
         Docs.update target_doc._id,
@@ -94,7 +94,7 @@ Template.array_edit.events
 
     'click .pull_element': (e,t)->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
         target = Template.parentData(5)
 
         array_block = Template.parentData(4)
@@ -119,7 +119,7 @@ Template.block_edit.helpers
 Template.boolean_edit.helpers
     bool_switch_class: ->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
         bool_value = target_doc?["#{@key}"]
         if bool_value and bool_value is true then 'active blue' else ''
 
@@ -130,7 +130,7 @@ Template.string_edit.helpers
 
     value: ->
         delta = Docs.findOne type:'delta'
-        editing_doc = Docs.findOne _id:delta.detail_id
+        editing_doc = Docs.findOne _id:delta.doc_id
         # console.log 'target doc', editing_doc
         value = editing_doc?["#{@key}"]
 
@@ -139,14 +139,14 @@ Template.string_edit.helpers
 Template.date_edit.helpers
     value: ->
         delta = Docs.findOne type:'delta'
-        editing_doc = Docs.findOne _id:delta.detail_id
+        editing_doc = Docs.findOne _id:delta.doc_id
         # console.log 'target doc', editing_doc
         value = editing_doc?["#{@key}"]
 
 Template.block_view.helpers
     value: ->
         delta = Docs.findOne type:'delta'
-        editing_doc = Docs.findOne _id:delta.detail_id
+        editing_doc = Docs.findOne _id:delta.doc_id
         # console.log 'target doc', editing_doc
         value = editing_doc?["#{@key}"]
 
@@ -155,14 +155,14 @@ Template.block_view.helpers
 Template.number_edit.helpers
     value: ->
         delta = Docs.findOne type:'delta'
-        editing_doc = Docs.findOne _id:delta.detail_id
+        editing_doc = Docs.findOne _id:delta.doc_id
         # console.log 'target doc', editing_doc
         value = editing_doc?["#{@key}"]
 
 Template.textarea_edit.helpers
     value: ->
         delta = Docs.findOne type:'delta'
-        editing_doc = Docs.findOne _id:delta.detail_id
+        editing_doc = Docs.findOne _id:delta.doc_id
         # console.log 'target doc', editing_doc
         value = editing_doc?["#{@key}"]
 
@@ -189,12 +189,12 @@ Template.multiref_edit.helpers
 
     value: ->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
         target_doc["#{@slug}"]
 
     element_class: ->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
         block_slug = Template.parentData().slug
         current_value = @slug
 
@@ -206,7 +206,7 @@ Template.multiref_edit.helpers
 Template.multiref_edit.events
     'click .toggle_element': (e,t)->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
         block_slug = Template.currentData().slug
         selected_value = @slug
 
@@ -228,7 +228,7 @@ Template.multiref_edit.events
 Template.ref_edit.events
     'click .choose_element': (e,t)->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
         slug = Template.currentData().slug
 
         Docs.update target_doc._id,
@@ -241,7 +241,7 @@ Template.ref_edit.helpers
 
     element_class: ->
         delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.detail_id
+        target_doc = Docs.findOne _id:delta.doc_id
         parent = Template.parentData()
 
         if target_doc?["#{parent.slug}"] is @slug then 'active blue' else ''

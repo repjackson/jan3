@@ -1,97 +1,94 @@
 template(name='delta_card')
-    with local_doc
-        unless full_mode
-            .delta_card(class=delta_card_class)
-                .ui.vertical.segments
-                    each blocks
-                        .ui.segment
-                            if part_template_exists
-                                +Template.dynamic template=part_template data=local_doc
-                            else
-                                // if icon
-                                //     +icon name=icon
-                                strong #{title}
-                                // s:#{slug} k:#{key}
-                                |&nbsp;
-                                if is_array
-                                    each value
-                                        .ui.margined.label #{this}
+    .column
+        with local_doc
+            unless full_mode
+                .delta_card(class=delta_card_class)
+                    .ui.vertical.segments
+                        each blocks
+                            .ui.segment
+                                if part_template_exists
+                                    +Template.dynamic template=part_template data=local_doc
                                 else
-                                    | #{value}
-                // if is_dev
-                // .ui.buttons
-                //     .ui.icon.button.edit
-                //         +icon name='pencil-alt'
-                // .ui.fluid.button.toggle_full
-                //     i.chevron.right.icon
-        if full_mode
-            .ui.padded.stackable.grid
-                .row
-                    if delta.editing
-                        .three.wide.column
-                            .ui.fluid.red.button.remove_doc
-                                +icon name='trash'
-                        .ten.wide.center.aligned.column
-                            .ui.header
-                                if icon
-                                    +icon name=icon
-                                |Edit '#{detail_doc.title}'
-                                // #{current_type.title}
-                        .right.floated.three.wide.column
-                            .ui.icon.green.fluid.button.save
-                                +icon name='save'
-                            // .ui.button.archive
-                            //     i.archive.icon
-                            //     |Archive
-                    else
-                        .three.wide.column
-                            .ui.fluid.button.toggle_full
-                                // i.caret.left.large.icon
-                                +icon name=current_type.icon
-                                | #{current_type.plural}
-                        .ten.wide.center.aligned.column
-                            .ui.header
-                                if icon
-                                    +icon name=icon
-                                |'#{local_doc.title}' #{current_type.title}
-                        .right.floated.three.wide.column
-                            .ui.fluid.icon.button.edit
-                                i.large.pencil.icon
-                .row
-                    .sixteen.wide.column
-                        .ui.stackable.two.column.padded.grid
-                            // each blocks
-                            //     .card
-                            //         .content
-                            //             if icon
-                            //                 i.large.icon
-                            //                     +icon name=icon
-                            //             strong #{title}
-                            unless delta.editing
-                                each blocks
-                                    .column
-                                        .ui.segment
-                                            .ui.dividing.header
-                                                if icon
-                                                    +icon name=icon classes='mini'
-                                                |#{title}
-                                            +Template.dynamic template=part_template data=local_doc
-                                            .ui.basic.segment
-                                                // if icon
-                                                //     i.icon
-                                                //         +icon name=icon
-                                                // strong #{title}
-                                                // |&nbsp;
-                                                if is_array
-                                                    each value
-                                                        .ui.label #{this}
-                                                else
-                                                    | #{value}
-
-                            if delta.editing
-                                each edit_blocks
-                                    .column
-                                        .ui.segment
-                                            +block_edit
-
-                                                // .ui.hidden.divider
+                                    // if icon
+                                    //     +icon name=icon
+                                    strong #{title}
+                                    // s:#{slug} k:#{key}
+                                    |&nbsp;
+                                    if is_array
+                                        each value
+                                            .ui.margined.label #{this}
+                                    else
+                                        | #{value}
+                    // if is_dev
+                    // .ui.buttons
+                    //     .ui.icon.button.edit
+                    //         +icon name='pencil-alt'
+                    // .ui.fluid.button.toggle_full
+                    //     i.chevron.right.icon
+            if full_mode
+                .ui.padded.stackable.grid
+                    .row
+                        if delta.editing
+                            .three.wide.column
+                                .ui.fluid.red.button.remove_doc
+                                    +icon name='trash'
+                            .ten.wide.center.aligned.column
+                                .ui.header
+                                    if icon
+                                        +icon name=icon
+                                    |Edit '#{detail_doc.title}'
+                            .right.floated.three.wide.column
+                                .ui.icon.green.fluid.button.save
+                                    +icon name='save'
+                        else
+                            .three.wide.column
+                                .ui.fluid.button.toggle_full
+                                    // i.caret.left.large.icon
+                                    +icon name=current_type.icon
+                                    | #{current_type.plural}
+                            .ten.wide.center.aligned.column
+                                .ui.header
+                                    if icon
+                                        +icon name=icon
+                                    |'#{local_doc.title}' #{current_type.title}
+                            .right.floated.three.wide.column
+                                .ui.fluid.icon.button.edit
+                                    i.large.pencil.icon
+                    .row
+                        .sixteen.wide.column
+                            .ui.stackable.two.column.padded.grid
+                                // each blocks
+                                //     .card
+                                //         .content
+                                //             if icon
+                                //                 i.large.icon
+                                //                     +icon name=icon
+                                //             strong #{title}
+                                unless delta.editing
+                                    each blocks
+                                        .column
+                                            .ui.segment
+                                                .ui.dividing.header
+                                                    if icon
+                                                        +icon name=icon classes='mini'
+                                                    |#{title}
+                                                +Template.dynamic template=part_template data=local_doc
+                                                .ui.basic.segment
+                                                    // if icon
+                                                    //     i.icon
+                                                    //         +icon name=icon
+                                                    // strong #{title}
+                                                    // |&nbsp;
+                                                    if is_array
+                                                        each value
+                                                            .ui.label #{this}
+                                                    else
+                                                        | #{value}
+    
+                                if delta.editing
+                                    each edit_blocks
+                                        .column
+                                            .ui.segment
+                                                +block_edit
+    
+                                                    // .ui.hidden.divider

@@ -1,38 +1,30 @@
 template(name='nav')
     .ui.fixed.inverted.jpblue.big.menu
-        a.icon.item.inbox(href='#')
-            i.inbox.icon
         a.dash.icon.item(href='#' class=header_class)
             .mobile.hidden
                 img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             .mobile.only
                 i.database.icon
+        a.icon.item.tasks(href='#')
+            i.tasks.large.icon
+            // | Agenda
+        a.icon.item.tickets(href='#')
+            i.ticket.large.icon
+            // | Tickets
         a.toggle_cc.item(href='#' class=cc_class)
             if currentUser.image_id
                 img.ui.avatar.nav_profile_icon.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
             else
                 i.user.icon
             span.mobile.hidden &nbsp; #{currentUser.username}
-        a.icon.item.tickets(href='#')
-            i.ticket.icon
         // a.chat.icon.item(href='#')
         //     i.comment.outline.icon
-        a.icon.work.item(href='#')
-            i.lightning.icon
         // a.mobile.hidden.item(href='#')
         //     i.shopping.cart.icon
         // a.mobile.hidden.messages.icon.item(href='#')
         //     i.envelope.outline.icon
 
 
-template(name='leftbar')
-    if delta.view_leftbar
-        .four.wide.leftbar.column
-            .ui.vertical.blue.inverted.fluid.menu
-                each bookmarks
-                    a.item.pick_delta.toggle_leftbar(href='#' title=title)
-                        | #{plural}
-                        +icon name=icon
 
 template(name='dash')
     .sixteen.wide.blue.column.lightblue
@@ -62,8 +54,8 @@ template(name='cc')
         .column.menu_segment.todos
             .ui.inverted.blue80.segment.work.pointer
                 .ui.small.header
-                    i.lightning.icon
-                    | Work
+                    i.tasks.icon
+                    | Agenda
         .column.menu_segment
             .ui.inverted.blue80.segment.settings.pointer
                 .ui.small.header
@@ -84,7 +76,7 @@ template(name='cc')
                     +role_switcher
         .column.menu_segment
             .ui.inverted.blue80.segment.delete_delta(title='If no data results.')
-                +icon name='trash'
+                i.trash.icon
                 |Clear Session
         // .column.menu_segment
         //     a.ui.inverted.lightblue.segment(title='Invert Colors' href='#')
@@ -97,7 +89,7 @@ template(name='cc')
             .column.menu_segment
                 a.ui.inverted.blue80.segment.profile.pointer.show_delta(href='#')
                     | Print Delta
-                    +icon name='code'
+                    i.code.icon
         .column.menu_segment
             .ui.inverted.blue80.segment
                 +quick_idea
@@ -128,11 +120,30 @@ template(name='footer')
             i.address.book.outline.icon
         a.icon.item.calendar(href='#')
             i.outline.calendar.icon
-        a.icon.item.tasks(href='#')
-            i.tasks.icon
         .item.item
             .mobile.hidden
-                .ui.inverted.small.grey.header
+                h4.ui.inverted.grey.header
                     i.copyright.outline.small.icon
                     | 2018 JAN-PRO Franchising, Inc.
+
+
+
+template(name='jp_footer')
+    img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
+    .ui.list
+        .item Why JAN-PRO
+        .item Commercial Cleaning
+        .item About Us
+    .ui.list
+        .item Contact Us
+        .item Legal/ Privacy Policy
+
+
+
+
+
+template(name='role_switcher')
+    each role_docs
+        .change_role.ui.margined.small.compact.button(class=role_button_class)
+            |#{title}
 

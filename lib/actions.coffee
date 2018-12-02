@@ -8,9 +8,9 @@ if Meteor.isClient
                 $set:
                     filter_type: [card_doc.slug]
                     current_page: 0
-                    detail_id:null
+                    doc_id:null
                     viewing_children:false
-                    viewing_detail:false
+                    doc_view:false
                     editing:false
                     config_mode:false
             Session.set 'is_calculating', true
@@ -141,9 +141,9 @@ if Meteor.isClient
 
         'click .select_user': (e,t) ->
             delta = Docs.findOne type:'delta'
-            target =  Docs.findOne delta.detail_id
+            target =  Docs.findOne delta.doc_id
             page_doc = Docs.findOne Template.currentData()._id
-            Meteor.call 'list_add_user', delta.detail_id,'assigned_ids',@,(err,res)=>
+            Meteor.call 'list_add_user', delta.doc_id,'assigned_ids',@,(err,res)=>
             $('#multiple_user_select_input').val ''
             t.user_results.set null
             # if page_doc.type is 'task'
@@ -160,7 +160,7 @@ if Meteor.isClient
     Template.assignment_part.helpers
         ticket_assignment_timestamp: ->
             delta = Docs.findOne type:'delta'
-            target =  Docs.findOne delta.detail_id
+            target =  Docs.findOne delta.doc_id
             if target
                 target.assignment_timestamp
 
@@ -168,7 +168,7 @@ if Meteor.isClient
 
         assigned_users: ->
             delta = Docs.findOne type:'delta'
-            target =  Docs.findOne delta.detail_id
+            target =  Docs.findOne delta.doc_id
             if target and target.assigned_ids
                 Meteor.users.find(_id: $in: target.assigned_ids)
 
@@ -193,9 +193,9 @@ if Meteor.isClient
 
         'click .select_user': (e,t) ->
             delta = Docs.findOne type:'delta'
-            target =  Docs.findOne delta.detail_id
+            target =  Docs.findOne delta.doc_id
             page_doc = Docs.findOne Template.currentData()._id
-            Meteor.call 'list_add_user', delta.detail_id,'approver_ids',@,(err,res)=>
+            Meteor.call 'list_add_user', delta.doc_id,'approver_ids',@,(err,res)=>
             $('#multiple_user_select_input').val ''
             t.user_results.set null
             # if page_doc.type is 'task'
@@ -209,7 +209,7 @@ if Meteor.isClient
     Template.approval_part.helpers
         ticket_assignment_timestamp: ->
             delta = Docs.findOne type:'delta'
-            target =  Docs.findOne delta.detail_id
+            target =  Docs.findOne delta.doc_id
             if target
                 target.assignment_timestamp
 
@@ -217,7 +217,7 @@ if Meteor.isClient
 
         assigned_users: ->
             delta = Docs.findOne type:'delta'
-            target =  Docs.findOne delta.detail_id
+            target =  Docs.findOne delta.doc_id
             if target and target.approver_ids
                 Meteor.users.find(_id: $in: target.approver_ids)
 
@@ -232,9 +232,9 @@ Meteor.methods
                 $set:
                     filter_type: [schema_slug]
                     current_page: 0
-                    detail_id:null
+                    doc_id:null
                     viewing_menu:false
-                    viewing_detail:false
+                    doc_view:false
                     viewing_delta:true
                     editing:false
                     config_mode:false
@@ -260,8 +260,8 @@ Meteor.methods
                 $set:
                     filter_type: [schema_slug]
                     current_page: 0
-                    viewing_detail:true
-                    detail_id:schema_doc._id
+                    doc_view:true
+                    doc_id:schema_doc._id
                     editing:true
                     config_mode:false
                     viewing_page:false

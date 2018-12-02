@@ -104,9 +104,9 @@ body {
   margin:0;
   padding:0;
   /*height:100%;*/
-  /*background: lightgrey !important;*/
-  background: rgba(244, 247, 249) !important;
-  /*background: rgba(250, 250, 250, 1);*/
+  background: lightgrey !important;
+  /*background: rgba(244, 247, 249) !important;*/
+  /*background: rgba(250, 250, 250, 1) !important;*/
   /*background: #f9f8fd;*/
 }
 .topbar {
@@ -118,7 +118,7 @@ body {
   position:relative;
   padding-bottom: 3.2em;
   padding-top: 2em;
-  margin-top: 1em;
+  margin-top: 2em;
   height:100%;
   overflow-y:scroll;
   overflow-x: hidden;

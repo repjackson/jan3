@@ -7,7 +7,7 @@
 #             delta = Docs.findOne type:'delta'
 #             # if delta
 #             Docs.find
-#                 parent_id:delta.detail_id,
+#                 parent_id:delta.doc_id,
 #                 type:'comment'
 
 
@@ -28,11 +28,11 @@
 #                         Docs.insert
 #                             type:'comment'
 #                             text:text
-#                             parent_id: delta.detail_id
+#                             parent_id: delta.doc_id
 #                     Docs.insert
 #                         type:'event'
 #                         text:"#{Meteor.user().username} commented: #{text}"
-#                         parent_id: delta.detail_id
+#                         parent_id: delta.doc_id
 #                         event_type:'comment'
 
 

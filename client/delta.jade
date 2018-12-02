@@ -3,14 +3,14 @@ template(name='delta')
         .row
             .sixteen.wide.column
                 if currentUser
-                    .create_delta.ui.button(title='Create Session')
-                        +icon name='plus'
+                    .create_delta.ui.margined.large.button(title='Create Session')
+                        i.plus.icon
                         | Session
     if delta
         if delta.viewing_delta
             .ui.stackable.padded.grid
                 .row
-                    unless delta.viewing_detail
+                    unless delta.doc_view
                         .four.wide.column
                             .ui.inline_header.header
                                 if current_type.icon
@@ -55,20 +55,21 @@ template(name='set_delta_key')
 template(name='facet')
     div
     if values
-        if icon
-            i.icon(class=icon)
-        .ui.small.header.inline_header #{title}
+        .ui.header 
+            if icon
+                i.icon(class=icon)
+            |#{title}
         each values
             +selector
 
 template(name='selector')
     if name
-        .ui.margined.toggle_value.button(class=toggle_value_class)
+        .ui.margined.toggle_value.compact.button(class=toggle_value_class)
             | #{name}
-            small #{count}
+            // small #{count}
     else
         // .column.toggle_value.pointer(class=toggle_value_class)
-        .ui.margined.toggle_value.button(class=toggle_value_class)
+        .ui.margined.toggle_value.compact.button(class=toggle_value_class)
             | [none]
             // small #{count}
 

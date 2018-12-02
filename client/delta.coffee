@@ -84,32 +84,32 @@ Template.delta.helpers
 
 
 Template.nav.events
-    'click .toggle_topbar': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                view_topbar: !delta.view_topbar
-                view_leftbar: false
-                view_rightbar: false
-                expand_footer: false
+    # 'click .toggle_topbar': ->
+    #     delta = Docs.findOne type:'delta'
+    #     Docs.update delta._id,
+    #         $set:
+    #             view_topbar: !delta.view_topbar
+    #             view_leftbar: false
+    #             view_rightbar: false
+    #             expand_footer: false
 
-    'click .toggle_rightbar': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                view_rightbar: !delta.view_rightbar
-                view_leftbar:false
-                view_topbar:false
-                expand_footer: false
+    # 'click .toggle_rightbar': ->
+    #     delta = Docs.findOne type:'delta'
+    #     Docs.update delta._id,
+    #         $set:
+    #             view_rightbar: !delta.view_rightbar
+    #             view_leftbar:false
+    #             view_topbar:false
+    #             expand_footer: false
 
-    'click .toggle_leftbar': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                view_leftbar: !delta.view_leftbar
-                view_rightbar:false
-                view_topbar:false
-                expand_footer: false
+    # 'click .toggle_leftbar': ->
+    #     delta = Docs.findOne type:'delta'
+    #     Docs.update delta._id,
+    #         $set:
+    #             view_leftbar: !delta.view_leftbar
+    #             view_rightbar:false
+    #             view_topbar:false
+    #             expand_footer: false
 
 
 Template.delta.events
@@ -120,9 +120,9 @@ Template.delta.events
             $set:
                 filter_type: ['schema']
                 current_page: 0
-                detail_id:null
+                doc_id:null
                 viewing_children:false
-                viewing_detail:false
+                doc_view:false
                 editing:false
                 config_mode:false
         Session.set 'is_calculating', true
@@ -143,8 +143,8 @@ Template.delta.events
 
         Docs.update delta._id,
             $set:
-                viewing_detail:true
-                detail_id:new_id
+                doc_view:true
+                doc_id:new_id
                 editing:true
         Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
@@ -184,25 +184,25 @@ Template.delta_card.events
 
     'click .toggle_full': ->
         delta = Docs.findOne type:'delta'
-        if delta.viewing_detail
+        if delta.doc_view
             Docs.update delta._id,
                 $set:
-                    viewing_detail: false
-                    detail_id: null
+                    doc_view: false
+                    doc_id: null
         else
             Docs.update delta._id,
                 $set:
-                    viewing_detail: true
-                    detail_id: @_id
+                    doc_view: true
+                    doc_id: @_id
                     expand_id: @_id
 
     'click .maximize': ->
         delta = Docs.findOne type:'delta'
-        unless delta.viewing_detail
+        unless delta.doc_view
             Docs.update delta._id,
                 $set:
-                    viewing_detail: true
-                    detail_id: @_id
+                    doc_view: true
+                    doc_id: @_id
 
 
 
@@ -277,8 +277,8 @@ Template.delta_card.events
         Docs.update delta._id,
             $set:
                 editing:true
-                viewing_detail: true
-                detail_id: @_id
+                doc_view: true
+                doc_id: @_id
 
 
 Template.facet.onRendered ->

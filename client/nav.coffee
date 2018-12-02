@@ -97,20 +97,17 @@ Template.footer.events
                 page_template:'bookmark'
                 viewing_delta: false
     
-    'click .work': (e,t)->
+
+Template.nav.events
+    'click .tasks': (e,t)->
         delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'work'
-                viewing_delta: false
+        Session.set 'is_calculating', true
+        Meteor.call 'set_schema', 'task', ->
+            Session.set 'is_calculating', false
     
 
 
 
-
-Template.nav.events
     'click .inbox': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
@@ -271,3 +268,64 @@ Template.cc.events
 Template.cc.helpers
     signing_out: -> Template.instance().signing_out.get()
 
+
+
+Template.role_switcher.onCreated ->
+    @autorun -> Meteor.subscribe 'type', 'role'
+
+Template.role_switcher.helpers
+    role_docs: ->
+        Docs.find
+            type: 'role'
+
+    role_button_class: ->
+        if Meteor.user() and Meteor.user().roles and @slug in Meteor.user().roles then 'blue' else ''
+
+
+# Template.footer.helpers
+    # site_doc: ->
+    #     site_doc = Docs.findOne Session.get('current_site_id')
+    #     if site_doc then site_doc
+
+    # bug_link: -> Session.get 'bug_link'
+
+
+
+# Template.footer.events
+    # "click #report_bug": ->
+    #     Session.set 'bug_link', window.location.pathname
+    #     new_bug_id = Docs.insert
+    #         type:'bug'
+    #         complete:false
+    #         link:window.location.pathname
+    #     FlowRouter.go("/edit/#{new_bug_id}")
+
+
+    # 'click .toggle_footer': ->
+    #     delta = Docs.findOne type:'delta'
+    #     Docs.update delta._id,
+    #         $set:
+    #             viewing_menu: !delta.viewing_menu
+    #             menu_template: 'dash'
+
+    # 'click .expand_footer': ->
+    #     delta = Docs.findOne type:'delta'
+    #     Docs.update delta._id,
+    #         $set:
+    #             expand_footer:true
+    #             view_leftbar:false
+    #             view_rightbar:false
+    #             view_topbar:false
+
+Template.role_switcher.events
+    'click .change_role': ->
+        cursor = Docs.find(type:'role').fetch()
+        # console.log @
+        user = Meteor.user()
+        if user
+            if @slug in user.roles
+                Meteor.users.update Meteor.userId(),
+                    $pull: roles:@slug
+            else
+                Meteor.users.update Meteor.userId(),
+                    $addToSet: roles: @slug
