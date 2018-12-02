@@ -62,7 +62,7 @@ Template.delta.helpers
             blocks = Docs.find({
                 type:'block'
                 slug: $in: schema_doc.attached_blocks
-                faceted:true
+                # faceted:true
             }, {sort:{rank:1}}).fetch()
             blocks
 

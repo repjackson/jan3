@@ -11,7 +11,7 @@ template(name='delta')
             .ui.stackable.padded.grid
                 .row
                     unless delta.doc_view
-                        .four.wide.column
+                        .eight.wide.column
                             .ui.inline_header.header
                                 if current_type.icon
                                     +icon name=current_type.icon
@@ -29,8 +29,8 @@ template(name='delta')
                                     | #{current_type.title}
                             each faceted_blocks
                                 +facet
+                        +delta_results
 
-                    +delta_results
 
 
 
@@ -55,7 +55,7 @@ template(name='set_delta_key')
 template(name='facet')
     div
     if values
-        .ui.header 
+        .ui.small.inline_header.header 
             if icon
                 i.icon(class=icon)
             |#{title}

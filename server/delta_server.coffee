@@ -65,7 +65,7 @@ Meteor.methods
                 delta_blocks = Docs.find({
                     type:'block'
                     slug: $in: schema.attached_blocks
-                    faceted:true
+                    # faceted:true
                 }, {sort:{rank:1}}).fetch()
         else
             return
