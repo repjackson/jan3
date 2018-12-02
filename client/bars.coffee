@@ -73,6 +73,12 @@ Template.footer.events
         Meteor.call 'set_schema', 'ticket', ->
             Session.set 'is_calculating', false
     
+    'click .tasks': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Session.set 'is_calculating', true
+        Meteor.call 'set_schema', 'task', ->
+            Session.set 'is_calculating', false
+
     'click .users': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
@@ -91,13 +97,13 @@ Template.footer.events
                 page_template:'bookmark'
                 viewing_delta: false
     
-    'click .todo': (e,t)->
+    'click .work': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
                 viewing_menu:false
                 viewing_page: true
-                page_template:'todo'
+                page_template:'work'
                 viewing_delta: false
     
 
@@ -156,13 +162,13 @@ Template.nav.events
                 page_template:'bookmark'
                 viewing_delta: false
 
-    'click .todo': (e,t)->
+    'click .work': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
                 viewing_menu:false
                 viewing_page: true
-                page_template:'todo'
+                page_template:'work'
                 viewing_delta: false
     
     'click .calendar': (e,t)->
@@ -206,12 +212,12 @@ Template.cc.events
                 viewing_delta:false
                 viewing_menu:false
 
-    'click .todos': (e,t)->
+    'click .work': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
                 viewing_menu:false
-                page_template:'todo'
+                page_template:'work'
                 viewing_page: true
                 viewing_delta: false
 

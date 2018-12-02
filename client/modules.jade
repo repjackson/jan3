@@ -50,14 +50,13 @@ template(name='messages')
         
 
 
-template(name='todo')
-    .ui.header
-        i.tasks.icon
-        | Tasks
-    .ui.fluid.icon.input
-        input(type='text')
+template(name='work')
+    .ui.inline_header.header
+        i.lightning.icon
+        | Work
+    .ui.icon.button.add_work    
         i.plus.icon
-    each todos
+    each joules
         .ui.rounded.segment(class=todo_segment_class)
             .ui.small.header #{title}
             .ui.horizontal.list

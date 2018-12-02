@@ -1,19 +1,19 @@
 if Meteor.isClient
-    Template.todo.onCreated ->
-        @autorun => Meteor.subscribe 'top_todos'
+    Template.work.onCreated ->
+        @autorun => Meteor.subscribe 'work'
 
-    Template.todo.helpers
-        todos: ->
+    Template.work.helpers
+        joules: ->
             Docs.find {
                 type:'task'
                 # assigned_ids: $in: [Meteor.userId()]
             }, limit:20
 
-        todo_segment_class: ->
+        work_segment_class: ->
             if @complete then 'green secondary' else ''
 
-    Template.todo.events
-        'click .todo': ->
+    Template.work.events
+        'click .work': ->
             delta = Docs.findOne type:'delta'
             Docs.update delta._id,
                 $set:
@@ -32,7 +32,7 @@ if Meteor.isClient
                 $set: complete: false
 
 if Meteor.isServer
-    Meteor.publish 'top_todos', ->
+    Meteor.publish 'work', ->
         Docs.find {
             type:'task'
             # assigned_ids: $in: [Meteor.userId()]

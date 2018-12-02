@@ -15,14 +15,14 @@ template(name='nav')
             span.mobile.hidden &nbsp; #{currentUser.username}
         a.icon.item.tickets(href='#')
             i.ticket.icon
-        a.chat.icon.item(href='#')
-            i.comment.outline.icon
-        a.mobile.hidden.icon.tasks.item(href='#')
-            i.tasks.icon
+        // a.chat.icon.item(href='#')
+        //     i.comment.outline.icon
+        a.icon.work.item(href='#')
+            i.lightning.icon
         // a.mobile.hidden.item(href='#')
         //     i.shopping.cart.icon
-        a.mobile.hidden.messages.icon.item(href='#')
-            i.envelope.outline.icon
+        // a.mobile.hidden.messages.icon.item(href='#')
+        //     i.envelope.outline.icon
 
 
 template(name='leftbar')
@@ -60,10 +60,10 @@ template(name='cc')
                     | #{currentUser.first_name} #{currentUser.last_name}
                 | @#{currentUser.username}
         .column.menu_segment.todos
-            .ui.inverted.blue80.segment.todos.pointer
+            .ui.inverted.blue80.segment.work.pointer
                 .ui.small.header
-                    i.tasks.icon
-                    | Todos
+                    i.lightning.icon
+                    | Work
         .column.menu_segment
             .ui.inverted.blue80.segment.settings.pointer
                 .ui.small.header
@@ -128,7 +128,7 @@ template(name='footer')
             i.address.book.outline.icon
         a.icon.item.calendar(href='#')
             i.outline.calendar.icon
-        a.icon.item.todo(href='#')
+        a.icon.item.tasks(href='#')
             i.tasks.icon
         .item.item
             .mobile.hidden
