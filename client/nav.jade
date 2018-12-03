@@ -1,5 +1,8 @@
 template(name='nav')
     .centered.row
+        .four.wide.center.aligned.column
+            .ui.icon.button
+                i.plus.icon
         .eight.wide.column
             img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
             // a.toggle_cc.ui.button(href='#')
@@ -8,21 +11,16 @@ template(name='nav')
             //     else
             //         i.user.icon
             //     span.mobile.hidden &nbsp; #{currentUser.username}
-        
-        if is_dev
-            .item.delete_delta
-                i.trash.icon
-            .item.run_fo
-                i.refresh.icon
-            .item.show_delta
-                i.code.icon
-        #logout.ui.icon.button
-            if signing_out
-                // +icon name='spinner' classes='fa-pulse'
-                i.spinner.loading.icon
-            else
-                i.sign.out.icon
-            // strong &nbsp; Log Out
+        .four.wide.column
+            .ui.icon.button
+                i.user.icon
+            #logout.ui.icon.button
+                if signing_out
+                    // +icon name='spinner' classes='fa-pulse'
+                    i.spinner.loading.icon
+                else
+                    i.sign.out.icon
+                // strong &nbsp; Log Out
 
                     
 

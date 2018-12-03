@@ -65,18 +65,18 @@ Template.delta.helpers
         #         # faceted:true
         #     }, {sort:{rank:1}}).fetch()
         facets = [
-            {
-                key:'type'
-                primitive:'string'
-            }
-            {
-                key:'timestamp_tags'
-                primitive:'array'
-            }
-            {
-                key:'tags'
-                type:'array'
-            }
+            # {
+            #     key:'type'
+            #     primitive:'string'
+            # }
+            # {
+            #     key:'timestamp_tags'
+            #     primitive:'array'
+            # }
+            # {
+            #     key:'tags'
+            #     type:'array'
+            # }
             {
                 key:'keys'
                 type:'array'

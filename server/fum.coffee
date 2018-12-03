@@ -62,21 +62,21 @@ Meteor.methods
         filter_keys = []
         
         facets = [
-            {
-                key:'type'
-                type:'string'
-                primitive:'string'
-            }
-            {
-                key:'timestamp_tags'
-                primitive:'array'
-            }
+            # {
+            #     key:'type'
+            #     type:'string'
+            #     primitive:'string'
+            # }
+            # {
+            #     key:'timestamp_tags'
+            #     primitive:'array'
+            # }
 
-            {
-                key:'tags'
-                type:'array'
-                primitive:'array'
-            }
+            # {
+            #     key:'tags'
+            #     type:'array'
+            #     primitive:'array'
+            # }
             {
                 key:'keys'
                 type:'array'
@@ -95,14 +95,15 @@ Meteor.methods
         # need to normalize list of existing filters
         # so normalizing keys in the fo method, ~abstracting my own server code
         
-        for filter in facets
-            unless filter.key in filter_keys
-                filter_keys.push filter.key
+        # for filter in facets
+        #     unless filter.key in filter_keys
+        #         filter_keys.push filter.key
 
         for facet in facets
             filter_list = delta["filter_#{facet.key}"]
             if filter_list and filter_list.length > 0
                 if facet.primitive is 'array'
+                    # need auto discovery, even for user_ids, thats the intelligence, not just primitive detection.  so this section will evolve.
                     built_query["#{facet.key}"] = $all: filter_list
                 else
                     built_query["#{facet.key}"] = $in: filter_list
@@ -112,16 +113,16 @@ Meteor.methods
 
 
         total = Docs.find(built_query).count()
-
+        # maybe this references keys_return?
         for facet in facets
             values = []
             key_return = []
-            # example_doc = Docs.findOne({"#{facet.key}":$exists:true})
-            # example_value = example_doc?["#{facet.key}"]
-            # primitive = typeof example_value
+            example_doc = Docs.findOne({"#{facet.key}":$exists:true})
+            example_value = example_doc?["#{facet.key}"]
+            primitive = typeof example_value
 
-            if facet.primitive
-                test_calc = Meteor.call 'agg', built_query, facet.primitive, facet.key
+            if primitive
+                test_calc = Meteor.call 'agg', built_query, primitive, facet.key
             else
                 console.log 'no primitive', facet
             if facet.key
