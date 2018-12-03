@@ -1,9 +1,3 @@
-Meteor.users.allow
-    update: (userId, doc, fields, modifier) ->
-        true
-        # if userId and doc._id == userId
-        #     true
-
 # SyncedCron.config
 #     log: true
 #     collectionName: 'cron_history'
@@ -117,7 +111,6 @@ Docs.allow
 Meteor.publish 'delta', ->
     Docs.find {
         type:'delta'
-        author_id: Meteor.userId()
     }, {limit:1}
 
 

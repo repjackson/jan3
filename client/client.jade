@@ -30,7 +30,7 @@ template(name='home')
                         .column
                             if delta.result_ids
                                 if delta.result_ids.length
-                                    | #{delta.total} results
+                                    // | #{delta.total} results
                                     if is_calculating
                                         .ui.hidden.divider
                                         .ui.active.indeterminate.massive.centered.inline.loader
