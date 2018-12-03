@@ -7,16 +7,6 @@ Template.response.onCreated ->
 Template.response.helpers
     is_calculating: -> Session.get('is_calculating')
 
-    grid_view_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.view_mode is 'grid' then 'delta_selected' else 'delta_selector'
-    list_view_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.view_mode is 'list' then 'delta_selected' else 'delta_selector'
-    table_view_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.view_mode is 'table' then 'delta_selected' else 'delta_selector'
-
     results_class: ->
         delta = Docs.findOne type:'delta'
         if delta.doc_view

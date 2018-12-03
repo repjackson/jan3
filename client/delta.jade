@@ -11,18 +11,6 @@ template(name='delta')
             .row
                 .column
                     .ui.header Call
-                    // .ui.inline_header.header
-                    //     if current_type.icon
-                    //         +icon name=current_type.icon
-                    //     if current_type.plural
-                    //         | #{current_type.plural}
-                    //     else
-                    //         | #{current_type.title}
-                    // if current_type.details
-                    //     p #{current_type.details}
-                    // if is_dev
-                    //     +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='cog'
-                    
                     .ui.button.delete_delta
                         i.trash.icon
                         |Clear Session
@@ -31,8 +19,8 @@ template(name='delta')
                         |Reset
                     if is_dev
                         .ui.button.show_delta
-                            | Print Delta
                             i.code.icon
+                            | Print Delta
 
                     
                     if can_add
@@ -68,22 +56,24 @@ template(name='set_delta_key')
 
 template(name='facet')
     div
+    .ui.small.inline_header.header 
+        if icon
+            i.icon(class=icon)
+        |#{key}
+    each selected_values
+        .unselect.ui.blue.button #{this}
     if values
-        .ui.small.inline_header.header 
-            if icon
-                i.icon(class=icon)
-            |#{title}
         each values
             +selector
 
 template(name='selector')
     if name
-        .ui.margined.toggle_value.button(class=toggle_value_class)
+        .ui.margined.select.button(class=toggle_value_class)
             | #{name}
             // small #{count}
     else
         // .column.toggle_value.pointer(class=toggle_value_class)
-        .ui.margined.toggle_value.button(class=toggle_value_class)
+        .ui.margined.select.button(class=toggle_value_class)
             | [none]
             // small #{count}
 

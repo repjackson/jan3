@@ -173,14 +173,14 @@ Meteor.methods
     keys: ->
         start = Date.now()
         console.log 'starting keys'
-        cursor = Docs.find({keys:$exists:false}, {limit:200}).fetch()
+        cursor = Docs.find({keys:$exists:false}, {limit:10000}).fetch()
         for doc in cursor
             keys = _.keys doc
             # console.log doc
             Docs.update doc._id,
                 $set:keys:keys
             
-            # console.log "updated keys for doc #{doc._id}"
+            console.log "updated keys for doc #{doc._id}"
         stop = Date.now()
         
         diff = stop - start

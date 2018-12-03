@@ -152,27 +152,27 @@ Template.registerHelper 'expanded', ()->
     delta.expand_id is @_id
 
 
-Template.registerHelper 'can_add', ()->
-    delta = Docs.findOne type:'delta'
-    type_key = delta.filter_type[0]
-    schema = Docs.findOne
-        type:'schema'
-        slug:type_key
-    if Meteor.user() and Meteor.user().roles
-        if 'dev' in Meteor.user()?.roles
-            true
-        else
-            my_role = Meteor.user()?.roles?[0]
-            if schema and my_role
-                if schema.add_roles
-                    if my_role in schema.add_roles
-                        true
-                    else
-                        false
-                else
-                    false
-            else
-                false
+# Template.registerHelper 'can_add', ()->
+#     delta = Docs.findOne type:'delta'
+#     type_key = delta.filter_type[0]
+#     schema = Docs.findOne
+#         type:'schema'
+#         slug:type_key
+#     if Meteor.user() and Meteor.user().roles
+#         if 'dev' in Meteor.user()?.roles
+#             true
+#         else
+#             my_role = Meteor.user()?.roles?[0]
+#             if schema and my_role
+#                 if schema.add_roles
+#                     if my_role in schema.add_roles
+#                         true
+#                     else
+#                         false
+#                 else
+#                     false
+#             else
+#                 false
 
 
 Template.registerHelper 'my_role', ()->

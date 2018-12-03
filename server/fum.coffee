@@ -58,74 +58,76 @@ Meteor.methods
             author_id: Meteor.userId()
 
 
-        delta_blocks = []
 
         built_query = {}
 
-        delta_blocks.push
-            key:'type'
-            primitive:'string'
 
         filter_keys = []
         
         facets = [
             {
+                key:'type'
+                type:'string'
+                primitive:'string'
+            }
+            {
                 key:'tags'
                 type:'array'
+                primitive:'array'
             }
             {
                 key:'keys'
                 type:'array'
+                primitive:'array'
             }
         ]
 
         
-        filter_keys = ['keys']
-    
-    
         # include existing filter selections
-        for key in filter_keys
-            filter_list = delta["filter_#{key}"]
-            if filter_list
-                built_query["#{key}"] = $all: filter_list
+        if delta.filter_keys
+            for key in delta.filter_keys
+                filter_list = delta["filter_#{key}"]
+                if filter_list
+                    built_query["#{key}"] = $all: filter_list
     
-
+        # need to normalize list of existing filters
+        # so normalizing keys in the fo method, ~abstracting my own server code
         
-        for filter in delta_blocks
+        for filter in facets
             unless filter.key in filter_keys
                 filter_keys.push filter.key
 
-        for delta_block in delta_blocks
-            filter_list = delta["filter_#{delta_block.key}"]
+        for facet in facets
+            filter_list = delta["filter_#{facet.key}"]
             if filter_list and filter_list.length > 0
-                if delta_block.primitive is 'array'
-                    built_query["#{delta_block.key}"] = $all: filter_list
+                if facet.primitive is 'array'
+                    built_query["#{facet.key}"] = $all: filter_list
                 else
-                    built_query["#{delta_block.key}"] = $in: filter_list
+                    built_query["#{facet.key}"] = $in: filter_list
             else
                 Docs.update delta._id,
-                    $set: "filter_#{delta_block.key}":[]
+                    $set: "filter_#{facet.key}":[]
 
 
         total = Docs.find(built_query).count()
 
-        for delta_block in delta_blocks
+        for facet in facets
             values = []
             key_return = []
-            example_doc = Docs.findOne({"#{delta_block.key}":$exists:true})
-            example_value = example_doc?["#{delta_block.key}"]
-            primitive = typeof example_value
+            # example_doc = Docs.findOne({"#{facet.key}":$exists:true})
+            # example_value = example_doc?["#{facet.key}"]
+            # primitive = typeof example_value
 
-            if delta_block.primitive
-                test_calc = Meteor.call 'agg', built_query, delta_block.primitive, delta_block.key
+            if facet.primitive
+                test_calc = Meteor.call 'agg', built_query, facet.primitive, facet.key
             else
-                console.log 'no primitive', delta_block
-            if delta_block.key
+                console.log 'no primitive', facet
+            if facet.key
                 Docs.update {_id:delta._id},
-                    { $set:"#{delta_block.key}_return":test_calc }
+                    { $set:"#{facet.key}_return":test_calc }
                     , ->
             else
-                console.log 'no delta block key', delta_block
+                console.log 'no delta block key', facet
 
 
         # calc_page_size = if delta.page_size then delta.page_size else 10
@@ -169,8 +171,8 @@ Meteor.methods
 
 
     agg: (query, type, key)->
-        # console.log query
-        # console.log type
+        console.log query
+        console.log type
         options = {
             explain:false
             }

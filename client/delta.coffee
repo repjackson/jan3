@@ -50,21 +50,36 @@ Template.delta.helpers
             # for block in schema.blocks
             #     console.log 'found block', block
 
-    faceted_blocks: ->
-        delta = Docs.findOne type:'delta'
-        current_type = delta.filter_type[0]
+    facets: ->
+        # delta = Docs.findOne type:'delta'
+        # current_type = delta.filter_type[0]
 
-        schema_doc =
-            Docs.findOne
-                type:'schema'
-                slug:current_type
-        if schema_doc
-            blocks = Docs.find({
-                type:'block'
-                slug: $in: schema_doc.attached_blocks
-                # faceted:true
-            }, {sort:{rank:1}}).fetch()
-            blocks
+        # schema_doc =
+        #     Docs.findOne
+        #         type:'schema'
+        #         slug:current_type
+        # if schema_doc
+        #     blocks = Docs.find({
+        #         type:'block'
+        #         slug: $in: schema_doc.attached_blocks
+        #         # faceted:true
+        #     }, {sort:{rank:1}}).fetch()
+        facets = [
+            {
+                key:'type'
+                primitive:'string'
+            }
+            {
+                key:'tags'
+                type:'array'
+            }
+            {
+                key:'keys'
+                type:'array'
+            }
+        ]
+
+            
 
 
     blocks: ->
@@ -157,12 +172,12 @@ Template.delta.events
         new_delta_id =
             Docs.insert
                 type:'delta'
-                filter_type: ['schema']
+                # filter_type: ['schema']
                 result_ids:[]
                 current_page:1
                 page_size:10
                 skip_amount:0
-                view_full:true
+                # view_full:true
         Meteor.call 'fo', new_delta_id
 
 
@@ -301,6 +316,7 @@ Template.set_delta_key.helpers
 
 Template.facet.helpers
     values: ->
+        # console.log @
         delta = Docs.findOne type:'delta'
         # delta["#{@key}_return"]?[..20]
         filtered_values = []
@@ -313,10 +329,15 @@ Template.facet.helpers
                 else if value.count < delta.total
                     filtered_values.push value
         filtered_values
-
-    # set_delta_key_class: ->
-    #     delta = Docs.findOne type:'delta'
-    #     if delta.query["#{@slug}"] is @value then 'blue' else 'basic'
+    
+    
+    selected_values: ->
+        # console.log @
+        delta = Docs.findOne type:'delta'
+        # delta["#{@key}_return"]?[..20]
+        filtered_values = []
+        fo_values = delta["#filter_{@key}"]
+        filters = delta["filter_#{@key}"]
 
 
 Template.facet.events
@@ -330,23 +351,32 @@ Template.facet.events
             else
                 Session.set 'is_calculating', false
 
+    'click .unselect': ->
+        facet = Template.currentData()
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $pull: "filter_#{facet.key}": @valueOf()
+        Session.set 'is_calculating', true
+        Meteor.call 'fo', (err,res)->
+            if err then console.log err
+            else
+                Session.set 'is_calculating', false
+
+
+
 Template.selector.events
-    'click .toggle_value': ->
+    'click .select': ->
         filter = Template.parentData()
         delta = Docs.findOne type:'delta'
         filter_list = delta["filter_#{filter.key}"]
-
-        if filter_list and @name in filter_list
-            Docs.update delta._id,
-                $set:
-                    current_page:1
-                $pull: "filter_#{filter.key}": @name
-        else
-            Docs.update delta._id,
-                $set:
-                    current_page:1
-                $addToSet:
-                    "filter_#{filter.key}": @name
+        
+        # console.log filter
+        
+        Docs.update delta._id,
+            $addToSet:
+                "filter_#{filter.key}": @name
+                filter_keys: filter.key
+                
         Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
             if err then console.log err
