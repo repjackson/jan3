@@ -131,7 +131,7 @@ Meteor.methods
 
 
         # calc_page_size = if delta.page_size then delta.page_size else 10
-        calc_page_size = 1
+        calc_page_size = 10
 
         page_amount = Math.ceil(total/calc_page_size)
 

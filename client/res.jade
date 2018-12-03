@@ -57,7 +57,9 @@ template(name='response')
                         with delta.doc_id
                             +delta_card
                     else
-                        +delta_card
+                        each delta.result_ids
+                            .ui.header #{this}
+                            +delta_card
         else
             |No results
 
