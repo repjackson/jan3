@@ -4,57 +4,57 @@ Meteor.users.allow
         # if userId and doc._id == userId
         #     true
 
-SyncedCron.config
-    log: true
-    collectionName: 'cron_history'
-    utc: false
-    collectionTTL: 17280
+# SyncedCron.config
+#     log: true
+#     collectionName: 'cron_history'
+#     utc: false
+#     collectionTTL: 17280
 
-if Meteor.isProduction
-    SyncedCron.add(
-        {
-            name: 'Update ticket escalations'
-            schedule: (parser) ->
-                parser.text 'every 50 minutes'
-                # so it catches 1 hour escalations
-            job: ->
-                console.log 'running site escalation check'
-                Meteor.call 'run_site_escalation_check', (err,res)->
-                    if err then console.error err
-        },{
-            name: 'Update customers'
-            schedule: (parser) ->
-                parser.text 'every 3 hours'
-            job: ->
-                console.log 'updating customers'
-                Meteor.call 'update_customers', (err, res)->
-                    if err then console.error err
-        },{
-            name: 'Update users'
-            schedule: (parser) ->
-                parser.text 'every 3 hours'
-            job: ->
-                console.log 'updating users/3hrs'
-                Meteor.call 'sync_ev_users', (err, res)->
-                    if err then console.error err
-        },{
-            name: 'Update franchisee'
-            schedule: (parser) ->
-                parser.text 'every 3 hours'
-            job: ->
-                console.log 'updating franchisee'
-                Meteor.call 'update_franchisees', (err, res)->
-                    if err then console.error err
-        },{
-            name: 'Update office'
-            schedule: (parser) ->
-                parser.text 'every 3 hours'
-            job: ->
-                console.log 'updating office'
-                Meteor.call 'update_offices', (err, res)->
-                    if err then console.error err
-        }
-    )
+# if Meteor.isProduction
+#     SyncedCron.add(
+#         {
+#             name: 'Update ticket escalations'
+#             schedule: (parser) ->
+#                 parser.text 'every 50 minutes'
+#                 # so it catches 1 hour escalations
+#             job: ->
+#                 console.log 'running site escalation check'
+#                 Meteor.call 'run_site_escalation_check', (err,res)->
+#                     if err then console.error err
+#         },{
+#             name: 'Update customers'
+#             schedule: (parser) ->
+#                 parser.text 'every 3 hours'
+#             job: ->
+#                 console.log 'updating customers'
+#                 Meteor.call 'update_customers', (err, res)->
+#                     if err then console.error err
+#         },{
+#             name: 'Update users'
+#             schedule: (parser) ->
+#                 parser.text 'every 3 hours'
+#             job: ->
+#                 console.log 'updating users/3hrs'
+#                 Meteor.call 'sync_ev_users', (err, res)->
+#                     if err then console.error err
+#         },{
+#             name: 'Update franchisee'
+#             schedule: (parser) ->
+#                 parser.text 'every 3 hours'
+#             job: ->
+#                 console.log 'updating franchisee'
+#                 Meteor.call 'update_franchisees', (err, res)->
+#                     if err then console.error err
+#         },{
+#             name: 'Update office'
+#             schedule: (parser) ->
+#                 parser.text 'every 3 hours'
+#             job: ->
+#                 console.log 'updating office'
+#                 Meteor.call 'update_offices', (err, res)->
+#                     if err then console.error err
+#         }
+#     )
 
 
 # if Meteor.isProduction

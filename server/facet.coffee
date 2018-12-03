@@ -76,14 +76,6 @@ Meteor.methods
                 , ->
 
 
-        # calc_page_size = if delta.page_size then delta.page_size else 10
-        calc_page_size = 10
-
-        page_amount = Math.ceil(total/calc_page_size)
-
-        current_page = if delta.current_page then delta.current_page else 1
-
-        skip_amount = current_page*calc_page_size-calc_page_size
 
         final_sort_key = if delta.sort_key then delta.sort_key else 'timestamp'
         final_sort_direction = if delta.sort_direction then delta.sort_direction else -1
@@ -106,9 +98,6 @@ Meteor.methods
 
         Docs.update {_id:delta._id},
             {$set:
-                current_page:current_page
-                page_amount:page_amount
-                skip_amount:skip_amount
                 page_size:calc_page_size
                 total: total
                 result_ids:result_ids
