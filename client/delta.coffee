@@ -1,5 +1,5 @@
 
-Template.delta_card.onCreated ->
+Template.doc.onCreated ->
     @autorun => Meteor.subscribe 'delta'
 
 Template.home.onCreated ->
@@ -181,13 +181,13 @@ Template.delta.events
         Meteor.call 'fo', new_delta_id
 
 
-Template.delta_card.onCreated ->
+Template.doc.onCreated ->
     @autorun => Meteor.subscribe 'doc', @data
 
 
 
 
-Template.delta_card.events
+Template.doc.events
     'click .expand': ->
         delta = Docs.findOne type:'delta'
         if delta.expand_id is @_id
@@ -281,7 +281,7 @@ Template.selector.helpers
         if filter_list and @name in filter_list then 'blue active' else ''
 
 
-Template.delta_card.events
+Template.doc.events
     'click .save': ->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
@@ -300,7 +300,7 @@ Template.facet.onRendered ->
     Meteor.setTimeout ->
         $('.accordion').accordion();
     , 500
-# Template.delta_card.onRendered ->
+# Template.doc.onRendered ->
 #     Meteor.setTimeout ->
 #         # $('.accordion').accordion();
 #         # $('.shape').shape()

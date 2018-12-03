@@ -108,32 +108,32 @@ Template.registerHelper 'is_eric', ()->
 
 
 
-Template.registerHelper 'blocks', ()->
-    delta = Docs.findOne type:'delta'
-    local_doc =
-        if @data
-            Docs.findOne @data.valueOf()
-        else
-            Docs.findOne @valueOf()
-    blocks_schema =
-        Docs.findOne
-            type:'schema'
-            slug:'block'
+# Template.registerHelper 'blocks', ()->
+#     delta = Docs.findOne type:'delta'
+#     local_doc =
+#         if @data
+#             Docs.findOne @data.valueOf()
+#         else
+#             Docs.findOne @valueOf()
+#     blocks_schema =
+#         Docs.findOne
+#             type:'schema'
+#             slug:'block'
 
-    if local_doc?.type is 'block'
-        Docs.find({
-            type:'block'
-            slug: $in: blocks_schema.attached_blocks
-        }, {sort:{rank:1}}).fetch()
-    else
-        schema = Docs.findOne
-            type:'schema'
-            slug:delta.filter_type[0]
-        Docs.find({
-            type:'block'
-            # visible:true
-            slug: $in: schema.attached_blocks
-        }, {sort:{rank:1}}).fetch()
+#     if local_doc?.type is 'block'
+#         Docs.find({
+#             type:'block'
+#             slug: $in: blocks_schema.attached_blocks
+#         }, {sort:{rank:1}}).fetch()
+#     else
+#         schema = Docs.findOne
+#             type:'schema'
+#             slug:delta.filter_type[0]
+#         Docs.find({
+#             type:'block'
+#             # visible:true
+#             slug: $in: schema.attached_blocks
+#         }, {sort:{rank:1}}).fetch()
 
 
 Template.registerHelper 'is_array', ()->

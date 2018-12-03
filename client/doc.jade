@@ -1,0 +1,20 @@
+template(name='doc')
+    with local_doc
+        unless full_mode
+            .delta_card(class=delta_card_class)
+                .ui.vertical.segments
+                    each blocks
+                        .ui.segment
+                            if part_template_exists
+                                +Template.dynamic template=part_template data=local_doc
+                            else
+                                // if icon
+                                //     +icon name=icon
+                                strong #{title}
+                                // s:#{slug} k:#{key}
+                                |&nbsp;
+                                if is_array
+                                    each value
+                                        .ui.margined.label #{this}
+                                else
+                                    | #{value}
