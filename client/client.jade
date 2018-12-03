@@ -1,22 +1,5 @@
 head
-    // script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-125029650-1')
-    script.
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-125029650-1');
-    title JAN-PRO Portal
-    link(rel="apple-touch-icon", sizes="180x180", href="/apple-touch-icon.png")
-    link(rel="icon", type="image/png", sizes="32x32", href="/favicon-32x32.png")
-    link(rel="icon", type="image/png", sizes="16x16", href="/favicon-16x16.png")
-    link(rel="manifest", href="/site.webmanifest")
-    link(rel="mask-icon", href="/safari-pinned-tab.svg", color="#5bbad5")
-    meta(name="msapplication-TileColor", content="#da532c")
-    meta(name="theme-color", content="#01336C")
-
-    link(href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet")
-
-
+    title JAN-PRO
     meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='black')
@@ -28,83 +11,51 @@ body
 template(name='home')
     if currentUser
         .ui.stackable.padded.grid
-            +nav
+            .centered.row
+                .four.wide.center.aligned.column
+                    .ui.icon.button
+                        i.plus.icon
+                .eight.wide.column
+                    img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
+                .four.wide.column
+                    .ui.icon.button
+                        i.user.icon
+                    #logout.ui.icon.button
+                        i.sign.out.icon
             #main
-                +delta
+                unless delta
+                    if currentUser
+                        .create_delta.ui.margined.large.button(title='Create Session')
+                            i.plus.icon
+                            | Session
+                if delta
+                    .ui.stackable.two.column.padded.grid
+                        .row
+                            .column
+                                each facets
+                                    +facet
+                            .column
+                                if delta.result_ids
+                                    if delta.result_ids.length
+                                        | #{delta.total} results
+                                        if is_calculating
+                                            .ui.hidden.divider
+                                            .ui.active.indeterminate.massive.centered.inline.loader
+                                        else
+                                            if delta.doc_view
+                                                with delta.doc_id
+                                                    +doc
+                                            else
+                                                each delta.result_ids
+                                                    +doc
+                                else
+                                    |No results
     else
         +login
 
 
 
-template(name='response')
-    if delta.result_ids
-        if delta.result_ids.length
-            | #{delta.total} results
-            if is_calculating
-                .ui.hidden.divider
-                .ui.active.indeterminate.massive.centered.inline.loader
-            else
-                if delta.doc_view
-                    with delta.doc_id
-                        +doc
-                else
-                    each delta.result_ids
-                        +doc
-    else
-        |No results
-
-
-
-template(name='nav')
-    .centered.row
-        .four.wide.center.aligned.column
-            .ui.icon.button
-                i.plus.icon
-        .eight.wide.column
-            img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
-        .four.wide.column
-            .ui.icon.button
-                i.user.icon
-            #logout.ui.icon.button
-                if signing_out
-                    i.spinner.loading.icon
-                else
-                    i.sign.out.icon
-
-                    
-template(name='role_switcher')
-    each role_docs
-        .change_role.ui.margined.small.compact.button(class=role_button_class)
-            |#{title}
-
-
-
-
-template(name='delta')
-    unless delta
-        .row
-            .sixteen.wide.column
-                if currentUser
-                    .create_delta.ui.margined.large.button(title='Create Session')
-                        i.plus.icon
-                        | Session
-    if delta
-        .ui.stackable.two.column.padded.grid
-            .row
-                .column
-                    if can_add
-                        .ui.button.add_doc
-                            +icon name='plus'
-                            | #{current_type.title}
-                    each facets
-                        +facet
-                .column
-                    +response
-
-
-
 template(name='facet')
-    div
     .ui.inline_header.header 
         if icon
             i.icon(class=icon)
@@ -138,42 +89,4 @@ template(name='doc')
                         strong #{value}
                         
                         
-                        
-template(name='login')
-    .ui.stackable.padded.grid
-        .centered.alphablue.row
-            .eight.wide.center.aligned.column
-                // img.ui.medium.centered.image(src="{{c.url 'jan_full_logo'}}")
-                img.ui.medium.centered.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-        .centered.row
-            .twelve.wide.column
-                h1.ui.center.aligned.header
-                    // img.ui.spaced.image(src="{{c.url 'green_jp_icon' effect='make_transparent:10'}}")
-                    | Login
-                .ui.basic.segment
-                    .ui.labeled.fluid.icon.input
-                        .ui.basic.label Username
-                        input.username(type='text')
-                        i.user.icon
-                    .ui.hidden.divider
-                    .ui.labeled.fluid.icon.input
-                        i.lock.icon
-                        .ui.basic.label Password
-                        input.password(type='password')
-                    .ui.hidden.divider
-                    .field
-                        // unless currentUser
-                        .login.ui.fluid.jpgreen.inverted.big.icon.button(class=login_button_class)
-                            i.play.icon
-            .four.wide.column
-                .ui.center.aligned.header Demo
-                #login_demo_customer.ui.fluid.margined.large.button(class=demo_class)
-                    i.handshake.outline.icon
-                    | Customer
-                #login_demo_office.ui.fluid.margined.large.button(class=demo_class)
-                    i.building.outline.icon
-                    | Office
-                #login_demo_admin.ui.fluid.margined.large.button(class=demo_class)
-                    i.shield.alternate.icon
-                    | Admin
                         
