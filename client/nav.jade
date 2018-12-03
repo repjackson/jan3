@@ -1,29 +1,21 @@
 template(name='nav')
-    .ui.fixed.inverted.jpblue.big.borderless.menu
-        a.delta.icon.item(href='#' class=header_class)
-            .mobile.hidden
-                img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-            .mobile.only
-                i.database.icon
-        // a.icon.item.tasks(href='#')
-        //     i.tasks.large.icon
-            // | Agenda
-        // a.icon.item.tickets(href='#')
-        //     i.ticket.large.icon
-            // | Tickets
-        a.toggle_cc.item(href='#')
-            if currentUser.image_id
-                img.ui.avatar.nav_profile_icon.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
-            else
-                i.user.icon
-            span.mobile.hidden &nbsp; #{currentUser.username}
-        if is_dev
-            .item.delete_delta
-                i.trash.icon
-            .item.run_fo
-                i.refresh.icon
-            .item.show_delta
-                i.code.icon
+    .centered.row
+        .eight.wide.column.toggle_cc
+            img.ui.small.centered.image.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
+            // a.toggle_cc.ui.button(href='#')
+            //     if currentUser.image_id
+            //         img.ui.avatar.nav_profile_icon.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            //     else
+            //         i.user.icon
+            //     span.mobile.hidden &nbsp; #{currentUser.username}
+        
+        // if is_dev
+        //     .item.delete_delta
+        //         i.trash.icon
+        //     .item.run_fo
+        //         i.refresh.icon
+        //     .item.show_delta
+        //         i.code.icon
 
                     
 
