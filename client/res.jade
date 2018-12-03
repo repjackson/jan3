@@ -19,6 +19,7 @@ template(name='response')
     else
         if delta.result_ids
             if delta.result_ids.length
+                | #{delta.total} results
                 .ui.horizontal.list
                     // .item
                     //     +set_page_size value=10
@@ -29,7 +30,6 @@ template(name='response')
                     //         .ui.label
                     //             | Page #{delta.current_page}/#{delta.page_amount}
                     .item
-                            | #{delta.total} Results
                     // .item
                     //     if show_page_down
                     //         .ui.icon.button.page_down(title='Previous Page')
@@ -38,8 +38,8 @@ template(name='response')
                     //     if show_page_up
                     //         .ui.icon.button.page_up(title='Next Page')
                     //             +icon name='chevron-right'
-                    .item
-                        +toggle_delta_config key='minimize' title='Minimize' label='Minimize' icon='chevron-up'
+                    // .item
+                    //     +toggle_delta_config key='minimize' title='Minimize' label='Minimize' icon='chevron-up'
                 if is_calculating
                     .ui.hidden.divider
                     .ui.active.indeterminate.massive.centered.inline.loader

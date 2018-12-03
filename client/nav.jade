@@ -1,7 +1,7 @@
 template(name='nav')
     .centered.row
-        .eight.wide.column.toggle_cc
-            img.ui.small.centered.image.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
+        .eight.wide.column
+            img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
             // a.toggle_cc.ui.button(href='#')
             //     if currentUser.image_id
             //         img.ui.avatar.nav_profile_icon.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
@@ -9,13 +9,20 @@ template(name='nav')
             //         i.user.icon
             //     span.mobile.hidden &nbsp; #{currentUser.username}
         
-        // if is_dev
-        //     .item.delete_delta
-        //         i.trash.icon
-        //     .item.run_fo
-        //         i.refresh.icon
-        //     .item.show_delta
-        //         i.code.icon
+        if is_dev
+            .item.delete_delta
+                i.trash.icon
+            .item.run_fo
+                i.refresh.icon
+            .item.show_delta
+                i.code.icon
+        #logout.ui.icon.button
+            if signing_out
+                // +icon name='spinner' classes='fa-pulse'
+                i.spinner.loading.icon
+            else
+                i.sign.out.icon
+            // strong &nbsp; Log Out
 
                     
 

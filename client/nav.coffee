@@ -166,7 +166,7 @@ Template.nav.events
 
 
 
-Template.cc.onCreated ->
+Template.nav.onCreated ->
     @signing_out = new ReactiveVar false
 
 
@@ -230,6 +230,7 @@ Template.cc.events
                 viewing_delta:false
                 viewing_menu:false
 
+Template.nav.events
     'click #logout': (e,t)->
         # e.preventDefault()
         t.signing_out.set true
@@ -237,7 +238,7 @@ Template.cc.events
             t.signing_out.set false
 
 
-Template.cc.helpers
+Template.nav.helpers
     signing_out: -> Template.instance().signing_out.get()
 
 
