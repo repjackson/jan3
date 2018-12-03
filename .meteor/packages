@@ -28,9 +28,8 @@ http@1.4.1
 underscore@1.0.10
 peerlibrary:xml2js
 pacreach:jade
-coffeescript
+coffeescript@2.3.2_1
 percolate:synced-cron
 random@1.1.0
 modules@0.13.0
-lepozepo:cloudinary
 juliancwirko:postcss@=1.2.0
