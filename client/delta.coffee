@@ -174,9 +174,9 @@ Template.delta.events
                 type:'delta'
                 # filter_type: ['schema']
                 result_ids:[]
-                current_page:1
-                page_size:10
-                skip_amount:0
+                # current_page:1
+                # page_size:10
+                # skip_amount:0
                 # view_full:true
         Meteor.call 'fo', new_delta_id
 
@@ -355,7 +355,9 @@ Template.facet.events
         facet = Template.currentData()
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
-            $pull: "filter_#{facet.key}": @valueOf()
+            $pull: 
+                "filter_#{facet.key}": @valueOf()
+                active_facets: facet.key
         Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
             if err then console.log err
@@ -375,7 +377,7 @@ Template.selector.events
         Docs.update delta._id,
             $addToSet:
                 "filter_#{filter.key}": @name
-                filter_keys: filter.key
+                active_facets: filter.key
                 
         Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->

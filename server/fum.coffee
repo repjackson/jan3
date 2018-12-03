@@ -84,8 +84,8 @@ Meteor.methods
 
         
         # include existing filter selections
-        if delta.filter_keys
-            for key in delta.filter_keys
+        if delta.active_facets
+            for key in delta.active_facets
                 filter_list = delta["filter_#{key}"]
                 if filter_list
                     built_query["#{key}"] = $all: filter_list
