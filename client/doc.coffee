@@ -33,23 +33,6 @@ Template.doc.events
                 Session.set 'is_calculating', false
 
 
-    'click .add_grandchild': ->
-        delta = Docs.findOne type:'delta'
-        Docs.insert
-            parent_id:delta.doc_id
-            type:@slug
-
-    'click .enable_editing': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:editing:true
-
-    'click .disable_editing': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:editing:false
-
-
 Template.doc.helpers
     detail_doc: ->
         delta = Docs.findOne type:'delta'
@@ -57,44 +40,8 @@ Template.doc.helpers
 
     delta_doc: -> Docs.findOne type:'delta'
 
-    blocks: ->
-        delta = Docs.findOne type:'delta'
-        detail_doc = Docs.findOne delta.doc_id
-        current_type = delta.filter_type[0]
-        current_schema =
-            Docs.findOne
-                type:'schema'
-                slug:current_type
-        blocks_schema =
-            Docs.findOne
-                type:'schema'
-                slug:'block'
-        if current_schema
-            if delta.config_mode is true
-                Docs.find({
-                    type:'block'
-                    slug: $in: blocks_schema.attached_blocks
-                }, {sort:{rank:1}}).fetch()
-            else if detail_doc?.type is 'block'
-                Docs.find({
-                    type:'block'
-                    slug: $in: blocks_schema.attached_blocks
-                }, {sort:{rank:1}}).fetch()
-            else
-                Docs.find({
-                    type:'block'
-                    # view_roles: $in: Meteor.user().roles
-                    slug: $in: current_schema.attached_blocks
-                }, {sort:{rank:1}}).fetch()
-
-
-    delta_card_class: ->
-        delta = Docs.findOne type:'delta'
-        if delta.doc_view then 'fluid blue raised' else ''
-        # if delta.view_mode is 'grid'
-        #     'six wide column'
-        # else
-        #     'sixteen wide column'
+    fields: ->
+        console.log @
 
     local_doc: ->
         if @data
