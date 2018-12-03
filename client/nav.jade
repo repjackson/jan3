@@ -5,12 +5,6 @@ template(name='nav')
                 i.plus.icon
         .eight.wide.column
             img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
-            // a.toggle_cc.ui.button(href='#')
-            //     if currentUser.image_id
-            //         img.ui.avatar.nav_profile_icon.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
-            //     else
-            //         i.user.icon
-            //     span.mobile.hidden &nbsp; #{currentUser.username}
         .four.wide.column
             .ui.icon.button
                 i.user.icon
@@ -23,109 +17,6 @@ template(name='nav')
                 // strong &nbsp; Log Out
 
                     
-
-
-
-// template(name='dash')
-//     .sixteen.wide.blue.column.lightblue
-//         .ui.equal.width.padded.grid
-//             each bookmarks
-//                 .column.menu_segment
-//                     .ui.inverted.blue80.segment.pick_delta.pointer
-//                         h4.ui.small.header
-//                             +icon name=icon
-//                             |#{plural}
-//                         // p
-//                         // p
-//                         //     |#{details}
-
-
-template(name='cc')
-    .ui.equal.width.padded.grid.lightblue.cc
-        .column.menu_segment
-            .ui.inverted.blue80.segment.view_profile.pointer
-                .ui.icon.header
-                    if currentUser.image_id
-                        img.ui.avatar.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                    else
-                        i.user.icon
-                    | #{currentUser.first_name} #{currentUser.last_name}
-                | @#{currentUser.username}
-        .column.menu_segment.todos
-            .ui.inverted.blue80.segment.work.pointer
-                .ui.small.header
-                    i.tasks.icon
-                    | Agenda
-        .column.menu_segment
-            .ui.inverted.blue80.segment.settings.pointer
-                .ui.small.header
-                    i.setting.icon
-                    | Settings
-                .item Password
-                .item Email
-                .item Username
-        .column.menu_segment
-            .ui.inverted.blue80.segment.sla.pointer
-                .ui.small.header
-                    i.clock.outline.icon
-                    | SLA Settings
-        if is_eric
-            .column.menu_segment
-                .ui.inverted.blue80.segment
-                    .ui.small.header Role Switcher
-                    +role_switcher
-        .column.menu_segment
-            .ui.inverted.blue80.segment
-                +quick_idea
-        .column.menu_segment
-            a#logout.ui.inverted.blue80.segment.profile.pointer(href='#')
-                if signing_out
-                    // +icon name='spinner' classes='fa-pulse'
-                    i.spinner.loading.icon
-                else
-                    i.sign.out.icon
-                strong &nbsp; Log Out
-
-
-
-template(name='quick_idea')
-    .ui.inverted.left.icon.transparent.input
-        +icon name='lightbulb'
-        input#idea_text(placeholder='Add idea')
-        // .ui.small.fluid.icon.button.submit_idea
-        //     i.checkmark.icon
-
-
-template(name='footer')
-    .ui.bottom.fixed.inverted.footer.big.borderless.menu
-        a.icon.item.bookmarks(href='#')
-            i.outline.bookmark.icon
-        a.icon.item.users(href='#')
-            i.address.book.outline.icon
-        a.icon.item.calendar(href='#')
-            i.outline.calendar.icon
-        .item.item
-            .mobile.hidden
-                h4.ui.inverted.grey.header
-                    i.copyright.outline.small.icon
-                    | 2018 JAN-PRO Franchising, Inc.
-
-
-
-template(name='jp_footer')
-    img.ui.small.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
-    .ui.list
-        .item Why JAN-PRO
-        .item Commercial Cleaning
-        .item About Us
-    .ui.list
-        .item Contact Us
-        .item Legal/ Privacy Policy
-
-
-
-
-
 template(name='role_switcher')
     each role_docs
         .change_role.ui.margined.small.compact.button(class=role_button_class)

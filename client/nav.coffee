@@ -1,83 +1,3 @@
-Template.footer.onCreated ->
-    @autorun => Meteor.subscribe 'user_status'
-
-
-# Template.footer.onRendered ->
-#     Meteor.setTimeout ->
-#         $('.item').popup()
-#     , 1000
-
-Template.quick_idea.events
-    'click .submit_idea': (e,t)->
-        idea = t.$('#idea_text').val()
-        Docs.insert
-            type:'idea'
-            details: idea
-        t.$('#idea_text').val('')
-
-    'keyup #idea_text': (e,t)->
-        if e.which is 13
-            idea = t.$('#idea_text').val()
-            Docs.insert
-                type:'idea'
-                details: idea
-            idea = t.$('#idea_text').val('')
-            t.$('#idea_text').closest('.blue80').transition('pulse')
-
-
-
-
-Template.nav.helpers
-    header_class: -> 
-        delta = Docs.findOne type:'delta'
-        if delta and delta.menu_template is 'dash' then 'lightblue' else ''
-
-    cc_class: -> 
-        delta = Docs.findOne type:'delta'
-        if delta and delta.menu_template is 'cc' then 'lightblue' else ''
-
-
-Template.footer.events
-    'click .calendar': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'calendar'
-                viewing_delta: false
-    
-    'click .tickets': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Session.set 'is_calculating', true
-        Meteor.call 'set_schema', 'ticket', ->
-            Session.set 'is_calculating', false
-    
-    'click .tasks': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Session.set 'is_calculating', true
-        Meteor.call 'set_schema', 'task', ->
-            Session.set 'is_calculating', false
-
-    'click .users': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'users'
-                viewing_delta: false
-
-    'click .bookmarks': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'bookmark'
-                viewing_delta: false
-    
-
 Template.nav.events
     'click .delta': (e,t)->
         delta = Docs.findOne type:'delta'
@@ -88,12 +8,6 @@ Template.nav.events
                 page_template:'delta'
                 viewing_delta: false
    
-    'click .tickets': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Session.set 'is_calculating', true
-        Meteor.call 'set_schema', 'ticket', ->
-            Session.set 'is_calculating', false
-
     'click .add': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
@@ -103,72 +17,7 @@ Template.nav.events
                 page_template:'add'
                 viewing_delta: false
 
-    'click .messages': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'messages'
-                viewing_delta: false
-
-    'click .chat': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'chat'
-                viewing_delta: false
-
-    'click .bookmarks': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'bookmark'
-                viewing_delta: false
-
-    'click .work': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'work'
-                viewing_delta: false
     
-    'click .calendar': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'calendar'
-                viewing_delta: false
-
-    'click .dash': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu: !delta.viewing_menu
-                menu_template:'dash'
-                # viewing_delta: !delta.viewing_delta
-
-    'click .toggle_cc': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu: !delta.viewing_menu
-                menu_template:'cc'
-                # viewing_delta: !delta.viewing_delta
-
-
-
-Template.nav.onCreated ->
-    @signing_out = new ReactiveVar false
-
 
 Template.nav.events
     'click .delete_delta': ->

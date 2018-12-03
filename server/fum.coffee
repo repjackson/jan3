@@ -114,23 +114,22 @@ Meteor.methods
 
         total = Docs.find(built_query).count()
         # maybe this references keys_return?
-        for facet in facets
+        for key in delta.keys_return
             values = []
-            key_return = []
+            local_return = []
+            
+            # field type detection 
             example_doc = Docs.findOne({"#{facet.key}":$exists:true})
             example_value = example_doc?["#{facet.key}"]
             primitive = typeof example_value
 
             if primitive
-                test_calc = Meteor.call 'agg', built_query, primitive, facet.key
+                test_calc = Meteor.call 'agg', built_query, primitive, key
             else
-                console.log 'no primitive', facet
-            if facet.key
-                Docs.update {_id:delta._id},
-                    { $set:"#{facet.key}_return":test_calc }
-                    , ->
-            else
-                console.log 'no delta block key', facet
+                console.log 'no primitive', facet, 'key:', key
+            Docs.update {_id:delta._id},
+                { $set:"#{facet.key}_return":test_calc }
+                , ->
 
 
         # calc_page_size = if delta.page_size then delta.page_size else 10
@@ -179,6 +178,8 @@ Meteor.methods
         options = {
             explain:false
             }
+            
+        # intelligence
         if type in ['array','multiref']
             pipe =  [
                 { $match: query }

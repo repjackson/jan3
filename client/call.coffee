@@ -1,14 +1,14 @@
 
 Template.doc.onCreated ->
-    @autorun => Meteor.subscribe 'delta'
+    # @autorun => Meteor.subscribe 'delta'
 
 Template.home.onCreated ->
     # @autorun => Meteor.subscribe 'type', 'block', 200
-    @autorun => Meteor.subscribe 'type', 'schema', 200
+    # @autorun => Meteor.subscribe 'type', 'schema', 200
     @autorun -> Meteor.subscribe 'delta'
-    @autorun => Meteor.subscribe 'schema_blocks'
+    # @autorun => Meteor.subscribe 'schema_blocks'
     @autorun -> Meteor.subscribe 'me'
-    @autorun -> Meteor.subscribe 'my_alerts'
+    # @autorun -> Meteor.subscribe 'my_alerts'
 
 
 
@@ -51,9 +51,9 @@ Template.delta.helpers
             #     console.log 'found block', block
 
     facets: ->
-        # delta = Docs.findOne type:'delta'
+        delta = Docs.findOne type:'delta'
         # current_type = delta.filter_type[0]
-
+        if delta and delta.keys_return then delta.keys_return
         # schema_doc =
         #     Docs.findOne
         #         type:'schema'
@@ -64,93 +64,28 @@ Template.delta.helpers
         #         slug: $in: schema_doc.attached_blocks
         #         # faceted:true
         #     }, {sort:{rank:1}}).fetch()
-        facets = [
-            # {
-            #     key:'type'
-            #     primitive:'string'
-            # }
-            # {
-            #     key:'timestamp_tags'
-            #     primitive:'array'
-            # }
-            # {
-            #     key:'tags'
-            #     type:'array'
-            # }
-            {
-                key:'keys'
-                type:'array'
-            }
-        ]
+        # facets = [
+        #     # {
+        #     #     key:'type'
+        #     #     primitive:'string'
+        #     # }
+        #     # {
+        #     #     key:'timestamp_tags'
+        #     #     primitive:'array'
+        #     # }
+        #     # {
+        #     #     key:'tags'
+        #     #     type:'array'
+        #     # }
+        #     {
+        #         key:'keys'
+        #         type:'array'
+        #     }
+        # ]
 
             
 
-
-    blocks: ->
-        delta = Docs.findOne type:'delta'
-        current_type = delta.filter_type[0]
-
-        schema_doc =
-            Docs.findOne
-                type:'schema'
-                slug:current_type
-        if schema_doc
-            blocks = Docs.find({
-                type:'block'
-                slug: $in: schema_doc.attached_blocks
-            }, {sort:{rank:1}}).fetch()
-            blocks
-
-
-Template.nav.events
-    # 'click .toggle_topbar': ->
-    #     delta = Docs.findOne type:'delta'
-    #     Docs.update delta._id,
-    #         $set:
-    #             view_topbar: !delta.view_topbar
-    #             view_leftbar: false
-    #             view_rightbar: false
-    #             expand_footer: false
-
-    # 'click .toggle_rightbar': ->
-    #     delta = Docs.findOne type:'delta'
-    #     Docs.update delta._id,
-    #         $set:
-    #             view_rightbar: !delta.view_rightbar
-    #             view_leftbar:false
-    #             view_topbar:false
-    #             expand_footer: false
-
-    # 'click .toggle_leftbar': ->
-    #     delta = Docs.findOne type:'delta'
-    #     Docs.update delta._id,
-    #         $set:
-    #             view_leftbar: !delta.view_leftbar
-    #             view_rightbar:false
-    #             view_topbar:false
-    #             expand_footer: false
-
-
 Template.delta.events
-    'click .view_schamas': ->
-        delta = Docs.findOne type:'delta'
-
-        Docs.update delta._id,
-            $set:
-                filter_type: ['schema']
-                current_page: 0
-                doc_id:null
-                viewing_children:false
-                doc_view:false
-                editing:false
-                config_mode:false
-        Session.set 'is_calculating', true
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
-
-
     'click .add_doc': (e,t)->
         delta = Docs.findOne type:'delta'
         type = delta.filter_type[0]
@@ -191,82 +126,7 @@ Template.doc.onCreated ->
 
 
 
-Template.doc.events
-    'click .expand': ->
-        delta = Docs.findOne type:'delta'
-        if delta.expand_id is @_id
-            Docs.update delta._id,
-                $set: expand_id: null
-        else
-            Docs.update delta._id,
-                $set: expand_id: @_id
 
-    'click .toggle_full': ->
-        delta = Docs.findOne type:'delta'
-        if delta.doc_view
-            Docs.update delta._id,
-                $set:
-                    doc_view: false
-                    doc_id: null
-        else
-            Docs.update delta._id,
-                $set:
-                    doc_view: true
-                    doc_id: @_id
-                    expand_id: @_id
-
-    'click .maximize': ->
-        delta = Docs.findOne type:'delta'
-        unless delta.doc_view
-            Docs.update delta._id,
-                $set:
-                    doc_view: true
-                    doc_id: @_id
-
-
-
-
-
-Template.toggle_delta_config.helpers
-    boolean_true: ->
-        delta = Docs.findOne type:'delta'
-        if delta then delta["#{@key}"]
-
-Template.toggle_delta_config.events
-    'click .enable_key': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:"#{@key}":true
-
-    'click .disable_key': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:"#{@key}":false
-
-
-
-
-
-
-Template.set_page_size.helpers
-    page_size_class: ->
-        delta = Docs.findOne type:'delta'
-        if @value is delta.page_size then 'active blue' else ''
-
-
-Template.set_page_size.events
-    'click .set_page_size': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                current_page:0
-                skip_amount:0
-                page_size:@value
-        Session.set 'is_calculating', true
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
 
 
 Template.selector.helpers
@@ -300,19 +160,6 @@ Template.doc.events
                 doc_id: @_id
 
 
-Template.facet.onRendered ->
-    Meteor.setTimeout ->
-        $('.accordion').accordion();
-    , 500
-# Template.doc.onRendered ->
-#     Meteor.setTimeout ->
-#         # $('.accordion').accordion();
-#         # $('.shape').shape()
-#     , 500
-
-
-
-
 Template.set_delta_key.helpers
     set_delta_key_class: ->
         delta = Docs.findOne type:'delta'
@@ -324,8 +171,8 @@ Template.facet.helpers
         delta = Docs.findOne type:'delta'
         # delta["#{@key}_return"]?[..20]
         filtered_values = []
-        fo_values = delta["#{@key}_return"]
-        filters = delta["filter_#{@key}"]
+        fo_values = delta["#{@valueOf()}_return"]
+        filters = delta["filter_#{@valueOf()}"]
         if fo_values
             for value in fo_values
                 if value.name in filters
