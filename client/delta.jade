@@ -55,13 +55,13 @@ template(name='facet')
 template(name='selector')
     if name
         .ui.margined.select.button(class=toggle_value_class)
-            | #{name}
-            // small #{count}
+            strong #{name}
+            small #{count}
     else
         // .column.toggle_value.pointer(class=toggle_value_class)
         .ui.margined.select.button(class=toggle_value_class)
             | [none]
-            // small #{count}
+            small #{count}
 
 
 

@@ -68,6 +68,11 @@ Meteor.methods
                 primitive:'string'
             }
             {
+                key:'timestamp_tags'
+                primitive:'array'
+            }
+
+            {
                 key:'tags'
                 type:'array'
                 primitive:'array'

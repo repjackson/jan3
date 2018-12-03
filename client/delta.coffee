@@ -70,6 +70,10 @@ Template.delta.helpers
                 primitive:'string'
             }
             {
+                key:'timestamp_tags'
+                primitive:'array'
+            }
+            {
                 key:'tags'
                 type:'array'
             }
