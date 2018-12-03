@@ -1,10 +1,10 @@
-Template.delta_results.onCreated ->
+Template.response.onCreated ->
     @autorun => Meteor.subscribe 'schema_blocks'
     @autorun => Meteor.subscribe 'block_blocks'
     Session.setDefault 'is_calculating', false
 
 
-Template.delta_results.helpers
+Template.response.helpers
     is_calculating: -> Session.get('is_calculating')
 
     grid_view_class: ->
@@ -92,7 +92,7 @@ Template.delta_results.helpers
 
 
 
-Template.delta_results.events
+Template.response.events
     'click .page_up': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,

@@ -1,0 +1,158 @@
+template(name='response')
+    // .column(class=results_class)
+    // .twelve.wide.column.results_panel
+        // +toggle_delta_config key='view_full' title='View Full' icon='resize-diagonal' label='Expand Cards'
+    if delta.config_mode
+        .ui.header
+            +icon name='administrative-tools'
+            | Edit '#{current_type.title}' parts
+        .ui.button.add_part
+            i.plus.icon
+            | Part
+        if delta.doc_view
+            with delta.doc_id
+                +delta_card
+        else
+            .ui.segments
+                each schema_blocks
+                    +delta_card data=_id
+    else
+        if delta.result_ids
+            if delta.result_ids.length
+                // unless delta.doc_view
+                    // .ui.horizontal.list
+                    //     .item
+                    //         +set_page_size value=10
+                    //         +set_page_size value=20
+                    //         +set_page_size value=50
+                        // .item
+                        //     if multiple_pages
+                        //         .ui.label
+                        //             | Page #{delta.current_page}/#{delta.page_amount}
+                        // .item
+                        //         | #{delta.total} Results
+                        // .item
+                        //     if show_page_down
+                        //         .ui.icon.button.page_down(title='Previous Page')
+                        //             +icon name='chevron-left'
+                        //             // +icon name='chevron-left' classes='mini spaced'
+                        //     if show_page_up
+                        //         .ui.icon.button.page_up(title='Next Page')
+                        //             +icon name='chevron-right'
+                        // .item
+                        //     +toggle_delta_config key='minimize' title='Minimize' label='Minimize' icon='chevron-up'
+                        // .item
+                        //     .ui.disabled.button
+                        //         +icon name='filter'
+                        //         |Sort By
+                        // .item
+                        //     .ui.disabled.button
+                        //         +icon name='filter'
+                        //         | Toggle Fields
+                if is_calculating
+                    .ui.hidden.divider
+                    .ui.active.indeterminate.massive.centered.inline.loader
+                else
+                    if delta.doc_view
+                        with delta.doc_id
+                            +delta_card
+                    else
+                        +delta_card
+        else
+            |No results
+
+
+
+template(name='delta_card')
+    with local_doc
+        unless full_mode
+            .delta_card(class=delta_card_class)
+                .ui.vertical.segments
+                    each blocks
+                        .ui.segment
+                            if part_template_exists
+                                +Template.dynamic template=part_template data=local_doc
+                            else
+                                // if icon
+                                //     +icon name=icon
+                                strong #{title}
+                                // s:#{slug} k:#{key}
+                                |&nbsp;
+                                if is_array
+                                    each value
+                                        .ui.margined.label #{this}
+                                else
+                                    | #{value}
+                // if is_dev
+                // .ui.buttons
+                //     .ui.icon.button.edit
+                //         +icon name='pencil-alt'
+                // .ui.fluid.button.toggle_full
+                //     i.chevron.right.icon
+        if full_mode
+            .ui.padded.stackable.grid
+                .row
+                    if delta.editing
+                        .three.wide.column
+                            .ui.fluid.red.button.remove_doc
+                                +icon name='trash'
+                        .ten.wide.center.aligned.column
+                            .ui.header
+                                if icon
+                                    +icon name=icon
+                                |Edit '#{detail_doc.title}'
+                        .right.floated.three.wide.column
+                            .ui.icon.green.fluid.button.save
+                                +icon name='save'
+                    else
+                        .three.wide.column
+                            .ui.fluid.button.toggle_full
+                                // i.caret.left.large.icon
+                                +icon name=current_type.icon
+                                | #{current_type.plural}
+                        .ten.wide.center.aligned.column
+                            .ui.header
+                                if icon
+                                    +icon name=icon
+                                |'#{local_doc.title}' #{current_type.title}
+                        .right.floated.three.wide.column
+                            .ui.fluid.icon.button.edit
+                                i.large.pencil.icon
+                .row
+                    .sixteen.wide.column
+                        .ui.stackable.two.column.padded.grid
+                            // each blocks
+                            //     .card
+                            //         .content
+                            //             if icon
+                            //                 i.large.icon
+                            //                     +icon name=icon
+                            //             strong #{title}
+                            unless delta.editing
+                                each blocks
+                                    .column
+                                        .ui.segment
+                                            .ui.dividing.header
+                                                if icon
+                                                    +icon name=icon classes='mini'
+                                                |#{title}
+                                            +Template.dynamic template=part_template data=local_doc
+                                            .ui.basic.segment
+                                                // if icon
+                                                //     i.icon
+                                                //         +icon name=icon
+                                                // strong #{title}
+                                                // |&nbsp;
+                                                if is_array
+                                                    each value
+                                                        .ui.label #{this}
+                                                else
+                                                    | #{value}
+
+                            if delta.editing
+                                each edit_blocks
+                                    .column
+                                        .ui.segment
+                                            +block_edit
+
+                                                // .ui.hidden.divider

@@ -7,29 +7,30 @@ template(name='delta')
                         i.plus.icon
                         | Session
     if delta
-        if delta.viewing_delta
-            .ui.stackable.padded.grid
-                .row
-                    unless delta.doc_view
-                        .eight.wide.column
-                            .ui.inline_header.header
-                                if current_type.icon
-                                    +icon name=current_type.icon
-                                if current_type.plural
-                                    | #{current_type.plural}
-                                else
-                                    | #{current_type.title}
-                            // if current_type.details
-                            //     p #{current_type.details}
-                            if is_dev
-                                +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='cog'
-                            if can_add
-                                .ui.button.add_doc
-                                    +icon name='plus'
-                                    | #{current_type.title}
-                            each faceted_blocks
-                                +facet
-                        +delta_results
+        .ui.stackable.two.column.padded.grid
+            .row
+                .column
+                    .ui.header Call
+                    // .ui.inline_header.header
+                    //     if current_type.icon
+                    //         +icon name=current_type.icon
+                    //     if current_type.plural
+                    //         | #{current_type.plural}
+                    //     else
+                    //         | #{current_type.title}
+                    // if current_type.details
+                    //     p #{current_type.details}
+                    // if is_dev
+                    //     +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='cog'
+                    if can_add
+                        .ui.button.add_doc
+                            +icon name='plus'
+                            | #{current_type.title}
+                    each faceted_blocks
+                        +facet
+                .column
+                    .ui.header Response
+                    +response
 
 
 

@@ -46,29 +46,19 @@ Meteor.publish 'schema', ->
             slug: current_type
 
 
+# facet macro to find documents
+# facet micro to view into/manipulate docs
+
+
+
 Meteor.methods
     fo: ->
         delta = Docs.findOne
             type:'delta'
             author_id: Meteor.userId()
 
-        current_type = delta.filter_type?[0]
 
         delta_blocks = []
-
-        if delta.filter_type and delta.filter_type.length > 0
-            schema =
-                Docs.findOne
-                    type:'schema'
-                    slug:current_type
-            if schema
-                delta_blocks = Docs.find({
-                    type:'block'
-                    slug: $in: schema.attached_blocks
-                    # faceted:true
-                }, {sort:{rank:1}}).fetch()
-        else
-            return
 
         built_query = {}
 
@@ -77,6 +67,30 @@ Meteor.methods
             primitive:'string'
 
         filter_keys = []
+        
+        facets = [
+            {
+                key:'tags'
+                type:'array'
+            }
+            {
+                key:'keys'
+                type:'array'
+            }
+        ]
+
+        
+        filter_keys = ['tags', 'keys']
+    
+    
+        # include existing filter selections
+        for key in filter_keys
+            filter_list = delta["filter_#{key}"]
+            if filter_list
+                built_query["#{key}"] = $all: filter_list
+    
+
+        
         for filter in delta_blocks
             unless filter.key in filter_keys
                 filter_keys.push filter.key
@@ -91,34 +105,6 @@ Meteor.methods
             else
                 Docs.update delta._id,
                     $set: "filter_#{delta_block.key}":[]
-
-
-
-        # if Meteor.user().roles
-        #     if 'office' in Meteor.user().roles
-        #         if current_type is 'ticket'
-        #             built_query['office_jpid'] = Meteor.user().office_jpid
-        #     if 'customer' in Meteor.user().roles
-        #         if current_type is 'ticket'
-        #             built_query['customer_jpid'] = Meteor.user().customer_jpid
-        if current_type is 'schema'
-            unless 'dev' in Meteor.user().roles
-                built_query['view_roles'] = $in:Meteor.user().roles
-        # if current_type is 'customer'
-        #     if Meteor.user().office_jpid
-        #         my_office =
-        #             Docs.findOne
-        #                 type:'office'
-        #                 office_jpid:Meteor.user().office_jpid
-        #         built_query['office_name'] = my_office.office_name
-
-        # if current_type is 'franchisee'
-        #     if Meteor.user().office_jpid
-        #         my_office =
-        #             Docs.findOne
-        #                 type:'office'
-        #                 office_jpid:Meteor.user().office_jpid
-        #         built_query['office_name'] = my_office.office_name
 
 
         total = Docs.find(built_query).count()
