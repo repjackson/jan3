@@ -91,7 +91,49 @@ if Meteor.isProduction
 if Meteor.isProduction
     SyncedCron.start()
 
-
+Meteor.methods
+    raw_count: ->
+        raw = Docs.rawCollection()
+            # .distinct('author_id')
+        dis = Meteor.wrapAsync raw.distinct, raw
+        count = dis 'author_id'
+        console.log count
+        
+        
+    keys: ->
+        start = Date.now()
+        console.log 'starting keys'
+        cursor = Docs.find({keys:$exists:false}, {limit:10000}).fetch()
+        for doc in cursor
+            keys = _.keys doc
+            # console.log doc
+            Docs.update doc._id,
+                $set:keys:keys
+            
+            console.log "updated keys for doc #{doc._id}"
+        stop = Date.now()
+        
+        diff = stop - start
+        # console.log diff
+        console.log moment(diff).format("HH:mm:ss:SS")
+        
+    key_count: ->
+        start = Date.now()
+        console.log 'starting key count'
+        cursor = Docs.find({key_count:$exists:false}, {limit:30000}).fetch()
+        for doc in cursor
+            key_count = doc.keys.length
+            Docs.update doc._id,
+                $set:key_count:key_count
+            
+            console.log "updated key count for doc #{doc.type}, #{key_count}"
+        stop = Date.now()
+        
+        diff = stop - start
+        # console.log diff
+        console.log moment(diff).format("HH:mm:ss:SS")
+        
+        
 
 Docs.allow
     insert: (user_id, doc) -> user_id
