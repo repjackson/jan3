@@ -1,95 +1,4 @@
-$.cloudinary.config
-    cloud_name:"facet"
-
-
-Template.registerHelper 'has_read', () ->
-    if @read_ids and Meteor.userId() in @read_ids then true else false
-
-Template.registerHelper 'read_users', () ->
-    if @read_ids
-        Meteor.users.find
-            _id: $in: @read_ids
-
-Template.registerHelper 'is_author', () ->  Meteor.userId() is @author_id
-
-Template.registerHelper 'overdue', () ->
-    if @assignment_timestamp
-        now = Date.now()
-        response = @assignment_timestamp - now
-        calc = moment.duration(response).humanize()
-        hour_amount = moment.duration(response).asHours()
-        if hour_amount<-5 then true else false
-
-
-
-Template.registerHelper 'cell_value', () ->
-    cell_object = Template.parentData(3)
-    @["#{cell_object.key}"]
-
-
-
-Template.registerHelper 'part_template', () -> "#{@slug}_part"
-
-
-Template.registerHelper 'is_multi', () -> @relation_type is 'multi'
-Template.registerHelper 'is_single', () -> @relation_type is 'single'
-
-Template.registerHelper 'part_template_exists', () ->
-    name = "#{@slug}_part"
-    if Template[name] then true else false
-
-
-
-# Template.registerHelper 'can_edit', () ->  Meteor.userId() is @author_id or 'admin' in Meteor.user().roles
-
-Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()
-
-
-Template.registerHelper 'block_parent', () -> Template.parentData(4)
-
-Template.registerHelper 'from_now', (input) -> moment(input).fromNow()
-Template.registerHelper 'long_format', (input) ->
-    if input
-        moment(input).format('MMMM Do h:mma')
-
 Template.registerHelper 'delta', () -> Docs.findOne type:'delta'
-
-Template.registerHelper 'is_level_one', () -> @level is 1
-Template.registerHelper 'is_level_two', () -> @level is 2
-Template.registerHelper 'is_level_three', () -> @level is 3
-Template.registerHelper 'is_level_four', () -> @level is 4
-
-Template.registerHelper 'ticket_color_class', () ->
-    if @level
-        color = switch @level
-            when 1 then 'blue'
-            when 2 then 'yellow'
-            when 3 then 'orange'
-            when 4 then 'red'
-
-Template.registerHelper 'when', () -> moment(@timestamp).fromNow()
-Template.registerHelper 'editing', () -> Template.instance().editing.get()
-
-Template.registerHelper 'my_office', () ->
-    if Meteor.user()
-        if Meteor.user().office_jpid
-            users_office = Docs.findOne
-                office_jpid: Meteor.user().office_jpid
-                type:'office'
-            if users_office
-                # console.log users_office
-                users_office
-        # if user.customer_jpid
-        #     customer_doc = Docs.findOne
-        #         customer_jpid: user.customer_jpid
-        #         type:'customer'
-        #     if customer_doc
-        #         users_office = Docs.findOne
-        #             "ev.MASTER_LICENSEE": customer_doc.ev.MASTER_LICENSEE
-        #             type:'office'
-        #         users_office
-        #     else null
-    else null
 
 
 Template.registerHelper 'is_admin', () ->
@@ -107,80 +16,11 @@ Template.registerHelper 'is_eric', ()->
         'Bda8mRG925DnxTjQC' is Meteor.userId()
 
 
-
-# Template.registerHelper 'blocks', ()->
-#     delta = Docs.findOne type:'delta'
-#     local_doc =
-#         if @data
-#             Docs.findOne @data.valueOf()
-#         else
-#             Docs.findOne @valueOf()
-#     blocks_schema =
-#         Docs.findOne
-#             type:'schema'
-#             slug:'block'
-
-#     if local_doc?.type is 'block'
-#         Docs.find({
-#             type:'block'
-#             slug: $in: blocks_schema.attached_blocks
-#         }, {sort:{rank:1}}).fetch()
-#     else
-#         schema = Docs.findOne
-#             type:'schema'
-#             slug:delta.filter_type[0]
-#         Docs.find({
-#             type:'block'
-#             # visible:true
-#             slug: $in: schema.attached_blocks
-#         }, {sort:{rank:1}}).fetch()
-
-
 Template.registerHelper 'is_array', ()->
     if @primitive
         @primitive in ['array','multiref']
     # else
     #     console.log 'no primitive', @
-
-
-Template.registerHelper 'full_mode', ()->
-    delta = Docs.findOne type:'delta'
-    delta.doc_view
-
-Template.registerHelper 'expanded', ()->
-    delta = Docs.findOne type:'delta'
-    delta.expand_id is @_id
-
-
-# Template.registerHelper 'can_add', ()->
-#     delta = Docs.findOne type:'delta'
-#     type_key = delta.filter_type[0]
-#     schema = Docs.findOne
-#         type:'schema'
-#         slug:type_key
-#     if Meteor.user() and Meteor.user().roles
-#         if 'dev' in Meteor.user()?.roles
-#             true
-#         else
-#             my_role = Meteor.user()?.roles?[0]
-#             if schema and my_role
-#                 if schema.add_roles
-#                     if my_role in schema.add_roles
-#                         true
-#                     else
-#                         false
-#                 else
-#                     false
-#             else
-#                 false
-
-
-Template.registerHelper 'my_role', ()->
-    if Meteor.user() and Meteor.user().roles
-        role_slug = Meteor.user().roles[0]
-        Docs.findOne
-            type:'role'
-            slug: role_slug
 
 
 Template.registerHelper 'is_editor', () ->
@@ -193,48 +33,70 @@ Template.registerHelper 'is_customer', () ->
     if Meteor.user() and Meteor.user().roles
         'customer' in Meteor.user().roles
 
-Template.registerHelper 'user_is_customer', () -> @roles and 'customer' in @roles
-Template.registerHelper 'user_is_office', () -> @roles and 'office' in @roles
-
-Template.registerHelper 'has_user_customer_jpid', () ->
-    Meteor.user() and Meteor.user().customer_jpid
-
 Template.registerHelper 'is_dev_env', () -> Meteor.isDevelopment
+Template.nav.events
+    'click .delta': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_menu:false
+                viewing_page: true
+                page_template:'delta'
+                viewing_delta: false
+   
+    'click .add': (e,t)->
+        delta = Docs.findOne type:'delta'
+        Docs.update delta._id,
+            $set:
+                viewing_menu:false
+                viewing_page: true
+                page_template:'add'
+                viewing_delta: false
+
+    'click .delete_delta': ->
+        if confirm 'Clear Session?'
+            delta = Docs.findOne type:'delta'
+            Docs.remove delta._id
+
+    'click .run_fo': ->
+        delta = Docs.findOne type:'delta'
+        Session.set 'is_calculating', true
+        Meteor.call 'fo', (err,res)->
+            if err then console.log err
+            else
+                Session.set 'is_calculating', false
+
+    'click .show_delta': (e,t)->
+        delta = Docs.findOne type:'delta'
+        console.log delta
+
+    'click #logout': (e,t)->
+        # e.preventDefault()
+        Meteor.logout ->
+            t.signing_out.set false
 
 
-Template.registerHelper 'block_block_value', ->
-    sla_setting = Template.parentData(0)
-    block_key = Template.parentData(3).key
-    value = sla_setting["#{block_key}"]
+Template.role_switcher.onCreated ->
+    @autorun -> Meteor.subscribe 'type', 'role'
+
+Template.role_switcher.helpers
+    role_docs: ->
+        Docs.find
+            type: 'role'
+
+    role_button_class: ->
+        if Meteor.user() and Meteor.user().roles and @slug in Meteor.user().roles then 'blue' else ''
 
 
-Template.registerHelper 'owner', () ->
-    Meteor.users.findOne username:@ticket_owner
-Template.registerHelper 'secondary', () ->
-    Meteor.users.findOne username:@secondary_contact
-
-
-
-Template.registerHelper 'online_users', () ->
-    Meteor.users.find({ "status.online": true })
-
-
-
-Template.home.helpers
-    # middle_column_class: ->
-    #     delta = Docs.findOne type:'delta'
-    #     if delta.doc_view
-    #         return 'sixteen wide column'
-    #     else
-    #         size = 16
-    #         if delta.view_leftbar then size -= 4
-    #         if delta.view_rightbar then size -= 4
-    #         # console.log size
-    #         switch size
-    #             when 16 then 'sixteen wide column'
-    #             when 13 then 'thirteen wide column'
-    #             when 10 then 'ten wide column'
-    #             when 12 then 'twelve wide column'
-    #             when 9 then 'nine wide column'
-    #             when 8 then 'eight wide column'
-    #             when 6 then 'six wide column'
+Template.role_switcher.events
+    'click .change_role': ->
+        cursor = Docs.find(type:'role').fetch()
+        # console.log @
+        user = Meteor.user()
+        if user
+            if @slug in user.roles
+                Meteor.users.update Meteor.userId(),
+                    $pull: roles:@slug
+            else
+                Meteor.users.update Meteor.userId(),
+                    $addToSet: roles: @slug

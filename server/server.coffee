@@ -4,37 +4,6 @@ Meteor.users.allow
         # if userId and doc._id == userId
         #     true
 
-Cloudinary.config
-    cloud_name: 'facet'
-    api_key: Meteor.settings.cloudinary_key
-    api_secret: Meteor.settings.cloudinary_secret
-
-
-# Meteor.startup(() =>
-#     Docs._ensureIndex({ "$**": "text" })
-
-#     Meteor.users._ensureIndex({ "$**": "text" })
-
-#     Meteor.users._ensureIndex( { "username": 1 }, { unique: true } )
-# )
-
-
-Accounts.onCreateUser (options=null, user)=>
-    if options
-        edited_user = Object.assign({
-            customer_jpid:options.customer_jpid
-            franchisee_jpid:options.franchisee_jpid
-            office_jpid:options.office_jpid
-            roles:options.roles
-        }, user)
-        if options.profile
-            edited_user.profile = options.profile
-    else
-        edited_user = {}
-    return edited_user
-
-
-
 SyncedCron.config
     log: true
     collectionName: 'cron_history'
@@ -88,8 +57,8 @@ if Meteor.isProduction
     )
 
 
-if Meteor.isProduction
-    SyncedCron.start()
+# if Meteor.isProduction
+#     SyncedCron.start()
 
 Meteor.methods
     raw_count: ->

@@ -45,3 +45,68 @@ template(name='home')
     else
         +login
 
+
+
+template(name='response')
+    if delta.result_ids
+        if delta.result_ids.length
+            | #{delta.total} results
+            .ui.horizontal.list
+                // .item
+                //     +set_page_size value=10
+                //     +set_page_size value=20
+                //     +set_page_size value=50
+                // .item
+                //     if multiple_pages
+                //         .ui.label
+                //             | Page #{delta.current_page}/#{delta.page_amount}
+                .item
+                // .item
+                //     if show_page_down
+                //         .ui.icon.button.page_down(title='Previous Page')
+                //             +icon name='chevron-left'
+                //             // +icon name='chevron-left' classes='mini spaced'
+                //     if show_page_up
+                //         .ui.icon.button.page_up(title='Next Page')
+                //             +icon name='chevron-right'
+                // .item
+                //     +toggle_delta_config key='minimize' title='Minimize' label='Minimize' icon='chevron-up'
+            if is_calculating
+                .ui.hidden.divider
+                .ui.active.indeterminate.massive.centered.inline.loader
+            else
+                if delta.doc_view
+                    with delta.doc_id
+                        +doc
+                else
+                    each delta.result_ids
+                        +doc
+    else
+        |No results
+
+
+
+template(name='nav')
+    .centered.row
+        .four.wide.center.aligned.column
+            .ui.icon.button
+                i.plus.icon
+        .eight.wide.column
+            img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
+        .four.wide.column
+            .ui.icon.button
+                i.user.icon
+            #logout.ui.icon.button
+                if signing_out
+                    // +icon name='spinner' classes='fa-pulse'
+                    i.spinner.loading.icon
+                else
+                    i.sign.out.icon
+                // strong &nbsp; Log Out
+
+                    
+template(name='role_switcher')
+    each role_docs
+        .change_role.ui.margined.small.compact.button(class=role_button_class)
+            |#{title}
+

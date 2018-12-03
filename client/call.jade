@@ -21,25 +21,6 @@ template(name='delta')
 
 
 
-
-template(name='toggle_delta_config')
-    if boolean_true
-        .ui.blue.icon.active.button.disable_key
-            i.setting.icon
-    else
-        .ui.icon.button.enable_key
-            i.setting.icon
-
-
-
-template(name='set_page_size')
-    .ui.icon.button.set_page_size(class=page_size_class title='Page Size')
-        .middle.aligned #{value}
-
-template(name='set_delta_key')
-    .ui.button.set_delta_key(class=set_delta_key_class)
-        |#{label}
-
 template(name='facet')
     div
     .ui.inline_header.header 

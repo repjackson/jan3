@@ -1,19 +1,8 @@
 Template.doc.onCreated ->
     delta = Docs.findOne type:'delta'
-    @autorun => Meteor.subscribe 'schema_blocks'
     if delta.doc_id
         @autorun => Meteor.subscribe 'doc', delta.doc_id
-        @autorun => Meteor.subscribe 'children', delta.doc_id
-
-Template.delta.onRendered ->
-    Meteor.setTimeout ->
-        $('.accordion').accordion();
-    , 500
-    Meteor.setTimeout ->
-        $('.ui.button').popup()
-    , 1000
-
-
+        # @autorun => Meteor.subscribe 'children', delta.doc_id
 
 Template.doc.events
     'click .remove_doc': ->

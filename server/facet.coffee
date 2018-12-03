@@ -4,47 +4,6 @@ Meteor.publish 'delta', ->
         author_id: Meteor.userId()
     }, {limit:1}
 
-Meteor.publish 'my_schemas', ->
-    if Meteor.user() and Meteor.user().roles
-        if 'dev' in Meteor.user().roles
-            Docs.find(
-                type:'schema'
-                # view_roles:$in:Meteor.user().roles
-            )
-        else
-            Docs.find(
-                type:'schema'
-                view_roles:$in:Meteor.user().roles
-            )
-
-
-Meteor.publish 'schema_blocks', ->
-    delta = Docs.findOne
-        type:'delta'
-        author_id: Meteor.userId()
-    if delta and delta.filter_type
-        current_type = delta.filter_type[0]
-        schema_doc =
-            Docs.findOne
-                type:'schema'
-                slug:current_type
-        if schema_doc
-            Docs.find {
-                type:'block'
-                archive:$ne:true
-                slug: $in: schema_doc.attached_blocks
-            }, limit:100
-
-Meteor.publish 'schema', ->
-    delta = Docs.findOne
-        type:'delta'
-        author_id: Meteor.userId()
-    if delta and delta.filter_type
-        current_type = delta.filter_type?[0]
-        Docs.find
-            type:'schema'
-            slug: current_type
-
 
 # facet macro to find documents
 # facet micro to view into/manipulate docs
@@ -62,21 +21,6 @@ Meteor.methods
         filter_keys = []
         
         facets = [
-            # {
-            #     key:'type'
-            #     type:'string'
-            #     primitive:'string'
-            # }
-            # {
-            #     key:'timestamp_tags'
-            #     primitive:'array'
-            # }
-
-            # {
-            #     key:'tags'
-            #     type:'array'
-            #     primitive:'array'
-            # }
             {
                 key:'keys'
                 type:'array'
