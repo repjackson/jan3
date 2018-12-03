@@ -9,49 +9,40 @@ body
 
 
 template(name='home')
-    if currentUser
-        .ui.stackable.padded.grid
-            .centered.row
-                .four.wide.center.aligned.column
-                    .ui.icon.button
+    .ui.stackable.padded.grid
+        .centered.row
+            .four.wide.center.aligned.column
+            .eight.wide.column
+                img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
+            .four.wide.column
+        #main
+            unless delta
+                if currentUser
+                    .create_delta.ui.margined.large.button(title='Create Session')
                         i.plus.icon
-                .eight.wide.column
-                    img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
-                .four.wide.column
-                    .ui.icon.button
-                        i.user.icon
-                    #logout.ui.icon.button
-                        i.sign.out.icon
-            #main
-                unless delta
-                    if currentUser
-                        .create_delta.ui.margined.large.button(title='Create Session')
-                            i.plus.icon
-                            | Session
-                if delta
-                    .ui.stackable.two.column.padded.grid
-                        .row
-                            .column
-                                each facets
-                                    +facet
-                            .column
-                                if delta.result_ids
-                                    if delta.result_ids.length
-                                        | #{delta.total} results
-                                        if is_calculating
-                                            .ui.hidden.divider
-                                            .ui.active.indeterminate.massive.centered.inline.loader
+                        | Session
+            if delta
+                .ui.stackable.two.column.padded.grid
+                    .row
+                        .column
+                            each facets
+                                +facet
+                        .column
+                            if delta.result_ids
+                                if delta.result_ids.length
+                                    | #{delta.total} results
+                                    if is_calculating
+                                        .ui.hidden.divider
+                                        .ui.active.indeterminate.massive.centered.inline.loader
+                                    else
+                                        if delta.doc_view
+                                            with delta.doc_id
+                                                +doc
                                         else
-                                            if delta.doc_view
-                                                with delta.doc_id
-                                                    +doc
-                                            else
-                                                each delta.result_ids
-                                                    +doc
-                                else
-                                    |No results
-    else
-        +login
+                                            each delta.result_ids
+                                                +doc
+                            else
+                                |No results
 
 
 
