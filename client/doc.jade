@@ -2,12 +2,11 @@ template(name='doc')
     with local_doc
         .ui.header #{title}
         .ui.vertical.segments
+            .ui.header keys
+            each keys
+                .ui.basic.label #{this}
             each fields
-                .ui.segment
-                    // if icon
-                    //     +icon name=icon
-                    strong #{title}
-                    // s:#{slug} k:#{key}
+                .ui.segment 
                     |&nbsp;
                     if is_array
                         each value

@@ -57,10 +57,7 @@ Meteor.methods
             type:'delta'
             author_id: Meteor.userId()
 
-
-
-        built_query = {}
-
+        built_query = { keys: {$exists:true} }
 
         filter_keys = []
         
