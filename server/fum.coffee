@@ -80,7 +80,7 @@ Meteor.methods
         ]
 
         
-        filter_keys = ['tags', 'keys']
+        filter_keys = ['keys']
     
     
         # include existing filter selections

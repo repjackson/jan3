@@ -168,3 +168,21 @@ Meteor.methods
         dis = Meteor.wrapAsync raw.distinct, raw
         count = dis 'author_id'
         console.log count
+        
+        
+    keys: ->
+        start = Date.now()
+        console.log 'starting keys'
+        cursor = Docs.find({keys:$exists:false}, {limit:200}).fetch()
+        for doc in cursor
+            keys = _.keys doc
+            # console.log doc
+            Docs.update doc._id,
+                $set:keys:keys
+            
+            # console.log "updated keys for doc #{doc._id}"
+        stop = Date.now()
+        
+        diff = stop - start
+        # console.log diff
+        console.log moment(diff).format("HH:mm:ss:SS")

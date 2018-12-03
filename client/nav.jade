@@ -75,22 +75,6 @@ template(name='cc')
                     .ui.small.header Role Switcher
                     +role_switcher
         .column.menu_segment
-            .ui.inverted.blue80.segment.delete_delta(title='If no data results.')
-                i.trash.icon
-                |Clear Session
-        // .column.menu_segment
-        //     a.ui.inverted.lightblue.segment(title='Invert Colors' href='#')
-        //         +icon name='lightbulb'
-        //         | Night Mode
-        // a.item.run_fo(title='Reload Session' href='#')
-        //     +icon name='refresh'
-        //     |Reset
-        if is_dev
-            .column.menu_segment
-                a.ui.inverted.blue80.segment.profile.pointer.show_delta(href='#')
-                    | Print Delta
-                    i.code.icon
-        .column.menu_segment
             .ui.inverted.blue80.segment
                 +quick_idea
         .column.menu_segment

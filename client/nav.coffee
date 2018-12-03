@@ -105,9 +105,6 @@ Template.nav.events
         Meteor.call 'set_schema', 'task', ->
             Session.set 'is_calculating', false
     
-
-
-
     'click .inbox': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
@@ -197,6 +194,23 @@ Template.nav.events
 
 Template.cc.onCreated ->
     @signing_out = new ReactiveVar false
+Template.delta.events
+    'click .delete_delta': ->
+        if confirm 'Clear Session?'
+            delta = Docs.findOne type:'delta'
+            Docs.remove delta._id
+
+    'click .run_fo': ->
+        delta = Docs.findOne type:'delta'
+        Session.set 'is_calculating', true
+        Meteor.call 'fo', (err,res)->
+            if err then console.log err
+            else
+                Session.set 'is_calculating', false
+
+    'click .show_delta': (e,t)->
+        delta = Docs.findOne type:'delta'
+        console.log delta
 
 Template.cc.events
     'click .settings': ->
@@ -229,24 +243,6 @@ Template.cc.events
                 page_template:'user_view'
                 viewing_delta:false
                 viewing_menu:false
-
-
-    'click .delete_delta': ->
-        if confirm 'Clear Session?'
-            delta = Docs.findOne type:'delta'
-            Docs.remove delta._id
-
-    'click .run_fo': ->
-        delta = Docs.findOne type:'delta'
-        Session.set 'is_calculating', true
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
-
-    'click .show_delta': (e,t)->
-        delta = Docs.findOne type:'delta'
-        console.log delta
 
 
     'click .sla': ->

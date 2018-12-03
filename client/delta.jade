@@ -22,11 +22,24 @@ template(name='delta')
                     //     p #{current_type.details}
                     // if is_dev
                     //     +toggle_delta_config key='config_mode' title='Schema Configuration' label='Configure' icon='cog'
+                    
+                    .ui.button.delete_delta
+                        i.trash.icon
+                        |Clear Session
+                    .ui.button.run_fo
+                        i.refresh.icon
+                        |Reset
+                    if is_dev
+                        .ui.button.show_delta
+                            | Print Delta
+                            i.code.icon
+
+                    
                     if can_add
                         .ui.button.add_doc
                             +icon name='plus'
                             | #{current_type.title}
-                    each faceted_blocks
+                    each facets
                         +facet
                 .column
                     .ui.header Response
