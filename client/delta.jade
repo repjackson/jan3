@@ -10,19 +10,6 @@ template(name='delta')
         .ui.stackable.two.column.padded.grid
             .row
                 .column
-                    .ui.header Call
-                    .ui.button.delete_delta
-                        i.trash.icon
-                        |Clear Session
-                    .ui.button.run_fo
-                        i.refresh.icon
-                        |Reset
-                    if is_dev
-                        .ui.button.show_delta
-                            i.code.icon
-                            | Print Delta
-
-                    
                     if can_add
                         .ui.button.add_doc
                             +icon name='plus'
@@ -30,7 +17,6 @@ template(name='delta')
                     each facets
                         +facet
                 .column
-                    .ui.header Response
                     +response
 
 

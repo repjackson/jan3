@@ -1,43 +1,46 @@
 template(name='nav')
-    .ui.fixed.inverted.jpblue.big.menu
+    .ui.fixed.inverted.jpblue.big.borderless.menu
         a.delta.icon.item(href='#' class=header_class)
             .mobile.hidden
                 img.ui.tiny.image(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-white.svg')
             .mobile.only
                 i.database.icon
-        a.icon.item.tasks(href='#')
-            i.tasks.large.icon
+        // a.icon.item.tasks(href='#')
+        //     i.tasks.large.icon
             // | Agenda
-        a.icon.item.tickets(href='#')
-            i.ticket.large.icon
+        // a.icon.item.tickets(href='#')
+        //     i.ticket.large.icon
             // | Tickets
-        a.toggle_cc.item(href='#' class=cc_class)
+        a.toggle_cc.item(href='#')
             if currentUser.image_id
                 img.ui.avatar.nav_profile_icon.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
             else
                 i.user.icon
             span.mobile.hidden &nbsp; #{currentUser.username}
-        // a.chat.icon.item(href='#')
-        //     i.comment.outline.icon
-        // a.mobile.hidden.item(href='#')
-        //     i.shopping.cart.icon
-        // a.mobile.hidden.messages.icon.item(href='#')
-        //     i.envelope.outline.icon
+        if is_dev
+            .item.delete_delta
+                i.trash.icon
+            .item.run_fo
+                i.refresh.icon
+            .item.show_delta
+                i.code.icon
+
+                    
 
 
 
-template(name='dash')
-    .sixteen.wide.blue.column.lightblue
-        .ui.equal.width.padded.grid
-            each bookmarks
-                .column.menu_segment
-                    .ui.inverted.blue80.segment.pick_delta.pointer
-                        h4.ui.small.header
-                            +icon name=icon
-                            |#{plural}
-                        // p
-                        // p
-                        //     |#{details}
+// template(name='dash')
+//     .sixteen.wide.blue.column.lightblue
+//         .ui.equal.width.padded.grid
+//             each bookmarks
+//                 .column.menu_segment
+//                     .ui.inverted.blue80.segment.pick_delta.pointer
+//                         h4.ui.small.header
+//                             +icon name=icon
+//                             |#{plural}
+//                         // p
+//                         // p
+//                         //     |#{details}
 
 
 template(name='cc')
@@ -97,7 +100,7 @@ template(name='quick_idea')
 
 
 template(name='footer')
-    .ui.bottom.fixed.inverted.footer.big.menu
+    .ui.bottom.fixed.inverted.footer.big.borderless.menu
         a.icon.item.bookmarks(href='#')
             i.outline.bookmark.icon
         a.icon.item.users(href='#')

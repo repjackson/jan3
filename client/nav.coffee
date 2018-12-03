@@ -1,14 +1,11 @@
-Template.dash.onCreated ->
-    @autorun => Meteor.subscribe 'type', 'schema', 200
-
 Template.footer.onCreated ->
     @autorun => Meteor.subscribe 'user_status'
 
 
-Template.footer.onRendered ->
-    Meteor.setTimeout ->
-        $('.item').popup()
-    , 1000
+# Template.footer.onRendered ->
+#     Meteor.setTimeout ->
+#         $('.item').popup()
+#     , 1000
 
 Template.quick_idea.events
     'click .submit_idea': (e,t)->
@@ -30,14 +27,6 @@ Template.quick_idea.events
 
 
 
-Template.dash.helpers
-    bookmarks: ->
-        if Meteor.user() and Meteor.user().roles
-            Docs.find {
-                view_roles: $in:Meteor.user().roles
-                type:'schema'
-            }, sort:title:1
-            
 Template.nav.helpers
     header_class: -> 
         delta = Docs.findOne type:'delta'
@@ -46,15 +35,6 @@ Template.nav.helpers
     cc_class: -> 
         delta = Docs.findOne type:'delta'
         if delta and delta.menu_template is 'cc' then 'lightblue' else ''
-
-
-Template.dash.events
-    'click .pick_delta': (e,t)->
-        e.preventDefault()
-        # console.log @
-        Session.set 'is_calculating', true
-        Meteor.call 'set_schema', @slug, ->
-            Session.set 'is_calculating', false
 
 
 Template.footer.events
@@ -99,19 +79,13 @@ Template.footer.events
     
 
 Template.nav.events
-    'click .tasks': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Session.set 'is_calculating', true
-        Meteor.call 'set_schema', 'task', ->
-            Session.set 'is_calculating', false
-    
-    'click .inbox': (e,t)->
+    'click .delta': (e,t)->
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $set:
                 viewing_menu:false
                 viewing_page: true
-                page_template:'inbox'
+                page_template:'delta'
                 viewing_delta: false
    
     'click .tickets': (e,t)->
@@ -194,7 +168,9 @@ Template.nav.events
 
 Template.cc.onCreated ->
     @signing_out = new ReactiveVar false
-Template.delta.events
+
+
+Template.nav.events
     'click .delete_delta': ->
         if confirm 'Clear Session?'
             delta = Docs.findOne type:'delta'
