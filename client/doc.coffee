@@ -51,9 +51,12 @@ Template.doc.helpers
 
 
     value: ->
-        delta = Docs.findOne type:'delta'
-        schema = Docs.findOne
-            type:'schema'
-            slug:delta.filter_type[0]
         parent = Template.parentData()
-        parent["#{@key}"]
+        parent["#{@valueOf()}"]
+        
+        # delta = Docs.findOne type:'delta'
+        # values = []
+        # if @keys
+        #     for key in @keys
+        #         values.push parent["#{@key}"]
+        # values

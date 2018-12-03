@@ -19,36 +19,35 @@ template(name='response')
     else
         if delta.result_ids
             if delta.result_ids.length
-                // unless delta.doc_view
-                    // .ui.horizontal.list
-                    //     .item
-                    //         +set_page_size value=10
-                    //         +set_page_size value=20
-                    //         +set_page_size value=50
-                        // .item
-                        //     if multiple_pages
-                        //         .ui.label
-                        //             | Page #{delta.current_page}/#{delta.page_amount}
-                        // .item
-                        //         | #{delta.total} Results
-                        // .item
-                        //     if show_page_down
-                        //         .ui.icon.button.page_down(title='Previous Page')
-                        //             +icon name='chevron-left'
-                        //             // +icon name='chevron-left' classes='mini spaced'
-                        //     if show_page_up
-                        //         .ui.icon.button.page_up(title='Next Page')
-                        //             +icon name='chevron-right'
-                        // .item
-                        //     +toggle_delta_config key='minimize' title='Minimize' label='Minimize' icon='chevron-up'
-                        // .item
-                        //     .ui.disabled.button
-                        //         +icon name='filter'
-                        //         |Sort By
-                        // .item
-                        //     .ui.disabled.button
-                        //         +icon name='filter'
-                        //         | Toggle Fields
+                .ui.horizontal.list
+                    .item
+                        +set_page_size value=10
+                        +set_page_size value=20
+                        +set_page_size value=50
+                    .item
+                        if multiple_pages
+                            .ui.label
+                                | Page #{delta.current_page}/#{delta.page_amount}
+                    .item
+                            | #{delta.total} Results
+                    .item
+                        if show_page_down
+                            .ui.icon.button.page_down(title='Previous Page')
+                                +icon name='chevron-left'
+                                // +icon name='chevron-left' classes='mini spaced'
+                        if show_page_up
+                            .ui.icon.button.page_up(title='Next Page')
+                                +icon name='chevron-right'
+                    .item
+                        +toggle_delta_config key='minimize' title='Minimize' label='Minimize' icon='chevron-up'
+                    .item
+                        .ui.disabled.button
+                            +icon name='filter'
+                            |Sort By
+                    .item
+                        .ui.disabled.button
+                            +icon name='filter'
+                            | Toggle Fields
                 if is_calculating
                     .ui.hidden.divider
                     .ui.active.indeterminate.massive.centered.inline.loader
@@ -58,7 +57,6 @@ template(name='response')
                             +doc
                     else
                         each delta.result_ids
-                            .ui.header #{this}
                             +doc
         else
             |No results

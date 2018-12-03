@@ -1,15 +1,8 @@
 template(name='doc')
     with local_doc
-        .ui.header #{title}
-        .ui.vertical.segments
-            .ui.header keys
-            each keys
-                .ui.basic.label #{this}
-            each fields
-                .ui.segment 
-                    |&nbsp;
-                    if is_array
-                        each value
-                            .ui.margined.label #{this}
-                    else
-                        | #{value}
+        .ui.segment
+            .ui.list
+                each local_doc.keys
+                    .item 
+                        |#{this}
+                        strong #{value}
