@@ -17,7 +17,7 @@ Meteor.methods
     keys: ->
         start = Date.now()
         console.log 'starting keys'
-        cursor = Docs.find({keys:$exists:false}, {limit:10000}).fetch()
+        cursor = Docs.find({keys:$exists:false}, {limit:1000}).fetch()
         for doc in cursor
             keys = _.keys doc
             # console.log doc
@@ -56,6 +56,8 @@ Meteor.methods
         #     unless filter.key in filter_keys
         #         filter_keys.push filter.key
 
+
+
         # call
         for key in facets
             filter_list = delta["filter_#{key}"]
@@ -74,8 +76,7 @@ Meteor.methods
         # maybe this references keys_return?
         # hard code 'keys', then grow out
         
-        # response, i think
-        
+        # response
         for key in facets
             values = []
             local_return = []
@@ -83,8 +84,17 @@ Meteor.methods
             # field type detection 
             example_doc = Docs.findOne({"#{key}":$exists:true})
             example_value = example_doc?["#{key}"]
-            primitive = typeof example_value
-            test_calc = Meteor.call 'agg', built_query, primitive, key
+
+            # js arrays typeof is object
+            array_test = Array.isArray example_value
+            if array_test
+                prim = 'array'
+            else
+                prim = typeof example_value
+            
+            console.log 'array', array_test
+            
+            test_calc = Meteor.call 'agg', built_query, prim, key
 
             Docs.update {_id:delta._id},
                 { $set:"#{key}_return":test_calc }
@@ -106,8 +116,8 @@ Meteor.methods
 
 
     agg: (query, type, key)->
-        console.log query
-        console.log type
+        console.log 'query agg', query
+        console.log 'type', type
         options = {
             explain:false
             }
