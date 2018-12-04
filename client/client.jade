@@ -25,19 +25,22 @@ template(name='home')
             .eight.wide.column
                 img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
             .four.wide.column
-        .row
+        .two.column.row
             .column
                 each delta.facets
                     +facet
-            // .column
-            //     each delta.result_ids
-            //         .ui.segment
-            //             .ui.header #{_id}
-                        // .ui.list
-                        //     each local_doc.keys
-                        //         .item 
-                        //             |#{this}
-                        //             strong #{value}
+            .column
+                each delta.results
+                    +result
+
+
+template(name='result')
+    .ui.segment
+        .ui.list
+            each keys
+                .item 
+                    |#{this}
+                    strong #{value}
 
 template(name='facet')
     .ui.header #{key}
@@ -45,6 +48,6 @@ template(name='facet')
         .unselect.ui.blue.button #{this}
     
     each res
-        .ui.select.margined.button(class=toggle_value_class)
+        .ui.select.margined.compact.button(class=toggle_value_class)
             strong #{name}
             small #{count}

@@ -24,6 +24,12 @@ Template.home.helpers
         filter = Template.parentData()
         filter_list = delta["filter_#{filter.key}"]
         if filter_list and @name in filter_list then 'blue active' else ''
+        
+    
+Template.result.helpers
+    value: ->
+        filter = Template.parentData()
+        filter["#{@valueOf()}"]
 
 
 Template.facet.helpers

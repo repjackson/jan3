@@ -65,27 +65,29 @@ Meteor.methods
             else
                 prim = typeof example_value
             
-            agg_res = Meteor.call 'agg', built_query, prim, facet.key
+            agg_res = Meteor.call 'agg', built_query, prim, facet.key, facet.filters
 
             Docs.update {_id:delta._id, "facets.key":facet.key},
                 { $set: "facets.$.res": agg_res }
 
 
-        results_cursor = Docs.find {built_query}, limit:10
+        results_cursor = Docs.find built_query, limit:10
 
-        result_ids = []
-        for result in results_cursor.fetch()
-            result_ids.push result._id
+        # result_ids = []
+        # for result in results_cursor.fetch()
+        #     result_ids.push result._id
+
+        results = results_cursor.fetch()
 
         Docs.update {_id:delta._id},
             {$set:
                 total: total
-                result_ids:result_ids
+                results:results
             }, ->
         return true
 
 
-    agg: (query, type, key)->
+    agg: (query, type, key, filters)->
         # console.log 'query agg', query
         # console.log 'type', type
         # console.log 'key', key
@@ -98,9 +100,9 @@ Meteor.methods
                 { $project: "#{key}": 1 }
                 { $unwind: "$#{key}" }
                 { $group: _id: "$#{key}", count: $sum: 1 }
-                { $match: _id: $nin: [key] }
+                # { $match: _id: $nin: filters }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 50 }
+                { $limit: 20 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
         else
@@ -108,9 +110,9 @@ Meteor.methods
                 { $match: query }
                 { $project: "#{key}": 1 }
                 { $group: _id: "$#{key}", count: $sum: 1 }
-                { $match: _id: $ne: key }
+                # { $match: _id: $nin: filters }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 50 }
+                { $limit: 20 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
 
