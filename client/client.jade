@@ -12,36 +12,31 @@ template(name='home')
     .ui.stackable.padded.grid
         .centered.row
             .four.wide.center.aligned.column
-                i.plus.link.large.icon.create_delta
-                i.remove.link.large.icon.delete_delta
-                i.code.link.large.icon.print_delta
-                i.refresh.link.large.icon.recalc
+                // i.plus.link.large.icon.create_delta
+                // i.remove.link.large.icon.delete_delta
+                // i.code.link.large.icon.print_delta
+                // i.refresh.link.large.icon.recalc
             .eight.wide.column
                 img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
             .four.wide.column
-        .two.column.row
-            +delta
+        .row
+            .column
+                each facets
+                    +facet             
+            // .column
+            //     each delta.result_ids
+            //         .ui.segment
+            //             .ui.header #{_id}
+                        // .ui.list
+                        //     each local_doc.keys
+                        //         .item 
+                        //             |#{this}
+                        //             strong #{value}
 
-template(name='delta')            
-    .column
-        .ui.header call
-        each delta.keys_return
-            .ui.label #{name} #{count}
-        each facets
-            .ui.inline_header.header 
-                |#{this}
-            each selected_values
-                .unselect.ui.blue.button #{this}
-            each values
-                .ui.select.button(class=toggle_value_class)
-                    strong #{name}
-                    // small #{count}
-    .column
-        .ui.header response
-        // each delta.result_ids
-        //     .ui.segment
-        //         .ui.list
-        //             each local_doc.keys
-        //                 .item 
-        //                     |#{this}
-        //                     strong #{value}
+template(name='facet')                
+    each selected_values
+        .unselect.ui.blue.button #{this}
+    each values
+        .ui.select.margined.button(class=toggle_value_class)
+            strong #{name}
+            small #{count}

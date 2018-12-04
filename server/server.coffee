@@ -41,13 +41,6 @@ Meteor.methods
         
         facets = ['keys']
 
-        
-        # include existing filter selections
-        if delta.active_facets
-            for key in delta.active_facets
-                filter_list = delta["filter_#{key}"]
-                if filter_list
-                    built_query["#{key}"] = $all: filter_list
     
         # need to normalize list of existing filters
         # so normalizing keys in the fo method, ~abstracting my own server code
@@ -58,18 +51,15 @@ Meteor.methods
 
 
 
-        # call
-        for key in facets
-            filter_list = delta["filter_#{key}"]
-            if filter_list and filter_list.length > 0
-                if facet.primitive is 'array'
-                    # need auto discovery, even for user_ids, thats the intelligence, not just primitive detection.  so this section will evolve.
+        # load existing active_facets and filters
+        if delta.active_facets
+            for key in delta.active_facets
+                filter_list = delta["filter_#{key}"]
+                if filter_list and filter_list.length > 0
                     built_query["#{key}"] = $all: filter_list
                 else
-                    built_query["#{key}"] = $in: filter_list
-            else
-                Docs.update delta._id,
-                    $set: "filter_#{key}":[]
+                    Docs.update delta._id,
+                        $set: "filter_#{key}":[]
 
 
         total = Docs.find(built_query).count()
@@ -116,8 +106,8 @@ Meteor.methods
 
 
     agg: (query, type, key)->
-        console.log 'query agg', query
-        console.log 'type', type
+        # console.log 'query agg', query
+        # console.log 'type', type
         options = {
             explain:false
             }
@@ -130,7 +120,7 @@ Meteor.methods
                 { $unwind: "$#{key}" }
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
+                { $limit: 100 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
         else
@@ -139,7 +129,7 @@ Meteor.methods
                 { $project: "#{key}": 1 }
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
+                { $limit: 100 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
 

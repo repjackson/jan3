@@ -1,11 +1,9 @@
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe 'delta'
-    console.log 'hi'
 
-Template.delta.helpers
+Template.home.helpers
     delta: -> 
         delta = Docs.findOne type:'delta'
-        console.log delta
         if delta 
             delta
     
@@ -26,20 +24,15 @@ Template.delta.helpers
         if filter_list and @name in filter_list then 'blue active' else ''
 
 
+Template.facet.helpers
     values: ->
         # console.log @
         delta = Docs.findOne type:'delta'
         # delta["#{@valueOf()}_return"]?[..20]
         filtered_values = []
-        fo_values = delta["#{@valueOf()}_return"]
-        filters = delta["filter_#{@valueOf()}"]
-        if fo_values
-            for value in fo_values
-                if value.name in filters
-                    filtered_values.push value
-                else if value.count < delta.total
-                    filtered_values.push value
-        filtered_values
+        # filters = delta["filter_#{@valueOf()}"]
+        # filtered_values
+        delta["#{@valueOf()}_return"]
     
     
     selected_values: ->
@@ -70,22 +63,26 @@ Template.home.events
     'click .recalc': ->
         Meteor.call 'fo', (err,res)->
 
+
+Template.facet.events
     'click .unselect': ->
         facet = Template.currentData()
+
         delta = Docs.findOne type:'delta'
         Docs.update delta._id,
             $pull: 
-                "filter_#{facet.key}": @valueOf()
-                active_facets: facet.key
+                "filter_#{facet}": @valueOf()
+                active_facets: facet
         Meteor.call 'fo', (err,res)->
 
     'click .select': ->
-        filter = Template.parentData()
+        facet = Template.currentData()
         delta = Docs.findOne type:'delta'
-        filter_list = delta["filter_#{filter.key}"]
+
+        facet_filters = delta["filter_#{facet}"]
         
         Docs.update delta._id,
             $addToSet:
-                "filter_#{filter.key}": @name
-                active_facets: filter.key
+                "filter_#{facet}": @name
+                active_facets: facet
         Meteor.call 'fo', (err,res)->
