@@ -32,34 +32,41 @@ Meteor.methods
         console.log moment(diff).format("HH:mm:ss:SS")
         
     fo: ->
-        delta = Docs.findOne
-            type:'delta'
+        delta = Docs.findOne type:'delta'
 
-        built_query = { keys: {$exists:true} }
-
+        built_query = { }
         filter_keys = []
         
-        facets = ['keys']
+        # if delta.facet_keys
+        #     facets = delta.filter_keys        
+        # else 
+        facets = []
+            
+        facets.push 'keys'
 
     
         # need to normalize list of existing filters
         # so normalizing keys in the fo method, ~abstracting my own server code
         
-        # for filter in facets
-        #     unless filter.key in filter_keys
-        #         filter_keys.push filter.key
-
-
-
         # load existing active_facets and filters
         if delta.active_facets
             for key in delta.active_facets
-                filter_list = delta["filter_#{key}"]
-                if filter_list and filter_list.length > 0
-                    built_query["#{key}"] = $all: filter_list
+                if delta.filters
+                    filters = delta.filters
                 else
-                    Docs.update delta._id,
-                        $set: "filter_#{key}":[]
+                    filters = []
+                facet_filters = filters["#{key}"]
+                
+                console.log facet_filters
+                
+                if facet_filters and facet_filters.length > 0
+                    built_query["#{key}"] = $all: facet_filters
+                # else
+                    
+                #     Docs.update delta._id,
+                #         $addToSet:
+                #             filters" 
+                #             "filter_#{key}":[]
 
 
         total = Docs.find(built_query).count()
@@ -86,8 +93,11 @@ Meteor.methods
             
             test_calc = Meteor.call 'agg', built_query, prim, key
 
+            return_ob = 
+                "#{key}": test_calc
+
             Docs.update {_id:delta._id},
-                { $set:"#{key}_return":test_calc }
+                { addToSet: response: return_ob }
                 , ->
 
         results_cursor = Docs.find {built_query}, limit:10
@@ -95,7 +105,6 @@ Meteor.methods
         result_ids = []
         for result in results_cursor.fetch()
             result_ids.push result._id
-
 
         Docs.update {_id:delta._id},
             {$set:
@@ -108,9 +117,7 @@ Meteor.methods
     agg: (query, type, key)->
         # console.log 'query agg', query
         # console.log 'type', type
-        options = {
-            explain:false
-            }
+        options = { explain:false }
             
         # intelligence
         if type in ['array','multiref']
@@ -120,7 +127,7 @@ Meteor.methods
                 { $unwind: "$#{key}" }
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 100 }
+                { $limit: 20 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
         else
@@ -129,7 +136,7 @@ Meteor.methods
                 { $project: "#{key}": 1 }
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 100 }
+                { $limit: 20 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
 

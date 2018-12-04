@@ -11,11 +11,13 @@ Template.home.helpers
         # at least keys
         facets = []
         delta = Docs.findOne type:'delta'
-        if delta and delta.keys_return
-            for item in delta.keys_return
-                facets.push item.name
-            facets.push 'keys'
-            facets
+        if delta 
+            console.log delta
+            if delta.keys_filter
+                for item in delta.keys_filter
+                    facets.push item.name
+        facets.push 'keys'
+        facets
     
     toggle_value_class: ->
         delta = Docs.findOne type:'delta'
@@ -28,29 +30,37 @@ Template.facet.helpers
     values: ->
         # console.log @
         delta = Docs.findOne type:'delta'
-        # delta["#{@valueOf()}_return"]?[..20]
         filtered_values = []
-        # filters = delta["filter_#{@valueOf()}"]
-        # filtered_values
-        delta["#{@valueOf()}_return"]
-    
+        if delta
+            filters = delta["filter_#{@valueOf()}"]
+            unfiltered_return = delta["#{@valueOf()}_return"]
+            if unfiltered_return and filters
+                console.log filters
+                for val in unfiltered_return
+                    if val.name in filters
+                        continue
+                    else if val.count < delta.total
+                        filtered_values.push val
+                filtered_values
     
     selected_values: ->
         # console.log @
         delta = Docs.findOne type:'delta'
         # delta["#{@valueOf()}_return"]?[..20]
         filtered_values = []
-        fo_values = delta["#filter_{@valueOf()}"]
-        filters = delta["filter_#{@valueOf()}"]
+        if delta
+            delta["filter_#{@valueOf()}"]
 
 
 Template.home.events
     'click .create_delta': (e,t)->
-        new_delta_id =
-            Docs.insert
-                type:'delta'
-                result_ids:[]
-        Meteor.call 'fo', new_delta_id
+        Docs.insert
+            type:'delta'
+            # filters: []
+            # results: []
+            # active_facets: ['keys']
+            # result_ids:[]
+        # Meteor.call 'fo'
     
     'click .delete_delta': (e,t)->
         delta = Docs.findOne type:'delta'

@@ -12,17 +12,26 @@ template(name='home')
     .ui.stackable.padded.grid
         .centered.row
             .four.wide.center.aligned.column
-                // i.plus.link.large.icon.create_delta
-                // i.remove.link.large.icon.delete_delta
-                // i.code.link.large.icon.print_delta
-                // i.refresh.link.large.icon.recalc
+                if delta
+                    .ui.icon.button.delete_delta
+                        i.remove.link.big.icon
+                    .ui.icon.button.print_delta
+                        i.code.link.big.icon
+                    .ui.icon.button.recalc
+                        i.refresh.link.big.icon
+                else
+                    .ui.icon.button.create_delta
+                        i.plus.link.big.icon
             .eight.wide.column
                 img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
             .four.wide.column
         .row
             .column
-                each facets
-                    +facet             
+                each delta.response
+                    +facet
+                if delta
+                    each delta.filter_keys
+                        +facet
             // .column
             //     each delta.result_ids
             //         .ui.segment
@@ -33,7 +42,11 @@ template(name='home')
                         //             |#{this}
                         //             strong #{value}
 
-template(name='facet')                
+template(name='facet')
+    .ui.header #{key}
+    .ui.header #{results}
+    
+    
     each selected_values
         .unselect.ui.blue.button #{this}
     each values
