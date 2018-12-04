@@ -12,7 +12,6 @@ tracker@1.2.0                 # Meteor's client-side reactive programming librar
 mobile-experience@1.0.5
 
 
-semantic:ui
 blaze-html-templates
 shell-server@0.4.0
 less@2.8.0
@@ -23,4 +22,3 @@ pacreach:jade
 coffeescript@2.3.2_1
 percolate:synced-cron
 random@1.1.0
-juliancwirko:postcss@=1.2.0

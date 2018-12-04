@@ -61,7 +61,7 @@ Template.facet.helpers
         facet = Template.parentData()
         delta = Docs.findOne type:'delta'
 
-        if @name in facet.filters
+        if facet.filters and @name in facet.filters
             'blue'
         else
             ''
@@ -88,30 +88,12 @@ Template.home.events
 
 
 Template.facet.events
-    'click .unselect': ->
-        facet = Template.currentData()
-
-        delta = Docs.findOne type:'delta'
-        Meteor.call 'remove_facet_filter', delta._id, facet.key, @valueOf(), ->
-
-
-    'click .select': ->
-        facet = Template.currentData()
-        delta = Docs.findOne type:'delta'
-
-        Meteor.call 'add_facet_filter', delta._id, facet.key, @name, ->
-
-
-
     'click .toggle_selection': ->
-        facet = Template.parentData()
-        console.log @
-        console.log facet
-        console.log Template.currentData()
-
+        delta = Docs.findOne type:'delta'
+        facet = Template.currentData()
         
         delta = Docs.findOne type:'delta'
-        if @name in facet.filters
-            Meteor.call 'remove_facet_filter', delta._id, facet.key, @valueOf(), ->
+        if facet.filters and @name in facet.filters
+            Meteor.call 'remove_facet_filter', delta._id, facet.key, @name, ->
         else 
             Meteor.call 'add_facet_filter', delta._id, facet.key, @name, ->

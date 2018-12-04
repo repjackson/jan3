@@ -36,7 +36,6 @@ Meteor.methods
         built_query = { }
         
         for facet in delta.facets
-            console.log facet
             if facet.filters and facet.filters.length > 0
                 built_query["#{facet.key}"] = $all: facet.filters
             # else
@@ -102,7 +101,7 @@ Meteor.methods
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 # { $match: _id: $nin: filters }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 42 }
+                { $limit: 20 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
         else
@@ -112,7 +111,7 @@ Meteor.methods
                 { $group: _id: "$#{key}", count: $sum: 1 }
                 # { $match: _id: $nin: filters }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 42 }
+                { $limit: 20 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
 
