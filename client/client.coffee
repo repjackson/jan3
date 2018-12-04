@@ -1,20 +1,14 @@
-Template.registerHelper 'delta', () -> Docs.findOne type:'delta'
-
-
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe 'delta'
-    delta = Docs.findOne type:'delta'
+    console.log 'hi'
 
-
-
-
-# consolidate all templates in home, only new templates if different data context
-# which shouldn't be
-
-
-# comments are fun.  hi future people.
-
-Template.home.helpers
+Template.delta.helpers
+    delta: -> 
+        delta = Docs.findOne type:'delta'
+        console.log delta
+        if delta 
+            delta
+    
     facets: ->
         # at least keys
         delta = Docs.findOne type:'delta'
@@ -22,14 +16,7 @@ Template.home.helpers
             facets = delta.keys_return
             facets.push 'keys'
             facets
-    selector_value: ->
-        switch typeof @name
-            when 'string' then @name
-            when 'boolean'
-                if @name is true then 'True'
-                else if @name is false then 'False'
-            when 'number' then @name
-
+    
     toggle_value_class: ->
         delta = Docs.findOne type:'delta'
         filter = Template.parentData()
@@ -40,7 +27,7 @@ Template.home.helpers
     values: ->
         # console.log @
         delta = Docs.findOne type:'delta'
-        # delta["#{@key}_return"]?[..20]
+        # delta["#{@valueOf()}_return"]?[..20]
         filtered_values = []
         fo_values = delta["#{@valueOf()}_return"]
         filters = delta["filter_#{@valueOf()}"]
@@ -56,10 +43,10 @@ Template.home.helpers
     selected_values: ->
         # console.log @
         delta = Docs.findOne type:'delta'
-        # delta["#{@key}_return"]?[..20]
+        # delta["#{@valueOf()}_return"]?[..20]
         filtered_values = []
-        fo_values = delta["#filter_{@key}"]
-        filters = delta["filter_#{@key}"]
+        fo_values = delta["#filter_{@valueOf()}"]
+        filters = delta["filter_#{@valueOf()}"]
 
 
 Template.home.events
@@ -99,5 +86,4 @@ Template.home.events
             $addToSet:
                 "filter_#{filter.key}": @name
                 active_facets: filter.key
-                
         Meteor.call 'fo', (err,res)->

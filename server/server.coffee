@@ -1,68 +1,19 @@
-# SyncedCron.config
-#     log: true
-#     collectionName: 'cron_history'
-#     utc: false
-#     collectionTTL: 17280
-
-# if Meteor.isProduction
-#     SyncedCron.add(
-#         {
-#             name: 'Update ticket escalations'
-#             schedule: (parser) ->
-#                 parser.text 'every 50 minutes'
-#                 # so it catches 1 hour escalations
-#             job: ->
-#                 console.log 'running site escalation check'
-#                 Meteor.call 'run_site_escalation_check', (err,res)->
-#                     if err then console.error err
-#         },{
-#             name: 'Update customers'
-#             schedule: (parser) ->
-#                 parser.text 'every 3 hours'
-#             job: ->
-#                 console.log 'updating customers'
-#                 Meteor.call 'update_customers', (err, res)->
-#                     if err then console.error err
-#         },{
-#             name: 'Update users'
-#             schedule: (parser) ->
-#                 parser.text 'every 3 hours'
-#             job: ->
-#                 console.log 'updating users/3hrs'
-#                 Meteor.call 'sync_ev_users', (err, res)->
-#                     if err then console.error err
-#         },{
-#             name: 'Update franchisee'
-#             schedule: (parser) ->
-#                 parser.text 'every 3 hours'
-#             job: ->
-#                 console.log 'updating franchisee'
-#                 Meteor.call 'update_franchisees', (err, res)->
-#                     if err then console.error err
-#         },{
-#             name: 'Update office'
-#             schedule: (parser) ->
-#                 parser.text 'every 3 hours'
-#             job: ->
-#                 console.log 'updating office'
-#                 Meteor.call 'update_offices', (err, res)->
-#                     if err then console.error err
-#         }
-#     )
+Docs.allow
+    insert: (user_id, doc) -> true
+    remove: (user_id, doc) -> true
+    update: (user_id, doc) -> true
 
 
-# if Meteor.isProduc5tion
-#     SyncedCron.start()
+Meteor.publish 'delta', ->
+    Docs.find({type:'delta'})
+
+
+# facet macro to find documents
+# facet micro to view into/manipulate docs
+
+
 
 Meteor.methods
-    raw_count: ->
-        raw = Docs.rawCollection()
-            # .distinct('author_id')
-        dis = Meteor.wrapAsync raw.distinct, raw
-        count = dis 'author_id'
-        console.log count
-        
-        
     keys: ->
         start = Date.now()
         console.log 'starting keys'
@@ -80,42 +31,6 @@ Meteor.methods
         # console.log diff
         console.log moment(diff).format("HH:mm:ss:SS")
         
-    key_count: ->
-        start = Date.now()
-        console.log 'starting key count'
-        cursor = Docs.find({key_count:$exists:false}, {limit:30000}).fetch()
-        for doc in cursor
-            key_count = doc.keys.length
-            Docs.update doc._id,
-                $set:key_count:key_count
-            
-            console.log "updated key count for doc #{doc.type}, #{key_count}"
-        stop = Date.now()
-        
-        diff = stop - start
-        # console.log diff
-        console.log moment(diff).format("HH:mm:ss:SS")
-        
-        
-
-Docs.allow
-    insert: (user_id, doc) -> true
-    remove: (user_id, doc) -> true
-    update: (user_id, doc) -> true
-
-
-Meteor.publish 'delta', ->
-    Docs.find {
-        type:'delta'
-    }, {limit:1}
-
-
-# facet macro to find documents
-# facet micro to view into/manipulate docs
-
-
-
-Meteor.methods
     fo: ->
         delta = Docs.findOne
             type:'delta'
@@ -127,7 +42,6 @@ Meteor.methods
         facets = [
             {
                 key:'keys'
-                type:'array'
                 primitive:'array'
             }
         ]
@@ -147,39 +61,41 @@ Meteor.methods
         #     unless filter.key in filter_keys
         #         filter_keys.push filter.key
 
-        for facet in facets
-            filter_list = delta["filter_#{facet.key}"]
+        # call
+        for key in facets
+            filter_list = delta["filter_#{key}"]
             if filter_list and filter_list.length > 0
                 if facet.primitive is 'array'
                     # need auto discovery, even for user_ids, thats the intelligence, not just primitive detection.  so this section will evolve.
-                    built_query["#{facet.key}"] = $all: filter_list
+                    built_query["#{key}"] = $all: filter_list
                 else
-                    built_query["#{facet.key}"] = $in: filter_list
+                    built_query["#{key}"] = $in: filter_list
             else
                 Docs.update delta._id,
-                    $set: "filter_#{facet.key}":[]
+                    $set: "filter_#{key}":[]
 
 
         total = Docs.find(built_query).count()
         # maybe this references keys_return?
-        for key in delta.keys_return
+        # hard code 'keys', then grow out
+        
+        # response, i think
+        
+        for key in facets
             values = []
             local_return = []
             
             # field type detection 
-            example_doc = Docs.findOne({"#{facet.key}":$exists:true})
-            example_value = example_doc?["#{facet.key}"]
+            example_doc = Docs.findOne({"#{key}":$exists:true})
+            example_value = example_doc?["#{key}"]
             primitive = typeof example_value
+            test_calc = Meteor.call 'agg', built_query, primitive, key
 
-            if primitive
-                test_calc = Meteor.call 'agg', built_query, primitive, key
-            else
-                console.log 'no primitive', facet, 'key:', key
             Docs.update {_id:delta._id},
-                { $set:"#{facet.key}_return":test_calc }
+                { $set:"#{key}_return":test_calc }
                 , ->
 
-        results_cursor = Docs.find built_query 
+        results_cursor = Docs.find {built_query}, limit:10
 
         result_ids = []
         for result in results_cursor.fetch()
