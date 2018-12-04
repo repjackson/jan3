@@ -26,11 +26,9 @@ template(name='delta')
     .column
         .ui.header call
         each delta.keys_return
-            |#{this},
+            .ui.label #{name} #{count}
         each facets
             .ui.inline_header.header 
-                if icon
-                    i.icon(class=icon)
                 |#{this}
             each selected_values
                 .unselect.ui.blue.button #{this}

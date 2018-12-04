@@ -39,12 +39,7 @@ Meteor.methods
 
         filter_keys = []
         
-        facets = [
-            {
-                key:'keys'
-                primitive:'array'
-            }
-        ]
+        facets = ['keys']
 
         
         # include existing filter selections

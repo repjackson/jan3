@@ -11,9 +11,11 @@ Template.delta.helpers
     
     facets: ->
         # at least keys
+        facets = []
         delta = Docs.findOne type:'delta'
         if delta and delta.keys_return
-            facets = delta.keys_return
+            for item in delta.keys_return
+                facets.push item.name
             facets.push 'keys'
             facets
     
