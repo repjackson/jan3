@@ -57,6 +57,15 @@ Template.facet.helpers
         if delta
             delta["filter_#{@valueOf()}"]
 
+    toggle_value_class: ->
+        facet = Template.parentData()
+        delta = Docs.findOne type:'delta'
+
+        if @name in facet.filters
+            'blue'
+        else
+            ''
+
 
 Template.home.events
     'click .create_delta': (e,t)->
@@ -90,7 +99,19 @@ Template.facet.events
         facet = Template.currentData()
         delta = Docs.findOne type:'delta'
 
-        facet_filters = delta["filter_#{facet}"]
-        
         Meteor.call 'add_facet_filter', delta._id, facet.key, @name, ->
 
+
+
+    'click .toggle_selection': ->
+        facet = Template.parentData()
+        console.log @
+        console.log facet
+        console.log Template.currentData()
+
+        
+        delta = Docs.findOne type:'delta'
+        if @name in facet.filters
+            Meteor.call 'remove_facet_filter', delta._id, facet.key, @valueOf(), ->
+        else 
+            Meteor.call 'add_facet_filter', delta._id, facet.key, @name, ->

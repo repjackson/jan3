@@ -42,12 +42,13 @@ template(name='result')
                     |#{this}
                     strong #{value}
 
+
 template(name='facet')
     .ui.header #{key}
-    each filters
-        .unselect.ui.blue.button #{this}
+    // each filters
+    //     .unselect.ui.blue.button #{this}
     
     each res
-        .ui.select.margined.compact.button(class=toggle_value_class)
+        .ui.toggle_selection.margined.compact.button(class=toggle_value_class)
             strong #{name}
             small #{count}
