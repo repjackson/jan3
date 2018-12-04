@@ -56,10 +56,8 @@ Template.home.events
     'click .create_delta': (e,t)->
         Docs.insert
             type:'delta'
-            # filters: []
-            # results: []
-            # active_facets: ['keys']
-            # result_ids:[]
+            facets: [{key:'keys', res:[]}]
+            result_ids:[]
         # Meteor.call 'fo'
     
     'click .delete_delta': (e,t)->

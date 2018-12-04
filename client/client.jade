@@ -26,11 +26,14 @@ template(name='home')
                 img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
             .four.wide.column
         .row
+            with delta
+                .ui.header active facets #{active_facets}
+        .row
             .column
-                each delta.response
+                each delta.facets
                     +facet
                 if delta
-                    each delta.filter_keys
+                    each delta.res
                         +facet
             // .column
             //     each delta.result_ids
@@ -44,7 +47,7 @@ template(name='home')
 
 template(name='facet')
     .ui.header #{key}
-    .ui.header #{results}
+    .ui.header #{res}
     
     
     each selected_values

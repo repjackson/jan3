@@ -16,7 +16,6 @@ Meteor.publish 'delta', ->
 Meteor.methods
     keys: ->
         start = Date.now()
-        console.log 'starting keys'
         cursor = Docs.find({keys:$exists:false}, {limit:1000}).fetch()
         for doc in cursor
             keys = _.keys doc
@@ -35,52 +34,30 @@ Meteor.methods
         delta = Docs.findOne type:'delta'
 
         built_query = { }
-        filter_keys = []
         
-        # if delta.facet_keys
-        #     facets = delta.filter_keys        
-        # else 
-        facets = []
-            
-        facets.push 'keys'
+        for facet in delta.facets
+            console.log facet
+            if facet.filters and facet.filters.length > 0
+                built_query["#{facet.key}"] = $all: facet.filters
+            # else
+            #     Docs.update delta._id,
+            #         $addToSet:
+            #             filters" 
+            #             "filter_#{key}":[]
 
-    
-        # need to normalize list of existing filters
-        # so normalizing keys in the fo method, ~abstracting my own server code
-        
-        # load existing active_facets and filters
-        if delta.active_facets
-            for key in delta.active_facets
-                if delta.filters
-                    filters = delta.filters
-                else
-                    filters = []
-                facet_filters = filters["#{key}"]
-                
-                console.log facet_filters
-                
-                if facet_filters and facet_filters.length > 0
-                    built_query["#{key}"] = $all: facet_filters
-                # else
-                    
-                #     Docs.update delta._id,
-                #         $addToSet:
-                #             filters" 
-                #             "filter_#{key}":[]
-
+        console.log 'built query', built_query
 
         total = Docs.find(built_query).count()
-        # maybe this references keys_return?
-        # hard code 'keys', then grow out
         
         # response
-        for key in facets
+        for facet in delta.facets
             values = []
             local_return = []
             
+            console.log 'facet', facet
             # field type detection 
-            example_doc = Docs.findOne({"#{key}":$exists:true})
-            example_value = example_doc?["#{key}"]
+            example_doc = Docs.findOne({"#{facet.key}":$exists:true})
+            example_value = example_doc?["#{facet.key}"]
 
             # js arrays typeof is object
             array_test = Array.isArray example_value
@@ -89,16 +66,13 @@ Meteor.methods
             else
                 prim = typeof example_value
             
-            console.log 'array', array_test
-            
-            test_calc = Meteor.call 'agg', built_query, prim, key
+            agg_res = Meteor.call 'agg', built_query, prim, facet.key
 
-            return_ob = 
-                "#{key}": test_calc
+            console.log 'agg res', agg_res    
+                
+            Docs.update {_id:delta._id, "facets.key":facet.key},
+                { $set: "facets.$.res": agg_res }
 
-            Docs.update {_id:delta._id},
-                { addToSet: response: return_ob }
-                , ->
 
         results_cursor = Docs.find {built_query}, limit:10
 
@@ -115,8 +89,9 @@ Meteor.methods
 
 
     agg: (query, type, key)->
-        # console.log 'query agg', query
-        # console.log 'type', type
+        console.log 'query agg', query
+        console.log 'type', type
+        console.log 'key', key
         options = { explain:false }
             
         # intelligence
