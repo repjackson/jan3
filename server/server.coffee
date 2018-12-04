@@ -86,9 +86,9 @@ Meteor.methods
 
 
     agg: (query, type, key)->
-        console.log 'query agg', query
-        console.log 'type', type
-        console.log 'key', key
+        # console.log 'query agg', query
+        # console.log 'type', type
+        # console.log 'key', key
         options = { explain:false }
             
         # intelligence
@@ -98,8 +98,9 @@ Meteor.methods
                 { $project: "#{key}": 1 }
                 { $unwind: "$#{key}" }
                 { $group: _id: "$#{key}", count: $sum: 1 }
+                { $match: _id: $nin: [key] }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
+                { $limit: 50 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
         else
@@ -107,8 +108,9 @@ Meteor.methods
                 { $match: query }
                 { $project: "#{key}": 1 }
                 { $group: _id: "$#{key}", count: $sum: 1 }
+                { $match: _id: $ne: key }
                 { $sort: count: -1, _id: 1 }
-                { $limit: 20 }
+                { $limit: 50 }
                 { $project: _id: 0, name: '$_id', count: 1 }
             ]
 
