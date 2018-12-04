@@ -54,7 +54,6 @@ Meteor.methods
             values = []
             local_return = []
             
-            console.log 'facet', facet
             # field type detection 
             example_doc = Docs.findOne({"#{facet.key}":$exists:true})
             example_value = example_doc?["#{facet.key}"]
@@ -68,8 +67,6 @@ Meteor.methods
             
             agg_res = Meteor.call 'agg', built_query, prim, facet.key
 
-            console.log 'agg res', agg_res    
-                
             Docs.update {_id:delta._id, "facets.key":facet.key},
                 { $set: "facets.$.res": agg_res }
 

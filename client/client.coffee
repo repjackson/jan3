@@ -77,11 +77,8 @@ Template.facet.events
         facet = Template.currentData()
 
         delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $pull: 
-                "filter_#{facet}": @valueOf()
-                active_facets: facet
-        Meteor.call 'fo', (err,res)->
+        Meteor.call 'remove_facet_filter', delta._id, facet.key, @valueOf(), ->
+
 
     'click .select': ->
         facet = Template.currentData()
@@ -89,8 +86,5 @@ Template.facet.events
 
         facet_filters = delta["filter_#{facet}"]
         
-        Docs.update delta._id,
-            $addToSet:
-                "filter_#{facet}": @name
-                active_facets: facet
-        Meteor.call 'fo', (err,res)->
+        Meteor.call 'add_facet_filter', delta._id, facet.key, @name, ->
+

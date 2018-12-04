@@ -26,9 +26,6 @@ template(name='home')
                 img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
             .four.wide.column
         .row
-            with delta
-                .ui.header active facets #{active_facets}
-        .row
             .column
                 each delta.facets
                     +facet
@@ -47,12 +44,11 @@ template(name='home')
 
 template(name='facet')
     .ui.header #{key}
-    .ui.header #{res}
-    
-    
-    each selected_values
+    div filters
+    each filters
         .unselect.ui.blue.button #{this}
-    each values
+    
+    each res
         .ui.select.margined.button(class=toggle_value_class)
             strong #{name}
             small #{count}
