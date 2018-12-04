@@ -51,7 +51,7 @@
 #     )
 
 
-# if Meteor.isProduction
+# if Meteor.isProduc5tion
 #     SyncedCron.start()
 
 Meteor.methods
@@ -99,13 +99,9 @@ Meteor.methods
         
 
 Docs.allow
-    insert: (user_id, doc) -> user_id
-    # update: (user_id, doc) -> doc.author_id is user_id or Roles.userIsInRole(user_id, 'admin')
-    remove: (user_id, doc) ->
-        user = Meteor.users.findOne user_id
-        doc.author_id is user_id or 'dev' in user.roles
-    update: (user_id, doc) -> user_id
-    # remove: (user_id, doc) -> user_id
+    insert: (user_id, doc) -> true
+    remove: (user_id, doc) -> true
+    update: (user_id, doc) -> true
 
 
 Meteor.publish 'delta', ->

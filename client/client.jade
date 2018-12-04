@@ -12,6 +12,10 @@ template(name='home')
     .ui.stackable.padded.grid
         .centered.row
             .four.wide.center.aligned.column
+                i.plus.link.icon.create_delta
+                i.remove.link.icon.delete_delta
+                i.code.link.icon.print_delta
+                i.refresh.link.icon.recalc
             .eight.wide.column
                 img.ui.small.centered.image.delta.pointer(src='https://jan-pro.com/wp-content/themes/underboot/img/jan-pro-blue.svg')
             .four.wide.column
@@ -29,7 +33,7 @@ template(name='home')
                                 .ui.inline_header.header 
                                     if icon
                                         i.icon(class=icon)
-                                    |#{key}
+                                    |#{this}
                                 each selected_values
                                     .unselect.ui.blue.button #{this}
                                 each values

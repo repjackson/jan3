@@ -3,21 +3,9 @@ Template.registerHelper 'delta', () -> Docs.findOne type:'delta'
 
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe 'delta'
+    delta = Docs.findOne type:'delta'
 
 
-Template.home.helpers
-    facets: ->
-        delta = Docs.findOne type:'delta'
-        if delta and delta.keys_return then delta.keys_return
-            
-
-Template.home.events
-    'click .create_delta': (e,t)->
-        new_delta_id =
-            Docs.insert
-                type:'delta'
-                result_ids:[]
-        Meteor.call 'fo', new_delta_id
 
 
 # consolidate all templates in home, only new templates if different data context
@@ -27,6 +15,13 @@ Template.home.events
 # comments are fun.  hi future people.
 
 Template.home.helpers
+    facets: ->
+        # at least keys
+        delta = Docs.findOne type:'delta'
+        if delta and delta.keys_return
+            facets = delta.keys_return
+            facets.push 'keys'
+            facets
     selector_value: ->
         switch typeof @name
             when 'string' then @name
@@ -42,7 +37,6 @@ Template.home.helpers
         if filter_list and @name in filter_list then 'blue active' else ''
 
 
-Template.home.helpers
     values: ->
         # console.log @
         delta = Docs.findOne type:'delta'
@@ -69,8 +63,22 @@ Template.home.helpers
 
 
 Template.home.events
-    'click .recalc': ->
+    'click .create_delta': (e,t)->
+        new_delta_id =
+            Docs.insert
+                type:'delta'
+                result_ids:[]
+        Meteor.call 'fo', new_delta_id
+    
+    'click .delete_delta': (e,t)->
         delta = Docs.findOne type:'delta'
+        Docs.remove delta._id
+    
+    'click .print_delta': (e,t)->
+        delta = Docs.findOne type:'delta'
+        console.log delta
+
+    'click .recalc': ->
         Meteor.call 'fo', (err,res)->
 
     'click .unselect': ->
