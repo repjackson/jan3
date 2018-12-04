@@ -1,52 +1,8 @@
 Template.registerHelper 'delta', () -> Docs.findOne type:'delta'
 
 
-Template.home.events
-    'click .delta': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'delta'
-                viewing_delta: false
-   
-    'click .add': (e,t)->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                viewing_menu:false
-                viewing_page: true
-                page_template:'add'
-                viewing_delta: false
-
-    'click .delete_delta': ->
-        if confirm 'Clear Session?'
-            delta = Docs.findOne type:'delta'
-            Docs.remove delta._id
-
-    'click .run_fo': ->
-        delta = Docs.findOne type:'delta'
-        Session.set 'is_calculating', true
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
-
-    'click .show_delta': (e,t)->
-        delta = Docs.findOne type:'delta'
-        console.log delta
-
-    'click #logout': (e,t)->
-        # e.preventDefault()
-        Meteor.logout ->
-            t.signing_out.set false
-            
-            
-            
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe 'delta'
-    @autorun -> Meteor.subscribe 'me'
 
 
 Template.home.helpers
@@ -56,27 +12,6 @@ Template.home.helpers
             
 
 Template.home.events
-    'click .add_doc': (e,t)->
-        delta = Docs.findOne type:'delta'
-        type = delta.filter_type[0]
-        user = Meteor.user()
-        new_doc = {}
-        if type
-            new_doc['type'] = type
-        new_id = Docs.insert(new_doc)
-
-        Docs.update delta._id,
-            $set:
-                doc_view:true
-                doc_id:new_id
-                editing:true
-        Session.set 'is_calculating', true
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
-
-
     'click .create_delta': (e,t)->
         new_delta_id =
             Docs.insert
@@ -85,16 +20,13 @@ Template.home.events
         Meteor.call 'fo', new_delta_id
 
 
-Template.doc.onCreated ->
-    @autorun => Meteor.subscribe 'doc', @data
+# consolidate all templates in home, only new templates if different data context
+# which shouldn't be
 
 
+# comments are fun.  hi future people.
 
-
-
-
-
-Template.selector.helpers
+Template.home.helpers
     selector_value: ->
         switch typeof @name
             when 'string' then @name
@@ -110,21 +42,7 @@ Template.selector.helpers
         if filter_list and @name in filter_list then 'blue active' else ''
 
 
-Template.doc.events
-    'click .save': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:editing:false
-
-    'click .edit': ->
-        delta = Docs.findOne type:'delta'
-        Docs.update delta._id,
-            $set:
-                editing:true
-                doc_view: true
-                doc_id: @_id
-
-Template.facet.helpers
+Template.home.helpers
     values: ->
         # console.log @
         delta = Docs.findOne type:'delta'
@@ -150,16 +68,10 @@ Template.facet.helpers
         filters = delta["filter_#{@key}"]
 
 
-Template.facet.events
-    # 'click .set_delta_key': ->
-    #     delta = Docs.findOne type:'delta'
+Template.home.events
     'click .recalc': ->
         delta = Docs.findOne type:'delta'
-        Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
 
     'click .unselect': ->
         facet = Template.currentData()
@@ -168,67 +80,16 @@ Template.facet.events
             $pull: 
                 "filter_#{facet.key}": @valueOf()
                 active_facets: facet.key
-        Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
 
-
-
-Template.selector.events
     'click .select': ->
         filter = Template.parentData()
         delta = Docs.findOne type:'delta'
         filter_list = delta["filter_#{filter.key}"]
-        
-        # console.log filter
         
         Docs.update delta._id,
             $addToSet:
                 "filter_#{filter.key}": @name
                 active_facets: filter.key
                 
-        Session.set 'is_calculating', true
         Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
-
-
-
-Template.doc.onCreated ->
-    delta = Docs.findOne type:'delta'
-    if delta.doc_id
-        @autorun => Meteor.subscribe 'doc', delta.doc_id
-        # @autorun => Meteor.subscribe 'children', delta.doc_id
-
-Template.doc.events
-    'click .remove_doc': ->
-        delta = Docs.findOne type:'delta'
-        target_doc = Docs.findOne _id:delta.doc_id
-        if confirm "Delete #{target_doc.title}?"
-            Docs.remove target_doc._id
-            Docs.update delta._id,
-                $set:
-                    doc_id:null
-                    editing:false
-                    doc_view:false
-        Session.set 'is_calculating', true
-        Meteor.call 'fo', (err,res)->
-            if err then console.log err
-            else
-                Session.set 'is_calculating', false
-
-
-Template.doc.helpers
-    detail_doc: ->
-        delta = Docs.findOne type:'delta'
-        Docs.findOne delta.doc_id
-
-    local_doc: -> Docs.findOne @valueOf()
-
-
-    value: ->
-        parent = Template.parentData()
-        parent["#{@valueOf()}"]

@@ -123,7 +123,6 @@ Meteor.methods
     fo: ->
         delta = Docs.findOne
             type:'delta'
-            author_id: Meteor.userId()
 
         built_query = { keys: {$exists:true} }
 

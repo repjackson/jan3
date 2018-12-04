@@ -26,58 +26,21 @@ template(name='home')
                     .row
                         .column
                             each facets
-                                +facet
+                                .ui.inline_header.header 
+                                    if icon
+                                        i.icon(class=icon)
+                                    |#{key}
+                                each selected_values
+                                    .unselect.ui.blue.button #{this}
+                                each values
+                                    .ui.select.button(class=toggle_value_class)
+                                        strong #{name}
+                                        // small #{count}
                         .column
-                            if delta.result_ids
-                                if delta.result_ids.length
-                                    // | #{delta.total} results
-                                    if is_calculating
-                                        .ui.hidden.divider
-                                        .ui.active.indeterminate.massive.centered.inline.loader
-                                    else
-                                        if delta.doc_view
-                                            with delta.doc_id
-                                                +doc
-                                        else
-                                            each delta.result_ids
-                                                +doc
-                            else
-                                |No results
-
-
-
-template(name='facet')
-    .ui.inline_header.header 
-        if icon
-            i.icon(class=icon)
-        |#{key}
-    each selected_values
-        .unselect.ui.blue.button #{this}
-    if values
-        each values
-            +selector
-
-template(name='selector')
-    if name
-        .ui.margined.select.button(class=toggle_value_class)
-            strong #{name}
-            // small #{count}
-    else
-        // .column.toggle_value.pointer(class=toggle_value_class)
-        .ui.margined.select.button(class=toggle_value_class)
-            | [none]
-            // small #{count}
-
-
-
-template(name='doc')
-    with local_doc
-        .ui.segment
-            .ui.list
-                each local_doc.keys
-                    .item 
-                        |#{this}
-                        strong #{value}
-                        
-                        
-                        
+                            each delta.result_ids
+                                .ui.segment
+                                    .ui.list
+                                        each local_doc.keys
+                                            .item 
+                                                |#{this}
+                                                strong #{value}
